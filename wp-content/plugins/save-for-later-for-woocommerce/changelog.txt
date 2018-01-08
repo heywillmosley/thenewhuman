@@ -1,0 +1,21 @@
+*** Save For Later For WooCommerce ***
+
+2017.04.18 - version 1.0.3
+ * New: WooCommerce 3.0.0+ compatible
+ * Update: Will now support only WooCommerce 2.5+
+ * Update: POT file
+
+2016.10.10 - version 1.0.2
+ * Update: Important changes replated to automatic updates of this plugin
+ * Update: Minor change in CSS
+
+2016.06.16 - version 1.0.1
+ * Update: Show "Save For Later" action in touch devices
+ * Update: Tested with WooCommerce 2.6
+ * Update: Change in logic for saving products in cookie & retrieving as well
+ * Update: Option for modifying life of cookie
+ * Update: Responsive
+ * Tweak: Code cleanup
+
+2016.05.25 - version 1.0.0
+ * First release

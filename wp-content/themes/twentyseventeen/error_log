@@ -1,0 +1,12 @@
+[27-Dec-2017 14:25:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php on line 13
+[29-Dec-2017 06:32:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_template_part() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/footer.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/footer.php on line 22
+[05-Jan-2018 15:31:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php on line 13

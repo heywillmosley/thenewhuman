@@ -1,0 +1,519 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Formidable Registration v1.11.04b1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-06 00:33+0100\n"
+"PO-Revision-Date: 2015-04-07 17:53:42+0000\n"
+"Last-Translator: Henrik Gregersen <henrik@bonest.dk>\n"
+"Language-Team: Henrik Gregersen <henrik@bonest.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.7.5\n"
+"X-Poedit-Language: \n"
+"X-Poedit-Country: \n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#: FrmRegAppController.php:86
+#@ frmreg
+msgid "You are running an outdated version of Formidable. This plugin may not work correctly if you do not update Formidable."
+msgstr "Du anvender en forældet version af Formidable. Dette plugin virker ikke korrekt med mindre du opdaterer Formidable."
+
+#: FrmRegAppController.php:289
+#@ frmreg
+msgid "User ID"
+msgstr "Bruger ID"
+
+#: FrmRegAppController.php:360
+#@ frmreg
+msgid "This username is already registered."
+msgstr "Dette brugernavn er optaget."
+
+#: FrmRegAppController.php:363
+#@ frmreg
+msgid "This username is invalid because it uses illegal characters. Please enter a valid username."
+msgstr "Dette brugernavn er ugyldigt fordi det indeholder ugyldige tegn. Indtast venligst et gyldigt brugernavn."
+
+#: FrmRegAppController.php:374
+#@ frmreg
+msgid "This email address is already registered."
+msgstr "Denne e-mail adresse er allerede oprettet."
+
+#: FrmRegAppController.php:378
+#@ frmreg
+msgid "Passwords may not contain the character \"\\\"."
+msgstr "Adgangskoder kan ikke indeholde tegn \"\\\"."
+
+#: FrmRegAppController.php:523
+#, php-format
+#@ frmreg
+msgid "<strong>ERROR</strong>: You have not confirmed your e-mail address. %1$sResend activation%2$s?"
+msgstr "<strong>FEJL</strong>: Du mangler at bekræfte din e-mail adresse. %1$sGensend bekræftelses e-mail%2$s?"
+
+#: FrmRegAppController.php:525
+#@ frmreg
+msgid "<strong>ERROR</strong>: Your registration has not yet been approved."
+msgstr "<strong>FEJL</strong>: Din nye bruger profil er endnu ikke godkendt."
+
+#: FrmRegAppController.php:527
+#@ frmreg
+msgid "<strong>ERROR</strong>: Your payment has not been completed. You must complete your payment before you may log in."
+msgstr "<strong>FEJL</strong>: Din betaling er ikke gennemført. Din betaling skal være gennemført før du kan logge ind."
+
+#: FrmRegAppController.php:597
+#@ frmreg
+msgid "Your account is now active. Enjoy!"
+msgstr "Din bruger profil er nu aktiv. God fornøjelse!"
+
+#: FrmRegAppController.php:601
+#@ frmreg
+msgid "Your account has been activated. You may now log in."
+msgstr "Din bruger profil er blevet aktiveret. Du har nu adgang til at logge ind."
+
+#: FrmRegAppController.php:605
+#@ frmreg
+msgid "Your account has been activated. Please check your e-mail for your password."
+msgstr "Din bruger profil er blevet aktiveret. Kontroller venligst din indbakke efter en e-mail med din adgangskode."
+
+#: FrmRegAppController.php:704
+#@ frmreg
+msgid "Settings Saved"
+msgstr "Opsætning gemt"
+
+#: FrmRegAppController.php:894
+#: FrmRegAppHelper.php:496
+#@ frmreg
+msgid "The activation e-mail has been sent to the e-mail address with which you registered. Please check your email and click on the link provided."
+msgstr "Aktiverings e-mail er blevet sendt til den e-mail adresse du indtastede. Kontroller venligst om du har modtaget en e-mail og klik på linket i e-mailen."
+
+#: FrmRegAppController.php:896
+#: FrmRegAppHelper.php:500
+#@ frmreg
+msgid "That activation link is invalid."
+msgstr "Aktiverings linket er ugyldigt."
+
+#: FrmRegAppController.php:1274
+#: views/_register_settings.php:34
+#: views/registration_options.php:40
+#: widgets/FrmRegLogin.php:15
+#: widgets/FrmRegLogin.php:44
+#@ frmreg
+msgid "Username"
+msgstr "Brugernavn"
+
+#: FrmRegAppController.php:1275
+#: views/_register_settings.php:58
+#: views/registration_options.php:59
+#: widgets/FrmRegLogin.php:15
+#: widgets/FrmRegLogin.php:45
+#@ frmreg
+msgid "Password"
+msgstr "Adgangskode"
+
+#: FrmRegAppController.php:1276
+#: widgets/FrmRegLogin.php:16
+#: widgets/FrmRegLogin.php:45
+#@ frmreg
+msgid "Remember Me"
+msgstr "Husk mig"
+
+#: FrmRegAppController.php:1277
+#: widgets/FrmRegLogin.php:16
+#: widgets/FrmRegLogin.php:46
+#@ frmreg
+msgid "Login"
+msgstr "Log ind"
+
+#: FrmRegAppController.php:1392
+#@ frmreg
+msgid "Reset my password"
+msgstr "Nulstil min adgangskode"
+
+#: FrmRegAppHelper.php:29
+#@ frmreg
+msgid "Your username and password"
+msgstr "Dit brugernavn og din adgangskode"
+
+#: FrmRegAppHelper.php:30
+#: models/FrmRegNotification.php:140
+#, php-format
+#@ frmreg
+msgid "Username: %s"
+msgstr "Brugernavn: %s"
+
+#: FrmRegAppHelper.php:31
+#: models/FrmRegNotification.php:141
+#, php-format
+#@ frmreg
+msgid "Password: %s"
+msgstr "Adgangskode: %s"
+
+#: FrmRegAppHelper.php:475
+#@ frmreg
+msgid "The username field is empty."
+msgstr "Du skal indtaste et brugernavn."
+
+#: FrmRegAppHelper.php:480
+#@ frmreg
+msgid "The password field is empty."
+msgstr "Du skal indtaste din adgangskode."
+
+#: FrmRegAppHelper.php:485
+#, php-format
+#@ frmreg
+msgid "Invalid username or password. %1$sLost your password%2$s?"
+msgstr "Ugyldigt brugernavn eller adgangskode. %1$sHar du glemt din adgangskode?%2$s?"
+
+#: FrmRegAppHelper.php:491
+#, php-format
+#@ frmreg
+msgid "You have not confirmed your e-mail address. %1$sResend activation%2$s?"
+msgstr "Du mangler at bekræfte din e-mail adresse. %1$sGensend aktiverings e-mail%2$s?"
+
+#: FrmRegAppHelper.php:512
+#@ frmreg
+msgid "Your email has been successfully confirmed, but you must complete your payment before you can log in."
+msgstr "Din e-mail adresse er nu bekræftet, men før du kan logge ind skal din betaling være gennemført."
+
+#: FrmRegAppHelper.php:514
+#@ frmreg
+msgid "Your email has been confirmed, but you must now be approved by an administrator before you can log in. You will be notified by e-mail once your account has been reviewed."
+msgstr "Din e-mail adresse er bekræftet, men dine nye profil skal manuelt godkendes før du kan logge ind. Du modtager en e-mail når din bruger profil er blevet godkendt."
+
+#: FrmRegAppHelper.php:530
+#@ frmreg
+msgid "Require new users to confirm their e-mail address before they may log in."
+msgstr "Kræv at nye brugere skal bekræfte deres e-mail adresse før de kan logge ind."
+
+#: FrmRegAppHelper.php:531
+#@ frmreg
+msgid "Require new users to be approved by an administrator before they may log in."
+msgstr "Kræv at nye brugere skal godkendes af en administrator før de kan logge ind."
+
+#: FrmRegAppHelper.php:532
+#@ frmreg
+msgid "Prevent users from logging in until Paypal payment is complete."
+msgstr "Brugere kan først logge ind efter en gennemført Paypal betaling."
+
+#: FrmRegAppHelper.php:533
+#@ frmreg
+msgid "Select the page where users will be redirected after clicking the activation link."
+msgstr "Vælg siden som brugerne skal sendes til når de klikker på aktiverings linket."
+
+#: FrmRegAppHelper.php:534
+#@ frmreg
+msgid "Select the general login/logout page for your site."
+msgstr "Vælg den generelle log ind/log ud side for dit website."
+
+#: models/FrmRegAction.php:14
+#@ frmreg
+msgid "Register User"
+msgstr "Ny bruger profil"
+
+#: models/FrmRegNotification.php:44
+#, php-format
+#@ frmreg
+msgid "[%s] Activate Your Account"
+msgstr "[%s] Aktiver din bruger profil"
+
+#: models/FrmRegNotification.php:45
+#, php-format
+#@ frmreg
+msgid "Thanks for registering at %s! To complete the activation of your account please click the following link: "
+msgstr "Tak for din tilmelding til %s! For at bekræfte din nye bruger profil skal du klikke på følgende link: "
+
+#: models/FrmRegNotification.php:152
+#, php-format
+#@ frmreg
+msgid "[%s] Your username and password"
+msgstr "[%s] Dit brugernavn og adgangskode"
+
+#: models/FrmRegNotification.php:198
+#@ frmreg
+msgid "Created at signup"
+msgstr "Oprettet ved tilmelding"
+
+#: views/_register_settings.php:5
+#: views/registration_options.php:16
+#@ frmreg
+msgid "User Email"
+msgstr "Bruger e-mail"
+
+#: views/_register_settings.php:24
+#: views/registration_options.php:33
+#@ frmreg
+msgid "You need an \"email\" field type in your form"
+msgstr "Du mangler et \"email\" felt i din formular"
+
+#: views/_register_settings.php:38
+#: views/registration_options.php:42
+#@ frmreg
+msgid "Automatically Generate from Email"
+msgstr "Opret automatisk ud fra e-mail adressen"
+
+#: views/_register_settings.php:39
+#: views/registration_options.php:43
+#@ frmreg
+msgid "Use Full Email Address"
+msgstr "Anvend hele e-mail adressen"
+
+#: views/_register_settings.php:62
+#: views/registration_options.php:61
+#@ frmreg
+msgid "Automatically Generate"
+msgstr "Opret automatisk"
+
+#: views/_register_settings.php:81
+#: views/registration_options.php:77
+#@ frmreg
+msgid "First Name"
+msgstr "Fornavn"
+
+#: views/_register_settings.php:85
+#: views/_register_settings.php:108
+#: views/_register_settings.php:165
+#: views/registration_options.php:79
+#: views/registration_options.php:97
+#: views/registration_options.php:139
+#@ frmreg
+msgid "None"
+msgstr "Ingen"
+
+#: views/_register_settings.php:104
+#: views/registration_options.php:95
+#@ frmreg
+msgid "Last Name"
+msgstr "Efternavn"
+
+#: views/_register_settings.php:127
+#: views/registration_options.php:113
+#@ frmreg
+msgid "Display Name"
+msgstr "Visningsnavn"
+
+#: views/_register_settings.php:131
+#: views/registration_options.php:115
+#@ frmreg
+msgid "Same as Username"
+msgstr "Samme som brugernavn"
+
+#: views/_register_settings.php:132
+#: views/registration_options.php:116
+#@ frmreg
+msgid "First Last (as selected above)"
+msgstr "For Efter (som valgt ovenfor)"
+
+#: views/_register_settings.php:133
+#: views/registration_options.php:117
+#@ frmreg
+msgid "Last First (as selected above)"
+msgstr "Efter For (som valgt ovenfor)"
+
+#: views/_register_settings.php:152
+#: views/registration_options.php:133
+#@ frmreg
+msgid "User Role"
+msgstr "Bruger rolle"
+
+#: views/_register_settings.php:161
+#: views/registration_options.php:137
+#@ frmreg
+msgid "Avatar"
+msgstr "Profil billede"
+
+#: views/_register_settings.php:161
+#: views/registration_options.php:137
+#@ frmreg
+msgid "Only select an avatar if you have not set it in another form. Only file upload fields will show here."
+msgstr "Vælg kun et profil billede, hvis du ikke har valgt et tidligere. Kun upload felter vises her."
+
+#: views/_register_settings.php:183
+#: views/registration_options.php:10
+#@ frmreg
+msgid "Automatically log in users who submit this form"
+msgstr "Log brugere ind automatisk efter tilmelding"
+
+#: views/_register_settings.php:189
+#: views/registration_options.php:155
+#@ frmreg
+msgid "User Meta"
+msgstr "Bruger Meta"
+
+#: views/_register_settings.php:200
+#: views/registration_options.php:164
+#@ frmreg
+msgid "Add"
+msgstr "Ny"
+
+#: views/_register_settings.php:205
+#: views/registration_options.php:167
+#@ frmreg
+msgid "User Moderation"
+msgstr "Bruger godkendelse"
+
+#: views/_register_settings.php:209
+#: views/registration_options.php:171
+#@ frmreg
+msgid "Email confirmation"
+msgstr "E-mail bekræftelse"
+
+#: views/_register_settings.php:213
+#: views/registration_options.php:173
+#@ frmreg
+msgid "Redirect to:"
+msgstr "Viderstil til:"
+
+#: views/_register_settings.php:219
+#@ frmreg
+msgid "Admin approval"
+msgstr "Admin godkendelse"
+
+#: views/_register_settings.php:227
+#: views/registration_options.php:179
+#@ frmreg
+msgid "Complete Paypal payment"
+msgstr "Paypal betaling"
+
+#: views/_register_settings.php:235
+#: views/registration_options.php:185
+#@ frmreg
+msgid "Email Notification"
+msgstr "E-mail besked"
+
+#: views/_register_settings.php:239
+#: views/registration_options.php:187
+#@ frmreg
+msgid "From/Reply to"
+msgstr "Fra/Svar til"
+
+#: views/_register_settings.php:242
+#: views/_usermeta_row.php:2
+#: views/new_usermeta_row.php:3
+#: views/registration_options.php:188
+#@ frmreg
+msgid "Name"
+msgstr "Navn"
+
+#: views/_register_settings.php:245
+#: views/registration_options.php:191
+#@ frmreg
+msgid "Email"
+msgstr "E-mail"
+
+#: views/_register_settings.php:252
+#: views/registration_options.php:195
+#@ frmreg
+msgid "Subject"
+msgstr "Emne"
+
+#: views/_register_settings.php:258
+#: views/registration_options.php:198
+#@ frmreg
+msgid "Message"
+msgstr "Besked"
+
+#: views/_usermeta_row.php:5
+#: views/new_usermeta_row.php:8
+#@ frmreg
+msgid "Form Field"
+msgstr "Formular felt"
+
+#: views/_usermeta_row.php:7
+#: views/new_usermeta_row.php:10
+#@ frmreg
+msgid "Select Field"
+msgstr "Vælg velt"
+
+#: views/global_reg_settings.php:4
+#@ frmreg
+msgid "Login/Logout URL"
+msgstr "Log ind/Log ud URL"
+
+#: views/global_reg_settings.php:17
+#@ frmreg
+msgid "Lost Password"
+msgstr "Glemt adgangskode"
+
+#: views/registration_options.php:4
+#@ frmreg
+msgid "Register users who submit this form"
+msgstr "Tilmeld brugere som udfylder denne formular"
+
+#: widgets/FrmRegLogin.php:6
+#@ frmreg
+msgid "Add a login form anywhere on your site"
+msgstr "Tilføj en log ind formular hvor som helst på din side"
+
+#: widgets/FrmRegLogin.php:7
+#@ frmreg
+msgid "Login Form"
+msgstr "Log ind formular"
+
+#: widgets/FrmRegLogin.php:52
+#@ frmreg
+msgid "Display fields in"
+msgstr "Vis felter i"
+
+#: widgets/FrmRegLogin.php:54
+#@ frmreg
+msgid "multiple rows"
+msgstr "flere rækker"
+
+#: widgets/FrmRegLogin.php:55
+#@ frmreg
+msgid "a single row"
+msgstr "en enkelt række"
+
+#: widgets/FrmRegLogin.php:59
+#@ frmreg
+msgid "Use Formidable Styling"
+msgstr "Anvend Formidable styling"
+
+#: widgets/FrmRegLogin.php:62
+#@ frmreg
+msgid "Slide the login area"
+msgstr "Slide log ind området"
+
+#: widgets/FrmRegLogin.php:65
+#@ frmreg
+msgid "Include Remember Me checkbox"
+msgstr "Anvend et Husk Mig afkrydsningsfelt"
+
+#: widgets/FrmRegLogin.php:67
+#@ frmreg
+msgid "Username Label"
+msgstr "Brugernavn label"
+
+#: widgets/FrmRegLogin.php:70
+#@ frmreg
+msgid "Password Label"
+msgstr "Adgangskode label"
+
+#: widgets/FrmRegLogin.php:73
+#@ frmreg
+msgid "Remember Me Label"
+msgstr "Husk mig Label"
+
+#: views/_register_settings.php:260
+#: views/registration_options.php:200
+#, php-format
+#@ frmreg
+msgid "You can also use %1$s and %2$s"
+msgstr ""
+
+#: views/global_reg_settings.php:12
+#@ frmreg
+msgid "This options prevents logged-out users from seeing the standard wp-admin page. Select a page where logged-out users will be redirected when they try to access the wp-admin page or just leave this option blank."
+msgstr ""
+
+#: widgets/FrmRegLogin.php:49
+#@ frmreg
+msgid "Title:"
+msgstr ""
+

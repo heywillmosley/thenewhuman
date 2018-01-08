@@ -1,0 +1,239 @@
+# Copyright (C) 2017 Save For Later For WooCommerce
+# This file is distributed under the same license as the Save For Later For WooCommerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Save For Later For WooCommerce 1.0.3\n"
+"Report-Msgid-Bugs-To: http://www.storeapps.org/support/contact-us/\n"
+"POT-Creation-Date: 2017-04-18 09:37:58+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: Tue, 18 Apr 2017 15:07:58 +0530\n"
+"Last-Translator: Ratnakar Dubey <ratnakar.dubey@storeapps.org>\n"
+"Language-Team: StoreApps <support@storeapps.org>\n"
+
+#: includes/class-sa-save-for-later.php:99
+msgid ""
+"%s Save For Later is active but it will only work with WooCommerce 2.5+. %s."
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:99
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:903
+msgid "Important"
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:99
+msgid "Please update WooCommerce to the latest version"
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:143
+msgid "Item"
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:148
+msgid "%s saved for later. %sUndo?%s"
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:150
+msgid "%s saved for later."
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:310
+msgid "Moved %s to cart"
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:537
+msgid "Saved for later (%s item)"
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:539 templates/saved-items-list.php:69
+msgid "Saved for later"
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:539
+msgid "items"
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:542
+msgid "Error"
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:734
+#: includes/class-sa-save-for-later.php:737
+msgid "Delete from cart"
+msgstr ""
+
+#: includes/class-sa-save-for-later.php:743
+#: includes/class-sa-save-for-later.php:745
+msgid "Save for later"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:378
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:964
+msgid "License Key"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:381
+msgid "Validate"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:408
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:947
+msgid ""
+"Your license for %s %s. Please %s to continue receiving updates & support"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:408
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:947
+msgid "has expired"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:408
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:410
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:947
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:949
+msgid "renew your license now"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:410
+msgid ""
+"Your license for %s %swill expire in %d %s%s. Please %s to get %s50%% "
+"discount%s"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:410
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:949
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:755
+msgid "Name"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:759
+msgid "E-mail"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:763
+#: templates/saved-items-list.php:92
+msgid "Product"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:767
+msgid "Subject"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:771
+msgid "Message"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:776
+msgid "Include plugins / environment details to help solve issue faster"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:784
+msgid "Send"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:816
+msgid "Documentation"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:816
+msgid "Docs"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:826
+msgid "Reset License Details"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:826
+msgid "Reset License"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:900
+msgid "A %s of %s is available. %s"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:900
+msgid "new version"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:900
+msgid "Update now"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:903
+msgid "%s"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:949
+msgid ""
+"Your license for %s %swill expire in %d %s%s. Please %s to get %sdiscount 50%"
+"%%s"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:952
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:965
+msgid "Dismiss"
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:964
+msgid "%s for %s is not found. Please %s to get automatic updates."
+msgstr ""
+
+#: sa-includes/class-storeapps-upgrade-v-1-4.php:964
+msgid "enter & validate license key"
+msgstr ""
+
+#: templates/saved-items-list.php:69
+msgid "(%s item)"
+msgid_plural "(%s items)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/saved-items-list.php:108
+msgid "Available on backorder"
+msgstr ""
+
+#: templates/saved-items-list.php:124
+msgid "Delete this item from Saved for later list"
+msgstr ""
+
+#: templates/saved-items-list.php:126
+msgid "Delete"
+msgstr ""
+
+#: templates/saved-items-list.php:131
+msgid "Move this item to cart"
+msgstr ""
+
+#: templates/saved-items-list.php:133
+msgid "Move to cart"
+msgstr ""
+
+#: templates/saved-items-list.php:145
+msgid "Price"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Save For Later For WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.storeapps.org/product/save-for-later-for-woocommerce/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Allow your customer to save products from cart for later use."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "StoreApps"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.storeapps.org/"
+msgstr ""

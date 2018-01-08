@@ -1,0 +1,184 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP E-Signature Signer Input Fields\n"
+"POT-Creation-Date: 2015-12-03 12:59+0600\n"
+"PO-Revision-Date: 2015-12-03 12:59+0600\n"
+"Last-Translator: Abu Shoaib <abushoaib73@gmail.com>\n"
+"Language-Team: approveme <team@approveme.me>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: admin\n"
+"X-Poedit-SearchPath-2: assets\n"
+"X-Poedit-SearchPath-3: includes\n"
+"X-Poedit-SearchPath-4: public\n"
+"X-Poedit-SearchPath-5: esig-sif.php\n"
+
+#: admin/esig-sif-admin.php:147
+msgid " Select Signer"
+msgstr ""
+
+#: admin/esig-sif-admin.php:359
+msgid "Settings"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:20 admin/views/shortcode_panel.php:69
+#: admin/views/shortcode_panel.php:179 admin/views/shortcode_panel.php:241
+#: admin/views/shortcode_panel.php:303
+msgid "Advanced"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:25 admin/views/shortcode_panel.php:74
+#: admin/views/shortcode_panel.php:127 admin/views/shortcode_panel.php:184
+#: admin/views/shortcode_panel.php:246 admin/views/shortcode_panel.php:308
+#: admin/views/shortcode_panel.php:363
+msgid "Required"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:30
+msgid "Insert Text Field"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:38
+msgid ""
+"Tips: you can adjust the size of your text field by using the text box "
+"above. See the result in real time"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:43 admin/views/shortcode_panel.php:98
+#: admin/views/shortcode_panel.php:135 admin/views/shortcode_panel.php:194
+#: admin/views/shortcode_panel.php:271 admin/views/shortcode_panel.php:330
+#: admin/views/shortcode_panel.php:373
+msgid "*You must assign this field to a specific signer."
+msgstr ""
+
+#: admin/views/shortcode_panel.php:44 admin/views/shortcode_panel.php:99
+#: admin/views/shortcode_panel.php:136 admin/views/shortcode_panel.php:195
+#: admin/views/shortcode_panel.php:272 admin/views/shortcode_panel.php:331
+#: admin/views/shortcode_panel.php:374
+msgid "Please select a signer from the dropdown and try again."
+msgstr ""
+
+#: admin/views/shortcode_panel.php:47 admin/views/shortcode_panel.php:102
+msgid "*You must input only number in input field size.."
+msgstr ""
+
+#: admin/views/shortcode_panel.php:79
+msgid "Insert Paragraph Text"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:93
+msgid ""
+"Tips: you can adjust the size of your text area by using the option above. "
+"See the result in real time"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:115
+msgid "Add a date picker for your signer to fill out."
+msgstr ""
+
+#: admin/views/shortcode_panel.php:131
+msgid "Insert Date"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:145
+msgid "Allow your signer to upload a file to your document"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:155
+msgid "A field label is text that will live above your file upload form."
+msgstr ""
+
+#: admin/views/shortcode_panel.php:166
+msgid ""
+"Enter the allowed file extensions for file uploads.  This will limit the "
+"type of files a user can upload."
+msgstr ""
+
+#: admin/views/shortcode_panel.php:172
+msgid "Separated with commas (i.e jpg, gif, png, pdf)"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:190
+msgid "Insert Upload Form"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:198
+msgid "*You must input file extension to a specific signer."
+msgstr ""
+
+#: admin/views/shortcode_panel.php:207
+msgid ""
+"Specify the maximum file size in megabytes allowed for the uploaded files."
+msgstr ""
+
+#: admin/views/shortcode_panel.php:222
+msgid " Enter your field label(Optional)"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:227
+msgid " Add Radio Buttons"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:251
+msgid "Insert Radio Buttons"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:256 admin/views/shortcode_panel.php:318
+msgid "Display vertically"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:258 admin/views/shortcode_panel.php:319
+msgid "(Default)"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:261 admin/views/shortcode_panel.php:320
+msgid "Display horizontally"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:265 admin/views/shortcode_panel.php:324
+msgid ""
+"Tips: you can choose for your radio buttons to be displayedvertically or "
+"horizontally on your document here."
+msgstr ""
+
+#: admin/views/shortcode_panel.php:284 admin/views/shortcode_panel.php:345
+msgid "Enter your field label(Optional)"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:289
+msgid " Add Checkbox Buttons"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:313
+msgid "Insert Checkboxes Buttons"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:350
+msgid " Add Dropdown option"
+msgstr ""
+
+#: admin/views/shortcode_panel.php:368
+msgid "Insert Dropdown"
+msgstr ""
+
+#: public/esig-sif.php:122
+#, php-format
+msgid "Invalid file size. Allowed file size is %s MB."
+msgstr ""
+
+#: public/esig-sif.php:129
+#, php-format
+msgid "Invalid File Extension. Allowed extensions are (  %s  )"
+msgstr ""
+
+#: public/esig-sif.php:146
+msgid "File is not uploaded : reason unknown"
+msgstr ""

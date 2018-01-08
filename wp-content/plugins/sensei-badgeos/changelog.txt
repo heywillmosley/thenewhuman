@@ -1,0 +1,17 @@
+*** Sensei BadgeOS Changelog ***
+
+2015.10.21 - version 1.0.4
+* Update missing dependency error to include link that goes to plugin search and auto-searches for BadgeOS
+* Add pot file for use with Localization.
+
+2015.06.18 - version 1.0.3
+ * Fix - enable retrieval of badges based on Sensei course category.
+
+2015.02.26 - version 1.0.2
+ * Sensei 1.7.0 compatibility fix.
+
+2014.05.30 - version 1.0.1
+ * Fix for the BadgeOS version check.
+
+2013.09.24 - version 1.0.0
+ * First release. Woo!

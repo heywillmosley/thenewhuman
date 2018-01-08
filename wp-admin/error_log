@@ -1,0 +1,2 @@
+[29-Dec-2017 19:13:31 UTC] PHP Warning:  require(/home/thenewhu/public_html/wp-includes/load.php): failed to open stream: No such file or directory in /home/thenewhu/public_html/wp-settings.php on line 19
+[29-Dec-2017 19:13:31 UTC] PHP Fatal error:  require(): Failed opening required '/home/thenewhu/public_html/wp-includes/load.php' (include_path='.:/opt/cpanel/ea-php70/root/usr/share/pear') in /home/thenewhu/public_html/wp-settings.php on line 19

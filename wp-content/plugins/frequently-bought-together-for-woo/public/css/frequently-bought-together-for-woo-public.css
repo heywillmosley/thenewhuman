@@ -1,0 +1,20 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+#frequently_bought_together_form{display: inline-block;margin-bottom: 30px;margin-top: 30px;width: 100%;}
+.frequently_bought_together_products {display: inline-block;max-width: 485px;width: 100%;float:left;}
+div.frequently_bought_product{display: inline-block;float: left;width:120px;max-width:120px;text-align: center;}
+div.frequently_bought_product div{font-size:14px;text-align: left;}
+div.frequently_bought_products{float: left;font-size: 25px;padding:25px 15px 0 0;}
+.frequently_bought_add_to_cart{float: left; margin-left:30px;text-align: center;}
+.frequently_bought_product_price{ border-top: 1px solid #ccc;margin-top: 5px;padding-top: 2px;}
+.frequently_bought_product_title a{border-bottom: 0 none;}
+
+@media screen and (max-width: 600px) 
+{
+    .frequently_bought_together_products {max-width:100%;}
+    div.frequently_bought_products { padding: 0; margin:0 auto;}
+    div.frequently_bought_product{max-width: 30%; width:auto; margin:0 auto;}
+    .frequently_bought_add_to_cart {display: inline;float: left;margin-left: 0;text-align: center;width: 100%;}
+}

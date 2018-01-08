@@ -1,0 +1,57 @@
+.esig-cc-signer-container{
+   display: block;
+   position: relative;
+   text-align: right;
+   right:15%;
+}
+.esig-cc-signer-container a {
+    text-decoration: none;
+}
+.cc_recipient_emails_container {
+    display:block;
+    position: relative;
+}
+
+.cc_signer_main{
+    display:block;
+    position: relative;
+}
+#cc_users_edit{
+    text-decoration: none;
+    position: relative;
+    right:12px;
+    top:-10px; 
+}
+#add_cc{
+    text-decoration: none;
+}
+
+/*********** cc invitation container ****************/
+.esig-cc-container {
+    display:block;
+    position: relative ;  
+    max-width: 407px;
+    text-align: right;
+    margin-top: 5px;
+}
+.cc-invitation-emails{
+    display:block;
+    position: relative;
+}
+#cc-signer_main
+{
+    display:block ;
+    width:100%;
+   
+    border-radius:3px ;
+    vertical-align: middle ;
+    text-align:left ;
+    position:relative ;
+    margin-bottom:5px ; 
+}
+#cc-signer_main input 
+{
+    border-radius:3px ; 
+    height:37px ; 
+    top:10px;
+}

@@ -1,0 +1,11 @@
+2017-10-31 12:45:11 - Zendesk API GET Error (https://newhuman1.zendesk.com/api/v2/users/me.json): cURL error 28: Operation timed out after 5000 milliseconds with 0 bytes received
+    #1: Zendesk_Wordpress_API->_get() - plugins/zendesk/classes/zendesk-wordpress-api.php:61
+    #2: Zendesk_Wordpress_API->authenticate() - plugins/zendesk/zendesk-support.php:407
+    #3: Zendesk_Support->_process_forms() - plugins/zendesk/classes/zendesk-wordpress-admin.php:211
+    #4: Zendesk_Wordpress_Admin->_register_settings() - plugins/zendesk/classes/zendesk-wordpress-admin.php:50
+    #5: Zendesk_Wordpress_Admin->_admin_init() - 
+    #6: call_user_func_array() - /home/thenewhu/public_html/wp-includes/class-wp-hook.php:298
+    #7: WP_Hook->apply_filters() - /home/thenewhu/public_html/wp-includes/class-wp-hook.php:323
+    #8: WP_Hook->do_action() - /home/thenewhu/public_html/wp-includes/plugin.php:453
+    #9: do_action() - /home/thenewhu/public_html/wp-admin/admin.php:154
+    #10: require_once() - /home/thenewhu/public_html/wp-admin/index.php:10

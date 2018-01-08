@@ -1,0 +1,13 @@
+[17-Nov-2017 04:57:30 UTC] PHP Fatal error:  Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/archive.php on line 19
+[23-Dec-2017 06:08:04 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/archive.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/archive.php on line 19
+[23-Dec-2017 09:54:37 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _e() in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/author-bio.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/author-bio.php on line 12
+[29-Dec-2017 19:12:13 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/404.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/404.php on line 10

@@ -1,0 +1,3096 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP E-Signature\n"
+"POT-Creation-Date: 2016-05-18 21:40+0600\n"
+"PO-Revision-Date: 2016-05-18 21:43+0600\n"
+"Last-Translator: \n"
+"Language-Team: Approveme <team@approveme.me>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _e;__;esc_html__\n"
+"X-Poedit-SearchPath-0: controllers\n"
+"X-Poedit-SearchPath-1: lib\n"
+"X-Poedit-SearchPath-2: models\n"
+"X-Poedit-SearchPath-3: page-template\n"
+"X-Poedit-SearchPath-4: vendors\n"
+"X-Poedit-SearchPath-5: views\n"
+"X-Poedit-SearchPath-6: e-signature.php\n"
+"X-Poedit-SearchPath-7: add-ons\n"
+
+#: controllers/addonsController.php:44
+msgid "<strong>E-signature installed</strong> : Add-ons installed successfully."
+msgstr ""
+
+#: controllers/addonsController.php:59
+#, php-format
+msgid "<strong>E-signature Plugin</strong> : %s Installed successfully."
+msgstr ""
+
+#: controllers/addonsController.php:71
+#, php-format
+msgid "<strong>E-signature Plugin</strong> : %s Updated successfully."
+msgstr ""
+
+#: controllers/addonsController.php:80
+msgid "<strong>E-signature installed</strong> : All Add-ons installed successfully."
+msgstr ""
+
+#: controllers/addonsController.php:94
+#, php-format
+msgid "<strong>E-signature Deactivation</strong> : %s deactivated successfully."
+msgstr ""
+
+#: controllers/addonsController.php:105
+#, php-format
+msgid "<strong>E-signature Activation</strong> : %s activated successfully."
+msgstr ""
+
+#: controllers/addonsController.php:115
+#, php-format
+msgid "<strong>E-signature Delete</strong> : %s Deleted successfully."
+msgstr ""
+
+#: controllers/documentsController.php:55
+msgid "you do not have access to view this page"
+msgstr ""
+
+#: controllers/documentsController.php:156
+#, php-format
+msgid ""
+"<span class=\"edit\"><a href=\"%s\" title=\"Edit this document\">Edit</a> | </span>"
+msgstr ""
+
+#: controllers/documentsController.php:159
+#, php-format
+msgid ""
+"<span class=\"edit\"><a href=\"edit.php?post_type=esign&page=esign-edit-"
+"document&document_id=%d\" title=\"Edit this document\">Edit</a> | </span>"
+msgstr ""
+
+#: controllers/documentsController.php:160
+#, php-format
+msgid ""
+"<span class=\"edit\"><a href=\"?page=esign-resend_invite-document&document_id=%d\" "
+"title=\"Resend this document\">Resend Invite</a> | </span>"
+msgstr ""
+
+#: controllers/documentsController.php:163
+#, php-format
+msgid ""
+"<span class=\"active\"><a href=\"%s\" title=\"View this document\" target=\"_blank"
+"\">View</a> </span>"
+msgstr ""
+
+#: controllers/documentsController.php:165
+#, php-format
+msgid ""
+"| <span class=\"edit\"><a href=\"?page=esign-resend_invite-document&document_id=%d\" "
+"title=\"Resend this document\">Resend Invite</a> </span>"
+msgstr ""
+
+#: controllers/documentsController.php:167
+#, php-format
+msgid ""
+"| <span class=\"trash\"><a class=\"submitdelete\" title=\"Move this item to the Trash"
+"\" href=\"?page=esign-trash-document&amp;document_id=%d&amp;token=%s\">Trash</a></span>"
+msgstr ""
+
+#: controllers/documentsController.php:171
+#, php-format
+msgid ""
+"<span class=\"restore\"><a title=\"Restore this document\" href=\"?page=esign-restore-"
+"document&document_id=%d\">Restore</a></span>"
+msgstr ""
+
+#: controllers/documentsController.php:172
+#, php-format
+msgid ""
+"| <span class=\"trash\"><a style=\"color:red\" class=\"submitdelete\" title="
+"\"Permanently Delete this Document\" href=\"?page=esign-delete-document&amp;"
+"document_id=%d&amp;token=%s\">Permanently Delete</a></span></div>"
+msgstr ""
+
+#: controllers/documentsController.php:219
+msgid "Error: Signer invite not sent <br>Configure sending options"
+msgstr ""
+
+#: controllers/documentsController.php:225
+msgid "Awaiting Signature(s)"
+msgstr ""
+
+#: controllers/documentsController.php:231
+msgid "Document Viewed"
+msgstr ""
+
+#: controllers/documentsController.php:236
+msgid "Invite Sent"
+msgstr ""
+
+#: controllers/documentsController.php:269
+msgid "Your document trash is empty."
+msgstr ""
+
+#: controllers/documentsController.php:271
+msgid ""
+"Looks like you're new around here.    <a href=\"admin.php?page=esign-view-document\">- "
+"Add new doc</a>"
+msgstr ""
+
+#: controllers/documentsController.php:298
+msgid ""
+"<div id='esig_show_alert' style='display:none;'>\n"
+"\t\t<div class='esig-error-dialog-content'>\n"
+"\t\t\t\t\t\tOh snap!  It looks like you have a document stuck somewhere between outer "
+"space and your WordPress website.  <a href='?page=esign-"
+"docs&document_status=pending'>Click here </a> to resolve the issue.\n"
+"\t\t\t\t\t</div>\n"
+"\t\t</div>"
+msgstr ""
+
+#: controllers/documentsController.php:321
+msgid "Oh snap! Your document was trashed."
+msgstr ""
+
+#: controllers/documentsController.php:323
+msgid "I'm terribly sorry to inform you, but your document could not be deleted."
+msgstr ""
+
+#: controllers/documentsController.php:325
+msgid ""
+"<strong>Oh yeah</strong> : 30 second dance party! You created a brand new document.  "
+"-  <a href=\"http://goo.gl/dEXqHE\" target=\"_blank\">http://goo.gl/dEXqHE</a>"
+msgstr ""
+
+#: controllers/documentsController.php:327
+msgid ""
+"<strong>Oh yeah</strong> : 30 second dance party! You updated a your old document.  -  "
+"<a href=\"http://goo.gl/dEXqHE\" target=\"_blank\">http://goo.gl/dEXqHE</a>"
+msgstr ""
+
+#: controllers/documentsController.php:329
+msgid "Oh snap! Your document was deleted."
+msgstr ""
+
+#: controllers/documentsController.php:331
+msgid "Snp! Crack!  Attack!  Just like that! Your document was restored."
+msgstr ""
+
+#: controllers/documentsController.php:401 controllers/documentsController.php:595
+#: models/Invite.php:305
+msgid "Edit"
+msgstr ""
+
+#: controllers/documentsController.php:437 controllers/documentsController.php:658
+msgid "Will Only work when the <a href='#'>Auto add my signature module </a> installed"
+msgstr ""
+
+#: controllers/documentsController.php:517 models/Document.php:511
+#: models/Document.php:567 models/Document.php:640 models/Document.php:692
+#, php-format
+msgid "%s Uploaded by %s - %s IP %s"
+msgstr ""
+
+#: controllers/documentsController.php:743 controllers/documentsController.php:747
+msgid "Draft Successfully Saved."
+msgstr ""
+
+#: controllers/documentsController.php:1098
+msgid ""
+"Today is a mighty fine day... becuase your document was re-sent successfully!  Well "
+"done."
+msgstr ""
+
+#: controllers/documentsController.php:1100
+msgid ""
+"<span class=\"icon-esig-alert\"></span> It appears you don't have your SMTP settings "
+"setup properly right now. In other words, no one is able to receive your E-Signature "
+"emails because they are not sending... <a href=\"admin.php?page=esign-email-general\" "
+"class=\"button-primary\">Fix this issue now</a>"
+msgstr ""
+
+#: controllers/documentsController.php:1144 controllers/documentsController.php:1149
+msgid ""
+"<strong>Urgent, License Needed:</strong> WP E-signature requires a valid license for "
+"critical security updates - <a href='admin.php?page=esign-licenses-general' class='e-"
+"sign-enter-license'>Enter License</a>"
+msgstr ""
+
+#: controllers/generalsController.php:49
+msgid ""
+"<div class=\"esig-add-on-block esig-pro-pack open\">\n"
+"\t\t\t\t\t                    <h3>Save Time...Install everything with one click</h3>\n"
+"\t\t\t\t\t                    <p style=\"display:block;\">Since you have access to the "
+"%S Pack you can save time by installing \n"
+"                                        all add-ons at once . \n"
+"                                        Please Note: The installation process can take "
+"few minutes to complete.</p>\n"
+"\t\t\t\t\t                    <a class=\"esig-btn-pro\" id=\"esig-install-alladdons\" "
+"href=\"?page=esign-addons&esig_action=installall\">Install all Add-ons Now</a><a href="
+"\"#\" class=\"esig-dismiss\">No thanks</a>\n"
+"\t\t\t\t                    </div>"
+msgstr ""
+
+#: controllers/generalsController.php:91 controllers/generalsController.php:277
+msgid "<strong>Well done Sir</strong> : Your e-signature settings have been updated."
+msgstr ""
+
+#: controllers/generalsController.php:210 controllers/generalsController.php:248
+msgid "Please enter a valid email address in the 'FROM' field."
+msgstr ""
+
+#: controllers/generalsController.php:225
+msgid "Please enter a valid port in the 'SMTP Port' field."
+msgstr ""
+
+#: controllers/generalsController.php:234
+msgid ""
+"Almost done... your SMTP settings have indeed been saved.   <a href='admin.php?"
+"page=esign-email-general#esig-test-email' style='color:red;'>Send a Test Email</a>"
+msgstr ""
+
+#: controllers/generalsController.php:236
+msgid "Settings are not saved."
+msgstr ""
+
+#: controllers/invitationsController.php:53
+#, php-format
+msgid "%s - Signature requested by %s"
+msgstr ""
+
+#: controllers/settingsController.php:46
+msgid ""
+"<strong>Urgent, License Needed:</strong> WP-Esignature add-on requires a valid license "
+"for critical security updates - <a href='admin.php?page=esign-licenses-general' "
+"class='e-sign-enter-license'>Enter License</a>"
+msgstr ""
+
+#: controllers/settingsController.php:89
+#, php-format
+msgid ""
+"Oh snap! Your default document page has been deleted. <a href=\"admin.php?page=esign-"
+"pdefault-document&page-id=%s\">Create New Page</a>"
+msgstr ""
+
+#: controllers/settingsController.php:98
+#, php-format
+msgid ""
+"Oh snap! Your default document page <a href='%1s'>%2s</a> shortcode  has been "
+"deleted :-<a href='admin.php?page=esign-settings&add_shortcode=1'>Add Shortcode</a>"
+msgstr ""
+
+#: controllers/settingsController.php:158
+msgid "-- Select a page --"
+msgstr ""
+
+#: controllers/settingsController.php:290
+msgid ""
+"There is already an admin using this email. Please enter a new email and save your "
+"settings."
+msgstr ""
+
+#: controllers/settingsController.php:306
+msgid "<strong>Document Error:</strong>"
+msgstr ""
+
+#: controllers/settingsController.php:382
+msgid ""
+"<strong>Woot Woot!</strong> : Welcome aboard.  You are all set to upload documents and "
+"request signatures using WordPress. - <a href=admin.php?page=esign-view-document>Add "
+"new document</a>"
+msgstr ""
+
+#: controllers/settingsController.php:392 controllers/settingsController.php:396
+msgid "<strong>Well done sir</strong> :  Your E-Signature settings have been updated!"
+msgstr ""
+
+#: e-signature.php:26
+msgid "WP E-Signature"
+msgstr ""
+
+#: e-signature.php:26 views/generals/about.php:152
+msgid "Approve Me"
+msgstr ""
+
+#: e-signature.php:80 e-signature.php:92
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: lib/AuditTrail.php:47
+msgid "E-mail"
+msgstr ""
+
+#: lib/AuditTrail.php:49
+msgid "Public Records"
+msgstr ""
+
+#: lib/Shortcode.php:51
+msgid "First & Last Name are required"
+msgstr ""
+
+#: lib/Shortcode.php:57
+#, php-format
+msgid ""
+"Oh snap! Carnegie, you've stumbled upon a broken URL. We're on the case. Let us know "
+"if the problem continues to persist. <p align='center'><img src='%s/images/boss.svg'></"
+"p>"
+msgstr ""
+
+#: lib/Shortcode.php:63
+msgid ""
+"The document has been modified since it was sent to you. Please request a new "
+"invitation to sign"
+msgstr ""
+
+#: lib/Shortcode.php:119 lib/Shortcode.php:131
+#, php-format
+msgid ""
+"<p align='center' class='esig-404-page-template'><a href='http://www.approveme.me/wp-"
+"digital-e-signature/' title='Wordpress Digital E-Signature by Approve Me' "
+"target='_blank'><img src='%s/images/logo.png' alt='Sign Documents Online using "
+"WordPress E-Signature by Approve Me'></a></p><p align='center' class='esig-404-page-"
+"template'>Well this is embarrassing, but we can't seem to locate the document you're "
+"looking to sign online.<br>You may want to send an email to the website owner. "
+"<br>Thank you for using Wordpress Digital E-Signature By <a href='http://www.approveme."
+"me/wp-digital-e-signature/' title='Free Document Signing by Approve Me'>Approve Me</"
+"a></p> <p align='center'><img src='"
+msgstr ""
+
+#: lib/Shortcode.php:198
+msgid ""
+"<p class=\"doc_title\" align=\"center\">You've already signed this document.</h2> <p "
+"align='center'></p>"
+msgstr ""
+
+#: lib/Shortcode.php:234
+msgid "There was an error attaching the signature to the document"
+msgstr ""
+
+#: lib/Shortcode.php:265
+#, php-format
+msgid "Signer name %s was changed to %s by %s IP: %s"
+msgstr ""
+
+#: lib/Shortcode.php:269
+#, php-format
+msgid "Document signed by %s - %s IP %s"
+msgstr ""
+
+#: lib/Shortcode.php:287
+msgid ""
+"<p class=\"success_title\" align=\"center\"><h2>You're done signing!</h2> <p "
+"align='center' class='s_logo'><span class=\"icon-success-check\"></span></p>"
+msgstr ""
+
+#: lib/Shortcode.php:340
+#, php-format
+msgid "%s - Signed by %s %s"
+msgstr ""
+
+#: lib/Shortcode.php:392
+#, php-format
+msgid "%s has been signed"
+msgstr ""
+
+#: lib/Shortcode.php:454 page-template/default/index.php:162
+#: page-template/default/index.php:185 views/generals/misc.php:46
+msgid "Print Document"
+msgstr ""
+
+#: lib/Shortcode.php:522 models/Document.php:939 models/Document.php:1126
+msgid "The document has been signed by all parties and is now closed."
+msgstr ""
+
+#: models/Addon.php:73
+#, php-format
+msgid ""
+"WP E-Signature %s %s Updates is available  <a href=\"?page=esign-"
+"addons&esig_action=update&download_url= urlencode%s &download_name= %s\" class=\"esign-"
+"addon-update-btn\"> Click Here To Update</a>"
+msgstr ""
+
+#: models/Addon.php:402
+msgid "You do not have sufficient permissions to activate plugins for this site."
+msgstr ""
+
+#: models/Addon.php:432 models/Addon.php:451
+msgid ""
+"You do not have sufficient permissions to deactivate plugins for this site.Only super "
+"admin activate/deactivate"
+msgstr ""
+
+#: models/Addon.php:436 models/Addon.php:455 models/Addon.php:469
+msgid "You do not have sufficient permissions to deactivate plugins for this site."
+msgstr ""
+
+#: models/Common.php:45
+msgid ""
+"<div id='esig_show_dialog' style='display:none;'>\n"
+"\t\t\t\t\t<div class='esig-show-dialog-content'>\n"
+"\t\t\t\t\t<h3>Setup your E-signature Admin</h3>\n"
+"\t\t\t\t\t<p>Select User:<select name='esig_admin_user' id='esig_admin_user'>\n"
+"\t\t\t\t\t"
+msgstr ""
+
+#: models/Common.php:187
+msgid "<option value=\"restore\">Restore Again</option>"
+msgstr ""
+
+#: models/Common.php:188
+msgid "<option value=\"del_permanent\">Delete Permanently</option>"
+msgstr ""
+
+#: models/Common.php:190
+msgid "<option value=\"trash\">Move to Trash</option>"
+msgstr ""
+
+#: models/Common.php:259
+msgid ""
+"To complicate the situation, it also looks like you do not have a license key (which "
+"means your site cannot communicate with ApproveMe and receive critical updates, "
+"downloads etc)... you will need to have a valid license in order to install this add-"
+"on."
+msgstr ""
+
+#: models/Common.php:260
+msgid "Put License Key"
+msgstr ""
+
+#: models/Common.php:263
+msgid "Urgent: Expired or Refunded License Key"
+msgstr ""
+
+#: models/Common.php:264 models/Common.php:270
+msgid ""
+"WP E-signature requires a valid license for critical security updates and support.</"
+"p>  <p><strong>Your signers, website and documents could be at risk.</strong></p> "
+"<p>To avoid any issues for you or your signers please renew your license immediately."
+msgstr ""
+
+#: models/Common.php:265
+msgid "Purchase Again"
+msgstr ""
+
+#: models/Common.php:269
+msgid "Urgent: You Have an Expired License"
+msgstr ""
+
+#: models/Common.php:271
+msgid "Renew My License Key"
+msgstr ""
+
+#: models/Common.php:511
+msgid "Select a city"
+msgstr ""
+
+#: models/Document.php:1037
+#, php-format
+msgid "Awaiting %s signatures"
+msgstr ""
+
+#: models/Document.php:1108
+#, php-format
+msgid ""
+"Document viewed %1s<br/>\n"
+" IP: %2s\n"
+msgstr ""
+
+#: models/Document.php:1123
+#, php-format
+msgid ""
+"Signer name %s was changed to %s by %s <br/> \n"
+"IP: %s}\n"
+msgstr ""
+
+#: models/Document.php:1149
+#, php-format
+msgid ""
+"Document signed by %1s<br/>\n"
+" IP: %2s"
+msgstr ""
+
+#: models/Document.php:1265
+#, php-format
+msgid "Document viewed by %s - %s IP %s"
+msgstr ""
+
+#: models/Email.php:164
+msgid ""
+"It appears you don't have your SMTP settings setup properly right now. In other words, "
+"no one is able to receive your E-Signature emails because they are not sending... <a "
+"href=\"admin.php?page=esign-email-general\" class=\"button-primary\">Fix this issue "
+"now</a>"
+msgstr ""
+
+#: models/Email.php:256
+msgid "WP E-Signature e-mail subject"
+msgstr ""
+
+#: models/Email.php:300
+#, php-format
+msgid ""
+"<a href=\"http://wpesign.com/?utm_source=wpesignplugin&utm_medium=signer-invite-"
+"email&utm_campaign=header-logo\" target=\"_blank\"><img src=\"%s/images/logo.png\" "
+"title=\"Wp E-signature\"></a> "
+msgstr ""
+
+#: models/Email.php:317
+msgid "Sign Legally Binding Documents using a WordPress website"
+msgstr ""
+
+#: models/Email.php:330
+msgid "What is WP E-Signature?"
+msgstr ""
+
+#: models/Email.php:343
+msgid ""
+"WP E-Signature by Approve Me is the\n"
+"                                fastest way to sign and send documents\n"
+"                                using WordPress. Save a tree (and a\n"
+"                                stamp).  Instead of printing, signing\n"
+"                                and uploading your contract, the\n"
+"                                document signing process is completed\n"
+"                                using your WordPress website. You have\n"
+"                                full control over your data - it never\n"
+"                                leaves your server. <br>\n"
+"                                <b>No monthly fees</b> - <b>Easy to use\n"
+"                                  WordPress plugin.</b><a style=\"color:#368bc6;text-"
+"decoration:none\" href=\"http://wpesign.com/?"
+"utm_source=wpesignplugin&utm_medium=signer-invite-email&utm_campaign=learn-more\" "
+"target=\"_blank\"> Learn more</a> "
+msgstr ""
+
+#: models/Esign_licenses.php:173 models/General.php:163
+#, php-format
+msgid "<tr><td colspan=\"3\">Your e-signature license will expire on %s </td></tr>"
+msgstr ""
+
+#: models/General.php:79
+msgid "Licenses"
+msgstr ""
+
+#: models/General.php:159
+msgid "Your e-signature license is expired."
+msgstr ""
+
+#: models/General.php:219
+msgid ""
+"Hey There! WP eSignature requires MCrypt to be installed on your server in order to "
+"work properly. MCrypt is often installed on most web hosts by default. For some reason "
+"your current hosting provider does not have MCrypt installed. Please contact your "
+"hosting provider and request they install MCrypt on your server so you can save a ton "
+"of time and money by signing documents using WordPress.-<a href=\"http://php.net/"
+"manual/en/mcrypt.requirements.php\" target=\"_blank\">Install Now</a>"
+msgstr ""
+
+#: models/General.php:223
+msgid ""
+"<strong>Wordpress Update Required:</strong> Your wordpress installation is currently "
+"out of date . Wp E-signature requires version 3.6 or greater to work properly.<a href="
+"\"http://wordpress.org\">Update Now</a>"
+msgstr ""
+
+#: models/Invite.php:36
+#, php-format
+msgid "Document Resent for signature to %s - %s"
+msgstr ""
+
+#: models/Invite.php:40
+#, php-format
+msgid "Document sent for signature to %s - %s"
+msgstr ""
+
+#: models/Invite.php:316 views/documents/add-form.php:93 views/documents/edit-form.php:75
+#: views/documents/footer-add-edit.php:30 views/documents/view.php:79
+msgid "+ Add Signer"
+msgstr ""
+
+#: models/Search.php:150
+msgid "&laquo;"
+msgstr ""
+
+#: models/Search.php:151
+msgid "&raquo;"
+msgstr ""
+
+#: page-template/default/index.php:24
+msgid "WP E-Signature by Approve Me - Sign Documents Using WordPress - "
+msgstr ""
+
+#: page-template/default/index.php:129
+msgid "I agree to be legally bound by this agreement and eSignature"
+msgstr ""
+
+#: page-template/default/index.php:129
+msgid "Terms of Use."
+msgstr ""
+
+#: page-template/default/index.php:193 views/documents/sign-document.php:245
+msgid "Agree & Sign"
+msgstr ""
+
+#: page-template/default/index.php:213 views/partials/_footer_recipient_signed.php:15
+msgid "Back to Main Site"
+msgstr ""
+
+#: vendors/WP_E_License_Handler.php:116
+#, php-format
+msgid "%1$s License Key"
+msgstr ""
+
+#: vendors/common-function.php:278
+#, php-format
+msgid ""
+" %s it looks WP e-Signature is out of date.  Since bugs are often fixed in our newer "
+"releases please update your plugin(s) before submitting a bug request"
+msgstr ""
+
+#: vendors/common-function.php:283
+#, php-format
+msgid ""
+" %s it looks You do not have valid E-signature license. <ol><li>To retreive your "
+"license follow these <a href=\"/wp-admin/admin.php?page=esign-licenses-general\">three "
+"simple steps</a>.</li><br><li>To renew your license visit <a href=\"http://www."
+"approveme.me/profile\" target=\"blank\">www.approveme.me</a></li><ol>"
+msgstr ""
+
+#: vendors/common-function.php:418 vendors/common-function.php:419
+msgid "E-signature"
+msgstr ""
+
+#: vendors/core-load.php:81
+msgid "Signing...."
+msgstr ""
+
+#: vendors/core-load.php:81
+msgid "+ Add signature"
+msgstr ""
+
+#: vendors/core-load.php:81
+msgid "I am"
+msgstr ""
+
+#: vendors/core-load.php:81
+msgid "and"
+msgstr ""
+
+#: vendors/plugin-compatibility.php:165
+msgid ""
+"UPDATE REQUIRED ASAP: WP E-Signature add-ons require a MAJOR critical updates.  <a "
+"href=\"https://www.approveme.me/wordpress-contract-plugin/wp-online-contract-e-"
+"signature/\">Read all about here</a>"
+msgstr ""
+
+#: views/about/about.php:13
+msgid "Welcome to WP E-Signature"
+msgstr ""
+
+#: views/about/about.php:15
+#, php-format
+msgid "Thanks for installing WP E-Signature %s &mdash; a Premium WordPress plugin."
+msgstr ""
+
+#: views/about/about.php:16
+msgid "We help you and your clients sign legally binding documents. Easily."
+msgstr ""
+
+#: views/about/about.php:23
+msgid "Version"
+msgstr ""
+
+#: views/about/about.php:35 views/partials/_tab-nav.php:79
+msgid "Settings"
+msgstr ""
+
+#: views/about/about.php:37
+msgid "Docs"
+msgstr ""
+
+#: views/about/about.php:58
+msgid "What&#8217;s New"
+msgstr ""
+
+#: views/about/about.php:59 views/partials/_tab-nav.php:89
+msgid "Premium Support"
+msgstr ""
+
+#: views/about/about.php:60 views/partials/_tab-nav.php:95
+msgid "Add-Ons"
+msgstr ""
+
+#: views/about/about.php:66
+msgid "Introducing electronic signatures for WordPress"
+msgstr ""
+
+#: views/about/about.php:74
+msgid "Legally Binding Plugin"
+msgstr ""
+
+#: views/about/about.php:75
+msgid ""
+"The Uniform Electronic Transactions Act (UETA) and the passage of Electronic "
+"Signatures in Global and National Commerce Act (ESIGN) are strictly enforced using an "
+"audit trail, ip address collection, activity timestamp, terms of service agreement and "
+"more."
+msgstr ""
+
+#: views/about/about.php:79
+msgid "SSL and HTTPS"
+msgstr ""
+
+#: views/about/about.php:80
+msgid ""
+"WP E-Signature comes SSL (Secure Sockets Layer) and HTTPS ready.\n"
+"The Force SSL/HTTPS setting in WP E-Signature will ensure document-signing pages are "
+"only shown over a secure and encrypted HTTPS connection when the option is enabled (a "
+"third party ssl certificate must be previously installed)."
+msgstr ""
+
+#: views/about/about.php:92
+msgid "Secure and encrypted."
+msgstr ""
+
+#: views/about/about.php:93
+msgid ""
+"Security is our top priority. All of your signed documents and signatures are kept "
+"hidden and encrypted on your server at all times, using a GUID encryption sequence."
+msgstr ""
+
+#: views/about/about.php:96
+msgid "Audit report."
+msgstr ""
+
+#: views/about/about.php:97
+msgid ""
+"Documents move turbo speed from signer to signer. We include a detailed audit report "
+"with viewer details, ip addresses, document analytics, document id# and signer history."
+msgstr ""
+
+#: views/about/about.php:100
+msgid "No monthly fees."
+msgstr ""
+
+#: views/about/about.php:101
+msgid ""
+"WP E-Signature is the easiest and most affordable way to sign documents. You have full "
+"control over your data - it never leaves your server. Built for WordPress."
+msgstr ""
+
+#: views/about/about.php:106
+msgid "Legally binding."
+msgstr ""
+
+#: views/about/about.php:107
+msgid ""
+"WP E-Signature is recognized in court. We are (UETA) and (ESIGN) compliant and adhere "
+"to some of the strictest document signing policy's in the US and European unions."
+msgstr ""
+
+#: views/about/about.php:110
+msgid ""
+"<span class=\"esign-icon-integrated\"></span><span class=\"feature-list esign-about-"
+"features-a\">Automate signing documents.</span>Tired of having to manually send out "
+"your NDA contract, Terms of Service, Patient in take form, Insurance Documents etc. "
+"Now you can automate the process."
+msgstr ""
+
+#: views/about/about.php:113
+msgid ""
+"<span class=\"esign-icon-wallet\"></span><span class=\"feature-list esign-about-"
+"features-a\">Tablet &amp; Cell Phone Friendly.</span>Upload documents via WordPress "
+"dashboard and collect real client signatures through your website. Users sign "
+"documents using their mouse, trackpad, tablet, or phone."
+msgstr ""
+
+#: views/about/about.php:125
+msgid "No Monthly Fees (we're serious)"
+msgstr ""
+
+#: views/about/about.php:127
+msgid ""
+"Our goal with WP E-Signature all along has been to create a FREE document signing "
+"alternative to the monthly service fees currently associated with the document signing "
+"industry. We make it ridiculously easy to sign documents from your very own WordPress "
+"website, send document signer invites, and save a ton of money by canceling your "
+"current monthly e-signature service (no monthly fees with us). "
+msgstr ""
+
+#: views/about/about.php:130
+msgid ""
+"You have full control over your document(s).</h4>\n"
+"\t\t\t<p>Each signature, document, and data related to your document is encrypted and "
+"stored in your very own website database.  Because documents are saved on your website "
+"server (and not a third party server), you can save lots of money by using WP E-"
+"Signature."
+msgstr ""
+
+#: views/about/about.php:143
+msgid "Customize E-Signature with ADD-ONS!"
+msgstr ""
+
+#: views/about/about.php:144
+msgid ""
+"You can customize your Document Signing workflow to work with many of our E-Signature "
+"add-on extensions."
+msgstr ""
+
+#: views/about/about.php:151
+msgid "Let's Start Signing Documents!"
+msgstr ""
+
+#: views/about/about.php:160
+msgid "Go to Dashboard &rarr; Home"
+msgstr ""
+
+#: views/about/progress-bar.php:148
+msgid "Updating"
+msgstr ""
+
+#: views/about/progress-bar.php:148
+#, php-format
+msgid "WP E-signature %s"
+msgstr ""
+
+#: views/about/progress-bar.php:148
+msgid "Add-ons..."
+msgstr ""
+
+#: views/about/system.php:20
+msgid "Please include this information when requesting support:"
+msgstr ""
+
+#: views/about/system.php:23
+msgid "Copy To Clipboard"
+msgstr ""
+
+#: views/about/system.php:24
+msgid "Download System Status"
+msgstr ""
+
+#: views/about/systeminfo.php:24
+msgid "System Status"
+msgstr ""
+
+#: views/about/systeminfo.php:24
+msgid "Logs"
+msgstr ""
+
+#: views/about/update-core.php:12 views/about/update.php:12
+msgid "Important: Security & Critical Updates Available"
+msgstr ""
+
+#: views/about/update-core.php:26 views/about/update.php:26
+msgid ""
+"we have great news! We recently added some new features along with some \n"
+"\t\t   critical security updates for <a href=\"https://www.approveme.me/wp-digital-e-"
+"signature?updates\" target=\"_blank\">WP E-Signature</a>. How would you like to handle "
+"these updates?"
+msgstr ""
+
+#: views/about/update-core.php:50
+msgid "Remind Me Later"
+msgstr ""
+
+#: views/about/update-core.php:51 views/addons/addons.php:184
+msgid "Update Now"
+msgstr ""
+
+#: views/about/update-failed.php:12
+msgid "Important: Your update has been failed"
+msgstr ""
+
+#: views/about/update-failed.php:26
+msgid ""
+"I'm really embarrassed but there appears to have been a slight issue installing your "
+"add-ons from the ApproveMe server.  We'll remind you again in 24 hours but if the "
+"problem persists please email email support by clicking the link below."
+msgstr ""
+
+#: views/about/update-failed.php:32
+msgid "EMAIL SUPPORT NOW"
+msgstr ""
+
+#: views/about/update.php:34
+msgid "Next time update my add-on's automatically, I love automation"
+msgstr ""
+
+#: views/about/update.php:35
+msgid "Remind me everytime an update is available, I'd rather click a button"
+msgstr ""
+
+#: views/about/update.php:69
+msgid "I'M TOO BUSY TODAY"
+msgstr ""
+
+#: views/about/update.php:70
+msgid "INSTALL MY UPDATES NOW"
+msgstr ""
+
+#: views/addons/addons.php:22
+msgid ""
+"Hey there, congrats!  It looks like your recent E-Signature add-on update has been "
+"successful."
+msgstr ""
+
+#: views/addons/addons.php:32
+msgid "You do not have sufficient permission to install/activate and deactivate plugins."
+msgstr ""
+
+#: views/addons/addons.php:38
+msgid "Premium Add-on Extensions"
+msgstr ""
+
+#: views/addons/addons.php:40
+msgid ""
+"Add-ons are customizable features that you can add or remove depending on your "
+"specific needs. Signing documents should only be as automated/customizable as you need "
+"it to be. Visit the Get More tab to see what else ApproveMe can do for you."
+msgstr ""
+
+#: views/addons/addons.php:88
+msgid ""
+" <h3>Save Time...Install everything with one click</h3>\n"
+"\t\t\t\t\t                    <p style=\"display:block;\">Since you have access to the "
+"Buisness Pack you can save time by installing \n"
+"                                        all add-ons at once . \n"
+"                                        Please Note: The installation process can take "
+"few minutes to complete.</p>"
+msgstr ""
+
+#: views/addons/addons.php:92
+msgid "Install all Add-ons Now"
+msgstr ""
+
+#: views/addons/addons.php:129
+#, php-format
+msgid ""
+"<h3>Get the E-Signature Buisness Pack<span><a href=\"#\">Learn More</a></span></h3>\n"
+"\n"
+"\t\t\t\t\t        <p>The Business Pack gets you access to WP E-Signature add-ons that "
+"unlock so much more functionality and features that WP E-Signature can do... like "
+"Dropbox Sync, Signing Reminders, Save as PDF, Stand Alone Documents, URL Redirect "
+"After Signing, Custom Fields and more. With the Business Pack, you get access to all "
+"our ApproveMe built WP E-Signature Add-ons plus any more we build in the next year "
+"(which will be a ton).</p>\n"
+"\t\t\t\t\t        <a class=\"esig-btn-pro\" href=\"http://www.approveme.me/e-signature-"
+"upgrade-license/\" target=\"_blank\">Get all our add-ons for $%s </php></php></a><a "
+"href=\"#\" class=\"esig-dismiss\">No thanks</a>"
+msgstr ""
+
+#: views/addons/addons.php:152 views/addons/addons.php:198
+msgid "Upgrade Now"
+msgstr ""
+
+#: views/addons/addons.php:163 views/addons/addons.php:166 views/addons/addons.php:276
+#: views/addons/addons.php:279
+msgid "Documentation"
+msgstr ""
+
+#: views/addons/addons.php:177 views/addons/addons.php:308
+msgid "Enabled"
+msgstr ""
+
+#: views/addons/addons.php:179 views/addons/addons.php:366
+msgid "Disabled"
+msgstr ""
+
+#: views/addons/addons.php:183
+msgid "Update Available"
+msgstr ""
+
+#: views/addons/addons.php:194 views/addons/addons.php:466
+msgid "Install Now"
+msgstr ""
+
+#: views/addons/addons.php:217 views/addons/addons.php:300 views/addons/addons.php:359
+#: views/addons/addons.php:486
+msgid "by"
+msgstr ""
+
+#: views/addons/addons.php:217 views/addons/addons.php:300 views/addons/addons.php:359
+#: views/addons/addons.php:486
+msgid "Approveme"
+msgstr ""
+
+#: views/addons/addons.php:242
+msgid "You have already installed all addons."
+msgstr ""
+
+#: views/addons/addons.php:324
+msgid "No add-ons are currently enabled"
+msgstr ""
+
+#: views/addons/addons.php:325
+msgid "Go enable Add-Ons"
+msgstr ""
+
+#: views/addons/addons.php:384
+msgid "No add-ons are currently disabled"
+msgstr ""
+
+#: views/addons/addons.php:430
+#, php-format
+msgid ""
+"<h3>Get the E-Signature Buisness Pack</h3>\n"
+"\t\t\t\t\t        <p style=\"display:block;\">The Business Pack gets you access to WP "
+"E-Signature add-ons that unlock so much more functionality and features that WP E-"
+"Signature can do... like Dropbox Sync, Signing Reminders, Save as PDF, Stand Alone "
+"Documents, URL Redirect After Signing, Custom Fields and more. With the Business Pack, "
+"you get access to all our ApproveMe built WP E-Signature Add-ons plus any more we "
+"build in the next year (which will be a ton).</p>\n"
+"\t\t\t\t\t        <a class=\"esig-btn-pro\" href=\"http://www.approveme.me/e-signature-"
+"upgrade-license/\" target=\"_blank\">Get all our add-ons for $%s</a> "
+msgstr ""
+
+#: views/addons/addons.php:442
+msgid ""
+"<h3>Are there any features you'd like to see?</h3>\n"
+"\t\t\t\t\t        <p style=\"display:block;\">WP E-Signature is a powerful (and highly "
+"customizable) document signing application powered by WordPress. We LOVE customer "
+"feedback and would love to hear from you. Let us know how we can improve your "
+"experience.</p>\n"
+"\t\t\t\t\t        <a class=\"esig-btn-pro\" href=\"http://approveme.uservoice.com/"
+"admin/forums/243780-general\" target=\"_blank\">Submit a feature request</a> "
+msgstr ""
+
+#: views/addons/addons.php:470
+msgid "Buy Now"
+msgstr ""
+
+#: views/addons/addons.php:506
+msgid "Awesome! Looks like you have everything installed. Well done."
+msgstr ""
+
+#: views/addons/addons.php:545
+msgid ""
+"it looks like you are about to permanently delete this add-on.  <br>Some industries "
+"require companies to keep legal records for up to 7 years.  By deleting this add-on "
+"you could affect various aspects of previously signed (and future) documents."
+msgstr ""
+
+#: views/addons/addons.php:550
+msgid "I understand that by deleting this add-on..."
+msgstr ""
+
+#: views/addons/addons.php:551
+msgid "will be removed from WP E-Signature"
+msgstr ""
+
+#: views/addons/addons.php:552
+msgid "All documents that used this feature could be affected permanently"
+msgstr ""
+
+#: views/addons/addons.php:553
+msgid "All memory and history related to this add-on will be erased"
+msgstr ""
+
+#: views/documents/about.php:8
+msgid "Welcome to esignature plugin"
+msgstr ""
+
+#: views/documents/about.php:10
+msgid "this is about e-signature plugin about us page"
+msgstr ""
+
+#: views/documents/add-form.php:24
+msgid "we're preparing your document... sip some coffee (or tea) while you wait."
+msgstr ""
+
+#: views/documents/add-form.php:32 views/documents/edit-form.php:28
+msgid "1. Enter your documents name"
+msgstr ""
+
+#: views/documents/add-form.php:61 views/documents/edit-form.php:47
+msgid "2. What needs to be signed?"
+msgstr ""
+
+#: views/documents/add-form.php:61 views/documents/edit-form.php:47
+msgid "(copy and paste the content below)"
+msgstr ""
+
+#: views/documents/add-form.php:78 views/documents/edit-form.php:59
+msgid "Each signer is sent a signer specific URL and email invite to sign your document."
+msgstr ""
+
+#: views/documents/add-form.php:82 views/documents/edit-form.php:64
+msgid "3. Who needs to sign this document?"
+msgstr ""
+
+#: views/documents/add-form.php:108 views/documents/edit-form.php:87
+msgid "Document Options"
+msgstr ""
+
+#: views/documents/add-form.php:116 views/documents/edit-form.php:94
+msgid "Receive an email notification everytime a signature is added to this document."
+msgstr ""
+
+#: views/documents/add-form.php:120 views/documents/edit-form.php:97
+msgid "Notify me when a signature is added"
+msgstr ""
+
+#: views/documents/add-form.php:128 views/documents/edit-form.php:105
+msgid ""
+"Selecting this option will automatically attach your signature from the WP E-Signature "
+"admin panel to this document."
+msgstr ""
+
+#: views/documents/add-form.php:139
+msgid "(+) Advanced document settings"
+msgstr ""
+
+#: views/documents/add-form.php:140
+msgid "(-) Hide Advanced document settings"
+msgstr ""
+
+#: views/documents/add-form.php:144 views/documents/edit-form.php:121
+msgid "Print Document button advanced options:"
+msgstr ""
+
+#: views/documents/add-form.php:147 views/documents/edit-form.php:124
+#: views/generals/misc.php:50
+msgid "Only display 'Print Document' button when document is signed by everyone"
+msgstr ""
+
+#: views/documents/add-form.php:148 views/documents/edit-form.php:125
+#: views/generals/misc.php:52
+msgid "Hide 'Print Document' button always, no matter what."
+msgstr ""
+
+#: views/documents/add-form.php:149 views/documents/edit-form.php:126
+#: views/generals/misc.php:54
+msgid "Display 'Print Document' button always, no matter what."
+msgstr ""
+
+#: views/documents/add-form.php:150 views/documents/edit-form.php:127
+#: views/generals/misc.php:56
+msgid "Only Display 'Print Document' while document waiting for signature."
+msgstr ""
+
+#: views/documents/add-form.php:183 views/documents/edit-form.php:152
+msgid " Preview Document"
+msgstr ""
+
+#: views/documents/audit-trail.php:24
+msgid "Signature Certificate"
+msgstr ""
+
+#: views/documents/audit-trail.php:25
+msgid "Document name:"
+msgstr ""
+
+#: views/documents/audit-trail.php:27
+msgid "Unique Document ID:"
+msgstr ""
+
+#: views/documents/audit-trail.php:32
+msgid "Build.\tTrack.\tSign Contracts."
+msgstr ""
+
+#: views/documents/audit-trail.php:52
+msgid "Security Level: "
+msgstr ""
+
+#: views/documents/audit-trail.php:67
+msgid "Awaiting signature"
+msgstr ""
+
+#: views/documents/audit-trail.php:74
+msgid "Multi-Factor"
+msgstr ""
+
+#: views/documents/audit-trail.php:75
+msgid "Digital Fingerprint Checksum"
+msgstr ""
+
+#: views/documents/audit-trail.php:92
+msgid "Timestamp"
+msgstr ""
+
+#: views/documents/audit-trail.php:93
+msgid "Audit"
+msgstr ""
+
+#: views/documents/audit-trail.php:111 views/documents/audit-trail.php:140
+msgid ""
+"This audit trail report provides a detailed record of the online activity and events "
+"recorded for this contract."
+msgstr ""
+
+#: views/documents/audit-trail.php:122 views/documents/audit-trail.php:155
+msgid "Audit Trail Serial#"
+msgstr ""
+
+#: views/documents/audit-trail.php:143
+msgid "Page {PAGENO} of {nb} "
+msgstr ""
+
+#: views/documents/edit-form.php:23
+msgid "we're preparing your document... sip some coffee (or tea) while you wait"
+msgstr ""
+
+#: views/documents/edit-form.php:116
+msgid "(+) Advanced eSign Settings"
+msgstr ""
+
+#: views/documents/edit-form.php:117
+msgid "(-) Hide Advanced eSign Settings"
+msgstr ""
+
+#: views/documents/error-email.php:14
+msgid ""
+"Hey there!  It looks like there was an error sending an email invite. <br>Please <a "
+"href=\"admin.php?page=esign-email-general\" target=\"_blank\">check your mail "
+"settings</a> and try again."
+msgstr ""
+
+#: views/documents/footer-add-edit.php:14 views/documents/view.php:64
+msgid "Who needs to sign this document?"
+msgstr ""
+
+#: views/documents/login-form.php:15 views/documents/login-form.php:177
+#, php-format
+msgid "Login to %s"
+msgstr ""
+
+#: views/documents/login-form.php:33 views/documents/login-form.php:145
+msgid "Protected Document"
+msgstr ""
+
+#: views/documents/login-form.php:34
+#, php-format
+msgid ""
+"Document ID #%s is a protected document.Please create a unique & secure passwords "
+"which will be required to access this document."
+msgstr ""
+
+#: views/documents/login-form.php:47
+msgid "Email Address:"
+msgstr ""
+
+#: views/documents/login-form.php:56
+msgid "<span id=\"access-error-text\">Enter your password:</span>"
+msgstr ""
+
+#: views/documents/login-form.php:58
+msgid "<span id=\"access-error-text\">Enter your Access Code:</span>"
+msgstr ""
+
+#: views/documents/login-form.php:78
+msgid "I forgot my password"
+msgstr ""
+
+#: views/documents/login-form.php:86 views/documents/login-form.php:110
+msgid "Login"
+msgstr ""
+
+#: views/documents/login-form.php:101
+msgid "Create a password:"
+msgstr ""
+
+#: views/documents/login-form.php:103
+msgid "<span id=\"access-error-textt\">Confirm your password:</span>"
+msgstr ""
+
+#: views/documents/login-form.php:146
+#, php-format
+msgid ""
+"Document ID #%s is a protected document.To reset your password enter the email address "
+"that %s to used to send invitation."
+msgstr ""
+
+#: views/documents/login-form.php:153
+msgid "<span id=\"access-error-texttt\">Email Address:</span>"
+msgstr ""
+
+#: views/documents/login-form.php:159
+msgid "&#x2190 go back"
+msgstr ""
+
+#: views/documents/login-form.php:160
+msgid "Resett My Password"
+msgstr ""
+
+#: views/documents/login-form.php:161
+msgid "Reset My Password"
+msgstr ""
+
+#: views/documents/login-form.php:188
+#, php-format
+msgid ""
+"<p>If we found the document associated with the email address, you will find an email "
+"address from us in your inbox shortly.</p>\n"
+"                                                                                   <p> "
+"Unsure which email you used to create your Slack account? please contact %s .</p>"
+msgstr ""
+
+#: views/documents/loop-footer.php:33 views/documents/loop-footer.php:35
+msgid "We'd Love to hear Your Feedback!"
+msgstr ""
+
+#: views/documents/loop-header.php:21
+msgid "Add New Document"
+msgstr ""
+
+#: views/documents/loop-header.php:66 views/documents/loop-header.php:77
+msgid "Title"
+msgstr ""
+
+#: views/documents/loop-header.php:67 views/documents/loop-header.php:78
+msgid "Signer(s)"
+msgstr ""
+
+#: views/documents/loop-header.php:68 views/documents/loop-header.php:79
+msgid "Latest Activity"
+msgstr ""
+
+#: views/documents/loop-header.php:69 views/documents/loop-header.php:80
+msgid "Date"
+msgstr ""
+
+#: views/documents/preview.php:8
+msgid "Back to my documents"
+msgstr ""
+
+#: views/documents/sign-document.php:56
+msgid "Your legal name"
+msgstr ""
+
+#: views/documents/sign-document.php:85 views/settings/index.php:126
+msgid "Please Confirm full name and signature."
+msgstr ""
+
+#: views/documents/sign-document.php:94 views/settings/index.php:144
+msgid "Change fonts"
+msgstr ""
+
+#: views/documents/sign-document.php:99 views/documents/sign-document.php:289
+#: views/settings/index.php:154
+msgid "Draw Signature"
+msgstr ""
+
+#: views/documents/sign-document.php:101 views/settings/index.php:158
+msgid "Type In Signature"
+msgstr ""
+
+#: views/documents/sign-document.php:110 views/settings/index.php:176
+msgid "Draw your signature with <strong>your mouse, tablet or smartphone</strong>"
+msgstr ""
+
+#: views/documents/sign-document.php:111 views/settings/index.php:178
+msgid "Clear"
+msgstr ""
+
+#: views/documents/sign-document.php:117
+msgid ""
+"I agree that I am <span id=\"esig-iam-draw\"></span> and I agree this is a legal "
+"representation of my signature for all purposes \n"
+"\t\t\t\t\t\tjust the same as a pen-and-paper signature"
+msgstr ""
+
+#: views/documents/sign-document.php:122 views/settings/index.php:200
+msgid "Insert Signature"
+msgstr ""
+
+#: views/documents/sign-document.php:156
+msgid "I agree that I am <span id=\"esig-iam-type\"></span> and"
+msgstr ""
+
+#: views/documents/sign-document.php:156
+msgid " I understand this is a legal representation of my signature"
+msgstr ""
+
+#: views/documents/sign-document.php:162 views/documents/sign-document.php:308
+#: views/settings/index.php:278
+msgid "Adopt & Sign"
+msgstr ""
+
+#: views/documents/sign-document.php:221
+msgid "Agree &amp; Sign Below"
+msgstr ""
+
+#: views/documents/sign-document.php:224 views/documents/sign-document.php:241
+msgid ""
+"Click on \"Agree &amp; Sign\" to legally sign this document and agree to the WP E-"
+"Signature"
+msgstr ""
+
+#: views/documents/sign-document.php:224 views/documents/sign-document.php:241
+#: views/documents/sign-document.php:258 views/documents/sign-document.php:315
+msgid "Terms of Use"
+msgstr ""
+
+#: views/documents/sign-document.php:225
+msgid "If you have questions about the contents of this document, you can email the"
+msgstr ""
+
+#: views/documents/sign-document.php:225
+msgid "document owner."
+msgstr ""
+
+#: views/documents/sign-document.php:239 views/invitations/invite.php:68
+#: views/notifications/admin/document_signed.php:71
+#: views/notifications/document_signed.php:70
+msgid "Document Name:"
+msgstr ""
+
+#: views/documents/sign-document.php:261
+msgid "Loading ........"
+msgstr ""
+
+#: views/documents/sign-document.php:284
+msgid "Signature Type"
+msgstr ""
+
+#: views/documents/sign-document.php:294
+msgid "Type Signature"
+msgstr ""
+
+#: views/documents/sign-document.php:300
+msgid "Next Step"
+msgstr ""
+
+#: views/documents/sign-document.php:307
+msgid "Go Back"
+msgstr ""
+
+#: views/documents/sign-document.php:314
+msgid "By clicking Adopt & Sign, I agree"
+msgstr ""
+
+#: views/documents/sign-document.php:315
+msgid ""
+"that I am <span id=\"esig-auto-fill-name\">  </span> and this signature will be the "
+"electronic representation of my signature for all purposes when I (or my agent) use "
+"them on documents, including legally binding contracts - just the same as a pen-and-"
+"paper signature."
+msgstr ""
+
+#: views/documents/sign-document.php:352
+msgid "Draw Your Signature"
+msgstr ""
+
+#: views/documents/sign-document.php:353
+msgid "With a tablet, mouse or smartphone"
+msgstr ""
+
+#: views/documents/sign-document.php:366
+msgid "Close"
+msgstr ""
+
+#: views/documents/sign-preview.php:26 views/invitations/invite.php:70
+#: views/notifications/admin/document_signed.php:73
+#: views/notifications/document_signed.php:72
+msgid "Document ID:"
+msgstr ""
+
+#: views/documents/sign-preview.php:28
+msgid "Signed On :"
+msgstr ""
+
+#: views/documents/view.php:19
+msgid "What kind of document are you creating?"
+msgstr ""
+
+#: views/documents/view.php:31
+msgid "+ Basic"
+msgstr ""
+
+#: views/documents/view.php:36
+msgid "Basic Benefits"
+msgstr ""
+
+#: views/documents/view.php:37
+msgid "1 or more signers"
+msgstr ""
+
+#: views/documents/view.php:38
+msgid "Customizable for each recipient"
+msgstr ""
+
+#: views/documents/view.php:39
+msgid "Send signer invites email with WordPress"
+msgstr ""
+
+#: views/documents/view.php:40
+msgid "Perfect for sales contracts, estimates, etc."
+msgstr ""
+
+#: views/documents/view.php:53
+msgid "Quit paying monthly fees and start signing with WP E-Signature -"
+msgstr ""
+
+#: views/documents/view.php:53
+msgid "Browse add-ons"
+msgstr ""
+
+#: views/errors/emails.php:28 views/generals/email.php:180
+msgid "Email Connection troubles..."
+msgstr ""
+
+#: views/errors/emails.php:28 views/generals/email.php:180
+msgid ""
+"I apologize, but we're having trouble connecting to your <em>Email Server</em> (which "
+"is required to use this Advanced Email Sending feature)."
+msgstr ""
+
+#: views/errors/emails.php:30 views/generals/email.php:182
+msgid ""
+"For your site to magically send important signer invite emails from your email "
+"address, you will definitely need fix this issue."
+msgstr ""
+
+#: views/errors/emails.php:32 views/generals/email.php:184
+msgid "You can do 1 of 2 things..."
+msgstr ""
+
+#: views/errors/emails.php:34 views/generals/email.php:186
+msgid "1. Double check that your email and password are entered correctly"
+msgstr ""
+
+#: views/errors/emails.php:35 views/generals/email.php:187
+msgid "2. Or you can check out this helpful "
+msgstr ""
+
+#: views/errors/emails.php:35 views/generals/email.php:187
+msgid "SMTP Troubleshooting Article"
+msgstr ""
+
+#: views/generals/about.php:14
+msgid ""
+"After 3+ years and thousands of hours of development we created a way to sign "
+"documents with your WordPress website. But this is just a start!"
+msgstr ""
+
+#: views/generals/about.php:14
+msgid "Could you give us feedback so that we can improve it?"
+msgstr ""
+
+#: views/generals/about.php:27
+msgid "1. Please indicate if you agree or disagree with the following statements:"
+msgstr ""
+
+#: views/generals/about.php:55
+msgid "Strongly<br>Agree"
+msgstr ""
+
+#: views/generals/about.php:56
+msgid "Agree"
+msgstr ""
+
+#: views/generals/about.php:57
+msgid "Neutral"
+msgstr ""
+
+#: views/generals/about.php:58
+msgid "Disagree"
+msgstr ""
+
+#: views/generals/about.php:59
+msgid "Strongly<br>Disagree"
+msgstr ""
+
+#: views/generals/about.php:62
+msgid "WP E-Signature is easy to use"
+msgstr ""
+
+#: views/generals/about.php:70
+msgid "WP E-Signature saves me time"
+msgstr ""
+
+#: views/generals/about.php:78
+msgid "WP E-Signature is better than others on the market"
+msgstr ""
+
+#: views/generals/about.php:88
+msgid ""
+"2. How likely are you to recomened WP E-Signature to a friend, client, or co-worker?"
+msgstr ""
+
+#: views/generals/about.php:92
+msgid "Not recommend"
+msgstr ""
+
+#: views/generals/about.php:96
+msgid "I will recommend<"
+msgstr ""
+
+#: views/generals/about.php:110
+msgid "3. How satisfied are you with WP E-Signature?"
+msgstr ""
+
+#: views/generals/about.php:115
+msgid "Not Satisfied"
+msgstr ""
+
+#: views/generals/about.php:119
+msgid "Completely satisfied"
+msgstr ""
+
+#: views/generals/about.php:132
+msgid "4. What would make you more satisfied with WP E-Signature?"
+msgstr ""
+
+#: views/generals/about.php:150
+msgid "Send Feedback"
+msgstr ""
+
+#: views/generals/about.php:152
+msgid "For more information visit"
+msgstr ""
+
+#: views/generals/about.php:157
+msgid "Should be Empty:"
+msgstr ""
+
+#: views/generals/email.php:21 views/generals/mails.php:22 views/generals/misc.php:23
+msgid "General Option"
+msgstr ""
+
+#: views/generals/email.php:23 views/generals/mails.php:24
+msgid "E-mail Sending Options"
+msgstr ""
+
+#: views/generals/email.php:44
+msgid ""
+"This is an OPTIONAL settings page (and it is not required for your plugin to work).  "
+"The E-Signature Advanced Email settings will only affect the emails that are sent from "
+"WP E-Signature and will NOT affect your overall WordPress site email settings.  "
+"Sending from an SMTP is a secondary option for sending signer invite emails if you are "
+"currently experiencing issues sending emails.  <a href=\"https://wordpress.org/plugins/"
+"sendgrid-email-delivery-simplified/\" target=\"_blank\">SendGrid</a> is another (free) "
+"third-party option (which we recommend exploring). "
+msgstr ""
+
+#: views/generals/email.php:44
+msgid "Here's a Helpful Troubleshooting Article"
+msgstr ""
+
+#: views/generals/email.php:49
+msgid "E-signature Advanced E-mail Settings"
+msgstr ""
+
+#: views/generals/email.php:62
+msgid "Advanced E-mail Settings"
+msgstr ""
+
+#: views/generals/email.php:65
+msgid "This checkbox will be used to enable E-signature mail settings"
+msgstr ""
+
+#: views/generals/email.php:71
+msgid "From Email Address"
+msgstr ""
+
+#: views/generals/email.php:74
+msgid "This email address will be used in the 'From' field."
+msgstr ""
+
+#: views/generals/email.php:78
+msgid "From Name"
+msgstr ""
+
+#: views/generals/email.php:81
+msgid "This text will be used in the 'FROM' field for your eSignature emails"
+msgstr ""
+
+#: views/generals/email.php:85
+msgid "SMTP Host"
+msgstr ""
+
+#: views/generals/email.php:88
+msgid "Your mail server"
+msgstr ""
+
+#: views/generals/email.php:92
+msgid "Type of Encription"
+msgstr ""
+
+#: views/generals/email.php:94
+msgid "None"
+msgstr ""
+
+#: views/generals/email.php:95
+msgid "SSL"
+msgstr ""
+
+#: views/generals/email.php:96
+msgid "TLS"
+msgstr ""
+
+#: views/generals/email.php:97
+msgid "For most servers SSL is the recommended option"
+msgstr ""
+
+#: views/generals/email.php:101
+msgid "SMTP Port"
+msgstr ""
+
+#: views/generals/email.php:104
+msgid "The port to your mail server"
+msgstr ""
+
+#: views/generals/email.php:108
+msgid "SMTP Authentication"
+msgstr ""
+
+#: views/generals/email.php:111
+msgid "No"
+msgstr ""
+
+#: views/generals/email.php:112
+msgid "Yes"
+msgstr ""
+
+#: views/generals/email.php:113
+msgid ""
+"If you select No, the default WordPress php mail function will work and your smtp "
+"username & password is not required"
+msgstr ""
+
+#: views/generals/email.php:117
+msgid "SMTP username"
+msgstr ""
+
+#: views/generals/email.php:120
+msgid "The username to login to your mail server"
+msgstr ""
+
+#: views/generals/email.php:124
+msgid "SMTP Password"
+msgstr ""
+
+#: views/generals/email.php:127
+msgid "The password to login to your mail server"
+msgstr ""
+
+#: views/generals/email.php:132
+msgid "Save Changes"
+msgstr ""
+
+#: views/generals/email.php:178
+msgid "High five... you nailed it!"
+msgstr ""
+
+#: views/generals/email.php:178
+msgid "Congratulations, your <em>Advanced Emails Settings"
+msgstr ""
+
+#: views/generals/email.php:178
+msgid "has been succesfully setup for "
+msgstr ""
+
+#: views/generals/email.php:178
+msgid ""
+"That means it's time to party, because anyone you send a document/contract to will now "
+"receive emails from: "
+msgstr ""
+
+#: views/generals/email.php:197
+msgid "Important: Test your SMTP settings below:"
+msgstr ""
+
+#: views/generals/email.php:201
+msgid "To"
+msgstr ""
+
+#: views/generals/email.php:204
+msgid "Enter the email address to recipient"
+msgstr ""
+
+#: views/generals/email.php:214
+msgid "Message"
+msgstr ""
+
+#: views/generals/email.php:217
+msgid "Write your message"
+msgstr ""
+
+#: views/generals/email.php:222
+msgid "Send Test Email"
+msgstr ""
+
+#: views/generals/email.php:241
+msgid ""
+"\n"
+"                    <h3> Gmail settings </h3>\n"
+"                    SMTP Host: smtp.gmail.com<br>\n"
+"                    Type of Encryption: SSL<br>\n"
+"                    SMTP Port: 465<br>\n"
+"                    SMTP Authentication: Yes"
+msgstr ""
+
+#: views/generals/email.php:252
+msgid ""
+"\n"
+"                    <h3> Yahoo settings </h3>\n"
+"                    SMTP Host: smtp.mail.yahoo.com<br>\n"
+"                    Type of Encryption: SSL<br>\n"
+"                    SMTP Port: 465<br>\n"
+"                    SMTP Authentication: Yes"
+msgstr ""
+
+#: views/generals/email.php:261
+msgid ""
+"\n"
+"                    <h3> Office 365 settings </h3>\n"
+"                    SMTP Host: smtp.office365.com<br>\n"
+"                    Type of Encryption: TLS<br>\n"
+"                    SMTP Port: 587<br>\n"
+"                    SMTP Authentication: Yes"
+msgstr ""
+
+#: views/generals/email.php:270
+msgid ""
+"\n"
+"                    <h3> Hotmail settings </h3>\n"
+"                    SMTP Host: smtp.live.com<br>\n"
+"                    Type of Encryption: SSL<br>\n"
+"                    SMTP Port: 465<br>\n"
+"                    SMTP Authentication: Yes"
+msgstr ""
+
+#: views/generals/email.php:278
+msgid ""
+"\n"
+"                    <h3> Bluehost settings </h3>\n"
+"                    SMTP Host: <span style=\"color:blue;\">mail.yourdomain.com</"
+"span><br>\n"
+"                    Type of Encryption: SSL<br>\n"
+"                    SMTP Port: 465<br>\n"
+"                    SMTP Authentication: Yes"
+msgstr ""
+
+#: views/generals/email.php:287
+msgid "GoDaddy settings "
+msgstr ""
+
+#: views/generals/email.php:288
+msgid "Click here for instructions"
+msgstr ""
+
+#: views/generals/licenses.php:34
+msgid "you will need to activate your license to get started!"
+msgstr ""
+
+#: views/generals/licenses.php:45
+#, php-format
+msgid ""
+"<h3>Get the E-Signature Buisness Pack</h3>\n"
+"\t\t\t\t\t        <p style=\"display:block;\">The Business Pack gets you access to WP "
+"E-Signature add-ons that unlock so much more functionality and features that WP E-"
+"Signature can do... like Dropbox Sync, Signing Reminders, Save as PDF, Stand Alone "
+"Documents, URL Redirect After Signing, Custom Fields and more. With the Business Pack, "
+"you get access to all our ApproveMe built WP E-Signature Add-ons plus any more we "
+"build in the next year (which will be a ton).</p>\n"
+"\t\t\t\t\t        <a class=\"esig-btn-pro\" href=\"http://www.approveme.me/e-signature-"
+"upgrade-license/\" target=\"_blank\">Get all our add-ons for $%d</a> "
+msgstr ""
+
+#: views/generals/licenses.php:64
+msgid "1. Log into your account"
+msgstr ""
+
+#: views/generals/licenses.php:65
+msgid "Login to your account at"
+msgstr ""
+
+#: views/generals/licenses.php:65
+msgid "ApproveMe"
+msgstr ""
+
+#: views/generals/licenses.php:65
+msgid ". An email was sent with your username and password at the time of purchase."
+msgstr ""
+
+#: views/generals/licenses.php:74
+msgid "2. Click on Purchase History"
+msgstr ""
+
+#: views/generals/licenses.php:75
+msgid ""
+"Once you've logged in.  Click on \"My Downloads\" and then click \"Purchase History\"."
+msgstr ""
+
+#: views/generals/licenses.php:84
+msgid "3. Click the Key icon"
+msgstr ""
+
+#: views/generals/licenses.php:85
+msgid ""
+"Clicking on the magical \"Key Icon\" will reveal your top secret license key.  An "
+"<em>active</em> license key is required for updates and support."
+msgstr ""
+
+#: views/generals/misc.php:46
+msgid "default settings:"
+msgstr ""
+
+#: views/generals/misc.php:67
+msgid ""
+"Keep my <a href=\"admin.php?page=esign-addons\">E-Signature add-ons</a> up to date "
+"automatically, I don't want to think about it."
+msgstr ""
+
+#: views/generals/misc.php:73
+msgid "Check this box to enable auto save and preview document"
+msgstr ""
+
+#: views/generals/misc.php:79
+msgid ""
+"<strong style=\"color:red;\">Danger Zone</strong> - Check this box if you would like "
+"WP E-Signature to completely remove ALL of its data when the plugin is deleted."
+msgstr ""
+
+#: views/generals/misc.php:80
+msgid ""
+"If box is checked, when plugin is deleted all documents and signatures will be lost "
+"forever."
+msgstr ""
+
+#: views/generals/privacy-policy.php:12
+msgid "APPROVEME PRIVACY POLICY"
+msgstr ""
+
+#: views/generals/privacy-policy.php:14 views/generals/terms.php:14
+msgid "1. Introduction"
+msgstr ""
+
+#: views/generals/privacy-policy.php:15
+msgid ""
+"Thank you for visiting ApproveMe and, if applicable, using our WordPress Plugin WP E-"
+"Signature. Please read our Terms of Service and this Privacy Policy carefully, as by "
+"accessing our Site and/or installing our WordPress plugin, you are agreeing to be "
+"bound by both agreements."
+msgstr ""
+
+#: views/generals/privacy-policy.php:17 views/generals/terms.php:17
+msgid "2. Definitions"
+msgstr ""
+
+#: views/generals/privacy-policy.php:18
+msgid ""
+"Throughout this document, we may use certain words or phrases, and it is important "
+"that you understand the meaning of them. The following is a non-exhaustive list of "
+"definitions of words and phrases found in this document:"
+msgstr ""
+
+#: views/generals/privacy-policy.php:20
+msgid ""
+"&ldquo;ApproveMe&rdquo; refers to our company, known as &ldquo;RockStar(idea)&rdquo;; "
+"our Site; our Plugin; our Service; or a combination of all or some of the preceding "
+"definitions, depending on the context in which the word is used;"
+msgstr ""
+
+#: views/generals/privacy-policy.php:22
+msgid ""
+" &ldquo;Plugin&rdquo; refers to the plugin that we provide for WordPress sites, known "
+"as &ldquo;ApproveMe&rdquo;;"
+msgstr ""
+
+#: views/generals/privacy-policy.php:24
+msgid ""
+" &ldquo;Service&rdquo; refers to the services that we provide online, including our "
+"Plugin and our Site;"
+msgstr ""
+
+#: views/generals/privacy-policy.php:27
+msgid ""
+"&ldquo;Site&rdquo; refers to our website, <a href=\"http://www.approveme.me\">http://"
+"www.approveme.me</a>;"
+msgstr ""
+
+#: views/generals/privacy-policy.php:29
+msgid ""
+"&ldquo;User&rdquo; refers to anyone who uses our Service, including users of our "
+"Plugin and general visitors to our Site;"
+msgstr ""
+
+#: views/generals/privacy-policy.php:31
+msgid ""
+"&ldquo;You&rdquo; refers to you, the person who is governed by this Privacy Policy."
+msgstr ""
+
+#: views/generals/privacy-policy.php:33
+msgid "3. Information Collected"
+msgstr ""
+
+#: views/generals/privacy-policy.php:35
+msgid "Identifying Information"
+msgstr ""
+
+#: views/generals/privacy-policy.php:36
+msgid ""
+" We collect certain personal information from you when you sign up to our Service that "
+"can be used to identify you, such as your name, e-mail address, credit card "
+"information, and any other information that we deem relevant for the purpose of "
+"providing you with our Service or which you provide to us voluntarily. The information "
+"we collect from you, to the extent that it is private, is disclosed only in accordance "
+"with our Terms of Service and/or this Privacy Policy."
+msgstr ""
+
+#: views/generals/privacy-policy.php:38
+msgid "Non-Identifying Information"
+msgstr ""
+
+#: views/generals/privacy-policy.php:39
+msgid ""
+"Whenever you visit our Site, we may collect non-identifying information from you, such "
+"as your IP address, referring URL, browser, operating system, cookie information, and "
+"Internet Service Provider. Without a subpoena, voluntary compliance on the part of "
+"your Internet Service Provider, or additional records from a third party, this "
+"information alone cannot usually be used to identify you."
+msgstr ""
+
+#: views/generals/privacy-policy.php:41
+msgid " 4. Use of Your Information"
+msgstr ""
+
+#: views/generals/privacy-policy.php:42
+msgid "We may use your information to:"
+msgstr ""
+
+#: views/generals/privacy-policy.php:44
+msgid "Enhance or improve User experience, our Plugin, our Site, or our Service."
+msgstr ""
+
+#: views/generals/privacy-policy.php:47
+msgid "Process transactions."
+msgstr ""
+
+#: views/generals/privacy-policy.php:50
+msgid "Send e-mails about our Site or respond to inquiries."
+msgstr ""
+
+#: views/generals/privacy-policy.php:53
+msgid "Send e-mails and updates about ApproveMe, including our e-mail newsletter."
+msgstr ""
+
+#: views/generals/privacy-policy.php:56
+msgid ""
+"Perform any other function that we believe in good faith is necessary to protect the "
+"security or proper functioning of our Plugin, Site, or Service."
+msgstr ""
+
+#: views/generals/privacy-policy.php:59
+msgid "5. Accessing, Editing, and Removing Your Information"
+msgstr ""
+
+#: views/generals/privacy-policy.php:60
+msgid ""
+"Users may in some cases be able to review and edit the personal information they have "
+"provided to us by logging into your account on the Site and editing their account. "
+"Although most changes may occur immediately, information may still be stored in a web "
+"browser&rsquo;s cache. We take no responsibility for stored information in your cache, "
+"or in other devices that may store information, and disclaim all liability of such. If "
+"you wish to review or remove any personally identifiable information collected by us, "
+"please contact us at <a href=\"mailto:curious@approveme.me\">curious@approveme.me</a>. "
+"In addition, we may, from time to time, retain residual information about you in our "
+"backup and/or database for a commercially reasonable period of time."
+msgstr ""
+
+#: views/generals/privacy-policy.php:62
+msgid "6. Tracking"
+msgstr ""
+
+#: views/generals/privacy-policy.php:63
+msgid ""
+"Please note that each document signatory is given a unique signer ID which becomes a "
+"part of the URL they are using to sign a document. This is sent to the e-mail address "
+"that the administrator specifies when creating the document to be signed and acts as a "
+"password without forcing the signer to enter one. We currently do not participate in "
+"any do-not-track programs, for this reason by using our Service you agree that we may "
+"identify you as a unique user."
+msgstr ""
+
+#: views/generals/privacy-policy.php:65
+msgid "7. Third Party Websites"
+msgstr ""
+
+#: views/generals/privacy-policy.php:66
+msgid ""
+"ApproveMe may post links to third party websites on its Site. These third party "
+"websites are not screened for privacy or security issues by ApproveMe, and you release "
+"us from any liability for the conduct of these third party websites.<br />\n"
+"  Please be aware that this Privacy Policy, and any other policies in place, in "
+"addition to any amendments, does not create rights enforceable by third parties or "
+"require disclosure of any personal information relating to members of the Service or "
+"Site. ApproveMe bears no responsibility for the information collected or used by any "
+"advertiser or third party website. Please review the privacy policy and terms of "
+"service for each site you visit through third party links."
+msgstr ""
+
+#: views/generals/privacy-policy.php:69
+msgid "8. Third Party Access to Your Information"
+msgstr ""
+
+#: views/generals/privacy-policy.php:70
+msgid ""
+"Although you are entering into an Agreement with ApproveMe to disclose your "
+"information to us, we do use third party individuals and organizations to assist us, "
+"including contractors, web hosts, and others.<br />\n"
+"  Throughout the course of our provision of our Service to you, we may delegate our "
+"authority to collect, access, use, and disseminate your information. For example, our "
+"web host stores the information that you provide us, and we may hire outside "
+"contractors to perform maintenance or assist us in securing our website.<br />\n"
+"  It is therefore necessary that you grant the third parties we may use in the course "
+"of our business the same rights that you afford us under this Privacy Policy. For this "
+"reason, you hereby agree that for every authorization which you grant to us in this "
+"Privacy Policy, you also grant to any third party that we may hire, contract, or "
+"otherwise retain the services of for the purpose of operating, maintaining, repairing, "
+"or otherwise improving or preserving our website or its underlying files or systems. "
+"You agree not to hold us liable for the actions of any of these third parties, even if "
+"we would normally be held vicariously liable for their actions, and that you must take "
+"legal action against them directly should they commit any tort or other actionable "
+"wrong against you.<br />\n"
+"  Without limiting the generality of the foregoing, you authorize us to collect, "
+"store, share, and otherwise use your information in conjunction with Active Campaign."
+"<br />"
+msgstr ""
+
+#: views/generals/privacy-policy.php:75
+msgid "9. Release of Your Information for Legal Purposes"
+msgstr ""
+
+#: views/generals/privacy-policy.php:76
+msgid ""
+"At times it may become necessary or desirable to ApproveMe, for legal purposes, to "
+"release your information in response to a request from a government agency or a "
+"private litigant. You agree that we may disclose your information to a third party "
+"where we believe, in good faith, that it is desirable to do so for the purposes of a "
+"civil action, criminal investigation, or other legal matter. In the event that we "
+"receive a subpoena affecting your privacy, we may elect to notify you to give you an "
+"opportunity to file a motion to quash the subpoena, or we may attempt to quash it "
+"ourselves, but we are not obligated to do either. We may also proactively report you, "
+"and release your information to, third parties where we believe that it is prudent to "
+"do so for legal reasons, such as our belief that you have engaged in fraudulent "
+"activities. You release us from any damages that may arise from or relate to the "
+"release of your information to a request from law enforcement agencies or private "
+"litigants.<br />"
+msgstr ""
+
+#: views/generals/privacy-policy.php:78
+msgid "10. Commercial and Non-Commercial Communications"
+msgstr ""
+
+#: views/generals/privacy-policy.php:79
+msgid ""
+"By providing information to the Site that forms the basis of communications with you, "
+"such as contact information, you agree to receive communications from us or anyone "
+"else covered under this Privacy Policy. However, you may unsubscribe from certain "
+"communications by notifying ApproveMe that you no longer wish to receive solicitations "
+"or information and we will endeavor to remove you from the database.<br />"
+msgstr ""
+
+#: views/generals/privacy-policy.php:81
+msgid "11. Security Measures"
+msgstr ""
+
+#: views/generals/privacy-policy.php:82
+msgid ""
+"We take certain measures to enhance the security of our Site and Service, including "
+"using SSL certificates. However, we make no representations as to the security or "
+"privacy of your information. It is in our interest to keep our website secure, but we "
+"recommend that you use anti-virus software, firewalls, and other precautions to "
+"protect yourself from security threats. Though security is our top priority we cannot "
+"control the security of your server environment when using our Plugin, we highly "
+"recommend you do everything you can to secure your server including but not limited to "
+"installing and forcing SSL certificate verification.<br />"
+msgstr ""
+
+#: views/generals/privacy-policy.php:84
+msgid "12. Your California Privacy Rights"
+msgstr ""
+
+#: views/generals/privacy-policy.php:85
+msgid ""
+"ApproveMe is located in the State of California and complies with the <em> California "
+"Business and Professions Code </em> $$ 22575-22579.If you are a California resident "
+"you may request certain information regarding our disclosure of personal information "
+"to any third parties for their direct marketing purposes. Various provisions "
+"throughout this Privacy Policy address requirements of the Californian privacy "
+"statutes. In summary, you must presume that we collect electronic information from all "
+"visitors.You may contact us at <a href=\"mailto:curious@approveme.me"
+"\">curious@approveme.me</a> with any questions.<br />"
+msgstr ""
+
+#: views/generals/privacy-policy.php:87
+msgid "13. International Transfer"
+msgstr ""
+
+#: views/generals/privacy-policy.php:88
+msgid ""
+"Your information may be transferred to-and maintained on-computers located outside of "
+"your state, province, country or other governmental jurisdiction where the privacy "
+"laws may not be as protective as those in your jurisdiction. If you are located "
+"outside the United States and choose to provide information to us, ApproveMe transfers "
+"Personal Information to the United States and processes it there. Your consent to this "
+"Privacy Policy followed by your submission of such information represents your "
+"agreement to that transfer.<br />"
+msgstr ""
+
+#: views/generals/privacy-policy.php:90
+msgid "14. Amendments"
+msgstr ""
+
+#: views/generals/privacy-policy.php:91
+msgid ""
+"We may amend this Privacy Policy from time to time. When we amend this Privacy Policy, "
+"we will update this page accordingly and we will require you to accept the amended "
+"version before you may continue using our Service.<br />"
+msgstr ""
+
+#: views/generals/privacy-policy.php:93
+msgid "Last Modified: July 14, 2014"
+msgstr ""
+
+#: views/generals/support.php:13
+msgid "Premium Tech Support That <br>Goes Above and Beyond."
+msgstr ""
+
+#: views/generals/support.php:16
+msgid "Plugin Installation & troubleshooting"
+msgstr ""
+
+#: views/generals/support.php:17
+msgid "Access to Support Forums"
+msgstr ""
+
+#: views/generals/support.php:18
+msgid "Advanced Technical Support"
+msgstr ""
+
+#: views/generals/support.php:19
+msgid "Logging into your Site"
+msgstr ""
+
+#: views/generals/support.php:20
+msgid "SSL Installation & Support"
+msgstr ""
+
+#: views/generals/support.php:29
+msgid "Select your support plan:"
+msgstr ""
+
+#: views/generals/support.php:37
+msgid "$129 / yr - Sign up for annual support"
+msgstr ""
+
+#: views/generals/support.php:38
+msgid "$39 / mo - Sign up for monthly support"
+msgstr ""
+
+#: views/generals/terms.php:12
+msgid "APPROVEME TERMS OF SERVICE"
+msgstr ""
+
+#: views/generals/terms.php:15
+msgid ""
+"Thank you for visiting ApproveMe and, if applicable, using our WordPress plugin WP E-"
+"Signature. Please read these Terms of Service and our Privacy Policy carefully, as by "
+"accessing our Site, and/or installing or using our WordPress plugin, you are agreeing "
+"to be bound by both documents."
+msgstr ""
+
+#: views/generals/terms.php:18
+msgid ""
+"Throughout this Agreement, we may use certain words or phrases, and it is important "
+"that you understand the meaning of them. The list is not all-encompassing and no "
+"definition should be considered binding to the point that it renders this Agreement "
+"nonsensical:<br /><br />\n"
+"  &ldquo;Agreement&rdquo; refers to these Terms of Service;<br /><br />\n"
+"  &ldquo;ApproveMe&rdquo; refers to our company, known as &ldquo;"
+"RockStar(idea)&rdquo;; our Site; our Plugin; our Service; or a combination of all or "
+"some of the preceding definitions, depending on the context in which the word is used;"
+"<br /><br />\n"
+"  &ldquo;Plugin&rdquo; refers to the plugin that we provide for WordPress sites, known "
+"as &ldquo;ApproveMe&rdquo;;<br /><br />\n"
+"  &ldquo;Service&rdquo; refers to the services that we provide online, including our "
+"Plugin and our Site;<br /><br />\n"
+"  &ldquo;Site&rdquo; refers to our website, <a href=\"http://www.approveme.me\">http://"
+"www.approveme.me</a>;<br /><br />\n"
+"  &ldquo;User&rdquo; refers to anyone who uses our Service, including users of our "
+"Plugin and general visitors to our Site;<br /><br />\n"
+"  &ldquo;You&rdquo; refers to you, the person who is entering into this Agreement with "
+"ApproveMe.<br />"
+msgstr ""
+
+#: views/generals/terms.php:27
+msgid "3. How ApproveMe Works"
+msgstr ""
+
+#: views/generals/terms.php:28
+msgid ""
+"ApproveMe&rsquo;s WP E-Signature provides you on-demand electronic signature services "
+"using a WordPress based website, which includes online uploads, display, delivery, "
+"acknowledgment and electronic signature for eContracts (the \"Services\"). "
+msgstr ""
+
+#: views/generals/terms.php:31
+msgid "4. Eligibility"
+msgstr ""
+
+#: views/generals/terms.php:32
+msgid ""
+"In order to use our Service, you must meet a number of conditions, including but not "
+"limited to:"
+msgstr ""
+
+#: views/generals/terms.php:34
+msgid ""
+"You must not be in violation of any embargoes, export controls, or other laws of the "
+"United States or other countries having jurisdiction over this Agreement, ApproveMe, "
+"and yourself. For example, if the Office of Foreign Assets Control prohibits "
+"conducting financial transactions with nationals, residents, or banks of your country, "
+"you must not use our Service."
+msgstr ""
+
+#: views/generals/terms.php:35
+msgid ""
+"You must be the minimum age required to enter into a contract in the area in which you "
+"reside, and, in any event, must not be less than 18 years of age."
+msgstr ""
+
+#: views/generals/terms.php:36
+msgid ""
+"You must not enter into this Agreement on behalf of any natural person other than "
+"yourself."
+msgstr ""
+
+#: views/generals/terms.php:37
+msgid ""
+"You must, if entering into this Agreement on behalf of a person other than a natural "
+"person, be authorized to do so, and you hereby agree that both you and that person "
+"shall be bound by this Agreement and be held jointly and severally liable for any "
+"breaches hereof."
+msgstr ""
+
+#: views/generals/terms.php:38
+msgid ""
+"You must not be using our Service to collect credit card data, payment information, or "
+"Social Security Number information unless using a PCI-compliant server environment to "
+"do so."
+msgstr ""
+
+#: views/generals/terms.php:39
+msgid ""
+"You must provide us with personal information, payment information, and other "
+"information that we deem necessary to provide you with our Service."
+msgstr ""
+
+#: views/generals/terms.php:41
+msgid "5. Additional Service Disclaimers"
+msgstr ""
+
+#: views/generals/terms.php:42
+msgid ""
+"ApproveMe&rsquo;s Plugin is only designed to allow for electronic signatures online. "
+"We make no representations about which courts of law will or will not recognize any "
+"given signature. You understand that we are not attorney&rsquo;s and cannot give any "
+"legal opinion or advice on whether a signature executed through our Plugin will be "
+"binding in any jurisdiction or court. It is important that you understand the "
+"signature and execution requirements of your jurisdiction before using our Plugin. "
+"Furthermore, certain documents (such as those regarding real estate transactions) may "
+"not be recognized using our Service if a notary is required to witness the signing of "
+"such documents. Finally, ApproveMe is not responsible for the contents or "
+"enforceability of any documents that it is used to sign. You agree that ApproveMe is "
+"not liable for any loss that you may incur as the result of the use of our Service, "
+"and you are advised to obtain the assistance of qualified legal counsel to ensure that "
+"your signed documents are enforceable in a court of law. Support Credentials: \n"
+"By creating login access to your site and providing them to ApproveMe for premium "
+"support, you hereby agree not to hold ApproveMe and / or its employees/contractors as "
+"responsible in any way for any loss or damage of any kind resulting from sharing "
+"access credentials to your website."
+msgstr ""
+
+#: views/generals/terms.php:45
+msgid "6. Rules of Use"
+msgstr ""
+
+#: views/generals/terms.php:46
+msgid "As a condition of using our Service, you must not:"
+msgstr ""
+
+#: views/generals/terms.php:48
+msgid ""
+"Violate the laws of the United States, its states, or any foreign political entity "
+"having jurisdiction over this Agreement, whether or not the foreign political entity "
+"is a country or a subdivision (such as a state or province) or municipality (such as a "
+"city, town, county, or region) of a foreign country."
+msgstr ""
+
+#: views/generals/terms.php:49
+msgid ""
+"Post or send anything violent, threatening, pornographic, racist, hateful, or "
+"otherwise objectionable according to the opinion of ApproveMe, including on the "
+"website in relation to which you use our Plugin."
+msgstr ""
+
+#: views/generals/terms.php:50
+msgid ""
+"Infringe on anyone&rsquo;s intellectual property rights, defame anyone, impersonate "
+"anyone, or otherwise violate the rights of a third party."
+msgstr ""
+
+#: views/generals/terms.php:51
+msgid ""
+"Hack, crack, phish, SQL inject, or otherwise compromise the security or integrity of "
+"the ApproveMe Site, Service, or its Users&rsquo; computers."
+msgstr ""
+
+#: views/generals/terms.php:52
+msgid "Attempt to reverse engineer or otherwise redistribute our Plugin."
+msgstr ""
+
+#: views/generals/terms.php:53
+msgid ""
+"Do anything else which could bring our Service into disrepute or violate the rights of "
+"any person."
+msgstr ""
+
+#: views/generals/terms.php:55
+msgid "7. Payment and Refund Policy"
+msgstr ""
+
+#: views/generals/terms.php:56
+msgid ""
+"If you wish to purchase or use our Service, payment can be made by means of PayPal or "
+"a credit card through our third party payment provider, Stripe. Unless otherwise "
+"stated, all prices are listed in United States dollars.<br />\n"
+"  Users having problems or issues with the premium paid add-on Plugin, should contact "
+"us within 30 days of purchase. Users experiencing such problems or issues within the "
+"30 day period may be entitled to a full refund. After 30 days, no refunds will be "
+"given. As a condition to receiving a refund within 30 days, Users must contact us and "
+"open up a support ticket. Once a support ticket has been opened up, we will attempt to "
+"fix the problem, if the problem is not fixed to the User&rsquo;s satisfaction a refund "
+"will then be granted. Please note that refunds will not be granted if a User simply "
+"decides not to use the purchased services. We stand behind our services and will make "
+"all reasonable efforts to assist you in solving any problems you may have with our "
+"Plugin.</p>\n"
+"<p>Where fees are payable for any component of the ApproveMe Service, these fees are "
+"payable in advance and we may, in our sole discretion, suspend any aspect of the "
+"ApproveMe Service for which you have not paid. Without prejudice to any of "
+"ApproveMe&rsquo;s rights contained elsewhere in this Agreement, you agree that we are "
+"entitled to discontinue the provision of our Service to you if you fail to pay for our "
+"Service and we may delete any data held by us in relation to the provision of your "
+"Service."
+msgstr ""
+
+#: views/generals/terms.php:60
+msgid "8. Discounts"
+msgstr ""
+
+#: views/generals/terms.php:61
+msgid ""
+"ApproveMe may, but is not obligated to, provide discounts in the form of coupon codes "
+"or otherwise. Such discounts will be subject to any conditions placed upon them at the "
+"time that they are promoted (including expiry dates, limiting them to a specific class "
+"of persons, etc.). Discounts are non-transferable and ApproveMe may refuse to honor "
+"them for any reason including, but not limited to, fraud, mistake on the part of our "
+"publication of information, actual or expected financial hardship, sale of all or part "
+"of our business, or any other reason."
+msgstr ""
+
+#: views/generals/terms.php:63
+msgid "9. Chargebacks, Credit Card Cancellations, and PayPal Disputes"
+msgstr ""
+
+#: views/generals/terms.php:64
+msgid ""
+"Where a User conducts a chargeback against ApproveMe, such User shall be liable to "
+"ApproveMe for the full amount of the chargeback, as well as any attorneys&rsquo; fees, "
+"collection agency fees, court costs, disbursements, and any other expenses occurred by "
+"ApproveMe in enforcing its rights against that User under this section.<br />\n"
+"  Additionally, should a credit card be declined for any reason including but not "
+"limited to expiry or insufficient credit, ApproveMe may pursue a claim against you for "
+"the unpaid amount and shall be entitled to be paid by you for the same costs, "
+"disbursements and other expenses as described in the above paragraph relating to "
+"chargebacks."
+msgstr ""
+
+#: views/generals/terms.php:67
+msgid "10. WordPress License and Updates"
+msgstr ""
+
+#: views/generals/terms.php:68
+msgid ""
+"The WordPress Plugin created by ApproveMe is licensed under the&nbsp;GNU general "
+"public license. This does not mean our products are free in all circumstances. For the "
+"premium Plugin, Users must first purchase our products before using them. While all of "
+"the WordPress-interactive code of our product is licensed under the GPL, all other "
+"code contained within the Plugin is proprietary to ApproveMe. Please review the "
+"licensing terms included with any purchases for the terms that apply to it. We offer "
+"you a limited, non-exclusive, fully revocable <a href=\"https://www.approveme.me/"
+"extension-license-terms/\">license to use our Plugin</a>. You agree to abide by our "
+"license when using our Plugin and also to abide by any additional terms required by "
+"the GNU general public license. You agree that you will not attempt to modify, enhance "
+"or change our Service or Plugin in any way.</p>\n"
+"<p>WordPress may update its software from time to time. When this occurs, our Plugin "
+"may cease to be compatible or may have vulnerabilities or other issues should you "
+"choose to accept such updates. You agree that when WordPress updates its software, you "
+"will either cease using our Plugin unless we declare our Plugin to be compatible with "
+"the new version, decline to accept the WordPress software update, or update your "
+"version of WordPress software and continue using our Plugin but do so at your own risk."
+msgstr ""
+
+#: views/generals/terms.php:71
+msgid "11. Our Copyright"
+msgstr ""
+
+#: views/generals/terms.php:72
+msgid ""
+"ApproveMe values its copyright as it distinguishes us from our competitors. Our "
+"copyright encompasses every original work that we have produced to the maximum extent "
+"permitted by law, including but not limited to our Site, our Plugin, and their "
+"underlying code. You agree not to copy, distribute, display, disseminate, or otherwise "
+"reproduce any of the information on the Site without receiving our prior written "
+"permission."
+msgstr ""
+
+#: views/generals/terms.php:74
+msgid "12. Trademarks"
+msgstr ""
+
+#: views/generals/terms.php:75
+msgid ""
+"&ldquo;ApproveMe&rdquo; and &ldquo;RockStar(idea) are trademarks used by us, "
+"RockStar(idea), to uniquely identify our Site, Service, and business. You agree not to "
+"use these phrases anywhere without our prior written consent. Additionally, you agree "
+"not to use our trade dress, or copy the look and feel of our website or its design, "
+"without our prior written consent. You agree that this paragraph goes beyond the "
+"governing law on intellectual property law, and includes prohibitions on any "
+"competition that violates the provisions of this paragraph, including starting your "
+"own competing business."
+msgstr ""
+
+#: views/generals/terms.php:77
+msgid "13. Revocation of Consent"
+msgstr ""
+
+#: views/generals/terms.php:78
+msgid ""
+"We may revoke our consent for your use of our intellectual property, or any other "
+"permission granted to you under this Agreement, at any time. You agree that if we so "
+"request, you must take immediate action to remove any usage of our intellectual "
+"property that you may have engaged in, even if it would cause a loss to you. Such "
+"require removal shall include our Plugin and its underlying code should we request it."
+msgstr ""
+
+#: views/generals/terms.php:80
+msgid "14. Representations &amp; Warranties, Limitation of Liability"
+msgstr ""
+
+#: views/generals/terms.php:81
+msgid ""
+"OUR SERVICES AND PLUGIN ARE OFFERED &ldquo;AS IS&rdquo; AND WITH &ldquo;ALL FAULTS."
+"&rsquo; WE MAKE NO REPRESENTATIONS OR WARRANTIES AS TO THE MERCHANTABILITY OF OUR "
+"SERVICE OR FITNESS FOR ANY PARTICULAR PURPOSE. WE SPECIFICALLY DISCLAIM ANY AND ALL "
+"IMPLIED WARRANTIES. YOU AGREE THAT YOU ARE RELEASING US FROM ANY LIABILITY THAT WE MAY "
+"OTHERWISE HAVE TO YOU IN RELATION TO OR ARISING FROM THIS AGREEMENT OR OUR SERVICES, "
+"FOR REASONS INCLUDING, BUT NOT LIMITED TO, FAILURE OF OUR SERVICE, NEGLIGENCE, OR ANY "
+"OTHER TORT. TO THE EXTENT THAT APPLICABLE LAW RESTRICTS THIS RELEASE OF LIABILITY, YOU "
+"AGREE THAT WE ARE ONLY LIABLE TO YOU FOR THE MINIMUM AMOUNT OF DAMAGES THAT THE LAW "
+"RESTRICTS OUR LIABILITY TO, IF SUCH A MINIMUM EXISTS.</p>\n"
+"<p>YOU AGREE THAT WE ARE NOT RESPONSIBLE IN ANY WAY FOR DAMAGES CAUSED BY THIRD "
+"PARTIES WHO MAY USE OUR SERVICES, INCLUDING BUT NOT LIMITED TO PEOPLE WHO COMMIT "
+"INTELLECTUAL PROPERTY INFRINGEMENT, DEFAMATION, TORTIOUS INTERFERENCE WITH ECONOMIC "
+"RELATIONS, OR ANY OTHER ACTIONABLE CONDUCT TOWARDS YOU.</p>\n"
+"<p>YOU AGREE THAT WE ARE NOT RESPONSIBLE FOR ANY ACTS OR OMISSIONS COMMITTED BY THE "
+"COUNTERPARTY OR COUNTERPARTIES TO ANY DOCUMENTS THAT YOU SIGN USING OUR SERVICE AND "
+"THAT YOU ARE ADVISED BY US TO OBTAIN QUALIFIED LEGAL COUNSEL TO DETERMINE WHETHER THE "
+"DOCUMENTS YOU ARE HAVING SIGNED WILL BE ENFORCEABLE IN THE COURT OR COURTS OF LAW IN "
+"WHICH YOU MAY WISH TO HAVE THEM ADMITTED AS EVIDENCE NOW OR AS SOME DATE IN THE FUTURE."
+"</p>\n"
+"<p>YOU AGREE THAT WE ARE NOT RESPONSIBLE FOR ANY FAILURE ON THE PART OF A PAYMENT "
+"PROCESSOR, INCLUDING PAYPAL OR THE CREDIT CARD COMPANY OR BANK THAT YOU USE TO FUND "
+"PAYPAL, TO DIRECT PAYMENTS TO THE CORRECT DESTINATION, OR ANY ACTIONS ON THEIR PART IN "
+"PLACING A HOLD ON YOUR FUNDS.</p>\n"
+"<p>YOU AGREE THAT WE ARE NOT LIABLE FOR ANY FAILURE OF THE GOODS OR SERVICES OF OUR "
+"COMPANY OR A THIRD PARTY, INCLUDING ANY FAILURES OR DISRUPTIONS, UNTIMELY DELIVERY, "
+"SCHEDULED OR UNSCHEDULED, INTENTIONAL OR UNINTENTIONAL, ON OUR WEBSITE WHICH PREVENT "
+"ACCESS TO OUR WEBSITE TEMPORARILY OR PERMANENTLY.</p>\n"
+"<p>THE PROVISION OF OUR SERVICE TO YOU IS CONTINGENT ON YOUR AGREEMENT WITH THIS AND "
+"ALL OTHER SECTIONS OF THIS AGREEMENT. NOTHING IN THE PROVISIONS OF THIS &ldquo;"
+"REPRESENTATIONS &amp; WARRANTIES&rdquo; SECTION SHALL BE CONSTRUED TO LIMIT THE "
+"GENERALITY OF THE FIRST PARAGRAPH OF THIS SECTION.</p>\n"
+"<p><strong><em>For Jurisdictions that do not allow us to limit our liability:</em></"
+"strong> Notwithstanding any provision of these Terms, if your jurisdiction has "
+"provisions specific to waiver or liability that conflict with the above then our "
+"liability is limited to the smallest extent possible by law. Specifically, in those "
+"jurisdictions not allowed, we do not disclaim liability for: (a) death or personal "
+"injury caused by its negligence or that of any of its officers, employees or agents; "
+"or (b) fraudulent misrepresentation; or (c) any liability which it is not lawful to "
+"exclude either now or in the future.</p>\n"
+"<p>IF YOU ARE A RESIDENT OF A JURISDICTION THAT REQUIRES A SPECIFIC STATEMENT "
+"REGARDING RELEASE THEN THE FOLLOWING APPLIES. FOR EXAMPLE, CALIFORNIA RESIDENTS MUST, "
+"AS A CONDITION OF THIS AGREEMENT, WAIVE THE APPLICABILITY OF CALIFORNIA CIVIL CODE "
+"SECTION 1542, WHICH STATES, &ldquo;A GENERAL RELEASE DOES NOT EXTEND TO CLAIMS WHICH "
+"THE CREDITOR DOES NOT KNOW OR SUSPECT TO EXIST IN HIS OR HER FAVOR AT THE TIME OF "
+"EXECUTING THE RELEASE, WHICH IF KNOWN BY HIM OR HER MUST HAVE MATERIALLY AFFECTED HIS "
+"OR HER SETTLEMENT WITH THE DEBTOR.&quot; YOU HEREBY WAIVE THIS SECTION OF THE "
+"CALIFORNIA CIVIL CODE. YOU HEREBY WAIVE ANY SIMILAR PROVISION IN LAW, REGULATION, OR "
+"CODE THAT HAS THE SAME INTENT OR EFFECT AS THE AFOREMENTIONED RELEASE. YOU AGREE THE "
+"TOTAL LIABILITY WE MAY HAVE TO YOU IS LIMITED TO $100 USD."
+msgstr ""
+
+#: views/generals/terms.php:90
+msgid "15. Indemnity"
+msgstr ""
+
+#: views/generals/terms.php:91
+msgid ""
+"You agree to indemnify and hold us harmless for any claims by you or any third party "
+"which may arise from or relate to this Agreement or the provision of our service to "
+"you, including any damages caused by your use of our Service. You also agree that you "
+"have a duty to defend us against such claims and we may require you to pay for an "
+"attorney(s) of our choice in such cases. You agree that this indemnity extends to "
+"requiring you to pay for our reasonable attorneys&rsquo; fees, court costs, and "
+"disbursements. In the event of a claim such as one described in this paragraph, we may "
+"elect to settle with the party/parties making the claim, and you shall be liable for "
+"the damages as though we had proceeded with a trial."
+msgstr ""
+
+#: views/generals/terms.php:93
+msgid "16. Choice of Law"
+msgstr ""
+
+#: views/generals/terms.php:94
+msgid ""
+"This Agreement shall be governed by the laws in force in the State of California, "
+"including federal, state, and municipal laws applicable in the State of California, to "
+"the exclusion of all other laws to the extent that the application of other laws may "
+"be excluded. The offer and acceptance of this Agreement, which is a valid and binding "
+"contract to which you are agreeing, are deemed to have occurred in the State of "
+"California."
+msgstr ""
+
+#: views/generals/terms.php:96
+msgid "17. Forum of Dispute"
+msgstr ""
+
+#: views/generals/terms.php:97
+msgid ""
+"Any controversy or claim arising out of or relating to this Agreement, or the breach "
+"thereof, shall be settled by arbitration administered by the American Arbitration "
+"Association under its Commercial Arbitration Rules, shall be heard by one arbitrator, "
+"and judgment on the award rendered by the arbitrator(s) may be entered in any court "
+"having jurisdiction thereof. You agree that all arbitration disputes will be heard in "
+"the city of Los Angeles, CA. <br />\n"
+"  <br />\n"
+"  If you bring a dispute in a manner other than in accordance with this section (such "
+"as initiating it with a court rather than through the arbitration process), you agree "
+"that we may move to have it dismissed, and that you will be responsible for our "
+"reasonable attorneys&rsquo; fees, court costs, and disbursements in doing so."
+msgstr ""
+
+#: views/generals/terms.php:101
+msgid "18. Force Majeure"
+msgstr ""
+
+#: views/generals/terms.php:102
+msgid ""
+"You agree that we are not responsible to you for anything that we may otherwise be "
+"responsible for, if it is the result of events beyond our control, including, but not "
+"limited to, acts of God, war, insurrection, riots, terrorism, crime, labor shortages "
+"(including lawful and unlawful strikes), embargoes, postal disruption, communication "
+"disruption, unavailability of payment processors, failure or shortage of "
+"infrastructure, shortage of materials, or any other event beyond our control."
+msgstr ""
+
+#: views/generals/terms.php:104
+msgid "19. Severability"
+msgstr ""
+
+#: views/generals/terms.php:105
+msgid ""
+"In the event that a provision of this Agreement is found to be unlawful, conflicting "
+"with another provision of the Agreement, or otherwise unenforceable, the Agreement "
+"will remain in force as though it had been entered into without that unenforceable "
+"provision being included in it.<br />\n"
+"  If two or more provisions of this Agreement are deemed to conflict with each "
+"other&rsquo;s operation, ApproveMe shall have the sole right to elect which provision "
+"remains in force."
+msgstr ""
+
+#: views/generals/terms.php:108
+msgid "20. Non-Waiver"
+msgstr ""
+
+#: views/generals/terms.php:109
+msgid ""
+"ApproveMe reserves all rights afforded to us under this Agreement as well as under the "
+"provisions of any applicable law. Our non-enforcement of any particular provision or "
+"provisions of this Agreement or any applicable law should not be construed as our "
+"waiver of the right to enforce that same provision under the same or different "
+"circumstances at any time in the future."
+msgstr ""
+
+#: views/generals/terms.php:111
+msgid "21. Termination &amp; Cancellation"
+msgstr ""
+
+#: views/generals/terms.php:112
+msgid ""
+"If you wish to terminate your license to use our Plugin, please contact us at <a href="
+"\"mailto:support@approveme.me\">support@approveme.me</a>. We may terminate your access "
+"to our Site, Plugin, and Service at our discretion without explanation, though we will "
+"strive to provide a timely explanation in most cases. Unless otherwise stated within "
+"this Agreement, no refunds will be extended to Users upon termination of the Plugin, "
+"Site or Service by either party.<br />\n"
+"  Under no circumstances, including termination or cancellation of our Service to you, "
+"will we be liable for any losses related to actions of other Users."
+msgstr ""
+
+#: views/generals/terms.php:115
+msgid "22. Assignment of Rights"
+msgstr ""
+
+#: views/generals/terms.php:116
+msgid ""
+"You may not assign your rights and/or obligations under this Agreement to any other "
+"party without our prior written consent. We may assign our rights and/or obligations "
+"under this Agreement to any other party at our discretion."
+msgstr ""
+
+#: views/generals/terms.php:118
+msgid "23. Amendments"
+msgstr ""
+
+#: views/generals/terms.php:119
+msgid ""
+"We may amend this Agreement from time to time. When we amend this Agreement, we will "
+"update this page accordingly and we will require you to accept the amended version "
+"before you may continue using our Service."
+msgstr ""
+
+#: views/generals/terms.php:121
+msgid "24. California Users and Residents"
+msgstr ""
+
+#: views/generals/terms.php:122
+msgid ""
+"Pursuant to <em>California Civil Code</em> Section 1789.3, any questions about "
+"pricing, complaints, or inquiries about ApproveMe must be addressed to our agent for "
+"notice and sent via certified mail to that agent. For our agent&rsquo;s most current "
+"contact information, please send a request to <a href=\"mailto:curious@approveme.me"
+"\">curious@approveme.me</a>.<br /><br />\n"
+"  Lastly, California users are also entitled to the following specific consumer rights "
+"notice: The Complaint Assistance Unit of the Division of Consumer Services of the "
+"California Department of Consumer Affairs may be contacted in writing at 1625 North "
+"Market Blvd., Sacramento, CA 95834, or by telephone at (916) 445-1254 or (800) "
+"952-5210."
+msgstr ""
+
+#: views/generals/terms.php:125
+msgid "25. HIPAA Disclaimer"
+msgstr ""
+
+#: views/generals/terms.php:126
+msgid ""
+"The Service and the Plugin are not HIPAA complaint. Therefore, users who collect "
+"&ldquo;protected health information&rdquo; as defined under the Health Insurance "
+"Portability and Accountability Act must understand that we cannot be responsible for "
+"any liability regarding your failure to comply with HIPAA. You agree to indemnify us "
+"and hold us harmless for your failure to comply with HIPAA.<br />\n"
+"  Last Modified: September 30, 2014"
+msgstr ""
+
+#: views/invitations/invite.php:56
+msgid "has requested your signature"
+msgstr ""
+
+#: views/invitations/invite.php:73 views/notifications/admin/document_signed.php:76
+#: views/notifications/document_signed.php:75
+msgid "From:"
+msgstr ""
+
+#: views/invitations/invite.php:81 views/notifications/document_signed.php:83
+msgid "Hi"
+msgstr ""
+
+#: views/invitations/invite.php:93
+msgid "sent you a document that needs to be signed."
+msgstr ""
+
+#: views/invitations/invite.php:95
+msgid "Please add your signature to the document below."
+msgstr ""
+
+#: views/invitations/invite.php:97
+msgid "Got a Question?"
+msgstr ""
+
+#: views/invitations/invite.php:113 views/invitations/invite.php:122
+msgid "REVIEW &amp; SIGN"
+msgstr ""
+
+#: views/invitations/invite.php:132 views/notifications/admin/document_signed.php:135
+#: views/notifications/document_signed.php:125
+msgid ""
+"Warning: Do not forward this email to others or else they will have access to your "
+"document (on your behalf)."
+msgstr ""
+
+#: views/invitations/invite.php:186
+#, php-format
+msgid ""
+"This message was sent to you by %s who is using the <a href=\"http://bit.ly/header-logo"
+"\" style=\"text-decoration:none;color:#555;\">WP E-Signature Document Signing "
+"WordPress plugin</a>. If you would rather not receive email from this sender you may "
+"contact the sender with your request."
+msgstr ""
+
+#: views/notifications/admin/document_signed.php:59
+msgid "has signed your document"
+msgstr ""
+
+#: views/notifications/admin/document_signed.php:95
+msgid "has signed your document."
+msgstr ""
+
+#: views/notifications/admin/document_signed.php:101
+#: views/notifications/document_signed.php:93
+msgid " Audit Trail Serial Number  #:"
+msgstr ""
+
+#: views/notifications/admin/document_signed.php:114
+#: views/notifications/admin/document_signed.php:123
+#: views/notifications/document_signed.php:104
+#: views/notifications/document_signed.php:113
+msgid "View Signed Document"
+msgstr ""
+
+#: views/notifications/document_signed.php:58
+msgid "Document has been signed"
+msgstr ""
+
+#: views/notifications/document_signed.php:92
+msgid "All signees have signed this document."
+msgstr ""
+
+#: views/partials/_footer_admin.php:11
+msgid "You're an Admin."
+msgstr ""
+
+#: views/partials/_footer_admin.php:19
+msgid "Preview Mode"
+msgstr ""
+
+#: views/partials/_header.php:19 views/partials/_tab-nav.php:41
+msgid "Signing documents just got alot easier."
+msgstr ""
+
+#: views/partials/_header.php:28 views/partials/_tab-nav.php:51
+msgid "To enable more features and signature functions you should visit"
+msgstr ""
+
+#: views/partials/_header.php:31 views/partials/_tab-nav.php:54
+msgid "E-Sign Add-On Extensions."
+msgstr ""
+
+#: views/partials/_rightside.php:40
+msgid "Documents Signed 30% Faster"
+msgstr ""
+
+#: views/partials/_rightside.php:41
+msgid "Signature Automation"
+msgstr ""
+
+#: views/partials/_rightside.php:43
+msgid ""
+"Get an extra hour every week with signer reminders, stand alone docs, and E-Signature "
+"awesomeness!"
+msgstr ""
+
+#: views/partials/_rightside.php:44
+msgid "Get Premium Add-Ons"
+msgstr ""
+
+#: views/partials/_rightside.php:51
+msgid "Get a Premium Module"
+msgstr ""
+
+#: views/partials/_rightside.php:84
+msgid "Found a bug? Need support?"
+msgstr ""
+
+#: views/partials/_rightside.php:89
+msgid "Watch Getting Started Video"
+msgstr ""
+
+#: views/partials/_rightside.php:95
+msgid "Report a Bug"
+msgstr ""
+
+#: views/partials/_rightside.php:97
+msgid "Open a Support Ticket"
+msgstr ""
+
+#: views/partials/_rightside.php:99
+msgid "Submit Feature Idea"
+msgstr ""
+
+#: views/partials/_rightside.php:101
+msgid "Getting Started"
+msgstr ""
+
+#: views/partials/_rightside.php:102
+msgid "Quick Start Guide"
+msgstr ""
+
+#: views/partials/_rightside.php:103
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: views/partials/_tab-nav.php:77
+msgid "My Documents"
+msgstr ""
+
+#: views/partials/_tab-nav.php:87
+msgid "E-Mails"
+msgstr ""
+
+#: views/partials/_tab-nav.php:92
+msgid "Customization"
+msgstr ""
+
+#: views/settings/index.php:28
+msgid "E-Signature Admin Settings"
+msgstr ""
+
+#: views/settings/index.php:38
+msgid "Admin First Name<span class=\"description\"> (required)</span>"
+msgstr ""
+
+#: views/settings/index.php:48
+msgid "Admin Last Name<span class=\"description\"> (required)</span>"
+msgstr ""
+
+#: views/settings/index.php:58
+msgid "Admin Email<span class=\"description\"> (required)</span>"
+msgstr ""
+
+#: views/settings/index.php:64
+msgid ""
+"Enter the E-Signature admin email address that you would like all document "
+"communications sent."
+msgstr ""
+
+#: views/settings/index.php:72
+msgid "Organization's Name<span class=\"description\"> (required)</span>"
+msgstr ""
+
+#: views/settings/index.php:82
+msgid ""
+"Draw signature with a mouse (for future documents)<span class=\"description\"> "
+"(required)</span>"
+msgstr ""
+
+#: views/settings/index.php:190
+msgid ""
+"I agree this is a legal representation of my signature for all purposes \n"
+"\n"
+"\t\t\t\t\t\tjust the same as a pen-and-paper signature"
+msgstr ""
+
+#: views/settings/index.php:266
+msgid "I understand this is a legal representation of my signature"
+msgstr ""
+
+#: views/settings/index.php:338
+msgid ""
+"A Super Admin is the main document sender/admin user that has executive document "
+"sending privileges.  To add additional document senders you will need our Premium "
+"\"Unlimited Document Senders\" Add-On."
+msgstr ""
+
+#: views/settings/index.php:354
+msgid ""
+"\n"
+"\n"
+"\t\t\t\t\t\tHanding over Super-Admin ownership is serious business. \n"
+"\n"
+"Once you assign <span id=\"esig_selected_admin\"> </span>as super admin you will no "
+"longer be able \n"
+"\n"
+"to send and preview documents unless you have the Additional E-Signature Roles Add-On. "
+msgstr ""
+
+#: views/settings/index.php:416
+msgid ""
+"WP E-Signature requires one page of your website to host the document signing "
+"application.  If a user accesses this page directly they will see an error message. "
+"Each document is protected with a randomly generated user specific url that is emailed "
+"to each signer."
+msgstr ""
+
+#: views/settings/index.php:444
+msgid "Hide the \"E-Signature\" page from main navigation menu."
+msgstr ""
+
+#: views/settings/index.php:452
+msgid "Hide E-Signature default page from main navigation menu"
+msgstr ""
+
+#: views/settings/index.php:473
+msgid "E-signature timezone settings. "
+msgstr ""
+
+#: views/settings/index.php:508
+msgid ""
+"Hide the \"E-Signature\" menu from all users that do not have direct access to WP E-"
+"Signature."
+msgstr ""
+
+#: views/settings/index.php:514
+msgid "Hide E-Signature from dashboard for users without access"
+msgstr ""
+
+#: views/settings/index.php:526
+msgid "SSL Security"
+msgstr ""
+
+#: views/settings/index.php:538
+msgid ""
+"This feature forces SSL (HTTPS) on all WP E-Signature signing pages (a valid SSL "
+"Certificate is required)."
+msgstr ""
+
+#: views/settings/index.php:548
+msgid "Force SSL (HTTPS) on the signing pages (an SSL Certificate is required)."
+msgstr ""
+
+#: views/settings/index.php:566
+msgid ""
+"By clicking \"Save Settings\" you are agreeing to the Approve Me & WP E-Signature <a "
+"href=\"admin.php?page=esign-terms-general\">Terms of Service</a> and <a href=\"admin."
+"php?page=esign-privacy-general\">Privacy Policy</a>."
+msgstr ""
+
+#: views/settings/upgrade-roles.php:12
+msgid "Access Denied"
+msgstr ""
+
+#: views/settings/upgrade-roles.php:13
+#, php-format
+msgid ""
+"Woah tiger! %s for WP E-Signature is a pro feature. Because security is a big deal, "
+"only the WordPress admin user who first saves the settings for WP E-Signature can have "
+"access to the E-Signature documents & settings page."
+msgstr ""
+
+#: views/settings/upgrade-roles.php:15
+msgid ""
+"If additional users need to upload, send, and manage documents we recommend you "
+"install our <a href=\"https://www.approveme.me/downloads/unlimited-sender-roles/\">E-"
+"Signature Unlimited Sender Roles</a> Premium Add-On."
+msgstr ""
+
+#: views/settings/upgrade-roles.php:17
+msgid ""
+"Please checkout our awesome list of extensions <a href=\"https://www.approveme.me/"
+"wordpress-electronic-digital-signature-add-ons/\">here</a>"
+msgstr ""
