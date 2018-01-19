@@ -171,6 +171,8 @@ function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/my-account/' );
   $whitelist[] = site_url( '/my-account/lost-password/' );
   $whitelist[] = site_url( '/my-account/lost-password/?' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/my-account/customer-logout/' );
+  $whitelist[] = site_url( '/my-account/customer-logout/?' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/sv2-insight/' );
   $whitelist[] = site_url( '/bionetics/' );
   $whitelist[] = site_url( '/testimonials/' );
@@ -178,14 +180,3 @@ function my_forcelogin_whitelist( $whitelist ) {
   return $whitelist;
 }
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
-
-
-// Redirect home if trying to access /wp-login.php
-add_action('init','custom_login');
-function custom_login(){
- global $pagenow;
- if( 'wp-login.php' == $pagenow ) {
-  wp_redirect( site_url( '/my-account' ) );
-  exit();
- }
-}
