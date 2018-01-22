@@ -1,0 +1,4 @@
+[19-Jan-2018 23:47:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _deprecated_file() in /home/thenewhu/public_html/wp-includes/locale.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-includes/locale.php on line 10

@@ -15,3 +15,7 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/index.php on line 17
+[21-Jan-2018 00:22:36 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function the_ID() in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/content.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/content.php on line 13
