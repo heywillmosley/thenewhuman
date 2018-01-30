@@ -4,92 +4,37 @@
  * Includes the assets loading and script printing functionality for the Modules
  * page.
  */
-class USIN_Module_Assets{
+class USIN_Module_Assets extends USIN_Assets{
 
-	protected $base_file = USIN_PLUGIN_FILE;
-	protected $version = USIN_VERSION;
-	protected $page_slug;
-	protected $module_options;
-	protected $page;
-
-	/**
-	 * @param string $page_slug      the slug of the Modules page
-	 * @param USIN_Module_Options $module_options the module options object
-	 * @param USIN_Module_Page $page           the module page object
-	 */
-	public function __construct($page_slug, $module_options, $page){
-		$this->page_slug = $page_slug;
-		$this->module_options = $module_options;
-		$this->page = $page;
-	}
-
-	/**
-	 * Registers all of the required action hooks.
-	 */
-	public function init(){
-		add_action( 'admin_enqueue_scripts', array($this, 'enqueue_assets') );
-		add_action( 'admin_print_scripts', array($this, 'print_inline') );
-	}
-
-	/**
-	 * Checks whether the current page is the Modules page.
-	 * @return boolean true if it is the Modules page and false otherwise
-	 */
-	protected function is_modules_page(){
-		global $current_screen;
-		return strpos( $current_screen->base, $this->page_slug ) !== false;
+	protected function register_custom_assets(){
+		$this->js_assets['usin_modules'] = array('path' => 'js/modules.min.js',
+			'deps' => array('usin_angular', 'usin_helpers'));
+		$this->js_assets['usin_module_templates'] = array('path' => 'views/modules/templates.js',
+			'deps' => array('usin_modules'));
 	}
 
 	/**
 	 * Loads the required assets on the Modules page/
 	 */
 	public function enqueue_assets(){
-		if($this->is_modules_page()){
-			//enqueue JavaScript files
-			
-			wp_enqueue_script('usin_angular', 
-				plugins_url('js/lib/angular/angular.min.js', $this->base_file), 
-				array(), 
-				$this->version);
+		$this->enqueue_scripts(array('usin_angular', 'usin_helpers', 'usin_modules',
+			'usin_module_templates'));
 
-			wp_enqueue_script('usin_helpers', 
-				plugins_url('js/helpers.js', $this->base_file), 
-				array(), 
-				$this->version);
-
-			wp_enqueue_script('usin_modules', 
-				plugins_url('js/modules.min.js', $this->base_file), 
-				array('usin_angular', 'usin_helpers'), 
-				$this->version);
-				
-			wp_enqueue_script('usin_templates', 
-				plugins_url('views/modules/templates.js', $this->base_file), 
-				array('usin_modules'), 
-				$this->version);
-
-			//enqueue CSS files
-			wp_enqueue_style( 'usin_main_css', plugins_url('css/style.css', $this->base_file ), array(), $this->version );
-		}
-
+		$this->enqueue_style('usin_main_css');
+		
 	}
 
-	/**
-	 * Prints the inline code on the Modules page.
-	 */
-	public function print_inline(){
-		if($this->is_modules_page()){
-			$this->init_js();
-		}
-	}
 
 	/**
 	 * Prints the initializing JavaScript code on the Modules page.
 	 */
-	protected function init_js(){
+	protected function print_inline(){
+		$module_options = usin_module_options();
+
 		$options = array(
 			'viewsURL' => 'views/modules',
 			'ajaxURL' => admin_url( 'admin-ajax.php' ),
-			'modules' => $this->module_options->get_module_options(),
+			'modules' => $module_options->get_module_options(),
 			'nonce' => $this->page->ajax_nonce
 		);
 

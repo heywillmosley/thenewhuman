@@ -1,17 +1,17 @@
 [
     {
         "name": "squizlabs/php_codesniffer",
-        "version": "2.8.1",
-        "version_normalized": "2.8.1.0",
+        "version": "2.9.1",
+        "version_normalized": "2.9.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-            "reference": "d7cf0d894e8aa4c73712ee4a331cc1eaa37cdc7d"
+            "reference": "dcbed1074f8244661eecddfc2a675430d8d33f62"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/d7cf0d894e8aa4c73712ee4a331cc1eaa37cdc7d",
-            "reference": "d7cf0d894e8aa4c73712ee4a331cc1eaa37cdc7d",
+            "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/dcbed1074f8244661eecddfc2a675430d8d33f62",
+            "reference": "dcbed1074f8244661eecddfc2a675430d8d33f62",
             "shasum": ""
         },
         "require": {
@@ -23,7 +23,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2017-03-01T22:17:45+00:00",
+        "time": "2017-05-22T02:43:20+00:00",
         "bin": [
             "scripts/phpcs",
             "scripts/phpcbf"
@@ -136,33 +136,38 @@
     },
     {
         "name": "wimg/php-compatibility",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "8.1.0",
+        "version_normalized": "8.1.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/wimg/PHPCompatibility.git",
-            "reference": "4853c6da08a6cb0f53029170e93c97120a6a2335"
+            "reference": "4ac01e4fe8faaa4f8d3b3cd06ea92e5418ce472e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/4853c6da08a6cb0f53029170e93c97120a6a2335",
-            "reference": "4853c6da08a6cb0f53029170e93c97120a6a2335",
+            "url": "https://api.github.com/repos/wimg/PHPCompatibility/zipball/4ac01e4fe8faaa4f8d3b3cd06ea92e5418ce472e",
+            "reference": "4ac01e4fe8faaa4f8d3b3cd06ea92e5418ce472e",
             "shasum": ""
         },
         "require": {
-            "ext-tokenizer": "*",
-            "php": ">=5.1.2",
-            "squizlabs/php_codesniffer": "~2.0"
+            "php": ">=5.3",
+            "squizlabs/php_codesniffer": "^2.2 || ^3.0.2"
+        },
+        "conflict": {
+            "squizlabs/php_codesniffer": "2.6.2"
         },
         "require-dev": {
-            "satooshi/php-coveralls": "dev-master"
+            "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0"
         },
-        "time": "2017-01-03T20:31:50+00:00",
+        "suggest": {
+            "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3"
+        },
+        "time": "2017-12-27T21:58:38+00:00",
         "type": "phpcodesniffer-standard",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "PHPCompatibility\\": ""
+                "PHPCompatibility\\": "PHPCompatibility/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -175,7 +180,7 @@
                 "role": "lead"
             }
         ],
-        "description": "This is a set of sniffs for PHP_CodeSniffer that checks for PHP version compatibility.",
+        "description": "A set of sniffs for PHP_CodeSniffer that checks for PHP version compatibility.",
         "homepage": "http://techblog.wimgodden.be/tag/codesniffer/",
         "keywords": [
             "compatibility",

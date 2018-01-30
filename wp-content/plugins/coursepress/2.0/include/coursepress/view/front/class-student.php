@@ -275,3 +275,4 @@ class CoursePress_View_Front_Student {
 		do_action( 'coursepress_after_settings_form' );
 	}
 }
+

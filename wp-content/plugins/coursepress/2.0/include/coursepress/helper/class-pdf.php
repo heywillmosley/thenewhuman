@@ -234,7 +234,7 @@ class CoursePress_Helper_PDF extends CP_TCPDF {
 
 		// If filtering, please make sure both path and url refer to the same location
 		$cache_path = self::cache_path();
-		$furl_path = self::cache_url();
+		$furl_path = self::cache_url(); 
 
 		$page_orientation = isset( $args['orientation'] ) ? $args['orientation'] : PDF_PAGE_ORIENTATION;
 

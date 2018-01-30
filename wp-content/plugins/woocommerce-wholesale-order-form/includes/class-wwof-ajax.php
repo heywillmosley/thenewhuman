@@ -171,6 +171,7 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
          * @since 1.3.5 Only show products with visibility of 'Catalog/Search' and 'Catalog'. 'Hidden' and 'Search' visibility should not shown.
          * @since 1.6.6 Refactor codebase and move to its proper model
          * @since 1.7.0 Updated query to support product_variation post type be inlcuded on the results
+         * @since 1.8.0 Allow loading of translated products for guest users (WWOF-256)
          *
          * @param int  $paged
          * @param null $search
@@ -180,7 +181,7 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
          *
          * @return string
          */
-        public function wwof_display_product_listing( $paged = 1 , $search = null , $cat_filter = null , $shortcode_atts = null ) {
+        public function wwof_display_product_listing( $paged = 1 , $search = null , $cat_filter = null , $shortcode_atts = null , $lang = 0 ) {
 
             ob_start();
 
@@ -189,12 +190,21 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
             // Check if the user has permission
             if ( $user_has_access ) {
 
+                global $sitepress;
+
                 if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 
-                    $paged              = trim( $_POST[ 'paged' ] );
-                    $search             = trim( $_POST[ 'search' ] );
-                    $cat_filter         = trim( $_POST[ 'cat_filter' ] );
-                    $shortcode_atts     = $_POST[ 'shortcode_atts' ];
+                    $paged          = trim( $_POST[ 'paged' ] );
+                    $search         = trim( $_POST[ 'search' ] );
+                    $cat_filter     = trim( $_POST[ 'cat_filter' ] );
+                    $shortcode_atts = $_POST[ 'shortcode_atts' ];
+
+                }
+
+                if ( is_object( $sitepress ) ) {
+
+                    $code = $sitepress->get_language_from_url( $_SERVER[ "HTTP_REFERER" ] );
+                    $sitepress->switch_lang( $code );
 
                 }
 

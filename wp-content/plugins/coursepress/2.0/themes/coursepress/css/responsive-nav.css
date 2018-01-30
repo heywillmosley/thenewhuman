@@ -126,7 +126,7 @@
         padding: 0 15px;
     }
 
-    #mobile_menu:last-child,
+    #mobile_menu:last-child, 
     .mobile_menu:last-child{
         display: none !important;
     }
@@ -154,6 +154,3 @@
         display: none;
     }
 }
-
-
-/* 378641-1510858548-au */

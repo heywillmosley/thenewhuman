@@ -127,7 +127,7 @@ abstract class Stripe_ApiResource extends Stripe_Object
     $url = self::_scopedLsb($class, 'classUrl', $class);
     $opts = Stripe_RequestOptions::parse($options);
     $requestor = new Stripe_ApiRequestor($opts->apiKey, $base);
-    list($response, $apiKey) =
+    list($response, $apiKey) = 
       $requestor->request('get', $url, $params, $opts->headers);
     return Stripe_Util::convertToStripeObject($response, $apiKey);
   }
@@ -139,7 +139,7 @@ abstract class Stripe_ApiResource extends Stripe_Object
     $base = self::_scopedLsb($class, 'baseUrl');
     $requestor = new Stripe_ApiRequestor($opts->apiKey, $base);
     $url = self::_scopedLsb($class, 'classUrl', $class);
-    list($response, $apiKey) =
+    list($response, $apiKey) = 
       $requestor->request('post', $url, $params, $opts->headers);
     return Stripe_Util::convertToStripeObject($response, $apiKey);
   }

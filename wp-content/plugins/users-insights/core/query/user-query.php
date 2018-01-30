@@ -7,10 +7,23 @@ class USIN_User_Query extends USIN_Query{
 		global $wpdb;
 
 		$this->build_query($default_fields);
+
+		ob_start();
+		$start_time = microtime(true);
+		$wpdb->show_errors();
+
 		$results =  $wpdb->get_results( $this->query );
 
 		$total = $wpdb->get_var( 'SELECT FOUND_ROWS()' );
 		$results = apply_filters('usin_users_raw_data', $results);
+
+		$wpdb->hide_errors();
+		$error = ob_get_clean();
+
+		if(!empty($error)){
+			$error.= sprintf("%s: %fs", __('Execution time', 'usin'), round((microtime(true) - $start_time), 5));
+			return new WP_Error('usin_db_error', __('Database error', 'usin'), $error);
+		}
 		
 		$users = $this->db_rows_to_objects($results);
 

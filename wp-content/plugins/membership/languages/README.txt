@@ -35,6 +35,3 @@ Directory
 
     The second option is not recommented because your custom translation will
     be lost when you update the plugin.
-
-
-378641-1509988136-au

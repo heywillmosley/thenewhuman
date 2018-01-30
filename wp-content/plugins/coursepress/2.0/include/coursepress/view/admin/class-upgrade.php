@@ -83,3 +83,4 @@ class CoursePress_View_Admin_Upgrade {
 		wp_enqueue_script( 'coursepress_admin_upgrade_js', $script, array( 'jquery' ), CoursePress::$version, true );
 	}
 }
+

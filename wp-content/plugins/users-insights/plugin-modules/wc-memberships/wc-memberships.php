@@ -9,8 +9,9 @@ class USIN_WC_Memberships extends USIN_Plugin_Module{
 	
 	protected $module_name = 'wc-memberships';
 	protected $plugin_path = 'woocommerce-memberships/woocommerce-memberships.php';
-	protected $post_type = 'wc_user_membership';
 	protected static $statuses = null;
+
+	const POST_TYPE = 'wc_user_membership';
 
 	
 	protected function apply_module_actions(){
@@ -22,8 +23,8 @@ class USIN_WC_Memberships extends USIN_Plugin_Module{
 		require_once 'wc-memberships-query.php';
 		require_once 'wc-memberships-user-activity.php';
 		
-		new USIN_WC_Memberships_Query($this->post_type);
-		new USIN_WC_Memberships_User_Activity($this->post_type);
+		new USIN_WC_Memberships_Query(self::POST_TYPE);
+		new USIN_WC_Memberships_User_Activity(self::POST_TYPE);
 	}
 
 
@@ -38,6 +39,11 @@ class USIN_WC_Memberships extends USIN_Plugin_Module{
 			),
 			'active' => false
 		);
+	}
+
+	protected function init_reports(){
+		require_once 'reports/wc-memberships-reports.php';
+		new USIN_WC_Memberships_Reports($this);
 	}
 
 	public function register_fields(){
@@ -77,7 +83,7 @@ class USIN_WC_Memberships extends USIN_Plugin_Module{
 				'fieldType' => $this->module_name,
 				'filter' => array(
 					'type' => 'include_exclude',
-					'options' => $this->get_status_options()
+					'options' => self::get_status_options()
 				),
 				'icon' => 'woocommerce',
 				'module' => $this->module_name
@@ -91,7 +97,7 @@ class USIN_WC_Memberships extends USIN_Plugin_Module{
 				'fieldType' => $this->module_name,
 				'filter' => array(
 					'type' => 'include_exclude',
-					'options' => $this->get_membership_plans()
+					'options' => self::get_membership_plans()
 				),
 				'icon' => 'woocommerce',
 				'module' => $this->module_name
@@ -111,23 +117,31 @@ class USIN_WC_Memberships extends USIN_Plugin_Module{
 		return self::$statuses;
 	}
 	
-	protected function get_status_options(){
+	public static function get_status_options($assoc_res = false){
 		$status_options = array();
 		
 		$wcm_statuses = self::get_statuses();
 		foreach ($wcm_statuses as $status_key => $status) {
-			$status_options[]= array('key'=>$status_key, 'val'=>$status['label']);
+			if($assoc_res){
+				$status_options[$status_key]= $status['label'];
+			}else{
+				$status_options[]= array('key'=>$status_key, 'val'=>$status['label']);
+			}
 		}
 			
 		return $status_options;
 	}
 	
-	protected function get_membership_plans(){
+	public static function get_membership_plans($assoc_res = false){
 		$plan_options = array();
 		if(function_exists('wc_memberships_get_membership_plans')){
 			$wcm_plans = wc_memberships_get_membership_plans();
 			foreach ($wcm_plans as $plan) {
-				$plan_options[]= array('key'=>$plan->id, 'val'=>$plan->name);
+				if($assoc_res){
+					$plan_options[$plan->id] = $plan->name;
+				}else{
+					$plan_options[]= array('key'=>$plan->id, 'val'=>$plan->name);
+				}
 			}
 			
 		}
@@ -136,7 +150,7 @@ class USIN_WC_Memberships extends USIN_Plugin_Module{
 	
 	
 	public function exclude_post_types($exclude){
-		$exclude[]=$this->post_type;
+		$exclude[]=self::POST_TYPE;
 		return $exclude;
 	}
 	

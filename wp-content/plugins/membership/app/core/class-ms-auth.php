@@ -70,7 +70,7 @@ class MS_Auth {
                                 $enforce
                             );
 						}
-
+						
 						/**
 						 * After login success action
 						 *

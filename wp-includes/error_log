@@ -2,3 +2,7 @@
 Stack trace:
 #0 {main}
   thrown in /home/thenewhu/public_html/wp-includes/locale.php on line 10
+[28-Jan-2018 17:25:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _deprecated_file() in /home/thenewhu/public_html/wp-includes/session.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-includes/session.php on line 8

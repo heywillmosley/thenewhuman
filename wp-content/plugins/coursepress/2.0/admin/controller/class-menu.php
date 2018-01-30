@@ -461,9 +461,7 @@ foreach ( $allowed_statuses as $status => $label ) {
 			);
 		}
 		$url = 'https://wordpress.org/support/plugin/coursepress';
-
-		$url = 'https://premium.wpmudev.org/forums/tags/coursepress-pro';
-
+		
 		$actions['support'] = sprintf(
 			'<a href="%s">%s</a>',
 			esc_url( $url ),

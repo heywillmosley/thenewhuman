@@ -24,6 +24,7 @@ jQuery( document ).ready( function( $ ) {
      | Functions
      |------------------------------------------------------------------------------------------------------------------
      */
+
     function disableElement( $element ) {
 
         $element.attr( 'disabled' , 'disabled' ).addClass( 'disabled' );
@@ -120,7 +121,7 @@ jQuery( document ).ready( function( $ ) {
         } , delay );
 
     }
-
+    
     function getParameterByName( name , url ) {
 
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -129,7 +130,7 @@ jQuery( document ).ready( function( $ ) {
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 
     }
-
+    
     function LoadProductListing( paged , search , catFilter , $shortcodeAtts , first_load ) {
 
         disableSearchCommandFields();
@@ -447,7 +448,8 @@ jQuery( document ).ready( function( $ ) {
 
         var quantityMin  = quantityField.prop( 'min' ) ? parseInt( quantityField.prop( 'min' ) ) : 1,
             quantityMax  = quantityField.prop( 'max' ) ? parseInt( quantityField.prop( 'max' ) ) : 0,
-            quantityStep = quantityField.prop( 'step' ) ? parseInt( quantityField.prop( 'step' ) ) : 1;
+            quantityStep = quantityField.prop( 'step' ) ? parseInt( quantityField.prop( 'step' ) ) : 1,
+            excessQty    = quantity - quantityMin;
 
         // validate quantity
         if ( quantity < quantityMin || ( quantityMax && quantity > quantityMax ) ) {
@@ -456,24 +458,21 @@ jQuery( document ).ready( function( $ ) {
             vex.dialog.alert( { unsafeMessage : invalidQuantityError } );
             return;
 
-        } else if ( quantity % quantityStep !== 0 ) {
+        } else if ( excessQty % quantityStep !== 0 ) {
 
-            var nearest  = { low : quantity , high : quantity },
-                mismatch = { invalid : false };
+            var multiplier  = parseInt( ( quantity - quantityMin ) / quantityStep , 10 ),
+                nearestLow  = quantityMin + ( quantityStep * multiplier ),
+                nearestHigh = quantityMin + ( quantityStep * ( multiplier + 1 ) );
 
-            while ( nearest[ 'low' ] % quantityStep != 0 && nearest[ 'low' ] + quantityStep >= quantity )
-                nearest[ 'low' ]--;
+            invalidQuantityError = Options.invalid_quantity.replace( '{low}' , nearestLow ).replace( '{high}' , nearestHigh );
 
-            while ( nearest[ 'high' ] % quantityStep != 0 && nearest[ 'high' ] - quantityStep <= quantity )
-                nearest[ 'high' ]++;
-
-            invalidQuantityError = Options.invalid_quantity.replace( '{low}' , nearest[ 'low' ] ).replace( '{high}' , nearest[ 'high' ] );
             vex.dialog.alert( { unsafeMessage : invalidQuantityError } );
-            return;
-        } else {
-            return true;
-        }
 
+            return;
+
+        } else
+            return true;
+        
     }
 
     // 6

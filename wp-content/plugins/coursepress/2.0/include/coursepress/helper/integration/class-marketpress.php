@@ -1314,3 +1314,4 @@ Yours sincerely,
 		update_post_meta( $product_id, 'mp_product_images', $mp_product_images );
 	}
 }
+

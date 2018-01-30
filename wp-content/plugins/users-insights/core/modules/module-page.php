@@ -35,7 +35,7 @@ class USIN_Module_Page{
 		add_action ( 'admin_menu', array($this, 'add_menu_page'), 20 );
 		add_action ( 'admin_init', array($this, 'create_nonce') );
 
-		$this->assets = new USIN_Module_Assets($this->slug, $this->module_options, $this);
+		$this->assets = new USIN_Module_Assets($this);
 		$this->assets->init();
 
 		$this->ajax = new USIN_Module_Ajax($this->module_options, $this->capability, $this->nonce_key);

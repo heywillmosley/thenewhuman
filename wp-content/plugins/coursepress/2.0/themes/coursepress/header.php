@@ -29,7 +29,7 @@
 						<?php
 						if ( function_exists( 'the_custom_logo' ) && get_custom_logo() ) :
 							the_custom_logo();
-						else :
+						else : 
 							$logo_image_url = get_theme_mod( 'coursepress_logo', get_template_directory_uri() . '/images/logo-default.png' );
 						?>
 							<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">

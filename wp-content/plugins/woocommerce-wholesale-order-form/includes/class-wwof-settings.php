@@ -307,7 +307,7 @@ if ( ! class_exists( 'WWOF_Settings' ) ) {
                 array(
                     'title'     =>  __( 'List product variation individually' , 'woocommerce-wholesale-order-form' ),
                     'type'      =>  'checkbox',
-                    'desc'      =>  __( 'Enabling this setting will list down each product variation individually and have its own row in the wholsale order form.' , 'woocommerce-wholesale-order-form' ),
+                    'desc'      =>  __( 'Enabling this setting will list down each product variation individually and have its own row in the wholesale order form.' , 'woocommerce-wholesale-order-form' ),
                     'id'        =>  'wwof_general_list_product_variation_individually',
                 ),
 

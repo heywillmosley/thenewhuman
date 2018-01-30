@@ -290,7 +290,7 @@ class MS_Controller_Shortcode extends MS_Controller {
 			null,
 			$exclude
 		);
-
+                
 		if ( ! $member->is_valid() || ! $member->has_membership() ) {
 			foreach( $memberships as $key => $membership ) {
 				if( isset( $membership->update_denied['guest'] ) && lib3()->is_true( $membership->update_denied['guest'] ) ) {
@@ -298,7 +298,7 @@ class MS_Controller_Shortcode extends MS_Controller {
 				}
 			}
 		}
-
+                
 
 		$data['memberships'] = $memberships;
 		$move_from_ids = array();
@@ -482,11 +482,11 @@ class MS_Controller_Shortcode extends MS_Controller {
 
 		if ( ! empty( $id ) ) {
 			$membership = MS_Factory::load( 'MS_Model_Membership', $id );
-
+                        
 			if ( ! $membership->active ){
 				return __( 'Sorry! The membership you are trying to register is not active.', 'membership2' );
 			}
-
+                        
 			$data['action'] = MS_Helper_Membership::MEMBERSHIP_ACTION_SIGNUP;
 			$data['step'] 	= MS_Controller_Frontend::STEP_PAYMENT_TABLE;
 
@@ -577,14 +577,14 @@ class MS_Controller_Shortcode extends MS_Controller {
 
 		$setting 	= MS_Plugin::instance()->settings;
 		$member 	= MS_Model_Member::get_current_member();
-
+                
 		if( defined( 'MS_PROTECTED_MESSAGE_REVERSE_RULE' ) && MS_PROTECTED_MESSAGE_REVERSE_RULE && isset( $_REQUEST['membership_id'] ) ) {
 
 			$protection_msg = $setting->get_protection_message(
 				MS_Model_Settings::PROTECTION_MSG_CONTENT,
 				$_REQUEST['membership_id']
 			);
-
+			
 		}
 		else{
 			if ( count( $member->subscriptions ) ) {
@@ -600,7 +600,7 @@ class MS_Controller_Shortcode extends MS_Controller {
 					MS_Model_Settings::PROTECTION_MSG_CONTENT
 				);
 			}
-		}
+		}	
 
 		$html = '<div class="ms-protected-content">';
 		if ( ! empty( $protection_msg ) ) {
@@ -815,7 +815,7 @@ class MS_Controller_Shortcode extends MS_Controller {
 				'posts_per_page' 	=> $data['limit_activities'],
 			)
 		);
-
+                
 		$view = MS_Factory::create( 'MS_View_Shortcode_Account' );
 		$view->data = apply_filters(
 			'ms_view_shortcode_account_data',
@@ -1240,11 +1240,10 @@ class MS_Controller_Shortcode extends MS_Controller {
 	public function hide_shortcode( $atts, $content = '' ) {
 		return do_shortcode( $content );
 	}
-
-        public function enqueue_scripts()
-        {
-            $data['ms_init'][] = 'frontend_register';
+        
+    public function enqueue_scripts() {
+        $data['ms_init'][] = 'frontend_register';
 	    lib3()->ui->data( 'ms_data', $data );
-        }
+    }
 
 }

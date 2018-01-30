@@ -454,7 +454,7 @@ class FrmProHooksController{
 
     public static function load_multisite_hooks() {
         // Copies Controller
-        add_action('init', 'FrmProCopiesController::install');
+		add_action( 'init', 'FrmProCopiesController::copy_forms' );
         add_action('frm_after_install', 'FrmProCopiesController::activation_install', 20);
         add_action('frm_update_form', 'FrmProCopiesController::save_copied_form', 20, 2);
         add_action('frm_create_display', 'FrmProCopiesController::save_copied_display', 20, 2);

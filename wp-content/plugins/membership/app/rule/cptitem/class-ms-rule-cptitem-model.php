@@ -28,7 +28,7 @@ class MS_Rule_CptItem_Model extends MS_Rule {
 	 * @var   array
 	 */
 	static protected $denied_ids = array();
-
+	
 
 	/**
 	 * Rule type.
@@ -65,7 +65,7 @@ class MS_Rule_CptItem_Model extends MS_Rule {
 			parent::protect_content();
 			$this->add_action( 'parse_query', 'find_protected_posts', 97 );
 			$this->add_action( 'parse_query', 'protect_posts', 98 );
-
+			
 		}
 	}
 
@@ -80,7 +80,7 @@ class MS_Rule_CptItem_Model extends MS_Rule {
 	 * @param WP_Query $query The WP_Query object to filter.
 	 */
 	public function find_protected_posts( $wp_query ) {
-		$post_types = $wp_query->get( 'post_type' );
+		$post_types = $wp_query->get( 'post_type' );		
 
 		// There was one case where this was needed...
 		if ( empty( $post_types )
@@ -128,9 +128,9 @@ class MS_Rule_CptItem_Model extends MS_Rule {
 						}
 					}
 				}
-			}
+			}			
 		}
-	}
+	}		
 
 	/**
 	 * Adds filter for posts query to remove all protected custom post types.

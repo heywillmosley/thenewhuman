@@ -1136,19 +1136,20 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
 
                     }
 
+                    // apply variable level input arguments.
                     $input_args = apply_filters( 'woocommerce_quantity_input_args', array(
                         'step'	        => $step_value,
                         'input_value'	=> $input_value,
                         'min_value'     => 1,
                         'max_value'     => $max_value
                     ) , $parent_product );
-
                 }
 
             } else
                 $input_args = apply_filters( 'woocommerce_quantity_input_args', array( 'input_value'	=> '1' ) , $product );
 
-            return $input_args;
+            // apply min and step value set on WWPP (priority)
+            return apply_filters( 'wwof_variation_quantity_input_args' , $input_args , $product );
         }
 
         /**
@@ -1193,6 +1194,63 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
 
             return ( $a->slug < $b->slug ) ? -1 : 1;
 
+        }
+
+        /**
+         * Get wholesale prices for each available variation.
+         *
+         * @since 1.8.0
+         * @access public
+         *
+         * @param array $available_variations List of variable product available variations.
+         * @param array $wholesale_role       Array of user wholesale role.
+         */
+        public static function wwof_get_variations_wholesale_price( &$available_variations , $wholesale_role ) {
+
+            if ( ! is_array( $available_variations ) || empty( $available_variations ) )
+                return;
+
+            foreach ( $available_variations as $key => $value ) {
+
+                if ( WWOF_Functions::wwof_dependency_version_compare( 'wwp' , '1.6.0' , '>=' ) ) {
+
+                    $price_arr      = WWP_Wholesale_Prices::get_product_wholesale_price_on_shop_v2( $value[ 'variation_id' ] , $wholesale_role );
+                    $wholesalePrice = $price_arr[ 'wholesale_price' ];
+
+                } elseif ( WWOF_Functions::wwof_dependency_version_compare( 'wwp' , '1.5.0' , '>=' ) )
+                    $wholesalePrice = WWP_Wholesale_Prices::get_product_wholesale_price_on_shop( $value[ 'variation_id' ] , $wholesale_role );
+                else
+                    $wholesalePrice = WWP_Wholesale_Prices::getProductWholesalePrice( $value[ 'variation_id' ] , $wholesale_role );
+
+                $available_variations[ $key ][ 'wholesale_price' ] = $wholesalePrice;
+
+            }
+
+        }
+
+        /**
+         * Update the input arguments of the available variations list.
+         *
+         * @since 1.8.0
+         * @access public
+         *
+         * @param array $available_variations List of variable product available variations.
+         */
+        public static function wwof_update_variations_input_args( &$available_variations ) {
+
+            if ( ! is_array( $available_variations ) || empty( $available_variations ) )
+                return;
+
+            foreach ( $available_variations as $key => $variation ) {
+
+                $product    = wc_get_product( $variation[ 'variation_id' ] );
+                $input_args = self::get_product_quantity_input_args( $product );
+
+                $available_variations[ $key ][ 'min_qty' ]     = $input_args[ 'min_value' ];
+                $available_variations[ $key ][ 'max_qty' ]     = $input_args[ 'max_value' ];
+                $available_variations[ $key ][ 'input_value' ] = $input_args[ 'input_value' ];
+                $available_variations[ $key ][ 'step' ]        = $input_args[ 'step' ];
+            }
         }
 
         /*

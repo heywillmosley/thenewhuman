@@ -957,7 +957,7 @@ class CoursePress_View_Admin_Course_Edit {
 			}
 
 			if ( CP_IS_PREMIUM ) {
-				$version_message = __( '<p>The full version of MarketPress has been bundled with CoursePress Pro.</p>', 'cp' );
+				$version_message = __( '<p>The full version of MarketPress has been bundled with CoursePress.</p>', 'cp' );
 			} else {
 				$version_message = __( '<p>You can use the free or premium version of MarketPress to sell your courses.</p>', 'cp' );
 			}

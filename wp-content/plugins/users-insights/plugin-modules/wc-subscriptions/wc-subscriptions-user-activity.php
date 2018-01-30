@@ -35,13 +35,13 @@ class USIN_WC_Subscriptions_User_Activity{
 			$list = array();
 			foreach ($subscriptions as $subscription) {
 				$title = '';
-
+				
 				if(class_exists('WC_Subscription')){
 					$wc_subscription = new WC_Subscription($subscription->ID);
 					
 					//get the date
 					if(method_exists($wc_subscription, 'get_date')){
-						$title .= USIN_Helper::format_date($wc_subscription->get_date('start'));
+						$title .= USIN_Helper::format_date($wc_subscription->get_date('date_created'));
 					}
 					
 					//get the status

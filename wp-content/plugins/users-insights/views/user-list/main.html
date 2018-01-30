@@ -26,8 +26,14 @@
 </div>
 <div class="clear"></div>
 
-<div class="usin-error" ng-show="errorMsg">
-	{{strings.error}}: {{errorMsg}}
+<div class="usin-error" ng-show="error.msg">
+	{{strings.error}}: {{error.msg}}
+	<div class="usin-error-data" ng-if="error.info">
+		<button class="usin-btn-small" ng-click="error.infoVisible = !error.infoVisible">
+			{{ error.infoVisible ? strings.hideDebugInfo : strings.showDebugInfo }}
+		</button>
+		<pre class="usin-debug-info" ng-show="error.infoVisible" ng-bind-html="error.info"></pre>
+	</div>
 </div>
 
 <div class="usin-map-view" ng-if="!listView" ng-controller="UsinMapCtrl">

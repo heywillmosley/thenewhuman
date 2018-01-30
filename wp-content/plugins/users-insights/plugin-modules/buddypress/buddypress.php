@@ -4,40 +4,40 @@ if(!defined( 'ABSPATH' )){
 	exit;
 }
 
-class USIN_BuddyPress{
+class USIN_BuddyPress extends USIN_Plugin_Module{
 	
-	protected $xprofile;
+	protected $module_name = 'buddypress';
+	protected $plugin_path = 'buddypress/bp-loader.php';
+	public $xprofile;
+	
 
-	public function __construct(){
-		add_filter('usin_module_options', array($this , 'register_module'));
-
-		if(USIN_Helper::is_plugin_activated('buddypress/bp-loader.php')){
-			add_action('admin_init', array($this, 'init'));
-			add_filter('usin_fields', array($this , 'register_fields'));
-			add_action('usin_module_activated', array($this, 'do_on_module_activated'));
-		}
+	protected function apply_module_actions(){
+		add_action('usin_module_activated', array($this, 'do_on_module_activated'));
 	}
 
 	public function init(){
-		if(usin_module_options()->is_module_active('buddypress')){
-			require_once 'buddypress-query.php';
-			require_once 'buddypress-user-activity.php';
-			require_once 'buddypress-xprofile.php';
+		require_once 'buddypress-query.php';
+		require_once 'buddypress-user-activity.php';
+		require_once 'buddypress-xprofile.php';
 
-			$this->xprofile = new USIN_BuddyPress_XProfile();
-			
-			$bp_query = new USIN_BuddyPress_Query($this->xprofile);
-			$bp_query->init();
+		$this->xprofile = new USIN_BuddyPress_XProfile();
+		
+		$bp_query = new USIN_BuddyPress_Query($this->xprofile);
+		$bp_query->init();
 
-			$bp_user_activity = new USIN_BuddyPress_User_Activity();
-			$bp_user_activity->init();
-			
-			add_filter('usin_user_db_data', array($this , 'filter_user_data'));
-		}
+		$bp_user_activity = new USIN_BuddyPress_User_Activity();
+		$bp_user_activity->init();
+
+		add_filter('usin_user_db_data', array($this , 'filter_user_data'));
+	}
+
+	protected function init_reports(){
+		require_once 'reports/buddypress-reports.php';
+		new USIN_BuddyPress_Reports($this);
 	}
 
 	public function do_on_module_activated($module){
-		if($module == 'buddypress'){
+		if($module == $this->module_name){
 			$this->save_last_seen();
 		}
 	}
@@ -49,107 +49,102 @@ class USIN_BuddyPress{
 		return true;
 	}
 
-	public function register_module($default_modules){
-		if(!empty($default_modules) && is_array($default_modules)){
-			$default_modules[]=array(
-				'id' => 'buddypress',
-				'name' => 'BuddyPress',
-				'desc' => __('Retrieves and displays data about the users activity in the BuddyPress social network.', 'usin'),
-				'allow_deactivate' => true,
-				'buttons' => array(
-					array('text'=> __('Learn More', 'usin'), 'link'=>'https://usersinsights.com/buddypress-users-data/', 'target'=>'_blank')
-				),
-				'active' => false
-			);
-		}
-		return $default_modules;
+	public function register_module(){
+		return array(
+			'id' => $this->module_name,
+			'name' => 'BuddyPress',
+			'desc' => __('Retrieves and displays data about the users activity in the BuddyPress social network.', 'usin'),
+			'allow_deactivate' => true,
+			'buttons' => array(
+				array('text'=> __('Learn More', 'usin'), 'link'=>'https://usersinsights.com/buddypress-users-data/', 'target'=>'_blank')
+			),
+			'active' => false
+		);
 	}
 
-	public function register_fields($fields){
+	public function register_fields(){
+		$fields = array();
 
-		if(!empty($fields) && is_array($fields)){
+		if($this->is_bp_feature_active('groups')){
+			$fields[]=array(
+				'name' => __('Group Number', 'usin'),
+				'id' => 'groups',
+				'order' => 'ASC',
+				'show' => true,
+				'fieldType' => 'buddypress',
+				'filter' => array(
+					'type' => 'number',
+					'disallow_null' => true
+				),
+				'module' => 'buddypress'
+			);
 
-			if($this->is_bp_feature_active('groups')){
-				$fields[]=array(
-					'name' => __('Group Number', 'usin'),
-					'id' => 'groups',
-					'order' => 'ASC',
-					'show' => true,
-					'fieldType' => 'buddypress',
-					'filter' => array(
-						'type' => 'number',
-						'disallow_null' => true
-					),
-					'module' => 'buddypress'
-				);
-
-				$fields[]=array(
-					'name' => __('Groups Created', 'usin'),
-					'id' => 'groups_created',
-					'order' => 'ASC',
-					'show' => true,
-					'fieldType' => 'buddypress',
-					'filter' => array(
-						'type' => 'number',
-						'disallow_null' => true
-					),
-					'module' => 'buddypress'
-				);
-				
-				$fields[]=array(
-					'name' => __('Group', 'usin'),
-					'id' => 'bp_group',
-					'order' => false,
-					'show' => false,
-					'hideOnTable' => true,
-					'fieldType' => 'none',
-					'filter' => array(
-						'type' => 'include_exclude_with_nulls',
-						'options' => $this->get_groups(),
-						'disallow_null' => true
-					),
-					'module' => 'buddypress'
-				);
-			}
-
-			if($this->is_bp_feature_active('friends')){
-				$fields[]=array(
-					'name' => __('Friends', 'usin'),
-					'id' => 'friends',
-					'order' => 'ASC',
-					'show' => true,
-					'fieldType' => 'buddypress',
-					'filter' => array(
-						'type' => 'number',
-						'disallow_null' => true
-					),
-					'module' => 'buddypress'
-				);
-			}
-
-			if($this->is_bp_feature_active('activity')){
-				$fields[]=array(
-					'name' => __('Activity Updates', 'usin'),
-					'id' => 'activity_updates',
-					'order' => 'ASC',
-					'show' => true,
-					'fieldType' => 'buddypress',
-					'filter' => array(
-						'type' => 'number',
-						'disallow_null' => true
-					),
-					'module' => 'buddypress'
-				);
-			}
-
-			if(!empty($this->xprofile)){
-				$xprof_fields = $this->xprofile->get_fields();
-				if(!empty($xprof_fields)){
-					$fields = array_merge($fields, $xprof_fields);
-				}
-			}
-
+			$fields[]=array(
+				'name' => __('Groups Created', 'usin'),
+				'id' => 'groups_created',
+				'order' => 'ASC',
+				'show' => true,
+				'fieldType' => 'buddypress',
+				'filter' => array(
+					'type' => 'number',
+					'disallow_null' => true
+				),
+				'module' => 'buddypress'
+			);
+			
+			$fields[]=array(
+				'name' => __('Group', 'usin'),
+				'id' => 'bp_group',
+				'order' => false,
+				'show' => false,
+				'hideOnTable' => true,
+				'fieldType' => 'none',
+				'filter' => array(
+					'type' => 'include_exclude_with_nulls',
+					'options' => self::get_groups(),
+					'disallow_null' => true
+				),
+				'module' => 'buddypress'
+			);
 		}
+
+		if($this->is_bp_feature_active('friends')){
+			$fields[]=array(
+				'name' => __('Friends', 'usin'),
+				'id' => 'friends',
+				'order' => 'ASC',
+				'show' => true,
+				'fieldType' => 'buddypress',
+				'filter' => array(
+					'type' => 'number',
+					'disallow_null' => true
+				),
+				'module' => 'buddypress'
+			);
+		}
+
+		if($this->is_bp_feature_active('activity')){
+			$fields[]=array(
+				'name' => __('Activity Updates', 'usin'),
+				'id' => 'activity_updates',
+				'order' => 'ASC',
+				'show' => true,
+				'fieldType' => 'buddypress',
+				'filter' => array(
+					'type' => 'number',
+					'disallow_null' => true
+				),
+				'module' => 'buddypress'
+			);
+		}
+
+		if(!empty($this->xprofile)){
+			$xprof_fields = $this->xprofile->get_fields();
+			if(!empty($xprof_fields)){
+				$fields = array_merge($fields, $xprof_fields);
+			}
+		}
+
 
 		return $fields;
 	}
@@ -196,7 +191,7 @@ class USIN_BuddyPress{
 		return $data;
 	}
 	
-	public function get_groups(){
+	public static function get_groups($return_associative = false){
 		$groups = array();
 		if(method_exists('BP_Groups_Group', 'get')){
 			$bp_groups = BP_Groups_Group::get(array(
@@ -207,7 +202,11 @@ class USIN_BuddyPress{
 			
 			if(!empty($bp_groups['groups']) && is_array($bp_groups['groups'])){
 				foreach ($bp_groups['groups'] as $bp_group ) {
-					$groups[]= array('key'=> $bp_group->id, 'val'=>$bp_group->name);
+					if($return_associative){
+						$groups[$bp_group->id] = $bp_group->name;
+					}else{
+						$groups[]= array('key'=> $bp_group->id, 'val'=>$bp_group->name);
+					}
 				}
 			}
 		}

@@ -12,12 +12,12 @@ class M2_Mailchimp {
     private $_api_key;
     private $_data_center;
 	private $_user;
-
-	/*
+	
+	/* 
     The <dc> part of the URL corresponds to the data center for your account. For example, if the last part of your MailChimp API key is us6, all API endpoints for your account are available at https://us6.api.mailchimp.com/3.0/.
     */
 	private $_endpoint = 'https://<dc>.api.mailchimp.com/3.0/';
-
+	
 	/**
      * Constructs class with required data
      *
@@ -30,7 +30,7 @@ class M2_Mailchimp {
         $this->_endpoint 	= str_replace( '<dc>', $data_center, $this->_endpoint );
         $this->_user 		= wp_get_current_user()->display_name;
 	}
-
+	
 	/**
      * Sends request to the endpoint url with the provided $action
      *
@@ -41,7 +41,7 @@ class M2_Mailchimp {
      */
     private function _request( $verb = "GET", $action, $args = array() ){
         $url = trailingslashit( $this->_endpoint )  . $action;
-
+		
         $_args = array(
             "method" 	=> $verb,
             "headers" 	=>  array(
@@ -58,12 +58,17 @@ class M2_Mailchimp {
 
         $res = wp_remote_request( $url, $_args );
 
-        if( $res['response']['code'] <= 204 )
-            return json_decode(  wp_remote_retrieve_body( $res ) );
+		if ( !is_wp_error( $res ) ) {
+			if( $res['response']['code'] <= 204 )
+            	return json_decode(  wp_remote_retrieve_body( $res ) );
 
-        $err = new WP_Error();
-        $err->add( $res['response']['code'], $res['response']['message'] );
-        return  $err;
+			$err = new WP_Error();
+			$err->add( $res['response']['code'], $res['response']['message'] );
+			return  $err;
+		} else {
+			return $res;
+		}
+        
     }
 
     /**
@@ -87,7 +92,7 @@ class M2_Mailchimp {
     private function _post( $action, $args = array()  ){
         return $this->_request( "POST", $action, $args );
     }
-
+    
      /**
      * Sends rest PUT request
      *
@@ -98,7 +103,7 @@ class M2_Mailchimp {
     private function _put( $action, $args = array()  ){
         return $this->_request( "PUT", $action, $args );
 	}
-
+	
 	 /**
      * Sends rest PUT request
      *
@@ -109,7 +114,7 @@ class M2_Mailchimp {
 	 private function _delete( $action, $args = array()  ){
         return $this->_request( "DELETE", $action, $args );
     }
-
+    
     /**
      * Gets all the lists
      *
@@ -124,7 +129,7 @@ class M2_Mailchimp {
 			'offset' 	=> $offset,
         ) );
     }
-
+    
     /**
      * Gets all the groups under a list
      * @param $list_id
@@ -136,7 +141,7 @@ class M2_Mailchimp {
             'user' => $this->_user . ':' . $this->_api_key, 'count' => $total
         ) );
     }
-
+    
     /**
      * Gets all the interests under a group list
      * @param $list_id
@@ -149,7 +154,7 @@ class M2_Mailchimp {
             'user' => $this->_user . ':' . $this->_api_key, 'count' => $total
         ) );
     }
-
+    
     /**
      * Check member email address if already existing
      * @param $list_id
@@ -163,7 +168,7 @@ class M2_Mailchimp {
             'user' => $this->_user . ':' . $this->_api_key
         ) );
     }
-
+    
     /**
      * Add custom field for list
      * @param $list_id
@@ -176,7 +181,7 @@ class M2_Mailchimp {
             "body" =>  $field_data
         ) );
     }
-
+    
     /**
      * Add new subscriber
      *
@@ -187,9 +192,9 @@ class M2_Mailchimp {
     public function subscribe( $list_id, $data ){
         return $this->_post( 'lists/'. $list_id .'/members', array(
             "body" =>  $data
-        ) );
+        ) );     
     }
-
+    
     /**
      * Update subscription
      *
@@ -205,7 +210,7 @@ class M2_Mailchimp {
             "body" =>  $data
         ) );
 	}
-
+	
 	/**
      * Remove subscriber
      *
@@ -218,7 +223,8 @@ class M2_Mailchimp {
 		$md5_email = md5( strtolower( $email ) );
         return $this->_delete( 'lists/'. $list_id .'/members/' . $md5_email, array(
             "body" =>  $data
-        ) );
+        ) );     
     }
 }
+
 

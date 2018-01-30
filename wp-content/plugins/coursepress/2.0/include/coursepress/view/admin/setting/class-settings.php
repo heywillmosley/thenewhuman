@@ -182,3 +182,4 @@ abstract class CoursePress_View_Admin_Setting_Setting {
 
 	}
 }
+

@@ -24,7 +24,8 @@ class MS_Rule_Url extends MS_Controller {
 				self::RULE_ID,
 				__CLASS__,
 				__( 'URL Restrictions', 'membership2' ),
-				0
+				0,
+				true
 			);
 		}
 
@@ -135,3 +136,4 @@ class MS_Rule_Url extends MS_Controller {
 	}
 
 }
+

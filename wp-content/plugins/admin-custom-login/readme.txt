@@ -3,8 +3,8 @@ Contributors: weblizar
 Donate link: http://www.weblizar.com/
 Tags: custom login page, custom admin login, custom login, customize wordpress login page, wordpress login
 Requires at least: 4.0
-Tested up to: 4.8.3
-Stable tag: 2.5.5
+Tested up to: 4.9.1
+Stable tag: 2.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,6 +97,7 @@ Theere you able update plugin design with unlimited colours. Colour option is av
 * Spanish Translation by [Jose Maria Bescos](http://www.ibidem-translations.com/spanish.php)
 * Polish Translation by [Maciej Janas](http://kowary.pl/)
 * Portuguese Translation (pt_BR) by [Rodrigues Santana](https://www.blupixel.com.br)
+* Finnish Translation (fi_FI) by Eerik Anttila - Graphic & Web Designer
 
 Please help us to translate this plugin in all WordPress available languages and send us your translated file to us at *lizarweb at gmail dot com*.
 
@@ -127,6 +128,8 @@ If you have any question contact us at here: [Plugin Support Forum ](http://word
 
 For more information, see [Weblizar](http://wwww.weblizar.com/)
 
+= 2.5.6 - Finnish Translation added by Eerik Anttila
+= 2.5.6 - Plugin tested with latest WordPress 4.9.1 and working perfect, feedback and review appreciated
 = 2.5.5 - Portuguese Translation updaed by Rodrigues Santana
 = 2.5.4 - Plugin code indented and made the code clean + Fomr Inner Social Icons Text Changed
 = 2.5.3.3 - Added New Language Contribution - Polish (Polski)

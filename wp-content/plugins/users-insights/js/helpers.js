@@ -60,6 +60,27 @@ var usinHelpers = {
 			}
 			return url;
 		}
+	},
+
+	session: {
+		get : function(key){
+			if(!sessionStorage) return null;
+
+			return sessionStorage.getItem(this._key(key));
+		},
+		set : function(key, val){
+			if(!sessionStorage) return;
+
+			sessionStorage.setItem(this._key(key), val);
+		},
+		remove: function(key){
+			if(!sessionStorage) return;
+
+			sessionStorage.removeItem(this._key(key));
+		},
+		_key : function(key){
+			return "_usin"+key;
+		}
 	}
 };
 

@@ -246,7 +246,7 @@ class MS_View_Settings_Edit extends MS_View {
 		$status_url = esc_url_raw(
 			add_query_arg( array( 'run_cron' => 'ms_cron_check_membership_status' ) )
 		);
-
+		
 		$lbl_run = __( 'Run now!', 'membership2' );
 
 
@@ -266,9 +266,9 @@ class MS_View_Settings_Edit extends MS_View {
 		if ( MS_Plugin::get_modifier( 'MS_STOP_EMAILS' ) ) {
 			_e( 'Sending Email Responses is disabled.', 'membership2' );
 		} else {
-
+			
 			$email_stamp = wp_next_scheduled( 'ms_cron_process_communications' ) - time();
-
+			
 			if ( $email_stamp > 0 ) {
 				$email_delay = sprintf(
 					__( 'in %s hrs %s min', 'membership2' ),
@@ -278,11 +278,11 @@ class MS_View_Settings_Edit extends MS_View {
 			} else {
 				$email_delay = __( '(now...)', 'membership2' );
 			}
-
+			
 			$email_url = esc_url_raw(
 				add_query_arg( array( 'run_cron' => 'ms_cron_process_communications' ) )
 			);
-
+			
 			if ( $show ) {
 				$count = MS_Model_Communication::get_queue_count();
 				if ( ! $count ) {
@@ -358,7 +358,7 @@ class MS_View_Settings_Edit extends MS_View {
 
 		return $tab->to_html();
 	}
-
+	
 	/* ====================================================================== *
 	 *                               IMPORT
 	 * ====================================================================== */

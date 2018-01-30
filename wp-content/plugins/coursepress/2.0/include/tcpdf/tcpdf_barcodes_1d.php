@@ -2171,7 +2171,7 @@ class TCPDFBarcode {
 
 	/**
 	 * IMB - Intelligent Mail Barcode - Onecode - USPS-B-3200
-	 *
+	 * 
 	 * @param $code (string) pre-formatted IMB barcode (65 chars "FADT")
 	 * @return array barcode representation.
 	 * @protected

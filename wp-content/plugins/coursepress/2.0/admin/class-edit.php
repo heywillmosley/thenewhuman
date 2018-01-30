@@ -933,12 +933,12 @@ if ( ! class_exists( 'CoursePress_Admin_Edit' ) ) :
 		 */
 		public static function notice_about_pro_when_try_to_add_new_course() {
 			echo '<p>';
-			_e( 'The free version of CoursePress is limited to one course. To add more courses, upgrade to CoursePress Pro for unlimited courses and more payment gateways.', 'cp' );
+			_e( 'The free version of CoursePress is limited to one course. To add more courses, upgrade to CoursePress for unlimited courses and more payment gateways.', 'cp' );
 			echo '</p>';
 			printf(
 				'<p><a href="%s" class="button-primary">%s</a></p>',
 				esc_url( __( 'https://premium.wpmudev.org/project/coursepress-pro/', 'cp' ) ),
-				esc_html__( 'Try CoursePress Pro for Free', 'cp' )
+				esc_html__( 'Try CoursePress for Free', 'cp' )
 			);
 		}
 

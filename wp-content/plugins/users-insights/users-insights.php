@@ -3,13 +3,13 @@
  * Plugin Name: Users Insights
  * Plugin URI: https://usersinsights.com/
  * Description: Everything about your WordPress users in one place
- * Version: 3.3.1
+ * Version: 3.4.1
  * Author: Pexeto
  * Text Domain: usin
  * Domain Path: /lang
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
- * Copyright: Pexeto 2015
+ * Copyright: Pexeto 2018
  *
  * Users Insights is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -66,6 +66,8 @@ if(! class_exists('USIN_Manager')){
 				$this->list_page = new USIN_List_Page($this->title, $this->slug, $this->options);
 				$this->list_page->init();
 
+				$this->reports_page = new USIN_Reports_Page($this->slug);
+				$this->reports_page->init();
 
 				$this->module_page = new USIN_Module_Page($this->slug, $this->module_options);
 				$this->module_page->init();
@@ -91,6 +93,8 @@ if(! class_exists('USIN_Manager')){
 					'license' => $updates_license,
 				));
 
+				USIN_Assets::load_global_inline_css();
+
 			}
 
 			$user_detect = new USIN_User_Detect();
@@ -115,7 +119,7 @@ if(! class_exists('USIN_Manager')){
 
 			//set constants
 			if ( ! defined( 'USIN_VERSION' ) ) {
-				define( 'USIN_VERSION', '3.3.1' );
+				define( 'USIN_VERSION', '3.4.1' );
 			}
 
 			if ( ! defined( 'USIN_PLUGIN_FILE' ) ) {

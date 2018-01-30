@@ -10,7 +10,7 @@ class FrmAppHelper {
 	/**
 	 * @since 2.0
 	 */
-	public static $plug_version = '2.05.08';
+	public static $plug_version = '2.05.09';
 
     /**
      * @since 1.07.02
@@ -402,8 +402,8 @@ class FrmAppHelper {
 		$allowed_html = array();
 		if ( $allowed == 'all' ) {
 			$allowed_html = $html;
-		} else {
-			foreach ( $allowed as $a ) {
+		} elseif ( ! empty( $allowed ) ) {
+			foreach ( (array) $allowed as $a ) {
 				$allowed_html[ $a ] = isset( $html[ $a ] ) ? $html[ $a ] : array();
 			}
 		}

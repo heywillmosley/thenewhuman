@@ -6,7 +6,7 @@
  *
  * @author 		Rymera Web Co
  * @package 	WooCommerceWholeSaleOrderForm/Templates
- * @version     1.7.5
+ * @version     1.8.0
  */
 
 if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -52,21 +52,22 @@ $labels = array(
                 $product = wc_get_product( $post_id );
 
                 if( WWOF_Functions::wwof_get_product_type( $product ) == 'variable' ) {
-                    
+
                     $available_variations = $product->get_available_variations();
-                    
+
                     if( class_exists( 'WWP_Wholesale_Prices' ) ){
 
                         global $wc_wholesale_prices;
 
-                        $wwprices       = new WWP_Wholesale_Prices();
-                        $wholesaleRole  = $wc_wholesale_prices->wwp_wholesale_roles->getUserWholesaleRole();
+                        $wholesale_role = $wc_wholesale_prices->wwp_wholesale_roles->getUserWholesaleRole();
 
-                        foreach ($available_variations as $key => $value) {
-                            $wholesalePrice = $wwprices->getUserProductWholesalePrice( $value[ 'variation_id' ] , $wholesaleRole );
-                            $available_variations[ $key ][ 'wholesale_price' ] = $wholesalePrice;
-                        }
+                        // get wholesale price for all variations
+                        WWOF_Product_Listing_Helper::wwof_get_variations_wholesale_price( $available_variations , $wholesale_role );
+
                     }
+
+                    // update available variations input arguments
+                    WWOF_Product_Listing_Helper::wwof_update_variations_input_args( $available_variations );
                 }
 
                 if( WWOF_Functions::wwof_get_product_type( $product ) == 'grouped' )

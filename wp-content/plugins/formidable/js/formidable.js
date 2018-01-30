@@ -2692,7 +2692,6 @@ function frmFrontFormJS(){
 
 			if ( fieldContainer !== null ) {
 				formContainer = closest( fieldContainer, function(el) {
-					console.log(el.tagName);
     				return el.tagName === 'FORM';
 				} );
 
@@ -4185,6 +4184,13 @@ function frmFrontFormJS(){
 						}
 					});
 
+					jQuery( html ).find( '.frm_html_container' ).each( function() {
+						// check heading logic
+						var fieldID = this.id.replace( 'frm_field_', '' ).split( '-' )[0];
+						checked.push( fieldID );
+						hideOrShowFieldById( fieldID, repeatArgs );
+					} );
+
 					loadDropzones(repeatArgs.repeatRow);
 					loadStars();
 
@@ -4382,7 +4388,11 @@ function frmFrontFormJS(){
 
 	function loadChosen( chosenContainer ) {
 		if ( jQuery().chosen ) {
-			var opts = {allow_single_deselect:true,no_results_text:frm_js.no_results};
+			var opts = {
+				allow_single_deselect:true,
+				no_results_text:frm_js.no_results,
+				search_contains:true
+			};
 			if ( typeof __frmChosen !== 'undefined' ) {
 				opts = '{' + __frmChosen + '}';
 			}

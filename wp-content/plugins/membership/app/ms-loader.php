@@ -155,7 +155,7 @@ class MS_Loader {
 			}
 
 			foreach ( $candidates as $path ) {
-                $current_file = basename( $path );
+                $current_file = basename( $path ); 
 				if ( is_file( $path ) && $current_file != 'ms-loader.php' ) {
 					include_once $path;
 					return true;

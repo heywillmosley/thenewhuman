@@ -64,7 +64,7 @@ class MS_Addon_WPRest extends MS_Addon {
 	 */
 	public function register( $list ) {
 		$settings = MS_Factory::load( 'MS_Model_Settings' );
-
+	
 		$list[ self::ID ] = (object) array(
 			'name' 			=> __( 'Rest API', 'membership2' ),
 			'description' 	=> __( 'Enable Membership WordPress REST API', 'membership2' ),

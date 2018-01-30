@@ -3,11 +3,11 @@
 - Plugin Name: Users Insights
 - Plugin URI: https://usersinsights.com/
 - Description: Everything about your WordPress users in one place
-- Version: 3.3.1
+- Version: 3.4.1
 - Author: Pexeto
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
-- Copyright: Pexeto 2017
+- Copyright: Pexeto 2018
 
 Users Insights is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
@@ -34,6 +34,15 @@ Users Insights is distributed in the hope that it will be useful, but WITHOUT AN
 
 
 == Changelog ==
+
+3.4.1
+- Fixed: empty error message displayed in the Create Segment dialog
+
+3.4.0
+- New: Introduced Reports (beta) for most of the modules - now available under Users Insights -> Reports
+- WooCommerce module: show order total price in the user profile order list section
+- EDD module: show order total price in the user profile order list section
+- General code improvements and optimizations
 
 3.3.1
 - Fixed: WooCommerce review stars not displayed in user profile section (since 3.3.0 update)

@@ -25,7 +25,7 @@ class USIN_List_Page{
 		add_action ( 'admin_menu', array($this, 'add_menu_page') );
 		add_action ( 'admin_init', array($this, 'create_nonce') );
 
-		$this->assets = new USIN_List_Assets($this->options, $this);
+		$this->assets = new USIN_List_Assets($this);
 		$this->assets->init();
 
 		$this->ajax = new USIN_List_Ajax($this->options, $this->capability, $this->nonce_key);

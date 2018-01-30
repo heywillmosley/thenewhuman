@@ -30,6 +30,7 @@ class USIN_Includes{
 			include_once('core/field.php');
 			include_once('core/capabilities.php');
 			include_once('core/notice.php');
+			include_once('core/assets.php');
 
 			//include the user list page files
 			include_once('core/user-list/list-export.php');
@@ -41,6 +42,10 @@ class USIN_Includes{
 			include_once('core/modules/module-page.php');
 			include_once('core/modules/module-assets.php');
 			include_once('core/modules/module-ajax.php');
+
+			//include the report page files
+			include_once('core/reports/reports-page.php');
+			include_once('core/reports/reports-ajax.php');
 
 			//include the query files
 			include_once('core/query/query.php');
@@ -73,6 +78,7 @@ class USIN_Includes{
 			
 			//include the plugin modules files
 			include_once('plugin-modules/plugin-module.php');
+			include_once('plugin-modules/module-reports.php');
 			include_once('plugin-modules/woocommerce/woocommerce.php');
 			include_once('plugin-modules/wc-subscriptions/wc-subscriptions.php');
 			include_once('plugin-modules/wc-memberships/wc-memberships.php');
@@ -87,6 +93,25 @@ class USIN_Includes{
 		
 		do_action('usin_files_loaded');
 		
+	}
+
+	public static function include_reports(){
+		include_once('core/reports/report.php');
+		include_once('core/reports/report-options.php');
+		include_once('core/reports/period-report.php');
+		include_once('core/reports/standard-report.php');
+		include_once('core/reports/reports-defaults.php');
+		include_once('core/reports/reports-assets.php');
+		include_once('core/reports/report-periods.php');
+		include_once('core/reports/loaders/report-loader.php');
+		include_once('core/reports/loaders/period-report-loader.php');
+		include_once('core/reports/loaders/standard-report-loader.php');
+		include_once('core/reports/loaders/numeric-field-loader.php');
+		include_once('core/reports/loaders/meta-field-loader.php');
+		include_once('core/reports/loaders/multioption-field-loader.php');
+		include_once('core/reports/loaders/numeric-meta-field-loader.php');
+
+		do_action('usin_report_files_loaded');
 	}
 	
 }

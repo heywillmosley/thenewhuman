@@ -255,5 +255,5 @@ class MS_Model_Communicationlog extends MS_Model_CustomPostType {
 	 */
 	public function __isset( $property ) {
 		return isset( $this->$property );
-	}
+	}		
 }

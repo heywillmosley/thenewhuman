@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb3bb3714c09974954f460653a49ed706
+class ComposerStaticInit6569350c290f3ede4f21d455ef891fb8
 {
     public static $prefixLengthsPsr4 = array (
         'P' => 
@@ -16,7 +16,7 @@ class ComposerStaticInitb3bb3714c09974954f460653a49ed706
     public static $prefixDirsPsr4 = array (
         'PHPCompatibility\\' => 
         array (
-            0 => __DIR__ . '/..' . '/wimg/php-compatibility',
+            0 => __DIR__ . '/..' . '/wimg/php-compatibility/PHPCompatibility',
         ),
     );
 
@@ -49,6 +49,7 @@ class ComposerStaticInitb3bb3714c09974954f460653a49ed706
         'Generic_Sniffs_ControlStructures_InlineControlStructureSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/ControlStructures/InlineControlStructureSniff.php',
         'Generic_Sniffs_Debug_CSSLintSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Debug/CSSLintSniff.php',
         'Generic_Sniffs_Debug_ClosureLinterSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Debug/ClosureLinterSniff.php',
+        'Generic_Sniffs_Debug_ESLintSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Debug/ESLintSniff.php',
         'Generic_Sniffs_Debug_JSHintSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Debug/JSHintSniff.php',
         'Generic_Sniffs_Files_ByteOrderMarkSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/ByteOrderMarkSniff.php',
         'Generic_Sniffs_Files_EndFileNewlineSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/EndFileNewlineSniff.php',
@@ -279,7 +280,6 @@ class ComposerStaticInitb3bb3714c09974954f460653a49ed706
         'Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/ScopeKeywordSpacingSniff.php',
         'Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/SemicolonSpacingSniff.php',
         'Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/SuperfluousWhitespaceSniff.php',
-        'WPEPHPCompat' => __DIR__ . '/../..' . '/src/wpephpcompat.php',
         'Zend_Sniffs_Debug_CodeAnalyzerSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Zend/Sniffs/Debug/CodeAnalyzerSniff.php',
         'Zend_Sniffs_Files_ClosingTagSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Zend/Sniffs/Files/ClosingTagSniff.php',
         'Zend_Sniffs_NamingConventions_ValidVariableNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Zend/Sniffs/NamingConventions/ValidVariableNameSniff.php',
@@ -288,10 +288,10 @@ class ComposerStaticInitb3bb3714c09974954f460653a49ed706
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb3bb3714c09974954f460653a49ed706::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb3bb3714c09974954f460653a49ed706::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitb3bb3714c09974954f460653a49ed706::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitb3bb3714c09974954f460653a49ed706::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6569350c290f3ede4f21d455ef891fb8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6569350c290f3ede4f21d455ef891fb8::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit6569350c290f3ede4f21d455ef891fb8::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit6569350c290f3ede4f21d455ef891fb8::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -8,7 +8,7 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 
 	protected $module_name = 'woocommerce';
 	protected $plugin_path = 'woocommerce/woocommerce.php';
-	protected $order_post_type = 'shop_order';
+	const ORDER_POST_TYPE = 'shop_order';
 
 	protected function apply_module_actions(){
 		add_filter('usin_exclude_post_types', array($this , 'exclude_post_types'));
@@ -18,11 +18,12 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 		require_once 'woocommerce-query.php';
 		require_once 'woocommerce-user-activity.php';
 
-		$this->wc_query = new USIN_Woocommerce_Query($this->order_post_type);
+		$this->wc_query = new USIN_Woocommerce_Query(self::ORDER_POST_TYPE);
 		$this->wc_query->init();
 
-		$wc_user_activity = new USIN_Woocommerce_User_Activity($this->order_post_type);
+		$wc_user_activity = new USIN_Woocommerce_User_Activity(self::ORDER_POST_TYPE);
 		$wc_user_activity->init();
+
 	}
 
 	public function register_module(){
@@ -36,6 +37,11 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 			),
 			'active' => false
 		);
+	}
+
+	protected function init_reports(){
+		require_once 'reports/woocommerce-reports.php';
+		new USIN_WooCommerce_Reports();
 	}
 
 	public function register_fields(){

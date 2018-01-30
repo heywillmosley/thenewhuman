@@ -503,7 +503,9 @@ class WWOF_Product_Listing {
                         'disabled'      => false,
                         'visible'       => true,
                         'attributes'    => $variation_attributes,
-                        'instock'       => $variation[ 'is_in_stock' ] // true = instock, false = out of stock
+                        'instock'       => $variation[ 'is_in_stock' ], // true = instock, false = out of stock,
+                        'sku'           => $variation_obj->get_sku(),
+                        'selected'      => false
                     );
 
                 } else {
@@ -518,7 +520,9 @@ class WWOF_Product_Listing {
                         'disabled'      => true,
                         'visible'       => $visibility,
                         'attributes'    => $variation_attributes,
-                        'instock'       => $variation[ 'is_in_stock' ] // true = instock, false = out of stock
+                        'instock'       => $variation[ 'is_in_stock' ], // true = instock, false = out of stock
+                        'sku'           => $variation_obj->get_sku(),
+                        'selected'      => false
                     );
 
                 }
@@ -532,27 +536,16 @@ class WWOF_Product_Listing {
             // Get default attributes
             $default_attributes = WWOF_Functions::wwof_get_default_attributes( $product );
 
+            // set the selected variation (makes sure only one variation is selected).
+            $this->wwof_product_variation_field_set_selected( $variation_arr , $default_attributes );
+
+            $selected_variation = false;
             foreach ( $variation_arr as $variation ) {
 
                 if ( !$variation[ 'visible' ] )
                     $count_not_visible_variations += 1;
 
-                if ( empty( $default_attributes ) )
-                    $selected = '';
-                else {
-
-                    $selected = 'selected="selected"';
-                    foreach ( $variation[ 'attributes' ] as $attr_key => $attr_val ) {
-
-                        $attr_key = str_replace( 'attribute_' , '' , $attr_key );
-
-                        if ( !array_key_exists( $attr_key , $default_attributes ) || $default_attributes[ $attr_key ] != $attr_val )
-                            $selected = '';
-
-                    }
-
-                }
-
+                $selected              = $variation[ 'selected' ] ? 'selected="selected"' : '';
                 $variation_select_box .= '<option value="' . $variation[ 'value' ] . '" ' . ( $variation[ 'disabled' ] ? 'disabled' : '' ) . ' ' . $selected . '>' . $variation[ 'text' ] . '</option>';
 
             }
@@ -569,6 +562,50 @@ class WWOF_Product_Listing {
 
         }
 
+    }
+
+    /**
+     * Set the selected variation of the variation field. This function makes sure that only one variation is selected.
+     *
+     * @since 1.8.0
+     * @access private
+     *
+     * @param array $variations         Array list of variations defined on wwof_get_product_variation_field.
+     * @param array $default_attributes Variable product default attributes.
+     */
+    private function wwof_product_variation_field_set_selected( &$variations , $default_attributes ) {
+
+        // when searching for an sku value.
+        if ( isset ( $_POST[ 'search' ] ) ) {
+
+            $skus         = array_column( $variations , 'sku' , 'value' );
+            $selected_var = array_search( $_POST[ 'search' ] , $skus );
+
+            foreach ( $variations as $key => $variation ) {
+
+                if ( $selected_var == $variation[ 'value' ] ) {
+                    $variations[ $key ][ 'selected' ] = true;
+                    return;
+                }
+            }
+
+        }
+
+        // when variable product has set default attributes
+        if ( ! empty( $default_attributes ) ) {
+
+            foreach ( $variations as $key => $variation ) {
+
+                $variations[ $key ][ 'selected' ] = true;
+                foreach ( $variation[ 'attributes' ] as $attr_key => $attr_val ) {
+
+                    $attr_key = str_replace( 'attribute_' , '' , $attr_key );
+
+                    if ( !array_key_exists( $attr_key , $default_attributes ) || $default_attributes[ $attr_key ] != $attr_val )
+                        $variations[ $key ][ 'selected' ] = false;
+                }
+            }
+        }
     }
 
     /**
@@ -968,7 +1005,8 @@ class WWOF_Product_Listing {
         }
 
         $variation_is_purchasable = $variation_obj->is_purchasable();
-        $variation_is_available   = in_array( $item_availability[ 'class' ] , array( 'in-stock' , 'available-on-backorder' ) );
+        $variation_classes        = apply_filters( 'wwof_filter_variation_class' , array( 'in-stock' , 'available-on-backorder' ) );
+        $variation_is_available   = in_array( $item_availability[ 'class' ] , $variation_classes );
 
         return $variation_is_purchasable && $variation_is_available;
 

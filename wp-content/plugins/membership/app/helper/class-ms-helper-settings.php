@@ -88,7 +88,7 @@ class MS_Helper_Settings extends MS_Helper {
 	public static function get_blogs( $only_public = true ) {
 		static $List 	= array();
         $key 			= $only_public ? 'public' : 'all';
-
+                
 		if ( ! isset( $List['_cache'] ) ) {
 			$List['_cache'] = array();
 		}
@@ -100,29 +100,29 @@ class MS_Helper_Settings extends MS_Helper {
 				'spam'      => false,
 				'deleted'   => false,
 			);
-
+                        
 			$args = apply_filters(
 				'ms_get_blog_list_args',
 				$args
 			);
-
+                        
 			if ( $only_public ) {
 				$args['archived'] 	= false;
 				$args['mature'] 	= false;
 			}
-
+			
 			global $wp_version;
 			$version_safe 		= false;
 			if ( version_compare( $wp_version, '4.6.0', '>=' ) ) {
 				$version_safe 	= true;
 			}
-
+			
 			if ( $version_safe ) {
 				$sites = get_sites( $args );
 			} else {
 				$sites = wp_get_sites( $args );
 			}
-
+			
 			$List[$key] = array();
 
 			foreach ( $sites as $site_data ) {

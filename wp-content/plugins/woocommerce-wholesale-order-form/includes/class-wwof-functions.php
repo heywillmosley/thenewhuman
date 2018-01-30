@@ -477,6 +477,7 @@ class WWOF_Functions {
      * Since getProductWholesalePrice() function will get deprecated in WWPP 1.15.0 we will now get wholesale price in WWP.
      *
      * @since 1.7.6
+     * @since 1.8.0 Add support for 'get_product_wholesale_price_on_shop_v2'.
      *
      * @param Object    $product            WC_Product Object
      * @param array     $wholesale_role     User Wholesale Role
@@ -484,19 +485,58 @@ class WWOF_Functions {
      */
     public static function wwof_get_wholesale_price( $product , $wholesale_role ) {
 
-        global $wc_wholesale_prices_premium;
+        if ( ! function_exists( 'get_plugin_data' ) )
+            require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+
+        $wwpp_data       = get_plugin_data( WP_PLUGIN_DIR . '/woocommerce-wholesale-prices/woocommerce-wholesale-prices.bootstrap.php' );
+        $wholesale_price = "";
+
+        if ( version_compare( $wwpp_data[ 'Version' ] , '1.6.0' , '>=' ) ) {
+
+            $wholesale_price_data = WWP_Wholesale_Prices::get_product_wholesale_price_on_shop_v2( WWOF_Functions::wwof_get_product_id( $product ) , $wholesale_role );
+            $wholesale_price      = $wholesale_price_data[ 'wholesale_price' ];
+
+        } elseif ( version_compare( $wwpp_data[ 'Version' ] , '1.5.0' , '>=' ) )
+            $wholesale_price = WWP_Wholesale_Prices::get_product_wholesale_price_on_shop( WWOF_Functions::wwof_get_product_id( $product ) , $wholesale_role );
+        else
+            $wholesale_price = WWP_Wholesale_Prices::getProductWholesalePrice( WWOF_Functions::wwof_get_product_id( $product ) , $wholesale_role );
+
+        return $wholesale_price;
+
+    }
+
+    /**
+     * Dependency plugin version compare.
+     *
+     * @since 1.8.0
+     * @access public
+     *
+     * @param string $plugin_prefix Prefix of the plugin dependency (wwp, wwpp).
+     * @param string $version       Plugin version to compare.
+     * @param string $operator      Conditional operator to use for version_compare().
+     */
+    public static function wwof_dependency_version_compare( $plugin_prefix , $version , $operator ) {
+
+        switch( $plugin_prefix ) {
+            case 'wwp' :
+                $basename = 'woocommerce-wholesale-prices/woocommerce-wholesale-prices.bootstrap.php';
+                break;
+            case 'wwpp' :
+                $basename = 'woocommerce-wholesale-prices-premium/woocommerce-wholesale-prices-premium.bootstrap.php';
+                break;
+            default :
+                return;
+        }
 
         if ( ! function_exists( 'get_plugin_data' ) )
             require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
-        $wwppData = get_plugin_data( WP_PLUGIN_DIR . '/woocommerce-wholesale-prices/woocommerce-wholesale-prices.bootstrap.php' );
+        $plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $basename );
 
-        if ( version_compare( $wwppData[ 'Version' ] , '1.5.0' , '>=' ) )
-            return WWP_Wholesale_Prices::get_product_wholesale_price_on_shop( WWOF_Functions::wwof_get_product_id( $product ) , $wholesale_role );
-        else
-            return $wc_wholesale_prices_premium->getProductWholesalePrice( WWOF_Functions::wwof_get_product_id( $product ) , $wholesale_role );
-
+        return version_compare( $plugin_data[ 'Version' ] , $version , $operator );
+        
     }
+
 }
 
 

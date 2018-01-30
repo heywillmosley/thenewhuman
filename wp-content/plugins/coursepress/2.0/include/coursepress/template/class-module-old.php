@@ -449,7 +449,7 @@ class CoursePress_Template_Module {
 			$course_status = CoursePress_Data_Course::get_course_status($course_id) == 'closed';
 			if ( $course_status ){
 				$disabled = true;
-			}
+			}		
 			// RESUBMIT LOGIC
 			$action = ! $disabled ? '<div><a class="module-submit-action">' . esc_html__( 'Submit Answer', 'cp' ) . '</a></div>' : '';
 
@@ -580,7 +580,7 @@ class CoursePress_Template_Module {
 	}
 
 	public static function render_input_radio( $module, $attributes = false, $student_progress = false, $disabled = false ) {
-
+		
 	}
 
 	public static function render_input_radioOLD( $module, $attributes = false ) {
@@ -606,7 +606,7 @@ class CoursePress_Template_Module {
 			$course_status = CoursePress_Data_Course::get_course_status($course_id) == 'closed';
 			if ( $course_status ){
 				$disabled = true;
-			}
+			}		
 			// RESUBMIT LOGIC
 			$action = ! $disabled ? '<div><a class="module-submit-action">' . esc_html__( 'Submit Answer', 'cp' ) . '</a></div>' : '';
 
@@ -714,7 +714,7 @@ class CoursePress_Template_Module {
 			$course_status = CoursePress_Data_Course::get_course_status($course_id) == 'closed';
 			if ( $course_status ){
 				$disabled = true;
-			}
+			}		
 
 			// RESUBMIT LOGIC.
 			$action = ! $disabled ? '<div><a class="module-submit-action">' . esc_html__( 'Submit Answer', 'cp' ) . '</a></div>' : '';
@@ -814,7 +814,7 @@ class CoursePress_Template_Module {
 		$course_status = CoursePress_Data_Course::get_course_status($course_id) == 'closed';
 		if ( $course_status ){
 			$disabled = true;
-		}
+		}		
 
 		// RESUBMIT LOGIC
 		$action = ! $disabled ? '<a class="module-submit-action">' . esc_html__( 'Submit Answer', 'cp' ) . '</a>' : '';
@@ -953,7 +953,7 @@ class CoursePress_Template_Module {
 		$course_status = CoursePress_Data_Course::get_course_status($course_id) == 'closed';
 		if ( $course_status ){
 			$disabled = true;
-		}
+		}		
 
 		// RESUBMIT LOGIC
 		$action = ! $disabled ? '<div><a class="module-submit-action">' . esc_html__( 'Submit File', 'cp' ) . '</a></div>' : '';
@@ -1154,7 +1154,7 @@ class CoursePress_Template_Module {
 		$remaining_message = ! $unlimited ? sprintf( __( 'You have %d attempts left.', 'cp' ), $remaining ) : '';
 
 		$content .= ! empty($remaining_message) ? sprintf( '<div class="not-passed-message">%s</div>', $remaining_message ) : '';
-
+		
 
 		// RESUBMIT LOGIC
 		$action = ! $disabled ? '<div><a class="module-submit-action">' . esc_html__( 'Submit Answer', 'cp' ) . '</a></div>' : '';

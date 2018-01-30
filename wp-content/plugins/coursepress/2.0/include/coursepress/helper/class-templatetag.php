@@ -207,3 +207,4 @@ if ( !function_exists( 'cp_is_academy_page' ) ) {
 	}
 
 }
+

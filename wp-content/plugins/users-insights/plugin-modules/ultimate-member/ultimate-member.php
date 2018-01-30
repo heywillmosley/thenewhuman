@@ -7,62 +7,53 @@ if(!defined( 'ABSPATH' )){
 /**
  * Ultimate Member Module that loads the Ultimate member custom fields data
  */
-class USIN_Ultimate_Member{
+class USIN_Ultimate_Member extends USIN_Plugin_Module{
 	
+	protected $module_name = 'ultimate-member';
+	protected $plugin_path = array('ultimate-member/index.php', 'ultimate-member/ultimate-member.php');
 	protected $fields;
 	protected $serialized_fields = array();
 	protected $um_query;
-	protected $prefix = 'um_';
-	protected $module_id = 'ultimate-member';
+	const PREFIX = 'um_';
 
-	public function __construct(){
-		add_filter('usin_module_options', array($this , 'register_module'));
-
-		if(USIN_Helper::is_plugin_activated('ultimate-member/index.php') || USIN_Helper::is_plugin_activated('ultimate-member/ultimate-member.php')){
-			add_action('admin_init', array($this, 'init'));
-			add_filter('usin_fields', array($this , 'register_fields'), 30);
-			add_filter('usin_user_db_data', array($this , 'filter_user_data'));
-			add_filter('usin_user_actions', array($this, 'add_user_profile_button'), 20, 2);
-		}
-	}
 
 	/**
 	 * Initialize the main pluin functionality.
 	 */
 	public function init(){
-		if($this->is_um_module_active()){
-			
-			require_once 'ultimate-member-query.php';
-			require_once 'ultimate-member-field.php';
 
-			$um_fields = $this->get_form_fields();
-			$this->um_query = new USIN_UM_Query($um_fields, $this->prefix);
-			$this->um_query->init();
+		add_filter('usin_user_db_data', array($this , 'filter_user_data'));
+		add_filter('usin_user_actions', array($this, 'add_user_profile_button'), 20, 2);
 			
-		}
+		require_once 'ultimate-member-query.php';
+		require_once 'ultimate-member-field.php';
+
+		$um_fields = $this->get_form_fields();
+		$this->um_query = new USIN_UM_Query($um_fields, self::PREFIX);
+		$this->um_query->init();
+
+	}
+
+	protected function init_reports(){
+		require_once 'reports/ultimate-member-reports.php';
+		new USIN_Ultimate_Member_Reports($this);
 	}
 	
-	protected function is_um_module_active(){
-		return usin_module_options()->is_module_active('ultimate-member');
-	}
 
 	/**
 	 * Registers the module.
 	 */
-	public function register_module($default_modules){
-		if(!empty($default_modules) && is_array($default_modules)){
-			$default_modules[]=array(
-				'id' => $this->module_id,
-				'name' => 'Ultimate Member',
-				'desc' => __('Detects and displays the custom user fields data generated with the Ultimate Member forms.', 'usin'),
-				'allow_deactivate' => true,
-				'buttons' => array(
-					array('text'=> __('Learn More', 'usin'), 'link'=>'https://usersinsights.com/ultimate-member-data-search-filters/', 'target'=>'_blank')
-				),
-				'active' => false
-			);
-		}
-		return $default_modules;
+	public function register_module(){
+		return array(
+			'id' => $this->module_name,
+			'name' => 'Ultimate Member',
+			'desc' => __('Detects and displays the custom user fields data generated with the Ultimate Member forms.', 'usin'),
+			'allow_deactivate' => true,
+			'buttons' => array(
+				array('text'=> __('Learn More', 'usin'), 'link'=>'https://usersinsights.com/ultimate-member-data-search-filters/', 'target'=>'_blank')
+			),
+			'active' => false
+		);
 	}
 
 	/**
@@ -71,17 +62,17 @@ class USIN_Ultimate_Member{
 	 * @return array         the default Users Insights fields including the 
 	 * Ultimate Member fields
 	 */
-	public function register_fields($fields){
-		if($this->is_um_module_active() && is_array($fields)){
-			//community role field
-			if(self::is_um_older_than_v2()){
-				$fields[]=$this->get_role_field_options();
-			}
-			
-			//Ultimate Member form fields
-			$form_fields = $this->get_form_fields();
-			$fields = array_merge($fields, $form_fields);
+	public function register_fields(){
+		$fields = array();
+
+		//community role field
+		if(self::is_um_older_than_v2()){
+			$fields[]=$this->get_role_field_options();
 		}
+		
+		//Ultimate Member form fields
+		$form_fields = $this->get_form_fields();
+		$fields = array_merge($fields, $form_fields);
 
 		return $fields;
 	}
@@ -94,7 +85,7 @@ class USIN_Ultimate_Member{
 	 * Loads all of the registered Ultimate Member form fields.
 	 * @return array containing the fields data, formatted as Users Insights fields
 	 */
-	protected function get_form_fields(){
+	public function get_form_fields(){
 		if(!isset($this->fields)){
 			$forms = get_posts(array('post_type'=>'um_form', 'posts_per_page' => -1));
 			$fields = array();
@@ -104,7 +95,7 @@ class USIN_Ultimate_Member{
 				
 				foreach ($custom_fields as $field_id => $field_options) {
 						
-					$field = new USIN_UM_Field($field_options, $this->prefix, $this->module_id);
+					$field = new USIN_UM_Field($field_options, self::PREFIX, $this->module_name);
 					$meta_key = $field->get_meta_key();
 					
 					if(!$field->should_be_ignored() && !isset($fields[$meta_key])){
@@ -137,12 +128,12 @@ class USIN_Ultimate_Member{
 		}
 		return array(
 			'name' => __('Community Role', 'usin'),
-			'id' => $this->prefix.'role',
+			'id' => self::PREFIX.'role',
 			'order' => 'ASC',
 			'show' => false,
 			'fieldType' => 'general',
 			'filter' => $filter,
-			'module' => $this->module_id
+			'module' => $this->module_name
 		);
 	}
 	
@@ -154,16 +145,16 @@ class USIN_Ultimate_Member{
 	 * @return object       the DB data with unserialized values
 	 */
 	public function filter_user_data($data){
-		if($this->is_um_module_active()){
-			$ser_keys = array_unique($this->serialized_fields);
-			foreach ($ser_keys as $key ) {
-				$key = $this->prefix.$key;
-				if(isset($data->$key)){
-					$val = maybe_unserialize($data->$key);
-					$data->$key = is_array($val) ? implode(', ', $val) : $val;
-				}
+		
+		$ser_keys = array_unique($this->serialized_fields);
+		foreach ($ser_keys as $key ) {
+			$key = self::PREFIX.$key;
+			if(isset($data->$key)){
+				$val = maybe_unserialize($data->$key);
+				$data->$key = is_array($val) ? implode(', ', $val) : $val;
 			}
 		}
+		
 		return $data;
 	}
 	

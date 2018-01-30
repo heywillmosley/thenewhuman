@@ -13,13 +13,15 @@ class USIN_Capabilities{
 	const MANAGE_OPTIONS = 'users_insights_manage_options';
 	const MANAGE_SEGMENTS = 'users_insights_manage_segments';
 	const EXPORT_USERS = 'users_insights_export_users';
+	const VIEW_REPORTS = 'users_insights_view_reports';
 	
 	protected $all_caps;
 	
 	public function __construct(){
 		
 		$this->all_caps = array(self::LIST_USERS, self::UPDATE_USERS, self::MANAGE_GROUPS,
-			self::MANAGE_CUSTOM_FIELDS, self::MANAGE_OPTIONS, self::MANAGE_SEGMENTS, self::EXPORT_USERS);
+			self::MANAGE_CUSTOM_FIELDS, self::MANAGE_OPTIONS, self::MANAGE_SEGMENTS, self::EXPORT_USERS,
+			self::VIEW_REPORTS);
 		
 		if(is_admin()){
 			add_action( 'plugins_loaded', array($this, 'set_capabilities_to_admin') );

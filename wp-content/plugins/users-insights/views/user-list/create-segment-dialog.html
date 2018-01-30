@@ -14,7 +14,7 @@
 			<div class="md-dialog-content">
 				<label>{{strings.segmentName}}</label>
 				<input ng-model="segmentName" class="usin-input" type="text" ng-keypress="$event.keyCode==13 && doOnEnter($event)">
-				<div class="usin-error" ng-if="error">{{error}}</div>
+				<div class="usin-error" ng-if="segmentError">{{segmentError}}</div>
 			</div>
 		</md-dialog-content>
 

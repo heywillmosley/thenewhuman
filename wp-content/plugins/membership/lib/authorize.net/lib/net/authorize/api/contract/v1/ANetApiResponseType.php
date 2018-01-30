@@ -88,9 +88,10 @@ class ANetApiResponseType
      */
     public function setSessionToken($sessionToken)
     {
-        $this->sessionToken = $sessionToken;	 	 	   	 				  		  	
+        $this->sessionToken = $sessionToken;
         return $this;
     }
 
 
 }
+

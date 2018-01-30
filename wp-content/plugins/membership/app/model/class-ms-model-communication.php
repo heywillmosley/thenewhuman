@@ -1010,13 +1010,16 @@ class MS_Model_Communication extends MS_Model_CustomPostType {
 	public function add_to_queue( $subscription_id ) {
 		do_action( 'ms_model_communication_add_to_queue_before', $this );
 		/**
-		 * Check if cron is enabled
+		 * Check if cron is enabled 
 		 *
 		 * @since 1.0.4
 		 */
 		$settings = MS_Factory::load( 'MS_Model_settings' );
-		if ( $settings->enable_cron_use ) {
-			$this->process_message_direct( $subscription->id );
+		if ( !$settings->enable_cron_use ) {
+			$subscription = MS_Factory::load( 'MS_Model_Relationship', $subscription_id );
+			if ( $subscription ) {
+				$this->process_message_direct( $subscription );
+			}
 		} else {
 			/**
 			* Documented in process_queue()
@@ -1082,7 +1085,7 @@ class MS_Model_Communication extends MS_Model_CustomPostType {
 				}
 			}
 		}
-
+		
 
 		do_action( 'ms_model_communication_add_to_queue_after', $this );
 	}

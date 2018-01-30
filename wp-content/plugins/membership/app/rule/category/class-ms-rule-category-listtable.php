@@ -40,7 +40,7 @@ class MS_Rule_Category_ListTable extends MS_Helper_ListTable_Rule {
                 $depth = $this->get_depth( $item->id );
 		return str_repeat( '- ', $depth ) . $item->name;
 	}
-
+        
         public function get_depth( $id, $depth = '', $i = 0 )
         {
                 global $wpdb;

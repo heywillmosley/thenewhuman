@@ -68,3 +68,4 @@ class MS_Rule_CptGroup extends MS_Controller {
 	}
 
 }
+

@@ -130,7 +130,7 @@ class CoursePress_View_Admin_Setting_MarketPress {
 	}
 
 	public static function process_form( $page, $tab ) {
-
+		
 		if ( ! isset( $_POST['_wpnonce'] ) ) { return; }
 		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'update-coursepress-options' ) ) { return; }
 
@@ -148,7 +148,7 @@ class CoursePress_View_Admin_Setting_MarketPress {
 				'delete' => 'change_status'
 			)
 		);
-
+		
 		/**
 		 * check data and if exists, then update
 		 */

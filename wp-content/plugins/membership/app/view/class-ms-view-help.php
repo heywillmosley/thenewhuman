@@ -1536,7 +1536,7 @@ class MS_View_Help extends MS_View {
 					<li>
 						<code>activity_title</code>
 						<?php _ex( '(text)', 'help', 'membership2' ); ?>
-						<?php _ex( 'Title of the invoices section', 'help', 'membership2' ); ?>
+						<?php _ex( 'Title of the activities section', 'help', 'membership2' ); ?>
 						<span class="ms-help-default">
 							<?php _ex( 'Default:', 'help', 'membership2' ); ?>
 							"<?php _e( 'Activities', 'membership2' ); ?>"
@@ -1554,7 +1554,7 @@ class MS_View_Help extends MS_View {
 					<li>
 						<code>show_all_activities</code>
 						<?php _ex( '(yes|no)', 'help', 'membership2' ); ?>
-						<?php _ex( 'Display the link to the complete list of users invoices', 'help', 'membership2' ); ?>
+						<?php _ex( 'Display the link to the complete list of users activities', 'help', 'membership2' ); ?>
 						<span class="ms-help-default">
 							<?php _ex( 'Default:', 'help', 'membership2' ); ?>
 							yes
@@ -1573,7 +1573,7 @@ class MS_View_Help extends MS_View {
 
 				<p><em><?php _ex( 'Example:', 'help', 'membership2' ); ?></em></p>
 				<p><code>[ms-membership-account]</code></p>
-				<p><code>[ms-membership-account show_profile_change="no" show_activity="no" limit_invoices="3" invoices_title="Last 3 invoices"]</code></p>
+				<p><code>[ms-membership-account show_profile_change="no" show_activity="no" limit_activities="3" activity_title="Last 3 activities"]</code></p>
 			</div>
 		</div>
 
@@ -1717,7 +1717,7 @@ class MS_View_Help extends MS_View {
 			<strong><?php _ex( 'Create subscription on trial when using Paypal', 'help', 'membership2' ); ?></strong><br />
 			<?php _ex( 'If you want to create subscription on trial period, use <code>define( "MS_PAYPAL_TRIAL_SUBSCRIPTION", true );</code> in wp-config.php file. Please note, it will work only if you use Paypal.', 'help', 'membership2' ); ?>
 		</p>
-                <p>
+        <p>
 			<strong><?php _ex( 'Disable default email on registration', 'help', 'membership2' ); ?></strong><br />
 			<?php _ex( 'To disable WP default email on registration from back end, use <code>define( "MS_DISABLE_WP_NEW_USER_NOTIFICATION", true );</code> in wp-config.php file.', 'help', 'membership2' ); ?>
 		</p>
@@ -1813,4 +1813,6 @@ class MS_View_Help extends MS_View {
 
 		return $html;
 	}
+
+	
 }

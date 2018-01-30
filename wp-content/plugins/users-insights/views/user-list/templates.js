@@ -76,7 +76,7 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "			<div class=\"md-dialog-content\">\n" +
     "				<label>{{strings.segmentName}}</label>\n" +
     "				<input ng-model=\"segmentName\" class=\"usin-input\" type=\"text\" ng-keypress=\"$event.keyCode==13 && doOnEnter($event)\">\n" +
-    "				<div class=\"usin-error\" ng-if=\"error\">{{error}}</div>\n" +
+    "				<div class=\"usin-error\" ng-if=\"segmentError\">{{segmentError}}</div>\n" +
     "			</div>\n" +
     "		</md-dialog-content>\n" +
     "\n" +
@@ -374,8 +374,14 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "</div>\n" +
     "<div class=\"clear\"></div>\n" +
     "\n" +
-    "<div class=\"usin-error\" ng-show=\"errorMsg\">\n" +
-    "	{{strings.error}}: {{errorMsg}}\n" +
+    "<div class=\"usin-error\" ng-show=\"error.msg\">\n" +
+    "	{{strings.error}}: {{error.msg}}\n" +
+    "	<div class=\"usin-error-data\" ng-if=\"error.info\">\n" +
+    "		<button class=\"usin-btn-small\" ng-click=\"error.infoVisible = !error.infoVisible\">\n" +
+    "			{{ error.infoVisible ? strings.hideDebugInfo : strings.showDebugInfo }}\n" +
+    "		</button>\n" +
+    "		<pre class=\"usin-debug-info\" ng-show=\"error.infoVisible\" ng-bind-html=\"error.info\"></pre>\n" +
+    "	</div>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"usin-map-view\" ng-if=\"!listView\" ng-controller=\"UsinMapCtrl\">\n" +

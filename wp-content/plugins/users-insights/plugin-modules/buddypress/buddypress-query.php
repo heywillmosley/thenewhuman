@@ -11,12 +11,16 @@ class USIN_BuddyPress_Query{
 	}
 
 	public function init(){
-		global $wpdb;
-		$this->prefix = is_multisite() ? $wpdb->base_prefix : $wpdb->prefix;
+		$this->prefix = self::get_prefix();
 		add_filter('usin_db_map', array($this, 'filter_db_map'));
 		add_filter('usin_query_join_table', array($this, 'filter_query_joins'), 10, 2);
 		add_filter('usin_custom_select', array($this, 'filter_query_select'), 10, 2);
 		add_filter('usin_db_aggregate_columns', array($this, 'filter_aggregate_columns'));
+	}
+
+	public static function get_prefix(){
+		global $wpdb;
+		return is_multisite() ? $wpdb->base_prefix : $wpdb->prefix;
 	}
 
 	protected function is_bp_feature_active($feature){
@@ -101,6 +105,15 @@ class USIN_BuddyPress_Query{
 			}
 		}
 			return $query_joins;
+	}
+
+	public static function get_field_counts($field_id, $total_col, $label_col){
+		global $wpdb;
+		
+		$query = $wpdb->prepare("SELECT `value` AS $label_col, COUNT(*) AS $total_col FROM ".self::get_prefix()."bp_xprofile_data".
+			" WHERE field_id = %d GROUP BY $label_col", $field_id);
+
+		return $wpdb->get_results($query);
 	}
 
 }

@@ -196,13 +196,13 @@ class MS_Gateway_Stripe_Api extends MS_Model_Option {
 	 * @return M2_Stripe_Charge The resulting charge object.
 	 */
 	public function charge( $customer, $amount, $currency, $description ) {
-
+                
 		$amount = apply_filters(
 			'ms_gateway_stripe_charge_amount',
 			$amount,
 			$currency
 		);
-
+                
 		$charge = Stripe_Charge::create(
 			array(
 				'customer' 		=> $customer->id,
@@ -272,6 +272,32 @@ class MS_Gateway_Stripe_Api extends MS_Model_Option {
 			'ms_gateway_stripe_get_subscription',
 			$subscription,
 			$customer,
+			$membership,
+			$this
+		);
+	}
+
+	/**
+	 * Get subscription data
+	 */
+	public function get_subscription_data( $subscription_data, $membership ) {
+		$plan_id = MS_Gateway_Stripeplan::get_the_id(
+			$membership->id,
+			'plan'
+		);
+
+		$subscription 	= false;
+
+		foreach ( $subscription_data as $sub ) {
+			if ( $sub->plan->id == $plan_id ) {
+				$subscription = $sub;
+			}
+		}
+
+
+		return apply_filters(
+			'ms_gateway_stripe_get_subscription',
+			$subscription,
 			$membership,
 			$this
 		);

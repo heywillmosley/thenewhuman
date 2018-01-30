@@ -45,7 +45,7 @@ class CoursePress_Email {
 
 	/**
 	 * Set the default email fields.
-	 *
+	 * 
 	 * Must be overriden in a sub-class
 	 **/
 	public function default_email_fields() { return array(); }
@@ -150,7 +150,7 @@ class CoursePress_Email {
 
 		if ( ! empty( $mail_tokens ) ) {
 			$content_help_text .= sprintf( '<p class="description"><strong>%s</strong>: <br />%s', __( 'Mail Tokens', 'cp' ), implode( ', ', $mail_tokens ) );
-			$content_help_text .= '<p class="description">* ' . __( 'These tokens will be replaced with actual data.', 'cp' ) . '</p>';
+			$content_help_text .= '<p class="description">* ' . __( 'These tokens will be replaced with actual data.', 'cp' ) . '</p>'; 
 		}
 
 		$fields .= '<tr><th>' . __( 'Email Body', 'cp' ) . '</th><td>' . $content_help_text;

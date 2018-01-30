@@ -385,6 +385,9 @@ tfoot .usin-heading-username {
 .usin-fields-settings ul li:hover {
   background: #f7fcfc;
 }
+usin-report-toggle .usin-fields-settings ul li {
+  margin-bottom: 2px;
+}
 .usin-fields-settings input[type=checkbox] {
   margin-right: 10px;
   margin-top: -2px;
@@ -600,6 +603,17 @@ tfoot .usin-heading-username {
   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.08) inset;
   clear: both;
 }
+.usin-debug-info {
+  background: #f5f9f9;
+  padding: 1px 10px;
+  overflow: auto;
+  border-radius: 2px;
+}
+.usin-debug-info .wpdberror code {
+  background-color: #fff;
+  font-size: 0.8em;
+  color: #3b444f;
+}
 /* Pagintaion */
 .usin-pagination-wrapper {
   position: relative;
@@ -647,11 +661,11 @@ tfoot .usin-heading-username {
   margin: 100px 0;
   opacity: 0.8;
 }
-.usin-no-results-logo {
-  background-image: url('../images/usin-logo-sq.png');
-  background-size: 100px 100px;
-  width: 100px;
-  height: 100px;
+.usin-no-results {
+  background-image: url('../images/no-results.png');
+  background-size: 500px 375px;
+  width: 500px;
+  height: 375px;
   margin: auto;
 }
 .usin-no-results h3 {
@@ -1607,6 +1621,9 @@ a.usin-act-more {
 .usin-custom-fields-wrap .usin-table-wrap {
   overflow: initial;
 }
+.usin-custom-fields-wrap .usin-table thead th {
+  height: 24px;
+}
 .usin-btn-delete,
 .usin-btn-edit,
 .usin-btn-apply {
@@ -2316,4 +2333,154 @@ button[disabled].usin-save-segment {
 .usin-notice {
   margin-left: 0;
   margin-top: 30px;
+}
+/* Reports */
+.usin-report-box {
+  float: left;
+  display: block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.usin-chart-box {
+  max-width: 376px;
+  max-height: 376px;
+}
+.usin-report-wrap {
+  width: 396px;
+  height: 500px;
+  background-color: #f9fbfd;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12) inset, 0 0 1px 0 rgba(44, 54, 67, 0.25);
+  border-radius: 4px;
+}
+.usin-report-wrap .usin-error {
+  margin-top: 30px;
+}
+.usin-report-graph {
+  border-top: 1px solid #e7e8e9;
+  padding: 20px 10px;
+  border-radius: 0 0 4px 4px;
+}
+.usin-report-graph .usin-error {
+  margin: 0;
+}
+.usin-report-header {
+  padding: 12px;
+  min-height: 34px;
+  background-color: #fff;
+  border-radius: 4px 4px 0 0;
+}
+.usin .usin-report-header .select2-container {
+  opacity: 0.7;
+  float: right;
+  width: 145px;
+}
+.usin .usin-report-header .select2-container:hover,
+.usin .usin-report-header .select2-dropdown-open {
+  opacity: 1;
+}
+.usin-report-title {
+  line-height: 34px;
+  font-size: 14px;
+  margin-left: 5px;
+}
+.usin-simple-loading {
+  background-image: url('../images/loading.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 32px 32px;
+}
+.usin-report-filters {
+  float: right;
+  width: 150px;
+}
+.usin-tabs {
+  border-radius: 4px;
+  margin-bottom: 25px;
+  min-height: 30px;
+}
+.usin-tab,
+usin-report-toggle {
+  display: inline-block;
+  padding: 9px 17px;
+  cursor: pointer;
+  outline: none;
+  font-weight: 500;
+  vertical-align: middle;
+}
+.usin-tab {
+  border-bottom: 2px solid #e2e2e2;
+  position: relative;
+}
+/*tab selected*/
+.usin-tab-selected:before,
+.usin-tab-selected:after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: solid #0000;
+  content: '';
+  pointer-events: none;
+}
+.usin-tab-selected:before {
+  margin-left: -8px;
+  border-width: 8px;
+  border-top-color: #00aba8;
+}
+.usin-tab-selected:after {
+  margin-left: -5px;
+  border-width: 5px;
+  border-top-color: #f1f1f1;
+}
+.usin-tab-selected {
+  border-color: #00aba8;
+  color: #00aba8;
+}
+.usin-no-reports-found {
+  margin-left: 0;
+  margin-top: 30px;
+}
+usin-report-toggle {
+  float: right;
+  display: inline-block;
+  padding: 0;
+  margin-bottom: 10px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.usin-report-toggle {
+  position: relative;
+}
+.usin-report-toggle span {
+  outline: none;
+}
+.usin-report-toggle .usin-drop-down {
+  top: 33px;
+  right: -12px;
+}
+.usin-reports-visible {
+  color: #aec2c1;
+  border-right: 1px solid #f1f1f1;
+  padding-right: 5px;
+  padding: 11px 10px;
+  background-color: #fbfbfb;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12) inset, 0 0 5px rgba(0, 0, 0, 0.03);
+  float: left;
+  border-radius: 4px 0 0 4px;
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+.usin-reports-icon {
+  background-color: #fff;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12) inset, 0 0 5px rgba(0, 0, 0, 0.03);
+  padding: 13px 10px;
+  float: left;
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+}
+.usin-chart-info p {
+  color: #aec2c1;
 }

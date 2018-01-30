@@ -428,11 +428,11 @@ class MS_Controller_Billing extends MS_Controller {
 			&& ! empty( $fields['membership_id'] )
 		) {
 
-
+			
 			$member = MS_Factory::load( 'MS_Model_Member', $fields['user_id'] );
 			$membership_id = $fields['membership_id'];
 			$gateway_id = 'admin';
-
+			
 			//Get all gateways that are active.
 			//If its only one, set that as the default gateway
 			$gateway_names = MS_Model_Gateway::get_gateway_names( true );

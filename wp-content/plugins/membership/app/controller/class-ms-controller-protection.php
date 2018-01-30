@@ -220,9 +220,7 @@ class MS_Controller_Protection extends MS_Controller {
 				MS_Rule_Shortcode::RULE_ID 			=> true,
 				MS_Rule_Url::RULE_ID 				=> true,
 				MS_Rule_Special::RULE_ID 			=> true,
-
-				MS_Rule_Adminside::RULE_ID 			=> true,
-
+				
 				MS_Rule_MemberCaps::RULE_ID 		=> true,
 				MS_Rule_MemberRoles::RULE_ID 		=> true,
 			);
@@ -284,12 +282,7 @@ class MS_Controller_Protection extends MS_Controller {
 				$tabs[ MS_Rule_Shortcode::RULE_ID ] = false;
 			}
 
-
-			// Maybe "Admin-Side"
-			if ( ! MS_Model_Addon::is_enabled( MS_Model_Addon::ADDON_ADMINSIDE ) ) {
-				$tabs[ MS_Rule_Adminside::RULE_ID ] = false;
-			}
-
+			
 
 			// Maybe "Membercaps"
 			if ( MS_Model_Addon::is_enabled( MS_Model_Addon::ADDON_MEMBERCAPS ) ) {

@@ -32,7 +32,7 @@ class USIN_Custom_Fields_Page{
 		add_action ( 'admin_menu', array($this, 'add_menu_page'), 15 );
 		add_action ( 'admin_init', array($this, 'create_nonce') );
 
-		$this->assets = new USIN_Custom_Fields_Assets($this->slug, $this);
+		$this->assets = new USIN_Custom_Fields_Assets($this);
 		$this->assets->init();
 		// 
 		$this->ajax = new USIN_Custom_Fields_Ajax($this->capability, $this->nonce_key);

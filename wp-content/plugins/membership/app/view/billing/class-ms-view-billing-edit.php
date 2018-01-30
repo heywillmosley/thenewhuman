@@ -80,9 +80,9 @@ class MS_View_Billing_Edit extends MS_View {
 				'<a href="%s" target="_blank">%s</a>',
 				MS_Controller_Plugin::get_admin_url(
 					'billing',
-					array(
-						'show' 		=> 'logs',
-						'invoice' 	=> $invoice->id
+					array( 
+						'show' 		=> 'logs', 
+						'invoice' 	=> $invoice->id 
 					)
 				),
 				__( 'Show Transactions', 'membership2' )

@@ -8,6 +8,9 @@ abstract class USIN_Plugin_Module{
 	abstract public function register_module();
 	abstract public function register_fields();
 	abstract public function init();
+
+	//optional functions
+	protected function init_reports(){}
 	
 	public function __construct(){
 		add_filter('usin_module_options', array($this , 'add_to_module_options'));
@@ -42,16 +45,30 @@ abstract class USIN_Plugin_Module{
 	public function init_module(){
 		if($this->is_module_active()){
 			$this->init();
+
+			//init the reports
+			if(USIN_Reports_Page::is_reports_page() || USIN_Reports_Ajax::is_reports_ajax()){
+				$this->init_reports();
+			}
 		}
 	}
-	
+
 	/**
 	 * Optional function that can be overwritten to apply other custom actions
 	 */
 	protected function apply_module_actions(){}
 	
 	protected function is_plugin_active(){
-		return USIN_Helper::is_plugin_activated($this->plugin_path);
+		if(is_array($this->plugin_path)){
+			foreach ($this->plugin_path as $path ) {
+				if(USIN_Helper::is_plugin_activated($path)){
+					return true;
+				}
+			}
+			return false;
+		}else{
+			return USIN_Helper::is_plugin_activated($this->plugin_path);
+		}
 	}
 	
 	protected function is_module_active(){

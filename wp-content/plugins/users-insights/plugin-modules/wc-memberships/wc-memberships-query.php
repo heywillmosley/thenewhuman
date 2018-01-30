@@ -55,7 +55,7 @@ class USIN_WC_Memberships_Query{
 			$query_joins .= " LEFT JOIN (
 					SELECT MIN(CAST(meta_value AS DATETIME)) AS member_since, $wpdb->posts.post_author AS user_id FROM $wpdb->postmeta
 					INNER JOIN $wpdb->posts ON $wpdb->postmeta.post_id = $wpdb->posts.ID
-					WHERE $wpdb->postmeta.meta_key = '_start_date' AND $wpdb->posts.post_type = '$this->post_type' AND $wpdb->posts.post_status IN (".$this->get_status_string().")
+					WHERE $wpdb->postmeta.meta_key = '_start_date' AND $wpdb->posts.post_type = '$this->post_type' AND $wpdb->posts.post_status IN (".self::get_status_string().")
 					GROUP BY $wpdb->posts.post_author
 				) AS memberships_since ON $wpdb->users.ID = memberships_since.user_id";
 				
@@ -63,7 +63,7 @@ class USIN_WC_Memberships_Query{
 			$query_joins .= " LEFT JOIN (
 				SELECT GROUP_CONCAT(post_status SEPARATOR ',') AS membership_statuses, post_author AS user_id
 				FROM $wpdb->posts
-				WHERE post_type='$this->post_type' AND post_status IN (".$this->get_status_string().")
+				WHERE post_type='$this->post_type' AND post_status IN (".self::get_status_string().")
 				GROUP BY $wpdb->posts.post_author
 				) AS mem_statuses ON  $wpdb->users.ID = mem_statuses.user_id";
 		}
@@ -81,11 +81,11 @@ class USIN_WC_Memberships_Query{
 		global $wpdb;
 		return " LEFT JOIN $wpdb->posts AS memberships 
 			ON $wpdb->users.ID = memberships.post_author AND memberships.post_type='$this->post_type'
-			AND memberships.post_status IN (".$this->get_status_string().")";
+			AND memberships.post_status IN (".self::get_status_string().")";
 	}
 	
-	protected function get_status_string(){
-		return USIN_Helper::array_to_sql_string($this->get_membership_statuses_keys());
+	public static function get_status_string(){
+		return USIN_Helper::array_to_sql_string(self::get_membership_statuses_keys());
 	}
 
 
@@ -124,7 +124,7 @@ class USIN_WC_Memberships_Query{
 		return $user_data;
 	}
 	
-	protected function get_membership_statuses_keys(){
+	protected static function get_membership_statuses_keys(){
 		$statuses = USIN_WC_Memberships::get_statuses();
 		return array_keys($statuses);
 	}

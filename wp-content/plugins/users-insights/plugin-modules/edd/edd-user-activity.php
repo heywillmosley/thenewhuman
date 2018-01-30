@@ -51,6 +51,10 @@ class USIN_EDD_User_Activity{
 					
 					$order = $orders[$i];
 					$title = get_the_date( get_option('date_format'), $order->ID);
+
+					if(function_exists('edd_payment_amount')){
+						$title .= ' - '.edd_payment_amount( $order->ID );
+					}
 					
 					$order_status = '';
 					if(function_exists('edd_get_payment_status')){

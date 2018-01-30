@@ -11,19 +11,19 @@ class CoursePress_Admin_Instructors extends CoursePress_Admin_Controller_Menu {
 	var $with_editor = false;
 	protected $cap = 'coursepress_settings_cap';
 	var $instructors_list;
-
+	
 	public static function init() {
-
+		
 	}
-
+	
 	public function get_labels() {
-
+		
 		add_action(
 			'admin_init',
 			array( $this, 'process_action' ),
 			20
 		);
-
+		
 		return array(
 			'title' => __( 'CoursePress Instructors', 'cp' ),
 			'menu_title' => __( 'Instructors', 'cp' ),
@@ -39,7 +39,7 @@ class CoursePress_Admin_Instructors extends CoursePress_Admin_Controller_Menu {
 			$this->instructors_list->prepare_items();
 
 			add_screen_option( 'per_page', array( 'default' => 20, 'option' => 'coursepress_instructors_per_page', 'label' => __( 'Number of instructors per page', 'cp' ) ) );
-
+			
 		} else {
 			$view = $_REQUEST['view'];
 			$this->slug = 'instructor-' . $view;
@@ -64,7 +64,7 @@ class CoursePress_Admin_Instructors extends CoursePress_Admin_Controller_Menu {
 			exit;
 		}
 	}
-
+	
 	public function process_action() {
 		if ( isset($_REQUEST['action']) && !empty($_REQUEST['action']) && isset($_REQUEST['instructor_id']) && !empty($_REQUEST['instructor_id']) ) {
 			$data = !empty($_REQUEST) ? stripslashes_deep($_REQUEST) : array();
@@ -76,7 +76,7 @@ class CoursePress_Admin_Instructors extends CoursePress_Admin_Controller_Menu {
 				),
 				admin_url('edit.php')
 			);
-
+			
 			switch( $data['action'] ){
 				case 'delete':
 					if ( isset($data['_wpnonce']) && wp_verify_nonce($data['_wpnonce'], 'coursepress_remove_instructor') ) {

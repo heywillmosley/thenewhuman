@@ -370,5 +370,5 @@ class MS_Model_Simulate extends MS_Model_Transient {
 	 */
 	public function __isset( $property ) {
 		return isset($this->$property);
-	}
+	}		
 }

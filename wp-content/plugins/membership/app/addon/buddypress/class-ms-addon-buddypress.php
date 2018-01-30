@@ -16,7 +16,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 	 * @var  bool
 	 */
 	protected $buddypress_registration = true;
-
+        
         /**
 	 * The flag to determine if we want to show the BuddyPress xprofile fields
 	 * M2 Account page.
@@ -68,7 +68,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 			$this->buddypress_registration = lib3()->is_true(
 				$this->get_setting( 'buddypress_registration' )
 			);
-
+                        
                         $this->buddypress_xprofile = lib3()->is_true(
 				$this->get_setting( 'buddypress_xprofile' )
 			);
@@ -100,20 +100,20 @@ class MS_Addon_BuddyPress extends MS_Addon {
 					'ms_controller_frontend_register_user_complete',
 					'save_custom_fields'
 				);
-
+                                
 				$this->add_action(
 						'wp',
 						'bp_m2_process_signup_errors'
 				);
-
+				
 				$this->add_filter(
 					'ms_model_membership_create_new_user_validation_errors',
 					'check_bp_xprofile_validation',
 					10, 1
 				);
-
+                                
 			}
-
+                        
 			if ( $this->buddypress_xprofile ) {
 				$this->add_action(
 					'ms_view_account_profile_before_card',
@@ -139,14 +139,14 @@ class MS_Addon_BuddyPress extends MS_Addon {
 					'disable_validation'
 				);
 
-			}
+			}	
 
-
+			
 		} else {
 			$this->buddypress_registration = false;
 		}
 	}
-
+        
 	/**
 	 * Checks, if some BuddyPress pages overlap with M2 membership pages.
 	 *
@@ -260,7 +260,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 	static public function buddypress_active() {
 		global $bp;
 
-		return ( ! empty( $bp ) && function_exists( 'bp_buffer_template_part' ) );
+		return ( ! empty( $bp ) && function_exists( 'bp_buffer_template_part' ) && function_exists( 'buddypress' ) );
 	}
 
 	/**
@@ -280,7 +280,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 
 		return $tabs;
 	}
-
+        
 	/**
 		* Show BP xprofile field value in M2 account page
 		*
@@ -290,9 +290,9 @@ class MS_Addon_BuddyPress extends MS_Addon {
 		* @param object $account Account object
 		*/
 	public function bp_xprofile_into_account_page( $member, $account ) {
-
+		
 		ob_start();
-
+		
 		$profile_groups 	= BP_XProfile_Group::get( array( 'fetch_fields' => true ) );
 		$profile_groups 	= lib3()->array->get( $profile_groups );
 		$disallowed_fields 	= array();
@@ -300,7 +300,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 								'ms_bp_profile_fields_account_disallowed_fields',
 								$disallowed_fields
 							);
-
+		
 		?>
 		<div id="m2-bp-profile">
 			<h2><?php _e( 'Extra Profile Information', 'membership2' ) ?></h2>
@@ -329,17 +329,17 @@ class MS_Addon_BuddyPress extends MS_Addon {
 			</table>
 		</div>
 		<?php
-
+		
 		$output = ob_get_contents();
 		ob_end_clean();
-
+		
 		$output = apply_filters(
 					'ms_bp_profile_fields_account',
 					$output,
 					$profile_groups,
 					$disallowed_fields
 				);
-
+		
 		echo $output;
 	}
 
@@ -377,7 +377,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 
 		return $code;
 	}
-
+        
 	/**
 		* Check buddypress xprofile field validation
 		* when using buddypress registration form on signup
@@ -387,7 +387,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 		*/
 	public function check_bp_xprofile_validation( $validation_errors ) {
 		$bp = buddypress();
-
+		
 		// Make sure hidden field is passed and populated.
 		if ( isset( $_POST['signup_profile_field_ids'] ) && !empty( $_POST['signup_profile_field_ids'] ) ) {
 
@@ -406,10 +406,10 @@ class MS_Addon_BuddyPress extends MS_Addon {
 				}
 			}
 		}
-
+		
 		return $validation_errors;
 	}
-
+        
     /**
 	 * Check the registration form error
 	 * when using buddypress registration form on signup
@@ -421,20 +421,20 @@ class MS_Addon_BuddyPress extends MS_Addon {
 		if( is_user_logged_in() ) {
 			return;
 		}
-
+		
 		if( ! isset( $_POST['signup_username'] ) ) {
 			return;
 		}
-
+		
 		if( bp_is_current_component( 'register' ) ) {
 			return;
 		}
-
+		
 		$bp = buddypress();
-
+		
 		do_action( 'bp_signup_pre_validate' );
 		$account_details = bp_core_validate_user_signup( $_POST['signup_username'], $_POST['signup_email'] );
-
+		
 		if ( !empty( $account_details['errors']->errors['user_name'] ) ){
 			$bp->signup->errors['signup_username'] = $account_details['errors']->errors['user_name'][0];
 		}
@@ -465,13 +465,13 @@ class MS_Addon_BuddyPress extends MS_Addon {
 		if ( isset( $_POST['signup_with_blog'] ) ) {
 			$this->_check_blog_fields();
 		}
-
+		
 		do_action( 'bp_signup_validate' );
-
+		
 		$this->_create_action_error_cb();
-
+            
     }
-
+        
     /**
 	 * Check the xprofile fields validation
 	 * when using buddypress registration form on signup
@@ -481,7 +481,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 	 */
 	private function _check_xprofile_fields() {
 		$bp = buddypress();
-
+		
 		// Make sure hidden field is passed and populated.
 		if ( isset( $_POST['signup_profile_field_ids'] ) && !empty( $_POST['signup_profile_field_ids'] ) ) {
 
@@ -507,7 +507,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 			bp_core_redirect( bp_get_root_domain() );
 		}
 	}
-
+        
     /**
 	 * Check blog fields validation
 	 * when using buddypress registration form on signup
@@ -517,7 +517,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 	 */
 	private function _check_blog_fields() {
 		$bp = buddypress();
-
+		
 		$active_signup = bp_core_get_root_option( 'registration' );
 
 		if ( 'blog' == $active_signup || 'all' == $active_signup ) {
@@ -531,7 +531,7 @@ class MS_Addon_BuddyPress extends MS_Addon {
 				$bp->signup->errors['signup_blog_title'] = $blog_details['errors']->errors['blog_title'][0];
 		}
 	}
-
+        
     /**
 	 * Create bp fields error callback action
 	 * when using buddypress registration form on signup
@@ -541,15 +541,19 @@ class MS_Addon_BuddyPress extends MS_Addon {
 	 */
 	private function _create_action_error_cb() {
 		$bp = buddypress();
-
+		
 		if ( ! empty( $bp->signup->errors ) ) {
-			// There is error, so show errors using action hook
+			// There is error, so show errors using action hook 
 			foreach ( (array) $bp->signup->errors as $fieldname => $error_message ) {
-				add_action( 'bp_' . $fieldname . '_errors', create_function( '', 'echo apply_filters(\'bp_members_signup_error_message\', "<div class=\"error\">" . stripslashes( \'' . addslashes( $error_message ) . '\' ) . "</div>" );' ) );
+				$this->add_action( 'bp_' . $fieldname . '_errors', '_bp_errors' );
 			}
 		}
 	}
 
+	function _bp_errors( $error_message ) {
+		echo apply_filters( 'bp_members_signup_error_message', '<div class="error">' . stripslashes( addslashes( $error_message ) ) . '</div>' );
+	}
+        
 
 	/**
 	 * Redirects all output to the Buffer, so we can easily discard it later...

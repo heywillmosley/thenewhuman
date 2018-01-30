@@ -829,6 +829,10 @@ input[type="image"] {
 #wpwrap .ms-wrap .ms-settings-box .ms-import-preview .preview-name {
   font-weight: bold;
 }
+.wpmui-popup .ms-settings-box .ms-import-preview tbody td,
+#wpwrap .ms-wrap .ms-settings-box .ms-import-preview tbody td {
+  text-align: center;
+}
 .wpmui-popup .ms-settings-box .ms-import-preview .preview-count,
 #wpwrap .ms-wrap .ms-settings-box .ms-import-preview .preview-count {
   text-align: center;
@@ -1195,6 +1199,3 @@ input[type="image"] {
 .ms-wrap .ms-settings-footer a {
   color: #666;
 }
-
-
-/* 378641-1509988136-au */

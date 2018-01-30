@@ -115,7 +115,7 @@ class MS_Gateway_Paypalstandard extends MS_Gateway {
 		}
 		if ( ! empty( $_POST[ 'payment_status'] ) ) {
 			$payment_status 	= strtolower( $_POST[ 'payment_status'] );
-
+                        
 			/**
 			* Sandbox fix
 			*
@@ -133,7 +133,7 @@ class MS_Gateway_Paypalstandard extends MS_Gateway {
 		} elseif ( ! empty( $_POST['currency_code'] ) ) {
 			$currency 			= $_POST['currency_code'];
 		}
-
+		
 
 		// Step 1: Find the invoice_id and determine if payment is M2 or M1.
 		if ( $payment_status || $transaction_type ) {
@@ -163,7 +163,7 @@ class MS_Gateway_Paypalstandard extends MS_Gateway {
 					}
 				}
 			}
-
+			
 			//It might be set in the post, but we might not have that invoice
 			if ( !$invoice_id ) {
 				if ( ! empty( $_POST['custom'] ) ) {
@@ -576,7 +576,7 @@ class MS_Gateway_Paypalstandard extends MS_Gateway {
 				&& 'VERIFIED' == $response['body']
 				&& $invoice->id == $invoice_id
 			) {
-
+				
 				$subscription 		= $invoice->get_subscription();
 				$membership 		= $subscription->get_membership();
 				$member 			= $subscription->get_member();

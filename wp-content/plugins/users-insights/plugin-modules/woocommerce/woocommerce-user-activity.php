@@ -44,6 +44,10 @@ class USIN_Woocommerce_User_Activity{
 
 				if(class_exists('WC_Order')){
 					$wc_order = new WC_Order($order->ID);
+
+					if(method_exists($wc_order, 'get_total') && function_exists('wc_price')){
+						$title.=' - '.wc_price($wc_order->get_total());
+					}
 					
 					if(method_exists($wc_order, 'get_status') && function_exists('wc_get_order_status_name')){
 						$status = $wc_order->get_status();

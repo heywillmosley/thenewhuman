@@ -95,7 +95,7 @@ class MS_Controller_Membership extends MS_Controller {
 			'ms_detect_membership_id',
 			'autodetect_membership'
 		);
-
+                
 	}
 
 	/**
@@ -121,7 +121,7 @@ class MS_Controller_Membership extends MS_Controller {
 				);
 			}
 		}
-
+                
 		$this->add_action(
 			'admin_action_membership_bulk_delete',
 			'membership_bulk_delete'
@@ -159,38 +159,38 @@ class MS_Controller_Membership extends MS_Controller {
 
 		wp_die( $msg );
 	}
-
+        
 	/**
 	 * Bulk delete memberships
 	 *
 	 * @since 1.0.2.7
 	 */
 	public function membership_bulk_delete() {
-
+		
 		if ( empty( $_REQUEST['_wpnonce'] ) ) { return; }
 
 		if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'bulk_delete' ) ) { return; }
-
+		
 		if( ! isset( $_REQUEST['membership_ids'] ) ) {
 			wp_redirect( MS_Controller_Plugin::get_admin_url() );
 			exit;
 		}
-
+		
 		$membership_ids = explode( '-', $_REQUEST['membership_ids'] );
-
+		
 		foreach( $membership_ids as $membership_id ) {
 			$membership = MS_Factory::load( 'MS_Model_Membership', $membership_id );
 			try {
 				$membership->delete();
 			}
 			catch( Exception $e ) {
-
+				
 			}
 		}
-
+		
 		wp_redirect( MS_Controller_Plugin::get_admin_url() );
 		exit;
-
+		
 	}
 
 	/**
@@ -448,9 +448,13 @@ class MS_Controller_Membership extends MS_Controller {
 				unset( $save_data['_wpnonce'] );
 				unset( $save_data['action'] );
 
-				if ( isset( $_POST['set_private_flag'] ) ) {
-					lib3()->array->equip_post( 'public' );
-					$save_data['public'] = ! lib3()->is_true( $_POST['public'] );
+				if ( isset( $_POST['set_public_flag'] ) ) {
+					//lib3()->array->equip_post( 'public' );
+					if ( isset( $_POST['public'] ) ) {
+						$save_data['private'] = false;
+					} else {
+						$save_data['private'] = true;
+					}
 				}
 				if ( isset( $_POST['set_paid_flag'] ) ) {
 					lib3()->array->equip_post( 'paid' );

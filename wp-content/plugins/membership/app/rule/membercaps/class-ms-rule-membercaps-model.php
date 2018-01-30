@@ -157,7 +157,7 @@ class MS_Rule_MemberCaps_Model extends MS_Rule {
 		if ( ! isset( self::$real_caps[$user->ID] ) ) {
 			self::$real_caps[$user->ID] = $allcaps;
 		}
-
+                
 		return apply_filters(
 			'ms_rule_membercaps_model_modify_caps',
 			self::$real_caps[$user->ID],

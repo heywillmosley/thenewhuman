@@ -82,8 +82,9 @@ class CoursePress_Helper_Editor {
 	 */
 	public static function teeny_mce_plugins( $plugins ) {
 		$plugins[] = 'paste';
-		//$plugins[] = 'wpautoresize'; it cause problem with very too tall tinyMCE editor
+		//$plugins[] = 'wpautoresize'; it cause problem with very too tall tinyMCE editor 
 		return $plugins;
     }
 
 }
+

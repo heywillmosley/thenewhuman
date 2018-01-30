@@ -80,7 +80,7 @@
 							$student_progress,
 							'completion/average'
 						);
-
+						
 						$odd = 'odd' === $odd ? 'even' : 'odd';
 						$last_active = '-';
 

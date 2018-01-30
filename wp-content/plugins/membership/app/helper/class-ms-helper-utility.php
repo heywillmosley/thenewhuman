@@ -79,16 +79,22 @@ class MS_Helper_Utility extends MS_Helper {
 		if ( null === $Url ) {
 			$Url = 'http://';
 
+			if ( is_ssl() ) {
+				$force_ssl = true;
+			}
+
 			if ( $force_ssl ) {
 				$Url = 'https://';
 			} elseif ( isset( $_SERVER['HTTPS'] ) && 'on' == $_SERVER['HTTPS'] ) {
 				$Url = 'https://';
+				$force_ssl = true;
 			}
 
 			$Url .= $_SERVER['SERVER_NAME'];
-			if ( $_SERVER['SERVER_PORT'] != '80' ) {
+			if ( $_SERVER['SERVER_PORT'] != '80' && !$force_ssl ) {
 				$Url .= ':' . $_SERVER['SERVER_PORT'];
 			}
+			
 			$Url .= $_SERVER['REQUEST_URI'];
 
 			$Url = apply_filters(
@@ -318,16 +324,63 @@ class MS_Helper_Utility extends MS_Helper {
 			return "";
 		}
 
-		return ( isset( $parts['scheme'] ) ? "{$parts['scheme']}:" : '' ) .
-				( (isset($parts['user'] ) || isset( $parts['host'] ) ) ? '//' : '' ) .
-				( isset($parts['user'] ) ? "{$parts['user']}" : '' ) .
-				( isset($parts['pass'] ) ? ":{$parts['pass']}" : '' ) .
-				( isset($parts['user'] ) ? '@' : '' ) .
-				( isset($parts['host'] ) ? "{$parts['host']}" : '' ) .
-				( isset($parts['port'] ) ? ":{$parts['port']}" : '' ) .
-				( isset($parts['path'] ) ? "{$parts['path']}" : '' ) .
-				( isset($parts['query'] ) ? "?{$parts['query']}" : '' ) .
+		return ( isset( $parts['scheme'] ) ? "{$parts['scheme']}:" : '' ) . 
+				( (isset($parts['user'] ) || isset( $parts['host'] ) ) ? '//' : '' ) . 
+				( isset($parts['user'] ) ? "{$parts['user']}" : '' ) . 
+				( isset($parts['pass'] ) ? ":{$parts['pass']}" : '' ) . 
+				( isset($parts['user'] ) ? '@' : '' ) . 
+				( isset($parts['host'] ) ? "{$parts['host']}" : '' ) . 
+				( isset($parts['port'] ) ? ":{$parts['port']}" : '' ) . 
+				( isset($parts['path'] ) ? "{$parts['path']}" : '' ) . 
+				( isset($parts['query'] ) ? "?{$parts['query']}" : '' ) . 
 				( isset($parts['fragment'] ) ? "#{$parts['fragment']}" : '' );
+	}
+
+	/**
+	 * Object to array
+	 *
+	 * @param $object Object - the object
+	 *
+	 * @return Array
+	 */
+	static function object_to_array( $object ) {
+		return json_decode( json_encode( $object ), true );
+	}
+
+	/**
+	 * Convert XML to array
+	 *
+	 * @param Object $xml - the xml object
+	 * @param  Array $out - the output
+	 *
+	 * @return Array
+	 */
+	static function xml2array ( $xml ) {
+		$out = array();
+		foreach ( $xml->children() as $r ) {
+			$t 	= array();
+			if ( count( $r->children() ) == 0) {
+				$out[ $r->getName() ] = strval( $r );
+			} else{
+				$out[ $r->getName() ][] = self::xml2array( $r );
+			}
+		}
+	
+		return $out;
+	}
+
+	/**
+	 * Convert Array to object
+	 *
+	 * @param Array $array
+	 *
+	 * @return object
+	 */
+	static function array_to_object( $array, $type ) {
+		if ( is_array( $array ) ) {
+			return ( object ) $array;
+		}
+		return $array;
 	}
 }
 

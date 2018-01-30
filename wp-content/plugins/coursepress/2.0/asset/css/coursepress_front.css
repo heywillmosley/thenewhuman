@@ -570,7 +570,7 @@ ul.notification-archive-list {
   cursor: pointer;
 }
 
-.course_list_box_item.clickable:hover .course-information *:not([class*="clickable-label"]) {	  			 		 	 			      
+.course_list_box_item.clickable:hover .course-information *:not([class*="clickable-label"]) {
   filter: blur(2px);
 }
 
@@ -1171,6 +1171,3 @@ ul.notification-archive-list {
   padding: 0 15px;
   margin: 0 2px;
 }
-
-
-/* 378641-1510858548-au */

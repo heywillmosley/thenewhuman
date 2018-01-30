@@ -86,6 +86,21 @@ class USIN_Ajax{
 	}
 
 	/**
+	 * Checks whether the required $_GET params exist. If they don't it
+	 * responds with an error and stops the execution
+	 *
+	 * @param array $required_params the required param keys
+	 * @return void
+	 */
+	protected function validate_required_get_params($required_params){
+		foreach ($required_params as $param ) {
+			if(empty($_GET[$param])){
+				$this->respond_error( __('Missing required param: ', 'usin').$param);
+			}
+		}
+	}
+
+	/**
 	 * Verifies the current request. If the request is not valid, it responds
 	 * with an error and stops the execution
 	 *
@@ -108,9 +123,13 @@ class USIN_Ajax{
 	 * @param string $message (optional) The error message to respond with
 	 * @return void
 	 */
-	protected function respond_error($message = 'Failed to execute your request'){
+	protected function respond_error($message = 'Failed to execute your request', $data = null){
 		status_header(400);
-		wp_send_json(array('error' => $message));
+		$res = array('error' => $message);
+		if(!empty($data)){
+			$res['info'] = $data;
+		}
+		wp_send_json($res);
 	}
 	
 	/**
@@ -136,7 +155,7 @@ class USIN_Ajax{
 	 */
 	protected function respond($res){
 		if(is_wp_error($res)){
-			$this->respond_error($res->get_error_message());
+			$this->respond_error($res->get_error_message(), $res->get_error_data());
 		}elseif($res === false){
 			$this->respond_error();
 		}else{

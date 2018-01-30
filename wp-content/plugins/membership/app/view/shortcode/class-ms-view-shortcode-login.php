@@ -572,7 +572,7 @@ class MS_View_Shortcode_Login extends MS_View {
 						remove_query_arg( array( 'action', 'key', 'login' ) )
 					)
 				);
-
+				
 				$url = apply_filters(
 					'ms_sc_login_pw_reset_url',
 					$url
@@ -594,7 +594,7 @@ class MS_View_Shortcode_Login extends MS_View {
 				$url = esc_url_raw(
 					remove_query_arg( array( 'action', 'key', 'login' ) )
 				);
-
+				
 				$url = apply_filters(
 					'ms_sc_login_new_login_url',
 					$url

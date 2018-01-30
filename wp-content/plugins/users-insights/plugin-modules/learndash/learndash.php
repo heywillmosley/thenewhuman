@@ -14,11 +14,12 @@ class USIN_LearnDash extends USIN_Plugin_Module{
 	protected $module_name = 'learndash';
 	protected $plugin_path = 'sfwd-lms/sfwd_lms.php';
 	protected static $statuses = null;
-	protected $course_post_type = 'sfwd-courses';
-	protected $quiz_post_type = 'sfwd-quiz';
-	protected $groups_post_type = 'groups';
 	protected $required_version = '2.3';
 	protected $upgrade_notice_set = false;
+
+	const COURSE_POST_TYPE = 'sfwd-courses';
+	const QUIZ_POST_TYPE = 'sfwd-quiz';
+	const GROUP_POST_TYPE = 'groups';
 
 	
 	/**
@@ -43,6 +44,11 @@ class USIN_LearnDash extends USIN_Plugin_Module{
 		
 		new USIN_LearnDash_Query();
 		new USIN_LearnDash_User_Activity($this->module_name);
+	}
+
+	protected function init_reports(){
+		require_once 'reports/learndash-reports.php';
+		new USIN_LearnDash_Reports($this);
 	}
 	
 	
@@ -123,8 +129,8 @@ class USIN_LearnDash extends USIN_Plugin_Module{
 			'module' => $this->module_name
 		);
 		
-		$course_options = $this->get_filter_options($this->course_post_type);
-		$quiz_options = $this->get_filter_options($this->quiz_post_type);
+		$course_options = self::get_items(self::COURSE_POST_TYPE);
+		$quiz_options = self::get_items(self::QUIZ_POST_TYPE);
 		
 		//register the filter fields
 		$filter_fields = array(
@@ -141,7 +147,7 @@ class USIN_LearnDash extends USIN_Plugin_Module{
 		}
 		
 		//group field
-		$group_opions = $this->get_filter_options($this->groups_post_type);
+		$group_opions = self::get_items(self::GROUP_POST_TYPE);
 		if(sizeof($group_opions)>0){
 			$fields []=array(
 				'name' => __('Group', 'usin'),
@@ -182,12 +188,16 @@ class USIN_LearnDash extends USIN_Plugin_Module{
 		return $label;
 	}
 	
-	protected function get_filter_options($post_type){
+	public static function get_items($post_type, $assoc_res = false){
 		$options = array();
 		$posts = get_posts( array( 'post_type' => $post_type, 'posts_per_page' => -1 ) );
 
 		foreach ($posts as $post) {
-			$options[] = array('key'=>$post->ID, 'val'=>$post->post_title);
+			if($assoc_res){
+				$options[$post->ID] = $post->post_title;
+			}else{
+				$options[] = array('key'=>$post->ID, 'val'=>$post->post_title);
+			}
 		}
 
 		return $options;

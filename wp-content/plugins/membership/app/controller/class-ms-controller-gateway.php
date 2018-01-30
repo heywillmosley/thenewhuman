@@ -124,7 +124,7 @@ class MS_Controller_Gateway extends MS_Controller {
 		$msg = MS_Helper_Settings::SETTINGS_MSG_NOT_UPDATED;
 
 		$fields = array( 'action', 'gateway_id', 'field', 'value' );
-
+                
 		if ( $this->verify_nonce()
 			&& ( self::validate_required( $fields ) || $_POST['field'] == 'pay_button_url' )
 			&& $this->is_admin_user()
@@ -643,7 +643,7 @@ class MS_Controller_Gateway extends MS_Controller {
 				$invoice = $gateway->process_purchase( $subscription );
 
 				$this->check_future_subscription_date( $invoice, $subscription );
-
+				
 				// If invoice is successfully paid, redirect to welcome page.
 				if ( $invoice->is_paid()
 					|| ( $invoice->uses_trial
@@ -721,7 +721,7 @@ class MS_Controller_Gateway extends MS_Controller {
 
 	/**
 	 * Check if a subscription set for a future date is being paid for now
-	 * If payment is being done before the due date, we have to adjust the
+	 * If payment is being done before the due date, we have to adjust the 
 	 * subscription date to match the payment gateway
 	 *
 	 * @since 1.0.4
@@ -732,7 +732,7 @@ class MS_Controller_Gateway extends MS_Controller {
 	private function check_future_subscription_date( $invoice, $subscription ) {
 		//Incase they are paying for a subscription before the start date, we adjust the dates
 		$current_date = MS_Helper_Period::current_date( null, true );
-
+		
 		$valid_date = MS_Helper_Period::is_after(
 			$subscription->start_date,
 			$current_date
@@ -882,7 +882,7 @@ class MS_Controller_Gateway extends MS_Controller {
 
 	/**
 	 * Handle Web Hook
-	 * Use by gateways that have webhooks
+	 * Use by gateways that have webhooks 
 	 * /ms-web-hook/XYZ becomes index.php?mswebhook=XYZ
 	 *
 	 * @since  1.0.4

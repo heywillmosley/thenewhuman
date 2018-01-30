@@ -36,7 +36,7 @@
 			<p class="description">
 				<?php esc_html_e( 'Comments listing must also included in your export for this to work.', 'cp' ); ?>
 			</p>
-		</div>
+		</div>		
 		<div class="cp-submit">
 			<?php submit_button( __( 'Upload file and import', 'cp' ), 'button-primary disabled' ); ?>
 		</div>

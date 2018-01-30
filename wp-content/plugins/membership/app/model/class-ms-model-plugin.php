@@ -369,7 +369,7 @@ class MS_Model_Plugin extends MS_Model {
 	 */
 	public function protect_current_page() {
 		do_action( 'ms_model_plugin_protect_current_page_before', $this );
-
+                
 		if( defined( 'MS_PROTECTED_MESSAGE_REVERSE_RULE' ) && MS_PROTECTED_MESSAGE_REVERSE_RULE ) {
 			$allowed_memberships = array();
 			$memberships = MS_Model_Membership::get_membership_ids();
@@ -408,7 +408,8 @@ class MS_Model_Plugin extends MS_Model {
 				MS_Model_Pages::MS_PAGE_PROTECTED_CONTENT,
 				false
 			);
-			$current_page_url = MS_Helper_Utility::get_current_url();
+			//Get current page url
+			$current_page_url = lib3()->net->current_url();
 
 			// Don't (re-)redirect the protection page.
 			if ( ! MS_Model_Pages::is_membership_page( null, MS_Model_Pages::MS_PAGE_PROTECTED_CONTENT ) ) {
@@ -538,11 +539,11 @@ class MS_Model_Plugin extends MS_Model {
 
 				$membership = $subscription->get_membership();
 				$membership->initialize( $subscription );
-
+						
 				$disable_protection = $disable_protection || $membership->has_access_to_content( MS_Rule_Content_Model::MORE_LIMIT );
 			}
 
-		}
+		}		
 
 		// Search permissions through all memberships joined.
 		foreach ( $this->member->subscriptions as $subscription ) {
@@ -674,7 +675,7 @@ class MS_Model_Plugin extends MS_Model {
 			if ( wp_next_scheduled( 'ms_cron_process_communications' ) ) {
 				wp_clear_scheduled_hook( 'ms_cron_process_communications' );
 			}
-			do_action( 'ms_cron_process_communications' ); //Send any pending emails
+			do_action( 'ms_cron_process_communications' ); //Send any pending emails 
 			unset( $jobs['ms_cron_process_communications'] );
 		}
 
@@ -751,14 +752,14 @@ class MS_Model_Plugin extends MS_Model {
 			wp_clear_scheduled_hook( $hook );
 			$this->setup_cron_services( $hook );
 		}
-
+                
         $_SESSION['m2_status_check'] = 'inv';
 
 		// Perform the actual status checks!
 		foreach ( $subscriptions as $subscription ) {
 			$subscription->check_membership_status();
 		}
-
+                
 		do_action( 'ms_model_plugin_check_membership_status_after', $this );
 	}
 

@@ -460,7 +460,7 @@ class CoursePress_Helper_Table_CourseStudent extends WP_Users_List_Table {
 							esc_attr( $nonce_search )
 						);
 					} else {
-						$user_selector = '<input type="text" id="' . $id .'" name="' . $name . '" placeholder="' . esc_attr__( 'Enter user ID', 'cp' ) . '" />';	  			 		 	 			      
+						$user_selector = '<input type="text" id="' . $id .'" name="' . $name . '" placeholder="' . esc_attr__( 'Enter user ID', 'cp' ) . '" />';
 					}
 					$user_selector = apply_filters( 'coursepress_student_selector', $user_selector, $id, $name );
 					echo $user_selector;
