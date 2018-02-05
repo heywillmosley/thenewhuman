@@ -1,0 +1,8 @@
+[01-Feb-2018 08:09:01 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/bb-theme/404.php:1
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/bb-theme/404.php on line 1
+[01-Feb-2018 09:29:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/bb-theme/404.php:1
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/bb-theme/404.php on line 1
