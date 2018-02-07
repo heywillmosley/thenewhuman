@@ -1,0 +1,3012 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Advance Sales Report Golden\n"
+"POT-Creation-Date: 2017-06-19 12:32+0530\n"
+"PO-Revision-Date: 2017-06-20 14:16+0530\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.12\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: ic-woocommerce-advance-sales-report-golden.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#. Plugin Name of the plugin/theme
+#: ic-woocommerce-advance-sales-report-golden.php:52
+msgid "WooCommerce Advance Sales Report Golden"
+msgstr "WooCommerce Advance Sales rapport Golden"
+
+#: ic-woocommerce-advance-sales-report-golden.php:53
+msgid "WooCommerce Report Golden"
+msgstr "WooCommerce rapport Golden"
+
+#: includes/ic_commerce_golden_activate.php:50
+#: includes/ic_commerce_golden_add_ons.php:29
+#: includes/ic_commerce_golden_all_report.php:42
+#: includes/ic_commerce_golden_cross_tab.php:98
+#: includes/ic_commerce_golden_custom_report.php:38
+#: includes/ic_commerce_golden_plugin_settings.php:22
+#: includes/ic_commerce_golden_variation.php:36
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Je hebt onvoldoende rechten voor toegang tot deze pagina."
+
+#: includes/ic_commerce_golden_activate.php:65
+msgid "Licence Key:"
+msgstr "Licentiesleutel:"
+
+#: includes/ic_commerce_golden_activate.php:76
+#: includes/ic_commerce_golden_init.php:253
+#: includes/ic_commerce_golden_init.php:268
+msgid "Activate"
+msgstr "Activeren"
+
+#: includes/ic_commerce_golden_activate.php:82
+msgid "product is activated"
+msgstr "product is geactiveerd"
+
+#: includes/ic_commerce_golden_activate.php:214
+msgid "No license keys were specified for activation."
+msgstr "Er zijn geen licentiesleutels opgegeven voor activering."
+
+#: includes/ic_commerce_golden_activate.php:219
+msgid "Product deactivated successfully."
+msgstr "Artikel is succesvol gedeactiveerd."
+
+#: includes/ic_commerce_golden_activate.php:221
+msgid "There was an error while deactivating the product."
+msgstr "Er is een fout opgetreden tijdens het deactiveren van het product."
+
+#: includes/ic_commerce_golden_activate.php:228
+msgid "Products activated successfully."
+msgstr "Artikelen die succesvol zijn geactiveerd."
+
+#: includes/ic_commerce_golden_activate.php:238
+msgid "There was an error and no product were activated."
+msgstr "Er is een fout opgetreden en er is geen product geactiveerd."
+
+#: includes/ic_commerce_golden_activate.php:290
+#: includes/ic_commerce_golden_init.php:913
+#, php-format
+msgid " depends on <a href=\"%s\">"
+msgstr " hangt af van <a href=\"%s\">"
+
+#: includes/ic_commerce_golden_activate.php:293
+#: includes/ic_commerce_golden_init.php:916
+#, php-format
+msgid ""
+" depends on <a href=\"%s\" target=\"_blank\" class=\"thickbox onclick\" "
+"title=\""
+msgstr ""
+" hangt af van <a href=\"%s\" target=\"_blank\" class=\"thickbox onclick\" "
+"title=\""
+
+#: includes/ic_commerce_golden_all_report.php:142
+#: includes/ic_commerce_golden_cross_tab.php:231
+#: includes/ic_commerce_golden_custom_report.php:253
+#: includes/ic_commerce_golden_stock_list.php:55
+#: includes/ic_commerce_golden_variation.php:130
+#: includes/ic_commerce_golden_variation_stock_list.php:61
+msgid "Custom Search"
+msgstr "Aangepaste zoekopdracht"
+
+#: includes/ic_commerce_golden_all_report.php:155
+#: includes/ic_commerce_golden_custom_report.php:262
+#: includes/ic_commerce_golden_variation.php:139
+msgid "From Date:"
+msgstr "Van datum:"
+
+#: includes/ic_commerce_golden_all_report.php:159
+#: includes/ic_commerce_golden_custom_report.php:266
+#: includes/ic_commerce_golden_variation.php:143
+msgid "To Date:"
+msgstr "Daten:"
+
+#: includes/ic_commerce_golden_all_report.php:170
+#: includes/ic_commerce_golden_cross_tab.php:265
+#: includes/ic_commerce_golden_cross_tab.php:389
+#: includes/ic_commerce_golden_custom_report.php:295
+#: includes/ic_commerce_golden_stock_list.php:133
+#: includes/ic_commerce_golden_variation.php:150
+#: includes/ic_commerce_golden_variation_stock_list.php:139
+msgid "Category:"
+msgstr "Categorie:"
+
+#: includes/ic_commerce_golden_all_report.php:179
+#: includes/ic_commerce_golden_cross_tab.php:349
+#: includes/ic_commerce_golden_cross_tab.php:424
+#: includes/ic_commerce_golden_custom_report.php:305
+#: includes/ic_commerce_golden_stock_list.php:124
+#: includes/ic_commerce_golden_variation.php:159
+msgid "Product:"
+msgstr "Artikel:"
+
+#: includes/ic_commerce_golden_all_report.php:195
+#: includes/ic_commerce_golden_cross_tab.php:321
+#: includes/ic_commerce_golden_cross_tab.php:398
+#: includes/ic_commerce_golden_custom_report.php:349
+#: includes/ic_commerce_golden_variation.php:188
+msgid "Status:"
+msgstr "Staat:"
+
+#: includes/ic_commerce_golden_all_report.php:233
+msgid "Parent Category:"
+msgstr "Ouder categorie:"
+
+#: includes/ic_commerce_golden_all_report.php:248
+msgid "Refund Type:"
+msgstr "Type Terugbetaling:"
+
+#: includes/ic_commerce_golden_all_report.php:253
+msgid "Part Refund - Order status not refunded"
+msgstr "Deel Terugbetaling - Order staat niet terugbetaald"
+
+#: includes/ic_commerce_golden_all_report.php:254
+msgid "Order Status Refunded"
+msgstr "Orderstaat terugbetaald"
+
+#: includes/ic_commerce_golden_all_report.php:265
+#: includes/ic_commerce_golden_refund_summary.php:80
+msgid "Show Refund Note:"
+msgstr "Toon Refund Opmerking:"
+
+#: includes/ic_commerce_golden_all_report.php:270
+#: includes/ic_commerce_golden_refund_summary.php:85
+#: includes/ic_commerce_golden_variation.php:321
+msgid "Group By:"
+msgstr "Groep door:"
+
+#: includes/ic_commerce_golden_all_report.php:275
+#: includes/ic_commerce_golden_columns.php:452
+#: includes/ic_commerce_golden_refund_summary.php:90
+#: includes/ic_commerce_golden_refund_summary.php:159
+msgid "Refund ID"
+msgstr "Refund ID"
+
+#: includes/ic_commerce_golden_all_report.php:276
+#: includes/ic_commerce_golden_all_report.php:645
+#: includes/ic_commerce_golden_all_report.php:673
+#: includes/ic_commerce_golden_columns.php:20
+#: includes/ic_commerce_golden_columns.php:37
+#: includes/ic_commerce_golden_columns.php:177
+#: includes/ic_commerce_golden_columns.php:204
+#: includes/ic_commerce_golden_columns.php:241
+#: includes/ic_commerce_golden_columns.php:319
+#: includes/ic_commerce_golden_columns.php:419
+#: includes/ic_commerce_golden_columns.php:456
+#: includes/ic_commerce_golden_custom_report.php:389
+#: includes/ic_commerce_golden_refund_summary.php:91
+#: includes/ic_commerce_golden_refund_summary.php:122
+#: includes/ic_commerce_golden_refund_summary.php:163
+msgid "Order ID"
+msgstr "Order ID"
+
+#: includes/ic_commerce_golden_all_report.php:277
+#: includes/ic_commerce_golden_refund_summary.php:92
+msgid "Refunded"
+msgstr "Teruggestort"
+
+#: includes/ic_commerce_golden_all_report.php:278
+#: includes/ic_commerce_golden_refund_summary.php:93
+msgid "Daily"
+msgstr "Dagelijks"
+
+#: includes/ic_commerce_golden_all_report.php:279
+#: includes/ic_commerce_golden_refund_summary.php:94
+msgid "Monthly"
+msgstr "Maandelijks"
+
+#: includes/ic_commerce_golden_all_report.php:280
+#: includes/ic_commerce_golden_refund_summary.php:95
+msgid "Yearly"
+msgstr "Jaarlijks"
+
+#: includes/ic_commerce_golden_all_report.php:293
+msgid "Coupon Codes:"
+msgstr "Kortings Codes:"
+
+#: includes/ic_commerce_golden_all_report.php:302
+msgid "Discount Type:"
+msgstr "Kortingstype:"
+
+#: includes/ic_commerce_golden_all_report.php:322
+#: includes/ic_commerce_golden_custom_report.php:385
+#: includes/ic_commerce_golden_stock_list.php:175
+#: includes/ic_commerce_golden_variation.php:309
+#: includes/ic_commerce_golden_variation_stock_list.php:193
+msgid "Order By:"
+msgstr "Bestellen door:"
+
+#: includes/ic_commerce_golden_all_report.php:335
+#: includes/ic_commerce_golden_custom_report.php:392
+#: includes/ic_commerce_golden_stock_list.php:180
+#: includes/ic_commerce_golden_variation.php:314
+#: includes/ic_commerce_golden_variation_stock_list.php:204
+msgid "Ascending"
+msgstr "Oplopend"
+
+#: includes/ic_commerce_golden_all_report.php:335
+#: includes/ic_commerce_golden_custom_report.php:392
+#: includes/ic_commerce_golden_stock_list.php:180
+#: includes/ic_commerce_golden_variation.php:314
+#: includes/ic_commerce_golden_variation_stock_list.php:204
+msgid "Descending"
+msgstr "Aflopend"
+
+#: includes/ic_commerce_golden_all_report.php:384
+#: includes/ic_commerce_golden_cross_tab.php:492
+#: includes/ic_commerce_golden_custom_report.php:449
+#: includes/ic_commerce_golden_variation.php:352
+msgid "Reset"
+msgstr "Reset"
+
+#: includes/ic_commerce_golden_all_report.php:386
+#: includes/ic_commerce_golden_cross_tab.php:493
+#: includes/ic_commerce_golden_custom_report.php:451
+#: includes/ic_commerce_golden_variation.php:354
+msgid "Search"
+msgstr "Zoeken"
+
+#: includes/ic_commerce_golden_all_report.php:431
+#: includes/ic_commerce_golden_cross_tab.php:507
+#: includes/ic_commerce_golden_custom_report.php:561
+#: includes/ic_commerce_golden_variation.php:380
+msgid ""
+"In order to view the results please hit \"<strong>Search</strong>\" button."
+msgstr "Om de resultaten te zien, klik op \"<strong>Zoeken</strong>\"."
+
+#: includes/ic_commerce_golden_all_report.php:453
+#: includes/ic_commerce_golden_all_report.php:2961
+#: includes/ic_commerce_golden_cross_tab.php:2957
+#: includes/ic_commerce_golden_custom_report.php:591
+#: includes/ic_commerce_golden_custom_report.php:1275
+#: includes/ic_commerce_golden_variation.php:1456
+msgid "Export to CSV - Additional Information"
+msgstr "Exporteer naar CSV - Extra informatie"
+
+#: includes/ic_commerce_golden_all_report.php:461
+#: includes/ic_commerce_golden_custom_report.php:599
+#: includes/ic_commerce_golden_plugin_settings.php:434
+msgid "Billing Information:"
+msgstr "Facturatie gegevens:"
+
+#: includes/ic_commerce_golden_all_report.php:465
+#: includes/ic_commerce_golden_custom_report.php:603
+#: includes/ic_commerce_golden_plugin_settings.php:435
+msgid "Shipping Information:"
+msgstr "Verzend informatie:"
+
+#: includes/ic_commerce_golden_all_report.php:470
+#: includes/ic_commerce_golden_all_report.php:2961
+#: includes/ic_commerce_golden_cross_tab.php:2957
+#: includes/ic_commerce_golden_custom_report.php:608
+#: includes/ic_commerce_golden_custom_report.php:1275
+#: includes/ic_commerce_golden_stock_list.php:877
+#: includes/ic_commerce_golden_variation.php:1456
+#: includes/ic_commerce_golden_variation_stock_list.php:1111
+msgid "Export to CSV"
+msgstr "Exporteer naar CSV"
+
+#: includes/ic_commerce_golden_all_report.php:491
+#: includes/ic_commerce_golden_all_report.php:527
+#: includes/ic_commerce_golden_cross_tab.php:533
+#: includes/ic_commerce_golden_cross_tab.php:588
+#: includes/ic_commerce_golden_custom_report.php:623
+#: includes/ic_commerce_golden_custom_report.php:677
+#: includes/ic_commerce_golden_plugin_settings.php:433
+#: includes/ic_commerce_golden_plugin_settings.php:518
+#: includes/ic_commerce_golden_stock_list.php:254
+#: includes/ic_commerce_golden_variation.php:412
+#: includes/ic_commerce_golden_variation.php:468
+#: includes/ic_commerce_golden_variation_stock_list.php:287
+msgid "Company Name:"
+msgstr "Bedrijfsnaam:"
+
+#: includes/ic_commerce_golden_all_report.php:495
+#: includes/ic_commerce_golden_all_report.php:531
+#: includes/ic_commerce_golden_cross_tab.php:537
+#: includes/ic_commerce_golden_cross_tab.php:592
+#: includes/ic_commerce_golden_custom_report.php:627
+#: includes/ic_commerce_golden_custom_report.php:681
+#: includes/ic_commerce_golden_fuctions.php:1841
+#: includes/ic_commerce_golden_stock_list.php:258
+#: includes/ic_commerce_golden_variation.php:416
+#: includes/ic_commerce_golden_variation.php:472
+#: includes/ic_commerce_golden_variation_stock_list.php:291
+msgid "Report Title:"
+msgstr "Rapport Titel:"
+
+#: includes/ic_commerce_golden_all_report.php:500
+#: includes/ic_commerce_golden_cross_tab.php:597
+#: includes/ic_commerce_golden_custom_report.php:686
+#: includes/ic_commerce_golden_variation.php:477
+msgid "Print Logo:"
+msgstr "Print Logo:"
+
+#: includes/ic_commerce_golden_all_report.php:505
+#: includes/ic_commerce_golden_cross_tab.php:603
+#: includes/ic_commerce_golden_custom_report.php:691
+#: includes/ic_commerce_golden_variation.php:482
+msgid "Print Date:"
+msgstr "Print datum:"
+
+#: includes/ic_commerce_golden_all_report.php:510
+#: includes/ic_commerce_golden_all_report.php:2964
+#: includes/ic_commerce_golden_all_report.php:3001
+#: includes/ic_commerce_golden_cross_tab.php:608
+#: includes/ic_commerce_golden_cross_tab.php:2960
+#: includes/ic_commerce_golden_cross_tab.php:2997
+#: includes/ic_commerce_golden_custom_report.php:696
+#: includes/ic_commerce_golden_custom_report.php:1278
+#: includes/ic_commerce_golden_custom_report.php:1307
+#: includes/ic_commerce_golden_variation.php:487
+#: includes/ic_commerce_golden_variation.php:1459
+#: includes/ic_commerce_golden_variation.php:1498
+msgid "Print"
+msgstr "Afdrukken"
+
+#: includes/ic_commerce_golden_all_report.php:521
+#: includes/ic_commerce_golden_all_report.php:2963
+#: includes/ic_commerce_golden_cross_tab.php:527
+#: includes/ic_commerce_golden_cross_tab.php:2959
+#: includes/ic_commerce_golden_custom_report.php:617
+#: includes/ic_commerce_golden_custom_report.php:1277
+#: includes/ic_commerce_golden_stock_list.php:248
+#: includes/ic_commerce_golden_stock_list.php:878
+#: includes/ic_commerce_golden_variation.php:406
+#: includes/ic_commerce_golden_variation.php:1458
+#: includes/ic_commerce_golden_variation_stock_list.php:281
+#: includes/ic_commerce_golden_variation_stock_list.php:1112
+msgid "Export to PDF"
+msgstr "Uitvoer naar PDF"
+
+#: includes/ic_commerce_golden_all_report.php:536
+#: includes/ic_commerce_golden_cross_tab.php:542
+#: includes/ic_commerce_golden_custom_report.php:632
+#: includes/ic_commerce_golden_stock_list.php:263
+#: includes/ic_commerce_golden_variation.php:421
+#: includes/ic_commerce_golden_variation_stock_list.php:296
+msgid "Show Logo:"
+msgstr "Toon logo:"
+
+#: includes/ic_commerce_golden_all_report.php:541
+#: includes/ic_commerce_golden_cross_tab.php:547
+#: includes/ic_commerce_golden_custom_report.php:637
+#: includes/ic_commerce_golden_stock_list.php:268
+#: includes/ic_commerce_golden_variation.php:426
+#: includes/ic_commerce_golden_variation_stock_list.php:301
+msgid "Show Date:"
+msgstr "Datum tonen:"
+
+#: includes/ic_commerce_golden_all_report.php:546
+#: includes/ic_commerce_golden_cross_tab.php:552
+#: includes/ic_commerce_golden_custom_report.php:642
+#: includes/ic_commerce_golden_stock_list.php:272
+#: includes/ic_commerce_golden_variation.php:432
+#: includes/ic_commerce_golden_variation_stock_list.php:305
+msgid "PDF Orientation:"
+msgstr "PDF Oriëntatie:"
+
+#: includes/ic_commerce_golden_all_report.php:548
+#: includes/ic_commerce_golden_cross_tab.php:554
+#: includes/ic_commerce_golden_custom_report.php:644
+#: includes/ic_commerce_golden_stock_list.php:274
+#: includes/ic_commerce_golden_variation.php:434
+#: includes/ic_commerce_golden_variation_stock_list.php:307
+msgid "Portrait"
+msgstr "Portret"
+
+#: includes/ic_commerce_golden_all_report.php:549
+#: includes/ic_commerce_golden_cross_tab.php:555
+#: includes/ic_commerce_golden_custom_report.php:645
+#: includes/ic_commerce_golden_stock_list.php:275
+#: includes/ic_commerce_golden_variation.php:435
+#: includes/ic_commerce_golden_variation_stock_list.php:308
+msgid "Landscape"
+msgstr "Liggend"
+
+#: includes/ic_commerce_golden_all_report.php:554
+#: includes/ic_commerce_golden_cross_tab.php:560
+#: includes/ic_commerce_golden_custom_report.php:650
+#: includes/ic_commerce_golden_stock_list.php:280
+#: includes/ic_commerce_golden_variation.php:440
+#: includes/ic_commerce_golden_variation_stock_list.php:313
+msgid "Paper Size:"
+msgstr "Papiergrootte:"
+
+#: includes/ic_commerce_golden_all_report.php:563
+#: includes/ic_commerce_golden_cross_tab.php:569
+#: includes/ic_commerce_golden_custom_report.php:659
+#: includes/ic_commerce_golden_stock_list.php:289
+#: includes/ic_commerce_golden_variation.php:449
+#: includes/ic_commerce_golden_variation_stock_list.php:322
+msgid "Export to PDF:"
+msgstr "Uitvoer naar PDF:"
+
+#: includes/ic_commerce_golden_all_report.php:606
+#: includes/ic_commerce_golden_all_report.php:667
+#: includes/ic_commerce_golden_columns.php:74
+#: includes/ic_commerce_golden_columns.php:92
+#: includes/ic_commerce_golden_columns.php:104
+#: includes/ic_commerce_golden_columns.php:279
+#: includes/ic_commerce_golden_columns.php:378
+#: includes/ic_commerce_golden_cross_tab.php:727
+#: includes/ic_commerce_golden_cross_tab.php:742
+#: includes/ic_commerce_golden_cross_tab.php:749
+#: includes/ic_commerce_golden_stock_list.php:178
+#: includes/ic_commerce_golden_stock_list.php:1251
+#: includes/ic_commerce_golden_stock_list.php:1258
+#: includes/ic_commerce_golden_variation.php:312
+#: includes/ic_commerce_golden_variation_stock_list.php:197
+#: includes/ic_commerce_golden_variation_stock_list.php:1370
+#: includes/ic_commerce_golden_variation_stock_list.php:1377
+msgid "Product Name"
+msgstr "Artikelnaam"
+
+#: includes/ic_commerce_golden_all_report.php:607
+#: includes/ic_commerce_golden_all_report.php:612
+msgid "Sold Quantity"
+msgstr "Verkocht Hoeveelheid"
+
+#: includes/ic_commerce_golden_all_report.php:608
+#: includes/ic_commerce_golden_all_report.php:613
+#: includes/ic_commerce_golden_all_report.php:620
+#: includes/ic_commerce_golden_all_report.php:625
+#: includes/ic_commerce_golden_all_report.php:631
+#: includes/ic_commerce_golden_all_report.php:636
+#: includes/ic_commerce_golden_all_report.php:641
+#: includes/ic_commerce_golden_all_report.php:665
+#: includes/ic_commerce_golden_columns.php:83
+#: includes/ic_commerce_golden_columns.php:96
+#: includes/ic_commerce_golden_columns.php:107
+#: includes/ic_commerce_golden_columns.php:121
+#: includes/ic_commerce_golden_columns.php:127
+#: includes/ic_commerce_golden_columns.php:282
+#: includes/ic_commerce_golden_columns.php:293
+#: includes/ic_commerce_golden_columns.php:300
+#: includes/ic_commerce_golden_columns.php:307
+#: includes/ic_commerce_golden_columns.php:358
+#: includes/ic_commerce_golden_columns.php:395
+#: includes/ic_commerce_golden_columns.php:403
+#: includes/ic_commerce_golden_columns.php:576
+#: includes/ic_commerce_golden_columns.php:583
+#: includes/ic_commerce_golden_columns.php:599
+#: includes/ic_commerce_golden_dashboard.php:1376
+#: includes/ic_commerce_golden_dashboard.php:1501
+#: includes/ic_commerce_golden_dashboard.php:1632
+#: includes/ic_commerce_golden_dashboard.php:1732
+#: includes/ic_commerce_golden_dashboard.php:1837
+#: includes/ic_commerce_golden_dashboard.php:1936
+#: includes/ic_commerce_golden_dashboard.php:2285
+#: includes/ic_commerce_golden_variation.php:312
+msgid "Amount"
+msgstr "Aantal"
+
+#: includes/ic_commerce_golden_all_report.php:611
+#: includes/ic_commerce_golden_columns.php:400
+msgid "Category Name"
+msgstr "Categorie Naam"
+
+#: includes/ic_commerce_golden_all_report.php:616
+#: includes/ic_commerce_golden_columns.php:291
+#: includes/ic_commerce_golden_dashboard.php:2283
+msgid "Billing Email"
+msgstr "Rekening e-mail"
+
+#: includes/ic_commerce_golden_all_report.php:617
+#: includes/ic_commerce_golden_columns.php:287
+#: includes/ic_commerce_golden_custom_report.php:2284
+msgid "Billing First Name"
+msgstr "Voornaam betalen"
+
+#: includes/ic_commerce_golden_all_report.php:618
+#: includes/ic_commerce_golden_columns.php:288
+#: includes/ic_commerce_golden_custom_report.php:2285
+msgid "Billing Last Name"
+msgstr "Facturatie Achternaam"
+
+#: includes/ic_commerce_golden_all_report.php:619
+#: includes/ic_commerce_golden_all_report.php:624
+#: includes/ic_commerce_golden_all_report.php:630
+#: includes/ic_commerce_golden_all_report.php:635
+#: includes/ic_commerce_golden_all_report.php:640
+#: includes/ic_commerce_golden_all_report.php:654
+#: includes/ic_commerce_golden_columns.php:137
+#: includes/ic_commerce_golden_columns.php:148
+#: includes/ic_commerce_golden_columns.php:292
+#: includes/ic_commerce_golden_columns.php:299
+#: includes/ic_commerce_golden_columns.php:306
+#: includes/ic_commerce_golden_columns.php:357
+#: includes/ic_commerce_golden_columns.php:394
+#: includes/ic_commerce_golden_columns.php:512
+#: includes/ic_commerce_golden_columns.php:519
+#: includes/ic_commerce_golden_columns.php:527
+#: includes/ic_commerce_golden_columns.php:535
+#: includes/ic_commerce_golden_columns.php:541
+#: includes/ic_commerce_golden_columns.php:575
+#: includes/ic_commerce_golden_dashboard.php:1375
+#: includes/ic_commerce_golden_dashboard.php:1500
+#: includes/ic_commerce_golden_dashboard.php:1731
+#: includes/ic_commerce_golden_dashboard.php:1836
+#: includes/ic_commerce_golden_dashboard.php:1935
+#: includes/ic_commerce_golden_dashboard.php:2284
+msgid "Order Count"
+msgstr "Aantal bestellingen"
+
+#: includes/ic_commerce_golden_all_report.php:623
+#: includes/ic_commerce_golden_all_report.php:629
+#: includes/ic_commerce_golden_all_report.php:698
+#: includes/ic_commerce_golden_columns.php:356
+#: includes/ic_commerce_golden_columns.php:393
+#: includes/ic_commerce_golden_custom_report.php:2291
+#: includes/ic_commerce_golden_dashboard.php:1730
+msgid "Billing Country"
+msgstr "Facturerings land"
+
+#: includes/ic_commerce_golden_all_report.php:628
+#: includes/ic_commerce_golden_columns.php:392
+#: includes/ic_commerce_golden_custom_report.php:2292
+#: includes/ic_commerce_golden_dashboard.php:1835
+msgid "Billing State"
+msgstr "Provincie"
+
+#: includes/ic_commerce_golden_all_report.php:634
+#: includes/ic_commerce_golden_columns.php:185
+#: includes/ic_commerce_golden_columns.php:212
+#: includes/ic_commerce_golden_columns.php:298
+#: includes/ic_commerce_golden_dashboard.php:1934
+msgid "Payment Method"
+msgstr "Betalingsmiddel"
+
+#: includes/ic_commerce_golden_all_report.php:639
+#: includes/ic_commerce_golden_all_report.php:646
+#: includes/ic_commerce_golden_all_report.php:675
+#: includes/ic_commerce_golden_all_report.php:700
+#: includes/ic_commerce_golden_columns.php:305
+#: includes/ic_commerce_golden_columns.php:421
+#: includes/ic_commerce_golden_columns.php:458
+#: includes/ic_commerce_golden_dashboard.php:1499
+#: includes/ic_commerce_golden_refund_summary.php:124
+#: includes/ic_commerce_golden_refund_summary.php:165
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:883
+msgid "Order Status"
+msgstr "Bestelstaat"
+
+#: includes/ic_commerce_golden_all_report.php:647
+#: includes/ic_commerce_golden_all_report.php:674
+#: includes/ic_commerce_golden_columns.php:420
+#: includes/ic_commerce_golden_columns.php:457
+#: includes/ic_commerce_golden_refund_summary.php:123
+#: includes/ic_commerce_golden_refund_summary.php:164
+msgid "Order Date"
+msgstr "Besteldatum"
+
+#: includes/ic_commerce_golden_all_report.php:648
+#: includes/ic_commerce_golden_all_report.php:651
+#: includes/ic_commerce_golden_columns.php:33
+#: includes/ic_commerce_golden_columns.php:50
+#: includes/ic_commerce_golden_columns.php:144
+#: includes/ic_commerce_golden_columns.php:157
+#: includes/ic_commerce_golden_columns.php:196
+#: includes/ic_commerce_golden_columns.php:224
+#: includes/ic_commerce_golden_columns.php:264
+#: includes/ic_commerce_golden_columns.php:334
+#: includes/ic_commerce_golden_columns.php:550
+msgid "Net Amt."
+msgstr "Netto bedrag"
+
+#: includes/ic_commerce_golden_all_report.php:652
+#: includes/ic_commerce_golden_columns.php:183
+#: includes/ic_commerce_golden_columns.php:210
+#: includes/ic_commerce_golden_custom_fields.php:71
+msgid "Tax Name"
+msgstr "Belasting naam"
+
+#: includes/ic_commerce_golden_all_report.php:653
+msgid "Tax Rate"
+msgstr "Belasting Tarief"
+
+#: includes/ic_commerce_golden_all_report.php:655
+#: includes/ic_commerce_golden_columns.php:29
+#: includes/ic_commerce_golden_columns.php:46
+#: includes/ic_commerce_golden_columns.php:152
+#: includes/ic_commerce_golden_columns.php:192
+#: includes/ic_commerce_golden_columns.php:219
+#: includes/ic_commerce_golden_columns.php:330
+#: includes/ic_commerce_golden_columns.php:545
+msgid "Shipping Amt."
+msgstr "Verzendbedrag"
+
+#: includes/ic_commerce_golden_all_report.php:658
+msgid "Shipping Tax"
+msgstr "Verzendkosten"
+
+#: includes/ic_commerce_golden_all_report.php:659
+#: includes/ic_commerce_golden_cross_tab.php:307
+#: includes/ic_commerce_golden_cross_tab.php:2444
+msgid "Order Tax"
+msgstr "Bestelbelasting"
+
+#: includes/ic_commerce_golden_all_report.php:660
+msgid "Total Tax"
+msgstr "Totaalbelasting"
+
+#: includes/ic_commerce_golden_all_report.php:666
+msgid "Customer Name"
+msgstr "Naam klant"
+
+#: includes/ic_commerce_golden_all_report.php:668
+#: includes/ic_commerce_golden_columns.php:81
+#: includes/ic_commerce_golden_columns.php:94
+#: includes/ic_commerce_golden_columns.php:105
+#: includes/ic_commerce_golden_columns.php:280
+msgid "Sales Qty."
+msgstr "Verkoophoeveelheid"
+
+#: includes/ic_commerce_golden_all_report.php:676
+#: includes/ic_commerce_golden_dashboard.php:258
+#: includes/ic_commerce_golden_refund_summary.php:126
+#: includes/ic_commerce_golden_refund_summary.php:136
+#: includes/ic_commerce_golden_refund_summary.php:144
+#: includes/ic_commerce_golden_refund_summary.php:152
+#: includes/ic_commerce_golden_refund_summary.php:188
+#: includes/ic_commerce_golden_refund_summary.php:198
+#: includes/ic_commerce_golden_refund_summary.php:212
+msgid "Part Refund"
+msgstr "Deel Terugbetaling"
+
+#: includes/ic_commerce_golden_all_report.php:677
+#: includes/ic_commerce_golden_dashboard.php:269
+#: includes/ic_commerce_golden_refund_summary.php:127
+#: includes/ic_commerce_golden_refund_summary.php:137
+#: includes/ic_commerce_golden_refund_summary.php:145
+#: includes/ic_commerce_golden_refund_summary.php:153
+#: includes/ic_commerce_golden_refund_summary.php:189
+#: includes/ic_commerce_golden_refund_summary.php:199
+#: includes/ic_commerce_golden_refund_summary.php:213
+msgid "Full Refund"
+msgstr "Volledige restutitie"
+
+#: includes/ic_commerce_golden_all_report.php:678
+#: includes/ic_commerce_golden_columns.php:422
+#: includes/ic_commerce_golden_columns.php:429
+#: includes/ic_commerce_golden_columns.php:441
+#: includes/ic_commerce_golden_columns.php:447
+#: includes/ic_commerce_golden_columns.php:589
+#: includes/ic_commerce_golden_refund_summary.php:125
+#: includes/ic_commerce_golden_refund_summary.php:135
+#: includes/ic_commerce_golden_refund_summary.php:187
+#: includes/ic_commerce_golden_refund_summary.php:197
+#: includes/ic_commerce_golden_refund_summary.php:220
+msgid "Refund Counts"
+msgstr "Terugbetalingsgetal"
+
+#: includes/ic_commerce_golden_all_report.php:679
+#: includes/ic_commerce_golden_columns.php:423
+#: includes/ic_commerce_golden_columns.php:430
+#: includes/ic_commerce_golden_columns.php:436
+#: includes/ic_commerce_golden_columns.php:442
+#: includes/ic_commerce_golden_columns.php:448
+#: includes/ic_commerce_golden_columns.php:460
+#: includes/ic_commerce_golden_columns.php:590
+#: includes/ic_commerce_golden_refund_summary.php:168
+#: includes/ic_commerce_golden_refund_summary.php:206
+#: includes/ic_commerce_golden_refund_summary.php:221
+#: includes/ic_commerce_golden_refund_summary.php:222
+msgid "Refund Amount"
+msgstr "Restitutiebedrag"
+
+#: includes/ic_commerce_golden_all_report.php:684
+#: includes/ic_commerce_golden_columns.php:187
+#: includes/ic_commerce_golden_columns.php:214
+#: includes/ic_commerce_golden_columns.php:339
+#: includes/ic_commerce_golden_columns.php:347
+#: includes/ic_commerce_golden_custom_fields.php:72
+#: includes/ic_commerce_golden_dashboard.php:2404
+msgid "Coupon Code"
+msgstr "Kortingsbon code"
+
+#: includes/ic_commerce_golden_all_report.php:685
+#: includes/ic_commerce_golden_columns.php:340
+#: includes/ic_commerce_golden_columns.php:349
+#: includes/ic_commerce_golden_columns.php:558
+#: includes/ic_commerce_golden_columns.php:566
+#: includes/ic_commerce_golden_dashboard.php:2406
+msgid "Coupon Count"
+msgstr "Coupon Telling"
+
+#: includes/ic_commerce_golden_all_report.php:686
+#: includes/ic_commerce_golden_columns.php:342
+#: includes/ic_commerce_golden_columns.php:351
+#: includes/ic_commerce_golden_columns.php:560
+#: includes/ic_commerce_golden_columns.php:568
+#: includes/ic_commerce_golden_dashboard.php:2407
+msgid "Coupon Amount"
+msgstr "Coupon Bedrag"
+
+#: includes/ic_commerce_golden_all_report.php:696
+msgid "Product"
+msgstr "Artikel"
+
+#: includes/ic_commerce_golden_all_report.php:697
+msgid "Customer"
+msgstr "Klant"
+
+#: includes/ic_commerce_golden_all_report.php:699
+msgid "Payment Gateway"
+msgstr "Betaling Gateway"
+
+#: includes/ic_commerce_golden_all_report.php:701
+msgid "Recent Order"
+msgstr "Recente bestelling"
+
+#: includes/ic_commerce_golden_all_report.php:702
+msgid "Refund Details"
+msgstr "Terugbetaling Gegevens"
+
+#: includes/ic_commerce_golden_all_report.php:703
+msgid "Coupon"
+msgstr "Kortingsbon"
+
+#: includes/ic_commerce_golden_all_report.php:707
+#: includes/ic_commerce_golden_custom_report.php:2309
+msgid "Shipping Country"
+msgstr "Verzendlandschap"
+
+#: includes/ic_commerce_golden_all_report.php:883
+msgid ""
+"Some thing going wrong on creating result data in \"add_filter\" or "
+"\"create_grid_items\""
+msgstr ""
+"Er gaat iets mis met het maken van resultaatgegevens in \"add_filter\" of "
+"\"create_grid_items\""
+
+#: includes/ic_commerce_golden_all_report.php:1187
+msgid "No Orders found"
+msgstr "Geen bestellingen gevonden"
+
+#: includes/ic_commerce_golden_all_report.php:1314
+#: includes/ic_commerce_golden_variation.php:995
+#: includes/ic_commerce_golden_variation.php:1317
+msgid "Not Set"
+msgstr "Niet vastgesteld"
+
+#: includes/ic_commerce_golden_all_report.php:2962
+#: includes/ic_commerce_golden_cross_tab.php:2958
+#: includes/ic_commerce_golden_custom_report.php:1276
+#: includes/ic_commerce_golden_variation.php:1457
+msgid "Export to Excel"
+msgstr "Exporteren naar Excel"
+
+#: includes/ic_commerce_golden_all_report.php:2962
+#: includes/ic_commerce_golden_cross_tab.php:2958
+#: includes/ic_commerce_golden_custom_report.php:1276
+#: includes/ic_commerce_golden_variation.php:1457
+msgid "Export to Excel - Additional Information"
+msgstr "Exporteren naar Excel - Extra informatie"
+
+#: includes/ic_commerce_golden_all_report.php:2983
+#: includes/ic_commerce_golden_all_report.php:3000
+#: includes/ic_commerce_golden_cross_tab.php:2981
+#: includes/ic_commerce_golden_cross_tab.php:2996
+#: includes/ic_commerce_golden_custom_report.php:1298
+#: includes/ic_commerce_golden_custom_report.php:1306
+#: includes/ic_commerce_golden_stock_list.php:898
+#: includes/ic_commerce_golden_variation.php:1480
+#: includes/ic_commerce_golden_variation.php:1497
+#: includes/ic_commerce_golden_variation_stock_list.php:1132
+msgid "Back to Previous"
+msgstr "Terug naar Vorige"
+
+#: includes/ic_commerce_golden_all_report.php:3016
+#: includes/ic_commerce_golden_custom_report.php:2217
+#: includes/ic_commerce_golden_custom_report.php:2248
+#: includes/ic_commerce_golden_variation.php:1513
+msgid "Something going wrong, contact to developer"
+msgstr "Er gaat iets mis, contacteer de ontwikkelaar"
+
+#: includes/ic_commerce_golden_all_report.php:3034
+msgid "Purchased product not found in selected categroy"
+msgstr "Gekocht product niet gevonden in geselecteerde categroy"
+
+#: includes/ic_commerce_golden_all_report.php:3044
+msgid "Some thing going wrong, contact to developer"
+msgstr "Er gaat iets mis, contacteer de ontwikkelaar"
+
+#: includes/ic_commerce_golden_all_report.php:3625
+#: includes/ic_commerce_golden_custom_report.php:2769
+#: includes/ic_commerce_golden_fuctions.php:1845
+#: includes/ic_commerce_golden_variation.php:1992
+msgid "Date:"
+msgstr "Datum:"
+
+#: includes/ic_commerce_golden_all_report.php:3672
+#: includes/ic_commerce_golden_fuctions.php:1893
+msgid "Summary Total:"
+msgstr "Samenvatting Totaal:"
+
+#: includes/ic_commerce_golden_api.php:130
+msgid "Error - <strong>211</strong> External HTTP Block Setting"
+msgstr "Fout - <strong>211</strong> Externe HTTP-blokinstelling"
+
+#: includes/ic_commerce_golden_api.php:131
+#: includes/ic_commerce_golden_api.php:140
+#: includes/ic_commerce_golden_api.php:149
+msgid ""
+"Setting <strong>'WP_HTTP_BLOCK_EXTERNAL'</strong> constant to true in your "
+"wp-config.php file will stop all outgoing network requests from your site. "
+"This is typically set on sites that are sitting behind a closed environment."
+msgstr ""
+"Als u <strong>'WP_HTTP_BLOCK_EXTERNAL'</strong> constant instelt op true in "
+"uw wp-config.php-bestand, worden alle uitgaande netwerkverzoeken van uw site "
+"stopgezet. Dit is typisch ingesteld op sites die achter een gesloten "
+"omgeving zitten."
+
+#: includes/ic_commerce_golden_api.php:132
+#: includes/ic_commerce_golden_api.php:141
+#: includes/ic_commerce_golden_api.php:150
+msgid ""
+"WordPress uses another constant <strong>'WP_ACCESSIBLE_HOSTS'</strong> in "
+"tandem with <strong>'WP_HTTP_BLOCK_EXTERNAL'</strong> to whitelist specific "
+"hosts to get past the block"
+msgstr ""
+"WordPress gebruikt een andere constante <strong>'WP_ACCESSIBLE_HOSTS'</"
+"strong> in combinatie met <strong>'WP_HTTP_BLOCK_EXTERNAL'</strong> om de "
+"specifieke hosten te whitelisten om langs het blok te komen"
+
+#: includes/ic_commerce_golden_api.php:134
+#: includes/ic_commerce_golden_api.php:143
+#: includes/ic_commerce_golden_api.php:152
+msgid ""
+"define( <strong>'WP_HTTP_BLOCK_EXTERNAL'</strong>, <strong>true</strong> )"
+msgstr ""
+"define( <strong>'WP_HTTP_BLOCK_EXTERNAL'</strong>, <strong>true</strong> )"
+
+#: includes/ic_commerce_golden_api.php:139
+msgid "Error - <strong>212</strong> External HTTP Block Setting"
+msgstr "Fout - <strong>212</strong> Externe HTTP-blokinstelling"
+
+#: includes/ic_commerce_golden_api.php:148
+msgid "Error - <strong>213</strong> External HTTP Block Setting"
+msgstr "Fout - <strong>213</strong> Externe HTTP-blokinstelling"
+
+#: includes/ic_commerce_golden_api.php:159
+msgid "Error - <strong>214</strong> Missing Extensions"
+msgstr "Fout - <strong>214</strong> Ontbrekende extensies"
+
+#: includes/ic_commerce_golden_api.php:160
+msgid ""
+"Request Error, \"curl\" and \"streams\" PHP extensions might be missing on "
+"your server in order to activate plug-in or Try after sometime."
+msgstr ""
+"Request Error, \"curl\" en \"streams\" kunnen PHP-uitbreidingen op uw server "
+"ontbreken om de plug-in te activeren of om eens te proberen."
+
+#: includes/ic_commerce_golden_columns.php:21
+#: includes/ic_commerce_golden_columns.php:38
+#: includes/ic_commerce_golden_columns.php:179
+#: includes/ic_commerce_golden_columns.php:206
+#: includes/ic_commerce_golden_columns.php:243
+#: includes/ic_commerce_golden_columns.php:320
+#: includes/ic_commerce_golden_custom_report.php:389
+msgid "Name"
+msgstr "Naam"
+
+#: includes/ic_commerce_golden_columns.php:22
+#: includes/ic_commerce_golden_columns.php:39
+#: includes/ic_commerce_golden_columns.php:180
+#: includes/ic_commerce_golden_columns.php:207
+#: includes/ic_commerce_golden_columns.php:244
+#: includes/ic_commerce_golden_columns.php:321
+#: includes/ic_commerce_golden_custom_report.php:389
+msgid "Email"
+msgstr "E-mailadres"
+
+#: includes/ic_commerce_golden_columns.php:23
+#: includes/ic_commerce_golden_columns.php:40
+#: includes/ic_commerce_golden_columns.php:181
+#: includes/ic_commerce_golden_columns.php:208
+#: includes/ic_commerce_golden_columns.php:245
+#: includes/ic_commerce_golden_columns.php:322
+#: includes/ic_commerce_golden_columns.php:366
+#: includes/ic_commerce_golden_custom_report.php:389
+msgid "Date"
+msgstr "Datum"
+
+#: includes/ic_commerce_golden_columns.php:24
+#: includes/ic_commerce_golden_columns.php:41
+#: includes/ic_commerce_golden_columns.php:182
+#: includes/ic_commerce_golden_columns.php:209
+#: includes/ic_commerce_golden_columns.php:248
+#: includes/ic_commerce_golden_columns.php:250
+#: includes/ic_commerce_golden_columns.php:323
+#: includes/ic_commerce_golden_custom_report.php:389
+msgid "Status"
+msgstr "staat"
+
+#: includes/ic_commerce_golden_columns.php:25
+#: includes/ic_commerce_golden_columns.php:42
+#: includes/ic_commerce_golden_columns.php:188
+#: includes/ic_commerce_golden_columns.php:215
+#: includes/ic_commerce_golden_columns.php:326
+#: includes/ic_commerce_golden_custom_fields.php:73
+msgid "Items"
+msgstr "Artikelen"
+
+#: includes/ic_commerce_golden_columns.php:26
+#: includes/ic_commerce_golden_columns.php:43
+#: includes/ic_commerce_golden_columns.php:149
+#: includes/ic_commerce_golden_columns.php:189
+#: includes/ic_commerce_golden_columns.php:216
+#: includes/ic_commerce_golden_columns.php:327
+#: includes/ic_commerce_golden_columns.php:542
+msgid "Gross Amt."
+msgstr "Brutobedrag"
+
+#: includes/ic_commerce_golden_columns.php:28
+#: includes/ic_commerce_golden_columns.php:45
+#: includes/ic_commerce_golden_columns.php:151
+#: includes/ic_commerce_golden_columns.php:191
+#: includes/ic_commerce_golden_columns.php:218
+#: includes/ic_commerce_golden_columns.php:329
+#: includes/ic_commerce_golden_columns.php:544
+msgid "Total Discount Amt."
+msgstr "Totaal kortingsbedrag"
+
+#: includes/ic_commerce_golden_columns.php:30
+#: includes/ic_commerce_golden_columns.php:47
+#: includes/ic_commerce_golden_columns.php:153
+#: includes/ic_commerce_golden_columns.php:193
+#: includes/ic_commerce_golden_columns.php:220
+#: includes/ic_commerce_golden_columns.php:331
+#: includes/ic_commerce_golden_columns.php:546
+msgid "Shipping Tax Amt."
+msgstr "Verzendbelastingbedrag"
+
+#: includes/ic_commerce_golden_columns.php:31
+#: includes/ic_commerce_golden_columns.php:48
+#: includes/ic_commerce_golden_columns.php:154
+#: includes/ic_commerce_golden_columns.php:194
+#: includes/ic_commerce_golden_columns.php:221
+#: includes/ic_commerce_golden_columns.php:332
+#: includes/ic_commerce_golden_columns.php:547
+msgid "Item Tax Amt."
+msgstr "Item Belastingbedrag"
+
+#: includes/ic_commerce_golden_columns.php:32
+#: includes/ic_commerce_golden_columns.php:49
+#: includes/ic_commerce_golden_columns.php:156
+#: includes/ic_commerce_golden_columns.php:197
+#: includes/ic_commerce_golden_columns.php:223
+#: includes/ic_commerce_golden_columns.php:333
+#: includes/ic_commerce_golden_columns.php:549
+msgid "Part Refund Amt."
+msgstr "Restitutiebedrag"
+
+#: includes/ic_commerce_golden_columns.php:65
+#: includes/ic_commerce_golden_columns.php:102
+#: includes/ic_commerce_golden_variation.php:312
+#: includes/ic_commerce_golden_variation_stock_list.php:198
+msgid "Product ID"
+msgstr "Artikel ID"
+
+#: includes/ic_commerce_golden_columns.php:68
+#: includes/ic_commerce_golden_variation.php:312
+#: includes/ic_commerce_golden_variation.php:324
+#: includes/ic_commerce_golden_variation_stock_list.php:200
+#: includes/ic_commerce_golden_variation_stock_list.php:1368
+#: includes/ic_commerce_golden_variation_stock_list.php:1375
+msgid "Variation ID"
+msgstr "Variatie ID"
+
+#: includes/ic_commerce_golden_columns.php:71
+#: includes/ic_commerce_golden_variation.php:324
+msgid "Order Item ID"
+msgstr "Bestelling Item ID"
+
+#: includes/ic_commerce_golden_columns.php:73
+#: includes/ic_commerce_golden_columns.php:91
+#: includes/ic_commerce_golden_columns.php:103
+#: includes/ic_commerce_golden_columns.php:278
+#: includes/ic_commerce_golden_columns.php:377
+#: includes/ic_commerce_golden_cross_tab.php:727
+#: includes/ic_commerce_golden_cross_tab.php:749
+msgid "Product SKU"
+msgstr "Artikel SKU"
+
+#: includes/ic_commerce_golden_columns.php:82
+#: includes/ic_commerce_golden_columns.php:95
+#: includes/ic_commerce_golden_columns.php:106
+#: includes/ic_commerce_golden_columns.php:281
+#: includes/ic_commerce_golden_columns.php:385
+msgid "Current Stock"
+msgstr "Huidige voorraad"
+
+#: includes/ic_commerce_golden_columns.php:90
+msgid "ID"
+msgstr "ID"
+
+#: includes/ic_commerce_golden_columns.php:93
+#: includes/ic_commerce_golden_columns.php:259
+#: includes/ic_commerce_golden_init.php:281
+msgid "Variation"
+msgstr "Variatie"
+
+#: includes/ic_commerce_golden_columns.php:119
+msgid "Variation Count"
+msgstr "Variatie Telling"
+
+#: includes/ic_commerce_golden_columns.php:120
+#: includes/ic_commerce_golden_columns.php:126
+#: includes/ic_commerce_golden_columns.php:379
+#: includes/ic_commerce_golden_columns.php:492
+#: includes/ic_commerce_golden_columns.php:500
+msgid "Sales Quantity"
+msgstr "Verkoophoeveelheid"
+
+#: includes/ic_commerce_golden_columns.php:125
+#: includes/ic_commerce_golden_columns.php:138
+#: includes/ic_commerce_golden_columns.php:402
+#: includes/ic_commerce_golden_columns.php:491
+#: includes/ic_commerce_golden_columns.php:499
+#: includes/ic_commerce_golden_columns.php:582
+msgid "Product Count"
+msgstr "Aantal producten"
+
+#: includes/ic_commerce_golden_columns.php:140
+#: includes/ic_commerce_golden_columns.php:260
+msgid "Qty."
+msgstr "Aantal stuks"
+
+#: includes/ic_commerce_golden_columns.php:141
+#: includes/ic_commerce_golden_columns.php:261
+msgid "Rate"
+msgstr "Tarief"
+
+#: includes/ic_commerce_golden_columns.php:142
+#: includes/ic_commerce_golden_columns.php:262
+msgid "Prod. Amt."
+msgstr "Artikelbedrag"
+
+#: includes/ic_commerce_golden_columns.php:143
+#: includes/ic_commerce_golden_columns.php:263
+msgid "Prod. Discount"
+msgstr "Artikel korting"
+
+#: includes/ic_commerce_golden_columns.php:155
+#: includes/ic_commerce_golden_columns.php:195
+#: includes/ic_commerce_golden_columns.php:222
+msgid "Total Tax Amt."
+msgstr "Totaal Belastingbedrag"
+
+#: includes/ic_commerce_golden_columns.php:184
+#: includes/ic_commerce_golden_columns.php:211
+msgid "Shipping Method"
+msgstr "Verzend Methode"
+
+#: includes/ic_commerce_golden_columns.php:186
+#: includes/ic_commerce_golden_columns.php:213
+msgid "Order Currency"
+msgstr "Bestelling Valuta"
+
+#: includes/ic_commerce_golden_columns.php:198
+#: includes/ic_commerce_golden_columns.php:225
+#: includes/ic_commerce_golden_columns.php:265
+msgid "Invoice Action"
+msgstr "Factuuractie"
+
+#: includes/ic_commerce_golden_columns.php:255
+#: includes/ic_commerce_golden_stock_list.php:1252
+#: includes/ic_commerce_golden_stock_list.php:1260
+#: includes/ic_commerce_golden_variation_stock_list.php:1371
+#: includes/ic_commerce_golden_variation_stock_list.php:1378
+msgid "Category"
+msgstr "Categorie"
+
+#: includes/ic_commerce_golden_columns.php:257
+#: includes/ic_commerce_golden_columns.php:365
+msgid "Products"
+msgstr "Artikelen"
+
+#: includes/ic_commerce_golden_columns.php:258
+#: includes/ic_commerce_golden_columns.php:363
+#: includes/ic_commerce_golden_stock_list.php:1250
+#: includes/ic_commerce_golden_stock_list.php:1257
+#: includes/ic_commerce_golden_variation_stock_list.php:1369
+#: includes/ic_commerce_golden_variation_stock_list.php:1376
+msgid "SKU"
+msgstr "SKU"
+
+#: includes/ic_commerce_golden_columns.php:290
+#: includes/ic_commerce_golden_dashboard.php:2282
+msgid "Company Name"
+msgstr "Bedrijfsnaam"
+
+#: includes/ic_commerce_golden_columns.php:348
+#: includes/ic_commerce_golden_cross_tab.php:730
+msgid "Country Name"
+msgstr "Naam van het land"
+
+#: includes/ic_commerce_golden_columns.php:367
+msgid "Quantity"
+msgstr "Aantal"
+
+#: includes/ic_commerce_golden_columns.php:368
+msgid "Product Price Exc VAT"
+msgstr "Artikelprijs Exclusief VAT"
+
+#: includes/ic_commerce_golden_columns.php:369
+msgid "VAT per Item"
+msgstr "VAT per stuk"
+
+#: includes/ic_commerce_golden_columns.php:370
+msgid "Shipping"
+msgstr "Verzenden"
+
+#: includes/ic_commerce_golden_columns.php:371
+msgid "Total Price Exl VAT and Shipping"
+msgstr "Totale Prijs Exclusief VAT en Verzendkosten"
+
+#: includes/ic_commerce_golden_columns.php:372
+msgid "Total Price"
+msgstr "Totale prijs"
+
+#: includes/ic_commerce_golden_columns.php:380
+#: includes/ic_commerce_golden_columns.php:501
+msgid "Unit Cost"
+msgstr "De kosten per eenheid"
+
+#: includes/ic_commerce_golden_columns.php:381
+#: includes/ic_commerce_golden_columns.php:502
+msgid "Cost of Goods"
+msgstr "Prijs van goederen"
+
+#: includes/ic_commerce_golden_columns.php:382
+#: includes/ic_commerce_golden_columns.php:503
+msgid "Sales Rate"
+msgstr "Verkoopprijs"
+
+#: includes/ic_commerce_golden_columns.php:383
+#: includes/ic_commerce_golden_columns.php:493
+#: includes/ic_commerce_golden_columns.php:504
+#: includes/ic_commerce_golden_columns.php:513
+#: includes/ic_commerce_golden_columns.php:520
+#: includes/ic_commerce_golden_columns.php:528
+#: includes/ic_commerce_golden_columns.php:536
+msgid "Sales Amount"
+msgstr "Verkoopbedrag"
+
+#: includes/ic_commerce_golden_columns.php:384
+#: includes/ic_commerce_golden_columns.php:505
+msgid "Margin/Profit"
+msgstr "Marge/Winst"
+
+#: includes/ic_commerce_golden_columns.php:386
+#: includes/ic_commerce_golden_stock_list.php:515
+#: includes/ic_commerce_golden_variation.php:994
+#: includes/ic_commerce_golden_variation_stock_list.php:693
+#: includes/ic_commerce_golden_variation_stock_list.php:873
+msgid "Edit"
+msgstr "Bewerken"
+
+#: includes/ic_commerce_golden_columns.php:401
+msgid "Parent Category Name"
+msgstr "Ouder Categorie Naam"
+
+#: includes/ic_commerce_golden_columns.php:428
+#: includes/ic_commerce_golden_refund_summary.php:134
+msgid "Refunded By"
+msgstr "Terugbetaald door"
+
+#: includes/ic_commerce_golden_columns.php:434
+#: includes/ic_commerce_golden_columns.php:453
+#: includes/ic_commerce_golden_refund_summary.php:143
+#: includes/ic_commerce_golden_refund_summary.php:151
+#: includes/ic_commerce_golden_refund_summary.php:160
+msgid "Refund Date"
+msgstr "Terugbetaling's Datum"
+
+#: includes/ic_commerce_golden_columns.php:435
+#: includes/ic_commerce_golden_columns.php:467
+#: includes/ic_commerce_golden_columns.php:594
+msgid "Order Counts"
+msgstr "Order tellen"
+
+#: includes/ic_commerce_golden_columns.php:440
+msgid "Month"
+msgstr "Maand"
+
+#: includes/ic_commerce_golden_columns.php:446
+msgid "Year"
+msgstr "Jaar"
+
+#: includes/ic_commerce_golden_columns.php:454
+#: includes/ic_commerce_golden_refund_summary.php:161
+msgid "Refund Status"
+msgstr "Restitutie Staat"
+
+#: includes/ic_commerce_golden_columns.php:455
+#: includes/ic_commerce_golden_refund_summary.php:162
+msgid "Refund By"
+msgstr "Terugbetaling door"
+
+#: includes/ic_commerce_golden_columns.php:459
+#: includes/ic_commerce_golden_refund_summary.php:166
+msgid "Refund Note"
+msgstr "Teruggave Opmerking"
+
+#: includes/ic_commerce_golden_columns.php:511
+msgid "Customer Count"
+msgstr "Klanten Telling"
+
+#: includes/ic_commerce_golden_columns.php:518
+msgid "Country Count"
+msgstr "Land Telling"
+
+#: includes/ic_commerce_golden_columns.php:526
+msgid "Payment Method Count"
+msgstr "Betaal Methode Telling"
+
+#: includes/ic_commerce_golden_columns.php:534
+msgid "Order Status Count"
+msgstr "Bestel Staat Telling"
+
+#: includes/ic_commerce_golden_columns.php:557
+#: includes/ic_commerce_golden_columns.php:565
+msgid "Result Count"
+msgstr "Resultaat Telling"
+
+#: includes/ic_commerce_golden_columns.php:574
+msgid "Billing State Count"
+msgstr "Factuurstaat Telling"
+
+#: includes/ic_commerce_golden_columns.php:581
+msgid "Category Count"
+msgstr "Categorie Telling"
+
+#: includes/ic_commerce_golden_columns.php:588
+#: includes/ic_commerce_golden_refund_summary.php:186
+#: includes/ic_commerce_golden_refund_summary.php:196
+#: includes/ic_commerce_golden_refund_summary.php:205
+#: includes/ic_commerce_golden_refund_summary.php:211
+#: includes/ic_commerce_golden_refund_summary.php:219
+msgid "Results Count"
+msgstr "Resultaten Telling"
+
+#: includes/ic_commerce_golden_cross_tab.php:193
+msgid "Prod./Month"
+msgstr "Artikel / Maand"
+
+#: includes/ic_commerce_golden_cross_tab.php:194
+msgid "Variation/Month"
+msgstr "Variatie / Maand"
+
+#: includes/ic_commerce_golden_cross_tab.php:196
+msgid "Prod./Country"
+msgstr "Artikel / Land"
+
+#: includes/ic_commerce_golden_cross_tab.php:197
+msgid "Prod./State"
+msgstr "Artikel / Staat"
+
+#: includes/ic_commerce_golden_cross_tab.php:199
+msgid "Country/Month"
+msgstr "Land / Maand"
+
+#: includes/ic_commerce_golden_cross_tab.php:200
+msgid "Payment G/Month"
+msgstr "Betaling Gateway / Maand"
+
+#: includes/ic_commerce_golden_cross_tab.php:201
+msgid "Ord. Status/Month"
+msgstr "Bestelstaat / Maand"
+
+#: includes/ic_commerce_golden_cross_tab.php:203
+msgid "Summary/Month"
+msgstr "Summier / Maand"
+
+#: includes/ic_commerce_golden_cross_tab.php:244
+msgid "Start Month:"
+msgstr "Start maand:"
+
+#: includes/ic_commerce_golden_cross_tab.php:248
+msgid "End Month:"
+msgstr "Einde Maand:"
+
+#: includes/ic_commerce_golden_cross_tab.php:277
+#: includes/ic_commerce_golden_cross_tab.php:359
+#: includes/ic_commerce_golden_customization.php:34
+msgid "Country:"
+msgstr "Land:"
+
+#: includes/ic_commerce_golden_cross_tab.php:289
+msgid "Payment Gatway:"
+msgstr "Betaling Gatway:"
+
+#: includes/ic_commerce_golden_cross_tab.php:302
+msgid "Reports:"
+msgstr "Rapporten:"
+
+#: includes/ic_commerce_golden_cross_tab.php:306
+#: includes/ic_commerce_golden_cross_tab.php:2443
+#: includes/ic_commerce_golden_refund_summary.php:129
+#: includes/ic_commerce_golden_refund_summary.php:139
+#: includes/ic_commerce_golden_refund_summary.php:147
+#: includes/ic_commerce_golden_refund_summary.php:155
+#: includes/ic_commerce_golden_refund_summary.php:167
+#: includes/ic_commerce_golden_refund_summary.php:191
+#: includes/ic_commerce_golden_refund_summary.php:201
+#: includes/ic_commerce_golden_refund_summary.php:215
+msgid "Order Total"
+msgstr "Bestelling Totaal"
+
+#: includes/ic_commerce_golden_cross_tab.php:308
+#: includes/ic_commerce_golden_cross_tab.php:2445
+msgid "Order Discount"
+msgstr "Bestel korting"
+
+#: includes/ic_commerce_golden_cross_tab.php:309
+#: includes/ic_commerce_golden_cross_tab.php:2446
+#: includes/ic_commerce_golden_fuctions.php:2001
+msgid "Cart Discount"
+msgstr "Winkelmand Korting"
+
+#: includes/ic_commerce_golden_cross_tab.php:310
+#: includes/ic_commerce_golden_cross_tab.php:2447
+msgid "Order Shipping"
+msgstr "Bestellen Verzenden"
+
+#: includes/ic_commerce_golden_cross_tab.php:311
+#: includes/ic_commerce_golden_cross_tab.php:2448
+msgid "Order Shipping Tax"
+msgstr "Bestel Verzendkosten"
+
+#: includes/ic_commerce_golden_cross_tab.php:312
+#: includes/ic_commerce_golden_cross_tab.php:2449
+msgid "Product Sales"
+msgstr "Artikel verkoop"
+
+#: includes/ic_commerce_golden_cross_tab.php:374
+#: includes/ic_commerce_golden_customization.php:44
+msgid "State:"
+msgstr "Staat:"
+
+#: includes/ic_commerce_golden_cross_tab.php:433
+#: includes/ic_commerce_golden_variation.php:213
+#: includes/ic_commerce_golden_variation_stock_list.php:181
+msgid "Variations:"
+msgstr "Variaties:"
+
+#: includes/ic_commerce_golden_cross_tab.php:443
+msgid "There is no order purchased in variable product."
+msgstr "Er is geen bestelling gekocht in variabel product."
+
+#: includes/ic_commerce_golden_cross_tab.php:451
+msgid "limit:"
+msgstr "begrenzing:"
+
+#: includes/ic_commerce_golden_cross_tab.php:582
+msgid "Export to Print"
+msgstr "Uitvoer naar afdrukken"
+
+#: includes/ic_commerce_golden_cross_tab.php:733
+msgid "Status Name"
+msgstr "Staat Naam"
+
+#: includes/ic_commerce_golden_cross_tab.php:736
+msgid "Payment Gatway"
+msgstr "Betaling Gatway"
+
+#: includes/ic_commerce_golden_cross_tab.php:739
+msgid "Reports"
+msgstr "Rapporten"
+
+#: includes/ic_commerce_golden_cross_tab.php:742
+msgid "Item SKU"
+msgstr "Item SKU"
+
+#: includes/ic_commerce_golden_cross_tab.php:742
+msgid "varition ID"
+msgstr "Variatie ID"
+
+#: includes/ic_commerce_golden_cross_tab.php:1098
+#: includes/ic_commerce_golden_cross_tab.php:1326
+msgid "Total"
+msgstr "Totaal"
+
+#: includes/ic_commerce_golden_cross_tab.php:1392
+msgid "Order not found"
+msgstr "Bestelling niet gevonden"
+
+#: includes/ic_commerce_golden_cross_tab.php:3016
+#: includes/ic_commerce_golden_cross_tab.php:3349
+msgid "Total Amt."
+msgstr "Totaal bedrag:"
+
+#: includes/ic_commerce_golden_cross_tab.php:3017
+msgid "Total Qty."
+msgstr "Totale kwantiteit"
+
+#: includes/ic_commerce_golden_custom_report.php:77
+msgid "Detail Search"
+msgstr "Detailzoeken"
+
+#: includes/ic_commerce_golden_custom_report.php:156
+msgid "Today's detail reports"
+msgstr "De gedetailleerde rapporten van vandaag"
+
+#: includes/ic_commerce_golden_custom_report.php:162
+msgid "Yesterday's detail reports"
+msgstr "Gedetailleerde verslagen van gisteren"
+
+#: includes/ic_commerce_golden_custom_report.php:169
+msgid "This week detail reports"
+msgstr "Deze week gedetailleerd verslagen"
+
+#: includes/ic_commerce_golden_custom_report.php:176
+msgid "This month detail reports"
+msgstr "Deze maand gedetailleerd verslagen"
+
+#: includes/ic_commerce_golden_custom_report.php:182
+msgid "This year detail reports"
+msgstr "Dit jaar gegevens verslagen"
+
+#: includes/ic_commerce_golden_custom_report.php:212
+#: includes/ic_commerce_golden_custom_report.php:225
+#, php-format
+msgid "Product detail of %s"
+msgstr "Artikeldetail van %s"
+
+#: includes/ic_commerce_golden_custom_report.php:216
+#, php-format
+msgid "Product detail of %s country"
+msgstr "Artikeldetail van %s land"
+
+#: includes/ic_commerce_golden_custom_report.php:220
+#, php-format
+msgid "Product detail of %s from %s country"
+msgstr "Artikeldetail van %s van %s land"
+
+#: includes/ic_commerce_golden_custom_report.php:229
+#, php-format
+msgid "Product detail of %s order ID"
+msgstr "Artikeldetail van %s order ID"
+
+#: includes/ic_commerce_golden_custom_report.php:233
+#, php-format
+msgid "Product detail of %s payment method"
+msgstr "Artikeldetail van %s betaalmethode"
+
+#: includes/ic_commerce_golden_custom_report.php:237
+#, php-format
+msgid "Coupon detail of %s"
+msgstr "Kortingsbon detail van %s"
+
+#: includes/ic_commerce_golden_custom_report.php:241
+#, php-format
+msgid "Coupons detail of %s"
+msgstr "Kortingsbon detail van %s"
+
+#: includes/ic_commerce_golden_custom_report.php:273
+msgid "Order ID:"
+msgstr "Bestellen ID:"
+
+#: includes/ic_commerce_golden_custom_report.php:277
+#: includes/ic_commerce_golden_custom_report.php:340
+#: includes/ic_commerce_golden_variation.php:171
+msgid "Customer:"
+msgstr "Klant:"
+
+#: includes/ic_commerce_golden_custom_report.php:284
+msgid "First Name:"
+msgstr "Voornaam:"
+
+#: includes/ic_commerce_golden_custom_report.php:288
+msgid "Last Name:"
+msgstr "Achternaam:"
+
+#: includes/ic_commerce_golden_custom_report.php:302
+#: includes/ic_commerce_golden_custom_report.php:312
+msgid "Enable product selection by clicking 'Show Order Item Details'"
+msgstr ""
+"Activeer product selectie door te klikken op 'Toon bestelling item gegevens'"
+
+#: includes/ic_commerce_golden_custom_report.php:380
+msgid "Email:"
+msgstr "E-mailadres:"
+
+#: includes/ic_commerce_golden_custom_report.php:405
+msgid "Show Order Item Details:"
+msgstr "Toon bestelling Artikel gegevens:"
+
+#: includes/ic_commerce_golden_custom_report.php:410
+msgid "Coupon Used Only:"
+msgstr "Enkel gebruikte coupon:"
+
+#: includes/ic_commerce_golden_custom_report.php:450
+msgid "Customize Column"
+msgstr "Kolom aanpassen"
+
+#: includes/ic_commerce_golden_custom_report.php:459
+msgid "Normal View Column: "
+msgstr "Normale weergave kolom: "
+
+#: includes/ic_commerce_golden_custom_report.php:459
+#: includes/ic_commerce_golden_custom_report.php:464
+#: includes/ic_commerce_golden_variation_stock_list.php:160
+#: includes/ic_commerce_golden_variation_stock_list.php:170
+#: includes/ic_commerce_golden_variation_stock_list.php:185
+msgid "Select All"
+msgstr "Selecteer alles"
+
+#: includes/ic_commerce_golden_custom_report.php:464
+msgid "Order Item Details Column: "
+msgstr "Bestelling Item Terugbetaling Kolom: "
+
+#: includes/ic_commerce_golden_custom_report.php:885
+#: includes/ic_commerce_golden_custom_report.php:1113
+msgid "No orders found"
+msgstr "Geen bestellingen gevonden"
+
+#: includes/ic_commerce_golden_custom_report.php:1222
+msgid "Order:"
+msgstr "Bestellen:"
+
+#: includes/ic_commerce_golden_custom_report.php:1222
+msgid "Amount:"
+msgstr "Bedrag:"
+
+#: includes/ic_commerce_golden_custom_report.php:2240
+msgid "Purchased product not found in selected category"
+msgstr "Gekocht product niet gevonden in geselecteerde categorie"
+
+#: includes/ic_commerce_golden_custom_report.php:2286
+msgid "Billing Company"
+msgstr "Facturatie Bedrijf"
+
+#: includes/ic_commerce_golden_custom_report.php:2287
+msgid "Billing Address 1"
+msgstr "Facturatie adres 1"
+
+#: includes/ic_commerce_golden_custom_report.php:2288
+msgid "Billing Address 2"
+msgstr "Facturatie adres 2"
+
+#: includes/ic_commerce_golden_custom_report.php:2289
+msgid "Billing City"
+msgstr "Facturatie Stad"
+
+#: includes/ic_commerce_golden_custom_report.php:2290
+msgid "Billing Post Code"
+msgstr "Facturatie Postcode"
+
+#: includes/ic_commerce_golden_custom_report.php:2293
+msgid "Billing Phone"
+msgstr "Facturatie telefoon"
+
+#: includes/ic_commerce_golden_custom_report.php:2302
+msgid "Shipping First Name"
+msgstr "Verzendvoornaam"
+
+#: includes/ic_commerce_golden_custom_report.php:2303
+msgid "Shipping Last Name"
+msgstr "Verzenden achternaam"
+
+#: includes/ic_commerce_golden_custom_report.php:2304
+msgid "Shipping Company"
+msgstr "Rederij"
+
+#: includes/ic_commerce_golden_custom_report.php:2305
+msgid "Shipping Address 1"
+msgstr "Verzendadres 1"
+
+#: includes/ic_commerce_golden_custom_report.php:2306
+msgid "Shipping Address 2"
+msgstr "Verzendadres 2"
+
+#: includes/ic_commerce_golden_custom_report.php:2307
+msgid "Shipping City"
+msgstr "Verzendende Stad"
+
+#: includes/ic_commerce_golden_custom_report.php:2308
+msgid "Shipping Post Code"
+msgstr "Verzend Postcode"
+
+#: includes/ic_commerce_golden_custom_report.php:2310
+msgid "Shipping State"
+msgstr "Verzend Staat"
+
+#: includes/ic_commerce_golden_customization.php:58
+#: includes/ic_commerce_golden_variation.php:181
+msgid "Postcode(Zip):"
+msgstr "Postcode:"
+
+#: includes/ic_commerce_golden_customization.php:62
+msgid "Min and Max By:"
+msgstr "Min en Max Door:"
+
+#: includes/ic_commerce_golden_customization.php:67
+msgid "Order Net Amount"
+msgstr "Bestel Netto Bedrag"
+
+#: includes/ic_commerce_golden_customization.php:68
+msgid "Order Discount Amount"
+msgstr "Bestel kortingsbedrag"
+
+#: includes/ic_commerce_golden_customization.php:69
+msgid "Order Shipping Amount"
+msgstr "Bestellen Verzendbedrag"
+
+#: includes/ic_commerce_golden_customization.php:70
+msgid "Order Shipping Tax Amount"
+msgstr "Bestellen Verzendbelastingbedrag"
+
+#: includes/ic_commerce_golden_customization.php:75
+#: includes/ic_commerce_golden_customization.php:82
+#: includes/ic_commerce_golden_customization.php:88
+msgid "Enable this selection by uncheck 'Show Order Item Details'"
+msgstr "Schakel deze selectie in door de optie 'Order item gegevens te tonen'"
+
+#: includes/ic_commerce_golden_customization.php:80
+msgid "Min Amount:"
+msgstr "Min Bedrag:"
+
+#: includes/ic_commerce_golden_customization.php:86
+msgid "Max Amount:"
+msgstr "Max bedrag:"
+
+#: includes/ic_commerce_golden_dashboard.php:154
+msgid "Summary"
+msgstr "Summier"
+
+#: includes/ic_commerce_golden_dashboard.php:156
+#, php-format
+msgid "Summary From %1$s To %2$s"
+msgstr "Samenvatting van %s tot %s"
+
+#: includes/ic_commerce_golden_dashboard.php:187
+#: includes/ic_commerce_golden_dashboard.php:188
+#: includes/ic_commerce_golden_dashboard.php:196
+#: includes/ic_commerce_golden_dashboard.php:205
+#: includes/ic_commerce_golden_dashboard.php:206
+#: includes/ic_commerce_golden_dashboard.php:215
+#: includes/ic_commerce_golden_dashboard.php:216
+#: includes/ic_commerce_golden_dashboard.php:225
+#: includes/ic_commerce_golden_dashboard.php:233
+#: includes/ic_commerce_golden_dashboard.php:243
+#: includes/ic_commerce_golden_dashboard.php:245
+#: includes/ic_commerce_golden_dashboard.php:255
+#: includes/ic_commerce_golden_dashboard.php:265
+#: includes/ic_commerce_golden_dashboard.php:276
+#: includes/ic_commerce_golden_dashboard.php:277
+#: includes/ic_commerce_golden_dashboard.php:291
+#: includes/ic_commerce_golden_dashboard.php:300
+#: includes/ic_commerce_golden_dashboard.php:308
+#: includes/ic_commerce_golden_dashboard.php:309
+#: includes/ic_commerce_golden_dashboard.php:318
+#: includes/ic_commerce_golden_dashboard.php:319
+#: includes/ic_commerce_golden_dashboard.php:329
+#: includes/ic_commerce_golden_dashboard.php:330
+msgid "0"
+msgstr "0"
+
+#: includes/ic_commerce_golden_dashboard.php:191
+msgid "Total Sales"
+msgstr "Totale verkoop"
+
+#: includes/ic_commerce_golden_dashboard.php:198
+msgid "Average Sales"
+msgstr "Gemiddelde verkoop"
+
+#: includes/ic_commerce_golden_dashboard.php:209
+msgid "Total Coupons"
+msgstr "Totaal Kortingsbon"
+
+#: includes/ic_commerce_golden_dashboard.php:219
+msgid "Total Order Tax"
+msgstr "Totale orderbelasting"
+
+#: includes/ic_commerce_golden_dashboard.php:228
+msgid "Order Shipping Total"
+msgstr "Bestelling Verzenden Totaal"
+
+#: includes/ic_commerce_golden_dashboard.php:236
+msgid "Total Customers"
+msgstr "Totaal klanten"
+
+#: includes/ic_commerce_golden_dashboard.php:248
+msgid "Last Order Date"
+msgstr "Laatste Besteldatum"
+
+#: includes/ic_commerce_golden_dashboard.php:280
+#: includes/ic_commerce_golden_refund_summary.php:128
+#: includes/ic_commerce_golden_refund_summary.php:138
+#: includes/ic_commerce_golden_refund_summary.php:146
+#: includes/ic_commerce_golden_refund_summary.php:154
+#: includes/ic_commerce_golden_refund_summary.php:190
+#: includes/ic_commerce_golden_refund_summary.php:200
+#: includes/ic_commerce_golden_refund_summary.php:214
+msgid "Total Refund"
+msgstr "Totaal Terugbetaling"
+
+#: includes/ic_commerce_golden_dashboard.php:286
+msgid "Todays Summary"
+msgstr "Samenvatting van vandaag"
+
+#: includes/ic_commerce_golden_dashboard.php:295
+msgid "Todays Total Sales"
+msgstr "De totale verkoop van vandaag"
+
+#: includes/ic_commerce_golden_dashboard.php:302
+msgid "Todays Average Sales"
+msgstr "De gemiddelde verkoop van vandaag"
+
+#: includes/ic_commerce_golden_dashboard.php:312
+msgid "Todays Total Refund"
+msgstr "Vandaag Total Refund"
+
+#: includes/ic_commerce_golden_dashboard.php:322
+msgid "Todays Total Coupons"
+msgstr "Totaal aantal coupons van vandaag"
+
+#: includes/ic_commerce_golden_dashboard.php:333
+msgid "Todays Order Total Tax"
+msgstr "Vandaag de bestelling Totaalbelasting"
+
+#: includes/ic_commerce_golden_dashboard.php:340
+msgid "Today's New Customers"
+msgstr "Nieuwe klanten van vandaag"
+
+#: includes/ic_commerce_golden_dashboard.php:371
+#: includes/ic_commerce_golden_dashboard.php:577
+msgid "Sales Summary"
+msgstr "Verkoopoverzicht"
+
+#: includes/ic_commerce_golden_dashboard.php:379
+#: includes/ic_commerce_golden_dashboard.php:585
+msgid "Sales By Months"
+msgstr "Verkoop Per Maanden"
+
+#: includes/ic_commerce_golden_dashboard.php:380
+#: includes/ic_commerce_golden_dashboard.php:586
+msgid "Sales By Days"
+msgstr "Verkoop per dag"
+
+#: includes/ic_commerce_golden_dashboard.php:381
+#: includes/ic_commerce_golden_dashboard.php:587
+msgid "Sales By Week"
+msgstr "Verkoop per week"
+
+#: includes/ic_commerce_golden_dashboard.php:382
+#: includes/ic_commerce_golden_dashboard.php:588
+msgid "Top Products"
+msgstr "Top Artikelen"
+
+#: includes/ic_commerce_golden_dashboard.php:393
+#: includes/ic_commerce_golden_dashboard.php:599
+msgid "Fetching data from Google Analytics..."
+msgstr "Gegevens ophalen van Google Analytics ..."
+
+#: includes/ic_commerce_golden_dashboard.php:394
+#: includes/ic_commerce_golden_dashboard.php:600
+msgid "Please Wait!"
+msgstr "Even geduld aub!"
+
+#: includes/ic_commerce_golden_dashboard.php:397
+#: includes/ic_commerce_golden_dashboard.php:603
+msgid "Last 30 day visit"
+msgstr "Laatste 30 dagen bezoek"
+
+#: includes/ic_commerce_golden_dashboard.php:413
+#: includes/ic_commerce_golden_dashboard.php:617
+msgid "Order Summary"
+msgstr "Bestelling Samenvatting"
+
+#: includes/ic_commerce_golden_dashboard.php:427
+#: includes/ic_commerce_golden_dashboard.php:430
+#: includes/ic_commerce_golden_dashboard.php:431
+#: includes/ic_commerce_golden_dashboard.php:432
+#: includes/ic_commerce_golden_dashboard.php:629
+#: includes/ic_commerce_golden_dashboard.php:632
+#: includes/ic_commerce_golden_dashboard.php:633
+#: includes/ic_commerce_golden_dashboard.php:634
+msgid "Sales Order Status"
+msgstr "Verkooporderstaat"
+
+#: includes/ic_commerce_golden_dashboard.php:451
+#: includes/ic_commerce_golden_dashboard.php:651
+#, php-format
+msgid "Top %s Products"
+msgstr "Top %s Artikelen"
+
+#: includes/ic_commerce_golden_dashboard.php:454
+#: includes/ic_commerce_golden_dashboard.php:455
+#: includes/ic_commerce_golden_dashboard.php:456
+#: includes/ic_commerce_golden_dashboard.php:654
+#: includes/ic_commerce_golden_dashboard.php:655
+#: includes/ic_commerce_golden_dashboard.php:656
+msgid "Top Product Status"
+msgstr "Top Artikel staat"
+
+#: includes/ic_commerce_golden_dashboard.php:474
+#: includes/ic_commerce_golden_dashboard.php:673
+#, php-format
+msgid "Top %s Billing Country"
+msgstr "Top %s Factuur Land"
+
+#: includes/ic_commerce_golden_dashboard.php:477
+#: includes/ic_commerce_golden_dashboard.php:478
+#: includes/ic_commerce_golden_dashboard.php:479
+#: includes/ic_commerce_golden_dashboard.php:676
+#: includes/ic_commerce_golden_dashboard.php:677
+#: includes/ic_commerce_golden_dashboard.php:678
+msgid "Top Billing Country"
+msgstr "Top Facturatie Land"
+
+#: includes/ic_commerce_golden_dashboard.php:496
+#: includes/ic_commerce_golden_dashboard.php:693
+#, php-format
+msgid "Top %s Payment Gateway"
+msgstr "Top %s betalings gateway"
+
+#: includes/ic_commerce_golden_dashboard.php:499
+#: includes/ic_commerce_golden_dashboard.php:500
+#: includes/ic_commerce_golden_dashboard.php:501
+#: includes/ic_commerce_golden_dashboard.php:696
+#: includes/ic_commerce_golden_dashboard.php:697
+#: includes/ic_commerce_golden_dashboard.php:698
+msgid "Top Payment Gateway"
+msgstr "Top Betaal Gateway"
+
+#: includes/ic_commerce_golden_dashboard.php:519
+#: includes/ic_commerce_golden_dashboard.php:714
+#, php-format
+msgid "Recent %s Orders"
+msgstr "Recente %s Bestellingen"
+
+#: includes/ic_commerce_golden_dashboard.php:533
+#: includes/ic_commerce_golden_dashboard.php:726
+#, php-format
+msgid "Top %s Customers"
+msgstr "Top %s Klanten"
+
+#: includes/ic_commerce_golden_dashboard.php:536
+#: includes/ic_commerce_golden_dashboard.php:537
+#: includes/ic_commerce_golden_dashboard.php:538
+#: includes/ic_commerce_golden_dashboard.php:729
+#: includes/ic_commerce_golden_dashboard.php:730
+#: includes/ic_commerce_golden_dashboard.php:731
+msgid "Top Customers"
+msgstr "Top Klanten"
+
+#: includes/ic_commerce_golden_dashboard.php:555
+#: includes/ic_commerce_golden_dashboard.php:746
+#, php-format
+msgid "Top %s Coupons"
+msgstr "Top %s Kortingsbon"
+
+#: includes/ic_commerce_golden_dashboard.php:558
+#: includes/ic_commerce_golden_dashboard.php:559
+#: includes/ic_commerce_golden_dashboard.php:560
+#: includes/ic_commerce_golden_dashboard.php:749
+#: includes/ic_commerce_golden_dashboard.php:750
+#: includes/ic_commerce_golden_dashboard.php:751
+msgid "Top Coupons"
+msgstr "Top Kortingsbon"
+
+#: includes/ic_commerce_golden_dashboard.php:1374
+msgid "Sales Order"
+msgstr "Verkooporder"
+
+#: includes/ic_commerce_golden_dashboard.php:1398
+#: includes/ic_commerce_golden_stock_list.php:524
+#: includes/ic_commerce_golden_variation_stock_list.php:760
+msgid "No order found."
+msgstr "Geen bestelling gevonden."
+
+#: includes/ic_commerce_golden_dashboard.php:1517
+#: includes/ic_commerce_golden_dashboard.php:1649
+#: includes/ic_commerce_golden_dashboard.php:1748
+#: includes/ic_commerce_golden_dashboard.php:1855
+#: includes/ic_commerce_golden_dashboard.php:1952
+#: includes/ic_commerce_golden_dashboard.php:2179
+#: includes/ic_commerce_golden_dashboard.php:2322
+#: includes/ic_commerce_golden_dashboard.php:2424
+msgid "View All"
+msgstr "Bekijk alles"
+
+#: includes/ic_commerce_golden_dashboard.php:1520
+msgid "No status found."
+msgstr "Geen staat gevonden."
+
+#: includes/ic_commerce_golden_dashboard.php:1630
+msgid "Item Name"
+msgstr "Item Naam"
+
+#: includes/ic_commerce_golden_dashboard.php:1631
+msgid "Qty"
+msgstr "Kwantiteit"
+
+#: includes/ic_commerce_golden_dashboard.php:1652
+msgid "No product found."
+msgstr "Geen product gevonden."
+
+#: includes/ic_commerce_golden_dashboard.php:1751
+msgid "No Country found."
+msgstr "Geen land gevonden."
+
+#: includes/ic_commerce_golden_dashboard.php:1858
+msgid "No State found."
+msgstr "Geen staat gevonden."
+
+#: includes/ic_commerce_golden_dashboard.php:1955
+msgid "No payment found."
+msgstr "Geen betaling gevonden."
+
+#: includes/ic_commerce_golden_dashboard.php:2182
+msgid "No Order found."
+msgstr "Geen bestelling gevonden."
+
+#: includes/ic_commerce_golden_dashboard.php:2281
+msgid "Billing Name"
+msgstr "Factuur Naam"
+
+#: includes/ic_commerce_golden_dashboard.php:2325
+msgid "No Customer found."
+msgstr "Geen klant gevonden."
+
+#: includes/ic_commerce_golden_dashboard.php:2427
+msgid "No Coupons found."
+msgstr "Geen kortingsbon gevonden."
+
+#: includes/ic_commerce_golden_dashboard_reports.php:31
+#: includes/ic_commerce_golden_plugin_settings.php:468
+#: includes/ic_commerce_golden_schedule.php:38
+#: includes/ic_commerce_golden_schedule_mailing.php:85
+msgid "Once Minute"
+msgstr "Minuut"
+
+#: includes/ic_commerce_golden_dashboard_reports.php:32
+#: includes/ic_commerce_golden_plugin_settings.php:469
+#: includes/ic_commerce_golden_schedule_mailing.php:87
+msgid "Once Hourly"
+msgstr "Eenmaal per uur"
+
+#: includes/ic_commerce_golden_dashboard_reports.php:33
+#: includes/ic_commerce_golden_plugin_settings.php:470
+#: includes/ic_commerce_golden_schedule_mailing.php:88
+msgid "Once Daily"
+msgstr "Een keer per dag"
+
+#: includes/ic_commerce_golden_dashboard_reports.php:34
+#: includes/ic_commerce_golden_plugin_settings.php:471
+#: includes/ic_commerce_golden_schedule.php:39
+#: includes/ic_commerce_golden_schedule_mailing.php:89
+msgid "Once Weekly"
+msgstr "Eenmaal per week"
+
+#: includes/ic_commerce_golden_dashboard_reports.php:35
+#: includes/ic_commerce_golden_plugin_settings.php:474
+#: includes/ic_commerce_golden_schedule_mailing.php:92
+msgid "Twice Daily"
+msgstr "Tweemaal daags"
+
+#: includes/ic_commerce_golden_export_invoice.php:608
+msgid "Product Image"
+msgstr "Artikel Beeld"
+
+#: includes/ic_commerce_golden_export_invoice.php:630
+#, php-format
+msgid "Download %d"
+msgstr "Download %d"
+
+#: includes/ic_commerce_golden_export_invoice.php:632
+msgid "Download"
+msgstr "Download"
+
+#: includes/ic_commerce_golden_fuctions.php:1546
+msgid "Letter"
+msgstr "Brief"
+
+#: includes/ic_commerce_golden_fuctions.php:1547
+msgid "Legal"
+msgstr "Wettelijk"
+
+#: includes/ic_commerce_golden_fuctions.php:1548
+msgid "A0"
+msgstr "A0"
+
+#: includes/ic_commerce_golden_fuctions.php:1549
+msgid "A1"
+msgstr "A1"
+
+#: includes/ic_commerce_golden_fuctions.php:1550
+msgid "A2"
+msgstr "A2"
+
+#: includes/ic_commerce_golden_fuctions.php:1551
+msgid "A3"
+msgstr "A3"
+
+#: includes/ic_commerce_golden_fuctions.php:1552
+msgid "A4"
+msgstr "A4"
+
+#: includes/ic_commerce_golden_fuctions.php:1553
+msgid "A5"
+msgstr "A5"
+
+#: includes/ic_commerce_golden_fuctions.php:1554
+msgid "A6"
+msgstr "A6"
+
+#: includes/ic_commerce_golden_fuctions.php:1671
+msgid "previous"
+msgstr "voorgaand"
+
+#: includes/ic_commerce_golden_fuctions.php:1672
+msgid "next"
+msgstr "volgende"
+
+#: includes/ic_commerce_golden_fuctions.php:1904
+#, php-format
+msgid "Total product variations: %s"
+msgstr "Totale product variaties: %s"
+
+#: includes/ic_commerce_golden_fuctions.php:2002
+msgid "Cart % Discount"
+msgstr "Cart % korting"
+
+#: includes/ic_commerce_golden_fuctions.php:2003
+msgid "Product Discount"
+msgstr "Artikel korting"
+
+#: includes/ic_commerce_golden_fuctions.php:2004
+msgid "Product % Discount"
+msgstr "Artikel % Korting"
+
+#: includes/ic_commerce_golden_fuctions.php:2423
+#: includes/ic_commerce_golden_variation.php:996
+msgid "-"
+msgstr "-"
+
+#: includes/ic_commerce_golden_init.php:247
+#: includes/ic_commerce_golden_init.php:262
+#: includes/ic_commerce_golden_init.php:276
+msgid " Dashboard"
+msgstr " Dashboard"
+
+#: includes/ic_commerce_golden_init.php:247
+#: includes/ic_commerce_golden_init.php:262
+#: includes/ic_commerce_golden_init.php:276
+#: includes/ic_commerce_golden_init.php:320
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: includes/ic_commerce_golden_init.php:249
+#: includes/ic_commerce_golden_init.php:264
+msgid " Reports"
+msgstr " Rapporten"
+
+#: includes/ic_commerce_golden_init.php:249
+#: includes/ic_commerce_golden_init.php:264
+msgid "Detail"
+msgstr "Detail"
+
+#: includes/ic_commerce_golden_init.php:250
+#: includes/ic_commerce_golden_init.php:265
+#: includes/ic_commerce_golden_init.php:288
+msgid " Settings"
+msgstr " Instellingen"
+
+#: includes/ic_commerce_golden_init.php:250
+#: includes/ic_commerce_golden_init.php:265
+#: includes/ic_commerce_golden_init.php:288
+#: includes/ic_commerce_golden_init.php:336
+msgid "Settings"
+msgstr "Instellingen"
+
+#: includes/ic_commerce_golden_init.php:253
+#: includes/ic_commerce_golden_init.php:268
+msgid " Activate"
+msgstr " Activeren"
+
+#: includes/ic_commerce_golden_init.php:278
+msgid " Details"
+msgstr "Gegevens"
+
+#: includes/ic_commerce_golden_init.php:278
+#: includes/ic_commerce_golden_init.php:328
+msgid "Details"
+msgstr "Gegevens"
+
+#: includes/ic_commerce_golden_init.php:279
+msgid " All Details"
+msgstr " Alle Gegevens"
+
+#: includes/ic_commerce_golden_init.php:279
+msgid "All Details"
+msgstr "Alle Gegevens"
+
+#: includes/ic_commerce_golden_init.php:280
+msgid " Crosstab"
+msgstr " Kruistabelquery"
+
+#: includes/ic_commerce_golden_init.php:280
+msgid "Crosstab"
+msgstr "Kruistabelquery"
+
+#: includes/ic_commerce_golden_init.php:281
+msgid " Variation"
+msgstr " Variatie"
+
+#: includes/ic_commerce_golden_init.php:282
+msgid " Stock List"
+msgstr " Voorraad Lijst"
+
+#: includes/ic_commerce_golden_init.php:282
+#: includes/ic_commerce_golden_stock_list.php:52
+#: includes/ic_commerce_golden_variation_stock_list.php:55
+msgid "Stock List"
+msgstr "Voorraad Lijst"
+
+#: includes/ic_commerce_golden_init.php:284
+msgid " Variation Stock List"
+msgstr "Variatie Voorraad Lijst"
+
+#: includes/ic_commerce_golden_init.php:284
+#: includes/ic_commerce_golden_variation_stock_list.php:201
+msgid "Variation Stock"
+msgstr "Variatie Voorraad"
+
+#: includes/ic_commerce_golden_init.php:296
+msgid " "
+msgstr ""
+
+#: includes/ic_commerce_golden_init.php:299
+msgid " Other Plug-ins"
+msgstr " Andere plugins"
+
+#: includes/ic_commerce_golden_init.php:299
+msgid "Other Plug-ins"
+msgstr "Andere plugins"
+
+#: includes/ic_commerce_golden_plugin_settings.php:45
+#: includes/ic_commerce_golden_plugin_settings.php:48
+msgid "Save Changes"
+msgstr "Wijzigingen opslaan"
+
+#: includes/ic_commerce_golden_plugin_settings.php:54
+msgid "Please Wait"
+msgstr "Even geduld aub"
+
+#: includes/ic_commerce_golden_plugin_settings.php:54
+msgid "Close"
+msgstr "Dichtbij"
+
+#: includes/ic_commerce_golden_plugin_settings.php:189
+msgid ""
+"<strong>Bad Authentication of Google Analytics:-</strong>Username or "
+"Password is incorrect."
+msgstr ""
+"<strong>Slechte authenticatie van Google Analytics: -<strong> Gebruikersnaam "
+"of wachtwoord is onjuist."
+
+#: includes/ic_commerce_golden_plugin_settings.php:213
+msgid "Your are successfully logged in"
+msgstr "Je bent succesvol ingelogd"
+
+#: includes/ic_commerce_golden_plugin_settings.php:229
+msgid "Settings saved"
+msgstr "Instellingen opgeslagen"
+
+#: includes/ic_commerce_golden_plugin_settings.php:272
+msgid "Your are successfully logged out of Google Analytic account."
+msgstr "U bent succesvol aangemeld bij Google Analytics."
+
+#: includes/ic_commerce_golden_plugin_settings.php:329
+#: includes/ic_commerce_golden_plugin_settings.php:361
+msgid "All Status"
+msgstr "Alle staat"
+
+#: includes/ic_commerce_golden_plugin_settings.php:362
+msgid "Auto Draft"
+msgstr "Automatisch ontwerp"
+
+#: includes/ic_commerce_golden_plugin_settings.php:363
+msgid "Drafts"
+msgstr "Concepten"
+
+#: includes/ic_commerce_golden_plugin_settings.php:364
+msgid "Published"
+msgstr "Gepubliceerd"
+
+#: includes/ic_commerce_golden_plugin_settings.php:365
+msgid "Trash"
+msgstr "Uitschot"
+
+#: includes/ic_commerce_golden_plugin_settings.php:371
+msgid "Dashboard Sections:"
+msgstr "Dashboard secties:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:373
+msgid "Enable Sections:"
+msgstr "Secties inschakelen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:375
+msgid "Show Graphical Presentation:"
+msgstr "Toon grafische presentatie:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:377
+msgid "Show Order Summary:"
+msgstr "Toon samenvatting van de bestelling:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:379
+msgid "Show Sales Order Status:"
+msgstr "Toon verkooporderstaat:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:381
+msgid "Show Top Products:"
+msgstr "Toon top producten:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:383
+msgid "Show Top Countries:"
+msgstr "Toon top landen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:385
+msgid "Show Top Payments:"
+msgstr "Topbetalingen weergeven:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:387
+msgid "Show Recent Orders:"
+msgstr "Toon recente bestellingen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:389
+msgid "Show Top Customers:"
+msgstr "Toon top klanten:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:391
+msgid "Show Top Coupons:"
+msgstr "Toon top coupons:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:394
+msgid "Product Image Section:"
+msgstr "Artikelafdeling:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:396
+msgid "Show Product Image:"
+msgstr "Toon productafbeelding:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:396
+msgid "Product Image will be displayed on Variaiton Report page."
+msgstr "Artikelafbeelding wordt weergegeven op de pagina Variatierapport."
+
+#: includes/ic_commerce_golden_plugin_settings.php:399
+msgid "Dashboard Setting:"
+msgstr "Dashboard instellen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:400
+msgid "Recent Order:"
+msgstr "Recente volgorde:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:401
+msgid "Top Product:"
+msgstr "Top Artikel:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:403
+msgid "Top Customer:"
+msgstr "Top Klant:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:404
+msgid "Top Billing Country:"
+msgstr "Top Factuur Land:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:405
+msgid "Top State Country:"
+msgstr "Top State Land:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:406
+msgid "Top Payment Gateway:"
+msgstr "Top Betaal poort:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:407
+msgid "Top Coupon:"
+msgstr "Top Coupon:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:409
+msgid "Per Page:"
+msgstr "Per pagina:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:410
+msgid "Detail Page Orders:"
+msgstr "Detail pagina Bestellingen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:411
+msgid "Detail Stock Orders:"
+msgstr "Detail bestellingen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:412
+msgid "Detail Variation Stock Orders:"
+msgstr "Detail Variatie Voorraad Bestellingen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:413
+msgid "Detail View All Report:"
+msgstr "Detail Bekijk Alles Rapport:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:414
+msgid "Detail Variation Report:"
+msgstr "Detail variatie verslag:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:415
+msgid "Customer Page Report:"
+msgstr "Rapport van klantenpagina:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:419
+msgid "Default Settings:"
+msgstr "Standaard instellingen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:420
+msgid "Shop Order Status:"
+msgstr "Shop Order staat:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:420
+msgid ""
+"Ctrl + click to multiselect. <br /> Selected status will be used for "
+"calculating sales amount."
+msgstr ""
+"Ctrl + klik om multiselect te selecteren. <br /> Geselecteerde staat wordt "
+"gebruikt voor het berekenen van de verkoopbedrag."
+
+#: includes/ic_commerce_golden_plugin_settings.php:422
+msgid "Hide Trash Order:"
+msgstr "Verberg Trash Order:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:427
+msgid "Cross Tab Reports:"
+msgstr "Crosstab Rapporten:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:428
+msgid "Cross Tab Start Month:"
+msgstr "Crosstab Start maand:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:429
+msgid "Cross Tab End Month:"
+msgstr "Crosstab End maand:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:431
+msgid "Export Report:"
+msgstr "Export Rapport:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:432
+msgid "(Pdf/Print) Report Title:"
+msgstr "(Pdf / Print) Rapport Titel:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:436
+#: includes/ic_commerce_golden_plugin_settings.php:524
+msgid "Logo Image:"
+msgstr "Logo Afbeelding:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:439
+msgid "Email Reports:"
+msgstr "E-mail Rapporten:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:440
+msgid "Email Today Report:"
+msgstr "E-mail vandaag bericht:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:441
+msgid "Email Current Week Report:"
+msgstr "E-mail huidige week Rapport:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:442
+msgid "Email Current Month Report:"
+msgstr "Email huidige maand rapport:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:443
+msgid "Email Till Today Report:"
+msgstr "Email tot vandaag rapport:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:461
+msgid "Email Send To:"
+msgstr "Email verzenden naar:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:462
+msgid "From Name:"
+msgstr "Van naam:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:463
+msgid "From Email:"
+msgstr "Van email:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:464
+msgid "Subject:"
+msgstr "Onderwerpen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:467
+msgid "Email Schedule:"
+msgstr "Email Schema:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:473
+#: includes/ic_commerce_golden_schedule_mailing.php:91
+msgid "Twice Hourly"
+msgstr "Tweemaal per uur"
+
+#: includes/ic_commerce_golden_plugin_settings.php:475
+#: includes/ic_commerce_golden_schedule_mailing.php:93
+msgid "Twice Weekly"
+msgstr "Tweewekelijks"
+
+#: includes/ic_commerce_golden_plugin_settings.php:477
+msgid "Unschedule Event"
+msgstr "Unschedule Event"
+
+#: includes/ic_commerce_golden_plugin_settings.php:479
+msgid "Activate Email Reporting:"
+msgstr "E-mail rapportage activeren:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:487
+msgid "Active"
+msgstr "Actief"
+
+#: includes/ic_commerce_golden_plugin_settings.php:488
+#: includes/ic_commerce_golden_plugin_settings.php:492
+msgid "Schedule Status:"
+msgstr "Schema staat:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:491
+msgid ""
+"Schedule mailing stoped or not activated or unschedule event or try again"
+msgstr ""
+"Geplande mailing is gestopt of niet geactiveerd of niet-agenda gebeurtenis "
+"of probeer het opnieuw"
+
+#: includes/ic_commerce_golden_plugin_settings.php:500
+msgid ""
+"Automatic Schedule mailing can not work, because \"DISABLE_WP_CRON\" is "
+"defined as \"TRUE\" on this plug-ins setting page in \"Cron URL Settings\" "
+"section."
+msgstr ""
+"Automatische schema-mailing kan niet werken, omdat 'DISABLE_WP_CRON' is "
+"gedefinieerd als 'TRUE' op deze instelpagina voor invoegtoepassingen in de "
+"sectie 'Cron URL-instellingen'."
+
+#: includes/ic_commerce_golden_plugin_settings.php:502
+msgid ""
+"Schedule mailing can not work, because \"DISABLE_WP_CRON\" is defined as "
+"\"TRUE\" in wp-config.php file or somewhere else. To define this to \"FALSE"
+"\" open wp-config.php file in WordPress root folder and set it to \"FALSE\" "
+"or comment."
+msgstr ""
+"Schema-mailing kan niet werken, omdat \"DISABLE_WP_CRON\" is gedefinieerd "
+"als \"TRUE\" in het wp-config.php-bestand of ergens anders. Om dit te "
+"definiëren naar \"FALSE\" open wp-config.php bestand in WordPress root "
+"folder en stel het in op \"FALSE\" of commentaar."
+
+#: includes/ic_commerce_golden_plugin_settings.php:505
+msgid "WP CRON Status:"
+msgstr "WP CRON staat:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:508
+msgid "Action:"
+msgstr "Actie:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:508
+msgid "Test Mail"
+msgstr "Test Mail"
+
+#: includes/ic_commerce_golden_plugin_settings.php:516
+msgid "PDF Invoice:"
+msgstr "PDF Factuur:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:520
+msgid "Company Address1:"
+msgstr "Bedrijf Adres 1:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:522
+msgid "Company Address2:"
+msgstr "Bedrijf Adres 2:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:525
+msgid "Comapany Name and Logo Align:"
+msgstr "Bedrijfsnaam en logo uitlijnen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:527
+msgid "Comapany Name Left and Logo Left"
+msgstr "Bedrijfsnaam links en logo links"
+
+#: includes/ic_commerce_golden_plugin_settings.php:532
+msgid "Show Signature:"
+msgstr "Toon handtekening:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:533
+msgid "Signature Align:"
+msgstr "Handtekening uitlijnen:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:533
+msgid "Left"
+msgstr "Links"
+
+#: includes/ic_commerce_golden_plugin_settings.php:533
+msgid "Center"
+msgstr "Centrum"
+
+#: includes/ic_commerce_golden_plugin_settings.php:533
+msgid "Right"
+msgstr "Rechts"
+
+#: includes/ic_commerce_golden_plugin_settings.php:534
+msgid "Signature Image:"
+msgstr "Handtekening Afbeelding:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:536
+msgid "Show Footer Note:"
+msgstr "Toon voetnoot Opmerking:"
+
+#: includes/ic_commerce_golden_plugin_settings.php:537
+msgid "Footer Note(after signature):"
+msgstr "Voetnoot (na ondertekening):"
+
+#: includes/ic_commerce_golden_plugin_settings.php:541
+msgid "Show Invoice Creation Date:"
+msgstr "Toon Factuur Creation Date:"
+
+#: includes/ic_commerce_golden_refund_summary.php:73
+msgid "On Refund Date:"
+msgstr "Op teruggave datum:"
+
+#: includes/ic_commerce_golden_refund_summary.php:106
+msgid "Refund Summary"
+msgstr "Teruggave Samenvatting"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:59
+msgid "Please select Email Schedule."
+msgstr "Selecteer e-mail schema."
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:64
+msgid "Please select Activate Email Reporting."
+msgstr "Selecteer alsjeblieft Activeer e-mailrapportage."
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:70
+msgid ""
+"Somehow next schedule is not set, please try re-activating schedule settting."
+msgstr ""
+"Op een of andere manier is het volgende schema niet ingesteld, probeer het "
+"opnieuw inschakelen van de schema-instelling."
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:79
+msgid "Email has been sent successfully."
+msgstr "E-mail is succesvol verzonden."
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:81
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:100
+msgid "Getting problem while sending mail."
+msgstr "Problemen worden bij het verzenden van mail."
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:86
+msgid "Click on \"Save Changes\" button for saving changes and try again."
+msgstr ""
+"Klik op de knop \"Wijzigingen opslaan\" om wijzigingen op te slaan en "
+"probeer het opnieuw."
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:97
+msgid "Email sent successfully."
+msgstr "E-mail is succesvol verzonden."
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:227
+msgid "Today's"
+msgstr "Today's"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:238
+msgid "Yesterday"
+msgstr "Gisteren"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:247
+msgid "Current Week"
+msgstr "Deze week"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:257
+msgid "Last Week"
+msgstr "Vorige week"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:266
+msgid "Current Month"
+msgstr "Deze maand"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:275
+msgid "Last Month"
+msgstr "Vorige maand"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:284
+msgid "Current Year"
+msgstr "Huidige jaar"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:293
+msgid "Last Year"
+msgstr "Afgelopen jaar"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:303
+msgid "Till Date"
+msgstr "Tot datum"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:411
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:412
+msgid "Created Date/Time: "
+msgstr "Datum/tijd:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:411
+msgid "(Wordpress Set Time Zone)"
+msgstr "(Wordpress Set Time Zone)"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:412
+msgid "(Default Server Time Zone)"
+msgstr "(Standaardtijdzone Server)"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:413
+msgid "Site URL:"
+msgstr "Domeinnaam website:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:778
+msgid "Summary -"
+msgstr "Summier -"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:785
+msgid "Total Sales:"
+msgstr "Totale omzet:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:792
+msgid "Total Sales Amount:"
+msgstr "Totale omzet:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:799
+msgid "Discount Amount:"
+msgstr "Toatale korting:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:807
+msgid "Coupon Amount:"
+msgstr "Couponbedrag:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:814
+msgid "Refund Amount:"
+msgstr "Bedrag van restitutie:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:822
+msgid "Shipping Tax Amount:"
+msgstr "Verzendbelastingbedrag:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:830
+msgid "Order Tax Amount:"
+msgstr "Bestelbelastingbedrag:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:840
+msgid "Total Tax Amount:"
+msgstr "Totaal Belastingbedrag:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:850
+msgid "Shipping Amount:"
+msgstr "Verzendbedrag:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:860
+msgid "Average Sales:"
+msgstr "Gemiddelde verkoop:"
+
+#: includes/ic_commerce_golden_schedule_mailing_sales_status.php:871
+msgid "New Customer:"
+msgstr "Nieuwe klant:"
+
+#: includes/ic_commerce_golden_stock_list.php:63
+#: includes/ic_commerce_golden_variation_stock_list.php:69
+msgid "SKU No:"
+msgstr "SKU nr:"
+
+#: includes/ic_commerce_golden_stock_list.php:67
+#: includes/ic_commerce_golden_variation_stock_list.php:73
+msgid "Product Name:"
+msgstr "Artikel naam:"
+
+#: includes/ic_commerce_golden_stock_list.php:75
+#: includes/ic_commerce_golden_variation_stock_list.php:81
+msgid "Min Stock:"
+msgstr "Min voorraad:"
+
+#: includes/ic_commerce_golden_stock_list.php:79
+msgid "Max Stock:"
+msgstr "Max Stock:"
+
+#: includes/ic_commerce_golden_stock_list.php:88
+#: includes/ic_commerce_golden_variation_stock_list.php:94
+msgid "Product Stock:"
+msgstr "Artikel voorraad:"
+
+#: includes/ic_commerce_golden_stock_list.php:92
+#: includes/ic_commerce_golden_variation_stock_list.php:98
+msgid "Show all sub-types:"
+msgstr "Toon alle subtypes:"
+
+#: includes/ic_commerce_golden_stock_list.php:103
+#: includes/ic_commerce_golden_variation_stock_list.php:109
+msgid "Stock Status:"
+msgstr "Voorraad Staats:"
+
+#: includes/ic_commerce_golden_stock_list.php:106
+#: includes/ic_commerce_golden_variation_stock_list.php:112
+msgid "In stock"
+msgstr "Op voorraad"
+
+#: includes/ic_commerce_golden_stock_list.php:106
+#: includes/ic_commerce_golden_variation_stock_list.php:112
+msgid "Out of stock"
+msgstr "Niet op voorraad"
+
+#: includes/ic_commerce_golden_stock_list.php:112
+#: includes/ic_commerce_golden_variation_stock_list.php:118
+msgid "Manage Stock:"
+msgstr "Beheer Voorraad:"
+
+#: includes/ic_commerce_golden_stock_list.php:115
+#: includes/ic_commerce_golden_variation_stock_list.php:121
+msgid "Include items whose stock is mannaged"
+msgstr "Inclusief items waarvan de voorraad wordt beheerd"
+
+#: includes/ic_commerce_golden_stock_list.php:115
+#: includes/ic_commerce_golden_variation_stock_list.php:121
+msgid "Include items whose stock is not mannaged"
+msgstr "Inclusief items waarvan de voorraad wordt beheerd"
+
+#: includes/ic_commerce_golden_stock_list.php:148
+msgid "Product Type:"
+msgstr "Artikel type:"
+
+#: includes/ic_commerce_golden_stock_list.php:161
+#: includes/ic_commerce_golden_variation.php:281
+#: includes/ic_commerce_golden_variation_stock_list.php:167
+msgid "Product SKU:"
+msgstr "Artikel SKU:"
+
+#: includes/ic_commerce_golden_stock_list.php:178
+#: includes/ic_commerce_golden_stock_list.php:1253
+#: includes/ic_commerce_golden_stock_list.php:1263
+#: includes/ic_commerce_golden_variation_stock_list.php:1395
+msgid "Stock"
+msgstr "Voorraad"
+
+#: includes/ic_commerce_golden_stock_list.php:190
+#: includes/ic_commerce_golden_variation_stock_list.php:214
+msgid "Basic Column:"
+msgstr "Basiskolom:"
+
+#: includes/ic_commerce_golden_stock_list.php:194
+#: includes/ic_commerce_golden_variation_stock_list.php:218
+msgid "Zero Stock:"
+msgstr "Nulvoorraad:"
+
+#: includes/ic_commerce_golden_stock_list.php:218
+msgid "Search Product"
+msgstr "Zoek Artikel"
+
+#: includes/ic_commerce_golden_stock_list.php:293
+#: includes/ic_commerce_golden_variation_stock_list.php:326
+msgid "Product variation"
+msgstr "Artikel variatie"
+
+#: includes/ic_commerce_golden_stock_list.php:294
+#: includes/ic_commerce_golden_variation_stock_list.php:327
+msgid "List of products variation"
+msgstr "Lijst van producten variatie"
+
+#: includes/ic_commerce_golden_stock_list.php:321
+#: includes/ic_commerce_golden_variation_stock_list.php:945
+msgid "Show all sub-types"
+msgstr "Toon alle subtypes:"
+
+#: includes/ic_commerce_golden_stock_list.php:325
+#: includes/ic_commerce_golden_stock_list.php:1266
+#: includes/ic_commerce_golden_variation_stock_list.php:949
+#: includes/ic_commerce_golden_variation_stock_list.php:1382
+msgid "Downloadable"
+msgstr "downloadbare"
+
+#: includes/ic_commerce_golden_stock_list.php:329
+#: includes/ic_commerce_golden_stock_list.php:1267
+#: includes/ic_commerce_golden_variation_stock_list.php:953
+#: includes/ic_commerce_golden_variation_stock_list.php:1383
+msgid "Virtual"
+msgstr "Virtueel"
+
+#: includes/ic_commerce_golden_stock_list.php:340
+#: includes/ic_commerce_golden_variation_stock_list.php:965
+msgid "Show all product types"
+msgstr "Alle Artikel Soorten"
+
+#: includes/ic_commerce_golden_stock_list.php:348
+#: includes/ic_commerce_golden_variation_stock_list.php:973
+msgid "Grouped product"
+msgstr "Gegroepeerd product"
+
+#: includes/ic_commerce_golden_stock_list.php:350
+#: includes/ic_commerce_golden_variation_stock_list.php:975
+msgid "External/Affiliate product"
+msgstr "Extern / Affiliate product"
+
+#: includes/ic_commerce_golden_stock_list.php:352
+#: includes/ic_commerce_golden_variation_stock_list.php:977
+msgid "Simple product"
+msgstr "Eenvoudig Artikel"
+
+#: includes/ic_commerce_golden_stock_list.php:354
+#: includes/ic_commerce_golden_variation_stock_list.php:979
+msgid "Variable"
+msgstr "veranderlijk"
+
+#: includes/ic_commerce_golden_stock_list.php:1259
+msgid "Product Type"
+msgstr "Soort Artikel"
+
+#: includes/ic_commerce_golden_stock_list.php:1261
+#: includes/ic_commerce_golden_variation_stock_list.php:1380
+msgid "Created Date"
+msgstr "Aanmaak Datum"
+
+#: includes/ic_commerce_golden_stock_list.php:1262
+#: includes/ic_commerce_golden_variation_stock_list.php:1381
+msgid "Modified Date"
+msgstr "Aangepaste datum"
+
+#: includes/ic_commerce_golden_stock_list.php:1264
+#: includes/ic_commerce_golden_variation_stock_list.php:1386
+msgid "Regular Price"
+msgstr "Normale prijs"
+
+#: includes/ic_commerce_golden_stock_list.php:1265
+#: includes/ic_commerce_golden_variation_stock_list.php:1387
+msgid "Sale Price"
+msgstr "Korting"
+
+#: includes/ic_commerce_golden_stock_list.php:1268
+#: includes/ic_commerce_golden_variation_stock_list.php:1384
+msgid "Manage Stock"
+msgstr "Voorraad Beheren"
+
+#: includes/ic_commerce_golden_stock_list.php:1269
+#: includes/ic_commerce_golden_variation_stock_list.php:1385
+msgid "Backorders"
+msgstr "Nabestellingen"
+
+#: includes/ic_commerce_golden_stock_list.php:1270
+msgid "Stock Status"
+msgstr "Voorraad staat"
+
+#: includes/ic_commerce_golden_variation.php:111
+#: includes/ic_commerce_golden_variation.php:252
+msgid "Variation Products"
+msgstr "Variatie producten"
+
+#: includes/ic_commerce_golden_variation.php:232
+msgid "There is no any order purchased in variable product."
+msgstr "Er is geen bestelling gekocht in variabel product."
+
+#: includes/ic_commerce_golden_variation.php:236
+msgid "Enable variations selection by clicking show variable products"
+msgstr "Schakel variatieselectie in door te klikken op variabele producten"
+
+#: includes/ic_commerce_golden_variation.php:248
+msgid "Show:"
+msgstr "Tonen:"
+
+#: includes/ic_commerce_golden_variation.php:252
+msgid "Simple Products"
+msgstr "Eenvoudige Artikelen"
+
+#: includes/ic_commerce_golden_variation.php:252
+msgid "All Products"
+msgstr "Alle producten"
+
+#: includes/ic_commerce_golden_variation.php:262
+msgid "Style:"
+msgstr "Stijl:"
+
+#: includes/ic_commerce_golden_variation.php:265
+msgid "Columner"
+msgstr "Columner"
+
+#: includes/ic_commerce_golden_variation.php:265
+msgid "Comma Separated"
+msgstr "Kommagescheiden"
+
+#: includes/ic_commerce_golden_variation.php:269
+msgid "Enable style selection by clicking show variable products"
+msgstr "Activeer de stijlkeuze door te klikken op variabele producten"
+
+#: includes/ic_commerce_golden_variation.php:289
+#: includes/ic_commerce_golden_variation_stock_list.php:158
+msgid "Variation SKU:"
+msgstr "Variatie SKU:"
+
+#: includes/ic_commerce_golden_variation.php:540
+msgid "Product List"
+msgstr "Artikel lijst"
+
+#: includes/ic_commerce_golden_variation.php:1122
+msgid "No order found"
+msgstr "Geen bestelling gevonden"
+
+#: includes/ic_commerce_golden_variation.php:1493
+msgid "Total Result: "
+msgstr "Totaal Resultaat: "
+
+#: includes/ic_commerce_golden_variation.php:1493
+msgid ", Amount: "
+msgstr ", Bedrag: "
+
+#: includes/ic_commerce_golden_variation_stock_list.php:85
+msgid "MaxStock"
+msgstr "MaxStock"
+
+#: includes/ic_commerce_golden_variation_stock_list.php:113
+#: includes/ic_commerce_golden_variation_stock_list.php:122
+msgid "All"
+msgstr "Alles"
+
+#: includes/ic_commerce_golden_variation_stock_list.php:130
+msgid ">Product:"
+msgstr ">Artıkel:"
+
+#: includes/ic_commerce_golden_variation_stock_list.php:134
+msgid "All Product"
+msgstr "﻿Alle Artikelen"
+
+#: includes/ic_commerce_golden_variation_stock_list.php:143
+msgid "All Category"
+msgstr "Alle categorieën"
+
+#: includes/ic_commerce_golden_variation_stock_list.php:219
+msgid "Include items having 0 stock"
+msgstr "Inclusief items met 0 stock"
+
+#: includes/ic_commerce_golden_variation_stock_list.php:873
+msgid "Edit this item"
+msgstr "Bewerk dit artikel"
+
+#: includes/ic_commerce_golden_variation_stock_list.php:1067
+#, php-format
+msgid "Results: <strong>%1$s/%2$s</strong>"
+msgstr "Resultaten: <strong> % s / % s </strong>"
+
+#. Plugin URI of the plugin/theme
+msgid "http://plugins.infosofttech.com/"
+msgstr "http://plugins.infosofttech.com/"
+
+#. Description of the plugin/theme
+msgid ""
+"Woocommerce Sales Reporter shows you all key sales information in one main "
+"Dashboard in very intuitive, easy to understand format which gives a quick "
+"overview of your business and helps make smart decisions. Key features are "
+"Responsive Layout, More Summary Details on Dashboard, Advance Filters, "
+"Export to Excel, Online PDF Generation, Customize Columns, Stock Summary, "
+"Theme Color, Crosstab Reports, Product Variation Reports, Reports linked "
+"with Google Analytics, Auto Email Reporting*."
+msgstr ""
+"Woocommerce Sales Reporter toont u alle belangrijke verkoopinformatie in één "
+"hoofddashboard in een zeer intuïtieve, makkelijk te begrijpen indeling die "
+"een snel overzicht geeft van uw bedrijf en helpt om slimme beslissingen te "
+"nemen. Belangrijkste kenmerken zijn Responsive Layout, Meer samenvatting "
+"Details over Dashboard, Advance Filters, Export naar Excel, Online PDF "
+"Generatie, Kolommen aanpassen, Voorraad Samenvatting, Thema Kleur, Crosstab "
+"Verslagen, Artikel Variatie Rapporten, Rapporten gekoppeld aan Google "
+"Analytics, Automatische Email Reporting *."
+
+#. Author of the plugin/theme
+msgid "Infosoft Consultants"
+msgstr "Infosoft Consultants"
+
+#. Author URI of the plugin/theme
+msgid "http://www.infosofttech.com"
+msgstr "http://www.infosofttech.com"
