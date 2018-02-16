@@ -23,3 +23,15 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/404.php on line 10
+[09-Feb-2018 20:46:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function post_password_required() in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/comments.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/comments.php on line 18
+[09-Feb-2018 20:46:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function post_password_required() in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/comments.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/comments.php on line 18
+[13-Feb-2018 02:50:58 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/404.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyfifteen/404.php on line 10
