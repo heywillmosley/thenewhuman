@@ -33,10 +33,10 @@ class USIN_EDD_Reports extends USIN_Module_Reports{
 		);
 
 		if(USIN_EDD::is_licensing_enabled()){
-			$reports[]= new USIN_Standard_Report('edd_license_statuses', __('License statuses (user & guest)', 'usin'), 
+			$reports[]= new USIN_Standard_Report('edd_license_statuses', __('License statuses', 'usin'), 
 				array('group'=>$this->group));
 
-			$reports[]= new USIN_Period_Report('edd_license_renewals', __('License renewals (user & guest)', 'usin'), 
+			$reports[]= new USIN_Period_Report('edd_license_renewals', __('License renewals', 'usin'), 
 				array('group'=>$this->group));
 		}
 

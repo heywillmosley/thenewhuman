@@ -293,6 +293,12 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
                                                 'value'   => 'outofstock',
                                                 'compare' => '=',
                                                 'type'    => 'string'
+                                            ),
+                                            array(
+                                                'key'     => '_stock_status',
+                                                'value'   => 'onbackorder',
+                                                'compare' => '=',
+                                                'type'    => 'string'
                                             )
                                         );
                 }else{

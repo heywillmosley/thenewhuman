@@ -2,23 +2,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WooCommerce Wholesale Order Form\n"
-"POT-Creation-Date: 2017-10-05 08:20+0800\n"
-"PO-Revision-Date: 2016-05-16 12:40+0800\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Last-Translator: \n"
-"Language-Team: Rymera Web Co <support@wholesalesuiteplugin.com>\n"
-"Language: en\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.1\n"
-"X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-KeywordsList: __;_e;_n;_x\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: .hg\n"
-"X-Poedit-SearchPathExcluded-1: .idea\n"
-"X-Poedit-SearchPathExcluded-2: js/lib\n"
+"X-Generator: Poedit 2.0.5\n"
 
 #: includes/class-wwof-ajax.php:113 includes/class-wwof-settings.php:14
 #: includes/class-wwof-wws-license-settings.php:149
@@ -29,64 +20,64 @@ msgstr ""
 msgid "Failed to create wholesale ordering page."
 msgstr ""
 
-#: includes/class-wwof-ajax.php:635
+#: includes/class-wwof-ajax.php:651
 msgid "Access Denied"
 msgstr ""
 
-#: includes/class-wwof-ajax.php:638
+#: includes/class-wwof-ajax.php:654
 msgid "You do not have permission to view wholesale product listing"
 msgstr ""
 
-#: includes/class-wwof-ajax.php:646
+#: includes/class-wwof-ajax.php:662
 msgid "Login Here"
 msgstr ""
 
-#: includes/class-wwof-ajax.php:680
+#: includes/class-wwof-ajax.php:696
 msgid "No Product Details Available"
 msgstr ""
 
-#: includes/class-wwof-ajax.php:751
+#: includes/class-wwof-ajax.php:767
 msgid "Trying to add a variable product with no variation provided"
 msgstr ""
 
-#: includes/class-wwof-ajax.php:764 includes/class-wwof-ajax.php:825
-#: includes/class-wwof-ajax.php:1008 includes/class-wwof-ajax.php:1105
+#: includes/class-wwof-ajax.php:780 includes/class-wwof-ajax.php:841
+#: includes/class-wwof-ajax.php:1024 includes/class-wwof-ajax.php:1121
 #, php-format
 msgid ""
 "Couldn't add <b>%1$s</b> to cart, selected quantity exceeds available stock "
 "amount <b>(%2$s)</b>."
 msgstr ""
 
-#: includes/class-wwof-ajax.php:773 includes/class-wwof-ajax.php:808
-#: includes/class-wwof-ajax.php:834 includes/class-wwof-ajax.php:1025
-#: includes/class-wwof-ajax.php:1058 includes/class-wwof-ajax.php:1121
-#: includes/class-wwof-ajax.php:1153
+#: includes/class-wwof-ajax.php:789 includes/class-wwof-ajax.php:824
+#: includes/class-wwof-ajax.php:850 includes/class-wwof-ajax.php:1041
+#: includes/class-wwof-ajax.php:1074 includes/class-wwof-ajax.php:1137
+#: includes/class-wwof-ajax.php:1169
 #, php-format
 msgid "Failed to add <b>%1$s</b> to cart."
 msgstr ""
 
-#: includes/class-wwof-ajax.php:869
+#: includes/class-wwof-ajax.php:885
 #, php-format
 msgid "Failed to add <b>%1$s</b> to cart"
 msgstr ""
 
-#: includes/class-wwof-ajax.php:876 includes/class-wwof-ajax.php:1165
+#: includes/class-wwof-ajax.php:892 includes/class-wwof-ajax.php:1181
 msgid "Failed to add product to cart"
 msgstr ""
 
-#: includes/class-wwof-ajax.php:961
+#: includes/class-wwof-ajax.php:977
 msgid ""
 "Contains invalid variation id. Either empty, not numeric or less than zero"
 msgstr ""
 
-#: includes/class-wwof-ajax.php:983 includes/class-wwof-ajax.php:1080
+#: includes/class-wwof-ajax.php:999 includes/class-wwof-ajax.php:1096
 #, php-format
 msgid ""
 "Couldn't add <b>%1$s</b> to cart, required product add-ons not filled.<br>"
 "%2$s"
 msgstr ""
 
-#: includes/class-wwof-ajax.php:1047 includes/class-wwof-ajax.php:1143
+#: includes/class-wwof-ajax.php:1063 includes/class-wwof-ajax.php:1159
 #, php-format
 msgid "Failed to add <b>%1$s</b> to cart. The entered quantity is invalid."
 msgstr ""
@@ -103,45 +94,65 @@ msgstr ""
 msgid "Category:"
 msgstr ""
 
-#: includes/class-wwof-product-listing.php:428
+#: includes/class-wwof-product-listing.php:373
+msgid "Available on backorder"
+msgstr ""
+
+#: includes/class-wwof-product-listing.php:378
+#, php-format
+msgid "Min: %s of any variation combination"
+msgstr ""
+
+#: includes/class-wwof-product-listing.php:450
 msgid "Variations:"
 msgstr ""
 
-#: includes/class-wwof-product-listing.php:588
+#: includes/class-wwof-product-listing.php:647
+#: includes/class-wwof-product-listing.php:654
 msgid "Product Add-ons"
 msgstr ""
 
-#: includes/class-wwof-product-listing.php:816
+#: includes/class-wwof-product-listing.php:875
+#: includes/class-wwof-product-listing.php:882
 msgid "<em>Unavailable</em>"
 msgstr ""
 
-#: includes/class-wwof-product-listing.php:823
-#: includes/class-wwof-product-listing.php:832
-#: includes/class-wwof-wwp-wholesale-prices.php:281
+#: includes/class-wwof-product-listing.php:882
+#: includes/class-wwof-product-listing.php:891
+#: includes/class-wwof-product-listing.php:889
+#: includes/class-wwof-product-listing.php:898
+#: includes/class-wwof-wwp-wholesale-prices.php:291
 msgid "Out of Stock"
 msgstr ""
 
-#: includes/class-wwof-product-listing.php:826
-#: includes/class-wwof-product-listing.php:828
+#: includes/class-wwof-product-listing.php:885
+#: includes/class-wwof-product-listing.php:887
+#: includes/class-wwof-product-listing.php:892
+#: includes/class-wwof-product-listing.php:894
 msgid "Add To Cart"
 msgstr ""
 
-#: includes/class-wwof-product-listing.php:864
+#: includes/class-wwof-product-listing.php:923
+#: includes/class-wwof-product-listing.php:930
 #, php-format
 msgid "%1$s Previous"
 msgstr ""
 
-#: includes/class-wwof-product-listing.php:865
+#: includes/class-wwof-product-listing.php:924
+#: includes/class-wwof-product-listing.php:931
 #, php-format
 msgid "Next %1$s"
 msgstr ""
 
-#: includes/class-wwof-product-listing.php:901
-#: includes/class-wwof-product-listing.php:906
+#: includes/class-wwof-product-listing.php:960
+#: includes/class-wwof-product-listing.php:965
+#: includes/class-wwof-product-listing.php:967
+#: includes/class-wwof-product-listing.php:972
 msgid "Subtotal: "
 msgstr ""
 
-#: includes/class-wwof-product-listing.php:912
+#: includes/class-wwof-product-listing.php:971
+#: includes/class-wwof-product-listing.php:978
 msgid "Cart Empty"
 msgstr ""
 
@@ -174,17 +185,21 @@ msgid "Please choose the quantity of items you wish to add to your cart…"
 msgstr ""
 
 #: includes/class-wwof-scripts.php:176
+msgid "Please enter a valid value."
+msgstr ""
+
+#: includes/class-wwof-scripts.php:177
 msgid ""
 "Please enter a valid value. The two nearest valid values are {low} and {high}"
 msgstr ""
 
-#: includes/class-wwof-scripts.php:177
+#: includes/class-wwof-scripts.php:178
 msgid ""
 "Please enter a valid value. The entered value is either lower than the "
 "allowed minimum ({min}) or higher than the allowed maximum ({max})."
 msgstr ""
 
-#: includes/class-wwof-scripts.php:178
+#: includes/class-wwof-scripts.php:179
 msgid "View Cart"
 msgstr ""
 
@@ -381,7 +396,7 @@ msgstr ""
 #: includes/class-wwof-settings.php:310
 msgid ""
 "Enabling this setting will list down each product variation individually and "
-"have its own row in the wholsale order form."
+"have its own row in the wholesale order form."
 msgstr ""
 
 #: includes/class-wwof-settings.php:354
@@ -489,21 +504,21 @@ msgid ""
 "\"_blank\">Knowledge Base</a>"
 msgstr ""
 
-#: includes/class-wwof-wwp-wholesale-prices.php:307
+#: includes/class-wwof-wwp-wholesale-prices.php:317
 #, php-format
 msgid ""
 "NOTE: A minimum order quantity of <b>%1$s</b> %2$s minimum order subtotal of "
 "<b>%3$s</b> is required to activate wholesale pricing in the cart."
 msgstr ""
 
-#: includes/class-wwof-wwp-wholesale-prices.php:309
+#: includes/class-wwof-wwp-wholesale-prices.php:319
 #, php-format
 msgid ""
 "NOTE: A minimum order quantity of <b>%1$s</b> is required to activate "
 "wholesale pricing in the cart."
 msgstr ""
 
-#: includes/class-wwof-wwp-wholesale-prices.php:311
+#: includes/class-wwof-wwp-wholesale-prices.php:321
 #, php-format
 msgid ""
 "NOTE: A minimum order subtotal of <b>%1$s</b> is required to activate "
@@ -518,7 +533,7 @@ msgstr ""
 msgid "WWS License"
 msgstr ""
 
-#: templates/wwof-product-details.php:92
+#: templates/wwof-product-details.php:94
 msgid "Out of stock"
 msgstr ""
 
@@ -557,27 +572,27 @@ msgid "Quantity"
 msgstr ""
 
 #: templates/wwof-product-listing-alternate.php:30
-#: templates/wwof-product-listing-alternate.php:160
+#: templates/wwof-product-listing-alternate.php:161
 msgid "Add Selected Products To Cart"
 msgstr ""
 
 #: templates/wwof-product-listing-alternate.php:34
-#: templates/wwof-product-listing-alternate.php:164
+#: templates/wwof-product-listing-alternate.php:165
 msgid "View Cart &rarr;"
 msgstr ""
 
 #: templates/wwof-product-listing-alternate.php:38
-#: templates/wwof-product-listing-alternate.php:168
+#: templates/wwof-product-listing-alternate.php:169
 msgid " Product/s Added"
 msgstr ""
 
-#: templates/wwof-product-listing-alternate.php:136
-#: templates/wwof-product-listing.php:120
+#: templates/wwof-product-listing-alternate.php:137
+#: templates/wwof-product-listing.php:122
 msgid "No Products Found"
 msgstr ""
 
-#: templates/wwof-product-listing-alternate.php:177
-#: templates/wwof-product-listing.php:145
+#: templates/wwof-product-listing-alternate.php:178
+#: templates/wwof-product-listing.php:147
 #, php-format
 msgid "%1$s Product/s Found"
 msgstr ""

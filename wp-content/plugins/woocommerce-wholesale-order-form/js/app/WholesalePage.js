@@ -121,7 +121,7 @@ jQuery( document ).ready( function( $ ) {
         } , delay );
 
     }
-    
+
     function getParameterByName( name , url ) {
 
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -130,7 +130,7 @@ jQuery( document ).ready( function( $ ) {
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 
     }
-    
+
     function LoadProductListing( paged , search , catFilter , $shortcodeAtts , first_load ) {
 
         disableSearchCommandFields();
@@ -344,6 +344,10 @@ jQuery( document ).ready( function( $ ) {
         var product_stock_quantity_col = $this.closest( 'tr' ).find( '.product_stock_quantity_col' );
         var product_quantity_col = $this.closest( 'tr' ).find( '.product_quantity_col' );
         var qty_field = $this.closest( 'tr' ).find( '.product_quantity_col' ).find( '.qty' );
+        var product_title_col = $this.closest( 'tr' ).find( '.product_title_col' );
+
+        // remove availability text from previous variation.
+        product_title_col.find( 'p.stock.available-on-backorder' ).remove();
 
         // Set new data
         if ( new_variation ) {
@@ -472,7 +476,7 @@ jQuery( document ).ready( function( $ ) {
 
         } else
             return true;
-        
+
     }
 
     // 6
@@ -499,8 +503,11 @@ jQuery( document ).ready( function( $ ) {
             quantity = parseInt( quantityField.val() );
 
         // validate quantity
-        if ( ! wwofValidateQuantityField( quantity , quantityField ) )
+        if ( ! wwofValidateQuantityField( quantity , quantityField ) ) {
+            enabledSearchCommandFields();
+            enablePagingLinks();
             return;
+        }
 
         $this
             .attr( 'disabled' , 'disabled' )

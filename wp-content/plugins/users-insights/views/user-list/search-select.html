@@ -1,7 +1,7 @@
 <span>
-	<ui-select search-enabled="{{usinOptions.length>20}}" theme="select2">
+	<ui-select search-enabled="searchEnabled" theme="select2" ng-class="{'usin-select-loading':loading}">
 		<ui-select-match placeholder="{{usinPlaceholder}}">{{$select.selected[usinOptionVal]}}</ui-select-match>
-		<ui-select-choices repeat="field[usinOptionKey] as field in usinOptions | filter: $select.search" position="down">
+		<ui-select-choices refresh="searchOptions($select)" refresh-delay="300" repeat="field[usinOptionKey] as field in usinOptions | filter: $select.search" position="down">
 			<span ng-if="field.icon" class="usin-icon-{{field.icon}}"></span>
 		  	<span ng-bind-html="field[usinOptionVal] | highlight: $select.search"></span>
 		</ui-select-choices>

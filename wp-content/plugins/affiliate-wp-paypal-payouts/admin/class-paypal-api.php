@@ -124,7 +124,7 @@ class AffiliateWP_PayPal_API {
 			$items[] = array(
 				'recipient_type' => 'EMAIL',
 				'amount'         => array(
-					'value'      => $payout['amount'],
+					'value'      => affwp_format_amount( $payout['amount'] ),
 					'currency'   => affwp_get_currency()
 				),
 				'receiver'       => $payout['email'],
@@ -161,6 +161,17 @@ class AffiliateWP_PayPal_API {
 		} else {
 
 			affiliate_wp()->utils->log( 'send_bulk_payment() request failed with error code ' . $code  . ': ' . $message );
+			affiliate_wp()->utils->log( 'send_payment() request items: ' . print_r( $items, true ) );
+			affiliate_wp()->utils->log( 'send_payment() request attempt: ' . print_r( $request, true ) );
+
+			$body = json_decode( $body );
+
+			if( ! empty( $body->name ) && 'VALIDATION_ERROR' === $body->name ) {
+
+				$code    = $body->name;
+				$message = $body->message . '. Details: ' . json_encode( $body->details ) . ' - ' . $body->information_link;
+
+			}
 
 			return new WP_Error( $code, $message );
 

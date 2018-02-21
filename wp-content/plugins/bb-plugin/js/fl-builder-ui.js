@@ -508,6 +508,7 @@
             $('html').removeClass('fl-builder-edit').addClass('fl-builder-show-admin-bar');
             $('body').removeClass('fl-builder-edit');
             $('#wpadminbar a').attr('tabindex', null );
+			$( FLBuilder._contentClass ).removeClass( 'fl-builder-content-editing' );
             this.hideMainToolbar();
             FLBuilder.ContentPanel.hide();
             FLBuilderLayout.init();
@@ -526,6 +527,7 @@
             $('html').addClass('fl-builder-edit').removeClass('fl-builder-show-admin-bar');
             $('body').addClass('fl-builder-edit');
             $('#wpadminbar a').attr('tabindex', '-1');
+			$( FLBuilder._contentClass ).addClass( 'fl-builder-content-editing' );
             this.showMainToolbar();
 
             e.preventDefault();
@@ -673,7 +675,10 @@
         },
     };
 
-    var BrowserState = {
+	/**
+    * Browser history logic.
+    */
+	var BrowserState = {
 
         isEditing: true,
 
@@ -687,8 +692,6 @@
             if ( history.pushState ) {
                 FLBuilder.addHook('endEditingSession', this.onLeaveBuilder.bind(this) );
                 FLBuilder.addHook('restartEditingSession', this.onEnterBuilder.bind(this) );
-                history.pushState( {}, document.title, FLBuilderConfig.editUrl );
-                window.onpopstate = this.onPopHistoryState.bind(this);
             }
         },
 
@@ -711,22 +714,7 @@
             history.replaceState( {}, document.title, FLBuilderConfig.url );
             this.isEditing = false;
         },
-
-        /**
-         * Handle change browser history state.
-         *
-         * @var {Event} e
-         * @return void
-         */
-        onPopHistoryState: function(e) {
-            if ( ! this.isEditing && window.location.search.indexOf( 'fl_builder' ) > -1 ) {
-                FLBuilder.triggerHook('restartEditingSession');
-            } else if ( this.isEditing ) {
-                FLBuilder.triggerHook('endEditingSession');
-            }
-        },
     };
-
 
     /**
     * Content Library Search
@@ -1001,6 +989,10 @@
                 maxAllowedWidth = FLBuilderConfig.rowResize.maxAllowedWidth;
 
             if (originalPosition !== currentPosition) {
+
+                if ( FLBuilderConfig.isRtl ) {
+                    edge = ( 'w' == edge ) ? 'e' : 'w'; // Flip the direction
+                }
 
                 if (originalPosition > currentPosition) {
                     if (edge === 'w') {

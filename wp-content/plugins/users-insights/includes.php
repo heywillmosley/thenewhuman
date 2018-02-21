@@ -88,6 +88,7 @@ class USIN_Includes{
 			include_once('plugin-modules/ultimate-member/ultimate-member.php');
 			include_once('plugin-modules/gravity-forms/gravity-forms.php');
 			include_once('plugin-modules/learndash/learndash.php');
+			include_once('plugin-modules/pmpro/pmpro.php');
 		}
 		
 		

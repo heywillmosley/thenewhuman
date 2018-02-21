@@ -256,6 +256,18 @@ class Affiliate_WP_Admin_Notices {
 
 					break;
 
+				case 'payout_deleted' :
+
+					$message = sprintf( __( 'Payout deleted successfully.', 'affiliate-wp' ) );
+
+					break;
+
+				case 'payout_delete_failed' :
+
+					$message = sprintf( __( 'Payout deletion failed, please try again.', 'affiliate-wp' ) );
+
+					break;
+
 				// Creatives.
 				case 'creative_updated' :
 

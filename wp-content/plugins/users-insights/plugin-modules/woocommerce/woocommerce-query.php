@@ -26,6 +26,7 @@ class USIN_Woocommerce_Query{
 		$db_map['has_order_status'] = array('db_ref'=>'', 'db_table'=>'', 'no_select'=>true);
 		$db_map['has_used_coupon'] = array('db_ref'=>'', 'db_table'=>'', 'no_select'=>true);
 		$db_map['last_order'] = array('db_ref'=>'last_order', 'db_table'=>'orders', 'nulls_last'=>true, 'cast'=>'DATETIME');
+		$db_map['first_order'] = array('db_ref'=>'first_order', 'db_table'=>'orders', 'nulls_last'=>true, 'cast'=>'DATETIME');
 		$db_map['lifetime_value'] = array('db_ref'=>'value', 'db_table'=>'lifetime_values', 'null_to_zero'=>true, 'custom_select'=>true, 'cast'=>'DECIMAL', 'set_alias'=>true);
 		$db_map['reviews'] = array('db_ref'=>'reviews_num', 'db_table'=>'reviews', 'null_to_zero'=>true, 'set_alias'=>true);
 		return $db_map;
@@ -55,7 +56,7 @@ class USIN_Woocommerce_Query{
 	}
 	
 	public function filter_fields_without($fields_without){
-		return array_merge($fields_without, array('order_num', 'last_order', 'lifetime_value'));
+		return array_merge($fields_without, array('order_num', 'first_order', 'last_order', 'lifetime_value'));
 	}
 	
 	public function filter_raw_db_data($data){
@@ -66,20 +67,20 @@ class USIN_Woocommerce_Query{
 			
 			//number of orders
 			$user_ids = wp_list_pluck($data, 'ID');
-			if($this->should_load_field_data('order_num', $data)){
-				$orders = $this->get_orders($user_ids);
-				foreach ($data as &$user_data) {
-					$user_id = intval($user_data->ID);
-					$user_data->order_num = isset($orders[$user_id]) ? $orders[$user_id]->order_num : 0;
-				}
-			}
-			
-			//last order date
-			if($this->should_load_field_data('last_order', $data)){
-				$orders = $this->get_orders($user_ids);
-				foreach ($data as &$user_data) {
-					$user_id = intval($user_data->ID);
-					$user_data->last_order = isset($orders[$user_id]) ? $orders[$user_id]->last_order : null;
+
+			$order_field_defaults = array(
+				'order_num' => 0,
+				'first_order' => null,
+				'last_order' => null
+			);
+
+			foreach ($order_field_defaults as $field_id => $default_value) {
+				if($this->should_load_field_data($field_id, $data)){
+					$orders = $this->get_orders($user_ids);
+					foreach ($data as &$user_data) {
+						$user_id = intval($user_data->ID);
+						$user_data->$field_id = isset($orders[$user_id]) ? $orders[$user_id]->$field_id : $default_value;
+					}
 				}
 			}
 			
@@ -126,7 +127,8 @@ class USIN_Woocommerce_Query{
 	protected function get_orders_select($for_users = null){
 		global $wpdb;
 		
-		$query = "SELECT count(ID) as order_num, MAX(post_date) as last_order, $wpdb->postmeta.meta_value as user_id FROM $wpdb->posts".
+		$query = "SELECT count(ID) as order_num,  MIN(post_date) as first_order, MAX(post_date) as last_order,".
+			" $wpdb->postmeta.meta_value as user_id FROM $wpdb->posts".
 			" INNER JOIN $wpdb->postmeta on $wpdb->posts.ID = $wpdb->postmeta.post_id".
 			" WHERE $wpdb->postmeta.meta_key = '_customer_user' AND $wpdb->posts.post_type = '$this->order_post_type'";
 			

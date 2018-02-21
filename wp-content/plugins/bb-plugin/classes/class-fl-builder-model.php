@@ -2355,6 +2355,7 @@ final class FLBuilderModel {
 		$col		 = self::get_node( $node_id );
 		$new_col_id	 = self::generate_node_id();
 		$nodes		 = self::get_nodes( null, $col );
+		$parent		 = self::get_node_parent( $node_id );
 		$new_nodes	 = array();
 
 		// Add the new column.
@@ -2364,8 +2365,15 @@ final class FLBuilderModel {
 
 		// Unset column template data.
 		if ( isset( $layout_data[ $new_col_id ]->template_id ) ) {
-			unset( $layout_data[ $new_col_id ]->template_id );
-			unset( $layout_data[ $new_col_id ]->template_node_id );
+
+			// Check if parent is a global node.
+			if ( self::is_node_global( $parent ) ) {
+				$layout_data[ $new_col_id ]->template_node_id = $new_col_id;
+			} else {
+				unset( $layout_data[ $new_col_id ]->template_id );
+				unset( $layout_data[ $new_col_id ]->template_node_id );
+
+			}
 			unset( $layout_data[ $new_col_id ]->template_root_node );
 		}
 
@@ -2412,8 +2420,13 @@ final class FLBuilderModel {
 				$new_nodes[ $child_node_id ]->parent = $new_col_id;
 			}
 			if ( isset( $new_nodes[ $child_node_id ]->template_id ) ) {
-				unset( $new_nodes[ $child_node_id ]->template_id );
-				unset( $new_nodes[ $child_node_id ]->template_node_id );
+				// Check if the column is global.
+				if ( $layout_data[ $new_col_id ]->template_node_id ) {
+					$new_nodes[ $child_node_id ]->template_node_id = $child_node_id;
+				} else {
+					unset( $new_nodes[ $child_node_id ]->template_id );
+					unset( $new_nodes[ $child_node_id ]->template_node_id );
+				}
 			}
 		}
 
@@ -2784,7 +2797,7 @@ final class FLBuilderModel {
 			$config->kind = 'module';
 			$config->isWidget = false; // @codingStandardsIgnoreLine
 			$config->isAlias = true; // @codingStandardsIgnoreLine
-			$config->group = $config->group ? array( strtolower( str_replace( ' ', '', $config->group ) ) ) : array( 'standard' );
+			$config->group = $config->group ? array( sanitize_key( $config->group ) ) : array( 'standard' );
 
 			$modules[] = $config;
 		}
@@ -2803,7 +2816,8 @@ final class FLBuilderModel {
 				$data->isWidget = true; // @codingStandardsIgnoreLine
 				$data->isAlias = false; // @codingStandardsIgnoreLine
 				$data->description = isset( $widget->widget_options['description'] ) ? $widget->widget_options['description'] : '';
-				$data->group = array( strtolower( str_replace( ' ', '', __( 'WordPress Widgets', 'fl-builder' ) ) ) );
+
+				$data->group = array( sanitize_key( __( 'WordPress Widgets', 'fl-builder' ) ) );
 
 				if ( ! isset( $widget->icon ) ) {
 					$data->icon = FLBuilderModule::get_widget_icon();
@@ -3445,7 +3459,7 @@ final class FLBuilderModel {
 			$responsive_name   = '';
 
 			if ( $is_multiple && $supports_multiple ) {
-				$defaults->$name = array( $default );
+				$defaults->$name = is_array( $default ) ? $default : array( $default );
 			} elseif ( $responsive ) {
 
 				foreach ( array( 'default', 'medium', 'responsive' ) as $device ) {
@@ -4213,6 +4227,8 @@ final class FLBuilderModel {
 		if ( strstr( $post_status, 'draft' ) ) {
 			self::save_layout( false );
 		}
+
+		do_action( 'fl_builder_after_save_draft', $post_id, $post_status );
 	}
 
 	/**

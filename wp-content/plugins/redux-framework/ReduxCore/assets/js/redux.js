@@ -188,6 +188,8 @@
                 if ( redux.args.ajax_save === true ) {
                     $.redux.ajax_save( $( this ) );
                     e.preventDefault();
+                } else {
+                    location.reload( true );
                 }
             }
         );
@@ -311,7 +313,7 @@
             }
         );
 
-        $( 'td > fieldset:empty,td > div:empty' ).parent().parent().hide();
+        $( '.redux-container td > fieldset:empty,td > div:empty' ).parent().parent().hide();
     };
 
     $.redux.initQtip = function() {

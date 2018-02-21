@@ -3,7 +3,7 @@
  * Plugin Name: Users Insights
  * Plugin URI: https://usersinsights.com/
  * Description: Everything about your WordPress users in one place
- * Version: 3.4.1
+ * Version: 3.5.1
  * Author: Pexeto
  * Text Domain: usin
  * Domain Path: /lang
@@ -119,7 +119,7 @@ if(! class_exists('USIN_Manager')){
 
 			//set constants
 			if ( ! defined( 'USIN_VERSION' ) ) {
-				define( 'USIN_VERSION', '3.4.1' );
+				define( 'USIN_VERSION', '3.5.1' );
 			}
 
 			if ( ! defined( 'USIN_PLUGIN_FILE' ) ) {

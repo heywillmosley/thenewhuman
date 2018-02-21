@@ -153,6 +153,12 @@ abstract class USIN_Assets{
 			top: -1px;
 			margin-left: 5px;
 		}
+
+		.usin-wc-profile-link{
+			float:left;
+			width:100%;
+			clear:both;
+		}
 		</style>';
 
 		echo $output;

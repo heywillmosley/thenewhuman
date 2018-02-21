@@ -534,7 +534,29 @@ class WWOF_Functions {
         $plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $basename );
 
         return version_compare( $plugin_data[ 'Version' ] , $version , $operator );
-        
+
+    }
+
+    /**
+     * PHP <= 5.4 support for array_column. Code below is the simplest version of the alternative function that is needed.
+     *
+     * @since 1.8.2
+     * @access public
+     *
+     * @param array $array   Array source.
+     * @param string $column Array column key.
+     * @param string $index  Array column to use as result index.
+     */
+    public static function array_column( $array , $column , $index = null ) {
+
+        $result = array();
+        foreach ( $array as $key => $row ) {
+
+            $result_key            = $index && isset( $row[ $index ] ) ? $row[ $index ] : $key;
+            $result[ $result_key ] = isset( $row[ $column ] ) ? $row[ $column ] : '';
+        }
+
+        return $result;
     }
 
 }

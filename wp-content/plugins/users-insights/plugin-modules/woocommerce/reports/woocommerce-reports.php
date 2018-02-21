@@ -24,7 +24,9 @@ class USIN_WooCommerce_Reports extends USIN_Module_Reports{
 
 		return array(
 			new USIN_Period_Report('woocommerce_sales', __('Sales', 'usin'), 
-				array('group' => $this->group)),
+				array('group' => $this->group, 'info' => __('Orders with status completed, processing or on hold'))),
+			new USIN_Period_Report('woocommerce_sales_total', __('Sales total', 'usin'), 
+				array('group' => $this->group, 'format' => 'float', 'info' => 'Total amount of sales (does not reflect partial refunds)')),
 			new USIN_Period_Report('woocommerce_new_customers', __('New customers', 'usin'), 
 				array('group' => $this->group)),
 			new USIN_Standard_Report('woocommerce_order_number', __('Number of orders per customer', 'usin'), 

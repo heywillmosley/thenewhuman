@@ -115,7 +115,7 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "	</button>\n" +
     "	\n" +
     "	<div class=\"usin-filter-set\" ng-repeat=\"(key, filter) in filters\">\n" +
-    "		\n" +
+    "\n" +
     "		<div ng-if=\"!filter.applied\" class=\"usin-filter-form\">\n" +
     "\n" +
     "			<usin-search-select ng-model=\"filter.by\" usin-options=\"fields\" usin-option-key=\"id\" usin-option-val=\"name\" ng-change=\"doOnFieldSelected(filter)\" class=\"usin-field-select\"></usin-search-select>\n" +
@@ -125,7 +125,8 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "\n" +
     "				<span ng-if=\"isOptionField(filter.type)\">\n" +
     "					<!-- filter a select field -->\n" +
-    "					<usin-search-select ng-model=\"filter.condition\" usin-options=\"filter.options\" ng-hide=\"isNullOperator(filter.operator)\" class=\"usin-condition-select\"></usin-search-select>\n" +
+    "					<usin-search-select ng-model=\"filter.condition\" usin-options=\"filter.options\" usin-search-action=\"filter.searchAction\"\n" +
+    "						ng-hide=\"isNullOperator(filter.operator)\" class=\"usin-condition-select\"></usin-search-select>\n" +
     "				</span>\n" +
     "				\n" +
     "				<span ng-if=\"filter.type=='date'\">\n" +
@@ -572,9 +573,9 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('views/user-list/search-select.html',
     "<span>\n" +
-    "	<ui-select search-enabled=\"{{usinOptions.length>20}}\" theme=\"select2\">\n" +
+    "	<ui-select search-enabled=\"searchEnabled\" theme=\"select2\" ng-class=\"{'usin-select-loading':loading}\">\n" +
     "		<ui-select-match placeholder=\"{{usinPlaceholder}}\">{{$select.selected[usinOptionVal]}}</ui-select-match>\n" +
-    "		<ui-select-choices repeat=\"field[usinOptionKey] as field in usinOptions | filter: $select.search\" position=\"down\">\n" +
+    "		<ui-select-choices refresh=\"searchOptions($select)\" refresh-delay=\"300\" repeat=\"field[usinOptionKey] as field in usinOptions | filter: $select.search\" position=\"down\">\n" +
     "			<span ng-if=\"field.icon\" class=\"usin-icon-{{field.icon}}\"></span>\n" +
     "		  	<span ng-bind-html=\"field[usinOptionVal] | highlight: $select.search\"></span>\n" +
     "		</ui-select-choices>\n" +

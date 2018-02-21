@@ -1,7 +1,7 @@
 <?php
 
 $product_name = 'ups'; // name should match with 'Software Title' configured in server, and it should not contains white space
-$product_version = '3.9.9';
+$product_version = '3.9.11';
 $product_slug = 'ups-woocommerce-shipping/ups-woocommerce-shipping.php'; //product base_path/file_name
 $serve_url = 'https://www.xadapter.com/';
 $plugin_settings_url = admin_url('admin.php?page=wc-settings&tab=shipping&section=wf_shipping_ups');

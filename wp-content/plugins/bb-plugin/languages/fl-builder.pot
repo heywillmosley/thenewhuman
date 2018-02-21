@@ -1,14 +1,14 @@
-# Copyright (C) 2017 The Beaver Builder Team
+# Copyright (C) 2018 The Beaver Builder Team
 # This file is distributed under the GNU General Public License v2.0.
 msgid ""
 msgstr ""
 "Project-Id-Version: bb-plugin\n"
 "Report-Msgid-Bugs-To: hello@wpbeaverbuilder.com\n"
-"POT-Creation-Date: 2017-12-20 20:06:38+00:00\n"
+"POT-Creation-Date: 2018-02-15 18:59:08+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 0.5.4\n"
@@ -30,10 +30,11 @@ msgstr ""
 
 #: classes/class-fl-builder-admin-settings.php:158
 #: classes/class-fl-builder-admin-settings.php:222
-#: classes/class-fl-builder-model.php:5717
-#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:121
-#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:238
-#: includes/updater/classes/class-fl-updater.php:283
+#: classes/class-fl-builder-model.php:5733
+#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:122
+#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:239
+#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:464
+#: includes/updater/classes/class-fl-updater.php:288
 msgid "Page Builder"
 msgstr ""
 
@@ -70,7 +71,7 @@ msgid "Icons"
 msgstr ""
 
 #: classes/class-fl-builder-admin-settings.php:192
-#: classes/class-fl-builder.php:892
+#: classes/class-fl-builder.php:899
 msgid "Tools"
 msgstr ""
 
@@ -118,18 +119,18 @@ msgid "Page Builder activated! <a%s>Click here</a> to get started."
 msgstr ""
 
 #: classes/class-fl-builder-debug.php:51 modules/button/button.php:321
-#: modules/callout/callout.php:618 modules/contact-form/contact-form.php:432
+#: modules/callout/callout.php:618 modules/contact-form/contact-form.php:430
 #: modules/content-slider/content-slider.php:819 modules/cta/cta.php:382
 #: modules/pricing-table/pricing-table.php:333
-#: modules/subscribe-form/subscribe-form.php:355
+#: modules/subscribe-form/subscribe-form.php:353
 msgid "Enabled"
 msgstr ""
 
 #: classes/class-fl-builder-debug.php:51 modules/button/button.php:320
-#: modules/callout/callout.php:617 modules/contact-form/contact-form.php:431
+#: modules/callout/callout.php:617 modules/contact-form/contact-form.php:429
 #: modules/content-slider/content-slider.php:818 modules/cta/cta.php:381
 #: modules/pricing-table/pricing-table.php:332
-#: modules/subscribe-form/subscribe-form.php:354
+#: modules/subscribe-form/subscribe-form.php:352
 msgid "Disabled"
 msgstr ""
 
@@ -177,8 +178,8 @@ msgid ""
 "Please <a href=\"%s\">deactivate one</a> before continuing."
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2648
-#: classes/class-fl-builder-module.php:352 modules/audio/audio.php:20
+#: classes/class-fl-builder-model.php:2661
+#: classes/class-fl-builder-module.php:351 modules/audio/audio.php:20
 #: modules/button/button.php:15 modules/heading/heading.php:15
 #: modules/html/html.php:15 modules/photo/photo.php:26
 #: modules/rich-text/rich-text.php:15 modules/separator/separator.php:15
@@ -186,7 +187,7 @@ msgstr ""
 msgid "Basic"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2649
+#: classes/class-fl-builder-model.php:2662
 #: modules/content-slider/content-slider.php:15 modules/gallery/gallery.php:15
 #: modules/icon/icon.php:15 modules/icon-group/icon-group.php:15
 #: modules/map/map.php:15 modules/slideshow/slideshow.php:15
@@ -194,14 +195,14 @@ msgstr ""
 msgid "Media"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2650 modules/callout/callout.php:15
+#: classes/class-fl-builder-model.php:2663 modules/callout/callout.php:15
 #: modules/contact-form/contact-form.php:15 modules/cta/cta.php:15
 #: modules/menu/menu.php:20 modules/social-buttons/social-buttons.php:15
 #: modules/subscribe-form/subscribe-form.php:19
 msgid "Actions"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2651
+#: classes/class-fl-builder-model.php:2664
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:8
 #: modules/accordion/accordion.php:15 modules/countdown/countdown.php:148
 #: modules/cta/cta.php:113 modules/gallery/gallery.php:227
@@ -211,18 +212,18 @@ msgstr ""
 #: modules/post-grid/post-grid.php:275 modules/post-grid/post-grid.php:282
 #: modules/post-slider/post-slider.php:461
 #: modules/pricing-table/pricing-table.php:15 modules/sidebar/sidebar.php:15
-#: modules/subscribe-form/subscribe-form.php:165 modules/tabs/tabs.php:15
+#: modules/subscribe-form/subscribe-form.php:163 modules/tabs/tabs.php:15
 #: modules/tabs/tabs.php:53 modules/testimonials/testimonials.php:38
 #: modules/woocommerce/woocommerce.php:55
 msgid "Layout"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2652 modules/countdown/countdown.php:15
+#: classes/class-fl-builder-model.php:2665 modules/countdown/countdown.php:15
 #: modules/numbers/numbers.php:15
 msgid "Info"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2653
+#: classes/class-fl-builder-model.php:2666
 #: modules/post-carousel/post-carousel.php:15
 #: modules/post-carousel/post-carousel.php:224
 #: modules/post-grid/post-grid.php:13 modules/post-grid/post-grid.php:15
@@ -231,77 +232,77 @@ msgstr ""
 msgid "Posts"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2654
-#: classes/class-fl-builder-module.php:354 includes/column-settings.php:317
+#: classes/class-fl-builder-model.php:2667
+#: classes/class-fl-builder-module.php:353 includes/column-settings.php:317
 #: includes/module-settings.php:6 includes/row-settings.php:582
 #: modules/content-slider/content-slider.php:327
 msgid "Advanced"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2655
-#: classes/class-fl-builder-model.php:2671
+#: classes/class-fl-builder-model.php:2668
+#: classes/class-fl-builder-model.php:2684
 msgid "Other"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2672
-#: classes/class-fl-builder-model.php:2806
-#: classes/class-fl-builder-model.php:3226
+#: classes/class-fl-builder-model.php:2685
+#: classes/class-fl-builder-model.php:2820
+#: classes/class-fl-builder-model.php:3240
 #: extensions/fl-builder-user-templates/includes/admin-add-new-form.php:42
 #: includes/admin-settings-modules.php:32 includes/ui-js-config.php:194
 #: modules/widget/widget.php:15 modules/widget/widget.php:16
 msgid "WordPress Widgets"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3264
+#: classes/class-fl-builder-model.php:3278
 msgid "1 Column"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3269
+#: classes/class-fl-builder-model.php:3283
 msgid "2 Columns"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3274
+#: classes/class-fl-builder-model.php:3288
 msgid "3 Columns"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3279
+#: classes/class-fl-builder-model.php:3293
 msgid "4 Columns"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3284
+#: classes/class-fl-builder-model.php:3298
 msgid "5 Columns"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3289
+#: classes/class-fl-builder-model.php:3303
 msgid "6 Columns"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3294
+#: classes/class-fl-builder-model.php:3308
 msgid "Left Sidebar"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3299
+#: classes/class-fl-builder-model.php:3313
 msgid "Right Sidebar"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3304
+#: classes/class-fl-builder-model.php:3318
 msgid "Left & Right Sidebar"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:4319
-#: classes/class-fl-builder-model.php:4357
-#: classes/class-fl-builder-model.php:4426
-#: classes/class-fl-builder-model.php:5589 includes/ui-js-config.php:176
+#: classes/class-fl-builder-model.php:4335
+#: classes/class-fl-builder-model.php:4373
+#: classes/class-fl-builder-model.php:4442
+#: classes/class-fl-builder-model.php:5605 includes/ui-js-config.php:176
 msgid "Uncategorized"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5544
+#: classes/class-fl-builder-model.php:5560
 #: extensions/fl-builder-core-templates-admin/includes/core-template-settings.php:20
 #: extensions/fl-builder-user-templates/includes/node-template-settings.php:6
 #: extensions/fl-builder-user-templates/includes/user-template-settings.php:7
 #: includes/global-settings.php:7 modules/accordion/accordion.php:122
 #: modules/audio/audio.php:73 modules/button/button.php:88
-#: modules/callout/callout.php:200 modules/contact-form/contact-form.php:156
+#: modules/callout/callout.php:200 modules/contact-form/contact-form.php:154
 #: modules/content-slider/content-slider.php:227
 #: modules/content-slider/content-slider.php:399
 #: modules/countdown/countdown.php:81 modules/cta/cta.php:69
@@ -313,26 +314,26 @@ msgstr ""
 #: modules/rich-text/rich-text.php:27 modules/separator/separator.php:28
 #: modules/sidebar/sidebar.php:28 modules/slideshow/slideshow.php:249
 #: modules/social-buttons/social-buttons.php:61
-#: modules/subscribe-form/subscribe-form.php:150 modules/tabs/tabs.php:78
+#: modules/subscribe-form/subscribe-form.php:148 modules/tabs/tabs.php:78
 #: modules/testimonials/testimonials.php:31
 #: modules/testimonials/testimonials.php:212 modules/video/video.php:80
 #: modules/widget/widget.php:80 modules/woocommerce/woocommerce.php:48
 msgid "General"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5545 includes/ui-js-config.php:204
+#: classes/class-fl-builder-model.php:5561 includes/ui-js-config.php:204
 msgid "Landing Pages"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5546 includes/ui-js-config.php:207
+#: classes/class-fl-builder-model.php:5562 includes/ui-js-config.php:207
 msgid "Content Pages"
 msgstr ""
 
-#: classes/class-fl-builder-module.php:351
+#: classes/class-fl-builder-module.php:350
 msgid "Basic Modules"
 msgstr ""
 
-#: classes/class-fl-builder-module.php:353
+#: classes/class-fl-builder-module.php:352
 msgid "Advanced Modules"
 msgstr ""
 
@@ -429,8 +430,9 @@ msgstr ""
 #: classes/class-fl-builder-service-mailerlite.php:161
 #: classes/class-fl-builder-service-mailpoet.php:110
 #: classes/class-fl-builder-service-mailrelay.php:183
+#: classes/class-fl-builder-service-mautic.php:210
 #: classes/class-fl-builder-service-sendinblue.php:154
-#: classes/class-fl-builder-services.php:335
+#: classes/class-fl-builder-services.php:340
 #: extensions/fl-builder-user-templates/includes/admin-add-new-form.php:26
 #: extensions/fl-builder-user-templates/includes/admin-add-new-form.php:40
 #: includes/ui-service-settings.php:7 modules/woocommerce/woocommerce.php:58
@@ -675,7 +677,7 @@ msgid "There was an error subscribing. The account is no longer connected."
 msgstr ""
 
 #: classes/class-fl-builder-service-email-address.php:112
-#: modules/subscribe-form/subscribe-form.php:189
+#: modules/subscribe-form/subscribe-form.php:187
 msgid "Subscribe Form Signup"
 msgstr ""
 
@@ -689,7 +691,7 @@ msgid "Name"
 msgstr ""
 
 #: classes/class-fl-builder-service-email-address.php:127
-#: modules/subscribe-form/subscribe-form.php:136
+#: modules/subscribe-form/subscribe-form.php:134
 msgid "There was an error subscribing. Please try again."
 msgstr ""
 
@@ -1043,6 +1045,72 @@ msgstr ""
 msgid "There was an error subscribing to Mailrelay. %s"
 msgstr ""
 
+#: classes/class-fl-builder-service-mautic.php:73
+msgid "Error: You must provide your Mautic installation URL."
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:77
+msgid "Error: You must provide you Mautic app username."
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:81
+msgid "Error: You must provide your Mautic app user password."
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:109
+msgid "Error: Could not connect to Mautic. %s"
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:129
+#: classes/class-fl-builder-service-sendy.php:114
+msgid "Installation URL"
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:130
+msgid ""
+"The URL where your Mautic application is installed (e.g. "
+"http://mautic.mywebsite.com)."
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:131
+msgid ""
+"API should be enabled in your Mautic application.\n"
+"\t\t\t\t\tGo to Mautic Configuration / API Settings and set `API enabled` "
+"to `Yes`, set `Enable HTTP basic auth` to `Yes` . Save changes."
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:142
+msgid "Mautic Username"
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:143
+msgid ""
+"Username from your Mautic application. Make sure it has `Full system "
+"access`. Best practise would be to set up a new user for each external site."
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:153
+msgid "Mautic Password"
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:154
+msgid "Password associated with the username. Make this a Long passPhrase."
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:189
+msgid "Error: Please check your API credentials."
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:249
+msgid ""
+"There was an error subscribing to Mautic. The account is no longer "
+"connected."
+msgstr ""
+
+#: classes/class-fl-builder-service-mautic.php:281
+msgid "There was an error subscribing to Mautic. %s"
+msgstr ""
+
 #: classes/class-fl-builder-service-sendinblue.php:65
 msgid "Error: You must provide an Access Key."
 msgstr ""
@@ -1093,10 +1161,6 @@ msgstr ""
 msgid "Error: Could not connect to Sendy. %s"
 msgstr ""
 
-#: classes/class-fl-builder-service-sendy.php:114
-msgid "Installation URL"
-msgstr ""
-
 #: classes/class-fl-builder-service-sendy.php:115
 msgid ""
 "The URL where your Sendy application is installed (e.g. "
@@ -1121,25 +1185,25 @@ msgstr ""
 msgid "There was an error subscribing to Sendy. %s"
 msgstr ""
 
-#: classes/class-fl-builder-services.php:300
+#: classes/class-fl-builder-services.php:305
 msgid "Account Name"
 msgstr ""
 
-#: classes/class-fl-builder-services.php:301
+#: classes/class-fl-builder-services.php:306
 msgid ""
 "Used to identify this connection within the accounts list and can be "
 "anything you like."
 msgstr ""
 
-#: classes/class-fl-builder-services.php:314
+#: classes/class-fl-builder-services.php:319
 msgid "Connect"
 msgstr ""
 
-#: classes/class-fl-builder-services.php:343
+#: classes/class-fl-builder-services.php:348
 msgid "Add Account..."
 msgstr ""
 
-#: classes/class-fl-builder-services.php:350
+#: classes/class-fl-builder-services.php:355
 msgid "Account"
 msgstr ""
 
@@ -1227,85 +1291,85 @@ msgstr ""
 msgid "Rebuilt the theme cache"
 msgstr ""
 
-#: classes/class-fl-builder.php:884
+#: classes/class-fl-builder.php:891
 msgid "Unnamed Menu"
 msgstr ""
 
-#: classes/class-fl-builder.php:900
+#: classes/class-fl-builder.php:907
 #: extensions/fl-builder-user-templates/includes/user-template-settings.php:4
 #: includes/ui-js-config.php:133
 msgid "Save Template"
 msgstr ""
 
-#: classes/class-fl-builder.php:908
+#: classes/class-fl-builder.php:915
 msgid "Duplicate Layout"
 msgstr ""
 
-#: classes/class-fl-builder.php:914
+#: classes/class-fl-builder.php:921
 msgid "Preview Layout"
 msgstr ""
 
-#: classes/class-fl-builder.php:925
+#: classes/class-fl-builder.php:932
 msgid "Layout CSS & Javascript"
 msgstr ""
 
-#: classes/class-fl-builder.php:932 includes/global-settings.php:4
+#: classes/class-fl-builder.php:939 includes/global-settings.php:4
 #: includes/ui-js-config.php:85
 msgid "Global Settings"
 msgstr ""
 
-#: classes/class-fl-builder.php:943
+#: classes/class-fl-builder.php:950
 msgid "Change UI Brightness"
 msgstr ""
 
-#: classes/class-fl-builder.php:950 classes/class-fl-builder.php:973
+#: classes/class-fl-builder.php:957 classes/class-fl-builder.php:980
 msgid "WordPress Admin"
 msgstr ""
 
-#: classes/class-fl-builder.php:957 classes/class-fl-builder.php:1027
+#: classes/class-fl-builder.php:964 classes/class-fl-builder.php:1034
 msgid "Help"
 msgstr ""
 
-#: classes/class-fl-builder.php:964
+#: classes/class-fl-builder.php:971
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: classes/class-fl-builder.php:1002 includes/ui-js-config.php:99
+#: classes/class-fl-builder.php:1009 includes/ui-js-config.php:99
 msgid "Manage Templates"
 msgstr ""
 
-#: classes/class-fl-builder.php:1016
+#: classes/class-fl-builder.php:1023
 msgid "Customize Theme"
 msgstr ""
 
-#: classes/class-fl-builder.php:1046
+#: classes/class-fl-builder.php:1053
 msgid "Take A Tour"
 msgstr ""
 
-#: classes/class-fl-builder.php:1054
+#: classes/class-fl-builder.php:1061
 msgid "View Knowledge Base"
 msgstr ""
 
-#: classes/class-fl-builder.php:1062
+#: classes/class-fl-builder.php:1069
 #: extensions/fl-builder-white-label/includes/admin-settings-help-button.php:59
 #: includes/ui-js-config.php:173
 msgid "Contact Support"
 msgstr ""
 
-#: classes/class-fl-builder.php:1248
+#: classes/class-fl-builder.php:1255
 msgid "Upgrade Today <i class=\"fa fa-external-link-square\"></i>"
 msgstr ""
 
-#: classes/class-fl-builder.php:1252
+#: classes/class-fl-builder.php:1259
 msgid "Buy Now <i class=\"fa fa-external-link-square\"></i>"
 msgstr ""
 
-#: classes/class-fl-builder.php:1256 includes/ui-js-config.php:80
+#: classes/class-fl-builder.php:1263 includes/ui-js-config.php:80
 #: includes/ui-js-templates.php:262
 msgid "Done"
 msgstr ""
 
-#: classes/class-fl-builder.php:2936
+#: classes/class-fl-builder.php:2948
 msgid "The uploaded file is not a valid %s extension."
 msgstr ""
 
@@ -1492,7 +1556,7 @@ msgstr ""
 
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:48
 #: extensions/fl-builder-user-templates/classes/class-fl-builder-user-templates-admin-edit.php:84
-#: includes/ui-bar.php:27 includes/ui-field-photo.php:44
+#: includes/ui-field-photo.php:44
 msgid "Edit"
 msgstr ""
 
@@ -1793,19 +1857,19 @@ msgid ""
 "<strong>Templates &rarr; Saved Templates</strong>."
 msgstr ""
 
-#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:57
+#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:58
 msgid "Branding"
 msgstr ""
 
-#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:63
+#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:64
 msgid "Help Button"
 msgstr ""
 
-#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:193
+#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:194
 msgid "Error! Please enter an iframe for the video embed code."
 msgstr ""
 
-#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:210
+#: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:211
 msgid "Error! You must have at least one feature of the help button enabled."
 msgstr ""
 
@@ -1926,7 +1990,7 @@ msgid ""
 "Enable or disable icon sets using the options below or upload a custom icon "
 "set. Instructions on how to generate your own custom icon sets can be read "
 "<a "
-"href=\"http://kb.wpbeaverbuilder.com/article/110-enable-disable-or-import-"
+"href=\"https://kb.wpbeaverbuilder.com/article/110-enable-disable-or-import-"
 "new-icon-sets\" target=\"_blank\">here</a>."
 msgstr ""
 
@@ -2285,7 +2349,7 @@ msgstr ""
 #: modules/audio/audio.php:145 modules/button/button.php:230
 #: modules/button/button.php:268 modules/button/button.php:272
 #: modules/callout/callout.php:235 modules/callout/callout.php:572
-#: modules/contact-form/contact-form.php:386
+#: modules/contact-form/contact-form.php:384
 #: modules/content-slider/content-slider.php:511
 #: modules/content-slider/content-slider.php:773
 #: modules/countdown/countdown.php:141 modules/cta/cta.php:106
@@ -2298,7 +2362,7 @@ msgstr ""
 #: modules/pricing-table/pricing-table.php:287
 #: modules/pricing-table/pricing-table.php:392
 #: modules/separator/separator.php:107
-#: modules/subscribe-form/subscribe-form.php:309 modules/tabs/tabs.php:46
+#: modules/subscribe-form/subscribe-form.php:307 modules/tabs/tabs.php:46
 msgid "Style"
 msgstr ""
 
@@ -2328,7 +2392,7 @@ msgstr ""
 #: includes/column-settings.php:47 includes/column-settings.php:181
 #: includes/row-settings.php:79 includes/row-settings.php:207
 #: modules/button/button.php:361 modules/callout/callout.php:245
-#: modules/contact-form/contact-form.php:455
+#: modules/contact-form/contact-form.php:453
 #: modules/content-slider/content-slider.php:563 modules/cta/cta.php:131
 #: modules/heading/heading.php:93 modules/heading/heading.php:222
 #: modules/icon/icon.php:137 modules/icon/icon.php:167
@@ -2387,14 +2451,14 @@ msgstr ""
 
 #: includes/column-settings.php:120 includes/row-settings.php:459
 #: modules/button/button.php:237 modules/callout/callout.php:400
-#: modules/callout/callout.php:537 modules/contact-form/contact-form.php:351
+#: modules/callout/callout.php:537 modules/contact-form/contact-form.php:349
 #: modules/content-slider/content-slider.php:448
 #: modules/content-slider/content-slider.php:746 modules/cta/cta.php:202
 #: modules/cta/cta.php:301 modules/icon/icon.php:98
 #: modules/icon-group/icon-group.php:65 modules/icon-group/icon-group.php:177
 #: modules/post-grid/post-grid.php:867
 #: modules/pricing-table/pricing-table.php:258
-#: modules/subscribe-form/subscribe-form.php:274
+#: modules/subscribe-form/subscribe-form.php:272
 msgid "Background Color"
 msgstr ""
 
@@ -2532,7 +2596,7 @@ msgid ""
 msgstr ""
 
 #: includes/column-settings.php:299 includes/row-settings.php:17
-#: modules/button/button.php:331 modules/contact-form/contact-form.php:442
+#: modules/button/button.php:331 modules/contact-form/contact-form.php:440
 #: modules/content-slider/content-slider.php:569
 #: modules/post-grid/post-grid.php:921
 #: modules/pricing-table/pricing-table.php:343
@@ -2555,11 +2619,11 @@ msgstr ""
 
 #: includes/column-settings.php:334 includes/global-settings.php:50
 #: includes/row-settings.php:604 modules/button/button.php:377
-#: modules/callout/callout.php:645 modules/contact-form/contact-form.php:469
+#: modules/callout/callout.php:645 modules/contact-form/contact-form.php:467
 #: modules/content-slider/content-slider.php:837 modules/cta/cta.php:400
 #: modules/post-grid/post-grid.php:905
 #: modules/pricing-table/pricing-table.php:373
-#: modules/subscribe-form/subscribe-form.php:374
+#: modules/subscribe-form/subscribe-form.php:372
 msgid "Padding"
 msgstr ""
 
@@ -2598,7 +2662,7 @@ msgid "Medium Devices Only"
 msgstr ""
 
 #: includes/column-settings.php:355 includes/module-settings.php:39
-#: includes/row-settings.php:630
+#: includes/row-settings.php:630 modules/menu/menu.php:273
 msgid "Medium &amp; Small Devices Only"
 msgstr ""
 
@@ -2776,7 +2840,7 @@ msgstr ""
 #: includes/global-settings.php:73 includes/global-settings.php:87
 #: includes/row-settings.php:21 includes/row-settings.php:39
 #: modules/button/button.php:335 modules/callout/callout.php:632
-#: modules/contact-form/contact-form.php:446
+#: modules/contact-form/contact-form.php:444
 #: modules/post-grid/post-grid.php:925
 #: modules/pricing-table/pricing-table.php:347
 #: modules/separator/separator.php:77
@@ -2928,7 +2992,7 @@ msgid "Colors"
 msgstr ""
 
 #: includes/row-settings.php:93 modules/button/button.php:252
-#: modules/callout/callout.php:552 modules/contact-form/contact-form.php:366
+#: modules/callout/callout.php:552 modules/contact-form/contact-form.php:364
 #: modules/content-slider/content-slider.php:614
 #: modules/content-slider/content-slider.php:757
 #: modules/content-slider/content-slider.php:888
@@ -2937,7 +3001,7 @@ msgstr ""
 #: modules/numbers/numbers.php:207 modules/post-carousel/post-carousel.php:425
 #: modules/post-grid/post-grid.php:882 modules/post-slider/post-slider.php:713
 #: modules/pricing-table/pricing-table.php:270
-#: modules/subscribe-form/subscribe-form.php:289
+#: modules/subscribe-form/subscribe-form.php:287
 msgid "Text Color"
 msgstr ""
 
@@ -3046,13 +3110,13 @@ msgid "Speed"
 msgstr ""
 
 #: includes/row-settings.php:389 modules/button/button.php:317
-#: modules/callout/callout.php:614 modules/contact-form/contact-form.php:428
+#: modules/callout/callout.php:614 modules/contact-form/contact-form.php:426
 #: modules/content-slider/content-slider.php:276
 #: modules/content-slider/content-slider.php:815 modules/cta/cta.php:378
 #: modules/post-slider/post-slider.php:407
 #: modules/pricing-table/pricing-table.php:329
 #: modules/slideshow/slideshow.php:386
-#: modules/subscribe-form/subscribe-form.php:351
+#: modules/subscribe-form/subscribe-form.php:349
 #: modules/testimonials/testimonials.php:101
 msgid "Transition"
 msgstr ""
@@ -3193,12 +3257,16 @@ msgstr ""
 msgid "Publish"
 msgstr ""
 
+#: includes/ui-bar.php:27
+msgid "Continue Editing"
+msgstr ""
+
 #: includes/ui-bar.php:32
 msgid "Apply"
 msgstr ""
 
 #: includes/ui-field-dimension.php:39 modules/button/button.php:363
-#: modules/callout/callout.php:247 modules/contact-form/contact-form.php:456
+#: modules/callout/callout.php:247 modules/contact-form/contact-form.php:454
 #: modules/content-slider/content-slider.php:564 modules/cta/cta.php:132
 #: modules/heading/heading.php:94 modules/heading/heading.php:223
 #: modules/icon/icon.php:139 modules/icon/icon.php:168
@@ -3212,7 +3280,7 @@ msgid "Right"
 msgstr ""
 
 #: includes/ui-field-dimension.php:57 modules/button/button.php:362
-#: modules/callout/callout.php:246 modules/contact-form/contact-form.php:454
+#: modules/callout/callout.php:246 modules/contact-form/contact-form.php:452
 #: modules/content-slider/content-slider.php:562 modules/cta/cta.php:130
 #: modules/heading/heading.php:92 modules/heading/heading.php:221
 #: modules/icon/icon.php:138 modules/icon/icon.php:166
@@ -3940,15 +4008,15 @@ msgstr ""
 msgid "Service"
 msgstr ""
 
-#: includes/updater/classes/class-fl-updater.php:346
+#: includes/updater/classes/class-fl-updater.php:351
 msgid "<strong>UPDATE UNAVAILABLE!</strong>"
 msgstr ""
 
-#: includes/updater/classes/class-fl-updater.php:348
+#: includes/updater/classes/class-fl-updater.php:353
 msgid "Please subscribe to enable automatic updates for this plugin."
 msgstr ""
 
-#: includes/updater/classes/class-fl-updater.php:352
+#: includes/updater/classes/class-fl-updater.php:357
 #: includes/updater/includes/form.php:14
 msgid "Subscribe Now"
 msgstr ""
@@ -4123,13 +4191,13 @@ msgstr ""
 msgid "Loop"
 msgstr ""
 
-#: modules/audio/audio.php:148 modules/contact-form/contact-form.php:542
-#: modules/subscribe-form/subscribe-form.php:449
+#: modules/audio/audio.php:148 modules/contact-form/contact-form.php:540
+#: modules/subscribe-form/subscribe-form.php:447
 msgid "Light"
 msgstr ""
 
-#: modules/audio/audio.php:149 modules/contact-form/contact-form.php:543
-#: modules/subscribe-form/subscribe-form.php:450
+#: modules/audio/audio.php:149 modules/contact-form/contact-form.php:541
+#: modules/subscribe-form/subscribe-form.php:448
 msgid "Dark"
 msgstr ""
 
@@ -4150,10 +4218,10 @@ msgid "Show Artist Name"
 msgstr ""
 
 #: modules/button/button.php:13 modules/callout/callout.php:488
-#: modules/contact-form/contact-form.php:311
+#: modules/contact-form/contact-form.php:309
 #: modules/content-slider/content-slider.php:699 modules/cta/cta.php:219
 #: modules/pricing-table/pricing-table.php:190
-#: modules/subscribe-form/subscribe-form.php:234
+#: modules/subscribe-form/subscribe-form.php:232
 msgid "Button"
 msgstr ""
 
@@ -4172,54 +4240,54 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
-#: modules/button/button.php:110 modules/contact-form/contact-form.php:328
+#: modules/button/button.php:110 modules/contact-form/contact-form.php:326
 #: modules/cta/cta.php:241 modules/post-grid/post-grid.php:849
-#: modules/subscribe-form/subscribe-form.php:251
+#: modules/subscribe-form/subscribe-form.php:249
 msgid "Icon Position"
 msgstr ""
 
 #: modules/button/button.php:113 modules/callout/callout.php:517
-#: modules/contact-form/contact-form.php:331
+#: modules/contact-form/contact-form.php:329
 #: modules/content-slider/content-slider.php:726 modules/cta/cta.php:244
 #: modules/post-grid/post-grid.php:852
 #: modules/pricing-table/pricing-table.php:238
-#: modules/subscribe-form/subscribe-form.php:254
+#: modules/subscribe-form/subscribe-form.php:252
 msgid "Before Text"
 msgstr ""
 
 #: modules/button/button.php:114 modules/callout/callout.php:518
-#: modules/contact-form/contact-form.php:332
+#: modules/contact-form/contact-form.php:330
 #: modules/content-slider/content-slider.php:727 modules/cta/cta.php:245
 #: modules/post-grid/post-grid.php:853
 #: modules/pricing-table/pricing-table.php:239
-#: modules/subscribe-form/subscribe-form.php:255
+#: modules/subscribe-form/subscribe-form.php:253
 msgid "After Text"
 msgstr ""
 
 #: modules/button/button.php:119 modules/callout/callout.php:523
-#: modules/contact-form/contact-form.php:337
+#: modules/contact-form/contact-form.php:335
 #: modules/content-slider/content-slider.php:732 modules/cta/cta.php:250
 #: modules/post-grid/post-grid.php:858
 #: modules/pricing-table/pricing-table.php:244
-#: modules/subscribe-form/subscribe-form.php:260
+#: modules/subscribe-form/subscribe-form.php:258
 msgid "Icon Visibility"
 msgstr ""
 
 #: modules/button/button.php:122 modules/callout/callout.php:526
-#: modules/contact-form/contact-form.php:340
+#: modules/contact-form/contact-form.php:338
 #: modules/content-slider/content-slider.php:735 modules/cta/cta.php:253
 #: modules/post-grid/post-grid.php:861
 #: modules/pricing-table/pricing-table.php:247
-#: modules/subscribe-form/subscribe-form.php:263
+#: modules/subscribe-form/subscribe-form.php:261
 msgid "Always Visible"
 msgstr ""
 
 #: modules/button/button.php:123 modules/callout/callout.php:527
-#: modules/contact-form/contact-form.php:341
+#: modules/contact-form/contact-form.php:339
 #: modules/content-slider/content-slider.php:736 modules/cta/cta.php:254
 #: modules/post-grid/post-grid.php:862
 #: modules/pricing-table/pricing-table.php:248
-#: modules/subscribe-form/subscribe-form.php:264
+#: modules/subscribe-form/subscribe-form.php:262
 msgid "Fade In On Hover"
 msgstr ""
 
@@ -4289,78 +4357,78 @@ msgid "Video Link"
 msgstr ""
 
 #: modules/button/button.php:243 modules/callout/callout.php:405
-#: modules/callout/callout.php:543 modules/contact-form/contact-form.php:357
+#: modules/callout/callout.php:543 modules/contact-form/contact-form.php:355
 #: modules/content-slider/content-slider.php:752 modules/cta/cta.php:307
 #: modules/icon/icon.php:103 modules/icon-group/icon-group.php:70
 #: modules/icon-group/icon-group.php:182 modules/post-grid/post-grid.php:873
 #: modules/pricing-table/pricing-table.php:264
-#: modules/subscribe-form/subscribe-form.php:280
+#: modules/subscribe-form/subscribe-form.php:278
 msgid "Background Hover Color"
 msgstr ""
 
 #: modules/button/button.php:258 modules/callout/callout.php:558
-#: modules/contact-form/contact-form.php:372
+#: modules/contact-form/contact-form.php:370
 #: modules/content-slider/content-slider.php:763 modules/cta/cta.php:322
 #: modules/post-grid/post-grid.php:888
 #: modules/pricing-table/pricing-table.php:276
-#: modules/subscribe-form/subscribe-form.php:295
+#: modules/subscribe-form/subscribe-form.php:293
 msgid "Text Hover Color"
 msgstr ""
 
 #: modules/button/button.php:275 modules/callout/callout.php:575
-#: modules/contact-form/contact-form.php:389
+#: modules/contact-form/contact-form.php:387
 #: modules/content-slider/content-slider.php:776 modules/cta/cta.php:339
 #: modules/pricing-table/pricing-table.php:290
-#: modules/subscribe-form/subscribe-form.php:312
+#: modules/subscribe-form/subscribe-form.php:310
 msgid "Flat"
 msgstr ""
 
 #: modules/button/button.php:276 modules/callout/callout.php:413
-#: modules/callout/callout.php:576 modules/contact-form/contact-form.php:390
+#: modules/callout/callout.php:576 modules/contact-form/contact-form.php:388
 #: modules/content-slider/content-slider.php:777 modules/cta/cta.php:340
 #: modules/icon/icon.php:111 modules/icon-group/icon-group.php:78
 #: modules/pricing-table/pricing-table.php:291
-#: modules/subscribe-form/subscribe-form.php:313
+#: modules/subscribe-form/subscribe-form.php:311
 msgid "Gradient"
 msgstr ""
 
 #: modules/button/button.php:277 modules/callout/callout.php:577
-#: modules/contact-form/contact-form.php:391
+#: modules/contact-form/contact-form.php:389
 #: modules/content-slider/content-slider.php:778 modules/cta/cta.php:341
 #: modules/pricing-table/pricing-table.php:292
-#: modules/subscribe-form/subscribe-form.php:314
+#: modules/subscribe-form/subscribe-form.php:312
 msgid "Transparent"
 msgstr ""
 
 #: modules/button/button.php:287 modules/callout/callout.php:587
-#: modules/contact-form/contact-form.php:401
+#: modules/contact-form/contact-form.php:399
 #: modules/content-slider/content-slider.php:788 modules/cta/cta.php:351
 #: modules/pricing-table/pricing-table.php:99
 #: modules/pricing-table/pricing-table.php:302
-#: modules/subscribe-form/subscribe-form.php:324
+#: modules/subscribe-form/subscribe-form.php:322
 msgid "Border Size"
 msgstr ""
 
 #: modules/button/button.php:297 modules/callout/callout.php:596
-#: modules/contact-form/contact-form.php:410
+#: modules/contact-form/contact-form.php:408
 #: modules/content-slider/content-slider.php:797 modules/cta/cta.php:208
 #: modules/cta/cta.php:360 modules/pricing-table/pricing-table.php:311
-#: modules/subscribe-form/subscribe-form.php:333
+#: modules/subscribe-form/subscribe-form.php:331
 msgid "Background Opacity"
 msgstr ""
 
 #: modules/button/button.php:307 modules/callout/callout.php:605
-#: modules/contact-form/contact-form.php:419
+#: modules/contact-form/contact-form.php:417
 #: modules/content-slider/content-slider.php:806 modules/cta/cta.php:369
 #: modules/pricing-table/pricing-table.php:320
-#: modules/subscribe-form/subscribe-form.php:342
+#: modules/subscribe-form/subscribe-form.php:340
 msgid "Background Hover Opacity"
 msgstr ""
 
 #: modules/button/button.php:327 modules/callout/callout.php:238
 #: modules/cta/cta.php:109 modules/heading/heading.php:85
 #: modules/icon/icon.php:121 modules/icon-group/icon-group.php:88
-#: modules/subscribe-form/subscribe-form.php:161
+#: modules/subscribe-form/subscribe-form.php:159
 msgid "Structure"
 msgstr ""
 
@@ -4368,7 +4436,7 @@ msgstr ""
 msgid "Custom Width"
 msgstr ""
 
-#: modules/button/button.php:358 modules/contact-form/contact-form.php:451
+#: modules/button/button.php:358 modules/contact-form/contact-form.php:449
 #: modules/cta/cta.php:127 modules/heading/heading.php:89
 #: modules/heading/heading.php:201 modules/icon/icon.php:134
 #: modules/icon/icon.php:149 modules/icon-group/icon-group.php:109
@@ -4378,20 +4446,20 @@ msgid "Alignment"
 msgstr ""
 
 #: modules/button/button.php:368 modules/callout/callout.php:637
-#: modules/contact-form/contact-form.php:461
+#: modules/contact-form/contact-form.php:459
 #: modules/content-slider/content-slider.php:829 modules/cta/cta.php:392
 #: modules/heading/heading.php:129 modules/heading/heading.php:231
 #: modules/post-grid/post-grid.php:897
 #: modules/pricing-table/pricing-table.php:365
-#: modules/subscribe-form/subscribe-form.php:365
+#: modules/subscribe-form/subscribe-form.php:363
 msgid "Font Size"
 msgstr ""
 
 #: modules/button/button.php:386 modules/callout/callout.php:653
-#: modules/contact-form/contact-form.php:477 modules/cta/cta.php:408
+#: modules/contact-form/contact-form.php:475 modules/cta/cta.php:408
 #: modules/post-grid/post-grid.php:913
 #: modules/pricing-table/pricing-table.php:381
-#: modules/subscribe-form/subscribe-form.php:383
+#: modules/subscribe-form/subscribe-form.php:381
 msgid "Round Corners"
 msgstr ""
 
@@ -4555,11 +4623,11 @@ msgstr ""
 msgid "Read More"
 msgstr ""
 
-#: modules/callout/callout.php:509 modules/contact-form/contact-form.php:323
+#: modules/callout/callout.php:509 modules/contact-form/contact-form.php:321
 #: modules/content-slider/content-slider.php:718
 #: modules/post-grid/post-grid.php:844
 #: modules/pricing-table/pricing-table.php:230
-#: modules/subscribe-form/subscribe-form.php:246
+#: modules/subscribe-form/subscribe-form.php:244
 msgid "Button Icon"
 msgstr ""
 
@@ -4569,24 +4637,24 @@ msgstr ""
 msgid "Button Icon Position"
 msgstr ""
 
-#: modules/callout/callout.php:533 modules/contact-form/contact-form.php:347
+#: modules/callout/callout.php:533 modules/contact-form/contact-form.php:345
 #: modules/content-slider/content-slider.php:742 modules/cta/cta.php:297
 #: modules/pricing-table/pricing-table.php:254
-#: modules/subscribe-form/subscribe-form.php:270
+#: modules/subscribe-form/subscribe-form.php:268
 msgid "Button Colors"
 msgstr ""
 
-#: modules/callout/callout.php:568 modules/contact-form/contact-form.php:382
+#: modules/callout/callout.php:568 modules/contact-form/contact-form.php:380
 #: modules/content-slider/content-slider.php:769 modules/cta/cta.php:332
 #: modules/pricing-table/pricing-table.php:283
-#: modules/subscribe-form/subscribe-form.php:305
+#: modules/subscribe-form/subscribe-form.php:303
 msgid "Button Style"
 msgstr ""
 
-#: modules/callout/callout.php:624 modules/contact-form/contact-form.php:438
+#: modules/callout/callout.php:624 modules/contact-form/contact-form.php:436
 #: modules/content-slider/content-slider.php:825 modules/cta/cta.php:388
 #: modules/pricing-table/pricing-table.php:339
-#: modules/subscribe-form/subscribe-form.php:361
+#: modules/subscribe-form/subscribe-form.php:359
 msgid "Button Structure"
 msgstr ""
 
@@ -4602,50 +4670,50 @@ msgstr ""
 msgid "A very simple contact form."
 msgstr ""
 
-#: modules/contact-form/contact-form.php:72
+#: modules/contact-form/contact-form.php:70
 msgid "Contact Form Submission"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:77
+#: modules/contact-form/contact-form.php:75
 #: modules/contact-form/includes/frontend.php:82
 msgid "Message failed. Please try again."
 msgstr ""
 
-#: modules/contact-form/contact-form.php:113
-#: modules/subscribe-form/subscribe-form.php:108
+#: modules/contact-form/contact-form.php:111
+#: modules/subscribe-form/subscribe-form.php:106
 msgid "Your reCAPTCHA Site or Secret Key is missing!"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:138
+#: modules/contact-form/contact-form.php:136
 msgid "Message"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:143
+#: modules/contact-form/contact-form.php:141
 msgid "Sent!"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:163
+#: modules/contact-form/contact-form.php:161
 msgid "Send To Email"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:165
+#: modules/contact-form/contact-form.php:163
 msgid "example@mail.com"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:166
+#: modules/contact-form/contact-form.php:164
 msgid "The contact form will send to this e-mail. Defaults to the admin email."
 msgstr ""
 
-#: modules/contact-form/contact-form.php:174
-#: modules/subscribe-form/subscribe-form.php:174
+#: modules/contact-form/contact-form.php:172
+#: modules/subscribe-form/subscribe-form.php:172
 msgid "Name Field"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:177
-#: modules/contact-form/contact-form.php:196
-#: modules/contact-form/contact-form.php:224
-#: modules/contact-form/contact-form.php:243
-#: modules/contact-form/contact-form.php:498
+#: modules/contact-form/contact-form.php:175
+#: modules/contact-form/contact-form.php:194
+#: modules/contact-form/contact-form.php:222
+#: modules/contact-form/contact-form.php:241
+#: modules/contact-form/contact-form.php:496
 #: modules/post-carousel/post-carousel.php:273
 #: modules/post-carousel/post-carousel.php:351
 #: modules/post-carousel/post-carousel.php:360
@@ -4661,16 +4729,16 @@ msgstr ""
 #: modules/post-slider/post-slider.php:570
 #: modules/post-slider/post-slider.php:584
 #: modules/post-slider/post-slider.php:593
-#: modules/subscribe-form/subscribe-form.php:177
-#: modules/subscribe-form/subscribe-form.php:405
+#: modules/subscribe-form/subscribe-form.php:175
+#: modules/subscribe-form/subscribe-form.php:403
 msgid "Show"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:178
-#: modules/contact-form/contact-form.php:197
-#: modules/contact-form/contact-form.php:225
-#: modules/contact-form/contact-form.php:244
-#: modules/contact-form/contact-form.php:499
+#: modules/contact-form/contact-form.php:176
+#: modules/contact-form/contact-form.php:195
+#: modules/contact-form/contact-form.php:223
+#: modules/contact-form/contact-form.php:242
+#: modules/contact-form/contact-form.php:497
 #: modules/post-carousel/post-carousel.php:274
 #: modules/post-carousel/post-carousel.php:352
 #: modules/post-carousel/post-carousel.php:361
@@ -4686,168 +4754,168 @@ msgstr ""
 #: modules/post-slider/post-slider.php:571
 #: modules/post-slider/post-slider.php:585
 #: modules/post-slider/post-slider.php:594
-#: modules/subscribe-form/subscribe-form.php:178
-#: modules/subscribe-form/subscribe-form.php:406
+#: modules/subscribe-form/subscribe-form.php:176
+#: modules/subscribe-form/subscribe-form.php:404
 msgid "Hide"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:188
+#: modules/contact-form/contact-form.php:186
 msgid "Name Field Placeholder"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:189
+#: modules/contact-form/contact-form.php:187
 msgid "Your name"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:193
+#: modules/contact-form/contact-form.php:191
 msgid "Subject Field"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:210
+#: modules/contact-form/contact-form.php:208
 msgid "Subject Field Placeholder"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:211
+#: modules/contact-form/contact-form.php:209
 #: modules/contact-form/includes/frontend.php:13
 msgid "Subject"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:215
+#: modules/contact-form/contact-form.php:213
 msgid "Email Subject"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:217
+#: modules/contact-form/contact-form.php:215
 msgid ""
 "You can choose the subject of the email. Defaults to Contact Form "
 "Submission."
 msgstr ""
 
-#: modules/contact-form/contact-form.php:221
+#: modules/contact-form/contact-form.php:219
 msgid "Email Field"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:235
+#: modules/contact-form/contact-form.php:233
 msgid "Email Field Placeholder"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:236
+#: modules/contact-form/contact-form.php:234
 msgid "Your email"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:240
+#: modules/contact-form/contact-form.php:238
 msgid "Phone Field"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:254
+#: modules/contact-form/contact-form.php:252
 msgid "Phone Field Placeholder"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:255
+#: modules/contact-form/contact-form.php:253
 msgid "Your phone"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:259
+#: modules/contact-form/contact-form.php:257
 msgid "Your Message Placeholder"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:260
+#: modules/contact-form/contact-form.php:258
 msgid "Your message"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:265
-#: modules/subscribe-form/subscribe-form.php:184
+#: modules/contact-form/contact-form.php:263
+#: modules/subscribe-form/subscribe-form.php:182
 msgid "Success"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:269
-#: modules/subscribe-form/subscribe-form.php:193
+#: modules/contact-form/contact-form.php:267
+#: modules/subscribe-form/subscribe-form.php:191
 msgid "Success Action"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:271 modules/menu/menu.php:197
+#: modules/contact-form/contact-form.php:269 modules/menu/menu.php:197
 #: modules/menu/menu.php:235 modules/menu/menu.php:433
 #: modules/pricing-table/pricing-table.php:85
 #: modules/pricing-table/pricing-table.php:114
 msgid "None"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:272
-#: modules/subscribe-form/subscribe-form.php:195
+#: modules/contact-form/contact-form.php:270
+#: modules/subscribe-form/subscribe-form.php:193
 msgid "Show Message"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:273
-#: modules/subscribe-form/subscribe-form.php:196
+#: modules/contact-form/contact-form.php:271
+#: modules/subscribe-form/subscribe-form.php:194
 msgid "Redirect"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:292
+#: modules/contact-form/contact-form.php:290
 msgid "Thanks for your message! We’ll be in touch soon."
 msgstr ""
 
-#: modules/contact-form/contact-form.php:300
-#: modules/subscribe-form/subscribe-form.php:223
+#: modules/contact-form/contact-form.php:298
+#: modules/subscribe-form/subscribe-form.php:221
 msgid "Success URL"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:318
+#: modules/contact-form/contact-form.php:316
 #: modules/post-grid/post-grid.php:839
 #: modules/pricing-table/pricing-table.php:197
-#: modules/subscribe-form/subscribe-form.php:241
+#: modules/subscribe-form/subscribe-form.php:239
 msgid "Button Text"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:319
+#: modules/contact-form/contact-form.php:317
 msgid "Send"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:488
-#: modules/subscribe-form/subscribe-form.php:395
+#: modules/contact-form/contact-form.php:486
+#: modules/subscribe-form/subscribe-form.php:393
 msgid "reCAPTCHA"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:506
-#: modules/subscribe-form/subscribe-form.php:413
+#: modules/contact-form/contact-form.php:504
+#: modules/subscribe-form/subscribe-form.php:411
 msgid "If you want to show this field, please provide valid Site and Secret Keys."
 msgstr ""
 
-#: modules/contact-form/contact-form.php:510
-#: modules/subscribe-form/subscribe-form.php:417
+#: modules/contact-form/contact-form.php:508
+#: modules/subscribe-form/subscribe-form.php:415
 msgid "Site Key"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:518
-#: modules/subscribe-form/subscribe-form.php:425
+#: modules/contact-form/contact-form.php:516
+#: modules/subscribe-form/subscribe-form.php:423
 msgid "Secret Key"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:526
-#: modules/subscribe-form/subscribe-form.php:433
+#: modules/contact-form/contact-form.php:524
+#: modules/subscribe-form/subscribe-form.php:431
 msgid "Validate Type"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:529
-#: modules/subscribe-form/subscribe-form.php:436
+#: modules/contact-form/contact-form.php:527
+#: modules/subscribe-form/subscribe-form.php:434
 msgid "\"I'm not a robot\" checkbox"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:530
-#: modules/subscribe-form/subscribe-form.php:437
+#: modules/contact-form/contact-form.php:528
+#: modules/subscribe-form/subscribe-form.php:435
 msgid "Invisible"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:532
+#: modules/contact-form/contact-form.php:530
 msgid ""
 "Validate users with checkbox or in the background.<br />Note: Checkbox and "
 "Invisible types use seperate API keys."
 msgstr ""
 
-#: modules/contact-form/contact-form.php:539
-#: modules/subscribe-form/subscribe-form.php:446
+#: modules/contact-form/contact-form.php:537
+#: modules/subscribe-form/subscribe-form.php:444
 msgid "Theme"
 msgstr ""
 
-#: modules/contact-form/contact-form.php:552
+#: modules/contact-form/contact-form.php:550
 msgid "Please register keys for your website at the <a%s>Google Admin Console</a>."
 msgstr ""
 
@@ -5280,11 +5348,11 @@ msgid "Drop us a line today for a free quote!"
 msgstr ""
 
 #: modules/cta/cta.php:116 modules/menu/menu.php:254
-#: modules/subscribe-form/subscribe-form.php:169
+#: modules/subscribe-form/subscribe-form.php:167
 msgid "Inline"
 msgstr ""
 
-#: modules/cta/cta.php:117 modules/subscribe-form/subscribe-form.php:168
+#: modules/cta/cta.php:117 modules/subscribe-form/subscribe-form.php:166
 msgid "Stacked"
 msgstr ""
 
@@ -5334,6 +5402,10 @@ msgstr ""
 
 #: modules/gallery/gallery.php:304
 msgid "Photo Link"
+msgstr ""
+
+#: modules/gallery/gallery.php:317
+msgid "Lightbox Photo Size"
 msgstr ""
 
 #: modules/heading/heading.php:14
@@ -5494,10 +5566,6 @@ msgstr ""
 
 #: modules/menu/menu.php:269
 msgid "Responsive Breakpoint"
-msgstr ""
-
-#: modules/menu/menu.php:273
-msgid "Medium & Small Devices Only"
 msgstr ""
 
 #: modules/menu/menu.php:289
@@ -6430,7 +6498,7 @@ msgstr ""
 msgid "Something went wrong. Please check your entries and try again."
 msgstr ""
 
-#: modules/subscribe-form/includes/validate-recaptcha.php:11
+#: modules/subscribe-form/includes/validate-recaptcha.php:16
 msgid "reCAPTCHA Error: "
 msgstr ""
 
@@ -6442,27 +6510,27 @@ msgstr ""
 msgid "Adds a simple subscribe form to your layout."
 msgstr ""
 
-#: modules/subscribe-form/subscribe-form.php:188
+#: modules/subscribe-form/subscribe-form.php:186
 msgid "Notification Subject"
 msgstr ""
 
-#: modules/subscribe-form/subscribe-form.php:215
+#: modules/subscribe-form/subscribe-form.php:213
 msgid "Thanks for subscribing! Please check your email for further instructions."
 msgstr ""
 
-#: modules/subscribe-form/subscribe-form.php:242
+#: modules/subscribe-form/subscribe-form.php:240
 msgid "Subscribe!"
 msgstr ""
 
-#: modules/subscribe-form/subscribe-form.php:402
+#: modules/subscribe-form/subscribe-form.php:400
 msgid "reCAPTCHA Field"
 msgstr ""
 
-#: modules/subscribe-form/subscribe-form.php:439
+#: modules/subscribe-form/subscribe-form.php:437
 msgid "Validate users with checkbox or in the background."
 msgstr ""
 
-#: modules/subscribe-form/subscribe-form.php:459
+#: modules/subscribe-form/subscribe-form.php:457
 msgid "Please register keys for your website at the <a%s>Google Admin Console</a>"
 msgstr ""
 
@@ -6750,26 +6818,26 @@ msgctxt "Plugin action link label."
 msgid "Upgrade"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2498
+#: classes/class-fl-builder-model.php:2511
 msgctxt "%s stands for the module filename"
 msgid ""
 "A module with the filename %s.php already exists! Please namespace your "
 "module filenames to ensure compatibility with Beaver Builder."
 msgstr ""
 
-#: classes/class-fl-builder-model.php:2525
+#: classes/class-fl-builder-model.php:2538
 msgctxt "%s stands for the module alias key"
 msgid ""
 "The module alias %s already exists! Please namespace your module aliases to "
 "ensure compatibility with Beaver Builder."
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3700
+#: classes/class-fl-builder-model.php:3714
 msgctxt "%s stands for post/page title."
 msgid "Copy of %s"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:4374
+#: classes/class-fl-builder-model.php:4390
 msgctxt "Default user template category."
 msgid "Uncategorized"
 msgstr ""
@@ -6828,6 +6896,7 @@ msgstr ""
 #: classes/class-fl-builder-service-mailchimp.php:181
 #: classes/class-fl-builder-service-mailerlite.php:173
 #: classes/class-fl-builder-service-mailpoet.php:121
+#: classes/class-fl-builder-service-mautic.php:221
 #: classes/class-fl-builder-service-sendinblue.php:165
 msgctxt "An email list from a third party provider."
 msgid "List"
@@ -6873,22 +6942,22 @@ msgctxt "A list of subscribers group from a Mailrelay account."
 msgid "Group"
 msgstr ""
 
-#: classes/class-fl-builder-services.php:215
+#: classes/class-fl-builder-services.php:220
 msgctxt "Third party service such as MailChimp."
 msgid "Error: Missing service type."
 msgstr ""
 
-#: classes/class-fl-builder-services.php:217
+#: classes/class-fl-builder-services.php:222
 msgctxt "Connection data such as an API key."
 msgid "Error: Missing service data."
 msgstr ""
 
-#: classes/class-fl-builder-services.php:219
+#: classes/class-fl-builder-services.php:224
 msgctxt "Account name for a third party service such as MailChimp."
 msgid "Error: Missing account name."
 msgstr ""
 
-#: classes/class-fl-builder-services.php:228
+#: classes/class-fl-builder-services.php:233
 msgctxt "Account name for a third party service such as MailChimp."
 msgid "Error: An account with that name already exists."
 msgstr ""
@@ -6909,82 +6978,82 @@ msgctxt "current blog name"
 msgid "Rebuilt the theme cache for blog %s"
 msgstr ""
 
-#: classes/class-fl-builder.php:993
+#: classes/class-fl-builder.php:1000
 msgctxt "label for the WordPress Dashboard link"
 msgid "Dashboard"
 msgstr ""
 
-#: classes/class-fl-builder.php:1083
+#: classes/class-fl-builder.php:1090
 msgctxt "A keyboard shortcut with no label given"
 msgid "Untitled Shortcut"
 msgstr ""
 
-#: classes/class-fl-builder.php:1091
+#: classes/class-fl-builder.php:1098
 msgctxt "Keyboard action to show modules tab"
 msgid "Open Modules Tab"
 msgstr ""
 
-#: classes/class-fl-builder.php:1095
+#: classes/class-fl-builder.php:1102
 msgctxt "Keyboard action to show rows tab"
 msgid "Open Rows Tab"
 msgstr ""
 
-#: classes/class-fl-builder.php:1099
+#: classes/class-fl-builder.php:1106
 msgctxt "Keyboard action to show templates tab"
 msgid "Open Templates Tab"
 msgstr ""
 
-#: classes/class-fl-builder.php:1103
+#: classes/class-fl-builder.php:1110
 msgctxt "Keyboard action to show saved tab"
 msgid "Open Saved Tab"
 msgstr ""
 
-#: classes/class-fl-builder.php:1108
+#: classes/class-fl-builder.php:1115
 msgctxt "Keyboard action to open save template form"
 msgid "Save New Template"
 msgstr ""
 
-#: classes/class-fl-builder.php:1113
+#: classes/class-fl-builder.php:1120
 msgctxt "Keyboard action to toggle preview mode"
 msgid "Toggle Preview Mode"
 msgstr ""
 
-#: classes/class-fl-builder.php:1117
+#: classes/class-fl-builder.php:1124
 msgctxt "Keyboard action to open the global settings panel"
 msgid "Open Global Settings"
 msgstr ""
 
-#: classes/class-fl-builder.php:1121
+#: classes/class-fl-builder.php:1128
 msgctxt "Keyboard action to open the layout settings panel"
 msgid "Open Layout Settings"
 msgstr ""
 
-#: classes/class-fl-builder.php:1125
+#: classes/class-fl-builder.php:1132
 msgctxt "Keyboard action to switch between light and dark UI brightness"
 msgid "Change UI Brightness"
 msgstr ""
 
-#: classes/class-fl-builder.php:1129
+#: classes/class-fl-builder.php:1136
 msgctxt "Keyboard action to open the module search panel"
 msgid "Display Module Search"
 msgstr ""
 
-#: classes/class-fl-builder.php:1134
+#: classes/class-fl-builder.php:1141
 msgctxt "Keyboard action to save changes"
 msgid "Save Layout"
 msgstr ""
 
-#: classes/class-fl-builder.php:1139
+#: classes/class-fl-builder.php:1146
 msgctxt "Keyboard action to publish any pending changes"
 msgid "Publish changes without leaving builder"
 msgstr ""
 
-#: classes/class-fl-builder.php:1144
+#: classes/class-fl-builder.php:1151
 msgctxt "Keyboard action to dismiss the current task or panel"
 msgid "Dismiss Active Panel"
 msgstr ""
 
-#: classes/class-fl-builder.php:1226
+#: classes/class-fl-builder.php:1233
 msgctxt "Currently editing message"
 msgid "Currently Editing %s"
 msgstr ""
@@ -7521,7 +7590,7 @@ msgid "Large"
 msgstr ""
 
 #: modules/button/button.php:334 modules/callout/callout.php:631
-#: modules/contact-form/contact-form.php:445
+#: modules/contact-form/contact-form.php:443
 #: modules/post-grid/post-grid.php:924
 #: modules/pricing-table/pricing-table.php:346
 msgctxt "Width."

@@ -1,3 +1,101 @@
+<h4>2.0.5 - 02/15/2018</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Plugin Icons are now shown in the updates core page.</li>
+	<li>Global JS is not included if safe mode is enabled.</li>
+	<li>Added url connection to HTML module.</li>
+	<li>Updated translation files.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed Custom module SVG icons not displaying.</li>
+	<li>Fixed issue with GoDaddy stock photo dropdown hidden in Lite version.</li>
+	<li>Fixed Load More button on Posts Module when there are 1000s of posts.</li>
+	<li>Fixed row background fallback image on row backgrounds on mobile for Youtube and Vimeo.</li>
+	<li>Fixed conflict with Button Module Lightbox and contact form.</li>
+	<li>Fixed missing trailing slash in paths passed to <code>fl_builder_locate_template_order</code> filter.</li>
+	<li>Fixed undefined variable in Post Slider module.</li>
+	<li>Fixed column width on column parent settings not working.</li>
+	<li>Fixed Posts Module pagination when order is set to author.</li>
+	<li>Fixed Number Counter module issue with DE lang.</li>
+	<li>Fixed SmugMug links, they now use https.</li>
+	<li>Fixed mobile stuttering issue in Number Counter module.</li>
+	<li>Fixed shortcodes being rendered twice when other plugins filter the_content.</li>
+	<li>Fixed issue where poorly coded themes styles were overriding the WP Core media modal.</li>
+	<li>Fixed sub menu styles when more than one menu is on the page.</li>
+	<li>Fixed rows set to mobile only displaying on desktop on IE11.</li>
+	<li>Fixed the nested columns equal alignment on IE 11.</li>
+</ul>
+
+<h4>2.0.4.4 - 02/05/2018</h4>
+<p><strong>Hotfix</strong></p>
+<ul>
+	<li>Fixed bug in HTML and Rich Text modules, <code>&nbsp;</code> was being stripped when changing to raw text mode.</li>
+</ul>
+
+<h4>2.0.4.3 - 01/31/2018</h4>
+<p><strong>Hotfix</strong></p>
+<ul>
+	<li>Fixed fl_builder showing in the URL after publish causing the builder to relaunch when refreshing.</li>
+	<li>Fixed Responsive Display setting not being respected after publishing.</li>
+</ul>
+
+<h4>2.0.4.2 - 01/29/2018</h4>
+<p><strong>Hotfix</strong></p>
+<ul>
+	<li>Fixed row overlay menus showing behind the row content.</li>
+	<li>Fixed duplicated columns in global rows not rendering.</li>
+	<li>Fixed overlay overflow menu not working for small columns.</li>
+	<li>Fixed TinyMCE button issues with pinned settings.</li>
+	<li>Fixed Siteground caching breaking the builder's settings JS.</li>
+	<li>Allow multiple defaults for repeater fields.</li>
+	<li>Remove node overlays when right clicking so nodes can be inspected.</li>
+	<li>Removed history manipulation when publishing until we have a more robust/consistent solution.</li>
+</ul>
+
+<h4>2.0.4.1 - 01/25/2018</h4>
+<p><strong>Hotfix</strong></p>
+<ul>
+	<li>Fixed an autop issue introduced in 2.0.4.</li>
+</ul>
+
+<h4>2.0.4 - 01/17/2018</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>All Schema.org links now use https.</li>
+	<li>Added <code>playsinline</code> to background videos and enabled them to play on mobiles.</li>
+	<li>New action <code>fl_builder_after_save_draft</code> added when a layout is saved as draft.</li>
+	<li>Lots of RTL updates for builder UI.</li>
+	<li>Allow users to select image size when using lightbox.</li>
+	<li>Allow multiple post types for auto suggest field.</li>
+	<li>Slideshow Module - Re-enabled prev & next button for touch devices.</li>
+	<li>Subscribe Module - Added Mautic.org as a service.</li>
+	<li>Updated language files.</li>
+	<li>Moved filter <code>fl_builder_loop_query_args</code> to just before <code>WP_Query()</code> to allow better customization.</li>
+</ul>
+
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed an icon bug on multisite installs.</li>
+	<li>Fixed PHP error in Subscribe Module recaptcha when Curl is unavailable.</li>
+	<li>Fixed list names appearing blank in Subscribe Module Madmimi service.</li>
+	<li>Fix z-index issue with overflow menus on top of field connection icons.</li>
+	<li>Fixed the Save As button showing up in the lite version and in restricted editing mode.</li>
+	<li>Fixed bug with layout settings getting encoded when the modsec fix is enabled.</li>
+	<li>Fixed Posts module - Columns layout broken when using load more pagination.</li>
+	<li>Fixed Subscribe Module - Issues when same forms loaded on a page.</li>
+	<li>Fixed issue with <code><textarea></code> HTML being stripped when settings are saved.</li>
+	<li>Fixed issue with column widths on mobile when reverse stacking is enabled.</li>
+	<li>Fixed issue when pasting color into a colorpicker field.</li>
+	<li>Fixed a conflict with Fancybox3.</li>
+</ul>
+
+<h4>2.0.3.3 - 01/09/2018</h4>
+<p><strong>Hotfix</strong></p>
+<ul>
+	<li>Fixed an issue with W3 Cache when CDN is enabled.</li>
+</ul>
+
 <h4>2.0.3.2 - 12/20/2017</h4>
 <p><strong>Hotfix</strong></p>
 <ul>
@@ -397,7 +495,7 @@
     <li>Subscribe Form module: New service for iContact Pro.</li>
     <li>Subscribe Form module: Added support for Godaddy Email Marketing.</li>
     <li>Saved rows in Builder UI now sorted alphabetically.</li>
-    <li>Enhanced WP-CLI support. See <a href="http://kb.wpbeaverbuilder.com/article/504-wp-cli">documentation</a>.</li>
+    <li>Enhanced WP-CLI support. See <a href="https://kb.wpbeaverbuilder.com/article/504-wp-cli">documentation</a>.</li>
     <li>New action <code>fl_builder_subscribe_form_submission_complete</code> added to Subscribe Form module.</li>
     <li>New filter <code>fl_builder_render_module_settings_assets</code> added to settings form assets.</li>
 </ul>
@@ -477,7 +575,7 @@
 	<li>Testimonials Module, new setting added to control slider direction.</li>
 	<li>Subscribe module MailPoet 3 beta support added.</li>
 	<li>Updated pt_PT translation.</li>
-	<li>Added the same <a href="http://kb.wpbeaverbuilder.com/article/139-set-up-a-mega-menu" target="_blank">mega menu logic as the theme</a> to the Menu module.</li>
+	<li>Added the same <a href="https://kb.wpbeaverbuilder.com/article/139-set-up-a-mega-menu" target="_blank">mega menu logic as the theme</a> to the Menu module.</li>
 	<li>Added a submenu spacing setting to the Menu module.</li>
 </ul>
 <p><strong>Bug Fixes</strong></p>

@@ -177,7 +177,8 @@ if ( !class_exists( 'WWOF_WWP_Wholesale_Prices' ) ) {
          * @since 1.3.0 Added feature to display wholesale price per order quantity as a list.
          * @since 1.3.2
          * @since 1.6.6 Refactor codebase and move to its proper model.
-         * @since 1.7.0 Refactor codebase, remove unnecessary codes, make it more effecient and easy to maintain.
+         * @since 1.7.0 Refactor codebase, remove unnecessary codes, make it more efficient and easy to maintain.
+         * @since 1.8.1 Refactor codebase to allow support for changes on WWPP 1.16.1
          *
          * @param $product
          * @return string
@@ -190,14 +191,20 @@ if ( !class_exists( 'WWOF_WWP_Wholesale_Prices' ) ) {
 
             if ( WWOF_Functions::wwof_get_product_type( $product ) == 'simple' || WWOF_Functions::wwof_get_product_type( $product ) == 'variation' ) {
 
-                if ( $hide_wholesale_discount !== 'yes' ) {
+                if ( $hide_wholesale_discount === 'yes' ) {
+                    
+                    add_filter( 'wwof_hide_table_on_wwof_form' , '__return_true' );
+                    add_filter( 'wwof_hide_per_category_table_on_wwof_form' , '__return_true' );
+                    add_filter( 'wwof_hide_per_wholesale_role_table_on_wwof_form' , '__return_true' );
+                    
+                    $price_html = '<span class="price">' . $product->get_price_html() . '</span>';
 
-                    add_filter( 'render_order_quantity_based_wholesale_pricing' , function( $render ) { return true; } );
-                    add_filter( 'render_order_quantity_based_wholesale_discount_per_category_level_table_markup' , function( $render ) { return true; } );
+                    remove_filter( 'wwof_hide_table_on_wwof_form' , '__return_true' );
+                    remove_filter( 'wwof_hide_per_category_table_on_wwof_form' , '__return_true' );
+                    remove_filter( 'wwof_hide_per_wholesale_role_table_on_wwof_form' , '__return_true' );
 
-                }
-
-                $price_html = '<span class="price">' . $product->get_price_html() . '</span>';
+                } else
+                    $price_html = '<span class="price">' . $product->get_price_html() . '</span>';
 
             }
 
@@ -256,26 +263,29 @@ if ( !class_exists( 'WWOF_WWP_Wholesale_Prices' ) ) {
             if ( $product->is_in_stock() ) {
 
 				$input_args 	   = WWOF_Product_Listing_Helper::get_product_quantity_input_args( $product );
-				$step              = ( isset( $input_args[ 'step' ] ) && $input_args[ 'step' ] ) ? $input_args[ 'step' ] : 1;
 				$min               = ( isset( $input_args[ 'min_value' ] ) && $input_args[ 'min_value' ] ) ? $input_args[ 'min_value' ] : 1;
                 $max               = ( isset( $input_args[ 'max_value' ] ) && $input_args[ 'max_value' ] ) ? $input_args[ 'max_value' ] : '';
-                $initial_value     = ( $initial_value % $min > 0 ) ? $min : $initial_value;
 				$tab_index_counter = isset( $_REQUEST[ 'tab_index_counter' ] ) ? $_REQUEST[ 'tab_index_counter' ] : '';
+				$stock_quantity    = $product->get_stock_quantity();
 
-                // If all variations are out of stock we show "Out of Stock" text
-                if ( $product->managing_stock() == 'yes' ) {
-                        $max_str = "";
-                        $stock_quantity = $product->get_stock_quantity();
+				// prepare quantity input args.
+				$quantity_args     = array(
+					'input_value' => ( $initial_value % $min > 0 ) ? $min : $initial_value,
+					'step'        => ( isset( $input_args[ 'step' ] ) && $input_args[ 'step' ] ) ? $input_args[ 'step' ] : 1,
+					'min_value'   => $min,
+					'max_value'   => $max
+				);
 
-						if ( $max )
-							$max_str = 'max="'. $max .'"';
-						else if ( $stock_quantity > 0 && ! $product->backorders_allowed() )
-                            $max_str = 'max="'. $stock_quantity .'"';
+				// if managing stock and max is not set, then set max to stock quantity.
+				if ( $product->managing_stock() == 'yes' && $stock_quantity && ! $max && ! $product->backorders_allowed() )
+					$quantity_args[ 'max_value' ] = $stock_quantity;
 
-                        $quantity_field = '<div class="quantity"><input type="number" step="' . $step . '" min="' . $min . '" ' . $max_str . ' name="quantity" value="' . $initial_value . '" title="Qty" class="input-text qty text" size="4" tabindex="' . $tab_index_counter . '"></div>';
+				$quantity_field  = '<div class="quantity">';
+				$quantity_field  = woocommerce_quantity_input( $quantity_args , $product , false );
+				$quantity_field .= '</div>';
 
-                } else
-                    $quantity_field = '<div class="quantity"><input type="number" step="' . $step . '" min="' . $min . '" max="' . $max . '" name="quantity" value="' . $initial_value . '" title="Qty" class="input-text qty text" size="4" tabindex="' . $tab_index_counter . '"></div>';
+				// add tab index attribute.
+				$quantity_field = str_replace( 'type="number"' , 'type="number" tabindex="' . $tab_index_counter . '"' , $quantity_field );
 
             } else
                 $quantity_field = '<span class="out-of-stock">' . __( 'Out of Stock' , 'woocommerce-wholesale-order-form' ) . '</span>';
@@ -348,160 +358,6 @@ if ( !class_exists( 'WWOF_WWP_Wholesale_Prices' ) ) {
         }
 
         /**
-         * Print wholesale pricing per order quantity list.
-         *
-         * @since 1.3.1
-         * @since 1.5.0 This is marked as deprecated. To be removed on future releases.
-         * @since 1.6.6 Refactor codebase and move to its proper model
-         *
-         * @param $base_currency_mapping
-         * @param $specific_currency_mapping
-         * @param $mapping
-         * @param $product
-         * @param $user_wholesale_role
-         * @param $isBaseCurrency
-         * @param $baseCurrency
-         * @param $active_currency
-         */
-        private function wwof_print_wholesale_price_per_order_quantity_list( $wholesalePrice , $base_currency_mapping , $specific_currency_mapping , $mapping , $product , $user_wholesale_role , $isBaseCurrency , $baseCurrency , $active_currency ) {
-
-            do_action( 'wwof_action_before_wholesale_price_per_order_quantity_list_html' ); ?>
-
-            <ul class="wholesale-price-quantity-discount-lists">
-
-                <?php
-                if ( !$isBaseCurrency ) {
-
-                    // Specific currency
-
-                    foreach ( $base_currency_mapping as $baseMap ) {
-
-                        /*
-                         * Even if this is a not a base currency, we will still rely on the base currency "RANGE".
-                         * Because some range that are present on the base currency, may not be present in this current currency.
-                         * But this current currency still has a wholesale price for that range, its wholesale price will be derived
-                         * from base currency wholesale price by converting it to this current currency.
-                         *
-                         * Also if a wholesale price is set for this current currency range ( ex. 10 - 20 ) but that range
-                         * is not present on the base currency mapping. We don't recognize this specific product on this range
-                         * ( 10 - 20 ) as having wholesale price. User must set wholesale price on the base currency for the
-                         * 10 - 20 range for this to be recognized as having a wholesale price.
-                         */
-
-                        $qty = $baseMap[ 'start_qty' ];
-
-                        if ( !empty( $baseMap[ 'end_qty' ] ) )
-                            $qty .= ' - ' . $baseMap[ 'end_qty' ];
-                        else
-                            $qty .= '+';
-
-                        $price = '';
-
-                        /*
-                         * First check if a price is set for this wholesale role : range pair in the specific currency mapping.
-                         * If wholesale price is present, then use it.
-                         */
-                        foreach ( $specific_currency_mapping as $specificMap ) {
-
-                            if ( $specificMap[ $active_currency . '_start_qty' ] == $baseMap[ 'start_qty' ] && $specificMap[ $active_currency . '_end_qty' ] == $baseMap[ 'end_qty' ] ) {
-
-                                if ( isset( $specificMap[ 'price_type' ] ) ) {
-
-                                    if ( $specificMap[ 'price_type' ] == 'fixed-price' )
-                                        $price = wc_price( $specificMap[ $active_currency . '_wholesale_price' ] , array( 'currency' => $active_currency ) );
-                                    elseif ( $specificMap[ 'price_type' ] == 'percent-price' ) {
-
-                                        $price = $wholesalePrice - ( ( $specificMap[ $active_currency . '_wholesale_price' ] / 100 ) * $wholesalePrice );
-                                        $price = wc_price( $price  , array( 'currency' => $active_currency ) );
-
-                                    }
-
-                                } else
-                                    $price = wc_price( $specificMap[ $active_currency . '_wholesale_price' ] , array( 'currency' => $active_currency ) );
-
-                            }
-
-                        }
-
-                        /*
-                         * Now if there is no mapping for this specific wholesale role : range pair inn the specific currency mapping,
-                         * since this range is present on the base map mapping. We derive the price by converting the price set on the
-                         * base currency mapping to this active currency.
-                         */
-                        if ( !$price ) {
-
-                            if ( isset( $baseMap[ 'price_type' ] ) ) {
-
-                                if ( $baseMap[ 'price_type' ] == 'fixed-price' )
-                                    $price = WWOF_ACS_Integration_Helper::convert( $baseMap[ 'wholesale_price' ] , $active_currency , $baseCurrency );
-                                elseif ( $baseMap[ 'price_type' ] == 'percent-price' ) {
-
-                                    $price = $wholesalePrice - ( ( $baseMap[ 'wholesale_price' ] / 100 ) * $wholesalePrice );
-                                    $price = WWOF_ACS_Integration_Helper::convert( $price , $active_currency , $baseCurrency );
-
-                                }
-
-                            } else
-                                $price = WWOF_ACS_Integration_Helper::convert( $baseMap[ 'wholesale_price' ] , $active_currency , $baseCurrency );
-
-                            $price = $this->wwof_get_product_shop_price_with_taxing_applied( $product , $price , array( 'currency' => $active_currency ) );
-
-                        } ?>
-
-                        <li>
-                            <?php do_action( 'wwof_action_before_wholesale_price_per_order_quantity_list_item_html' , $baseMap , $product , $user_wholesale_role ); ?>
-                            <span class="quantity-range"><?php echo $qty; ?></span><span class="sep">:</span><span class="discounted-price"><?php echo $price; ?></span>
-                            <?php do_action( 'wwof_action_after_wholesale_price_per_order_quantity_list_item_html' , $baseMap , $product , $user_wholesale_role ); ?>
-                        </li>
-
-                    <?php }
-
-                } else {
-
-                    /*
-                     * Base currency.
-                     * Also the default if Aelia currency switcher plugin isn't active.
-                     */
-                    foreach ( $base_currency_mapping as $map ) {
-
-                        $qty = $map[ 'start_qty' ];
-
-                        if ( !empty( $map[ 'end_qty' ] ) )
-                            $qty .= ' - ' . $map[ 'end_qty' ];
-                        else
-                            $qty .= '+';
-
-                        if ( isset( $map[ 'price_type' ] ) ) {
-
-                            if ( $map[ 'price_type' ] == 'fixed-price' )
-                                $price = $this->wwof_get_product_shop_price_with_taxing_applied( $product , $map[ 'wholesale_price' ] , array( 'currency' => $baseCurrency ) );
-                            elseif ( $map[ 'price_type' ] == 'percent-price' ) {
-
-                                $price = $wholesalePrice - ( ( $map[ 'wholesale_price' ] / 100 ) * $wholesalePrice );
-                                $price = $this->wwof_get_product_shop_price_with_taxing_applied( $product , $price , array( 'currency' => $baseCurrency ) );
-
-                            }
-
-                        } else
-                            $price = $this->wwof_get_product_shop_price_with_taxing_applied( $product , $map[ 'wholesale_price' ] , array( 'currency' => $baseCurrency ) ); ?>
-
-                        <li>
-                            <?php do_action( 'wwof_action_before_wholesale_price_per_order_quantity_list_item_html' , $map , $product , $user_wholesale_role ); ?>
-                            <span class="quantity-range"><?php echo $qty; ?></span><span class="sep">:</span><span class="discounted-price"><?php echo $price; ?></span>
-                            <?php do_action( 'wwof_action_after_wholesale_price_per_order_quantity_list_item_html' , $map , $product , $user_wholesale_role ); ?>
-                        </li>
-
-                    <?php }
-
-                } ?>
-
-            </ul><!-- .wholesale-price-per-order-quantity-list --><?php
-
-            do_action( 'wwof_action_after_wholesale_price_per_order_quantity_list_html' );
-
-        }
-
-        /**
          * Get the specific currency mapping from the wholesale price per order quantity mapping.
          *
          * @since 1.3.1
@@ -561,7 +417,7 @@ if ( !class_exists( 'WWOF_WWP_Wholesale_Prices' ) ) {
 
             // Display wholesale price requirement message at the top of the search box wholesale ordering form.
             add_action( 'wwof_action_before_product_listing_filter' , array( $this , 'wwof_display_wholesale_price_requirement' ) , 10 , 1 );
-
+            
         }
     }
 }

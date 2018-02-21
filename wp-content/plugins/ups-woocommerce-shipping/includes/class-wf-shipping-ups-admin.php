@@ -102,6 +102,7 @@ class WF_Shipping_UPS_Admin
 		);
 	private $freight_endpoint = 'https://wwwcie.ups.com/rest/FreightRate';
 	private $ups_surepost_services = array(92, 93, 95, 95);
+	private $email_notification_services = array('M2', 'M3', 'M4');
 	
 	public function __construct(){
 		$this->wf_init();
@@ -848,7 +849,7 @@ class WF_Shipping_UPS_Admin
 						
 						if($return_label){
 							$request_arr['Shipment']['ShipTo']	=	array(
-								'CompanyName'	=>	htmlspecialchars( $from_address['name'] ),
+								'CompanyName'	=>	substr( htmlspecialchars( $from_address['name'] ), 0, 30 ),
 								'AttentionName'	=>	htmlspecialchars( $from_address['company'] ),
 								'PhoneNumber'	=>	$from_address['phone'],
 								'EMailAddress'	=>	$from_address['email'],
@@ -867,7 +868,7 @@ class WF_Shipping_UPS_Admin
 							}
 
 							$request_arr['Shipment']['ShipTo']	=	array(
-								'CompanyName'	=>	htmlspecialchars( $to_address['company'] ),
+								'CompanyName'	=>	substr( htmlspecialchars( $to_address['company'] ), 0, 35 ),
 								'AttentionName'	=>	htmlspecialchars( $to_address['name'] ),
 								'PhoneNumber'	=>	$to_address['phone'],
 								'EMailAddress'	=>	$to_address['email'],
@@ -921,7 +922,7 @@ class WF_Shipping_UPS_Admin
 						// For return label, Ship From address will be set as Shipping Address of order.
 						if($return_label){
 							$request_arr['Shipment']['ShipFrom']	=	array(
-								'CompanyName'	=>	htmlspecialchars( $to_address['name'] ),
+								'CompanyName'	=>	substr( htmlspecialchars( $to_address['name'] ), 0, 30 ),
 								'AttentionName'	=>	htmlspecialchars( $to_address['company'] ),
 								'Address'		=>	array(
 									'AddressLine1'	=>	htmlspecialchars( $to_address['address_1'] ),
@@ -945,7 +946,7 @@ class WF_Shipping_UPS_Admin
 							$soldToPhone	=	(strlen($billing_phone) < 10) ? '0000000000' : htmlspecialchars( $billing_phone ); 
 							
 							$sold_to_arr	=	array(
-								'CompanyName'	=>	htmlspecialchars($to_address['company']),
+								'CompanyName'	=>	substr( htmlspecialchars($to_address['company']), 0, 35 ),
 								'AttentionName'	=>	htmlspecialchars( $to_address['name'] ),
 								'PhoneNumber'	=>	$to_address['phone'],
 								'Address'		=>	array(
@@ -1049,7 +1050,7 @@ class WF_Shipping_UPS_Admin
 							$request_arr['Shipment']['Shipper']['TaxIdentificationNumber'] = $this->tin_number;
 						}
 
-						if( !empty($this->email_notification) ){
+						if( !empty($this->email_notification) && in_array( $request_arr['Shipment']['Service']['Code'], $this->email_notification_services ) ){
 							$emails= array();
 							foreach ($this->email_notification as $notifier) {
 								switch ( $notifier ) {
@@ -1067,6 +1068,7 @@ class WF_Shipping_UPS_Admin
 								$shipmentServiceOptions['Notification']['EMailMessage']['EMailAddress'] = array_merge(array('multi_node'=>1), $emails);
 								$shipmentServiceOptions['Notification']['NotificationCode'] = 6;
 								$shipmentServiceOptions['Notification']['FromEMailAddress'] = $shipper_email;
+								$shipmentServiceOptions['Notification']['EMailMessage']['UndeliverableEMailAddress'] = $shipper_email;
 							}
 						}
 						if(sizeof($shipmentServiceOptions)){
@@ -1200,7 +1202,7 @@ class WF_Shipping_UPS_Admin
 		}
 
 		private function wf_get_shipment_description( $order ){
-			$shipment_description	= '\nOrder Id - '.$order->id.'\n';
+			$shipment_description	= '\nOrder Id - '.$order->get_order_number().'\n';
 			$order_items	= $order->get_items();
 
 			$shipment_description	.=	'Items - '; 

@@ -45,6 +45,12 @@ class USIN_WC_Memberships_User_Activity{
 							$details []= sprintf('%s: %s', __('End Date', 'usin'), USIN_Helper::format_date( $end_date ));
 						}
 					}
+					if(method_exists($membership, 'get_cancelled_date')){
+						$cancelled_date = $membership->get_cancelled_date();
+						if($cancelled_date !== null){
+							$details []= sprintf('%s: %s', __('Cancelled Date', 'usin'), USIN_Helper::format_date( $cancelled_date ));
+						}
+					}
 					
 					$membership_info = array('title'=>$title, 'link'=>get_edit_post_link($membership->id, 'usin'));
 					if(!empty($details)){

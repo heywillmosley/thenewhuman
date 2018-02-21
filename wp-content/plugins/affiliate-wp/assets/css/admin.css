@@ -333,6 +333,10 @@ table.affiliates #unpaid {
 	position: relative;
 }
 
+.widefat .column-referral {
+	width: 110px;
+}
+
 /* Add-ons */
 
 #affwp-add-ons h2 {

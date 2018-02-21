@@ -416,7 +416,7 @@ class USIN_Query{
 					(isset($filter->condition) || in_array($filter->operator, array('isnull', 'notnull', 'isset', 'notset')))){
 					if($filter->by=='role'){
 						//set the operator to check the string for contains and not contains
-						$filter->operator = $filter->operator == 'is' ? 'contains' : 'notcontains';
+						$filter->operator = $filter->operator == 'is' ? 'contains_ser' : 'notcontains_ser';
 					}
 
 					if($this->filter_contains_function_col($filter)){

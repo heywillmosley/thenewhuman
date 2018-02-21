@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( !class_exists( 'WWS_Plugin_Update_Checker' ) ) {
+if ( !class_exists( 'WWS_WWOF_Plugin_Update_Checker' ) ) {
 
     /**
      * A custom plugin update checker.
@@ -12,7 +12,7 @@ if ( !class_exists( 'WWS_Plugin_Update_Checker' ) ) {
      * @access public
      * @since 1.0.1
      */
-    class WWS_Plugin_Update_Checker {
+    class WWS_WWOF_Plugin_Update_Checker {
 
         public $metadataUrl = ''; // The URL of the plugin's metadata file.
         public $pluginFile = '';  // Plugin filename relative to the plugins directory.
@@ -47,15 +47,14 @@ if ( !class_exists( 'WWS_Plugin_Update_Checker' ) ) {
 
             // If no slug is specified, use the name of the main plugin file as the slug.
             // For example, 'my-cool-plugin/cool-plugin.php' becomes 'cool-plugin'.
-            if ( empty($this->slug) ){
+            if ( empty( $this->slug ) )
                 $this->slug = basename($this->pluginFile, '.php');
-            }
 
-            if ( empty($this->optionName) ){
+            if ( empty( $this->optionName ) )
                 $this->optionName = 'external_updates-' . $this->slug;
-            }
 
             $this->installHooks();
+
         }
 
         /**
@@ -65,62 +64,124 @@ if ( !class_exists( 'WWS_Plugin_Update_Checker' ) ) {
          * @return void
          */
         function installHooks() {
-            //Override requests for plugin information
-            add_filter('plugins_api', array(&$this, 'injectInfo'), 10, 3);
 
-            //Insert our update info into the update array maintained by WP
-            add_filter('site_transient_update_plugins', array(&$this,'injectUpdate')); //WP 3.0+
-            add_filter('transient_update_plugins', array(&$this,'injectUpdate')); //WP 2.8+
+			add_filter( 'pre_set_site_transient_update_plugins' , array( $this , 'update_check' ) );
+			add_filter( 'plugins_api' 							, array( $this , 'inject_info' ) , 10 , 3 );
+			add_action( 'upgrader_process_complete'             , array( $this , 'after_plugin_update' ) , 10 , 2 );
 
-            //Set up the periodic update checks
-            $this->cronHook = 'check_plugin_updates-' . $this->slug;
-            if ($this->checkPeriod > 0) {
+			register_deactivation_hook( $this->pluginFile , array( $this , 'clear_plugin_update_data' ) );
 
-                //Trigger the check via Cron
-                add_filter('cron_schedules', array(&$this, '_addCustomSchedule'));
-                if ( !wp_next_scheduled($this->cronHook) && !defined('WP_INSTALLING') ) {
-                    $scheduleName = 'every' . $this->checkPeriod . 'hours';
-                    wp_schedule_event(time(), $scheduleName, $this->cronHook);
-                }
-                add_action($this->cronHook, array(&$this, 'checkForUpdates'));
-
-                register_deactivation_hook($this->pluginFile, array($this, '_removeUpdaterCron'));
-
-                //In case Cron is disabled or unreliable, we also manually trigger
-                //the periodic checks while the user is browsing the Dashboard.
-                add_action( 'admin_init', array(&$this, 'maybeCheckForUpdates') );
-
-            } else {
-                //Periodic checks are disabled.
-                wp_clear_scheduled_hook($this->cronHook);
-            }
         }
+
+		/**
+		 * Check for updates every time WordPress is about to save update_plugins transient data.
+		 *
+		 * @since 1.8.2
+		 * @access public
+		 *
+		 * @param array $update_plugins Update plugins data.
+		 * @return array Filtered update plugins data.
+		 */
+		public function update_check( $update_plugins ) {
+
+			/**
+			 * Function wp_update_plugins calls set_site_transient( 'update_plugins' , ... ) twice, yes twice
+			 * so we need to make sure we are on the last call before proceeding
+			 * the last call will have the checked object parameter
+			 */
+			if ( empty( $update_plugins->checked ) )
+				return $update_plugins;
+
+			$this->checkForUpdates();
+
+			$update_plugins = $this->injectUpdate( $update_plugins , $this->pluginFile );
+
+			return $update_plugins;
+
+		}
 
         /**
-         * Remove the scheduled cron event that the library uses to check for updates.
+         * Intercept plugins_api() calls that request information about our plugin and
+         * use the configured API endpoint to satisfy them.
          *
-         * @return void
+		 * @since 1.0.0
+		 * @since 1.8.2 Major code refactoring, now use the locally saved update data instead of spawning a new request from WWS server.
+         * @access public
+         *
+		 * @param false|object|array $result The result object or array. Default false.
+		 * @param string             $action The type of information being requested from the Plugin Install API.
+		 * @param object             $args   Plugin API arguments.
+		 * @return array Plugin update info.
          */
-        function _removeUpdaterCron() {
-            wp_clear_scheduled_hook($this->cronHook);
+        function inject_info( $result , $action = null , $args = null ) {
+
+            $relevant = ( $action == 'plugin_information' ) && isset( $args->slug ) && ( $args->slug == $this->slug );
+            if ( !$relevant )
+                return $result;
+
+            $update_info = get_option( 'wwof_update_info' );
+
+			if ( $update_info ) {
+
+				$update_info->icons = array(
+					'1x'      => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-icon-128x128.jpg',
+					'2x'      => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-icon-256x256.jpg',
+					'default' => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-icon-256x256.jpg'
+				);
+
+				$update_info->banners = array(
+					'low'  => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-banner-772x250.jpg',
+					'high' => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-banner-1544x500.jpg',
+				);
+
+				return $update_info;
+
+            }
+
+			return $result;
+
         }
 
-        /**
-         * Add our custom schedule to the array of Cron schedules used by WP.
-         *
-         * @param array $schedules
-         * @return array
-         */
-        function _addCustomSchedule($schedules) {
-            if ( $this->checkPeriod && ($this->checkPeriod > 0) ) {
-                $scheduleName = 'every' . $this->checkPeriod . 'hours';
-                $schedules[$scheduleName] = array(
-                    'interval' => $this->checkPeriod * 3600,
-                    'display' => sprintf('Every %d hours', $this->checkPeriod),
-                );
-            }
-            return $schedules;
-        }
+		/**
+		 * After plugin update callback.
+		 *
+		 * @since 1.8.2
+		 * @access public
+		 *
+		 * @param Plugin_Upgrader $upgrader_object Plugin_Upgrader instance.
+		 * @param array           $options         Options.
+		 */
+		public function after_plugin_update( $upgrader_object , $options ) {
+
+			if ( $options[ 'action' ] == 'update' && $options[ 'type' ] == 'plugin' ) {
+
+				foreach ( $options[ 'plugins' ] as $each_plugin ) {
+
+					if ( $each_plugin == $this->pluginFile ) {
+
+						$this->clear_plugin_update_data();
+						break;
+
+					}
+
+				}
+
+			}
+
+		}
+
+		/**
+		 * Clear plugin update data.
+		 *
+		 * @since 1.8.2
+		 */
+		public function clear_plugin_update_data() {
+
+			delete_option( 'wwof_update_info' );
+
+			wp_clear_scheduled_hook( $this->cronHook );
+
+		}
 
         /**
          * Retrieve plugin info from the configured API endpoint.
@@ -131,7 +192,7 @@ if ( !class_exists( 'WWS_Plugin_Update_Checker' ) ) {
          * @return WWS_Plugin_Info
          */
         function requestInfo($queryArgs = array()) {
-            //Query args to append to the URL. Plugins can add their own by using a filter callback (see addQueryArgFilter()).
+
             $queryArgs['installed_version'] = $this->getInstalledVersion();
             $queryArgs = apply_filters('puc_request_info_query_args-'.$this->slug, $queryArgs);
 
@@ -170,18 +231,26 @@ if ( !class_exists( 'WWS_Plugin_Update_Checker' ) ) {
         /**
          * Retrieve the latest update (if any) from the configured API endpoint.
          *
+         * @since 1.0.0
+         * @since 1.8.2 Store update data locally for later use
          * @uses WWS_Plugin_UpdateChecker::requestInfo()
          *
          * @return WWS_Plugin_Update An instance of WWS_Plugin_Update, or NULL when no updates are available.
          */
         function requestUpdate() {
+
             //For the sake of simplicity, this function just calls requestInfo()
             //and transforms the result accordingly.
             $WWS_Plugin_Info = $this->requestInfo(array('checking_for_updates' => '1'));
-            if ( $WWS_Plugin_Info == null ){
+            if ( $WWS_Plugin_Info == null )
                 return null;
-            }
-            return WWS_Plugin_Update::fromWWS_Plugin_Info($WWS_Plugin_Info);
+
+			// Store update info locally for later use
+			$update_info = $WWS_Plugin_Info->toWpFormat();
+			update_option( 'wwof_update_info' , $update_info );
+
+            return WWS_Plugin_Update::fromWWS_Plugin_Info( $WWS_Plugin_Info );
+
         }
 
         /**
@@ -225,120 +294,50 @@ if ( !class_exists( 'WWS_Plugin_Update_Checker' ) ) {
         }
 
         /**
-         * Check for updates only if the configured check interval has already elapsed.
-         *
-         * @return void
-         */
-        function maybeCheckForUpdates() {
-            if (empty($this->checkPeriod)) {
-                return;
-            }
-
-            $state = get_option($this->optionName);
-
-            $shouldCheck =
-                empty($state) ||
-                !isset($state->lastCheck) ||
-                ( (time() - $state->lastCheck) >= $this->checkPeriod*3600 );
-
-            if ( $shouldCheck ){
-                $this->checkForUpdates();
-            }
-        }
-
-        /**
-         * Intercept plugins_api() calls that request information about our plugin and
-         * use the configured API endpoint to satisfy them.
-         *
-         * @see plugins_api()
-         *
-         * @param mixed $result
-         * @param string $action
-         * @param array|object $args
-         * @return mixed
-         */
-        function injectInfo($result, $action = null, $args = null) {
-            $relevant = ($action == 'plugin_information') && isset($args->slug) && ($args->slug == $this->slug);
-            if (!$relevant) {
-                return $result;
-            }
-
-            $WWS_Plugin_Info = $this->requestInfo();
-            if ($WWS_Plugin_Info) {
-                return $WWS_Plugin_Info->toWpFormat();
-            }
-
-            return $result;
-        }
-
-        /**
          * Insert the latest update (if any) into the update list maintained by WP.
          *
-         * @param array $updates Update list.
+		 * @since 1.0.0
+		 * @since 1.8.2 Major code refactoring, now adjust codebase for usage on WordPress setting update_plugins transients.
+         * @access public
+         *
+         * @param array  $updates         Update list.
+         * @param string $plugin_basename Plugin basename.
          * @return array Modified update list.
          */
-        function injectUpdate($updates) {
-            $state = get_option($this->optionName);
+        function injectUpdate( $updates , $plugin_basename ) {
+
+            $state = get_option( $this->optionName );
 
             //Is there an update to insert?
-            if (!empty($state) && isset($state->update) && !empty($state->update)) {
+            if ( !empty( $state ) && isset( $state->update ) && !empty( $state->update ) && !array_key_exists( $this->pluginFile , $updates->response ) ) {
+
                 //Only insert updates that are actually newer than the currently installed version.
-                if (version_compare($state->update->version, $this->getInstalledVersion(), '>')) {
-                    $updates->response[$this->pluginFile] = $state->update->toWpFormat();
+                if ( version_compare( $state->update->version , $this->getInstalledVersion() , '>' ) ) {
+
+					$update_data = $state->update->toWpFormat();
+
+                    $update_data->plugin = $plugin_basename;
+
+					$update_data->icons = array(
+						'1x'      => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-icon-128x128.jpg',
+						'2x'      => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-icon-256x256.jpg',
+						'default' => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-icon-256x256.jpg'
+					);
+
+					$update_data->banners = array(
+						'1x'      => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-banner-772x250.jpg',
+						'2x'      => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-banner-1544x500.jpg',
+						'default' => 'https://ps.w.org/woocommerce-wholesale-prices/assets/wwof-banner-1544x500.jpg'
+					);
+
+                    $updates->response[ $this->pluginFile ] = $update_data;
+
                 }
+
             }
 
             return $updates;
-        }
 
-        /**
-         * Register a callback for filtering query arguments.
-         *
-         * The callback function should take one argument - an associative array of query arguments.
-         * It should return a modified array of query arguments.
-         *
-         * @uses add_filter() This method is a convenience wrapper for add_filter().
-         *
-         * @param callback $callback
-         * @return void
-         */
-        function addQueryArgFilter($callback) {
-            add_filter('puc_request_info_query_args-'.$this->slug, $callback);
-        }
-
-        /**
-         * Register a callback for filtering arguments passed to wp_remote_get().
-         *
-         * The callback function should take one argument - an associative array of arguments -
-         * and return a modified array or arguments. See the WP documentation on wp_remote_get()
-         * for details on what arguments are available and how they work.
-         *
-         * @uses add_filter() This method is a convenience wrapper for add_filter().
-         *
-         * @param callback $callback
-         * @return void
-         */
-        function addHttpRequestArgFilter($callback) {
-            add_filter('puc_request_info_options-'.$this->slug, $callback);
-        }
-
-        /**
-         * Register a callback for filtering the plugin info retrieved from the external API.
-         *
-         * The callback function should take two arguments. If the plugin info was retrieved
-         * successfully, the first argument passed will be an instance of  WWS_Plugin_Info. Otherwise,
-         * it will be NULL. The second argument will be the corresponding return value of
-         * wp_remote_get (see WP docs for details).
-         *
-         * The callback function should return a new or modified instance of WWS_Plugin_Info or NULL.
-         *
-         * @uses add_filter() This method is a convenience wrapper for add_filter().
-         *
-         * @param callback $callback
-         * @return void
-         */
-        function addResultFilter($callback) {
-            add_filter('puc_request_info_result-'.$this->slug, $callback, 10, 2);
         }
 
     }
@@ -364,7 +363,7 @@ if ( !class_exists( 'WWS_Plugin_Info' ) ) {
         public $slug;
         public $version;
         public $homepage;
-        public $sections;
+		public $sections;
         public $download_url;
 
         public $author;
@@ -465,7 +464,7 @@ if ( !class_exists( 'WWS_Plugin_Update' ) ) {
      */
     class WWS_Plugin_Update {
 
-        public $id = 0;
+		public $id = 0;
         public $slug;
         public $version;
         public $homepage;
@@ -499,7 +498,7 @@ if ( !class_exists( 'WWS_Plugin_Update' ) ) {
          */
         public static function fromWWS_Plugin_Info($info) {
             $update = new WWS_Plugin_Update();
-            $copyFields = array('id', 'slug', 'version', 'homepage', 'download_url', 'upgrade_notice');
+            $copyFields = array( 'id' , 'slug' , 'version' , 'homepage' , 'download_url' , 'upgrade_notice' );
             foreach ($copyFields as $field) {
                 $update->$field = $info->$field;
             }
@@ -512,16 +511,14 @@ if ( !class_exists( 'WWS_Plugin_Update' ) ) {
          * @return object
          */
         public function toWpFormat() {
+
             $update = new StdClass;
 
-            $update->id = $this->id;
+            $update->id = $this->download_url; // As long as it is unique we are good
             $update->slug = $this->slug;
             $update->new_version = $this->version;
             $update->url = $this->homepage;
             $update->package = $this->download_url;
-            if (!empty($this->upgrade_notice)) {
-                $update->upgrade_notice = $this->upgrade_notice;
-            }
 
             return $update;
         }

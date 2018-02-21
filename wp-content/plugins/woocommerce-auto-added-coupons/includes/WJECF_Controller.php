@@ -460,7 +460,7 @@ class WJECF_Controller {
 
         //We use our own filter (instead of woocommerce_coupon_is_valid) for easier compatibility management
         //e.g. WC prior to 2.3.0 can't handle Exceptions; while 2.3.0 and above require exceptions
-        do_action( 'wjecf_assert_coupon_is_valid', $coupon );
+        do_action( 'wjecf_assert_coupon_is_valid', $coupon, $wc_discounts );
 
         if ( $wrap_coupon->get_minimum_amount() ) {
              $multiplier = self::min_value( floor( WC()->cart->subtotal / $wrap_coupon->get_minimum_amount() ), $multiplier );

@@ -16,6 +16,7 @@ class USIN_Woocommerce_User_Activity{
 	public function filter_user_activity($activity, $user_id){
 		$activity = $this->add_orders_to_user_activity($activity, $user_id);
 		$activity = $this->add_reviews_to_activity($activity, $user_id);
+		$activity = $this->add_coupons_to_user_activity($activity, $user_id);
 		return $activity;
 	}
 	
@@ -40,7 +41,7 @@ class USIN_Woocommerce_User_Activity{
 			$list = array();
 			foreach ($orders as $order) {
 
-				$title = get_the_date( get_option('date_format'), $order->ID);
+				$title = sprintf('#%s %s', $order->ID, get_the_date( get_option('date_format'), $order->ID));
 
 				if(class_exists('WC_Order')){
 					$wc_order = new WC_Order($order->ID);
@@ -143,6 +144,38 @@ class USIN_Woocommerce_User_Activity{
 		}
 		return array_values($activity);
 	}
+
+
+	protected function add_coupons_to_user_activity($activity, $user_id){
+		$coupons_used = $this->get_coupons_used($user_id);
+
+		if(empty($coupons_used)){
+			return $activity;
+		}
+
+		$count = sizeof($coupons_used);
+		$list = array();
+		$post_type_data = get_post_type_object($this->order_post_type);
+
+		foreach ($coupons_used as $coupon ) {
+			$title = sprintf('%s - %s #%s', $coupon->code, $post_type_data->labels->singular_name, $coupon->order_id);
+			$list[]= array('title' => $title, 'link' => get_edit_post_link($coupon->order_id, ''));
+		}
+
+		$activity[] = array(
+			'type' => 'wc_coupons',
+			'for' => 'wc_coupons',
+			'label' => _n('Coupon Used', 'Coupons Used', $count, 'usin'),
+			'count' => $count,
+			'list' => $list,
+			'icon' => 'woocommerce'
+		);
+
+		return $activity;
+		
+	}
+
+	
 	
 	protected function is_review_activity($activity){
 		if(isset($activity['type']) && $activity['type'] == 'comment' && 
@@ -162,6 +195,18 @@ class USIN_Woocommerce_User_Activity{
 				$query->set('meta_value', $user_id);
 			}
 		}
+	}
+
+	protected function get_coupons_used($user_id){
+		global $wpdb;
+
+		$query = $wpdb->prepare("SELECT c.order_item_name as code, order_id FROM ".$wpdb->prefix."woocommerce_order_items c".
+		" INNER JOIN $wpdb->posts p ON c.order_id = p.ID".
+		" INNER JOIN $wpdb->postmeta m ON p.ID = m.post_id AND m.meta_key = '_customer_user'".
+		" WHERE c.order_item_type = 'coupon' AND m.meta_value = %d", $user_id);
+
+		return $wpdb->get_results($query);
+
 	}
 	
 }

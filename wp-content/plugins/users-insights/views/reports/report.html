@@ -1,6 +1,9 @@
 <div ng-class="['usin-report-wrap', {'usin-simple-loading': $ctrl.loading}]">
 	<div class="usin-report-header">
 		<span class="usin-report-title">{{$ctrl.reportOptions.name}}</span>
+		<span class="usin-icon-info" ng-if="$ctrl.reportOptions.info">
+			<md-tooltip md-direction="right">{{$ctrl.reportOptions.info}}</md-tooltip>
+		</span>
 		
 		<ui-select ng-model="$ctrl.filter" ng-change="$ctrl.onFilterChange()" ng-if="$ctrl.hasFilters()" 
 			theme="select2" search-enabled="{{$ctrl.shouldEnableSearch()}}" ng-disabled="$ctrl.loading">
@@ -15,9 +18,6 @@
 	<div class="usin-report-graph">
 		<div ng-if="!$ctrl.loading && !$ctrl.error">
 			<usin-chart chart-options="$ctrl.chartOptions"></usin-chart>
-			<div ng-if="$ctrl.reportOptions.info" class="usin-chart-info">
-				<p>{{$ctrl.reportOptions.info}}</p>
-			</div>
 		</div>
 		<div ng-if="$ctrl.error" class="usin-error">
 			{{$ctrl.error}}

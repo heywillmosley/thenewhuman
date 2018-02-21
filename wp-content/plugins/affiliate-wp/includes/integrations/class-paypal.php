@@ -44,7 +44,7 @@ class Affiliate_WP_PayPal extends Affiliate_WP_Base {
 				var action = $(this).attr( 'action' );
 
 				// Bail if there's no action attribute on the form tag.
-				if ( 'undefined' === action ) {
+				if ( 'undefined' === typeof action ) {
 					return;
 				}
 

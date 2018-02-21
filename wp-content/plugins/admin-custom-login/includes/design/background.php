@@ -88,7 +88,7 @@ function set_slideshow(){
 					<div class="post-social post-social-xs" id="post-social-5">
 						<div class="text-center padding-all text-center">
 							<div class="textbox text-white   margin-bottom settings-title">
-								<?php _e('Background Settings','WEBLIZAR_ACL')?> 
+								<?php _e('Background Settings', WEBLIZAR_ACL)?> 
 							</div>
 						</div>
 					</div>
@@ -100,17 +100,17 @@ function set_slideshow(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Select Background','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Select Background', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<select id="select-background" class="standard-dropdown" name="select-background" onchange='getComboid()'>
-							<option value="no-background" ><?php _e('No background Selected','WEBLIZAR_ACL')?></option>
-							<optgroup label="<?php _e('Select background','WEBLIZAR_ACL')?>">
-							<option value="static-background-color" ><?php _e('Static Background Color','WEBLIZAR_ACL')?></option>
-							<option value="static-background-image" ><?php _e('Static Background Image','WEBLIZAR_ACL')?></option>
-							<option value="slider-background"><?php _e('Background SlideShow','WEBLIZAR_ACL')?></option>								
+							<option value="no-background" ><?php _e('No Background Selected', WEBLIZAR_ACL)?></option>
+							<optgroup label="<?php _e('Select Background', WEBLIZAR_ACL)?>">
+							<option value="static-background-color" ><?php _e('Static Background Color', WEBLIZAR_ACL)?></option>
+							<option value="static-background-image" ><?php _e('Static Background Image', WEBLIZAR_ACL)?></option>
+							<option value="slider-background"><?php _e('Background SlideShow', WEBLIZAR_ACL)?></option>								
 							</optgroup>
 						</select>
 					</td>
@@ -128,7 +128,7 @@ function set_slideshow(){
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('Background Color','WEBLIZAR_ACL')?></th>
+						<th scope="row" ><?php _e('Background Color', WEBLIZAR_ACL)?></th>
 						<td></td>
 					</tr>
 					<tr  style="border-bottom:none;">
@@ -150,18 +150,18 @@ function set_slideshow(){
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('Background Image','WEBLIZAR_ACL')?></th>
+						<th scope="row" ><?php _e('Background Image', WEBLIZAR_ACL)?></th>
 						<td></td>
 					</tr>
 					<tr  style="border-bottom:none;">
 						<td>
-							<input type="text" class="pro_text" id="top_image" placeholder="<?php _e('No media selected!','WEBLIZAR_ACL')?>" name="upload_image" disabled="disabled"  value="<?php echo $top_image; ?>"/>
+							<input type="text" class="pro_text" id="top_image" placeholder="<?php _e('No media selected!', WEBLIZAR_ACL)?>" name="upload_image" disabled="disabled"  value="<?php echo $top_image; ?>"/>
 
-							<input type="button" value="<?php _e('Upload','WEBLIZAR_ACL')?>" id="upload-logo" class="button-primary rcsp_media_upload" />
+							<input type="button" value="<?php _e('Upload', WEBLIZAR_ACL)?>" id="upload-logo" class="button-primary rcsp_media_upload" />
 
-							<input type="button"  value="<?php _e('Preview','WEBLIZAR_ACL')?>" data-toggle="modal" data-target="#top_about_us_image_builder" id="top-image-previewer" title="Font Awesome Icons"  class="button  " onclick="Acl_show_Image()" />
+							<input type="button"  value="<?php _e('Preview', WEBLIZAR_ACL)?>" data-toggle="modal" data-target="#top_about_us_image_builder" id="top-image-previewer" title="Font Awesome Icons"  class="button  " onclick="Acl_show_Image()" />
 
-							<input type="button" id="display-logo" value="<?php _e('Remove','WEBLIZAR_ACL')?>" class="button" onclick="Acl_top_img_clear();" />
+							<input type="button" id="display-logo" value="<?php _e('Remove', WEBLIZAR_ACL)?>" class="button" onclick="Acl_top_img_clear();" />
 
 							<!-- Modal -->
 							<div class="modal " id="top_about_us_image_builder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -169,7 +169,7 @@ function set_slideshow(){
 									<div class="modal-content">
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-											<h4 class="modal-title" id="myModalLabel"><?php _e('Background Image','WEBLIZAR_ACL')?></h4>
+											<h4 class="modal-title" id="myModalLabel"><?php _e('Background Image', WEBLIZAR_ACL)?></h4>
 										</div>
 
 										<div class="modal-body">
@@ -177,7 +177,7 @@ function set_slideshow(){
 										</div>
 
 										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close','WEBLIZAR_ACL')?></button>
+											<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close', WEBLIZAR_ACL)?></button>
 										</div>
 									</div>
 								</div>
@@ -193,12 +193,12 @@ function set_slideshow(){
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('Cover or Strech','WEBLIZAR_ACL')?></th>
+						<th scope="row" ><?php _e('Cover or Strech', WEBLIZAR_ACL)?></th>
 						<td></td>
 					</tr>
 					<tr  style="border-bottom:none;">
 						<td>
-							<input type="checkbox" value="yes" id="bg-strech" name="strech-bg"  onclick="OnChangeCheckbox(this)" style="visibility: visible;" <?php if($top_cover=="yes"){echo "checked";}?>/>&nbsp;<?php _e('Yes','WEBLIZAR_ACL')?>
+							<input type="checkbox" value="yes" id="bg-strech" name="strech-bg"  onclick="OnChangeCheckbox(this)" style="visibility: visible;" <?php if($top_cover=="yes"){echo "checked";}?>/>&nbsp;<?php _e('Yes', WEBLIZAR_ACL)?>
 						</td>
 					</tr>
 				</table>
@@ -210,17 +210,16 @@ function set_slideshow(){
 				<div class="panel-body">
 					<table class="form-table">
 						<tr>
-							<th scope="row" ><?php _e('Background Repeat','WEBLIZAR_ACL')?></th>
+							<th scope="row" ><?php _e('Background Repeat', WEBLIZAR_ACL)?></th>
 							<td></td>
 						</tr>
 						<tr class="radio-span" style="border-bottom:none;">
 							<td>
-								<select id="top_bg_repeat" class="standard-dropdown" name="top_bg_repeat"  >
-
-										<option value="no-repeat" ><?php _e('No Repeat ','WEBLIZAR_ACL')?> </option>
-										<option value="repeat" ><?php _e('Repeat','WEBLIZAR_ACL')?> </option>
-										<option value="repeat-x" ><?php _e('Repeat Horizontally','WEBLIZAR_ACL')?> </option>
-										<option value="repeat-y" ><?php _e('Repeat Vertically','WEBLIZAR_ACL')?> </option>
+								<select id="top_bg_repeat" class="standard-dropdown" name="top_bg_repeat" >
+										<option value="no-repeat" ><?php _e('No Repeat', WEBLIZAR_ACL)?></option>
+										<option value="repeat" ><?php _e('Repeat', WEBLIZAR_ACL)?></option>
+										<option value="repeat-x" ><?php _e('Repeat Horizontally', WEBLIZAR_ACL)?></option>
+										<option value="repeat-y" ><?php _e('Repeat Vertically', WEBLIZAR_ACL)?></option>
 								</select>
 							</td>
 						</tr>
@@ -232,21 +231,21 @@ function set_slideshow(){
 				<div class="panel-body">
 					<table class="form-table">
 						<tr>
-							<th scope="row" ><?php _e('Background Position ','WEBLIZAR_ACL')?></th>
+							<th scope="row" ><?php _e('Background Position', WEBLIZAR_ACL)?></th>
 							<td></td>
 						</tr>
 						<tr class="radio-span" style="border-bottom:none;">
 							<td>
 								<select id="top_bg_position" class="standard-dropdown" name="top_bg_position"  >
-									<option value="left top" ><?php _e('Left Top','WEBLIZAR_ACL')?> </option>
-									<option value="left center" ><?php _e('Left Center','WEBLIZAR_ACL')?> </option>
-									<option value="left bottom" ><?php _e('Left Bottom','WEBLIZAR_ACL')?> </option>
-									<option value="right top" ><?php _e('Right Top','WEBLIZAR_ACL')?> </option>
-									<option value="right center" ><?php _e('Right Center','WEBLIZAR_ACL')?> </option>
-									<option value="right bottom" ><?php _e('Right Bottom','WEBLIZAR_ACL')?></option>
-									<option value="center top" ><?php _e('Center Top','WEBLIZAR_ACL')?> </option>
-									<option value="center" ><?php _e('Center Center','WEBLIZAR_ACL')?> </option>
-									<option value="center bottom" ><?php _e('Center Bottom','WEBLIZAR_ACL')?> </option>
+									<option value="left top" ><?php _e('Left Top', WEBLIZAR_ACL)?> </option>
+									<option value="left center" ><?php _e('Left Center', WEBLIZAR_ACL)?> </option>
+									<option value="left bottom" ><?php _e('Left Bottom', WEBLIZAR_ACL)?> </option>
+									<option value="right top" ><?php _e('Right Top', WEBLIZAR_ACL)?> </option>
+									<option value="right center" ><?php _e('Right Center', WEBLIZAR_ACL)?> </option>
+									<option value="right bottom" ><?php _e('Right Bottom', WEBLIZAR_ACL)?></option>
+									<option value="center top" ><?php _e('Center Top', WEBLIZAR_ACL)?> </option>
+									<option value="center" ><?php _e('Center Center', WEBLIZAR_ACL)?> </option>
+									<option value="center bottom" ><?php _e('Center Bottom', WEBLIZAR_ACL)?> </option>
 								</select>
 							</td>
 						</tr>
@@ -258,15 +257,15 @@ function set_slideshow(){
 				<div class="panel-body">
 					<table class="form-table">
 						<tr>
-							<th scope="row" ><?php _e('Background Attachment','WEBLIZAR_ACL')?></th>
+							<th scope="row" ><?php _e('Background Attachment', WEBLIZAR_ACL)?></th>
 							<td></td>
 						</tr>
 						<tr class="radio-span" style="border-bottom:none;">
 							<td>
 								<select id="top_bg_attachment" class="standard-dropdown" name="top_bg_attachment">
-										<option value="fixed" ><?php _e('Fixed','WEBLIZAR_ACL')?> </option>
-										<option value="scroll" ><?php _e('Scroll','WEBLIZAR_ACL')?> </option>
-										<option value="inherit" ><?php _e('Inherit','WEBLIZAR_ACL')?> </option>
+										<option value="fixed" ><?php _e('Fixed', WEBLIZAR_ACL)?> </option>
+										<option value="scroll" ><?php _e('Scroll', WEBLIZAR_ACL)?> </option>
+										<option value="inherit" ><?php _e('Inherit', WEBLIZAR_ACL)?> </option>
 								</select>
 							</td>
 						</tr>
@@ -285,18 +284,18 @@ function set_slideshow(){
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('No. Of Background Slideshow','WEBLIZAR_ACL')?></th>
+						<th scope="row" ><?php _e('No. Of Background Slideshow', WEBLIZAR_ACL)?></th>
 						<td></td>
 					</tr>
 					<tr  style="border-bottom:none;">
 						<td>
 							<select id="top_slideshow_no" class="standard-dropdown" name="top_slideshow_no" onchange="set_slideshow()">
-									<option value="0" ><?php _e('Select Number of Slide Show','WEBLIZAR_ACL')?> </option>
-									<option value="2" ><?php _e('2','WEBLIZAR_ACL')?> </option>
-									<option value="3" ><?php _e('3','WEBLIZAR_ACL')?> </option>
-									<option value="4" ><?php _e('4','WEBLIZAR_ACL')?> </option>
-									<option value="5" ><?php _e('5','WEBLIZAR_ACL')?> </option>
-									<option value="6" ><?php _e('6','WEBLIZAR_ACL')?> </option>
+									<option value="0" ><?php _e('Select Number of Slide Show', WEBLIZAR_ACL)?> </option>
+									<option value="2" ><?php _e('2', WEBLIZAR_ACL)?> </option>
+									<option value="3" ><?php _e('3', WEBLIZAR_ACL)?> </option>
+									<option value="4" ><?php _e('4', WEBLIZAR_ACL)?> </option>
+									<option value="5" ><?php _e('5', WEBLIZAR_ACL)?> </option>
+									<option value="6" ><?php _e('6', WEBLIZAR_ACL)?> </option>
 							</select>
 						</td>
 					</tr>
@@ -307,7 +306,7 @@ function set_slideshow(){
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('No. Of Background Slideshow','WEBLIZAR_ACL')?></th>
+						<th scope="row" ><?php _e('No. Of Background Slideshow', WEBLIZAR_ACL)?></th>
 						<td></td>
 					</tr>
 
@@ -337,17 +336,17 @@ function set_slideshow(){
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('Slider Animation','WEBLIZAR_ACL')?></th>
+						<th scope="row" ><?php _e('Slider Animation', WEBLIZAR_ACL)?></th>
 						<td></td>
 					</tr>
 					<tr class="radio-span" style="border-bottom:none;">
 						<td>
 							<select id="top_bg_slider_animation" class="standard-dropdown" name="top_bg_slider_animation"  >
 
-									<option value="slider-style1" ><?php _e('Slider Animation 1','WEBLIZAR_ACL')?> </option>
-									<option value="slider-style2" ><?php _e('Slider Animation 2','WEBLIZAR_ACL')?> </option>
-									<option value="slider-style3" ><?php _e('Slider Animation 3','WEBLIZAR_ACL')?> </option>
-									<option value="slider-style4" ><?php _e('Slider Animation 4','WEBLIZAR_ACL')?> </option>
+									<option value="slider-style1" ><?php _e('Slider Animation 1', WEBLIZAR_ACL)?> </option>
+									<option value="slider-style2" ><?php _e('Slider Animation 2', WEBLIZAR_ACL)?> </option>
+									<option value="slider-style3" ><?php _e('Slider Animation 3', WEBLIZAR_ACL)?> </option>
+									<option value="slider-style4" ><?php _e('Slider Animation 4', WEBLIZAR_ACL)?> </option>
 							</select>
 						</td>
 					</tr>
@@ -366,7 +365,7 @@ function set_slideshow(){
 				</svg>
 			</div>
 			<div class="dialog-inner">
-				<h2><strong><?php _e('Top Background ','WEBLIZAR_ACL')?></strong><?php _e('Setting Save Successfully','WEBLIZAR_ACL')?></h2><div><button class="action dialog-button-close" id="dialog-close-button1" data-dialog-close ><?php _e('Close','WEBLIZAR_ACL')?></button></div>
+				<h2><strong><?php _e('Top Background', WEBLIZAR_ACL)?></strong> <?php _e('Setting Save Successfully', WEBLIZAR_ACL)?></h2><div><button class="action dialog-button-close" id="dialog-close-button1" data-dialog-close ><?php _e('Close', WEBLIZAR_ACL)?></button></div>
 			</div>
 		</div>
 	</div>
@@ -381,7 +380,7 @@ function set_slideshow(){
 				</svg>
 			</div>
 			<div class="dialog-inner">
-				<h2><strong><?php _e('Top Background ','WEBLIZAR_ACL')?></strong><?php _e('Setting Reset Successfully','WEBLIZAR_ACL')?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button11"><?php _e('Close','WEBLIZAR_ACL')?></button></div>
+				<h2><strong><?php _e('Top Background', WEBLIZAR_ACL)?></strong> <?php _e('Setting Reset Successfully', WEBLIZAR_ACL)?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button11"><?php _e('Close', WEBLIZAR_ACL)?></button></div>
 			</div>
 		</div>
 	</div>
@@ -389,10 +388,10 @@ function set_slideshow(){
 	<div class="panel panel-primary save-button-block">
 		<div class="panel-body">
 			<div class="pull-left">
-				<button type="button" onclick="return Custom_login_top('topbgSave', '');" class="btn btn-info btn-lg"><?php _e('Save Changes','WEBLIZAR_ACL')?></button>
+				<button type="button" onclick="return Custom_login_top('topbgSave', '');" class="btn btn-info btn-lg"><?php _e('Save Changes', WEBLIZAR_ACL)?></button>
 			</div>
 			<div class="pull-right">
-				<button type="button" onclick="return Custom_login_top('topbgReset', '');" class="btn btn-primary btn-lg"><?php _e('Reset Default','WEBLIZAR_ACL')?></button>
+				<button type="button" onclick="return Custom_login_top('topbgReset', '');" class="btn btn-primary btn-lg"><?php _e('Reset Default', WEBLIZAR_ACL)?></button>
 			</div>
 		</div>
 	</div>

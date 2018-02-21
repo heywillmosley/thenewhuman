@@ -31,7 +31,7 @@
 				return false;
 
 			$order = new WC_Order( $order_id );
-			$order_shipping_method = current( $order->get_items( 'shipping' ) )->get_method_id();
+			$order_shipping_method = ( WC()->version > '2.7' ) ? current( $order->get_items( 'shipping' ) )->get_method_id() : current( $order->get_items( 'shipping' ) )['method_id'] ;
 			$service_code=explode(':',$order_shipping_method);
 			return $service_code[1];
 		}

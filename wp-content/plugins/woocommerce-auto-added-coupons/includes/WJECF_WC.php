@@ -85,7 +85,7 @@ class WJECF_WC {
 	 */
 	public function cart_item_to_discount_item( $cart_item, $key = null ) {
 		$item                = new stdClass();
-		$item->key           = $key === null ? $cart_item['key'] : $key;
+		$item->key           = $key === null && isset( $cart_item['key'] ) ? $cart_item['key'] : $key; //Note: might yield null
 		$item->object        = $cart_item;
 		$item->product       = $cart_item['data'];
 		$item->quantity      = $cart_item['quantity'];

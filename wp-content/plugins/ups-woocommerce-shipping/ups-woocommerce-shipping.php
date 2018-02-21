@@ -3,7 +3,7 @@
 	Plugin Name: UPS WooCommerce Shipping
 	Plugin URI: https://www.xadapter.com/product/woocommerce-ups-shipping-plugin-with-print-label/
 	Description: Obtain Real time shipping rates, Print shipping labels and Track Shipment via the UPS Shipping API.
-	Version: 3.9.9
+	Version: 3.9.11
 	Author: Xadapter
 	Author URI: https://www.xadapter.com/vendor/wooforce/
 */

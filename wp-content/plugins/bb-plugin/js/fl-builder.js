@@ -613,12 +613,10 @@
 		 */
 		_bindEvents: function()
 		{
-
 			/* Links */
 			$excludedLinks = $('.fl-builder-bar a, .fl-builder--content-library-panel a, .fl-page-nav .nav a'); // links in ui shouldn't be disabled.
 			$('a').not($excludedLinks).on('click', FLBuilder._preventDefault);
 			$('.fl-page-nav .nav a').on('click', FLBuilder._headerLinkClicked);
-
 			$('body').delegate('button.fl-builder-button', 'mouseup', this._buttonMouseUp.bind(this) );
 
 			/* Heartbeat */
@@ -642,7 +640,6 @@
 			$('body').delegate('.fl-builder-node-template-delete', 'mousedown', FLBuilder._stopPropagation);
 			$('body').delegate('.fl-builder-node-template-edit', 'click', FLBuilder._editNodeTemplateClicked);
 			$('body').delegate('.fl-builder-node-template-delete', 'click', FLBuilder._deleteNodeTemplateClicked);
-
 			$('body').delegate('.fl-builder-block', 'mousedown', FLBuilder._blockDragInit );
 			$('body').on('mouseup', FLBuilder._blockDragCancel);
 
@@ -681,6 +678,9 @@
 
 			/* Alert Lightbox */
 			$('body').delegate('.fl-builder-alert-close', 'click', FLBuilder._alertClose);
+
+			/* General Overlays */
+			$('body').delegate('.fl-block-overlay', 'contextmenu', FLBuilder._removeAllOverlays);
 
 			/* Rows */
 			$('body').delegate('.fl-row-overlay .fl-block-remove', 'click', FLBuilder._deleteRowClicked);
@@ -992,6 +992,8 @@
 				parent.addClass( 'fl-builder-submenu-open' );
 			}
 
+			submenu.closest('.fl-row-overlay').addClass('fl-row-menu-active');
+
 			FLBuilder._hideTipTips();
 			e.preventDefault();
 			e.stopPropagation();
@@ -1050,6 +1052,8 @@
 					body.removeClass( 'fl-builder-submenu-open' );
 					menu.closest( '.fl-builder-has-submenu' ).removeClass( 'fl-builder-submenu-open' );
 				}, 500 );
+
+			menu.closest('.fl-row-overlay').removeClass('fl-row-menu-active');
 
 			menu.data( 'timeout', timeout );
 		},
@@ -3315,7 +3319,7 @@
 					nodeId    : nodeId,
 					className : 'fl-builder-row-settings',
 					attrs     : 'data-node="' + nodeId + '"',
-					buttons   : ! global ? ['save-as'] : [],
+					buttons   : ! global && ! FLBuilderConfig.lite && ! FLBuilderConfig.simpleUi ? ['save-as'] : [],
 					badges    : global ? [ FLBuilderStrings.global ] : [],
 					settings  : FLBuilderSettingsConfig.nodes[ nodeId ],
 					preview	  : {
@@ -3887,11 +3891,10 @@
 			}
 
 			if ( button.hasClass( 'fl-block-col-edit-parent' ) ) {
-				nodeId = col.parents( '.fl-col' ).data( 'node' );
+			    col = col.parents( '.fl-col' );
 			}
-			else {
-				nodeId = col.attr('data-node');
-			}
+
+			nodeId = col.attr('data-node');
 
 			FLBuilderSettingsForms.render( {
 				id        : 'col',
@@ -4372,9 +4375,10 @@
 		{
 			// Setup resize vars.
 			var data 			= FLBuilder._colResizeData,
+				directionRef	= FLBuilderConfig.isRtl ? 'w' : 'e',
 				overlay 		= data.handle.closest( '.fl-block-overlay' ),
 				change 			= ( data.offset - ui.position.left ) / data.groupWidth,
-				colWidth 		= 'e' == data.direction ? ( data.colWidth - change ) * 100 : ( data.colWidth + change ) * 100,
+				colWidth 		= directionRef == data.direction ? ( data.colWidth - change ) * 100 : ( data.colWidth + change ) * 100,
 				colRound 		= Math.round( colWidth * 100 ) / 100,
 				siblingWidth	= data.availWidth - colWidth,
 				siblingRound	= Math.round( siblingWidth * 100 ) / 100,
@@ -4392,7 +4396,7 @@
 			}
 
 			// Set the feedback values.
-			if ( 'e' == data.direction ) {
+			if ( directionRef == data.direction ) {
 				data.feedbackLeft.html( colRound.toFixed( 1 ) + '%'  ).show();
 				data.feedbackRight.html( siblingRound.toFixed( 1 ) + '%'  ).show();
 			}
@@ -5030,7 +5034,7 @@
 				nodeId    : data.nodeId,
 				className : 'fl-builder-module-settings fl-builder-' + data.type + '-settings',
 				attrs     : 'data-node="' + data.nodeId + '" data-parent="' + data.parentId + '" data-type="' + data.type + '"',
-				buttons   : ! data.global ? ['save-as'] : [],
+				buttons   : ! data.global && ! FLBuilderConfig.lite && ! FLBuilderConfig.simpleUi ? ['save-as'] : [],
 				badges    : data.global ? [ FLBuilderStrings.global ] : [],
 				settings  : settings ? settings : FLBuilderSettingsConfig.defaults.modules[ data.type ],
 				legacy    : data.legacy,
@@ -7769,10 +7773,11 @@
 				init     = null,
 				wrap     = null;
 
-			html = html.replace( /flbuildereditor/g , editorId ).replace( '{FL_EDITOR_CONTENT}' , textarea.val() );
+			html = html.replace( /flbuildereditor/g , editorId );
 			config = JSON.parse( JSON.stringify( config ).replace( /flbuildereditor/g , editorId ) );
 
 			textarea.after( html ).remove();
+			$( 'textarea#' + editorId ).val( textarea.val() )
 
 			if ( undefined !== typeof tinymce && undefined !== config.mceInit[ editorId ] ) {
 
@@ -7886,7 +7891,7 @@
 				setting   = field.attr( 'data-name' ),
 				editor    = typeof tinyMCE == 'undefined' ? false : tinyMCE.get( id ),
 				hidden    = textarea.siblings( 'textarea[name="' + setting + '"]' ),
-				wpautop   = field.attr( 'data-wpautop' );
+				wpautop   = field.data( 'wpautop' );
 
 			// Add a hidden textarea if we don't have one.
 			if ( 0 === hidden.length ) {
@@ -8101,10 +8106,10 @@
 
 			// Prevent ModSecurity false positives if our fix is enabled.
 			if ( 'undefined' != typeof data.settings ) {
-				data.settings = FLBuilder._ajaxModSecFix( data.settings );
+				data.settings = FLBuilder._ajaxModSecFix( $.extend( true, {}, data.settings ) );
 			}
 			if ( 'undefined' != typeof data.node_settings ) {
-				data.node_settings = FLBuilder._ajaxModSecFix( data.node_settings );
+				data.node_settings = FLBuilder._ajaxModSecFix( $.extend( true, {}, data.node_settings ) );
 			}
 
 			// Store the data in a single variable to avoid conflicts.
@@ -8354,7 +8359,7 @@
 
 			FLBuilder._lightbox.on('resized', FLBuilder._calculateSettingsTabsOverflow);
 			FLBuilder._lightbox.on('close', FLBuilder._lightboxClosed);
-			FLBuilder._lightbox.on('beforeClose', FLBuilder._destroyEditorFields);
+			FLBuilder._lightbox.on('beforeCloseLightbox', FLBuilder._destroyEditorFields);
 
 			/* Actions lightbox */
 			FLBuilder._actionsLightbox = new FLLightbox({

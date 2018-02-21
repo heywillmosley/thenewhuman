@@ -361,8 +361,10 @@ class WWOF_Product_Listing {
         // get the variable level min quantity value only when WWP is active.
         if ( get_class( $wc_wholesale_prices ) == 'WooCommerceWholeSalePrices' && is_user_logged_in() ) {
 
-            $wholesale_role         = $wc_wholesale_prices->wwp_wholesale_roles->getUserWholesaleRole();
-			$variable_level_min_qty = get_post_meta( WWOF_Functions::wwof_get_product_id( $product ) , $wholesale_role[ 0 ] . '_variable_level_wholesale_minimum_order_quantity' , true );
+            $wholesale_role = $wc_wholesale_prices->wwp_wholesale_roles->getUserWholesaleRole();
+
+            if ( isset( $wholesale_role[0] ) )
+                $variable_level_min_qty = get_post_meta( WWOF_Functions::wwof_get_product_id( $product ) , $wholesale_role[ 0 ] . '_variable_level_wholesale_minimum_order_quantity' , true );
         }
 
         // if the variable level min quantity is present, then display the requirement text.
@@ -568,6 +570,7 @@ class WWOF_Product_Listing {
      * Set the selected variation of the variation field. This function makes sure that only one variation is selected.
      *
      * @since 1.8.0
+     * @since 1.8.2 Make sure out of stock variations aren't set as selected by default.
      * @access private
      *
      * @param array $variations         Array list of variations defined on wwof_get_product_variation_field.
@@ -578,10 +581,13 @@ class WWOF_Product_Listing {
         // when searching for an sku value.
         if ( isset ( $_POST[ 'search' ] ) ) {
 
-            $skus         = array_column( $variations , 'sku' , 'value' );
+            $skus         = function_exists( 'array_column' ) ? array_column( $variations , 'sku' , 'value' ) : WWOF_Functions::array_column( $variations , 'sku' , 'value' );
             $selected_var = array_search( $_POST[ 'search' ] , $skus );
 
             foreach ( $variations as $key => $variation ) {
+
+                if ( ! $variation[ 'instock' ] )
+                    continue;
 
                 if ( $selected_var == $variation[ 'value' ] ) {
                     $variations[ $key ][ 'selected' ] = true;
@@ -595,6 +601,9 @@ class WWOF_Product_Listing {
         if ( ! empty( $default_attributes ) ) {
 
             foreach ( $variations as $key => $variation ) {
+
+                if ( ! $variation[ 'instock' ] )
+                    continue;
 
                 $variations[ $key ][ 'selected' ] = true;
                 foreach ( $variation[ 'attributes' ] as $attr_key => $attr_val ) {
@@ -622,7 +631,7 @@ class WWOF_Product_Listing {
 
         global $Product_Addon_Display;
 
-        if ( get_class( $Product_Addon_Display ) == 'Product_Addon_Display' || get_class( $Product_Addon_Display ) == 'Product_Addon_Display_Legacy' ) {
+        if ( $Product_Addon_Display != null && ( get_class( $Product_Addon_Display ) == 'Product_Addon_Display' || get_class( $Product_Addon_Display ) == 'Product_Addon_Display_Legacy' ) ) {
 
             $product_id = ( WWOF_Functions::wwof_get_product_type( $product ) == 'variation' ) ?  WWOF_Functions::wwof_get_product_variation_parent( $product , true ) : WWOF_Functions::wwof_get_product_id( $product );
 

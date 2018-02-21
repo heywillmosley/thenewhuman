@@ -8,7 +8,7 @@ $affiliate_id = affwp_get_affiliate_id();
 
 	<?php
 	$per_page  = 30;
-	$page      = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+	$page      = affwp_get_current_page_number();
 	$pages     = absint( ceil( affwp_count_referrals( $affiliate_id ) / $per_page ) );
 	$referrals = affiliate_wp()->referrals->get_referrals(
 		array(

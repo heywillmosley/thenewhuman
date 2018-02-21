@@ -1,10 +1,11 @@
-=== Plugin Name ===
+=== WooCommerce Extended Coupon Features ===
 Contributors: josk79
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQBCS2QHRY&lc=NL&item_name=Jos%20Koenis&item_number=wordpress%2dplugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: woocommerce, coupons, discount
 Requires at least: 4.7
-Tested up to: 4.9.1
-Stable tag: 2.6.0.2
+Requires PHP: 5.3
+Tested up to: 4.9.2
+Stable tag: 2.6.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +16,7 @@ Additional functionality for WooCommerce Coupons: Allow discounts to be automati
 "WooCommerce Extended Coupon Features" adds functionality to the WooCommerce coupons and allows for automatic discount rules. 
 Very easy to use, the functionality is conveniently integrated to the WooCommerce Edit Coupon panel.
 
-Compatible with WooCommerce 3.2.3. Backwards compatible with older WooCommerce versions (2.6.0 confirmed).
+Compatible with WooCommerce 3.3.0. Backwards compatible with older WooCommerce versions (2.6.0 confirmed).
 
 Full documentation is available at [www.soft79.nl](http://www.soft79.nl/documentation/wjecf).
 
@@ -48,12 +49,12 @@ If the restrictions are no longer met, it will silently be removed from the cart
 
 Apply coupon through an url like this:
 
-1. Use the url www.example.com/url-to-shop?apply_coupon=my_coupon
+1. Use the url www.example.com/url-to-shop?apply_coupon=my_coupon&fill_cart=123
 
-Voila! Any coupon can be applied this way.
+Voila! Any coupon can be applied this way. Please note that an empty cart can not contain any coupons. Download the free [Cart Links for WooCommerce-plugin](https://www.soft79.nl/product/cart-links-for-woocommerce/) to handle the 'fill_cart'-part of the url.
 
 
-This plugin has been tested in combination with WPML and qTranslate-X.
+This plugin has been tested in combination with WPML and [WP-Multilang](https://wordpress.org/plugins/wp-multilang/).
 
 == Installation ==
 
@@ -75,7 +76,8 @@ Yes, all string values are translatable through the supplied POT/PO/MO files. In
 
 = Why isn't my coupon applied using www.example.com?apply_coupon=my_coupon ? =
 
-The coupon will only be applied if the url links to a WooCommerce page (e.g. product loop / cart / product detail ).
+The coupon will only be applied if the url links to a WooCommerce page (e.g. product loop / cart / product detail ) and at least one product is in the cart.
+An empty cart can not have any coupons. The PRO version of this plugin has a work around for this though; it will 'remember' the coupon and apply it at the moment the cart contains a product.
 
 = The cart is not updated after changing the payment method =
 
@@ -88,8 +90,8 @@ Paste this snippet in your theme's functions.php:
 `
 //Update the cart preview when the billing email is changed by the customer
 add_filter( 'woocommerce_checkout_fields', function( $checkout_fields ) {
-	$checkout_fields['billing']['billing_email']['class'][] = 'update_totals_on_change';
-	return $checkout_fields;	
+    $checkout_fields['billing']['billing_email']['class'][] = 'update_totals_on_change';
+    return $checkout_fields;    
 } );
 `
 
@@ -102,9 +104,24 @@ Sure! [This](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQ
 1. Allow a coupon to be applied automatically by checking "Auto coupon".
 2. Extra restrictions. E.g. Quantity or subtotal of matching products.
 3. (PRO) A free product has been applied to the cart
-4. Additionals restrictions based on shipping or payment method or the customer
+4. Additional restrictions based on shipping or payment method or the customer
 
 == Changelog ==
+
+= 2.6.2 =
+* FIX: (PRO) First order purchase: Ignore cancelled/waiting for payment order statuses
+* FIX: (PRO) Auto updater plugins_api return $def instead of false
+
+= 2.6.1.1 =
+*Release Date - 2017-12-24*
+* FIX: (PRO) Possible crash on null reference in filter woocommerce_coupon_get_discount_amount
+
+= 2.6.1 =
+*Release Date - 2017-12-22*
+* German translation (Thanks to, Guido Hloch)
+* FIX: Use WC_Coupon::get_description (for translation plugins)
+* FIX: (PRO) ADMIN - Auto update: Allow multiple license activation
+* FIX: (PRO) ADMIN - Auto update: Removed invalid warning 'Invalid response block'
 
 = 2.6.0.2 =
 *Release Date - 2017-12-04*
@@ -341,7 +358,7 @@ Sure! [This](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQ
 = 2.0.0 =
 * RENAME: Renamed plugin from "WooCommerce auto added coupons" to "WooCommerce Extended Coupon Features"
 * FEATURE: Restrict coupons by payment method
-* FEATURE: Restrict coupons by shipping method	
+* FEATURE: Restrict coupons by shipping method  
 * FEATURE: Use AND-operator for the selected products (default is OR)
 * FIX: Validate email restrictions for auto coupons
 * Norwegian translation added (Thanks to Anders Zorensen)
@@ -355,7 +372,7 @@ Sure! [This](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQ
 * Included translations: Dutch, German, Spanish (Thanks to stephan.sperling for the german translation)
 
 = 1.1.3.1 =
-* FIX: Apply auto coupon if discount is 0.00 and free shipping is ticked	
+* FIX: Apply auto coupon if discount is 0.00 and free shipping is ticked    
 
 = 1.1.3 =
 * Don't apply coupon if the discount is 0.00

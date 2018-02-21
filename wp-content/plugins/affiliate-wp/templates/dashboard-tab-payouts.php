@@ -6,7 +6,7 @@
 	$affiliate_id = affwp_get_affiliate_id();
 
 	$per_page = 30;
-	$page     = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
+	$page     = affwp_get_current_page_number();
 	$count    = affiliate_wp()->affiliates->payouts->count( array( 'affiliate_id' => $affiliate_id ) );
 	$pages    = absint( ceil( $count / $per_page ) );
 	$payouts  = affiliate_wp()->affiliates->payouts->get_payouts(

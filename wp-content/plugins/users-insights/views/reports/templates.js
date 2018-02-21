@@ -62,6 +62,9 @@ angular.module('usinReportsApp').run(['$templateCache', function($templateCache)
     "<div ng-class=\"['usin-report-wrap', {'usin-simple-loading': $ctrl.loading}]\">\n" +
     "	<div class=\"usin-report-header\">\n" +
     "		<span class=\"usin-report-title\">{{$ctrl.reportOptions.name}}</span>\n" +
+    "		<span class=\"usin-icon-info\" ng-if=\"$ctrl.reportOptions.info\">\n" +
+    "			<md-tooltip md-direction=\"right\">{{$ctrl.reportOptions.info}}</md-tooltip>\n" +
+    "		</span>\n" +
     "		\n" +
     "		<ui-select ng-model=\"$ctrl.filter\" ng-change=\"$ctrl.onFilterChange()\" ng-if=\"$ctrl.hasFilters()\" \n" +
     "			theme=\"select2\" search-enabled=\"{{$ctrl.shouldEnableSearch()}}\" ng-disabled=\"$ctrl.loading\">\n" +
@@ -76,9 +79,6 @@ angular.module('usinReportsApp').run(['$templateCache', function($templateCache)
     "	<div class=\"usin-report-graph\">\n" +
     "		<div ng-if=\"!$ctrl.loading && !$ctrl.error\">\n" +
     "			<usin-chart chart-options=\"$ctrl.chartOptions\"></usin-chart>\n" +
-    "			<div ng-if=\"$ctrl.reportOptions.info\" class=\"usin-chart-info\">\n" +
-    "				<p>{{$ctrl.reportOptions.info}}</p>\n" +
-    "			</div>\n" +
     "		</div>\n" +
     "		<div ng-if=\"$ctrl.error\" class=\"usin-error\">\n" +
     "			{{$ctrl.error}}\n" +

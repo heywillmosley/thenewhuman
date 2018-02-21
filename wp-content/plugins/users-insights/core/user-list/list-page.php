@@ -4,10 +4,10 @@ class USIN_List_Page{
 	
 	protected $capability;
 	protected $options;
-	protected $nonce_key = 'usin_user_list';
 	protected $assets;
 	protected $ajax;
 	protected $export;
+	public static $nonce_key = 'usin_user_list';
 
 	public $slug;
 	public $title;
@@ -28,10 +28,10 @@ class USIN_List_Page{
 		$this->assets = new USIN_List_Assets($this);
 		$this->assets->init();
 
-		$this->ajax = new USIN_List_Ajax($this->options, $this->capability, $this->nonce_key);
+		$this->ajax = new USIN_List_Ajax($this->options, $this->capability, self::$nonce_key);
 		$this->ajax->add_actions();
 
-		$this->export = new USIN_List_Export($this->options, $this->nonce_key);
+		$this->export = new USIN_List_Export($this->options, self::$nonce_key);
 	}
 
 	public function add_menu_page(){
@@ -42,7 +42,7 @@ class USIN_List_Page{
 	}
 
 	public function create_nonce(){
-		$this->ajax_nonce = wp_create_nonce($this->nonce_key);
+		$this->ajax_nonce = wp_create_nonce(self::$nonce_key);
 	}
 
 	public function print_page_markup(){

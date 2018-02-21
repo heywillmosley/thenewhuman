@@ -56,6 +56,8 @@ class Affiliate_WP_Ninja_Forms extends Affiliate_WP_Base {
 			return;
 		}
 
+		$referral_total = $this->calculate_referral_amount( $referral_total, $reference );
+
 		$this->insert_pending_referral( $referral_total, $reference, $description );
 		$this->complete_referral( $reference );
 	}

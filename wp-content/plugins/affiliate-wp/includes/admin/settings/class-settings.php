@@ -549,6 +549,11 @@ class Affiliate_WP_Settings {
 						'size' => 'small',
 						'std' => '1'
 					),
+					'cookie_sharing' => array(
+						'name' => __( 'Cookie Sharing', 'affiliate-wp' ),
+						'desc' => __( 'Share tracking cookies with sub-domains. When enabled, tracking cookies created on domain.com will also be available on sub.domain.com.', 'affiliate-wp' ),
+						'type' => 'checkbox',
+					),
 					'currency_settings' => array(
 						'name' => '<strong>' . __( 'Currency Settings', 'affiliate-wp' ) . '</strong>',
 						'desc' => __( 'Configure the currency options', 'affiliate-wp' ),

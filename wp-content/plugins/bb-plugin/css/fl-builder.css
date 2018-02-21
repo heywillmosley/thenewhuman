@@ -704,10 +704,8 @@ body .fl-theme-builder-preview-select-item-child:hover {
 	.fl-builder-publish-actions {
 		width:100% !important;
 	}
-}
-@media (max-width: 400px) {
 	.fl-builder-bar-actions .fl-builder-button {
-		padding: 0 8px;
+		padding: 0 8px !important;
 	}
 }
 
@@ -717,7 +715,7 @@ body .fl-theme-builder-preview-select-item-child:hover {
 	top: 4px;
     left: 4px;
     z-index: 100008;
-    padding: 4px 4px 6px;
+    padding: 4px;
     justify-content: center;
 	background:white;
 	border-radius: 4px;
@@ -728,8 +726,6 @@ body .fl-theme-builder-preview-select-item-child:hover {
 .fl-builder--preview-actions .device-icons {
 	color: #555;
     background: #e4e4e4;
-    -webkit-box-shadow: 0 2px 0 #d6d6d6;
-    box-shadow: 0 2px 0 #d6d6d6;
     border: none !important;
     align-items: center;
     display: flex;
@@ -743,7 +739,6 @@ body .fl-theme-builder-preview-select-item-child:hover {
     -webkit-border-radius: 3px;
     -webkit-appearance: none;
     border-radius: 3px;
-	height: 33px;
 }
 .fl-builder--preview-actions .device-icons i {
 	margin: 0 6px;
@@ -2332,6 +2327,10 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	right: 0;
 	z-index: 100006;
 }
+.fl-row-overlay.fl-row-menu-active,
+.fl-row-overlay.fl-row-menu-active.fl-block-overlay.fl-block-overlay-global {
+	z-index: 100007;
+}
 .fl-row-full-width .fl-row-overlay {
 	left: 2px;
 	right: 2px;
@@ -3231,7 +3230,7 @@ body .fl-lightbox-has-tab-overflow .fl-builder-settings-tabs-more {
 	border-top: 3px solid #00a0d2;
 	border-radius: 4px;
 	background: white;
-	z-index: 9;
+	z-index: 9999;
 	margin: 0 6px;
 	padding: 10px;
 	flex-direction: column;
@@ -3723,6 +3722,9 @@ i.fl-field-responsive-toggle:hover {
 .fl-builder-edit .media-frame {
 	-webkit-backface-visibility: hidden;
 }
+.fl-builder-edit .media-modal-content h1 {
+	font-family: inherit;
+}
 .fl-builder-edit .media-modal-content .thumbnail {
 	padding: 0;
 	border: none;
@@ -3735,6 +3737,9 @@ i.fl-field-responsive-toggle:hover {
 }
 .fl-builder-edit .media-frame.hide-menu {
 	visibility: visible;
+}
+span.select2-container.select2-container--open {
+    z-index: 9999999;
 }
 
 /* Multiple Photo Fields */
@@ -3841,6 +3846,9 @@ i.fl-field-responsive-toggle:hover {
 }
 .fl-builder-settings .mce-menubtn.mce-fixed-width button {
 	width: 100px;
+}
+.fl-builder-settings .mce-menubtn.mce-fixed-width span {
+	width: 100%;
 }
 .mce-close:hover,
 .mce-close:active,

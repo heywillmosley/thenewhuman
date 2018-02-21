@@ -768,6 +768,22 @@ class Affiliate_WP_Referrals_DB extends Affiliate_WP_DB  {
 	}
 
 	/**
+	 * Count the total number of paid referrals
+	 *
+	 * @access  public
+	 * @since   2.1.11
+	 *
+	 * @see count_by_status()
+	 *
+	 * @param string $date         Optional. Date range in which to search. Accepts 'month'. Default empty.
+	 * @param int    $affiliate_id Optional. Affiliate ID. Default 0.
+	 * @return int Number of referrals for the given status or 0 if the affiliate doesn't exist.
+	*/
+	public function paid_count( $date = '', $affiliate_id = 0 ) {
+		return $this->count_by_status( 'paid', $affiliate_id, $date );
+	}
+
+	/**
 	 * Count the total number of unpaid referrals
 	 *
 	 * @access  public

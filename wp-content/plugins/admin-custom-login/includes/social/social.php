@@ -18,7 +18,7 @@ jQuery(document).ready(function(){
 					<div class="post-social post-social-xs" id="post-social-5">
 						<div class="text-center padding-all text-center">
 							<div class="textbox text-white   margin-bottom settings-title">
-								<?php _e('Social Settings','WEBLIZAR_ACL')?>
+								<?php _e('Social Settings',WEBLIZAR_ACL)?>
 							</div>
 						</div>
 					</div>
@@ -30,16 +30,16 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Enable Social Icons','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Enable Social Icons',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<select id="enable_social_icon" class="standard-dropdown" name="enable_social_icon">
-							<option value="no-icon" ><?php _e('No Icon','WEBLIZAR_ACL')?></option>
-							<option value="inner" ><?php _e('Inner','WEBLIZAR_ACL')?></option>
-							<option value="outer" ><?php _e('Outer','WEBLIZAR_ACL')?></option>
-							<option value="both" ><?php _e('Both','WEBLIZAR_ACL')?></option>
+							<option value="no-icon" ><?php _e('No Icon',WEBLIZAR_ACL)?></option>
+							<option value="inner" ><?php _e('Inner',WEBLIZAR_ACL)?></option>
+							<option value="outer" ><?php _e('Outer',WEBLIZAR_ACL)?></option>
+							<option value="both" ><?php _e('Both',WEBLIZAR_ACL)?></option>
 						</select>
 					</td>
 				</tr>
@@ -50,19 +50,19 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Social Media Icon Size','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Social Media Icon Size',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<span>
-							<input type="radio" name="social_size" value="small" id="social_size1" <?php if($social_icon_size=="small")echo "checked"; ?> />&nbsp;<?php _e('Small','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="social_size" value="small" id="social_size1" <?php if($social_icon_size=="small")echo "checked"; ?> />&nbsp;<?php _e('Small',WEBLIZAR_ACL)?><br>
 						</span>
 						<span>
-							<input type="radio" name="social_size" value="mediam" id="social_size2" <?php if($social_icon_size=="mediam")echo "checked"; ?> />&nbsp;<?php _e('Medium','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="social_size" value="mediam" id="social_size2" <?php if($social_icon_size=="mediam")echo "checked"; ?> />&nbsp;<?php _e('Medium',WEBLIZAR_ACL)?><br>
 						</span>
 						<span>
-							<input type="radio" name="social_size" value="large" id="social_size3"  <?php if($social_icon_size=="large")echo "checked"; ?> />&nbsp;<?php _e('Large','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="social_size" value="large" id="social_size3"  <?php if($social_icon_size=="large")echo "checked"; ?> />&nbsp;<?php _e('Large',WEBLIZAR_ACL)?><br>
 						</span>
 					</td>
 				</tr>
@@ -73,16 +73,16 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Social Media Icon Layout','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Social Media Icon Layout',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<span>
-							<input type="radio" name="social_layout" value="rectangle" id="social_layout1" <?php if($social_icon_layout=="rectangle")echo "checked"; ?>  />&nbsp;<?php _e('Rectangle','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="social_layout" value="rectangle" id="social_layout1" <?php if($social_icon_layout=="rectangle")echo "checked"; ?>  />&nbsp;<?php _e('Rectangle',WEBLIZAR_ACL)?><br>
 						</span>
 						<span>
-							<input type="radio" name="social_layout" value="circle" id="social_layout2" <?php if($social_icon_layout=="circle")echo "checked"; ?>  />&nbsp;<?php _e('Circle','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="social_layout" value="circle" id="social_layout2" <?php if($social_icon_layout=="circle")echo "checked"; ?>  />&nbsp;<?php _e('Circle',WEBLIZAR_ACL)?><br>
 						</span>
 					</td>
 				</tr>
@@ -93,7 +93,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Social Media Icon Color','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Social Media Icon Color',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -108,7 +108,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Social Media Icon Color On Hover','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Social Media Icon Color On Hover',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -123,7 +123,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Social Media Icon Background Color','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Social Media Icon Background Color',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -138,7 +138,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Social Media Background Color On Hover','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Social Media Background Color On Hover',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -153,27 +153,27 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Social Profiles','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Social Profiles',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
-						<p class="rcsp_p_admin"><?php _e('Enter your social profiles complete url here','WEBLIZAR_ACL')?></p>
+						<p class="rcsp_p_admin"><?php _e('Enter your social profiles complete url here',WEBLIZAR_ACL)?></p>
 						<ul class="rcp_social_profile_admin">
-							<li><i class="fa fa-facebook"></i><input type="text" class="pro_text" id="facebook-link" name="facebook-link" placeholder="<?php _e('Facebook','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_facebook_link; ?>" /></li>
-							<li><i class="fa fa-twitter"></i><input type="text" class="pro_text" id="twitter-link" name="twitter-link" placeholder="<?php _e('Twitter','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_twitter_link; ?>" /></li>
-							<li><i class="fa fa-linkedin"></i><input type="text" class="pro_text" id="linkedin-link" name="linkedin-link" placeholder="<?php _e('Linkedin','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_linkedin_link; ?>" /></li>
-							<li><i class="fa fa-google-plus"></i><input type="text" class="pro_text" id="google-plus-link" name="google-plus-link" placeholder="<?php _e('google plus','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_google_plus_link; ?>" /></li>
-							<li><i class="fa fa-pinterest-p"></i><input type="text" class="pro_text" id="pinterest-link" name="pinterest-link" placeholder="<?php _e('Pinterest','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_pinterest_link; ?>" /></li>
-							<li><i class="fa fa-digg"></i><input type="text" class="pro_text" id="digg-link" name="digg-link" placeholder="<?php _e('Digg','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_digg_link; ?>" /></li>
-							<li><i class="fa fa-youtube"></i><input type="text" class="pro_text" id="youtube-link" name="youtube-link" placeholder="<?php _e('Youtube','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_youtube_link; ?>" /></li>
-							<li><i class="fa fa-flickr"></i><input type="text" class="pro_text" id="flickr-link" name="flickr-link" placeholder="<?php _e('Flickr','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_flickr_link; ?>" /></li>
-							<li><i class="fa fa-tumblr"></i><input type="text" class="pro_text" id="tumblr-link" name="tumblr-link" placeholder="<?php _e('Tumblr','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_tumblr_link; ?>" /></li>
-							<li><i class="fa fa-vk"></i><input type="text" class="pro_text" id="vkontakte-link" name="vkontakte-link" placeholder="<?php _e('VKontakte','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_vkontakte_link; ?>" /></li>
-							<li><i class="fa fa-skype"></i><input type="text" class="pro_text" id="skype-link" name="skype-link" placeholder="<?php _e('Skype','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_skype_link; ?>" /></li> 
-							<li><i class="fa fa-instagram"></i><input type="text" class="pro_text" id="instagram-link" name="instagram-link" placeholder="<?php _e('Instagram','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_instagram_link; ?>" /></li>
-							<li><i class="fa fa-telegram"></i><input type="text" class="pro_text" id="telegram-link" name="telegram-link" placeholder="<?php _e('Telegram','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_telegram_link; ?>" /></li>
-							<li><i class="fa fa-whatsapp"></i><input type="text" class="pro_text" id="whatsapp-link" name="whatsapp-link" placeholder="<?php _e('Whatsapp','WEBLIZAR_ACL')?>" size="56" value="<?php echo $social_whatsapp_link; ?>" /></li>
+							<li><i class="fa fa-facebook"></i><input type="text" class="pro_text" id="facebook-link" name="facebook-link" placeholder="<?php _e('Facebook', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_facebook_link; ?>" /></li>
+							<li><i class="fa fa-twitter"></i><input type="text" class="pro_text" id="twitter-link" name="twitter-link" placeholder="<?php _e('Twitter', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_twitter_link; ?>" /></li>
+							<li><i class="fa fa-linkedin"></i><input type="text" class="pro_text" id="linkedin-link" name="linkedin-link" placeholder="<?php _e('Linkedin', WEBLIZAR_ACL); ?>" size="56" value="<?php echo $social_linkedin_link; ?>" /></li>
+							<li><i class="fa fa-google-plus"></i><input type="text" class="pro_text" id="google-plus-link" name="google-plus-link" placeholder="<?php _e('Google Plus', WEBLIZAR_ACL); ?>" size="56" value="<?php echo $social_google_plus_link; ?>" /></li>
+							<li><i class="fa fa-pinterest-p"></i><input type="text" class="pro_text" id="pinterest-link" name="pinterest-link" placeholder="<?php _e('Pinterest', WEBLIZAR_ACL); ?>" size="56" value="<?php echo $social_pinterest_link; ?>" /></li>
+							<li><i class="fa fa-digg"></i><input type="text" class="pro_text" id="digg-link" name="digg-link" placeholder="<?php _e('Digg', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_digg_link; ?>" /></li>
+							<li><i class="fa fa-youtube"></i><input type="text" class="pro_text" id="youtube-link" name="youtube-link" placeholder="<?php _e('Youtube', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_youtube_link; ?>" /></li>
+							<li><i class="fa fa-flickr"></i><input type="text" class="pro_text" id="flickr-link" name="flickr-link" placeholder="<?php _e('Flickr', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_flickr_link; ?>" /></li>
+							<li><i class="fa fa-tumblr"></i><input type="text" class="pro_text" id="tumblr-link" name="tumblr-link" placeholder="<?php _e('Tumblr', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_tumblr_link; ?>" /></li>
+							<li><i class="fa fa-vk"></i><input type="text" class="pro_text" id="vkontakte-link" name="vkontakte-link" placeholder="<?php _e('VKontakte', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_vkontakte_link; ?>" /></li>
+							<li><i class="fa fa-skype"></i><input type="text" class="pro_text" id="skype-link" name="skype-link" placeholder="<?php _e('Skype', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_skype_link; ?>" /></li> 
+							<li><i class="fa fa-instagram"></i><input type="text" class="pro_text" id="instagram-link" name="instagram-link" placeholder="<?php _e('Instagram', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_instagram_link; ?>" /></li>
+							<li><i class="fa fa-telegram"></i><input type="text" class="pro_text" id="telegram-link" name="telegram-link" placeholder="<?php _e('Telegram', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_telegram_link; ?>" /></li>
+							<li><i class="fa fa-whatsapp"></i><input type="text" class="pro_text" id="whatsapp-link" name="whatsapp-link" placeholder="<?php _e('Whatsapp', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_whatsapp_link; ?>" /></li>
 						</ul>
 					</td>
 				</tr>
@@ -190,7 +190,7 @@ jQuery(document).ready(function(){
 				</svg>
 			</div>
 			<div class="dialog-inner">
-				<h2><strong><?php _e('Social ','WEBLIZAR_ACL')?></strong><?php _e('Setting Save Successfully','WEBLIZAR_ACL')?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button5"><?php _e('Close','WEBLIZAR_ACL')?></button></div>
+				<h2><strong><?php _e('Social', WEBLIZAR_ACL)?></strong> <?php _e('Setting Save Successfully',WEBLIZAR_ACL)?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button5"><?php _e('Close',WEBLIZAR_ACL)?></button></div>
 			</div>
 		</div>
 	</div>
@@ -204,17 +204,17 @@ jQuery(document).ready(function(){
 				</svg>
 			</div>
 			<div class="dialog-inner">
-				<h2><strong><?php _e('Social ','WEBLIZAR_ACL')?></strong><?php _e('Setting Reset Successfully','WEBLIZAR_ACL')?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button6"><?php _e('Close','WEBLIZAR_ACL')?></button></div>
+				<h2><strong><?php _e('Social',WEBLIZAR_ACL)?></strong> <?php _e('Setting Reset Successfully',WEBLIZAR_ACL)?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button6"><?php _e('Close',WEBLIZAR_ACL)?></button></div>
 			</div>
 		</div>
 	</div>
 	<div class="panel panel-primary save-button-block">
 		<div class="panel-body">
 			<div class="pull-left">
-				<button type="button" onclick="return Custom_login_social('socialSave', '');" class="btn btn-info btn-lg"><?php _e('Save Changes','WEBLIZAR_ACL')?></button>
+				<button type="button" onclick="return Custom_login_social('socialSave', '');" class="btn btn-info btn-lg"><?php _e('Save Changes',WEBLIZAR_ACL)?></button>
 			</div>
 			<div class="pull-right">
-				<button type="button" onclick="return Custom_login_social('socialReset', '');" class="btn btn-primary btn-lg"><?php _e('Reset Default','WEBLIZAR_ACL')?></button>
+				<button type="button" onclick="return Custom_login_social('socialReset', '');" class="btn btn-primary btn-lg"><?php _e('Reset Default',WEBLIZAR_ACL)?></button>
 			</div>
 		</div>
 	</div>

@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					<div class="post-social post-social-xs" id="post-social-5">
 						<div class="text-center padding-all text-center">
 							<div class="textbox text-white   margin-bottom settings-title">
-								<?php _e('Admin Custom Login Dashboard','WEBLIZAR_ACL')?>
+								<?php _e('Admin Custom Login Dashboard', WEBLIZAR_ACL); ?>
 							</div>
 						</div>
 					</div>
@@ -24,16 +24,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Admin Custom Login Status','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Admin Custom Login Status', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<span>
-							<input type="radio" name="dashboard_status" value="disable" id="dashboard_status1" <?php if($dashboard_status == "disable") echo "checked"; ?> />&nbsp;<?php _e('Disable','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="dashboard_status" value="disable" id="dashboard_status1" <?php if($dashboard_status == "disable") echo "checked"; ?> />&nbsp;<?php _e('Disable', WEBLIZAR_ACL)?><br>
 						</span>
 						<span>
-							<input type="radio" name="dashboard_status" value="enable" id="dashboard_status2" <?php if($dashboard_status == "enable") echo "checked";?> />&nbsp;<?php _e('Enable','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="dashboard_status" value="enable" id="dashboard_status2" <?php if($dashboard_status == "enable") echo "checked";?> />&nbsp;<?php _e('Enable', WEBLIZAR_ACL)?><br>
 						</span>
 					</td>
 				</tr>
@@ -44,12 +44,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('View Login Page','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('View Login Page', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
-						<h4><?php _e('Copy below link and open in another browser where you are not logged in','WEBLIZAR_ACL')?></h4>
+						<h4><?php _e('Copy below link and open in another browser where you are not logged in', WEBLIZAR_ACL)?></h4>
 						<br>
 						<span style="color:#ef4238">  <?php echo wp_login_url(); ?> </span>
 					</td>
@@ -67,7 +67,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				</svg>
 			</div>
 			<div class="dialog-inner">
-				<h2><strong><?php _e('Dashboard ','WEBLIZAR_ACL');?></strong><?php _e('Setting Save Successfully','WEBLIZAR_ACL');?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button" ><?php _e('Close','WEBLIZAR_ACL');?></button></div>
+				<h2><strong><?php _e('Dashboard', WEBLIZAR_ACL);?></strong> <?php _e('Setting Save Successfully', WEBLIZAR_ACL);?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button" ><?php _e('Close', WEBLIZAR_ACL);?></button></div>
 			</div>
 		</div>
 	</div>
@@ -81,17 +81,17 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				</svg>
 			</div>
 			<div class="dialog-inner">
-				<h2><strong><?php _e('Dashboard ','WEBLIZAR_ACL')?></strong><?php _e('Setting Reset Successfully','WEBLIZAR_ACL')?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button7" ><?php _e('Close','WEBLIZAR_ACL')?></button></div>
+				<h2><strong><?php _e('Dashboard', WEBLIZAR_ACL)?></strong> <?php _e('Setting Reset Successfully', WEBLIZAR_ACL)?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button7" ><?php _e('Close', WEBLIZAR_ACL)?></button></div>
 			</div>
 		</div>
 	</div>
 	<div class="panel panel-primary save-button-block">
 		<div class="panel-body">
 			<div class="pull-left">
-				<button type="button" onclick="return Custom_login_dashboard('dashboardSave', '');" class="btn btn-info btn-lg"><?php _e('Save Changes','WEBLIZAR_ACL');?></button>
+				<button type="button" onclick="return Custom_login_dashboard('dashboardSave', '');" class="btn btn-info btn-lg"><?php _e('Save Changes', WEBLIZAR_ACL);?></button>
 			</div>
 			<div class="pull-right">
-				<button type="button" onclick="return Custom_login_dashboard('dashboardReset', '');" class="btn btn-primary btn-lg"><?php _e('Reset Default','WEBLIZAR_ACL');?></button>
+				<button type="button" onclick="return Custom_login_dashboard('dashboardReset', '');" class="btn btn-primary btn-lg"><?php _e('Reset Default', WEBLIZAR_ACL);?></button>
 			</div>
 		</div>
 	</div>

@@ -118,44 +118,47 @@ final class Affiliate_WP_Ninja_Forms_Add_Referral extends NF_Abstracts_Action {
             return $data;
         }
 
-        $sub = Ninja_Forms()->form( $form_id )->sub()->get();
+        if ( ! isset( $data[ 'actions' ][ 'save' ][ 'sub_id' ] ) ) {
+            $sub = Ninja_Forms()->form( $form_id )->sub()->get();
 
-        $hidden_field_types = apply_filters( 'nf_sub_hidden_field_types', array() );
+            $hidden_field_types = apply_filters( 'nf_sub_hidden_field_types', array() );
 
-        foreach( $data['fields'] as $field ){
+            foreach( $data['fields'] as $field ){
 
-            if( in_array( $field[ 'type' ], array_values( $hidden_field_types ) ) ) {
-                $data['actions']['save']['hidden'][] = $field['type'];
-                continue;
+                if( in_array( $field[ 'type' ], array_values( $hidden_field_types ) ) ) {
+                    $data['actions']['save']['hidden'][] = $field['type'];
+                    continue;
+                }
+
+                $sub->update_field_value( $field['id'], $field['value'] );
             }
 
-            $sub->update_field_value( $field['id'], $field['value'] );
+            if( isset( $data[ 'extra' ] ) ) {
+                $sub->update_extra_values( $data['extra'] );
+            }
+
+            /**
+             * Fires when saving a Ninja Forms submission in Ninja Forms 3.0 or greater.
+             *
+             * @param int $sub->get_id() The Ninja Forms form submission ID.
+             */
+            do_action( 'nf_save_sub', $sub->get_id() );
+
+            /**
+             * Fires when saving a Ninja Forms submission in Ninja Forms versions lower than 3.0.
+             *
+             * @param int $sub->get_id() The Ninja Forms form submission ID.
+             */
+            do_action( 'ninja_forms_save_sub', $sub->get_id() );
+
+            $sub->save();
+
+            $data[ 'actions' ][ 'save' ][ 'sub_id' ] = $sub->get_id();
+
         }
-
-        if( isset( $data[ 'extra' ] ) ) {
-            $sub->update_extra_values( $data['extra'] );
-        }
-
-        /**
-         * Fires when saving a Ninja Forms submission in Ninja Forms 3.0 or greater.
-         *
-         * @param int $sub->get_id() The Ninja Forms form submission ID.
-         */
-        do_action( 'nf_save_sub', $sub->get_id() );
-
-        /**
-         * Fires when saving a Ninja Forms submission in Ninja Forms versions lower than 3.0.
-         *
-         * @param int $sub->get_id() The Ninja Forms form submission ID.
-         */
-        do_action( 'ninja_forms_save_sub', $sub->get_id() );
-
-        $sub->save();
-
-        $data[ 'actions' ][ 'save' ][ 'sub_id' ] = $sub->get_id();
 
         $referral_total = $this->get_total( $action_settings );
-        $reference      = $sub->get_id();
+        $reference      = $data[ 'actions' ][ 'save' ][ 'sub_id' ];
         $description    = $this->get_description( $action_settings, $data );
         $customer_email = $this->get_customer_email( $action_settings );
 

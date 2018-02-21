@@ -63,6 +63,11 @@ table.affwp-table th {
 	cursor: pointer;
 }
 
+.affwp-form label + input,
+.affwp-form label + textarea {
+	width: 100%;
+}
+
 .affwp-wrap {
 	margin-bottom: 20px;
 }

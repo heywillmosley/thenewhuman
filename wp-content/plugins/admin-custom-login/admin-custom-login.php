@@ -1,17 +1,19 @@
 <?php
 /**
  * Plugin Name: Admin Custom Login
- * Version: 2.5.7
+ * Version: 2.5.8
  * Description: Customize Your WordPress Login Screen Amazingly
  * Author: Weblizar
  * Author URI: http://weblizar.com/plugins/
  * Plugin URI: http://weblizar.com/plugins/
+ * Text Domain: admin-custom-login
+ * Domain Path: /languages/
  */
  
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 define("WEBLIZAR_NALF_PLUGIN_URL", plugin_dir_url(__FILE__));
-define("WEBLIZAR_ACL", "WEBLIZAR_ACL" );
+define("WEBLIZAR_ACL", "admin-custom-login", true);
 
 /**
 * Redirect user after successful login.
@@ -25,7 +27,7 @@ function ACL_login_redirect( $redirect_to, $request, $user ) {
 	//is there a user to check?
     if ( isset( $user->roles ) && is_array( $user->roles ) ) {
 
-		// get and load custom rerdirect option after user login
+		// get and load custom redirect option after user login
 		$login_page = unserialize(get_option('Admin_custome_login_login'));
 		$login_redirect_user = $login_page['login_redirect_user'];
 		
@@ -154,14 +156,14 @@ function acl_footer_func() {
 
 		<?php if($enable_inputbox_icon=='yes'){?>
 		if (jQuery('#log_input_lable').length) {
-			document.getElementById("log_input_lable").innerHTML="<?php _e('User Name','WEBLIZAR_ACL');?><div class='input-container'> <div class='icon-ph'><i class='fa <?php echo $user_input_icon; ?>'></i></div> <input id='user_login' name='log' class='input' type='text' placeholder='<?php _e('User Name','WEBLIZAR_ACL');?>'></div>";
-			document.getElementById("pwd_input_lable").innerHTML="<?php _e('Password','WEBLIZAR_ACL');?><div class='input-container'> <div class='icon-ph'><i class='fa <?php echo $password_input_icon; ?>'></i></div> <input id='user_pass' name='pwd' class='input' type='password' placeholder='<?php _e('Password','WEBLIZAR_ACL');?>'></div>";
+			document.getElementById("log_input_lable").innerHTML="<?php _e('User Name',WEBLIZAR_ACL);?><div class='input-container'> <div class='icon-ph'><i class='fa <?php echo $user_input_icon; ?>'></i></div> <input id='user_login' name='log' class='input' type='text' placeholder='<?php _e('User Name',WEBLIZAR_ACL);?>'></div>";
+			document.getElementById("pwd_input_lable").innerHTML="<?php _e('Password',WEBLIZAR_ACL);?><div class='input-container'> <div class='icon-ph'><i class='fa <?php echo $password_input_icon; ?>'></i></div> <input id='user_pass' name='pwd' class='input' type='password' placeholder='<?php _e('Password',WEBLIZAR_ACL);?>'></div>";
 			jQuery('body.login div#login form .input, .login input[type="text"]').css('padding','5px 5px 5px 45px');
 		}
 		<?php } else { ?>
 		if (jQuery('#log_input_lable').length) {
-			jQuery('#loginform #user_login').attr('placeholder', '<?php _e('User Name','WEBLIZAR_ACL');?>');
-			jQuery('#loginform #user_pass').attr('placeholder', '<?php _e('Password','WEBLIZAR_ACL');?>');
+			jQuery('#loginform #user_login').attr('placeholder', '<?php _e('User Name',WEBLIZAR_ACL);?>');
+			jQuery('#loginform #user_pass').attr('placeholder', '<?php _e('Password',WEBLIZAR_ACL);?>');
 			jQuery('body.login div#login form .input, .login input[type="text"]').css('padding','5px 5px 5px 5px');
 		}
 		<?php }?>
@@ -171,7 +173,7 @@ function acl_footer_func() {
 		
 		//enable Social Icon In inner login form 
 		<?php if($Social_page['enable_social_icon'] == "inner" || $Social_page['enable_social_icon'] == "both") {?>
-		jQuery( ".forgetmenot, #lostpasswordform" ).append('<div class="acl-social-inner" style="padding-top:16px"><div class="acl-social-text" style="color:<?php echo $heading_font_color; ?>; font-size:<?php echo $heading_font_size;?>px; "><?php _e('Find Us On Social Media','WEBLIZAR_ACL'); ?></div><div style="padding-top:5px"><?php if($Social_page['social_twitter_link']!=''){ ?><a href="<?php echo $Social_page['social_twitter_link'];?>" class="icon-button twitter"><i class="fa fa-twitter"></i><span></span></a><?php } if($Social_page['social_facebook_link']!=''){ ?> <a href="<?php echo $Social_page['social_facebook_link'];?>" class="icon-button facebook"><i class="fa fa-facebook"></i><span></span></a> <?php } if($Social_page['social_google_plus_link']!=''){ ?> <a href="<?php echo $Social_page['social_google_plus_link'];?>" class="icon-button google-plus"><i class="fa fa-google-plus"></i><span></span></a><?php } if($Social_page['social_linkedin_link']!=''){ ?> <a href="<?php echo $Social_page['social_linkedin_link'];?>" class="icon-button linkedin"> <i class="fa fa-linkedin"> </i> <span></span> </a> <?php } if($Social_page['social_pinterest_link']!=''){ ?><a href="<?php echo $Social_page['social_pinterest_link'];?>" class="icon-button pinterest"><i class="fa fa-pinterest"></i><span></span></a><?php } if($Social_page['social_digg_link']!=''){ ?><a href="<?php echo $Social_page['social_digg_link'];?>" class="icon-button digg"><i class="fa fa-digg"></i><span></span></a><?php } if($Social_page['social_youtube_link']!=''){ ?><a href="<?php echo $Social_page['social_youtube_link'];?>" class="icon-button youtube"><i class="fa fa-youtube"></i><span></span></a><?php } if($Social_page['social_flickr_link']!=''){ ?><a href="<?php echo $Social_page['social_flickr_link'];?>" class="icon-button flickr"><i class="fa fa-flickr"></i><span></span></a><?php } if($Social_page['social_tumblr_link']!=''){ ?><a href="<?php echo $Social_page['social_tumblr_link'];?>" class="icon-button tumblr"><i class="fa fa-tumblr"></i><span></span></a><?php }  if($Social_page['social_vkontakte_link']!=''){ ?><a href="<?php echo $Social_page['social_vkontakte_link'];?>" class="icon-button vkontakte"><i class="fa fa-vk"></i><span></span></a><?php } if($Social_page['social_skype_link']!=''){ ?><a href="<?php echo $Social_page['social_skype_link'];?>" class="icon-button skype"><i class="fa fa-skype"></i><span></span></a><?php } if($Social_page['social_instagram_link']!=''){ ?><a href="<?php echo $Social_page['social_instagram_link'];?>" class="icon-button instagram"><i class="fa fa-instagram"></i><span></span></a><?php } if($Social_page['social_telegram_link']!=''){ ?><a href="<?php echo $Social_page['social_telegram_link'];?>" class="icon-button telegram"><i class="fa fa-telegram"></i><span></span></a><?php }if($Social_page['social_whatsapp_link']!=''){ ?><a href="<?php echo $Social_page['social_whatsapp_link'];?>" class="icon-button whatsapp"><i class="fa fa-whatsapp"></i><span></span></a><?php } ?><div></div>' );
+		jQuery( ".forgetmenot, #lostpasswordform" ).append('<div class="acl-social-inner" style="padding-top:16px"><div class="acl-social-text" style="color:<?php echo $heading_font_color; ?>; font-size:<?php echo $heading_font_size;?>px; "><?php _e('Find Us On Social Media',WEBLIZAR_ACL); ?></div><div style="padding-top:5px"><?php if($Social_page['social_twitter_link']!=''){ ?><a href="<?php echo $Social_page['social_twitter_link'];?>" class="icon-button twitter"><i class="fa fa-twitter"></i><span></span></a><?php } if($Social_page['social_facebook_link']!=''){ ?> <a href="<?php echo $Social_page['social_facebook_link'];?>" class="icon-button facebook"><i class="fa fa-facebook"></i><span></span></a> <?php } if($Social_page['social_google_plus_link']!=''){ ?> <a href="<?php echo $Social_page['social_google_plus_link'];?>" class="icon-button google-plus"><i class="fa fa-google-plus"></i><span></span></a><?php } if($Social_page['social_linkedin_link']!=''){ ?> <a href="<?php echo $Social_page['social_linkedin_link'];?>" class="icon-button linkedin"> <i class="fa fa-linkedin"> </i> <span></span> </a> <?php } if($Social_page['social_pinterest_link']!=''){ ?><a href="<?php echo $Social_page['social_pinterest_link'];?>" class="icon-button pinterest"><i class="fa fa-pinterest"></i><span></span></a><?php } if($Social_page['social_digg_link']!=''){ ?><a href="<?php echo $Social_page['social_digg_link'];?>" class="icon-button digg"><i class="fa fa-digg"></i><span></span></a><?php } if($Social_page['social_youtube_link']!=''){ ?><a href="<?php echo $Social_page['social_youtube_link'];?>" class="icon-button youtube"><i class="fa fa-youtube"></i><span></span></a><?php } if($Social_page['social_flickr_link']!=''){ ?><a href="<?php echo $Social_page['social_flickr_link'];?>" class="icon-button flickr"><i class="fa fa-flickr"></i><span></span></a><?php } if($Social_page['social_tumblr_link']!=''){ ?><a href="<?php echo $Social_page['social_tumblr_link'];?>" class="icon-button tumblr"><i class="fa fa-tumblr"></i><span></span></a><?php }  if($Social_page['social_vkontakte_link']!=''){ ?><a href="<?php echo $Social_page['social_vkontakte_link'];?>" class="icon-button vkontakte"><i class="fa fa-vk"></i><span></span></a><?php } if($Social_page['social_skype_link']!=''){ ?><a href="<?php echo $Social_page['social_skype_link'];?>" class="icon-button skype"><i class="fa fa-skype"></i><span></span></a><?php } if($Social_page['social_instagram_link']!=''){ ?><a href="<?php echo $Social_page['social_instagram_link'];?>" class="icon-button instagram"><i class="fa fa-instagram"></i><span></span></a><?php } if($Social_page['social_telegram_link']!=''){ ?><a href="<?php echo $Social_page['social_telegram_link'];?>" class="icon-button telegram"><i class="fa fa-telegram"></i><span></span></a><?php }if($Social_page['social_whatsapp_link']!=''){ ?><a href="<?php echo $Social_page['social_whatsapp_link'];?>" class="icon-button whatsapp"><i class="fa fa-whatsapp"></i><span></span></a><?php } ?><div></div>' );
 		<?php } ?>
 		//enable Social Icon In outer login form 
 		<?php if($Social_page['enable_social_icon'] == "outer" || $Social_page['enable_social_icon'] == "both") {?>

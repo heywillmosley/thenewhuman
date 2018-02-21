@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					<div class="post-social post-social-xs" id="post-social-5">
 						<div class="text-center padding-all text-center">
 							<div class="textbox text-white   margin-bottom settings-title">
-								<?php _e('Rate Us','WEBLIZAR_ACL')?>
+								<?php _e('Rate Us', WEBLIZAR_ACL)?>
 							</div>
 						</div>
 					</div>
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
-					<h3><?php _e('We need your feedback for improve our plugin functionality on WordPress. So, if you like our plugin then please rate us','WEBLIZAR_ACL')?></h3>	
+					<h3><?php _e('We need your feedback for improve our plugin functionality on WordPress. So, if you like our plugin then please rate us', WEBLIZAR_ACL)?></h3>	
 					</td>
 				</tr>
 			</table>
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Rate Us','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Rate Us', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">

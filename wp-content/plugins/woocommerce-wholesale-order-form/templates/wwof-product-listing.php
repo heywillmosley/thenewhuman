@@ -6,7 +6,7 @@
  *
  * @author 		Rymera Web Co
  * @package 	WooCommerceWholeSaleOrderForm/Templates
- * @version     1.8.0
+ * @version     1.8.1
  */
 
 if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -51,11 +51,11 @@ $labels = array(
                 $post_id = get_the_ID();
                 $product = wc_get_product( $post_id );
 
-                if( WWOF_Functions::wwof_get_product_type( $product ) == 'variable' ) {
+                if ( WWOF_Functions::wwof_get_product_type( $product ) == 'variable' ) {
 
-                    $available_variations = $product->get_available_variations();
+                    $available_variations = WWOF_Product_Listing_Helper::wwof_get_available_variations( $product );
 
-                    if( class_exists( 'WWP_Wholesale_Prices' ) ){
+                    if ( class_exists( 'WWP_Wholesale_Prices' ) ) {
 
                         global $wc_wholesale_prices;
 
@@ -68,6 +68,7 @@ $labels = array(
 
                     // update available variations input arguments
                     WWOF_Product_Listing_Helper::wwof_update_variations_input_args( $available_variations );
+
                 }
 
                 if( WWOF_Functions::wwof_get_product_type( $product ) == 'grouped' )
@@ -114,7 +115,7 @@ $labels = array(
 
             }// End while loop
 
-        }else{ ?>
+        } else { ?>
 
             <tr class="no-products">
                 <td colspan="4">

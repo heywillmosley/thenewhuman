@@ -1284,6 +1284,41 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
 
         }
 
+        /**
+         * WWOF get variable product available variations.
+         * 
+         * @since 1.8.1
+         * @access public
+         * 
+         * @param WC_Product_Variable $variable_product Variable product.
+         * @return array Variable product variations.
+         */
+        public static function wwof_get_available_variations( $variable_product ) {
+
+            $hide_wholesale_discount = get_option( "wwof_general_hide_quantity_discounts" ); // Option to hide Product Quantity Based Wholesale Pricing
+
+            if ( $hide_wholesale_discount === 'yes' ) {
+
+                add_filter( 'wwof_hide_table_on_wwof_form' , '__return_true' );
+                add_filter( 'wwof_hide_per_category_table_on_wwof_form' , '__return_true' );
+                add_filter( 'wwof_hide_per_wholesale_role_table_on_wwof_form' , '__return_true' );
+
+            }
+
+            $available_variations = $variable_product->get_available_variations();
+
+            if ( $hide_wholesale_discount === 'yes' ) {
+
+                remove_filter( 'wwof_hide_table_on_wwof_form' , '__return_true' );
+                remove_filter( 'wwof_hide_per_category_table_on_wwof_form' , '__return_true' );
+                remove_filter( 'wwof_hide_per_wholesale_role_table_on_wwof_form' , '__return_true' );
+
+            }
+
+            return $available_variations;
+
+        }
+
         /*
          |------------------------------------------------------------------------------------------------------------------
          | Utility Functions

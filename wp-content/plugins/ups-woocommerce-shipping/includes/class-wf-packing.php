@@ -152,7 +152,7 @@ class WF_Boxpack {
 					$package->width    = $item->get_width();
 					$package->height   = $item->get_height();
 					$package->value    = $item->get_value();
-                    $package->packtype = $box->get_packtype();
+					$package->packtype = '';
 					$package->unpacked = true;
 					$this->packages[]  = $package;
 				}

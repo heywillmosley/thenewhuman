@@ -172,7 +172,7 @@ function loginbgchange() {
 					<div class="post-social post-social-xs" id="post-social-5">
 						<div class="text-center padding-all text-center">
 							<div class="textbox text-white   margin-bottom settings-title">
-								<?php _e('Login Settings','WEBLIZAR_ACL'); ?> 
+								<?php _e('Login Settings', WEBLIZAR_ACL); ?> 
 							</div>
 						</div>
 					</div>
@@ -185,15 +185,15 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Login Form Position','WEBLIZAR_ACL'); ?></th>
+					<th scope="row" ><?php _e('Login Form Position', WEBLIZAR_ACL); ?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<select id="login_form_position" name="login_form_position" class="standard-dropdown" onchange='form_position_change()'>
-							<option value="default" <?php if($login_form_position == "default") echo "selected"; ?>><?php _e('Default','WEBLIZAR_ACL'); ?></option>
-							<option value="lf_float_style" <?php if($login_form_position == "lf_float_style") echo "selected"; ?>><?php _e('Floating','WEBLIZAR_ACL'); ?></option>
-							<option value="lf_customize_style" <?php if($login_form_position == "lf_customize_style") echo "selected"; ?>><?php _e('Floating With Customization','WEBLIZAR_ACL'); ?></option>
+							<option value="default" <?php if($login_form_position == "default") echo "selected"; ?>><?php _e('Default', WEBLIZAR_ACL); ?></option>
+							<option value="lf_float_style" <?php if($login_form_position == "lf_float_style") echo "selected"; ?>><?php _e('Floating', WEBLIZAR_ACL); ?></option>
+							<option value="lf_customize_style" <?php if($login_form_position == "lf_customize_style") echo "selected"; ?>><?php _e('Floating With Customization', WEBLIZAR_ACL); ?></option>
 						</select>
 					</td>
 				</tr>
@@ -204,19 +204,19 @@ function loginbgchange() {
 	<div id="div-login-float" class="lf_float_style" style="display:none;">
 		<table class="form-table">
 			<tr>
-				<th scope="row" ><?php _e('Float Settings','WEBLIZAR_ACL'); ?></th>
+				<th scope="row" ><?php _e('Float Settings', WEBLIZAR_ACL); ?></th>
 				<td></td>
 			</tr>
 			<tr class="radio-span" style="border-bottom:none;">
 				<td>
 					<span>
-						<input type="radio" name="login_form_float" value="left" id="login_form_float" <?php if($login_form_float=="left")echo "checked"; ?> />&nbsp;<?php _e('Left','WEBLIZAR_ACL')?><br>
+						<input type="radio" name="login_form_float" value="left" id="login_form_float" <?php if($login_form_float=="left")echo "checked"; ?> />&nbsp;<?php _e('Left', WEBLIZAR_ACL)?><br>
 					</span>
 					<span>
-						<input type="radio" name="login_form_float" value="center" id="login_form_float" <?php if($login_form_float=="center")echo "checked"; ?> />&nbsp;<?php _e('Center','WEBLIZAR_ACL')?><br>
+						<input type="radio" name="login_form_float" value="center" id="login_form_float" <?php if($login_form_float=="center")echo "checked"; ?> />&nbsp;<?php _e('Center', WEBLIZAR_ACL)?><br>
 					</span>
 					<span>	
-						<input type="radio" name="login_form_float" value="right" id="login_form_float" <?php if($login_form_float=="right")echo "checked"; ?> />&nbsp;<?php _e('Right','WEBLIZAR_ACL')?><br>
+						<input type="radio" name="login_form_float" value="right" id="login_form_float" <?php if($login_form_float=="right")echo "checked"; ?> />&nbsp;<?php _e('Right', WEBLIZAR_ACL)?><br>
 					</span>
 				</td>
 			</tr>
@@ -226,7 +226,7 @@ function loginbgchange() {
 	<div id="div-login-custom" class="lf_customize_style" style="display:none;">	
 		<table class="form-table">
 			<tr>
-			<th scope="row" ><?php _e('Floating With Customization Settings','WEBLIZAR_ACL'); ?></th>
+			<th scope="row" ><?php _e('Floating With Customization Settings', WEBLIZAR_ACL); ?></th>
 			<td></td>
 			</tr>
 				<tr  style="border-bottom:none;">
@@ -247,7 +247,7 @@ function loginbgchange() {
 				</tr>
 				<tr>
 					<td>
-						<p><?php _e('Note: This form position setting will be not responsive.','WEBLIZAR_ACL'); ?></p>						
+						<p><?php _e('Note: This form position setting will be not responsive.', WEBLIZAR_ACL); ?></p>						
 					</td>
 				</tr>
 		</table>
@@ -257,15 +257,15 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Select Background','WEBLIZAR_ACL'); ?></th>
+					<th scope="row" ><?php _e('Select Background', WEBLIZAR_ACL); ?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<select id="select-login-bg" class="standard-dropdown" name="select-background" onchange='loginbgchange()'>								
-							<optgroup label="<?php _e('Select background','WEBLIZAR_ACL'); ?>">
-							<option value="static-background-color" ><?php _e('Static Background Color','WEBLIZAR_ACL'); ?></option>
-							<option value="static-background-image" ><?php _e('Static Background Image','WEBLIZAR_ACL'); ?></option>										
+							<optgroup label="<?php _e('Select background', WEBLIZAR_ACL); ?>">
+							<option value="static-background-color" ><?php _e('Static Background Color', WEBLIZAR_ACL); ?></option>
+							<option value="static-background-image" ><?php _e('Static Background Image', WEBLIZAR_ACL); ?></option>										
 							</optgroup>
 						</select>
 					</td>
@@ -281,7 +281,7 @@ function loginbgchange() {
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('Background Color','WEBLIZAR_ACL'); ?></th>
+						<th scope="row" ><?php _e('Background Color', WEBLIZAR_ACL); ?></th>
 						<td></td>
 					</tr>
 					<tr  style="border-bottom:none;">
@@ -296,7 +296,7 @@ function loginbgchange() {
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('Login Form Opacity','WEBLIZAR_ACL')?></th>
+						<th scope="row" ><?php _e('Login Form Opacity', WEBLIZAR_ACL)?></th>
 						<td></td>
 					</tr>
 					<tr  style="border-bottom:none;">
@@ -318,17 +318,17 @@ function loginbgchange() {
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('Background Image','WEBLIZAR_ACL')?></th>
+						<th scope="row" ><?php _e('Background Image', WEBLIZAR_ACL)?></th>
 						<td></td>
 					</tr>
 					<tr  style="border-bottom:none;">
 						<td>
-							<input type="text" class="pro_text" id="login_bg_image" placeholder="<?php _e('No media selected!','WEBLIZAR_ACL')?>" name="upload_image" disabled="disabled"  value="<?php echo $login_bg_image; ?>"/>
-							<input type="button" value="<?php _e('Upload','WEBLIZAR_ACL')?>" id="upload-logo" class="button-primary rcsp_media_upload"/>
+							<input type="text" class="pro_text" id="login_bg_image" placeholder="<?php _e('No media selected!', WEBLIZAR_ACL)?>" name="upload_image" disabled="disabled"  value="<?php echo $login_bg_image; ?>"/>
+							<input type="button" value="<?php _e('Upload', WEBLIZAR_ACL)?>" id="upload-logo" class="button-primary rcsp_media_upload"/>
 							
-							<input type="button"  value="<?php _e('preview','WEBLIZAR_ACL')?>" data-toggle="modal" data-target="#about_us_image_builder" id="login-image-previewer" title="Font Awesome Icons"  class="button  " onclick="Acl_show_Image_2()" />
+							<input type="button"  value="<?php _e('Preview', WEBLIZAR_ACL)?>" data-toggle="modal" data-target="#about_us_image_builder" id="login-image-previewer" title="Font Awesome Icons"  class="button  " onclick="Acl_show_Image_2()" />
 							
-							<input type="button" id="display-logo" value="<?php _e('Remove','WEBLIZAR_ACL')?>" class="button " onclick="Acl_login_img_clear();" />
+							<input type="button" id="display-logo" value="<?php _e('Remove', WEBLIZAR_ACL)?>" class="button " onclick="Acl_login_img_clear();" />
 
 							<!-- Modal -->
 							<div class="modal " id="about_us_image_builder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -336,13 +336,13 @@ function loginbgchange() {
 									<div class="modal-content">
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-											<h4 class="modal-title" id="myModalLabel"><?php _e('Login Background Image','WEBLIZAR_ACL')?></h4>
+											<h4 class="modal-title" id="myModalLabel"><?php _e('Login Background Image', WEBLIZAR_ACL)?></h4>
 										</div>
 										<div class="modal-body">
 											<img class="show_prev_img" src="" style="width:100%; height:50%" id="img"/>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close','WEBLIZAR_ACL')?></button>
+											<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close', WEBLIZAR_ACL)?></button>
 										</div>
 									</div>
 								</div>
@@ -357,16 +357,16 @@ function loginbgchange() {
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('Background Repeat','WEBLIZAR_ACL')?></th>
+						<th scope="row" ><?php _e('Background Repeat', WEBLIZAR_ACL)?></th>
 						<td></td>
 					</tr>
 					<tr class="radio-span" style="border-bottom:none;">
 						<td>
 							<select id="login_bg_repeat" class="standard-dropdown" name="login_bg_repeat">
-								<option value="no-repeat" ><?php _e('No Repeat ','WEBLIZAR_ACL')?> </option>
-								<option value="repeat" ><?php _e('Repeat','WEBLIZAR_ACL')?> </option>
-								<option value="repeat-x" ><?php _e('Repeat Horizontally','WEBLIZAR_ACL')?> </option>
-								<option value="repeat-y" ><?php _e('Repeat Vertically','WEBLIZAR_ACL')?> </option>
+								<option value="no-repeat" ><?php _e('No Repeat', WEBLIZAR_ACL)?></option>
+								<option value="repeat" ><?php _e('Repeat', WEBLIZAR_ACL)?></option>
+								<option value="repeat-x" ><?php _e('Repeat Horizontally', WEBLIZAR_ACL)?></option>
+								<option value="repeat-y" ><?php _e('Repeat Vertically', WEBLIZAR_ACL)?></option>
 							</select>
 						</td>
 					</tr>
@@ -377,21 +377,21 @@ function loginbgchange() {
 			<div class="panel-body">
 				<table class="form-table">
 					<tr>
-						<th scope="row" ><?php _e('Background Position ','WEBLIZAR_ACL')?></th>
+						<th scope="row" ><?php _e('Background Position', WEBLIZAR_ACL)?></th>
 						<td></td>
 					</tr>
 					<tr class="radio-span" style="border-bottom:none;">
 						<td>
 							<select id="login_bg_position" class="standard-dropdown" name="login_bg_position">
-								<option value="left top" ><?php _e('Left Top','WEBLIZAR_ACL')?> </option>
-								<option value="left center" ><?php _e('Left Center','WEBLIZAR_ACL')?> </option>
-								<option value="left bottom" ><?php _e('Left Bottom','WEBLIZAR_ACL')?> </option>
-								<option value="right top" ><?php _e('Right Top','WEBLIZAR_ACL')?> </option>
-								<option value="right center" ><?php _e('Right Center','WEBLIZAR_ACL')?> </option>
-								<option value="right bottom" ><?php _e('Right Bottom','WEBLIZAR_ACL')?></option>
-								<option value="center top" ><?php _e('Center Top','WEBLIZAR_ACL')?> </option>
-								<option value="center" ><?php _e('Center Center','WEBLIZAR_ACL')?> </option>
-								<option value="center bottom" ><?php _e('Center Bottom','WEBLIZAR_ACL')?> </option>
+								<option value="left top" ><?php _e('Left Top', WEBLIZAR_ACL)?> </option>
+								<option value="left center" ><?php _e('Left Center', WEBLIZAR_ACL)?> </option>
+								<option value="left bottom" ><?php _e('Left Bottom', WEBLIZAR_ACL)?> </option>
+								<option value="right top" ><?php _e('Right Top', WEBLIZAR_ACL)?> </option>
+								<option value="right center" ><?php _e('Right Center', WEBLIZAR_ACL)?> </option>
+								<option value="right bottom" ><?php _e('Right Bottom', WEBLIZAR_ACL)?></option>
+								<option value="center top" ><?php _e('Center Top', WEBLIZAR_ACL)?> </option>
+								<option value="center" ><?php _e('Center Center', WEBLIZAR_ACL)?> </option>
+								<option value="center bottom" ><?php _e('Center Bottom', WEBLIZAR_ACL)?> </option>
 							</select>
 						</td>
 					</tr>
@@ -403,17 +403,17 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Background Effect','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Background Effect', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						 <select id="login_bg_color_overlay" class="standard-dropdown" name="login_bg_color_overlay"  >
-							<optgroup label="<?php _e('Select overlay effect','WEBLIZAR_ACL')?>">
-								<option value="no_effect" ><?php _e('No Overlay Effect','WEBLIZAR_ACL')?></option>
-								<option value="pattern-1" ><?php _e('Overlay Effect 1','WEBLIZAR_ACL')?> </option>
-								<option value="pattern-2" ><?php _e('Overlay Effect 2','WEBLIZAR_ACL')?> </option>
-								<option value="logo" ><?php _e('Overlay Effect 3','WEBLIZAR_ACL')?> </option>
+							<optgroup label="<?php _e('Select overlay effect', WEBLIZAR_ACL)?>">
+								<option value="no_effect" ><?php _e('No Overlay Effect', WEBLIZAR_ACL)?></option>
+								<option value="pattern-1" ><?php _e('Overlay Effect 1', WEBLIZAR_ACL)?> </option>
+								<option value="pattern-2" ><?php _e('Overlay Effect 2', WEBLIZAR_ACL)?> </option>
+								<option value="logo" ><?php _e('Overlay Effect 3', WEBLIZAR_ACL)?> </option>
 							</optgroup>
 						</select>
 					</td>
@@ -426,7 +426,7 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Login Form Width','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Login Form Width', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -443,7 +443,7 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Border Color','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Border Color', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -458,7 +458,7 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Border Radius','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Border Radius', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -475,17 +475,17 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Border Style','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Border Style', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<select id="login_border_style" class="standard-dropdown" name="login_border_style">
-							<option value="none" ><?php _e('None','WEBLIZAR_ACL')?> </option>
-							<option value="solid" ><?php _e('Solid','WEBLIZAR_ACL')?> </option>
-							<option value="dotted" ><?php _e('Dotted','WEBLIZAR_ACL')?> </option>
-							<option value="dashed" ><?php _e('Dashed','WEBLIZAR_ACL')?> </option>
-							<option value="double" ><?php _e('Double','WEBLIZAR_ACL')?> </option>
+							<option value="none" ><?php _e('None', WEBLIZAR_ACL)?> </option>
+							<option value="solid" ><?php _e('Solid', WEBLIZAR_ACL)?> </option>
+							<option value="dotted" ><?php _e('Dotted', WEBLIZAR_ACL)?> </option>
+							<option value="dashed" ><?php _e('Dashed', WEBLIZAR_ACL)?> </option>
+							<option value="double" ><?php _e('Double', WEBLIZAR_ACL)?> </option>
 						</select>
 					</td>
 				</tr>
@@ -496,7 +496,7 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Border Thickness','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Border Thickness', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -513,16 +513,16 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Enable form shadow?','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Enable Form Shadow?', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<span>
-							<input type="radio" name="enable_form_shadow" value="yes" id="login_enable_shadow1" <?php if($login_enable_shadow=="yes")echo "checked"; ?> />&nbsp;<?php _e('Yes','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="enable_form_shadow" value="yes" id="login_enable_shadow1" <?php if($login_enable_shadow=="yes")echo "checked"; ?> />&nbsp;<?php _e('Yes', WEBLIZAR_ACL)?><br>
 						</span>
 						<span>
-							<input type="radio" name="enable_form_shadow" value="no" id="login_enable_shadow2" <?php if($login_enable_shadow=="no")echo "checked"; ?> />&nbsp;<?php _e('No','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="enable_form_shadow" value="no" id="login_enable_shadow2" <?php if($login_enable_shadow=="no")echo "checked"; ?> />&nbsp;<?php _e('No', WEBLIZAR_ACL)?><br>
 						</span>
 					</td>
 				</tr>
@@ -533,7 +533,7 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Form Shadow Color','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Form Shadow Color', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -548,13 +548,13 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Redirect Users After Login (Not Work For Admin)','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Redirect Users After Login (Not Work For Admin)', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
-						<input type="text" class="login_redirect_user" id="login_redirect_user" name="login_redirect_user" placeholder="Redirect URL" size="56" value="<?php echo $login_redirect_user; ?>"><br>
-						<span style="color:#ef4238"> Enter the URL to redirect users after login, this setting will not work for admin</span>
+						<input type="text" class="login_redirect_user" id="login_redirect_user" name="login_redirect_user" placeholder="<?php _e('Redirect URL', WEBLIZAR_ACL)?>" size="56" value="<?php echo $login_redirect_user; ?>"><br>
+						<span style="color:#ef4238"><?php _e('Enter the URL to redirect users after login, Setting will not work for an administrator.', WEBLIZAR_ACL)?></span>
 					</td>
 				</tr>
 			</table>
@@ -564,12 +564,12 @@ function loginbgchange() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Custom CSS','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Custom CSS', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
-						<textarea id="login_custom_css" name="login_custom_css" placeholder="<?php _e('Custom CSS','WEBLIZAR_ACL')?>" type="text" class="login_custom_css" rows="10" cols="75" style="width:80%"><?php echo $login_custom_css; ?></textarea>
+						<textarea id="login_custom_css" name="login_custom_css" placeholder="<?php _e('Custom CSS', WEBLIZAR_ACL)?>" type="text" class="login_custom_css" rows="10" cols="75" style="width:80%"><?php echo $login_custom_css; ?></textarea>
 						<p class="description">
 							<?php _e('Enter any custom css you want to apply on login panel.', WEBLIZAR_ACL ); ?>.<br>
 							<?php _e('Note: Please Do Not Use', WEBLIZAR_ACL ); ?> <b>Style</b> <?php _e('Tag With Custom CSS', WEBLIZAR_ACL ); ?>.
@@ -589,7 +589,7 @@ function loginbgchange() {
 				</svg>
 			</div>
 			<div class="dialog-inner">
-				<h2><strong><?php _e('Login ','WEBLIZAR_ACL')?></strong><?php _e('Setting Save Successfully','WEBLIZAR_ACL')?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button2"><?php _e('Close','WEBLIZAR_ACL')?></button></div>
+				<h2><strong><?php _e('Login', WEBLIZAR_ACL)?></strong> <?php _e('Setting Save Successfully', WEBLIZAR_ACL)?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button2"><?php _e('Close', WEBLIZAR_ACL)?></button></div>
 			</div>
 		</div>
 	</div>
@@ -603,17 +603,17 @@ function loginbgchange() {
 				</svg>
 			</div>
 			<div class="dialog-inner">
-				<h2><strong><?php _e('Login ','WEBLIZAR_ACL')?></strong><?php _e('Setting Reset Successfully','WEBLIZAR_ACL')?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button8"><?php _e('Close','WEBLIZAR_ACL')?></button></div>
+				<h2><strong><?php _e('Login', WEBLIZAR_ACL)?></strong> <?php _e('Setting Reset Successfully', WEBLIZAR_ACL)?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button8"><?php _e('Close', WEBLIZAR_ACL)?></button></div>
 			</div>
 		</div>
 	</div>
 	<div class="panel panel-primary save-button-block">
 		<div class="panel-body">
 			<div class="pull-left">
-				<button type="button" onclick="return Custom_login_login('loginbgSave', '');" class="btn btn-info btn-lg"><?php _e('Save Changes','WEBLIZAR_ACL')?></button>
+				<button type="button" onclick="return Custom_login_login('loginbgSave', '');" class="btn btn-info btn-lg"><?php _e('Save Changes', WEBLIZAR_ACL)?></button>
 			</div>
 			<div class="pull-right">
-				<button type="button" onclick="return Custom_login_login('loginbgReset', '');" class="btn btn-primary btn-lg"><?php _e('Reset Default','WEBLIZAR_ACL')?></button>
+				<button type="button" onclick="return Custom_login_login('loginbgReset', '');" class="btn btn-primary btn-lg"><?php _e('Reset Default', WEBLIZAR_ACL)?></button>
 			</div>
 		</div>
 	</div>

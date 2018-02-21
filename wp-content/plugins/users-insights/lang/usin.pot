@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-01-09 13:46+1100\n"
-"PO-Revision-Date: 2018-01-09 13:46+1100\n"
+"POT-Creation-Date: 2018-02-06 11:34+1100\n"
+"PO-Revision-Date: 2018-02-06 11:34+1100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -460,13 +460,13 @@ msgstr ""
 #: core/modules/module-default-options.php:33
 #: core/modules/module-default-options.php:49
 #: plugin-modules/bbpress/bbpress.php:41
-#: plugin-modules/buddypress/buddypress.php:63 plugin-modules/edd/edd.php:65
-#: plugin-modules/gravity-forms/gravity-forms.php:69
-#: plugin-modules/learndash/learndash.php:71
-#: plugin-modules/ultimate-member/ultimate-member.php:64
-#: plugin-modules/wc-memberships/wc-memberships.php:40
+#: plugin-modules/buddypress/buddypress.php:59 plugin-modules/edd/edd.php:59
+#: plugin-modules/gravity-forms/gravity-forms.php:62
+#: plugin-modules/learndash/learndash.php:74 plugin-modules/pmpro/pmpro.php:37
+#: plugin-modules/ultimate-member/ultimate-member.php:53
+#: plugin-modules/wc-memberships/wc-memberships.php:38
 #: plugin-modules/wc-subscriptions/wc-subscriptions.php:37
-#: plugin-modules/woocommerce/woocommerce.php:38
+#: plugin-modules/woocommerce/woocommerce.php:44
 msgid "Learn More"
 msgstr ""
 
@@ -528,11 +528,11 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: core/reports/reports-ajax.php:49
+#: core/reports/reports-ajax.php:57
 msgid "Error finding a report with this ID"
 msgstr ""
 
-#: core/reports/reports-ajax.php:53
+#: core/reports/reports-ajax.php:61
 msgid "Missing filter parameter"
 msgstr ""
 
@@ -588,7 +588,7 @@ msgstr ""
 msgid "Detected platforms displayed only"
 msgstr ""
 
-#: core/reports/reports-page.php:24
+#: core/reports/reports-page.php:26
 msgid "Reports"
 msgstr ""
 
@@ -905,7 +905,7 @@ msgid "Friend"
 msgstr ""
 
 #: plugin-modules/buddypress/buddypress-user-activity.php:89
-#: plugin-modules/buddypress/buddypress.php:120
+#: plugin-modules/buddypress/buddypress.php:113
 msgid "Friends"
 msgstr ""
 
@@ -914,7 +914,7 @@ msgid "Activity Update"
 msgstr ""
 
 #: plugin-modules/buddypress/buddypress-user-activity.php:135
-#: plugin-modules/buddypress/buddypress.php:135
+#: plugin-modules/buddypress/buddypress.php:128
 msgid "Activity Updates"
 msgstr ""
 
@@ -932,7 +932,7 @@ msgid "Group Created"
 msgstr ""
 
 #: plugin-modules/buddypress/buddypress-user-activity.php:219
-#: plugin-modules/buddypress/buddypress.php:90
+#: plugin-modules/buddypress/buddypress.php:83
 msgid "Groups Created"
 msgstr ""
 
@@ -940,18 +940,18 @@ msgstr ""
 msgid "View BuddyPress Profile"
 msgstr ""
 
-#: plugin-modules/buddypress/buddypress.php:60
+#: plugin-modules/buddypress/buddypress.php:56
 msgid ""
 "Retrieves and displays data about the users activity in the BuddyPress "
 "social network."
 msgstr ""
 
-#: plugin-modules/buddypress/buddypress.php:77
+#: plugin-modules/buddypress/buddypress.php:70
 msgid "Group Number"
 msgstr ""
 
-#: plugin-modules/buddypress/buddypress.php:103
-#: plugin-modules/learndash/learndash.php:150
+#: plugin-modules/buddypress/buddypress.php:96
+#: plugin-modules/learndash/learndash.php:153
 msgid "Group"
 msgstr ""
 
@@ -969,33 +969,33 @@ msgid_plural "Orders"
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugin-modules/edd/edd.php:61
+#: plugin-modules/edd/edd.php:55
 msgid "Easy Digital Downloads"
 msgstr ""
 
-#: plugin-modules/edd/edd.php:62
+#: plugin-modules/edd/edd.php:56
 msgid ""
 "Retrieves and displays data from the Easy Digital Downloads orders made by "
 "the WordPress users."
 msgstr ""
 
-#: plugin-modules/edd/edd.php:82 plugin-modules/woocommerce/woocommerce.php:47
+#: plugin-modules/edd/edd.php:74 plugin-modules/woocommerce/woocommerce.php:62
 msgid "Orders"
 msgstr ""
 
-#: plugin-modules/edd/edd.php:95 plugin-modules/woocommerce/woocommerce.php:70
+#: plugin-modules/edd/edd.php:87 plugin-modules/woocommerce/woocommerce.php:96
 msgid "Lifetime Value"
 msgstr ""
 
-#: plugin-modules/edd/edd.php:109
+#: plugin-modules/edd/edd.php:101
 msgid "Last Order Date"
 msgstr ""
 
-#: plugin-modules/edd/edd.php:121
+#: plugin-modules/edd/edd.php:113
 msgid "Ordered Products"
 msgstr ""
 
-#: plugin-modules/edd/edd.php:135
+#: plugin-modules/edd/edd.php:127
 msgid "Orders Status"
 msgstr ""
 
@@ -1005,7 +1005,7 @@ msgid "Sales"
 msgstr ""
 
 #: plugin-modules/edd/reports/edd-reports.php:23
-#: plugin-modules/woocommerce/reports/woocommerce-reports.php:28
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:30
 msgid "New customers"
 msgstr ""
 
@@ -1026,11 +1026,11 @@ msgid "Best sellers"
 msgstr ""
 
 #: plugin-modules/edd/reports/edd-reports.php:36
-msgid "License statuses (user & guest)"
+msgid "License statuses"
 msgstr ""
 
 #: plugin-modules/edd/reports/edd-reports.php:39
-msgid "License renewals (user & guest)"
+msgid "License renewals"
 msgstr ""
 
 #: plugin-modules/edd/reports/loaders/edd-order-number-loader.php:27
@@ -1046,17 +1046,17 @@ msgid_plural "%s Entries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugin-modules/gravity-forms/gravity-forms.php:66
+#: plugin-modules/gravity-forms/gravity-forms.php:59
 msgid ""
 "Provides Gravity Forms related filters and data. Detects and displays the "
 "custom user data saved with the Gravity Forms User Registration Add-on."
 msgstr ""
 
-#: plugin-modules/gravity-forms/gravity-forms.php:89
+#: plugin-modules/gravity-forms/gravity-forms.php:80
 msgid "Has completed form"
 msgstr ""
 
-#: plugin-modules/gravity-forms/gravity-forms.php:103
+#: plugin-modules/gravity-forms/gravity-forms.php:94
 msgid "Has not completed form"
 msgstr ""
 
@@ -1074,7 +1074,7 @@ msgid_plural "Belongs to %d Groups"
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugin-modules/learndash/learndash.php:54
+#: plugin-modules/learndash/learndash.php:57
 msgid ""
 "The <b>LearnDash Module</b> of Users Insights requires LearnDash 2.3 or "
 "newer. \n"
@@ -1084,75 +1084,75 @@ msgid ""
 "integration/\">this article</a>."
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:67
+#: plugin-modules/learndash/learndash.php:70
 msgid "LearnDash"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:68
+#: plugin-modules/learndash/learndash.php:71
 msgid ""
 "Detects the LearnDash user activity and makes it available in the user table "
 "and filters."
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:87
+#: plugin-modules/learndash/learndash.php:90
 #, php-format
 msgctxt "Lessons Completed Label"
 msgid "%s Completed"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:91
+#: plugin-modules/learndash/learndash.php:94
 #, php-format
 msgctxt "Topics Completed Label"
 msgid "%s Completed"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:95
+#: plugin-modules/learndash/learndash.php:98
 #, php-format
 msgctxt "Courses Completed Label"
 msgid "%s Completed"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:99
+#: plugin-modules/learndash/learndash.php:102
 #, php-format
 msgctxt "Courses Started Label"
 msgid "%s In Progress"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:103
+#: plugin-modules/learndash/learndash.php:106
 #, php-format
 msgid "%s Attempts"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:107
+#: plugin-modules/learndash/learndash.php:110
 #, php-format
 msgid "%s Passes"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:118
+#: plugin-modules/learndash/learndash.php:121
 msgid "Last Activity"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:134
+#: plugin-modules/learndash/learndash.php:137
 msgid "Has enrolled in course"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:135
+#: plugin-modules/learndash/learndash.php:138
 msgid "Has not enrolled in course"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:136
+#: plugin-modules/learndash/learndash.php:139
 msgid "Has completed course"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:137
+#: plugin-modules/learndash/learndash.php:140
 msgid "Has not completed course"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:138
+#: plugin-modules/learndash/learndash.php:141
 msgid "Has passed quiz"
 msgstr ""
 
-#: plugin-modules/learndash/learndash.php:139
+#: plugin-modules/learndash/learndash.php:142
 msgid "Has not passed quiz"
 msgstr ""
 
@@ -1169,6 +1169,7 @@ msgid "Top courses by student number"
 msgstr ""
 
 #: plugin-modules/learndash/reports/learndash-reports.php:41
+#: plugin-modules/pmpro/reports/pmpro-reports.php:18
 #: plugin-modules/wc-memberships/reports/wc-memberships-reports.php:18
 #: plugin-modules/woocommerce/reports/woocommerce-reports.php:17
 msgid "All statuses"
@@ -1204,17 +1205,146 @@ msgid_plural "attempts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugin-modules/ultimate-member/ultimate-member.php:61
+#: plugin-modules/pmpro/pmpro-user-activity.php:51
+#: plugin-modules/wc-memberships/wc-memberships-user-activity.php:66
+msgid "Membership"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro-user-activity.php:74
+msgid "Fee"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro-user-activity.php:75
+#: plugin-modules/pmpro/pmpro.php:60
+msgid "Start date"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro-user-activity.php:77
+#: plugin-modules/pmpro/pmpro.php:72
+msgid "End date"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro-user-activity.php:88
+msgid "Payment"
+msgid_plural "Payments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin-modules/pmpro/pmpro-user-activity.php:164
+msgid "Discount Code Used"
+msgid_plural "Discount Codes Used"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin-modules/pmpro/pmpro.php:33
+msgid ""
+"Detects the Paid Memberships Pro user data and makes it available in the "
+"user table, filters and reports."
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro.php:47
+msgid "Level"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro.php:85
+msgid "Status"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro.php:98
+#: plugin-modules/wc-memberships/wc-memberships.php:66
+msgid "Member since"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro.php:110
+msgid "Lifetime value"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro.php:123
+#: plugin-modules/pmpro/reports/pmpro-reports.php:26
+msgid "Payments"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro.php:136
+msgid "Last payment"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro.php:148
+msgid "Has used discount code"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro.php:161
+msgid "Billing country"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro.php:174
+msgid "Billing state"
+msgstr ""
+
+#: plugin-modules/pmpro/pmpro.php:186
+msgid "Billing city"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:21
+msgid "All levels"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:24
+msgid "Signups"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:28
+msgid "Payments total amount"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:30
+#: plugin-modules/wc-memberships/reports/wc-memberships-reports.php:25
+msgid "Ended memberships"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:32
+msgid "Number of members per level"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:39
+#: plugin-modules/wc-memberships/reports/wc-memberships-reports.php:36
+#: plugin-modules/wc-memberships/wc-memberships.php:79
+msgid "Membership statuses"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:46
+msgid "Customer lifetime value"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:48
+msgid "Top discount codes used"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:50
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:38
+msgid "Top billing countries"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:52
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:40
+msgid "Top billing states"
+msgstr ""
+
+#: plugin-modules/pmpro/reports/pmpro-reports.php:54
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:42
+msgid "Top billing cities"
+msgstr ""
+
+#: plugin-modules/ultimate-member/ultimate-member.php:50
 msgid ""
 "Detects and displays the custom user fields data generated with the Ultimate "
 "Member forms."
 msgstr ""
 
-#: plugin-modules/ultimate-member/ultimate-member.php:143
+#: plugin-modules/ultimate-member/ultimate-member.php:130
 msgid "Community Role"
 msgstr ""
 
-#: plugin-modules/ultimate-member/ultimate-member.php:187
+#: plugin-modules/ultimate-member/ultimate-member.php:174
 msgid "View Ultimate Member Profile"
 msgstr ""
 
@@ -1226,13 +1356,12 @@ msgstr ""
 msgid "New members"
 msgstr ""
 
-#: plugin-modules/wc-memberships/reports/wc-memberships-reports.php:25
-msgid "Number of memberships per plan"
+#: plugin-modules/wc-memberships/reports/wc-memberships-reports.php:26
+msgid "Cancelled & expired memberships"
 msgstr ""
 
-#: plugin-modules/wc-memberships/reports/wc-memberships-reports.php:34
-#: plugin-modules/wc-memberships/wc-memberships.php:76
-msgid "Membership statuses"
+#: plugin-modules/wc-memberships/reports/wc-memberships-reports.php:27
+msgid "Number of memberships per plan"
 msgstr ""
 
 #: plugin-modules/wc-memberships/wc-memberships-user-activity.php:39
@@ -1243,30 +1372,24 @@ msgstr ""
 msgid "End Date"
 msgstr ""
 
-#: plugin-modules/wc-memberships/wc-memberships-user-activity.php:60
-msgid "Membership"
-msgid_plural "Memberships"
-msgstr[0] ""
-msgstr[1] ""
+#: plugin-modules/wc-memberships/wc-memberships-user-activity.php:51
+msgid "Cancelled Date"
+msgstr ""
 
-#: plugin-modules/wc-memberships/wc-memberships.php:36
+#: plugin-modules/wc-memberships/wc-memberships.php:34
 msgid "WooCommerce Memberships"
 msgstr ""
 
-#: plugin-modules/wc-memberships/wc-memberships.php:37
+#: plugin-modules/wc-memberships/wc-memberships.php:35
 msgid ""
 "Retrieves and displays the data from the WooCommerce Memberships extension."
 msgstr ""
 
-#: plugin-modules/wc-memberships/wc-memberships.php:49
+#: plugin-modules/wc-memberships/wc-memberships.php:52
 msgid "Memberships"
 msgstr ""
 
-#: plugin-modules/wc-memberships/wc-memberships.php:63
-msgid "Member since"
-msgstr ""
-
-#: plugin-modules/wc-memberships/wc-memberships.php:90
+#: plugin-modules/wc-memberships/wc-memberships.php:93
 msgid "Membership plans"
 msgstr ""
 
@@ -1297,76 +1420,86 @@ msgid_plural "orders"
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugin-modules/woocommerce/reports/woocommerce-reports.php:30
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:27
+msgid "Orders with status completed, processing or on hold"
+msgstr ""
+
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:28
+msgid "Sales total"
+msgstr ""
+
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:32
 msgid "Number of orders per customer"
 msgstr ""
 
-#: plugin-modules/woocommerce/reports/woocommerce-reports.php:36
-msgid "Top billing countries"
-msgstr ""
-
-#: plugin-modules/woocommerce/reports/woocommerce-reports.php:38
-msgid "Top billing states"
-msgstr ""
-
-#: plugin-modules/woocommerce/reports/woocommerce-reports.php:40
-msgid "Top billing cities"
-msgstr ""
-
-#: plugin-modules/woocommerce/reports/woocommerce-reports.php:42
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:44
 msgid "Order status"
 msgstr ""
 
-#: plugin-modules/woocommerce/reports/woocommerce-reports.php:44
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:46
 msgid "Payment methods used"
 msgstr ""
 
-#: plugin-modules/woocommerce/reports/woocommerce-reports.php:46
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:48
 msgid "Top coupons used"
 msgstr ""
 
-#: plugin-modules/woocommerce/reports/woocommerce-reports.php:48
+#: plugin-modules/woocommerce/reports/woocommerce-reports.php:50
 msgid "Top ordered products"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce-user-activity.php:110
+#: plugin-modules/woocommerce/woocommerce-user-activity.php:111
 msgid "Product Review"
 msgid_plural "Product Reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugin-modules/woocommerce/woocommerce-user-activity.php:129
+#: plugin-modules/woocommerce/woocommerce-user-activity.php:130
 msgid "for"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:34
+#: plugin-modules/woocommerce/woocommerce-user-activity.php:168
+msgid "Coupon Used"
+msgid_plural "Coupons Used"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin-modules/woocommerce/woocommerce.php:40
 msgid "WooCommerce"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:35
+#: plugin-modules/woocommerce/woocommerce.php:41
 msgid ""
 "Retrieves and displays data from the WooCommerce orders made by the "
 "WordPress users."
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:59
+#: plugin-modules/woocommerce/woocommerce.php:74
+msgid "First order"
+msgstr ""
+
+#: plugin-modules/woocommerce/woocommerce.php:85
 msgid "Last order"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:82
+#: plugin-modules/woocommerce/woocommerce.php:108
 msgid "Ordered products"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:95
+#: plugin-modules/woocommerce/woocommerce.php:122
 msgid "Orders status"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:108
+#: plugin-modules/woocommerce/woocommerce.php:135
 msgid "Reviews"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:120
+#: plugin-modules/woocommerce/woocommerce.php:147
 msgid "Has used coupon"
+msgstr ""
+
+#: plugin-modules/woocommerce/woocommerce.php:237
+msgid "Users Insights Profile"
 msgstr ""
 
 #: users-insights.php:118

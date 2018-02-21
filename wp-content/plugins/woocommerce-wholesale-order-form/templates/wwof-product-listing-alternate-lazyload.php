@@ -6,7 +6,7 @@
  *
  * @author 		Rymera Web Co
  * @package 	WooCommerceWholeSaleOrderForm/Templates
- * @version     1.8.0
+ * @version     1.8.1
  */
 
 if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -29,8 +29,8 @@ while ( $product_loop->have_posts() ) { $product_loop->the_post();
     $product = wc_get_product( $post_id );
 
     if ( WWOF_Functions::wwof_get_product_type( $product ) == 'variable' ) {
-
-        $available_variations = $product->get_available_variations();
+        
+        $available_variations = WWOF_Product_Listing_Helper::wwof_get_available_variations( $product );
 
         if ( class_exists( 'WWP_Wholesale_Prices' ) ){
 

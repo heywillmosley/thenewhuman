@@ -4,11 +4,11 @@ Plugin Name:    WooCommerce Wholesale Order Form
 Plugin URI:     https://wholesalesuiteplugin.com/
 Description:    WooCommerce Extension to Provide Wholesale Product Listing Functionality
 Author:         Rymera Web Co
-Version:        1.8.0
+Version:        1.8.3
 Author URI:     http://rymera.com.au/
 Text Domain:    woocommerce-wholesale-order-form
 WC requires at least: 3.0.9
-WC tested up to: 3.2.6
+WC tested up to: 3.3.1
 */
 
 require_once ( 'includes/class-wwof-functions.php' );
@@ -56,9 +56,9 @@ if ( count( WWOF_Functions::wwof_check_plugin_dependencies() ) <= 0 ) {
 
     if ( $wwof_option_license_key && $wwof_option_license_email ) {
 
-        require 'plugin-updates/class-wws-plugin-update-checker.php';
+        include 'plugin-updates/class-wws-plugin-update-checker.php';
 
-        $wws_wwof_update_checker = new WWS_Plugin_Update_Checker(
+        $wws_wwof_update_checker = new WWS_WWOF_Plugin_Update_Checker(
             'https://wholesalesuiteplugin.com/wp-admin/admin-ajax.php?action=wumGetUpdateInfo&plugin=order-form&licence=' . $wwof_option_license_key . '&email=' . $wwof_option_license_email,
             __FILE__,
             'woocommerce-wholesale-order-form',

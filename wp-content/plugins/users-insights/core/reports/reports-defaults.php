@@ -22,10 +22,10 @@ class USIN_Reports_Defaults{
 
 		if(usin_module_options()->is_module_active('devices')){
 			$defaults[]= new USIN_Standard_Report('user_browsers', __('User browsers', 'usin'), 
-				array('info' => '* '.__('Detected browsers displayed only', 'usin')));
+				array('info' => __('Detected browsers displayed only', 'usin')));
 
 			$defaults[]= new USIN_Standard_Report('user_platforms', __('User platforms', 'usin'), 
-				array('info' => '* '.__('Detected platforms displayed only', 'usin')));
+				array('info' => __('Detected platforms displayed only', 'usin')));
 		}
 
 		$defaults = apply_filters('usin_report_defaults', $defaults);

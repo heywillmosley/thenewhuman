@@ -196,7 +196,7 @@ final class FLBuilder {
 
 		wp_editor( '{FL_EDITOR_CONTENT}', 'flbuildereditor', array(
 			'media_buttons' => true,
-			'wpautop' 		=> true,
+			'wpautop'       => true,
 			'textarea_rows' => 16,
 		) );
 
@@ -690,6 +690,7 @@ final class FLBuilder {
 				}
 			}
 		}// End if().
+		wp_add_inline_style( 'admin-bar', '#wp-admin-bar-fl-builder-frontend-edit-link .ab-icon:before { content: "\f116" !important; top: 2px; margin-right: 3px; }' );
 	}
 
 	/**
@@ -750,6 +751,12 @@ final class FLBuilder {
 			if ( FLBuilderModel::layout_has_drafted_changes() ) {
 				$classes[] = 'fl-builder--layout-has-drafted-changes';
 			}
+
+			if ( is_rtl() ) {
+				$classes[] = 'fl-builder-direction-rtl';
+			} else {
+				$classes[] = 'fl-builder-direction-ltr';
+			}
 		}
 
 		return $classes;
@@ -772,7 +779,7 @@ final class FLBuilder {
 
 			$wp_admin_bar->add_node( array(
 				'id'    => 'fl-builder-frontend-edit-link',
-				'title' => '<style> #wp-admin-bar-fl-builder-frontend-edit-link .ab-icon:before { content: "\f116" !important; top: 2px; margin-right: 3px; } </style><span class="ab-icon"></span>' . FLBuilderModel::get_branding() . $dot,
+				'title' => '<span class="ab-icon"></span>' . FLBuilderModel::get_branding() . $dot,
 				'href'  => FLBuilderModel::get_edit_url( $wp_the_query->post->ID ),
 			));
 		}
@@ -786,8 +793,8 @@ final class FLBuilder {
 		// Try to find the specific template, then repeat the same process for general.
 
 		$locate_template_order = apply_filters( 'fl_builder_locate_template_order', array(
-			self::$template_dir . $specific_template,
-			self::$template_dir . $general_template,
+			trailingslashit( self::$template_dir ) . $specific_template,
+			trailingslashit( self::$template_dir ) . $general_template,
 		), self::$template_dir, $template_base, $slug );
 
 		$template_path = locate_template( $locate_template_order );
@@ -1635,6 +1642,9 @@ final class FLBuilder {
 		// Remove empty lines.
 		$content = preg_replace( '/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $content );
 
+		// Strip shortcodes since some plugins parse them early causing them to be parsed twice.
+		$content = preg_replace( '/\[.*\]/', '', $content );
+
 		return apply_filters( 'fl_builder_editor_content', $content );
 	}
 
@@ -2114,7 +2124,7 @@ final class FLBuilder {
 		include $module->dir . 'includes/frontend.css.php';
 		$css = ob_get_clean();
 
-		echo apply_filters( 'fl_builder_render_module_css', $css, $module );
+		echo apply_filters( 'fl_builder_render_module_css', $css, $module, $id );
 	}
 
 	/**
@@ -2666,7 +2676,7 @@ final class FLBuilder {
 		$path               = $include_global ? $asset_info['js'] : $asset_info['js_partial'];
 
 		// Render the global js.
-		if ( $include_global ) {
+		if ( $include_global && ! isset( $_GET['safemode'] ) ) {
 			$js .= self::render_global_js();
 		}
 
@@ -2681,8 +2691,10 @@ final class FLBuilder {
 		}
 
 		// Add the layout settings JS.
-		$js .= self::render_global_nodes_custom_code( 'js' );
-		$js .= ( is_array( $layout_settings->js ) || is_object( $layout_settings->js ) ) ? json_encode( $layout_settings->js ) : $layout_settings->js;
+		if ( ! isset( $_GET['safemode'] ) ) {
+			$js .= self::render_global_nodes_custom_code( 'js' );
+			$js .= ( is_array( $layout_settings->js ) || is_object( $layout_settings->js ) ) ? json_encode( $layout_settings->js ) : $layout_settings->js;
+		}
 
 		// Call the FLBuilder._renderLayoutComplete method if we're currently editing.
 		if ( stristr( $asset_info['js'], '-draft.js' ) || stristr( $asset_info['js'], '-preview.js' ) ) {

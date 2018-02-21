@@ -107,7 +107,7 @@ class WJECF_Wrap_Coupon extends WJECF_Wrap {
     }
 
     public function get_description() {
-        if ( false && $this->use_wc27 && is_callable( array( $this->object, 'get_description' ) ) ) {
+        if ( $this->use_wc27 && is_callable( array( $this->object, 'get_description' ) ) ) {
             return $this->object->get_description();
         }
 

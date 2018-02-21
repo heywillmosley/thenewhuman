@@ -167,7 +167,7 @@ class USIN_Module_Options{
 		}
 
 		if( ($res->success === true && $res->license === 'deactivated') ||
-			(!$res->success && $res->license == 'failed' && empty($res->item_name)) ){  //the license doesn't exist anymore, just remove it from the options
+			(!$res->success && $res->license == 'failed') ){  //the license doesn't exist anymore, just remove it from the options
 			
 			$module->license->deactivate();
 			$module->save_options();

@@ -8,8 +8,7 @@ require_once('get_value.php');
 <style>
 	#post-social-5{
 		background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('<?php echo WEBLIZAR_NALF_PLUGIN_URL.'css/img/pattern-1.png'; ?>') left top repeat, url('<?php echo WEBLIZAR_NALF_PLUGIN_URL.'css/img/bg1.jpg'; ?>') center center fixed;
-	}
-	
+	}	
 </style>
 <!-- ==============================================
 Fonts
@@ -26,7 +25,7 @@ Fonts
 				<span class="icon-bar"></span>
 			</button>
 			<a class="sidebar-toggle hidden-xs" href="javascript:void(0);"><i class="fa fa-bars fa-2x"></i></a>
-			<a class="navbar-brand coming-soon-admin-title" href="index.html"><?php _e('Admin Custom Login','WEBLIZAR_ACL')?></a>
+			<a class="navbar-brand coming-soon-admin-title" href="index.html"><?php _e('Admin Custom Login', WEBLIZAR_ACL)?></a>
 		</div>
 
 		<!-- /.navbar-header -->
@@ -61,13 +60,13 @@ Fonts
 							<img src="<?php echo WEBLIZAR_NALF_PLUGIN_URL.'css/img/photo.jpg'; ?>" alt="Profile Picture"/>
 						</span>
 						<p class="sidebar-profile-description">
-							<?php _e('Powered By','WEBLIZAR_ACL')?>
+							<?php _e('Powered By', WEBLIZAR_ACL)?>
 						</p>
-						<h3 class="sidebar-profile-name"><a href="http://weblizar.com/" target="_blank" style="background-color: #29282f; border-left:0px ; "><?php _e( 'Weblizar', 'WEBLIZAR_ACL' ); ?></a></h3>
+						<h3 class="sidebar-profile-name"><a href="http://weblizar.com/" target="_blank" style="background-color: #29282f; border-left:0px ; "><?php _e( 'Weblizar',  WEBLIZAR_ACL ); ?></a></h3>
 						
 						
 						
-						<h5 style="color:#fff" class="acl-rate"><?php _e('Show Us Some Love (Rate Us)','WEBLIZAR_ACL')?></h5>
+						<h5 style="color:#fff" class="acl-rate"><?php _e('Show Us Some Love (Rate Us)', WEBLIZAR_ACL)?></h5>
 						<a class="acl-rate-us" style="text-align:center; text-decoration: none;font:normal 30px/l;" href="https://wordpress.org/plugins/admin-custom-login/" target="_blank">
 							<span class="dashicons dashicons-star-filled"></span>
 							<span class="dashicons dashicons-star-filled"></span>
@@ -83,8 +82,8 @@ Fonts
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
 								<i class="fa fa-dashboard fa-stack-1x fa-inverse"></i>
 							</span>
-							<span class="sidebar-item-title"><?php _e('Dashboard','WEBLIZAR_ACL')?></span>
-							<span class="sidebar-item-subtitle"><?php _e('Application overview','WEBLIZAR_ACL')?></span>
+							<span class="sidebar-item-title"><?php _e('Dashboard', WEBLIZAR_ACL)?></span>
+							<span class="sidebar-item-subtitle"><?php _e('Application overview', WEBLIZAR_ACL)?></span>
 						</a>
 					</li>
 					<li>
@@ -93,8 +92,8 @@ Fonts
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
 								<i class="fa fa-paint-brush fa-stack-1x fa-inverse"></i>
 							</span>
-							<span class="sidebar-item-title"><?php _e('Background Design','WEBLIZAR_ACL')?></span>
-							<span class="sidebar-item-subtitle"><?php _e('Modify Background design here','WEBLIZAR_ACL')?></span>
+							<span class="sidebar-item-title"><?php _e('Background Design', WEBLIZAR_ACL)?></span>
+							<span class="sidebar-item-subtitle"><?php _e('Modify Background design here', WEBLIZAR_ACL)?></span>
 						</a>
 						<!-- /.nav-second-level -->
 					</li>
@@ -104,8 +103,8 @@ Fonts
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
 								<i class="fa fa-paint-brush fa-stack-1x fa-inverse"></i>
 							</span>
-							<span class="sidebar-item-title"><?php _e('Login form Setting','WEBLIZAR_ACL')?></span>
-							<span class="sidebar-item-subtitle"><?php _e('Modify Login design here','WEBLIZAR_ACL')?></span>
+							<span class="sidebar-item-title"><?php _e('Login form Setting', WEBLIZAR_ACL)?></span>
+							<span class="sidebar-item-subtitle"><?php _e('Modify Login design here', WEBLIZAR_ACL)?></span>
 						</a>
 						<!-- /.nav-second-level -->
 					</li>
@@ -115,8 +114,8 @@ Fonts
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
 								<i class="fa fa-dashboard fa-stack-1x fa-inverse"></i>
 							</span>
-							<span class="sidebar-item-title"><?php _e('Font Setting','WEBLIZAR_ACL')?></span>
-							<span class="sidebar-item-subtitle"><?php _e('Modify Login Form Style here','WEBLIZAR_ACL')?></span>
+							<span class="sidebar-item-title"><?php _e('Font Setting', WEBLIZAR_ACL)?></span>
+							<span class="sidebar-item-subtitle"><?php _e('Modify Login Form Style here', WEBLIZAR_ACL)?></span>
 						</a>
 					</li>
 
@@ -126,8 +125,8 @@ Fonts
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
 								<i class="fa fa-wrench fa-stack-1x fa-inverse"></i>
 							</span>
-							<span class="sidebar-item-title"><?php _e('Logo Settings','WEBLIZAR_ACL')?></span>
-							<span class="sidebar-item-subtitle"><?php _e('Customize Logo Settings here','WEBLIZAR_ACL')?></span>
+							<span class="sidebar-item-title"><?php _e('Logo Settings', WEBLIZAR_ACL)?></span>
+							<span class="sidebar-item-subtitle"><?php _e('Customize Logo Settings here', WEBLIZAR_ACL)?></span>
 						</a>
 						
 						<!-- /.nav-second-level -->
@@ -138,8 +137,8 @@ Fonts
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
 								<i class="fa fa-table fa-stack-1x fa-inverse"></i>
 							</span>
-							<span class="sidebar-item-title"><?php _e('Social Settings','WEBLIZAR_ACL')?></span>
-							<span class="sidebar-item-subtitle"><?php _e('Connect with your social profile','WEBLIZAR_ACL')?></span>
+							<span class="sidebar-item-title"><?php _e('Social Settings', WEBLIZAR_ACL)?></span>
+							<span class="sidebar-item-subtitle"><?php _e('Connect with your social profile', WEBLIZAR_ACL)?></span>
 						</a>
 					</li>
 					
@@ -149,8 +148,8 @@ Fonts
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
 								<i class="fa fa-upload fa-stack-1x fa-inverse"></i>
 							</span>
-							<span class="sidebar-item-title"><?php _e('Export / Import','WEBLIZAR_ACL')?></span>
-							<span class="sidebar-item-subtitle"><?php _e('Export / Import Your Data','WEBLIZAR_ACL')?></span>
+							<span class="sidebar-item-title"><?php _e('Export / Import', WEBLIZAR_ACL)?></span>
+							<span class="sidebar-item-subtitle"><?php _e('Export / Import Your Data', WEBLIZAR_ACL)?></span>
 						</a>
 					</li>
 					<li>
@@ -159,8 +158,8 @@ Fonts
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
 								<i class="fa fa-plug fa-stack-1x fa-inverse"></i>
 							</span>
-							<span class="sidebar-item-title"><?php _e('Recommendations','WEBLIZAR_ACL')?></span>
-							<span class="sidebar-item-subtitle"><?php _e('Get More Free Useful Plugins','WEBLIZAR_ACL')?></span>
+							<span class="sidebar-item-title"><?php _e('Recommendations', WEBLIZAR_ACL)?></span>
+							<span class="sidebar-item-subtitle"><?php _e('Get More Free Useful Plugins', WEBLIZAR_ACL)?></span>
 						</a>
 					</li>
 					<li>
@@ -169,8 +168,8 @@ Fonts
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
 								<i class="fa fa-question fa-stack-1x fa-inverse"></i>
 							</span>
-							<span class="sidebar-item-title"><?php _e('Help And Support','WEBLIZAR_ACL')?></span>
-							<span class="sidebar-item-subtitle"><?php _e('Ask your query','WEBLIZAR_ACL')?></span>
+							<span class="sidebar-item-title"><?php _e('Help And Support', WEBLIZAR_ACL)?></span>
+							<span class="sidebar-item-subtitle"><?php _e('Ask your query', WEBLIZAR_ACL)?></span>
 						</a>
 					</li>
 					<li>
@@ -179,8 +178,8 @@ Fonts
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
 								<i class="fa fa-star fa-stack-1x fa-inverse"></i>
 							</span>
-							<span class="sidebar-item-title"><?php _e('Please rate us ','WEBLIZAR_ACL')?></span>
-							<span class="sidebar-item-subtitle"><?php _e('If you like us','WEBLIZAR_ACL')?></span>
+							<span class="sidebar-item-title"><?php _e('Please rate us', WEBLIZAR_ACL)?></span> 
+							<span class="sidebar-item-subtitle"><?php _e('If you like us', WEBLIZAR_ACL)?></span>
 						</a>
 					</li>
 					

@@ -3,7 +3,7 @@
 - Plugin Name: Users Insights
 - Plugin URI: https://usersinsights.com/
 - Description: Everything about your WordPress users in one place
-- Version: 3.4.1
+- Version: 3.5.1
 - Author: Pexeto
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,25 @@ Users Insights is distributed in the hope that it will be useful, but WITHOUT AN
 
 
 == Changelog ==
+
+3.5.1
+- Optimized the loading of the WooCommerce First Order field - it is now loaded as part of the main query only when used in the filters or the table is sorted by it.
+
+3.5.0
+- New: Introduced integration for the Paid Memberships Pro plugin
+- New: WooCommerce features:
+    - First Order date field & filter in the user table
+    - Total Sales Amount report
+    - List WooCommerce coupons used in the user profile section
+    - Added a link in the WooCommerce order screen linking to the Users Insights profile page of the customer 
+    - WooCommerce Memberships: Ended Memberships report
+    - WooCommerce Memberships: displayed the cancelled date of the membership (when available) in the user profile section
+- Improved: Allow floating labels in the reports that represent amounts
+- Improved: Enable AJAX search in the WooCommerce products filter when there is a large number of products available
+- Improved: Icons style
+- Fixed: Filtering by role issue when there are roles that contain the filtered role as part of their name
+- Fixed: Issue with removing expired licenses
+
 
 3.4.1
 - Fixed: empty error message displayed in the Create Segment dialog

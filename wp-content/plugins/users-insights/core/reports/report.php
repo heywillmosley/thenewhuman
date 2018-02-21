@@ -15,7 +15,7 @@ class USIN_Report{
 
 	protected $visible = true;
 	protected $loader;
-	protected $public_fields = array('id', 'name', 'type', 'subtype', 'group', 'info', 'filters');
+	protected $public_fields = array('id', 'name', 'type', 'subtype', 'group', 'info', 'filters', 'format');
 
 
 	public function __construct($id, $name, $options = array()){
@@ -23,7 +23,7 @@ class USIN_Report{
 		$this->name = $name;
 
 		$optional_fields = array('type', 'group', 'info', 'loader_class', 'loader_file', 
-			'type', 'field_id', 'filters', 'visible');
+			'type', 'field_id', 'filters', 'visible', 'format');
 
 		foreach ($optional_fields as $key) {
 			if(isset($options[$key])){

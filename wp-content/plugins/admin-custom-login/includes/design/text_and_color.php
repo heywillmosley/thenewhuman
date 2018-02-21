@@ -86,7 +86,7 @@ jQuery(document).ready(function(){
 					<div class="post-social post-social-xs" id="post-social-5">
 						<div class="text-center padding-all text-center">
 							<div class="textbox text-white   margin-bottom settings-title">
-								<?php _e('Text And Color Settings','WEBLIZAR_ACL')?>
+								<?php _e('Text And Color Settings', WEBLIZAR_ACL)?>
 							</div>
 						</div>
 					</div>
@@ -99,7 +99,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Headline Font Color','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Headline Font Color', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -115,7 +115,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Input Font Color','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Input Font Color', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -131,7 +131,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Link Color','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Link Color', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -147,7 +147,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Button Color','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Button Color', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -163,7 +163,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Headline Font size','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Headline Font size', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -181,7 +181,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Input Font Size','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Input Font Size', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -199,7 +199,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Link Font Size','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Link Font Size', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -217,7 +217,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Button Font Size','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Button Font Size', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -235,16 +235,16 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Enable Link shadow?','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Enable Link shadow?', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<span>
-							<input type="radio" name="enable_Link_shadow" value="yes" id="enable_Link_shadow1" <?php if($enable_link_shadow=="yes")echo "checked"; ?> />&nbsp;<?php _e('Yes','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="enable_Link_shadow" value="yes" id="enable_Link_shadow1" <?php if($enable_link_shadow=="yes")echo "checked"; ?> />&nbsp;<?php _e('Yes', WEBLIZAR_ACL)?><br>
 						</span>
 						<span>
-							<input type="radio" name="enable_Link_shadow" value="no" id="enable_Link_shadow2" <?php if($enable_link_shadow=="no")echo "checked"; ?> />&nbsp;<?php _e('No','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="enable_Link_shadow" value="no" id="enable_Link_shadow2" <?php if($enable_link_shadow=="no")echo "checked"; ?> />&nbsp;<?php _e('No', WEBLIZAR_ACL)?><br>
 						</span>
 					</td>
 				</tr>
@@ -256,7 +256,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Link Shadow Color','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Link Shadow Color', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -272,7 +272,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Headline Font Style','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Headline Font Style', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<?php $RPP_Font_Style=""; ?>
@@ -834,7 +834,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Input Font Style','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Input Font Style', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<?php $RPP_Font_Style=""; ?>
@@ -1396,7 +1396,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Link Font Style','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Link Font Style', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<?php $RPP_Font_Style=""; ?>
@@ -1959,7 +1959,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Button Font Style','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Button Font Style', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<?php $RPP_Font_Style=""; ?>
@@ -2522,16 +2522,16 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Enable Input Box Icon?','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Enable Input Box Icon?', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<span>
-							<input type="radio" name="enable_inputbox_icon" value="yes" id="enable_inputbox_icon1" <?php if($enable_inputbox_icon=="yes")echo "checked"; ?> />&nbsp;<?php _e('Yes','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="enable_inputbox_icon" value="yes" id="enable_inputbox_icon1" <?php if($enable_inputbox_icon=="yes")echo "checked"; ?> />&nbsp;<?php _e('Yes', WEBLIZAR_ACL)?><br>
 						</span>
 						<span>	
-							<input type="radio" name="enable_inputbox_icon" value="no" id="enable_inputbox_icon2" <?php if($enable_inputbox_icon=="no")echo "checked"; ?> />&nbsp;<?php _e('No','WEBLIZAR_ACL')?><br>
+							<input type="radio" name="enable_inputbox_icon" value="no" id="enable_inputbox_icon2" <?php if($enable_inputbox_icon=="no")echo "checked"; ?> />&nbsp;<?php _e('No', WEBLIZAR_ACL)?><br>
 						</span>
 					</td>
 				</tr>
@@ -2542,7 +2542,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Icon For user Input Box','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Icon For user Input Box', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="" style="border-bottom:none;">
@@ -2563,7 +2563,7 @@ jQuery(document).ready(function(){
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Icon For Password Input Box','WEBLIZAR_ACL')?></th>
+					<th scope="row" ><?php _e('Icon For Password Input Box', WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="" style="border-bottom:none;">
@@ -2591,7 +2591,7 @@ jQuery(document).ready(function(){
 				</svg>
 			</div>
 			<div class="dialog-inner">
-				<h2><strong><?php _e('Text and Color ','WEBLIZAR_ACL')?></strong><?php _e('Setting Save Successfully','WEBLIZAR_ACL')?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button3"><?php _e('Close','WEBLIZAR_ACL')?></button></div>
+				<h2><strong><?php _e('Text and Color', WEBLIZAR_ACL); ?></strong> <?php _e('Setting Save Successfully', WEBLIZAR_ACL)?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button3"><?php _e('Close', WEBLIZAR_ACL)?></button></div>
 			</div>
 		</div>
 	</div>
@@ -2606,7 +2606,7 @@ jQuery(document).ready(function(){
 				</svg>
 			</div>
 			<div class="dialog-inner">
-				<h2><strong><?php _e('Text and Color ','WEBLIZAR_ACL')?></strong><?php _e('Setting Reset Successfully','WEBLIZAR_ACL')?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button9"><?php _e('Close','WEBLIZAR_ACL')?></button></div>
+				<h2><strong><?php _e('Text and Color', WEBLIZAR_ACL)?></strong> <?php _e('Setting Reset Successfully', WEBLIZAR_ACL)?></h2><div><button class="action dialog-button-close" data-dialog-close id="dialog-close-button9"><?php _e('Close', WEBLIZAR_ACL)?></button></div>
 			</div>
 		</div>
 	</div>
@@ -2614,10 +2614,10 @@ jQuery(document).ready(function(){
 	<div class="panel panel-primary save-button-block" >
 		<div class="panel-body">
 			<div class="pull-left">
-				<button type="button" onclick="return Custom_login_text('textandcolorSave', '');" class="btn btn-info btn-lg"><?php _e('Save Changes','WEBLIZAR_ACL')?></button>
+				<button type="button" onclick="return Custom_login_text('textandcolorSave', '');" class="btn btn-info btn-lg"><?php _e('Save Changes', WEBLIZAR_ACL)?></button>
 			</div>
 			<div class="pull-right">
-				<button type="button" onclick="return Custom_login_text('textandcolorReset', '');" class="btn btn-primary btn-lg"><?php _e('Reset Default','WEBLIZAR_ACL')?></button>
+				<button type="button" onclick="return Custom_login_text('textandcolorReset', '');" class="btn btn-primary btn-lg"><?php _e('Reset Default', WEBLIZAR_ACL)?></button>
 			</div>
 		</div>
 	</div>

@@ -22,6 +22,8 @@ class USIN_WC_Memberships_Reports extends USIN_Module_Reports{
 
 		return array(
 			new USIN_Period_Report('wc_memberships_new_members', __('New members', 'usin'), array('group' => $this->group)),
+			new USIN_Period_Report('wc_ended_memberships', __('Ended memberships', 'usin'), 
+				array('group' => $this->group, 'info' => __('Cancelled & expired memberships', 'usin'))),
 			new USIN_Standard_Report('wc_memberships_per_plan', __('Number of memberships per plan', 'usin'), 
 				array(
 					'group' => $this->group,

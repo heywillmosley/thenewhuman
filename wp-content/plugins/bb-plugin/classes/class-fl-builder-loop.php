@@ -164,7 +164,7 @@ final class FLBuilderLoop {
 		}
 
 		// Build the query args.
-		$args = apply_filters( 'fl_builder_loop_query_args', array(
+		$args = array(
 			'paged'          => $paged,
 			'posts_per_page' => $posts_per_page,
 			'post_type'      => $post_type,
@@ -179,11 +179,19 @@ final class FLBuilderLoop {
 			'fl_builder_loop'     => true,
 			'fields'              => $fields,
 			'settings'            => $settings,
-		) );
+		);
 
 		// Order by meta value arg.
 		if ( strstr( $order_by, 'meta_value' ) ) {
 			$args['meta_key'] = $settings->order_by_meta_key;
+		}
+
+		// Order by author
+		if ( 'author' == $order_by ) {
+			$args['orderby'] = array(
+				'author' => $order,
+				'date' => $order,
+			);
 		}
 
 		// Build the author query.
@@ -294,6 +302,8 @@ final class FLBuilderLoop {
 				$args[ $arg ] = explode( ',', $settings->{'posts_' . $post_type} );
 			}
 		}
+
+		$args = apply_filters( 'fl_builder_loop_query_args', $args );
 
 		// Build the query.
 		$query = new WP_Query( $args );

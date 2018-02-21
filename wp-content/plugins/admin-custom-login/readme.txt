@@ -1,10 +1,10 @@
-=== Customize WordPress Login Page ===
+=== Customize WordPress Login Page - Custom Login, Design Login Page, Login Page Customizer ===
 Contributors: weblizar
 Donate link: http://www.weblizar.com/
-Tags: custom login page, custom admin login, custom login, customize wordpress login page, wordpress login
+Tags: custom login page, custom admin login, custom login, customize wordpress login page, design wordpress login
 Requires at least: 4.0
 Tested up to: 4.9.1
-Stable tag: 2.5.7
+Stable tag: 2.5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ Pugin allows to change background color, background image, background slide show
 
 Guys please send us your login screenshots at `lizarweb[at]gmail[dot]com`.
 
-**Standard Features**
+### Standard Features
 
 * Add Your Own Custom Logo On Login Form
 * Background Colour
@@ -40,7 +40,6 @@ Guys please send us your login screenshots at `lizarweb[at]gmail[dot]com`.
 * Social Media Icon Size
 * Interactive Plugin Dashboard
 * Customize Login Form Positions
-
 
 ### Background Slide Show:
 This is our most key feature of this plugin. We have provide you our best to add slide show on your custom login background without any hesitation.
@@ -76,16 +75,11 @@ Plugin is integrated with 500+ google fonts. So add beautiful font styles fro yo
 ### Unlimited Colour Scheme:
 Theere you able update plugin design with unlimited colours. Colour option is available for both login form panel and background  
 
-> #### **Admin Demo**
->
->
-> [Admin Demo](http://demo.weblizar.com/admin-custom-login-admin-demo/wp-admin)
->
-> **Username:** userdemo
->
-> **Password:** userdemo
->
->
+#### Admin Demo
+
+* [Admin Demo](http://demo.weblizar.com/admin-custom-login-admin-demo/wp-admin)
+* **Username:** userdemo
+* **Password:** userdemo
 
 ### Translations By Our Plugin Users:
 
@@ -123,12 +117,13 @@ If you have any question contact us at here: [Plugin Support Forum ](http://word
 9. Made by Mary Job
 10. http://amirasghari.com Made by Dr. Amir Asghari
 11. Admin Setting Dashboard
- 
+
 == Changelog ==
 
 For more information, see [Weblizar](http://wwww.weblizar.com/)
 
-= 2.5.6 - Finnish Translation added by Eerik Anttila
+= 2.5.8 - Plugin text domain updated according to Wordpress.org Guideline
+= 2.5.7 - Finnish Translation added by Eerik Anttila
 = 2.5.6 - Plugin tested with latest WordPress 4.9.1 and working perfect, feedback and review appreciated
 = 2.5.5 - Portuguese Translation updaed by Rodrigues Santana
 = 2.5.4 - Plugin code indented and made the code clean + Fomr Inner Social Icons Text Changed
