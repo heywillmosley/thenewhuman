@@ -57,15 +57,21 @@ class WP_E_Email extends WP_E_Model {
         return apply_filters('esig_mailtype', $mail_type);
     }
 
+    function charType($charset) {
+        $charType = 'utf-8';
+        return apply_filters('esig_mail_chartype', $charType);
+    }
+
     public function default_mail($to_email, $subject, $message, $headers, $attachments = false) {
 
         add_filter('wp_mail_content_type', array($this, 'mailType'));
+        add_filter('wp_mail_charset', array($this, 'charType'));
 
         if ($attachments) {
             try {
                 $mailsent = @wp_mail($to_email, $subject, $message, $headers, $attachments);
                 if (!$mailsent) {
-                   $mailsent= @mail($to_email, $subject, $message, implode("\r\n", $headers), $attachments);
+                    $mailsent = @mail($to_email, $subject, $message, implode("\r\n", $headers), $attachments);
                 }
             } catch (Exception $e) {
                 error_log('WP E-sginature mail sent error:' . $e->getMessage()); // this line is for testing 
@@ -74,7 +80,7 @@ class WP_E_Email extends WP_E_Model {
             try {
                 $mailsent = @wp_mail($to_email, $subject, $message, $headers);
                 if (!$mailsent) {
-                   $mailsent= @mail($to_email, $subject, $message, implode("\r\n", $headers));
+                    $mailsent = @mail($to_email, $subject, $message, implode("\r\n", $headers));
                 }
             } catch (Exception $e) {
                 error_log('WP E-sginature mail sent error:' . $e->getMessage()); // this line is for testing 
@@ -102,17 +108,18 @@ class WP_E_Email extends WP_E_Model {
             $from_email = $esig_options['from_email_field'];
         }
 
+        $newSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
 
         if (empty($esig_options['enable']) || $esig_options['enable'] != 'yes') {
 
             $headers = array(
                 "From: " . $from_name . " <{$from_email}>",
                 "Reply-To: {$from_name} <{$from_email}>",
-                "MIME-Version: 1.0" ,
-                "Content-type: text/html; charset=iso-8859-1"        
+                "MIME-Version: 1.0",
+                "Content-type: text/html; charset=utf-8"
             );
-            
-            $mailsent = $this->default_mail($to_email, $subject, $message, $headers, $attachments);
+
+            $mailsent = $this->default_mail($to_email, $newSubject, $message, $headers, $attachments);
             return $mailsent;
         }
 
@@ -136,6 +143,8 @@ class WP_E_Email extends WP_E_Model {
         /* Set the SMTPSecure value, if set to none, leave this blank */
         if ($esig_options['smtp_settings']['type_encryption'] != 'none') {
             $mail->SMTPSecure = $esig_options['smtp_settings']['type_encryption'];
+            $options = array();
+            $mail->SMTPOptions = apply_filters("esig_smtp_connection_options", $options);
         }
 
         /* Set the other options */
@@ -143,7 +152,7 @@ class WP_E_Email extends WP_E_Model {
         $mail->Port = $esig_options['smtp_settings']['port'];
         $mail->SetFrom($from_email, $from_name);
         $mail->isHTML(true);
-        $mail->Subject = utf8_decode($subject);
+        $mail->Subject = $newSubject; //utf8_decode($subject);
         $mail->MsgHTML($message);
         $mail->AddAddress($to_email);
 
@@ -208,6 +217,9 @@ class WP_E_Email extends WP_E_Model {
         if ($esig_options['smtp_settings']['type_encryption'] != 'none') {
 
             $mail->SMTPSecure = $esig_options['smtp_settings']['type_encryption'];
+
+            $options = array();
+            $mail->SMTPOptions = apply_filters("esig_smtp_connection_options", $options);
         }
 
         /* Set the other options */

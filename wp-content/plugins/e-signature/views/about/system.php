@@ -80,7 +80,7 @@ Active Add-ons:         <?php
             
             $addon_data = Esig_Addons::get_addon_data(Esig_Addons::get_installed_directory($folder_name) . $addon_file);
             if($addon_data){
-                echo $addon_data['Name'] .' ' . $addon_data['Version'] . "\n\t\t\t";
+                echo $addon_data['Name']  . "\n\t\t\t";
             }    
         }
         ?>

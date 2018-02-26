@@ -20,14 +20,21 @@ if (!class_exists('esigMigrate')):
 
         public function init() {
             add_action("esig_approveme_db_migrate", array($this, 'approveme_db_migrate'));
-            add_action( 'admin_notices', array($this, 'update_notice') );
-            add_action( 'esig_display_alert_message', array($this, 'update_notice') );
+            add_action('admin_notices', array($this, 'update_notice'));
+            add_action('esig_display_alert_message', array($this, 'update_notice'));
         }
-        
-        public function update_notice(){
-            if($this->is_db_updated()){
+
+        public function update_notice() {
+
+            if ($this->is_db_updated()) {
                 return;
             }
+
+            /* if (version_compare(esigGetVersion(), '1.5.1.0', '>')) {
+              return;
+              } */
+
+
             wp_enqueue_script('jquery-ui-dialog');
             add_thickbox();
             include_once 'views/notices.php';
@@ -58,15 +65,14 @@ if (!class_exists('esigMigrate')):
 
             $this->runMigrate();
         }
-        
-         public function migrateLink() {
+
+        public function migrateLink() {
             return add_query_arg(
                     array(
                 'esig_action' => 'approveme_db_migrate',
                 'esig_migrate_nonce' => wp_create_nonce('esig_migrate_nonce'),
                     ), admin_url('admin.php?page=esign-docs')
             );
-            
         }
 
         /**
@@ -88,6 +94,10 @@ if (!class_exists('esigMigrate')):
         }
 
         public function is_db_updated() {
+
+            if (is_esig_newer_version()) {
+                return true;
+            }
 
             $updated = get_option('esig_database_migrated');
             if (!empty($updated) && $updated == 1) {
@@ -134,7 +144,7 @@ if (!class_exists('esigMigrate')):
             do {
                 // don't include extra stuff, if so requested
                 if (!esig_is_func_disabled('set_time_limit') && !ini_get('safe_mode'))
-                                 @set_time_limit(0);
+                    @set_time_limit(0);
 
                 $table_data = $wpdb->get_results("SELECT document_id,document_content FROM $tableName LIMIT {$row_start}, {$row_inc}", ARRAY_A);
 

@@ -7,7 +7,7 @@
     $('.signature-wrapper-displayonly').click(function () {
 
         var signature_text_owner = $(".esignature-in-text").val();
-        var font_owner = $('#font-type-owner').val();
+        var font_owner = $('#font-type').val();
 
         if (signature_text_owner != "") {
 
@@ -47,8 +47,8 @@
                 if (!font) {
                     font = "1";
                 }
-
-                var htmlcontent = '<div class="sign-here pad signed esig-sig-type-signed esig-signature-type-font' + font + '" width="400" height="100"><span class="sig-type">' + signature_text + '</span></div>';
+                //var htmlcontent = '<div class="sign-here pad signed esig-sig-type-signed esig-signature-type-font' + font + '" width="400" height="100"><span class="sig-type">' + signature_text + '</span></div>';
+                var htmlcontent = '<div class="sign-here pad signed esig-sig-type-signed" width="400" height="100"><span class="sig-type esig-signature-type-font' + font + '">' + signature_text + '</span></div>';
                 htmlcontent += '<input type="hidden" name="esig_signature_type" value="typed">';
                 // $('#signatureCanvas2').hide();
 
@@ -58,7 +58,7 @@
                 var htmlcontent1 = '<span class="sign-text">' + signature_text + '</span><br> <input type="hidden" id="font-type" name="font_type" value="' + font + '">';
 
                 $(this).find('#esig-type-in-preview').html(htmlcontent1);
-                $('#esig-type-in-preview').addClass('esig-signature-type-font' + font).css("font-size", newSize + "px");
+                //$('#esig-type-in-preview').addClass('esig-signature-type-font' + font).css("font-size", newSize + "px");
 
             }
         }
@@ -127,10 +127,11 @@
         if (currentfont > 7) {
             currentfont = 1;
         }
+       
+        
         var presentfont = "esig-signature-type-font" + font;
         var nextfont = 'esig-signature-type-font' + currentfont;
         $('#font-type').val(currentfont);
-
         $('#esig-type-in-preview').removeClass(presentfont).addClass(nextfont);
 
     });

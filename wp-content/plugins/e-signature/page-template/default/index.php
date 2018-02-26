@@ -59,7 +59,7 @@
 
                 <div class="navbar-header">
 
-                    <a href="<?php echo bloginfo('url'); ?>" target="_blank" class="navbar-brand" style="color:#fff;"> 
+                    <a href="<?php echo bloginfo('url'); ?>" target="_blank" class="navbar-brand" style="color:#fff;">
 
                         <?php
                         echo stripslashes(WP_E_Sig()->setting->get_company_name());
@@ -88,17 +88,67 @@
 
             <?php
 // Start the Loop.
+            $license_status = Esign_licenses::is_license_valid();
 
-            while (have_posts()) : the_post();
+            if ($license_status) {
+
+                while (have_posts()) : the_post();
+
+                    the_content();
+
+                //echo do_shortcode(wpautop($post->post_content));
+
+                endwhile;
+            } else {
+                ?>
+
+                <div class="esig-506-error">
+                    <p class="alert-icon"><span class="icon-esig-alert"></span></p>
+
+                    <h3 class="error-alert"><?php _e('Put your electronic pen down!', 'esign'); ?></h3>
+
+                    <h4 class="error-code"><?php _e('Error 506', 'esig'); ?></h4>
+                    <p><?php _e("It looks like something has gone awry with this document. Don’t panic, it's an easy fix. Give the", 'esig'); ?> <a data-toggle="modal" data-target="#esigModal" href="#"><?php _e("document sender", 'esig'); ?></a> <?php _e("this error code, they’ll know what to do. :)", 'esig'); ?></p>
 
 
 
-                the_content();
+                </div>
 
-//echo do_shortcode(wpautop($post->post_content)); 
+                <div id="esigModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
 
-            endwhile;
-            ?>	
+                        <!-- Modal content-->
+                        <div class="modal-content">
+
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="adminEmail">To:</label>
+                                    <input type="esig_admin_email" value="<?php echo WP_E_Sig()->user->getUserEmail(WP_E_Sig()->user->esig_get_super_admin_id()); ?>" disabled class="form-control" style="width:100% !important;" id="esig_admin_email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="signerName">Name:</label>
+                                    <input type="esig_signer_name" class="form-control" style="width:100% !important;" id="esig_signer_name">
+                                </div>
+                                <div class="form-group required">
+                                    <label for="signerEmail">From:</label>
+                                    <input type="esig_signer_email" class="form-control" style="width:100% !important;" id="esig_signer_email">
+                                </div>
+                                <div class="form-group required">
+                                    <label for="message">Message:</label>
+                                    <textarea class="form-control" rows="5" style="width:100% !important;" id="esig_admin_message">I am attempting to sign a document on your website but I'm receiving a 506 Error.  Will you please visit your document signing company's website to resolve the error code.  Thanks! (more info: http://aprv.me/506-error)</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="esig-expired-email-send" type="button" class="btn btn-primary">Send</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
 
 
 
@@ -113,7 +163,7 @@
 
         <div class="container doc_page">
 
-        
+
 
         </div>
 

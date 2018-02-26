@@ -81,4 +81,6 @@ a:focus, a:hover {
 }
 
 
-
+input[type=checkbox], input[type=radio] {
+   margin: 4px 7px !important;  
+}

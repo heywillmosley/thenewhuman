@@ -128,8 +128,8 @@ if (!class_exists('ESIG_SIF')) :
             $filesize_byte = $filesize * 1024 * 1024;
 
             // $act_size = round(pow(1024, $upload_filesize - floor($upload_filesize)), 2);
-
-            $ext = end((explode(".", $file_name)));
+            $full_ext = explode(".", $file_name);
+            $ext = end($full_ext);
             if ($upload_filesize > $filesize_byte) {
                 $data[0] = "error";
                 $data[1] = '<strong><font size="3" color="red">' . sprintf(__('Invalid file size. Allowed file size is %s MB.', 'esig-sif'), $filesize) . '</font></strong>';
@@ -354,7 +354,7 @@ if (!class_exists('ESIG_SIF')) :
 
                 $fname = isset($fname) ? "fname=\"" . $fname . "\"" : null;
 
-                $html .='<div class="sif-file-container" id="' . $name . '-content"><label id="file-' . $name . '"> ' . $label . '  <input class="esig-sif-file" ' . $verify . ' id="' . $name . '" type="file" ' . $towhom . ' value=""  name="' . $name . '" ' . $fname . ' ' . $extensions . '  ' . $filesize . '  ' . $required . ' /></label> </div>';
+                $html .= '<div class="sif-file-container" id="' . $name . '-content"><label id="file-' . $name . '"> ' . $label . '  <input class="esig-sif-file" ' . $verify . ' id="' . $name . '" type="file" ' . $towhom . ' value=""  name="' . $name . '" ' . $fname . ' ' . $extensions . '  ' . $filesize . '  ' . $required . ' /></label> </div>';
 
                 return $html;
             }
@@ -807,7 +807,7 @@ if (!class_exists('ESIG_SIF')) :
 
                 global $esig_pdf_export;
                 $value = ($esig_pdf_export) ? __('Select Date', 'esig') : '';
-                $html .='<label> ' . $label . '  <input class="esig-sif-datepicker" ' . $verify . ' placeholder="Select Date" id="' . $name . '" type="text"  name="' . $name . '" value="' . $value . '" ' . $required . '  /></label> ';
+                $html .= '<label> ' . $label . '  <input class="esig-sif-datepicker" ' . $verify . ' placeholder="Select Date" id="' . $name . '" type="text"  name="' . $name . '" value="' . $value . '" ' . $required . '  /></label> ';
 
                 return $html;
             }
@@ -856,12 +856,12 @@ if (!class_exists('ESIG_SIF')) :
 
                     $this->populate_field($esig, $document_id, $name, $value, $verifysigner = 'null');
 
-                    return $this->date_to_html($value, true);
+                    return $this->date_to_html($value, true, $displaytype);
 
                     // Not signed
                 } else {
 
-                    return $this->date_to_html($date);
+                    return $this->date_to_html($date, false, $displaytype);
                 }
 
                 // Recipient
@@ -872,12 +872,12 @@ if (!class_exists('ESIG_SIF')) :
                 if ($this->check_signature($doc_id, $verifysigner = 'null', $invitation->user_id)) {
 
                     $this->populate_field($esig, $doc_id, $name, $value, $verifysigner = 'null');
-                    return $this->date_to_html($value, true);
+                    return $this->date_to_html($value, true, $displaytype);
 
                     // Not signed
                 } else {
 
-                    return $this->date_to_html($date);
+                    return $this->date_to_html($date, false, $displaytype);
                 }
 
 
@@ -890,7 +890,7 @@ if (!class_exists('ESIG_SIF')) :
                     return $this->date_to_html($value, true, $displaytype);
                 } else {
 
-                    return $this->date_to_html($date);
+                    return $this->date_to_html($date, false, $displaytype);
                 }
             }
         }
@@ -925,8 +925,13 @@ if (!class_exists('ESIG_SIF')) :
                 //return '<input value="'. $value .'" readonly size="'. $width .'" style="border:1px solid #ccc;text-align:center;padding:1px;" />';
                 //return  '<span class="esig-sif-textfield signed" >'.$value.'</span>';
             } else {
-
-                return '<input class="esig-sif-todaydate" type="text" name="esig-sif-todaydate" value="' . $value . '" readonly />';
+                if ($displaytype == 'border') {
+                    return '<input class="esig-sif-todaydate" type="text" name="esig-sif-todaydate" value="' . $value . '" readonly />';
+                } elseif ($displaytype == 'underline') {
+                    return '<span><u><input class="esig-sif-todaydate" type="hidden" name="esig-sif-todaydate" value="' . $value . '" readonly />' . $value . '</u></span>';
+                } elseif ($displaytype == 'plaintext') {
+                    return '<span><input class="esig-sif-todaydate" type="hidden" name="esig-sif-todaydate" value="' . $value . '" readonly />' . $value . '</span>';
+                }
             }
         }
 
@@ -1081,7 +1086,7 @@ if (!class_exists('ESIG_SIF')) :
             }
             if (empty($verify)) {
                 $html .= '<div id="error-' . $name . '">';
-                $html .='</div>';
+                $html .= '</div>';
             }
             return $html;
         }
@@ -1241,7 +1246,7 @@ if (!class_exists('ESIG_SIF')) :
 
             if (empty($verify)) {
                 $html .= '<div id="error-' . $name . '">';
-                $html .='</div>';
+                $html .= '</div>';
             }
 
             return $html;
@@ -1351,13 +1356,13 @@ if (!class_exists('ESIG_SIF')) :
 
             $required = ($is_required == 1) ? 'required' : '';
 
-            $html .='<select ' . $verify . ' name="' . $name . '" ' . $required . '>';
+            $html .= '<select ' . $verify . ' name="' . $name . '" ' . $required . '>';
             $html .= '<option value="">' . $label . '</option>';
             foreach ($boxes as $key => $checked) {
                 $html .= '<option value="' . $key . '">' . $key . '</option>';
             }
 
-            $html .='</select>';
+            $html .= '</select>';
 
             return $html;
         }
@@ -1506,12 +1511,12 @@ if (!class_exists('ESIG_SIF')) :
                     }
                 }
 
-                $previewMode = esigget("esigpreview");
-                
-                $document_status = WP_E_Sig()->document->getStatus($document_id);
-                if ($previewMode && $document_status != "signed") {
-                    return false;
-                }
+                /* $previewMode = esigget("esigpreview");
+
+                  $document_status = WP_E_Sig()->document->getStatus($document_id);
+                  if ($previewMode && $document_status != "signed") {
+                  return false;
+                  } */
 
                 if ($esig->signature->documentHasSignature($document_id))
                     return true;
@@ -1972,6 +1977,8 @@ if (!class_exists('ESIG_SIF')) :
         }
 
     }
+
+    
 
    
 endif;

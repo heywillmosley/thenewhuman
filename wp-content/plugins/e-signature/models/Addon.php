@@ -550,6 +550,7 @@ class WP_E_Addon extends WP_E_Model {
 
 
         Esig_Addons::activate($plugin_file);
+        Esig_Addons::isBusinessPackActive();
 
         return true;
     }
@@ -692,6 +693,10 @@ class WP_E_Addon extends WP_E_Model {
 
         $all_addons_list = $this->esig_get_premium_addons_list();
 
+        if(!is_object($all_addons_list)){
+            return false;
+        }
+        
         $business = $all_addons_list->business_pack;
 
         if (Esig_Addons::find_old_installed_addon()) {

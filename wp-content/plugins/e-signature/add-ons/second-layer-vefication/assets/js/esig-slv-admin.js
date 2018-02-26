@@ -21,20 +21,25 @@
             $("#esig-access-none").addClass("current");
         }
 
-        
         var email_address = $(this).closest('div').parent().find('input[name="recipient_emails\\[\\]"]').val();
-       
+
         if (esig_validation.is_email(email_address)) {
 
             // passing email address to dialog 
             $("#esig-slv-email-address").val(email_address);
 
-            //show dialog
-            var code = slv_meta_get(email_address);
-            if (code) {
-                $('#esig_access_code').val(code);
+            var accessCode = $(this).data('accesscode');
+           
+            if (accessCode) {
+                $('#esig_access_code').val(accessCode);
             } else {
-                $('#esig_access_code').val("");
+                //show dialog
+                var code = slv_meta_get(email_address);
+                if (code) {
+                    $('#esig_access_code').val(code);
+                } else {
+                    $('#esig_access_code').val("");
+                }
             }
 
             $("#esig-access-code-verification").dialog({
@@ -45,6 +50,7 @@
             });
 
         } else {
+
             $('.esig-error-box').remove();
             $(this).closest('div').parent().after('<div class="row esig-error-box"><div class="col-md-12">*You must fill e-mail address field.</div></div>');
         }
@@ -70,7 +76,7 @@
 
         } else {
             $('.esig-error-box').remove();
-           $(this).closest('div').parent().after('<div class="row esig-error-box"><div class="col-md-12">*You must fill e-mail address field.</div></div>');
+            $(this).closest('div').parent().after('<div class="row esig-error-box"><div class="col-md-12">*You must fill e-mail address field.</div></div>');
         }
 
     });
@@ -86,10 +92,10 @@
 
         if (esign.isEmpty(access_security_code)) {
             $('.esig-error-box').remove();
-            $("#esig_access_code").parent().parent().append('<div class="esig-error-box" style="margin:20px;">*You must fill valid access code.</div>');
+            $("#esig_access_code").parent().parent().parent().append('<div class="esig-error-box" style="margin:40px;">*You must fill valid access code.</div>');
             return false;
         }
-        
+
         slv_meta_save(email_address, access_security_code);
 
         $("#esig-access-code-verification").dialog("close");
@@ -126,7 +132,8 @@
             $("#esig-access-none").addClass("current");
         }
 
-        var email_address = $('#standard_view_popup_bottom').parent().find('input[name="recipient_emails\\[\\]"]').val();
+        var email_address = $(this).closest('div').parent().find('input[name="recipient_emails\\[\\]"]').val();
+       
         if (esig_validation.is_email(email_address)) {
 
             // passing email address to dialog 
@@ -141,8 +148,10 @@
             });
 
         } else {
+
             $('.esig-error-box').remove();
-            $('.af-inner').append('<span class="esig-error-box">*You must fill e-mail address field.</span>');
+            // $('.af-inner').append('<span class="esig-error-box">*You must fill e-mail address field.</span>');
+            $(this).closest('div').parent().after('<div class="row esig-error-box"><div class="col-md-12" align="center">*You must fill e-mail address field.</div></div>');
         }
 
     });
@@ -192,11 +201,11 @@
 function slv_meta_save(email, access_code) {
 
     var slv_settings = esign.getCookie("esig-slv-settings");
-    
+
     if (slv_settings) {
         var slv_json = JSON.parse(slv_settings);
         slv_json[urlFriendly(email)] = access_code;
-       
+
         esign.setCookie("esig-slv-settings", JSON.stringify(slv_json), 1 * 60 * 60);
 
     } else {
@@ -219,7 +228,7 @@ function slv_meta_get(email) {
     return false;
 }
 
-function urlFriendly(emailAddress){
+function urlFriendly(emailAddress) {
     var str = btoa(emailAddress);
     return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=+$/, '');
 }

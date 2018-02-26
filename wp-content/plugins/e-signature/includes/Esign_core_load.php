@@ -13,7 +13,7 @@ class Esign_core_load {
     protected $about_screen = 'esign-about';
     protected $screen_prefix = 'esign-'; // Used for admin screens
     protected static $instance = null;
-    
+
     public function __construct() {
 
         add_action('admin_enqueue_scripts', array($this, 'enqueueAdminScripts'));
@@ -43,6 +43,7 @@ class Esign_core_load {
         add_action('wp_ajax_wp_e_signature_ajax', 'wp_e_signature_ajax');
         add_action('wp_ajax_nopriv_wp_e_signature_ajax', 'wp_e_signature_ajax_nopriv');
         add_filter('admin_footer_text', 'e_sign_admin_footer');
+         
 
         //add_filter('all_plugins', array($this->esigrole, 'prepare_plugins'), 10, 1);
     }
@@ -63,12 +64,12 @@ class Esign_core_load {
      * @param null
      * @return void
      * @since 0.1.0
-     * 
+     *
      * page $_GET var is constructed as follows:
      *
      * 'controller_method'-'controller_name'
      * So if the page var is: documents-add
-     * the contoller would be: documentsController 
+     * the contoller would be: documentsController
      * and the method would be: add()
      */
     function route() {
@@ -79,7 +80,7 @@ class Esign_core_load {
 
         $wpid = get_current_user_id();
 
-        // call an action when esignature initialize . 
+        // call an action when esignature initialize .
         do_action('esig-init');
         //Allow users that have not yet saved their settings to still access their System Status #273
         if (!$this->settingsEstablished() && isset($_GET['page']) && $_GET['page'] == 'esign-systeminfo-about') {
@@ -90,18 +91,18 @@ class Esign_core_load {
             $about->index();
         } elseif (!$user->checkEsigAdmin($wpid) && $user->getUserTotal() > 0) {
 
-            $admin_user_id = $setting->get_generic('esig_superadmin_user');
+           // $admin_user_id = $setting->get_generic('esig_superadmin_user');
 
-            $user_details = get_userdata($admin_user_id);
+           //$user_details = get_userdata($admin_user_id);
 
-            $esig_admin = '<div class="esig-updated" style="padding: 11px;width: 515px;margin-top: 17px;">' . __('Super admin is', 'esig') . ' : <span>' . esc_html($user_details->display_name) . '-<a href="mailto:' . $user_details->user_email . '">' . __('Send an email', 'esig') . '</a></span></div>';
+           // $esig_admin = '<div class="esig-updated" style="padding: 11px;width: 515px;margin-top: 17px;">' . __('Your Super admin is currently', 'esig') . ' : <span>' . esc_html($user_details->display_name) . '-<a href="mailto:' . $user_details->user_email . '">' . __('Send an email', 'esig') . '</a></span></div>';
 
             // Currently only administrators have access to this plugin
             $settings = new WP_E_SettingsController();
 
             $data = array(
                 "feature" => __('Multiple Users', 'esig'),
-                "esig_user_role" => $esig_admin,
+               // "esig_user_role" => $esig_admin,
             );
 
             if (current_user_can('manage_options')) {
@@ -117,7 +118,7 @@ class Esign_core_load {
                 $alert = array(
                     'type' => 'alert e-sign-alert esig-updated',
                     'title' => '',
-                    'message' => __('<strong>Let\'s get this party started</strong> :  Fill in the form below to setup WP E-Signature.', 'esig')
+                    'message' => __('<strong>BEFORE YOU CAN PROCEED, let\'s get this party started</strong> :  Fill in the form below to setup WP E-Signature.', 'esig')
                 );
                 $settings->view->setAlert($alert);
             }
@@ -199,7 +200,7 @@ class Esign_core_load {
 
     /**
      * Register our admin pages with WP
-     * 
+     *
      * @since 1.0.1
      * @param null
      * @return void
@@ -225,13 +226,13 @@ class Esign_core_load {
         add_submenu_page($this->main_screen, __('Settings', 'esig'), __('Settings', 'esig'), 'read', $prefix . 'settings', array(&$this, 'route'));
 
 
-       
+
         add_submenu_page(null, __('Update Settings', 'esig'), __('Update Settings', 'esig'), 'read', $prefix . 'update-settings', array(&$this, 'route'));
 
         // Action Items
         //if (is_esig_super_admin()) {
-        add_submenu_page('edit.php?post_type=esign', __('Add Document', 'esig'), __('Add New Document', 'esig'), 'read', $prefix . 'add-document', array(&$this, 'route'));
-        add_submenu_page('edit.php?post_type=esign', __('Edit Document', 'esig'), __('Edit Document', 'esig'), 'read', $prefix . 'edit-document', array(&$this, 'route'));
+        add_submenu_page('admin.php?post_type=esign', __('Add Document', 'esig'), __('Add New Document', 'esig'), 'read', $prefix . 'add-document', array(&$this, 'route'));
+        add_submenu_page('admin.php?post_type=esign', __('Edit Document', 'esig'), __('Edit Document', 'esig'), 'read', $prefix . 'edit-document', array(&$this, 'route'));
         //}
 
         add_submenu_page(null, __('Preview Document', 'esig'), __('Preview Document', 'esig'), 'read', $prefix . 'preview-document', array(&$this, 'route'));
@@ -326,7 +327,7 @@ class Esign_core_load {
 
     /**
      * Enqueue stylesheets and scripts for admin pages
-     * 
+     *
      * @since 1.0.1
      * @param null
      * @return void
@@ -356,7 +357,7 @@ class Esign_core_load {
             }
             /*             * ************** main theme style end here **************** */
             wp_enqueue_style('esig-style', ESIGN_DIRECTORY_URI . 'assets/css/style.css');
-             
+
         }
 
         // Settings page
@@ -398,7 +399,7 @@ class Esign_core_load {
 
             wp_enqueue_script('e-signature' . '-admin-script', ESIGN_DIRECTORY_URI . 'assets/js/chosen.jquery.js', array('jquery', 'jquery-ui-dialog'), '1.0.1', true);
 
-            // adding select 2 scripts and css 
+            // adding select 2 scripts and css
             wp_enqueue_style('e-signature' . '-select2-styles', ESIGN_DIRECTORY_URI . 'assets/css/select2.css', array(), null, false);
             wp_enqueue_script('e-signature' . '-select2-script', ESIGN_DIRECTORY_URI . 'assets/js/select2.js', array('jquery', 'jquery-ui-dialog'), '1.0.13', true);
 
@@ -414,7 +415,7 @@ class Esign_core_load {
 
     /**
      * Returns true/false if current admin screen is an esignature screen
-     * 
+     *
      * @param $screen_id (defaults to current)
      * @return void
      */
@@ -443,7 +444,8 @@ class Esign_core_load {
             'esign-upload-success-page',
             'esign-email-general',
             'esign-about-general',
-            'esign'
+            'esign',
+            'plugins', // For the new expired notice on the plugins list page
         );
 
         $admin_screens = apply_filters("esig-admin-screen-filters", $screens);
@@ -459,7 +461,7 @@ class Esign_core_load {
 
     /**
      * Use our page template for documents
-     * 
+     *
      * @since 1.0.1
      * @param null
      * @return void
@@ -488,7 +490,7 @@ class Esign_core_load {
         return $template;
     }
 
-    // removing other plugin enforce especially wocommerce 
+    // removing other plugin enforce especially wocommerce
     public function remove_other_plugin_force_ssl() {
         global $wpdb;
         $setting = new WP_E_Setting();
@@ -569,7 +571,7 @@ class Esign_core_load {
 
     /**
      * Hide admin bar for docs
-     * 
+     *
      * @since 1.0.1
      * @param null
      * @return void
@@ -595,7 +597,7 @@ class Esign_core_load {
 
     /**
      * Admin Init Hook
-     * 
+     *
      * @since 1.0.1
      * @param null
      * @return void
@@ -610,7 +612,7 @@ class Esign_core_load {
 
     /**
      * Change thickbox text for Admin Settings form
-     * 
+     *
      * @since 1.0.1
      * @param null
      * @return void

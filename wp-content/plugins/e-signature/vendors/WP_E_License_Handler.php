@@ -45,7 +45,7 @@ if (!class_exists('ESIG_License')) :
             $this->item_id = $_item_id;
             $this->item_shortname = 'esig_' . preg_replace('/[^a-zA-Z0-9_\s]/', '', str_replace(' ', '_', strtolower($this->item_name)));
             $this->version = $_version;
-            //$this->license        = trim( $esig->setting->get_generic($this->item_shortname . '_license_key'));
+            $this->license = Esign_licenses::get_license_key();
             $this->author = $_author;
             $this->api_url = is_null($_api_url) ? $this->api_url : $_api_url;
             // Setup hooks
@@ -81,6 +81,8 @@ if (!class_exists('ESIG_License')) :
 
             // Deactivate license key
             add_action('admin_init', array($this, 'deactivate_license'));
+
+            add_action( "in_plugin_update_message-" . ESIGN_PLUGIN_BASENAME, array( $this, 'expired_notice' ), 10, 2 );
         }
 
         /**
@@ -95,12 +97,12 @@ if (!class_exists('ESIG_License')) :
             // Setup the updater
             $esig_updater = new ESIG_Plugin_Updater(
                     $this->api_url, $this->file, array(
-                'version' => $this->version,
-                'license' => $this->license,
-                'item_name' => $this->item_name,
-                'item_id'=> $this->item_id,
-                'item_shortname' => $this->item_shortname,
-                'author' => $this->author
+                    'version' => $this->version,
+                    'license' => $this->license,
+                    'item_name' => $this->item_name,
+                    'item_id'=> $this->item_id,
+                    'item_shortname' => $this->item_shortname,
+                    'author' => $this->author
                     )
             );
         }
@@ -164,32 +166,33 @@ if (!class_exists('ESIG_License')) :
             );
 
             $response = Esign_licenses::wpRemoteRequest(array('timeout' => 15,'body' => $api_params,'sslverify' => false));
-            
+
             // Make sure there are no errors
             if (is_wp_error($response)) {
                 error_log(__FILE__ . " WP E-Signature license activation error " . $response->get_error_code() . " : " . $response->get_error_message() );
-                return; 
+                return;
             }
 
 
             // Decode license data
             $license_data = json_decode(wp_remote_retrieve_body($response));
 
-
-            if ($license_data->license == "valid") {
+            if ( $license_data->success && $license_data->license == "valid") {
                 $esig->setting->set_generic($this->item_shortname . '_license_active', $license_data->license);
                 $esig->setting->set_generic($this->item_shortname . '_license_key', $license);
                 $esig->setting->set_generic($this->item_shortname . '_license_expires', $license_data->expires);
                 $esig->setting->set_generic($this->item_shortname . '_customer_email', $license_data->customer_email);
                 $esig->setting->set_generic($this->item_shortname . '_license_type', $license_data->license_type);
                 $esig->setting->set_generic($this->item_shortname . '_license_name', $license_data->item_name);
-                WP_E_Sig()->notice->set('e-sign-red-alert license', Esign_licenses::esig_super_admin() . ' Your license key has been Activated');
+                // deletes cache for license check
+                $esig->setting->delete_generic('esig_license_info');
+                WP_E_Sig()->notice->set('e-sign-alert notice notice-success', Esign_licenses::esig_super_admin() . ' Your license key has been Activated');
             } else {
 
                 WP_E_Sig()->notice->set('e-sign-red-alert license', Esign_licenses::esig_super_admin() . ' It looks like the license you entered no longer exists.  Please <a href="https://www.approveme.com/support">contact support</a> or <a href="https://www.approveme.com/email-limited-pricing/">purchase a new license here</a>');
             }
 
-            //add_option('esig_license_msg',$license_data->license) ; 
+            //add_option('esig_license_msg',$license_data->license) ;
         }
 
         /**
@@ -226,9 +229,9 @@ if (!class_exists('ESIG_License')) :
                 );
 
                 // Call the API
-               
+
                 $response = Esign_licenses::wpRemoteRequest(array('timeout' => 15,'body' => $api_params,'sslverify' => false));
-               
+
                 // Make sure there are no errors
                 if (is_wp_error($response)) {
                     error_log(__FILE__ . " WP E-Signature license Deactivation error " . $response->get_error_code() . " : " . $response->get_error_message() );
@@ -245,22 +248,46 @@ if (!class_exists('ESIG_License')) :
                     $esig->setting->delete_generic($this->item_shortname . '_customer_email');
                     $esig->setting->delete_generic($this->item_shortname . '_license_type');
                     $esig->setting->delete_generic($this->item_shortname . '_license_name');
+                    $esig->setting->delete_generic($this->item_shortname . '_license_expires');
+                    $esig->setting->delete_generic('esig_license_info');
 
                     // add_option('esig_license_msg', $license_data->license);
-                    WP_E_Sig()->notice->set('e-sign-red-alert license', Esign_licenses::esig_super_admin() . ' Your license key has been Deactivated.');
+                    WP_E_Sig()->notice->set('e-sign-alert notice notice-success', Esign_licenses::esig_super_admin() . ' Your license key has been Deactivated.');
                 } else {
-                    WP_E_Sig()->notice->set('e-sign-red-alert license', Esign_licenses::esig_super_admin() . ' It looks like the license you entered no longer exists.  Please <a href="https://www.approveme.com/support">contact support</a>');
+                    WP_E_Sig()->notice->set('e-sign-red-alert license', Esign_licenses::esig_super_admin() . ' It looks like the license you entered no longer active.  Please <a href="https://www.approveme.com/support">contact support</a>');
                 }
+            }
+        }
+
+        public function expired_notice( $plugin, $version_info ) {
+            $license_data = Esign_licenses::check_license();
+            if ( empty( $version_info->download_link ) && 'expired' === $license_data->license ) {
+                ?>
+                <span class="esig-expired-license-plugin-row-wrapper">
+                    <span>
+                        <span class="esig-expired-license-heading"><strong><?php _e( 'Update Unavailable!', 'esig' ); ?></strong></span>
+                        <span class="esig-expired-license-message">
+                            <?php
+                                printf(
+                                    __( 'Your license expired %s ago. To re-enable automatic updates <a href="%s" target="_blank">renew it now</a>.', 'esig' ),
+                                    human_time_diff( strtotime( $license_data->expires ) ),
+                                    $this->api_url . 'checkout/?download_id=2660&edd_license_key=' . Esign_licenses::get_license_key()
+                                );
+                            ?>
+                        </span>
+                    </span>
+                </span>
+                <?php
             }
         }
 
     }
 
-    
 
-    
 
-    
+
+
+
 
 endif; // end class_exists check
 

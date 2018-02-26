@@ -34,7 +34,7 @@ if (!class_exists('Esig_Slv_Settings')):
         }
 
         public static function slv_meta_save($document_id, $meta_key, $meta_index, $meta_value) {
-            
+
             $slv_settings = self::get_slv_setting($document_id);
             $meta_key = strtolower($meta_key);
             if (!$slv_settings) {
@@ -57,7 +57,7 @@ if (!class_exists('Esig_Slv_Settings')):
             $slv_settings = self::get_slv_setting($document_id);
             if (is_array($slv_settings)) {
                 $meta_key = strtolower($meta_key);
-                if(!array_key_exists($meta_key,$slv_settings)){
+                if (!array_key_exists($meta_key, $slv_settings)) {
                     return false;
                 }
                 if (array_key_exists($meta_index, $slv_settings[$meta_key])) {
@@ -115,9 +115,9 @@ if (!class_exists('Esig_Slv_Settings')):
             }
             return false;
         }
-        
-        public static function urlFriendly($emailAddress){
-              return trim(base64_encode($emailAddress),"=");
+
+        public static function urlFriendly($emailAddress) {
+            return trim(base64_encode($emailAddress), "=");
         }
 
         public static function is_slv_allowed($document_id) {
@@ -154,35 +154,44 @@ if (!class_exists('Esig_Slv_Settings')):
         }
 
         public static function is_already_logged_in($inviteHash) {
-            
+
             if (isset($_COOKIE['esig-slv-' . $inviteHash]) == "yes") {
                 return true;
             }
             return false;
         }
-        
-        public static function access_code_event_record($signer_name, $email_address,$document_id) {
-            
+
+        public static function access_code_event_record($signer_name, $email_address, $document_id) {
+
             $event_text = sprintf(__("Access code authenticated and new password created by %s %s IP: %s", 'esig'), $signer_name, $email_address, esig_get_ip());
             WP_E_Sig()->document->recordEvent($document_id, 'set_password', $event_text, null);
         }
-        
-        public static function is_sad_document($document_id){
+
+        public static function is_sad_document($document_id) {
             $document_type = ESIG_GET('esig_type');
-            if($document_id){
+            if ($document_id) {
                 $document_type = WP_E_Sig()->document->getDocumenttype($document_id);
-                if($document_type == "stand_alone"){
+                if ($document_type == "stand_alone") {
                     return true;
                 }
             }
-            if($document_type == "sad"){
+            if ($document_type == "sad") {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
         }
 
+        public static function displayPassword($emailAddress, $docId) {
+            if (!self::is_access_code_enabled($docId, $emailAddress)) {
+                return false;
+            }
+            
+            return 'data-accesscode='. self::get_access_code($docId, $emailAddress);
+        }
+
     }
+
+    
 
 endif;

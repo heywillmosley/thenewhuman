@@ -20,7 +20,15 @@ class WP_E_AuditTrail {
         $return_obj->email = $signer->user_email;
         $return_obj->ID = $signer->user_id;
         $return_obj->party_id = $signer->uuid;
-        $return_obj->image = $this->get_user_image($return_obj->email);
+
+        $display_user_image = true;
+        $display_user_image = apply_filters("esig_display_signer_avatar", $display_user_image, $user_id, $document_id);
+        if ($display_user_image) {
+            $return_obj->image = $this->get_user_image($return_obj->email);
+        } else {
+            $return_obj->image = "";
+        }
+
         return $return_obj;
     }
 
@@ -31,7 +39,14 @@ class WP_E_AuditTrail {
         $return_obj->email = $sender->user_email;
         $return_obj->ID = $sender->user_id;
         $return_obj->party_id = $sender->uuid;
-        $return_obj->image = $this->get_user_image($return_obj->email);
+        $display_user_image = true;
+        $display_user_image = apply_filters("esig_display_signer_avatar", $display_user_image, $sender->user_id, $document_id);
+        if ($display_user_image) {
+            $return_obj->image = $this->get_user_image($return_obj->email);
+        } else {
+            $return_obj->image = "";
+        }
+
         return $return_obj;
     }
 
@@ -44,7 +59,7 @@ class WP_E_AuditTrail {
             $document_type = $this->document->getDocumenttype($document_id);
 
             if ($document_type == "normal") {
-                $security_level = __("E-mail", "esig") ;
+                $security_level = __("E-mail", "esig");
             } else if ($document_type == "stand_alone") {
                 $security_level = 'sad';
             }
@@ -57,15 +72,27 @@ class WP_E_AuditTrail {
 
     public function get_digital_fingerprint_checksum($user_id, $document_id) {
         $sig_data = $this->signature->getDocumentSignatureData($user_id, $document_id);
-       
+
         if (!$sig_data) {
             $sting_to_hash = $user_id . '+' . $document_id;
         } else {
-           // $sting_to_hash = $user_id . '+' . $document_id . '+' . $sig_data->signature_data;
+            // $sting_to_hash = $user_id . '+' . $document_id . '+' . $sig_data->signature_data;
             $sting_to_hash = $user_id . '+' . $document_id . '+' . $sig_data->signature_salt;
         }
 
         $dfc = md5($sting_to_hash);
+        $string = filter_var($dfc, FILTER_SANITIZE_NUMBER_INT);
+        if (strlen($string) > 25) {
+            $sting_to_hash = $user_id . '+' . $document_id . '+' . $sig_data->signature_data;
+            $dfc = md5($sting_to_hash);
+        }
+
+        if (strpos($dfc, "abc") !== false) {
+
+            $sting_to_hash = $user_id . '+' . $document_id . '+' . $sig_data->signature_data;
+            $dfc = md5($sting_to_hash);
+        }
+
         return $dfc;
     }
 
@@ -105,7 +132,7 @@ class WP_E_AuditTrail {
         foreach ($timeline as $k => $val) {
             $val['timestamp'] = $k;
 
-            $default_timeformat = get_option('time_format');//'Y-m-d H:i:s T'; //
+            $default_timeformat = get_option('time_format'); //'Y-m-d H:i:s T'; //
             $event_id = $val['event_id'];
             $esig_timezone = 'UTC';
             if ($event_id) {
@@ -149,7 +176,7 @@ class WP_E_AuditTrail {
             }
 
             //date($default_timeformat, $val['timestamp'])
-            $docDate= $this->document->docDate($document_id, $val['date']);
+            $docDate = $this->document->docDate($document_id, $val['date']);
 
             $li = "<td class=\"time\">" . $docDate . " " . $esig_timezone . "</td>";
             $li .= "<td {$font_family} class=\"log\">" . $val['log'] . "</td>";
@@ -173,7 +200,7 @@ class WP_E_AuditTrail {
             $document = $this->document->getDocument($document_id);
             $sig_data = $this->signature->getDocumentSignatureData($user_id, $document_id);
             if ($sig_data->signature_type == 'typed') {
-                $font_num = $this->signature->get_font_type($document_id,$user_id);
+                $font_num = $this->signature->get_font_type($document_id, $user_id);
                 if ($font_num > 7) {
                     $font_num = 1;
                 }
@@ -204,10 +231,9 @@ class WP_E_AuditTrail {
 
         //To hide warning..
         if (function_exists('get_avatar_url')) {
-            
-            $image_src = $this->get_avatar_url($email,array('force_display' => true));
-            
-        }else {
+
+            $image_src = $this->get_avatar_url($email, array('force_display' => true));
+        } else {
             libxml_use_internal_errors(true);
             $image = get_avatar($email, 96, '', false, array('force_display' => true));
 
@@ -221,10 +247,11 @@ class WP_E_AuditTrail {
             }
         }
         $content = WP_E_Sig()->signature->esig_get_contents($image_src);
-        if(!$content){
+        if (!$content) {
             $image_src = 'http://www.gravatar.com/avatar/?d=mm';
-           $content = WP_E_Sig()->signature->esig_get_contents($image_src); 
+            $content = WP_E_Sig()->signature->esig_get_contents($image_src);
         }
+
         $type = $this->get_image_type($content, $image_src);
         $img_data = "data:image/$type;base64," . base64_encode($content);
         return $img_data;
@@ -240,7 +267,7 @@ class WP_E_AuditTrail {
         if (function_exists('exif_imagetype') && ini_get('allow_url_fopen')) {
 
             $type = exif_imagetype($image_src);
-            if (!$type){
+            if (!$type) {
                 return $this->get_img_type_from_content($data);
             }
             switch ($type) {

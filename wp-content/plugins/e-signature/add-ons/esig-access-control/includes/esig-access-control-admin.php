@@ -3,7 +3,7 @@
 /**
  *
  * @package ESIG_ACCESS_CONTROL_Admin
- * @author  Abu Shoaib <abushoaib73@gmail.com>
+ * @author  Abu Shoaib 
  */
 class ESIG_ACCESS_CONTROL_Admin extends Access_Control_Setting {
 
@@ -81,9 +81,9 @@ class ESIG_ACCESS_CONTROL_Admin extends Access_Control_Setting {
         $document_id = $args['document']->document_id;
         //getting value from post  
         $esig_required_wpmember = ESIG_POST('esig_required_wpmember');
-        if (!$esig_required_wpmember) {
-            return;
-        }
+        
+       
+        
         $esig_access_control_role = ESIG_POST('esig_access_control_role', true);
         $esig_document_permission = ESIG_POST('esig_document_permission');
         $esig_document_description = ESIG_POST('esig_document_description');
@@ -149,7 +149,7 @@ class ESIG_ACCESS_CONTROL_Admin extends Access_Control_Setting {
         //$content .='';
 
         $content .= ' <div style="width:250px;">
-                                        <div class="checkbox leftPadding" ><input type="checkbox" id="esig_required_wpmember" name="esig_required_wpmember" value="1" ' . $esig_required_wpmember_checked . '><label class="leftPadding-5">Required a Specific Wordpress member (or) user role to sign this document.</label></div>
+                                        <div ><input type="checkbox" id="esig_required_wpmember" name="esig_required_wpmember" value="1" ' . $esig_required_wpmember_checked . '>Required a Specific Wordpress member (or) user role to sign this document.</div>
                                       
                              <div id="esig_wpaccess_control_role" name="esig_wpaccess_control_role" style="display:' . $display . ';" > <hr>
                                         

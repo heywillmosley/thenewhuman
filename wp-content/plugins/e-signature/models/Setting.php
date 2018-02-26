@@ -64,25 +64,26 @@ class WP_E_Setting extends WP_E_Model {
 
 
         if ($this->exists($name)) {
-            $this->update($name, $value);
+           return $this->update($name, $value);
         } else {
 
             $user_id = get_current_user_id();  //wordpress method
 
-            $this->wpdb->query(
+           /* $this->wpdb->query(
                     $this->wpdb->prepare(
                             "INSERT INTO " . $this->table . " VALUES(null, %d, %s, %s)", $user_id, $name, $value
                     )
-            );
+            );*/
+            return Esign_Query::_insert(Esign_Query::$table_settings,array("user_id"=>$user_id,"setting_name"=>$name,"setting_value"=>$value), array("%d","%s","%s"));
         }
-        return $this->wpdb->insert_id;
+        
     }
 
     /**
-     *  set an array settings 
+     *  set an array settings
      * @param undefined $name
      * @param undefined $value
-     * 
+     *
      * @return
      */
     public function set_array($name, $value) {
@@ -99,7 +100,7 @@ class WP_E_Setting extends WP_E_Model {
 
             $old_array = json_encode($old_array);
 
-            $this->update_generic($name, $old_array);
+          return  $this->update_generic($name, $old_array);
         } else {
 
 
@@ -107,31 +108,33 @@ class WP_E_Setting extends WP_E_Model {
 
             $user_id = get_current_user_id();  //wordpress method
 
-            $this->wpdb->query(
+           /* $this->wpdb->query(
                     $this->wpdb->prepare(
                             "INSERT INTO " . $this->table . " VALUES(null, %d, %s, %s)", $user_id, $name, $new_array
                     )
-            );
+            );*/
+          return Esign_Query::_insert(Esign_Query::$table_settings,array("user_id"=>$user_id,"setting_name"=>$name,"setting_value"=>$new_array), array("%d","%s","%s"));
         }
-        return $this->wpdb->insert_id;
+        
     }
 
     public function set_generic($name, $value) {
 
 
         if ($this->exists_generic($name)) {
-            $this->update_generic($name, $value);
+           return $this->update_generic($name, $value);
         } else {
 
             $user_id = get_current_user_id();  //wordpress method
 
-            $this->wpdb->query(
+           /* $this->wpdb->query(
                     $this->wpdb->prepare(
                             "INSERT INTO " . $this->table . " VALUES(null, %d, %s, %s)", $user_id, $name, $value
                     )
-            );
+            );*/
+            return Esign_Query::_insert(Esign_Query::$table_settings,array("user_id"=>$user_id,"setting_name"=>$name,"setting_value"=>$value), array("%d","%s","%s"));
         }
-        return $this->wpdb->insert_id;
+        
     }
 
     public function update($name, $value) {
@@ -200,14 +203,14 @@ class WP_E_Setting extends WP_E_Model {
 
     public function esign_hide_esig_menus() {
 
-        $hide_esign = $this->get_generic('esig_unlimited_hide_settings'); // getting hide settings from settings table 
-        $esig_super_admin = WP_E_Sig()->user->esig_get_super_admin_id(); // getting e-signature super admin 
-        $wp_user_id = get_current_user_id(); // getting current wp user id 
+        $hide_esign = $this->get_generic('esig_unlimited_hide_settings'); // getting hide settings from settings table
+        $esig_super_admin = WP_E_Sig()->user->esig_get_super_admin_id(); // getting e-signature super admin
+        $wp_user_id = get_current_user_id(); // getting current wp user id
         // getting esigrole class
         $esigrole = new WP_E_Esigrole();
 
         if ($esig_super_admin != $wp_user_id) { // checking super and current user match
-            if ($hide_esign == "1") { // checking hide setting true or false 
+            if ($hide_esign == "1") { // checking hide setting true or false
                 if ($esigrole->esig_current_user_can('edit_document')) {
 
                     return true;
@@ -239,13 +242,13 @@ class WP_E_Setting extends WP_E_Model {
             }
         } else {
 
-            // getting sad document id 
+            // getting sad document id
             $sad_document = new esig_sad_document();
 
             $doc_id = $sad_document->get_sad_document_id();
         }
 
-        // get document creator id 
+        // get document creator id
         $owner_id = $document_api->get_document_owner_id($doc_id);
 
         $company_name = $this->get('company_logo', $owner_id);
@@ -255,11 +258,11 @@ class WP_E_Setting extends WP_E_Model {
         return esc_attr(stripslashes($company_name));
     }
 
-    
-    
+
+
     public function esig_license_expired() {
 
-        // check licese key empty then return false . 
+        // check licese key empty then return false .
         $license_key = Esign_licenses::get_license_key();
 
         if (!$license_key) {
@@ -300,12 +303,12 @@ class WP_E_Setting extends WP_E_Model {
     }
 
     /**
-     * return esignature default display page 
+     * return esignature default display page
      * @return type
      */
     public function get_default_page() {
         return $this->get_generic("default_display_page");
     }
-    
+
 
 }

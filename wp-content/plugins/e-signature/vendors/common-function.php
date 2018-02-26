@@ -34,7 +34,9 @@ function esig_addRecipient() {
         $docinvite->deleteDocumentInvitations($document_id);
     }
 
-    ESIGN_SIGNER_ORDER_SETTING::save_signer_order_active($document_id, esigpost('esign_assign_signer_order'));
+    if(class_exists("ESIGN_SIGNER_ORDER_SETTING")){
+		ESIGN_SIGNER_ORDER_SETTING::save_signer_order_active($document_id, esigpost('esign_assign_signer_order'));
+	}
     do_action("esig_reciepent_edit", array('document_id' => $document_id, 'post' => $_POST));
 
 
@@ -572,7 +574,6 @@ function esig_document_tail_filter($loop_tail, $args) {
         'esign-view-document'
     );
 
-
     if (!in_array($current_screen, $signature_screens)) {
         return $loop_tail;
     }
@@ -600,6 +601,7 @@ function esig_document_tail_filter($loop_tail, $args) {
         delete_transient('esign-auto-up-failed');
         return $loop_tail;
     }
+      
     if (get_transient('esign-update-remind')) {
         return $loop_tail;
     }
@@ -616,6 +618,7 @@ function esig_document_tail_filter($loop_tail, $args) {
     }
 
     $esign_auto_update = $settings->get_generic("esign_auto_update");
+  
     if (isset($esign_auto_update) && !empty($esign_auto_update)) {
         return $loop_tail;
     }
@@ -672,6 +675,8 @@ function esig_update_progress_content() {
  */
 function esig_auto_update() {
 
+   
+    
     if (!current_user_can('install_plugins')) {
         return;
     }
@@ -690,13 +695,15 @@ function esig_auto_update() {
     }
    
     
+    
     if (!get_transient('esign-auto-downloads')) {
         return;
     }
-    
+     
     if (!Esig_Addons::is_business_pack_exists()) {
         return;
     }
+    
     if (!get_transient('esign-update-list')) {
         return;
     } else {
@@ -707,18 +714,19 @@ function esig_auto_update() {
         }
 
         $auto_downloads = get_transient('esign-auto-downloads');
+       
         if (isset($esign_auto_update) && !empty($esign_auto_update)) {
 
 
             $esign_addon = new WP_E_Addon();
 
             $download_link = esig_addons::get_business_pack_link();
-
+      
+         
             if (!$download_link) {
                 return;
             }
-
-            //$install_now = isset($_GET['esig-auto']) ? $_GET['esig-auto'] : null;
+  //$install_now = isset($_GET['esig-auto']) ? $_GET['esig-auto'] : null;
 
             if ($install_now != 'now') {
                 include_once ESIGN_PLUGIN_PATH . "/views/about/progress-bar.php";
@@ -727,6 +735,7 @@ function esig_auto_update() {
             $installed = $esign_addon->esig_addons_update($download_link, 'e-signature-business-add-ons');
 
             if ($installed) {
+                
                 // after installing updates it unset from auto install
                 // unset($auto_downloads[$plugin->addon_id]);
                 delete_transient('esign-auto-downloads');

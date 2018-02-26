@@ -27,7 +27,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
     </div>
 
-	<?php echo $data['message']; 
+	<?php 
+        
+         echo $data['message']; 
 	
 	 if(class_exists('WP_E_Notice'))
 	 {

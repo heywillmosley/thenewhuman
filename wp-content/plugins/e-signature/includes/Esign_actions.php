@@ -71,7 +71,7 @@ function wp_e_signature_activate_network($network_wide) {
  * */
 
 function wp_e_signature_deactivate() {
-    
+        
 }
 
 /**
@@ -125,6 +125,9 @@ function wp_e_signature_activate() {
         update_option("esig_db_version", $esig_db_version);
     }
 
+    if (!get_option("esig_version")) {
+        update_option("esig_version", esigGetVersion());
+    }
 
     set_transient('_esign_activation_redirect', true, 30);
 }
@@ -180,8 +183,7 @@ function init_wp_e_signature() {
 }
 
 function esign_after_install() {
-    global $pagenow;
-
+    
     if (!is_admin())
         return;
 

@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			
 			<a class='wp-e-saveButton esign-blue-btn' href="admin.php?page=esign-settings"><?php _e('Settings', 'esig'); ?></a>
 			
-			<a class='wp-e-saveButton esign-blue-btn' href="#"><?php _e('Docs','esig'); ?></a>
+			<a class='wp-e-saveButton esign-blue-btn' href="admin.php?page=esign-docs"><?php _e('Docs','esig'); ?></a>
 			
 			<iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" src="http://platform.twitter.com/widgets/tweet_button.1393899192.html#_=1394751928338&amp;count=horizontal&amp;hashtags=esignature&amp;id=twitter-widget-0&amp;lang=en&amp;size=l&amp;text=An%20open-source%20(free)%20%23WPeSignature%20plugin%20for%20%23WordPress%20that%20helps%20you%20sign%20documents.&amp;url=http%3A%2F%2Fgoo.gl%2F9CFLSv&amp;via=approveme" class="twitter-share-button twitter-tweet-button twitter-count-horizontal" title="Twitter Tweet Button" data-twttr-rendered="true" style="width: 138px; height: 35px;"></iframe>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

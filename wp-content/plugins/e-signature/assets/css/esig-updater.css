@@ -340,3 +340,35 @@ vertical-align: baseline;
     top: auto;
 }
 
+.esig-expired-license-plugin-row-wrapper {
+	height: 50px;
+	vertical-align: middle;
+	display: table-cell;
+	background-color: #EB4B29;
+	border: 1px solid #B53B21;
+	border-left: 5px solid #B53B21;
+	color: #fff !important;
+}
+
+.esig-expired-license-plugin-row-wrapper > span {
+	display: inline-block;
+	padding: 0 75px 0 8px;
+}
+
+.esig-expired-license-heading {
+	text-transform: uppercase;
+}
+
+.esig-expired-license-message {
+	margin-left: 5px;
+}
+
+.esig-expired-license-message > a {
+	color: #fff;
+	text-decoration: underline;
+}
+
+p.esig-expired-license-plugin-row-wrapper::before {
+	display: none;
+	content: '';
+}

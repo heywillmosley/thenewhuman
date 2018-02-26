@@ -35,7 +35,7 @@
     });
 
 // disabling third party alert msg . 
-    $('.updated').hide();
+    //$('.updated').hide();
 
 
     //updater popup start here 

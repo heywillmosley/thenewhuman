@@ -34,13 +34,19 @@ class Esig_Addons {
         if (self::is_exists_in_plugindir($addon_file)) {
             activate_plugins($addon_file);
         }
-
+        
+        self::$active_addons = self::get_addons_setting();
+        if(!is_array(self::$active_addons)){
+            return false;
+        }
+        
         if (($key = array_search($addon_file, self::$active_addons)) === false) {
+            
             self::$active_addons[] = $addon_file;
             // saving active addons now . 
             self::save_addons_setting(self::$active_addons);
 
-            self::isBusinessPackActive();
+            //
 
             return true;
         }
@@ -446,6 +452,9 @@ class Esig_Addons {
             $file = Esig_Addons::get_business_pack_path() . $addon_files;
             if (file_exists($file)) {
                 $oldVersion = getAddonVersion($file);
+                if(empty($oldVersion)){
+                    return false;
+                }
                 if (version_compare($oldVersion, $newVersion, '<')) {
                     
                     return true;
@@ -467,9 +476,10 @@ class Esig_Addons {
         if (!self::is_updates_available()) {
             return false;
         }
-        if (self::find_old_installed_addon()) {
+        
+       /* if (self::find_old_installed_addon()) {
             return false;
-        }
+        }*/
 
         $plugin_list = json_decode(get_transient('esign-update-list'));
 
@@ -576,7 +586,8 @@ if ( ! defined( 'WPINC' ) )
         return strcmp($a["addon_name"], $b["addon_name"]);
     }
 
-    private static function isBusinessPackActive() {
+    public static function isBusinessPackActive() {
+        
         $plugin = "e-signature-business-add-ons/e-signature-business-add-ons.php";
         if (!self::is_business_pack_exists()) {
             return false;
@@ -587,6 +598,16 @@ if ( ! defined( 'WPINC' ) )
             sort($current);
             update_option('active_plugins', $current);
         }
+    }
+    
+    public static function isAlwaysEnabled($file) {
+        $array = array(
+            'esig-signer-input-fields/esig-sif.php',
+        );
+        if (in_array($file, $array)) {
+            return true;
+        }
+        return false;
     }
 
 }

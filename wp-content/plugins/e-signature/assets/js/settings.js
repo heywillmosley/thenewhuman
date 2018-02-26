@@ -14,7 +14,7 @@
 
 	var popup_content_id = 'admin-signature'; //Id of the pop-up content
 
-	
+
 
 	var edit_opts = {
 
@@ -46,7 +46,7 @@
 
 	};
 
-	
+
 
 	var signaturePadEdit = $('.signature-wrapper').signaturePad(edit_opts);
 
@@ -56,7 +56,7 @@
 
     if(sig != ""){
 
-        
+
 
          $(".esig-sig-type").remove();
 
@@ -68,7 +68,7 @@
 
 	}
 
-    else 
+    else
 
     {
 
@@ -78,7 +78,7 @@
 
 			{
 
-				
+
 
 				$('#signatureCanvas2').hide();
 
@@ -90,13 +90,13 @@
 
 	$('.signature-wrapper-displayonly').click(function(){
 
-	    
 
-		tb_show("+ Add signature", '#TB_inline?width=480&height=350&inlineId=' + popup_content_id);
+
+		tb_show("+ Add signature", '#TB_inline?width=480&inlineId=' + popup_content_id);
 
 	});
 
-	
+
 
 	// Save signature
 
@@ -106,7 +106,7 @@
 
 		var output = $('input[name="output"]');
 
-       
+
 
 		if(!output.val()){
 
@@ -118,7 +118,7 @@
 
 		var elem = this;
 
-        
+
 
         $('.esig-sig-type').remove();
 
@@ -136,13 +136,13 @@
 
 		$('.signature-wrapper-displayonly .sign-here').removeClass('unsigned').addClass('signed');
 
-		
 
-		
+
+
 
 	});
 
-	
+
 
 	// Modal dialog box for the super admin select . .
 
@@ -172,9 +172,9 @@
 
 				"Cancel": function() {
 
-                    var old_val = $('select option:selected').data('used'); 
+                    var old_val = $('select option:selected').data('used');
 
-                    
+
 
                     $('#esig_admin_user_id').val(old_val);
 
@@ -202,13 +202,13 @@
 
 				$overwrite.dialog('open'); // Popup a dialog
 
-			   
+
 
 		});
 
 
 
-     
+
 
 
 
@@ -218,7 +218,7 @@
 
 		var form = $(this);
 
-        
+
 
 		form.find(".error").remove(); //remove previous alerts
 
@@ -256,7 +256,7 @@
 		var input_text = $("input[name='esignature_in_text']").val();
 		var input_sig = $("input[name='output']").val();
 		if (input_text == "" && input_sig == "") {
-			valid=false ; 
+			valid=false ;
 		}
 
 		if(!valid){
@@ -273,17 +273,17 @@
 
 		}
 
-	}); 
+	});
 
 
 
-    
 
-    // signature type end here 
 
-	
+    // signature type end here
 
-	
+
+
+
 
 	$('#upload_company_logo').click(function() {
 
@@ -315,7 +315,7 @@
 
 
 
-  // error dialog popup 
+  // error dialog popup
 
 	$( "#esig_show_alert" ).dialog({
 
@@ -336,8 +336,6 @@
       }
 
     });
-
-	
 
 })(jQuery);
 

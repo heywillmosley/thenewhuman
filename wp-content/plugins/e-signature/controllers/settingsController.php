@@ -43,7 +43,7 @@ class WP_E_SettingsController extends WP_E_appController {
         $esig_license = $this->model->get_generic("esig_wp_esignature_license_active");
         if (empty($esig_license) || $esig_license == 'invalid') {
             if (is_esig_super_admin()) {
-                $this->view->setAlert(array('type' => 'e-sign-red-alert alert e-sign-alert esig-updated', 'title' => '', 'message' => __("<strong>Urgent, License Needed:</strong> WP-Esignature add-on requires a valid license for critical security updates - <a href='admin.php?page=esign-licenses-general' class='e-sign-enter-license'>Enter License</a>", 'esig')));
+                $this->view->setAlert(array('type' => 'e-sign-red-alert e-sign-alert notice notice-error', 'title' => '', 'message' => __("<strong>Urgent, License Needed:</strong> WP-Esignature add-on requires a valid license for critical security updates - <a href='admin.php?page=esign-licenses-general' class='e-sign-enter-license'>Enter License</a>", 'esig')));
             }
         }
         $this->queueScripts();
@@ -393,7 +393,7 @@ class WP_E_SettingsController extends WP_E_appController {
             
             // set this user as admin 
             $this->user->updateField($userID, 'is_admin', '1');
-            $this->view->setAlert(array('type' => 'e-sign-alert esig-updated', 'title' => '', 'message' => __('<strong>Well done sir</strong> :  Your E-Signature settings have been updated!', 'esig')));
+            $this->view->setAlert(array('type' => 'e-sign-alert esig-updated', 'title' => '', 'message' => __('<strong>Well done! </strong>   Your E-Signature settings have been updated!', 'esig')));
         }
 
         foreach ($userdata as $field => $value) {

@@ -111,14 +111,14 @@ class WP_E_Shortcode {
 
             if (empty($invite_hash) || empty($checksum)) {
 
-                if (get_transient('esig_current_url')) {
+               /* if (get_transient('esig_current_url')) {
 
                     $current_url = get_transient('esig_current_url');
                     delete_transient('esig_current_url');
 
                     wp_redirect($current_url);
                     exit;
-                }
+                }*/
 
                 $esigPreview = esigget('esigpreview');
                 if ($esigPreview) {
@@ -187,7 +187,7 @@ class WP_E_Shortcode {
 
 
             // for pdmi bug added this tra
-            set_transient('esig_current_url', esc_url_raw($_SERVER['REQUEST_URI']));
+           // set_transient('esig_current_url', esc_url_raw($_SERVER['REQUEST_URI']));
             // increase execution time 
             @ini_set('max_execution_time', 300);
 
@@ -280,11 +280,11 @@ class WP_E_Shortcode {
                     //$this->user->updateField($recipient->user_id, "last_name", trim($l_name));
                     //$this->setting->set("esign_signed_". $invitation->user_id ."_name_document_id_".$doc_id,$f_name);
                     // saving event
-                    $event_text = sprintf(__("Signer name %s was changed to %s by %s IP: %s", 'esig'), $user_name, stripslashes($f_name), $recipient->user_email, esig_get_ip());
+                    $event_text = sprintf(__("Signer name %s was changed to %s by %s IP: %s", "esig"), $user_name, stripslashes($f_name), $recipient->user_email, esig_get_ip());
                     $this->document->recordEvent($doc_id, 'name_changed', $event_text, null);
                 }
 
-                $event_text = sprintf(__("Document signed by %s - %s IP %s", 'esig'), stripslashes($f_name), $recipient->user_email, esig_get_ip());
+                $event_text = sprintf(__("Document signed by %s - %s IP %s", "esig"), stripslashes($f_name), $recipient->user_email, esig_get_ip());
                 $this->document->recordEvent($doc_id, 'document_signed', $event_text);
 
                 $document = $this->document->getDocumentByID($doc_id);
@@ -359,9 +359,7 @@ class WP_E_Shortcode {
         // $signed_message = $this->view->renderPartial('document_signed', $template_data, false, 'notifications/admin');
 
         $subject = sprintf(__("%s - Signed by %s %s", "esig"), $document->document_title, $this->user->get_esig_signer_name($recipient->user_id, $document->document_id), $recipient->user_email);
-        // $subject = "{$document->document_title} - Signed by {$recipient->first_name} ({$recipient->user_email})";
-        // send Email
-        // $mailsent = $this->email->esig_mail($sender, $owner->user_email, $owner->user_email, $subject, $signed_message, $attachments);
+       
 
         $mailsent = WP_E_Sig()->email->send(array(
             'from_name' => $sender, // Use 'posts' to get standard post objects
@@ -554,12 +552,16 @@ class WP_E_Shortcode {
                     'recipient' => $recipient,
                     'invitation' => $invitation,
                 ));
+                
+               // do_action('esig_agreement_signed_by_all_party',$document_id);
+                
+                $document = $this->document->getDocument($document_id);
+                 
                 // getting attachment 
                 $attachments = apply_filters('esig_email_pdf_attachment', array('document' => $document));
                 $audit_hash = $this->auditReport($document_id, $document, true);
 
                 if (is_array($attachments) || empty($attachments)) {
-
                     $attachments = false;
                 }
                 // Email all signers
@@ -653,7 +655,7 @@ class WP_E_Shortcode {
                         if ($invite->invite_hash != $current_user_invite_hash) {
                             $user_data['esig-tooltip'] = 'title="This signature section is assigned to ' . $user_name . '"';
                             if (!$this->user->hasSignedDocument($invite->user_id, $document_id)) {
-                                $user_data['esig-awaiting-sig'] = $user_name . "<br>" . "(Awaiting Signature)";
+                                $user_data['esig-awaiting-sig'] = $user_name . "<br>" . __("(Awaiting Signature)","esig");
                             }
                             $recipient_sig_html .= $this->view->renderPartial('_signature_display', $user_data);
                         }
@@ -680,7 +682,7 @@ class WP_E_Shortcode {
             $date4sort = $this->document->esig_date_format($document->date_created,$document_id);
 
             if (isset($_GET['hash'])) {
-                $audit_hash = "Audit Signature ID#" . $_GET['hash'];
+                $audit_hash = __("Audit Signature ID#","esig") . $_GET['hash'];
             } else {
 
                 if ($this->document->getSignedresult($document->document_id)) {
@@ -688,7 +690,7 @@ class WP_E_Shortcode {
                     $audit_hash = $this->auditReport($document_id, $document, true);
 
                     if ($audit_hash != "")
-                        $audit_hash = "Audit Signature ID#" . $audit_hash;
+                        $audit_hash = __("Audit Signature ID#","esig") . $audit_hash;
                 }
             }
 
@@ -757,6 +759,7 @@ class WP_E_Shortcode {
      * */
 
     public function auditReport($id, &$document_data = null, $return_type = false) {
+        
         global $audit_trail_data;
         $audit_trail_data = new stdClass();
 
@@ -1009,7 +1012,7 @@ class WP_E_Shortcode {
         $styles[] = 'esig-thickbox-css';
 
         /*         * ********* main theme styels ********* */
-        $styles[] = 'esig-style-google-css';
+        
         $styles[] = 'esig-icon-css';
         $styles[] = 'esig-updater-css';
         $styles[] = 'esig-mail-css';
@@ -1039,8 +1042,8 @@ class WP_E_Shortcode {
     public static function register_scripts() {
 
         wp_register_style('esig-signaturepad-css', plugins_url('assets/css/jquery.signaturepad.css', dirname(__FILE__)), array(), esigGetVersion(), 'screen');
-        wp_register_script('esig-core-object-scirpts', ESIGN_ASSETS_DIR_URI . "/js/esign.js", array(), esigGetVersion(), false);
-        wp_register_script('esig-core-validation-scirpts', ESIGN_ASSETS_DIR_URI . "/js/esig-validation.js", array(), esigGetVersion(), false);
+        wp_register_script('esig-core-object-scirpts', ESIGN_ASSETS_DIR_URI . "/js/esign.js", array('jquery'), esigGetVersion(), true);
+        wp_register_script('esig-core-validation-scirpts', ESIGN_ASSETS_DIR_URI . "/js/esig-validation.js", array('jquery'), esigGetVersion(), true);
 
         // registering bootstrap styles 
         wp_register_style('esig-bootstrap-css', plugins_url('assets/css/bootstrap/bootstrap.min.css', dirname(__FILE__)), array(), esigGetVersion(), 'all');
@@ -1050,7 +1053,7 @@ class WP_E_Shortcode {
         wp_register_style('esig-mobile-style-template-css', plugins_url('page-template/default/style_mobile.css', dirname(__FILE__)), array(), esigGetVersion(), 'all');
 
         /*         * ****************** styles ***************************** */
-        wp_register_style('esig-style-google-css', "//fonts.googleapis.com/css?family=La+Belle+Aurore|Shadows+Into+Light|Nothing+You+Could+Do|Zeyada|Dawning+of+a+New+Day|Herr+Von+Muellerhoff|Over+the+Rainbow", array(), esigGetVersion(), 'screen');
+        wp_register_style('esig-style-google-css', "//fonts.googleapis.com/css?family=La+Belle+Aurore|Shadows+Into+Light|Nothing+You+Could+Do|Zeyada|Dawning+of+a+New+Day|Herr+Von+Muellerhoff|Over+the+Rainbow", array(), esigGetVersion(), 'all');
         wp_register_style('esig-icon-css', plugins_url('assets/css/esig-icon.css', dirname(__FILE__)), array(), esigGetVersion(), 'screen');
         wp_register_style('esig-updater-css', plugins_url('assets/css/esig-updater.css', dirname(__FILE__)), array(), esigGetVersion(), 'screen');
         wp_register_style('esig-mail-css', plugins_url('assets/css/esig-mail.css', dirname(__FILE__)), array(), esigGetVersion(), 'screen');
@@ -1070,32 +1073,33 @@ class WP_E_Shortcode {
 
         /*         * *********************** style end here ******************* */
 
-        wp_register_script('esig-jquery-validate', plugins_url("assets/js/jquery.validate.js", dirname(__FILE__)), array('jquery'), esigGetVersion(), true);
+        wp_register_script('esig-jquery-validate', plugins_url("assets/js/jquery.validate.js", dirname(__FILE__)), array('jquery'), esigGetVersion(), false);
 
-        wp_register_script('esig-jquery-signaturepad-main', plugins_url("assets/js/jquery.signaturepad.js", dirname(__FILE__)), array('jquery'), esigGetVersion(), true);
-        wp_register_script('esig-jquery-signaturepad', plugins_url("assets/js/jquery.signaturepad.min.js", dirname(__FILE__)), array('jquery'), esigGetVersion(), true);
+        wp_register_script('esig-jquery-signaturepad-main', plugins_url("assets/js/jquery.signaturepad.js", dirname(__FILE__)), array('jquery'), esigGetVersion(), false);
+        wp_register_script('esig-jquery-signaturepad', plugins_url("assets/js/jquery.signaturepad.min.js", dirname(__FILE__)), array('jquery'), esigGetVersion(), false);
 
-        wp_register_script('esig-prefixfree', plugins_url('assets/js/prefixfree.min.js', dirname(__FILE__)), array(), esigGetVersion(), true);
+        wp_register_script('esig-prefixfree', plugins_url('assets/js/prefixfree.min.js', dirname(__FILE__)), array(), esigGetVersion(), false);
 
-        wp_register_script('esig-tooltip', plugins_url('assets/js/tooltip.js?ver=3.9.1', dirname(__FILE__)), array(), esigGetVersion(), true);
+        wp_register_script('esig-tooltip', plugins_url('assets/js/tooltip.js?ver=3.9.1', dirname(__FILE__)), array(), esigGetVersion(), false);
 
-        wp_register_script('esig-bootstrap-js', plugins_url('assets/js/bootstrap/bootstrap.min.js', dirname(__FILE__)), array(), esigGetVersion(), true);
+        wp_register_script('esig-bootstrap-js', plugins_url('assets/js/bootstrap/bootstrap.min.js', dirname(__FILE__)), array(), esigGetVersion(), false);
 
-        wp_register_script('esig-smarttab-js', plugins_url('assets/js/jquery.smartTab.js', dirname(__FILE__)), array('jquery'), esigGetVersion(), true);
+        wp_register_script('esig-smarttab-js', plugins_url('assets/js/jquery.smartTab.js', dirname(__FILE__)), array('jquery'), esigGetVersion(), false);
 
-        wp_register_script('esig-jquery-mobile-event-js', plugins_url('assets/js/jquery.mobile-events.js', dirname(__FILE__)), array('jquery'), esigGetVersion(), true);
+        wp_register_script('esig-jquery-mobile-event-js', plugins_url('assets/js/jquery.mobile-events.js', dirname(__FILE__)), array('jquery'), esigGetVersion(), false);
 
-        wp_register_script('esig-mobile-common-js', plugins_url('assets/js/esig-mobile-common.js', dirname(__FILE__)), array('jquery'), esigGetVersion(), true);
+        wp_register_script('esig-mobile-common-js', plugins_url('assets/js/esig-mobile-common.js', dirname(__FILE__)), array('jquery'), esigGetVersion(), false);
 
-        wp_register_script('esig-signdoc-js', plugins_url('assets/js/signdoc.js', dirname(__FILE__)), array('jquery'), esigGetVersion(), true);
+        wp_register_script('esig-signdoc-js', plugins_url('assets/js/signdoc.js', dirname(__FILE__)), array('jquery'), esigGetVersion(), false);
 
-        wp_register_script('esig-common-js', plugins_url('assets/js/common.js?ver=1.0.1', dirname(__FILE__)), array('jquery'), esigGetVersion(), true);
+        wp_register_script('esig-common-js', plugins_url('assets/js/common.js?ver=1.0.1', dirname(__FILE__)), array('jquery'), esigGetVersion(), false);
     }
 
     public static function esig_header_style() {
         $styles = array(
             'esig-signaturepad-css',
         );
+        $styles[] = 'esig-style-google-css';
         $styles = apply_filters('esig_print_header_styles', $styles);
         return $styles;
     }

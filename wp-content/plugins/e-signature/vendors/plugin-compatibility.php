@@ -182,9 +182,8 @@ function esig_rewrite_wp_die($message, $title, $args) {
         echo '</body>';
         die();
     }
-    
-     _default_wp_die_handler($message, $title, $args);
-     
+
+    _default_wp_die_handler($message, $title, $args);
 }
 
 function bwp_loads($loads) {
@@ -204,4 +203,19 @@ function esig_cache_plugin_compatibility($args) {
 }
 
 add_action('esig_signature_loaded', "esig_cache_plugin_compatibility", -100, 1);
+
+
+if (!function_exists('is_esig_newer_version')) {
+
+    function is_esig_newer_version() {
+        
+        $currentVersion = esigGetVersion();
+        $installVersion = get_option('esig_version');
+        if (version_compare($currentVersion, $installVersion, "<=")) {
+            return true;
+        }
+        return false;
+    }
+
+}
 ?>

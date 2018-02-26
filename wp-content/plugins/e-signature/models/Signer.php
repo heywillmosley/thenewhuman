@@ -116,11 +116,11 @@ class WP_E_Signer extends WP_E_Model {
 
             $user_email = $recipient->user_email;
             $del_button = ($index > 0) ? '<span id="esig-del-signer" class="deleteIcon"></span>' : false;
-            $slv_button = (class_exists('ESIG_SLV_Admin')) ? '<span id="second_layer_verification" class="icon-doorkey second-layer" ></span>' : false;
+            $slv_button = (class_exists('ESIG_SLV_Admin')) ? '<span id="second_layer_verification" '. Esig_Slv_Settings::displayPassword($user_email,$document_id) .' class="icon-doorkey second-layer" ></span>' : false;
             $cross_button = (!$edit_button) ? $slv_button . $del_button : false;
 
            
-            if (ESIGN_SIGNER_ORDER_SETTING::is_signer_order_active($document_id)) {
+            if (class_exists("ESIGN_SIGNER_ORDER_SETTING") && ESIGN_SIGNER_ORDER_SETTING::is_signer_order_active($document_id)) {
                   $read_display = false;
                  $signer_order = apply_filters("esig-load-signer-order", '', $readonly, $document_id, $index);
                  

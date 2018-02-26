@@ -25,6 +25,12 @@ $this->default_vals($data, $vars);
     </div>
 </div>
 
+<?php 
+
+   echo WP_E_Notice::instance()->esig_print_notice();
+
+?>
+
 <h2 class="esign-form-header"><?php _e('1. Enter your documents name', 'esig'); ?></h2>
 
 <form method="post" class="form-horizontal document-form " id="document_form" enctype="multipart/form-data">

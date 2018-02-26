@@ -46,6 +46,7 @@ $documentation_page = '';
 $settings_page = '';
 
 
+//
 
 $this->model->esig_addons_tabs($tab);
 echo '<div class="esig-add-ons-wrapper">';
@@ -73,17 +74,24 @@ if ($tab == 'all') {
 
             <div class="esig-add-on-block esig-pro-pack open">
 
-                <h3><?php _e("A Valid E-Signature License is Required","esig");?></h3>
-                <p style="display:block;"><?php _e("A valid WP E-Signature license is required for access to critical updates and support. Without a license you are putting you and your signers at risk. To protect yourself and your documents please update your license.","esig");?></p><a href="https://www.approveme.com/email-limited-pricing/" class="esig-btn-pro" target="_blank"><?php _e("Purchase a license","esig");?> </a>
+                <h3><?php _e("A Valid E-Signature License is Required", "esig"); ?></h3>
+                <p style="display:block;"><?php _e("A valid WP E-Signature license is required for access to critical updates and support. Without a license you are putting you and your signers at risk. To protect yourself and your documents please update your license.", "esig"); ?></p><a href="https://www.approveme.com/email-limited-pricing/" class="esig-btn-pro" target="_blank"><?php _e("Purchase a license", "esig"); ?> </a>
             </div>
 
             <?php
         }
-        
-       
-        
+
+
+
         $business_pack_option = $this->model->one_click_installation_option($all_addons_list);
-       
+
+
+        if (empty($business_pack_option)) {
+            WP_E_Sig()->common->force_to_check_update();
+            WP_E_Sig()->common->esign_check_update();
+            $business_pack_option = $this->model->one_click_installation_option($all_addons_list);
+        }
+
         if ($business_pack_option && !Esig_Addons::is_updates_available()) {
             ?>
 
@@ -96,26 +104,26 @@ if ($tab == 'all') {
             </div>
 
             <?php
-        }
-        elseif($business_pack_option && Esig_Addons::is_updates_available()) {?>
-         
-             <div class="esig-add-on-block esig-pro-pack open" id="esig-all_install">
+        } elseif ($business_pack_option && Esig_Addons::is_updates_available()) {
+            ?>
+
+            <div class="esig-add-on-block esig-pro-pack open" id="esig-all_install">
                 <?php _e(' <h3>Save Time...Update everything with one click</h3>
 					                    <p style="display:block;">Since you have access to the Buisness Pack you can save time by updating 
                                         all add-ons at once . 
                                         Please Note: The Update process can take few minutes to complete.</p>', 'esig'); ?>
                 <a class="esig-btn-pro" id="esig-install-alladdons" href="<?php echo $business_pack_option ?>"><?php _e('Update all Add-ons Now', 'esig'); ?></a>
             </div>
-          <?php  
+            <?php
         }
-        
+
         $all_addons = Esig_Addons::esig_object_sort($all_addons_list);
-        
+
         foreach ($all_addons as $addonlist => $addons) {
 
             $update_available = '';
-            
-            
+
+
             if (WP_E_Addon::is_business_pack_list($addons)) {
                 continue;
             }
@@ -130,7 +138,7 @@ if ($tab == 'all') {
                     $professional_price = is_array($addons) ? $addons[1]->amount : null;
                     $individual_price = is_array($addons) ? $addons[2]->amount : null;
 
-                    
+
                     if (Esign_licenses::get_license_type() == 'Professional License' && $license_key != 'no') {
                         $price = $buisness_price - $professional_price;
                     } elseif (Esign_licenses::get_license_type() == 'individual-license' && $license_key != 'no') {
@@ -163,8 +171,8 @@ if ($tab == 'all') {
 
 
                 $plugin_file = $this->model->esig_get_addons_file_path($plugin_root_folder);
-                
-                
+
+
                 $esig_update_link = '';
                 if ($license_key == 'no') {
 
@@ -173,23 +181,23 @@ if ($tab == 'all') {
                 } elseif ($plugin_file) {
 
                     $plugin_data = Esig_Addons::get_addon_data(Esig_Addons::get_installed_directory($plugin_file) . $plugin_file);
-                  
+
                     $plugin_name = $plugin_data['Name'];
                     $update_available = '';
                     $settings_page = '';
-                    $documentation_page ='<span class="esig-add-on-author"><a href="' . $addons->download_page_link . '" target="_blank">' . __('Documentation', 'esig') . '</a></span>'; 
-                     if(!empty($plugin_data['Documentation'])){
-                             $documentation_page = '<span class="esig-add-on-author"><a href="' . $plugin_data['Documentation'] . '" target="_blank">' . __('Documentation', 'esig') . '</a></span>';
-                        }
+                    $documentation_page = '<span class="esig-add-on-author"><a href="' . $addons->download_page_link . '" target="_blank">' . __('Documentation', 'esig') . '</a></span>';
+                    if (!empty($plugin_data['Documentation'])) {
+                        $documentation_page = '<span class="esig-add-on-author"><a href="' . $plugin_data['Documentation'] . '" target="_blank">' . __('Documentation', 'esig') . '</a></span>';
+                    }
                     if (Esig_Addons::is_enabled($plugin_file)) {
                         $esig_name = preg_replace('/[^a-zA-Z0-9_\s]/', '', str_replace(' ', '_', "WP E-Signature - " . $addons->addon_name));
-                        
-                       
-                        
+
+
+
                         // settings page .
-                        
-                        if(is_callable('esig_addon_setting_page_'.str_replace('-', '_', $plugin_root_folder))){
-                            $settings_page = call_user_func('esig_addon_setting_page_'.str_replace('-', '_', $plugin_root_folder), $settings_page);
+
+                        if (is_callable('esig_addon_setting_page_' . str_replace('-', '_', $plugin_root_folder))) {
+                            $settings_page = call_user_func('esig_addon_setting_page_' . str_replace('-', '_', $plugin_root_folder), $settings_page);
                         }
 
                         $esig_action_link = '<div class="esig-add-on-enabled"><a data-text-disable="Disable" data-text-enabled="Enabled" href="?page=esign-addons&tab=enable&esig_action=disable&plugin_url=' . urlencode($plugin_file) . '&plugin_name=' . $plugin_name . '" ' . $esig_permission . '>' . __('Enabled', 'esig') . '</a></div>';
@@ -199,7 +207,7 @@ if ($tab == 'all') {
 
                     if (version_compare($plugin_data['Version'], $addons->new_version, '<')) {
                         $update_available = __('Update Available', 'esig');
-                        $esig_action_link = '<div class="esig-add-on-disabled"><a  href="'. $business_pack_option .'" ' . $esig_permission . ' class="eisg-addons-update">' . __('Update Now', 'esig') . '</a></div>';
+                        $esig_action_link = '<div class="esig-add-on-disabled"><a  href="' . $business_pack_option . '" ' . $esig_permission . ' class="eisg-addons-update">' . __('Update Now', 'esig') . '</a></div>';
                     }
                 } else {
                     if ($addons->download_access == 'yes') {
@@ -210,9 +218,8 @@ if ($tab == 'all') {
                         $all_install[$addons->download_name] = $addons->download_link;
 
                         $esig_action_link = '<div class="esig-add-on-disabled"><a  href="?page=esign-addons&esig_action=install&download_url=' . WP_E_Addon::base64_url_encode($addons->download_link) . '&download_name=' . $addons->download_name . '" ' . $esig_permission . ' class="eisg-addons-install">' . __('Install Now', 'esig') . '</a></div>';
-                       // $esig_action_link = '<div class="esig-add-on-disabled">'. WP_E_Addon::get_install_link($addons->download_link, $addons->download_name, $esig_permission) .'</div>';
-                    }
-                    else {
+                        // $esig_action_link = '<div class="esig-add-on-disabled">'. WP_E_Addon::get_install_link($addons->download_link, $addons->download_name, $esig_permission) .'</div>';
+                    } else {
                         $esig_action_link = '<div class="esig-add-on-actions"><div class="esig-add-on-buy-now"><a href="https://www.approveme.com/wp-digital-e-signature#pricingPlans" target="_blank" class="eisg-addons-upgrade">' . __('Upgrade Now', 'esig') . '</a></div></div>';
                     }
                 }
@@ -234,7 +241,8 @@ if ($tab == 'all') {
                         <h4><a href="<?php echo $addons->download_page_link; ?>" target="_blank"><?php echo "WP E-Signature - " . $addons->addon_name; ?></a></h4>
                         <span class="esig-add-on-author"> <?php _e('by', 'esig'); ?> <a href="https://www.approveme.com/" target="_blank"><?php _e('Approveme', 'esig'); ?></a></span>
                         <?php echo $documentation_page; ?>
-                        <span class="esig-add-on-author"> <?php echo "Version " . $addons->new_version; ?> <font color="red"><?php echo $update_available; ?></font></span>
+
+
 
                         <p class="esig-add-on-description"><?php echo $addons->addon_description; ?></p>
                     </div>
@@ -267,7 +275,7 @@ if ($tab == "enable") {
 
     //$array_Plugins = get_plugins();
     $array_Plugins = Esig_Addons::get_all_addons();
-   
+
     asort($array_Plugins);
 
     $total = 0;
@@ -288,25 +296,25 @@ if ($tab == "enable") {
 
                         // $plugin_name= trim($plugin_name, "WP E-Signature");
                         $esig_name = preg_replace('/[^a-zA-Z0-9_\s]/', '', str_replace(' ', '_', $plugin_name));
-                        
+
                         $plugin_data = Esig_Addons::get_addon_data(Esig_Addons::get_installed_directory($plugin_file) . $plugin_file);
-                        if(!empty($plugin_data['Documentation'])){
-                             $documentation_page = '<span class="esig-add-on-author"><a href="' . $plugin_data['Documentation'] . '" target="_blank">' . __('Documentation', 'esig') . '</a></span>';
+                        if (!empty($plugin_data['Documentation'])) {
+                            $documentation_page = '<span class="esig-add-on-author"><a href="' . $plugin_data['Documentation'] . '" target="_blank">' . __('Documentation', 'esig') . '</a></span>';
                         }
-                       
-                        
+
+
                         // settings page .
                         $settings_page = '';
-                        if(is_callable('esig_addon_setting_page_'.str_replace('-', '_', $folder_name))){
-                            $settings_page = call_user_func('esig_addon_setting_page_'.str_replace('-', '_', $folder_name), $settings_page);
+                        if (is_callable('esig_addon_setting_page_' . str_replace('-', '_', $folder_name))) {
+                            $settings_page = call_user_func('esig_addon_setting_page_' . str_replace('-', '_', $folder_name), $settings_page);
                         }
-                       
-                        
-                       /* if (get_option($esig_name . "_setting_page")) {
-                            $settings_page = '<div class="esig-add-on-settings"><a href="' . get_option($esig_name . "_setting_page") . '"></a></div>';
-                        } else {
-                            $settings_page = '';
-                        }*/
+
+
+                        /* if (get_option($esig_name . "_setting_page")) {
+                          $settings_page = '<div class="esig-add-on-settings"><a href="' . get_option($esig_name . "_setting_page") . '"></a></div>';
+                          } else {
+                          $settings_page = '';
+                          } */
                         ?>
                         <div class="esig-add-on-block">
 
@@ -320,13 +328,17 @@ if ($tab == "enable") {
                                 <h4><?php echo $plugin_name; ?></h4>
                                 <span class="esig-add-on-author"> <?php _e('by', 'esig'); ?> <a href="http://approveme.com"><?php _e('Approveme', 'esig'); ?></a></span>
                                 <?php echo $documentation_page; ?>
-                                <span class="esig-add-on-author"> <?php echo "Version " . $plugin_data['Version']; ?> </span>
+
                                 <p class="esig-add-on-description"><?php echo $plugin_data['Description']; ?></p>
                             </div>
 
 
                             <div class="esig-add-on-actions">
-                                <div class="esig-add-on-enabled"><?php echo '<a data-text-disable="Disable" data-text-enabled="Enabled" href="?page=esign-addons&tab=enable&esig_action=disable&plugin_url=' . urlencode($plugin_file) . '&plugin_name=' . $plugin_name . '" ' . $esig_permission . ' class="eisg-addons-disable">' . __('Enabled', 'esig') . '</a>'; ?></div>
+                                <?php if (Esig_Addons::isAlwaysEnabled($plugin_file)) { ?>
+                                    <div class="esig-add-on-enabled-fixed"><?php echo '<a href="#" ' . $esig_permission . ' class="eisg-addons-disable-fixed">' . __('Enabled', 'esig') . '</a>'; ?></div>
+                                <?php } else { ?>
+                                   <div class="esig-add-on-enabled"><?php echo '<a data-text-disable="Disable" data-text-enabled="Enabled" href="?page=esign-addons&tab=enable&esig_action=disable&plugin_url=' . urlencode($plugin_file) . '&plugin_name=' . $plugin_name . '" ' . $esig_permission . ' class="eisg-addons-disable">' . __('Enabled', 'esig') . '</a>'; ?></div> 
+                                <?php } ?>
                                 <?php echo $settings_page; ?>
                             </div>
 
@@ -369,8 +381,8 @@ if ($tab == 'disable') {
                         list($folder_name, $file_name) = explode('/', $plugin_file);
                         //$plugin_data = Esig_Addons::get_addon_data(Esig_Addons::get_installed_directory($plugin_file) . $plugin_file);
                         $documentation_page = '';
-                        if(!empty($plugin_data['Documentation'])){
-                             $documentation_page = '<span class="esig-add-on-author"><a href="' . $plugin_data['Documentation'] . '" target="_blank">' . __('Documentation', 'esig') . '</a></span>';
+                        if (!empty($plugin_data['Documentation'])) {
+                            $documentation_page = '<span class="esig-add-on-author"><a href="' . $plugin_data['Documentation'] . '" target="_blank">' . __('Documentation', 'esig') . '</a></span>';
                         }
                         ?>
                         <div class="esig-add-on-block">
@@ -384,8 +396,8 @@ if ($tab == 'disable') {
                             <div class="esig-add-on-info">
                                 <h4><?php echo $plugin_name; ?></h4>
                                 <span class="esig-add-on-author"> <?php _e('by', 'esig'); ?> <a href="http://approveme.com"><?php _e('Approveme', 'esig'); ?></a></span>
-                                <span class="esig-add-on-author"> <?php echo "Version " . $plugin_data['Version']; ?> </span>
-                                <?=$documentation_page; ?>
+
+                                <?php echo $documentation_page; ?>
 
                                 <p class="esig-add-on-description"><?php echo $plugin_data['Description']; ?></p>
                             </div>
@@ -434,13 +446,13 @@ if ($tab == 'get-more') {
         $all_addons = Esig_Addons::esig_object_sort($all_addons_list);
         foreach ($all_addons as $addonlist => $addons) {
 
-             if (WP_E_Addon::is_business_pack_list($addons)) {
+            if (WP_E_Addon::is_business_pack_list($addons)) {
                 continue;
             }
             if ($addonlist == "esig-price") {
-                
-                
-                if ((Esign_licenses::get_license_type()) != "business-license" && (Esign_licenses::get_license_type()) !="Business License") {
+
+
+                if ((Esign_licenses::get_license_type()) != "business-license" && (Esign_licenses::get_license_type()) != "Business License") {
 
                     $buisness_price = is_array($addons) ? $addons[0]->amount : null;
                     $professional_price = is_array($addons) ? $addons[1]->amount : null;
@@ -547,7 +559,7 @@ if ($tab == 'get-more') {
 } // get-more tab end here 
 
 if ($tab == 'integration') {
-      include_once "integrations.php";
+    include_once "integrations.php";
 }
 ?>
 
@@ -569,7 +581,7 @@ if ($tab == 'integration') {
         <div class="esig-alert">
             <span class="icon-esig-alert"></span>
         </div>
-        <h3><?php _e("Delete","esig");?> <span id="esig-addon-name"> </span>?</h3>
+        <h3><?php _e("Delete", "esig"); ?> <span id="esig-addon-name"> </span>?</h3>
 
         <p class="esig-updater-text"><?php
 $esig_user = new WP_E_User();

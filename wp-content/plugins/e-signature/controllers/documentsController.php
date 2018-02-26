@@ -34,7 +34,7 @@ class WP_E_DocumentsController extends WP_E_appController {
     private function queueScripts() {
         //wp_enqueue_style('tabs', ESIGN_ASSETS_DIR_URI . DS . "css/jquery.tabs.css");
         wp_enqueue_script('jquery');
-        
+
         wp_enqueue_script('document-js', ESIGN_ASSETS_DIR_URI . DS . "/js/document.js");
 
         wp_localize_script('document-js', 'documentAjax', array('ajaxurl' => admin_url('admin-ajax.php?action=addRecipient')));
@@ -151,13 +151,13 @@ class WP_E_DocumentsController extends WP_E_appController {
                         $edit_url = apply_filters('esig_document_edit_template_link', $edit_url, array('document' => $doc));
                     } else {
 
-                        $edit_url = "edit.php?post_type=esign&page=esign-edit-document&document_id=" . $doc->document_id;
+                        $edit_url = "admin.php?post_type=esign&page=esign-edit-document&document_id=" . $doc->document_id;
                     }
 
                     $row_actions = sprintf(__('<span class="edit"><a href="%s" title="Edit this document">Edit</a> | </span>', 'esig'), $edit_url);
                 }
                 if ($doc->document_status == 'pending') {
-                    $row_actions = sprintf(__('<span class="edit"><a href="edit.php?post_type=esign&page=esign-edit-document&document_id=%d" title="Edit this document">Edit</a> | </span>', 'esig'), $doc->document_id);
+                    $row_actions = sprintf(__('<span class="edit"><a href="admin.php?post_type=esign&page=esign-edit-document&document_id=%d" title="Edit this document">Edit</a> | </span>', 'esig'), $doc->document_id);
                     $row_actions .= sprintf(__('<span class="edit"><a href="?page=esign-resend_invite-document&document_id=%d" title="Resend this document">Resend Invite</a> | </span>', 'esig'), $doc->document_id);
                 }
                 if ($doc->document_status != 'trash') {
@@ -181,12 +181,12 @@ class WP_E_DocumentsController extends WP_E_appController {
                 } else {
 
                     if ($document_type == 'stand_alone') {
-                        
+
                         $action_url = apply_filters('esig_document_edit_sad_link', $edit_url, array('document' => $doc));
                     } else if ($document_type == 'esig_template') {
                         $action_url = apply_filters('esig_document_edit_template_link', $edit_url, array('document' => $doc));
                     } else {
-                        $action_url = "edit.php?post_type=esign&page=esign-edit-document&document_id=" . $doc->document_id;
+                        $action_url = "admin.php?post_type=esign&page=esign-edit-document&document_id=" . $doc->document_id;
                     }
                 }
 
@@ -214,11 +214,11 @@ class WP_E_DocumentsController extends WP_E_appController {
                     foreach ($allinvitaions as $invite) {
 
                         if ($this->user->hasSignedDocument($invite->user_id, $doc->document_id)) {
-                            $latest_activity .= __("Signed","esig") . "</br>";
+                            $latest_activity .= __("Signed", "esig") . "</br>";
                             $invitation_date = $this->signature->GetSignatureDate($invite->user_id, $doc->document_id);
                         } elseif (!WP_E_Invite::is_invite_sent($doc->document_id)) {
                             $latest_activity .= '<span class="esig-sent-error">' . __("Error: Signer invite not sent <br>Configure sending options", "esig") . '</span> ' .
-                                    '<a href="admin.php?page=esign-resend_invite-document&document_id=' . $doc->document_id . '" class="button-primary">'. __("Resend Invite","esig") .'</a>';
+                                    '<a href="admin.php?page=esign-resend_invite-document&document_id=' . $doc->document_id . '" class="button-primary">' . __("Resend Invite", "esig") . '</a>';
                             $template_data['sent-error'] = "esig-invite-sent-error";
                         } else {
                             if ($status == 'awaiting'): $latest_activity .= __('Awaiting Signature(s)', 'esig') . "</br>";
@@ -230,7 +230,7 @@ class WP_E_DocumentsController extends WP_E_appController {
                                 $latest_activity .= __('Document Viewed', 'esig') . "</br>";
                             } else {
                                 if ($doc->document_status == 'draft') {
-                                    $latest_activity .='' . "</br>";
+                                    $latest_activity .= '' . "</br>";
                                 } else {
                                     $latest_activity .= __('Invite Sent', 'esig') . "</br>";
                                 }
@@ -261,9 +261,9 @@ class WP_E_DocumentsController extends WP_E_appController {
                     $template_data = array_merge($template_data, $template_data1);
                 }
 
-                $template_data['created_date'] = mysql2date(get_option('date_format'), esigget('date_created',$doc));
-                $template_data['modified_date'] = mysql2date(get_option('date_format'), esigget('last_modified',$doc));
-                $template_data['created_by'] = $this->user->superAdminUserName(esigget('user_id',$doc));
+                $template_data['created_date'] = mysql2date(get_option('date_format'), esigget('date_created', $doc));
+                $template_data['modified_date'] = mysql2date(get_option('date_format'), esigget('last_modified', $doc));
+                $template_data['created_by'] = $this->user->superAdminUserName(esigget('user_id', $doc));
                 $this->fetchView("loop", $template_data);
                 $index++;
             }
@@ -285,7 +285,7 @@ class WP_E_DocumentsController extends WP_E_appController {
 
         $loop_tail = '';
 
-        $loop_tail .=$this->common->expired_popup();
+        $loop_tail .= $this->common->expired_popup();
         $loop_tail .= apply_filters('esig-document-index-footer', $loop_tail, $args);
 
         $template_data['loop_tail'] = $loop_tail;
@@ -332,11 +332,9 @@ class WP_E_DocumentsController extends WP_E_appController {
             $user_msg = array("message" => __("Oh snap! Your document was deleted.", 'esig'));
         } else if ($message == 'restore_success') {
             $user_msg = array("message" => __("Snp! Crack!  Attack!  Just like that! Your document was restored.", 'esig'));
-        }
-        else if ($message == 'template_success') {
+        } else if ($message == 'template_success') {
             $user_msg = array("message" => __("Template successfully created.", 'esig'));
-        }
-         else if ($message == 'template_saved') {
+        } else if ($message == 'template_saved') {
             $user_msg = array("message" => __("Template successfully saved.", 'esig'));
         }
 
@@ -381,15 +379,15 @@ class WP_E_DocumentsController extends WP_E_appController {
     public function add() {
 
         $esigType = esigget('esig_type');
-        if($esigType == "sad"){
+        if ($esigType == "sad") {
             $post = array(
-                "document_type"=>"stand_alone",
-                "document_action"=>"save",
-                "document_title"=>"",
-                "document_content"=> "",
+                "document_type" => "stand_alone",
+                "document_action" => "save",
+                "document_title" => "",
+                "document_content" => "",
             );
             $doc_id = $this->model->insert($post);
-            wp_redirect("edit.php?post_type=esign&page=esign-edit-document&document_id=" . $doc_id);
+            wp_redirect("admin.php?post_type=esign&page=esign-edit-document&document_id=" . $doc_id);
             exit;
         }
         // Get
@@ -443,9 +441,6 @@ class WP_E_DocumentsController extends WP_E_appController {
             // add document right option action
             do_action('esig_document_before_save');
             // add document form right side option
-
-
-
             //echo $this->view->renderPartial('_rightside');
 
 
@@ -526,24 +521,23 @@ class WP_E_DocumentsController extends WP_E_appController {
             if (esigpost('send_sad')) {
                 $redirect_suffix = '&document_status=stand_alone&doc_preview_id=' . $doc_id;
             } else {
-                $redirect_suffix = '';
+                $redirect_suffix = '&message=new_success';
             }
 
             if ($_POST['document_action'] == "save" || esigpost('save_sad') == "Save as Draft") {
                 $this->notice->set("updated", "Draft Successfully Saved.");
-                wp_redirect("edit.php?post_type=esign&page=esign-edit-document&document_id=" . $doc->document_id);
+                wp_redirect("admin.php?post_type=esign&page=esign-edit-document&document_id=" . $doc->document_id);
                 exit;
             } else if (esigpost('save_template') == "Save as Draft") {
                 $this->notice->set("updated", "Draft Successfully Saved.");
-                wp_redirect("edit.php?post_type=esign&page=esign-edit-document&esig_type=template&document_id=" . $doc->document_id);
+                wp_redirect("admin.php?post_type=esign&page=esign-edit-document&esig_type=template&document_id=" . $doc->document_id);
                 exit;
-            }
-            else if (esigpost('add_template') == "Add Template") {
-               // $this->notice->set("updated", __("Template sucessfully created.", "esig"));
+            } else if (esigpost('add_template') == "Add Template") {
+                // $this->notice->set("updated", __("Template sucessfully created.", "esig"));
                 wp_redirect("admin.php?page=esign-docs&document_status=esig_template&message=template_success");
                 exit;
             }
-            wp_redirect("admin.php?page=esign-docs&message=new_success" . $redirect_suffix);
+            wp_redirect("admin.php?page=esign-docs" . $redirect_suffix);
             exit;
         }
     }
@@ -582,7 +576,7 @@ class WP_E_DocumentsController extends WP_E_appController {
             $template_data = array(
                 "message" => $this->view->renderAlerts(),
                 "document_id" => $document->document_id,
-                "document_type"=>$document->document_type,
+                "document_type" => $document->document_type,
                 "document_title" => $document->document_title,
                 "document_body" => $document->document_content,
                 "user_email" => isset($user_email),
@@ -609,14 +603,13 @@ class WP_E_DocumentsController extends WP_E_appController {
 
             $template_data = array_merge($template_data, $template_filter);
 
-           
-            
+
+
             $this->fetchView("edit-form", $template_data);
-            
-             do_action('esig_document_before_edit_save');
 
-           // echo $this->view->renderPartial('_rightside');
+            do_action('esig_document_before_edit_save');
 
+            // echo $this->view->renderPartial('_rightside');
             //
             // This filter has been added to add extra content in add/edit document footer . 
             $form_tail = apply_filters('esig_document_form_additional_content', '');
@@ -654,14 +647,14 @@ class WP_E_DocumentsController extends WP_E_appController {
 
 
             // If owner has signed, add their signature.
-            if ($doc->add_signature) {
-                try {
-                    $signature = $this->signature->getSignatureData($doc->user_id);
-                    $join_id = $this->signature->join($doc->document_id, $signature->signature_id);
-                } catch (Exception $e) {
-                    
-                }
-            }
+            /* if ($doc->add_signature) {
+              try {
+              $signature = $this->signature->getSignatureData($doc->user_id);
+              $join_id = $this->signature->join($doc->document_id, $signature->signature_id);
+              } catch (Exception $e) {
+
+              }
+              } */
 
             // all invitations sent, set status to awaiting from pending.
             if ($doc->document_status == "pending") {
@@ -680,37 +673,42 @@ class WP_E_DocumentsController extends WP_E_appController {
 
 
             $this->savesend_recipients($send, $doc, $owner, $recipients, $invitations);
-            
-             do_action('esig_document_after_invite_sent', array(
+
+            do_action('esig_document_after_invite_sent', array(
                 'document' => $doc,
                 'recipients' => $recipients,
                 'invitations' => $invitations,
             ));
 
-            $redirect_suffix = (esigpost('send_sad') == 'Publish Document') ? '&document_status=stand_alone&doc_preview_id=' . $doc_id : false;
+            if (esigpost('send_sad') == 'Publish Document') {
+                $this->notice->set("updated", __("Stand Alone document successfully published.", "esig"));
+                $redirect_suffix = '&document_status=stand_alone&doc_preview_id=' . $doc_id;
+            } else {
+                $redirect_suffix = '&message=new_success';
+            }
+
 
             if (!WP_E_Sig()->user->isDocumentAdmin($doc->document_id) && esigpost('document_action') == "save") {
-               // $this->notice->set("updated", __("Draft Successfully Saved.", "esig"));
+                // $this->notice->set("updated", __("Draft Successfully Saved.", "esig"));
                 wp_redirect("admin.php?page=esign-docs&message=edit_success" . $redirect_suffix);
                 exit;
             }
 
             if (esigpost('document_action') == "save" || esigpost('save_sad') == "Save as Draft") {
                 $this->notice->set("updated", __("Draft Successfully Saved.", "esig"));
-                wp_redirect("edit.php?post_type=esign&page=esign-edit-document&document_id=" . $doc->document_id);
+                wp_redirect("admin.php?post_type=esign&page=esign-edit-document&document_id=" . $doc->document_id);
                 exit;
             } else if (esigpost('save_template') == "Save as Draft") {
                 $this->notice->set("updated", __("Draft Successfully Saved.", "esig"));
-                wp_redirect("edit.php?post_type=esign&page=esign-edit-document&esig_type=template&document_id=" . $doc->document_id);
+                wp_redirect("admin.php?post_type=esign&page=esign-edit-document&esig_type=template&document_id=" . $doc->document_id);
                 exit;
-            }
-            else if (esigpost('add_template') == "Add Template" || esigpost('add_template') == "Save Template") {
+            } else if (esigpost('add_template') == "Add Template" || esigpost('add_template') == "Save Template") {
                 //$this->notice->set("updated", __("Template sucessfully saved.", "esig"));
                 wp_redirect("admin.php?page=esign-docs&document_status=esig_template&message=template_saved");
                 exit;
             }
 
-            wp_redirect("admin.php?page=esign-docs&message=new_success" . $redirect_suffix);
+            wp_redirect("admin.php?page=esign-docs" . $redirect_suffix);
             exit;
         }
     }
@@ -810,7 +808,7 @@ class WP_E_DocumentsController extends WP_E_appController {
             }
 
             if (isset($_POST['nextstep']) && !isset($_POST['esig_temp_document_type'])) {
-                wp_redirect('edit.php?post_type=esign&page=esign-edit-document&document_id=' . $doc_id);
+                wp_redirect('admin.php?post_type=esign&page=esign-edit-document&document_id=' . $doc_id);
                 exit;
             }
         }
@@ -993,7 +991,7 @@ class WP_E_DocumentsController extends WP_E_appController {
             wp_redirect("admin.php?page=esign-docs&document_status=trash&message=delete_fail");
             exit;
         }
-        
+
         if ($this->model->delete($id)) {
             // action hook when document delete permanently 
             do_action('esig_document_after_delete', array('document_id' => $id));
@@ -1002,6 +1000,16 @@ class WP_E_DocumentsController extends WP_E_appController {
             $meta = new WP_E_Meta();
             $meta->delete_all($id);
             esignSifData::deleteValue($id);
+            // delete all invitation associated with this document. 
+            $this->invitation->deleteDocumentInvitations($id);
+            // delete all events associated with this document. 
+            $this->model->deleteEvents($id);
+            // delete all signers info associated with this document. 
+             $signer_obj = new WP_E_Signer();
+             $signer_obj->delete($id);
+            // Delete all signature join with document
+             $this->signature->deleteJoins($id);
+            
             wp_redirect("admin.php?page=esign-docs&document_status=trash&message=delete_success");
         } else {
             wp_redirect("admin.php?page=esign-docs&document_status=trash&message=delete_fail");
@@ -1054,7 +1062,7 @@ class WP_E_DocumentsController extends WP_E_appController {
                 $mailsent = $this->invitation->send_invitation($invitation_id, $user_id, $document_id);
 
                 if ($mailsent) {
-                    $this->notice->set('e-sign-green-alert resent', __('Today is a mighty fine day... becuase your document was re-sent successfully!  Well done.', 'esig'));
+                    $this->notice->set('e-sign-green-alert resent', __('Today is a mighty fine day... because your document was re-sent successfully!  Well done.', 'esig'));
                 } else {
                     $this->notice->set('e-sign-red-alert error resent', __('<span class="icon-esig-alert"></span> It appears you don\'t have your SMTP settings setup properly right now. In other words, no one is able to receive your E-Signature emails because they are not sending... <a href="admin.php?page=esign-email-general" class="button-primary">Fix this issue now</a>', 'esig'));
                     WP_E_Notice::set_error_dialog('emails');
@@ -1068,7 +1076,14 @@ class WP_E_DocumentsController extends WP_E_appController {
             $result = $this->model->updateStatus($document_id, "awaiting");
             wp_redirect("admin.php?page=esign-docs&message=new_success");
         } else {
-            wp_redirect("admin.php?page=esign-docs");
+            $callBackUrl = esigget("callBackUrl");
+            if ($callBackUrl) {
+                wp_redirect($callBackUrl . "&action=edit&esig_s=success");
+                exit;
+            } else {
+                wp_redirect("admin.php?page=esign-docs");
+                exit;
+            }
         }
     }
 

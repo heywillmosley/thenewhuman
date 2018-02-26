@@ -69,7 +69,7 @@ class Access_Control_Setting {
         if (self::this_document_signed($document_id)) {
             return;
         }
-
+     
         return ESIG_ACCESS_CONTROL_Shortcode::esig_doc_dashboard11($document_id, $meta);
     }
 
@@ -133,9 +133,7 @@ class Access_Control_Setting {
 
     public static function is_all_sad_signed($document_id) {
 
-        $api = new WP_E_Api();
-
-        $docutmet_status = $api->document->getStatus($document_id);
+        $docutmet_status = WP_E_Sig()->document->getStatus($document_id);
 
         if ($docutmet_status == "stand_alone") {
 
@@ -203,6 +201,15 @@ class Access_Control_Setting {
         }
         return false;
     }
+    
+    public static function isFormIntegration($document_id){
+             $document_type = WP_E_Sig()->document->getDocumenttype($document_id);
+            $integration= WP_E_Sig()->document->getFormIntegration($document_id);
+            if($document_type=='stand_alone' && !empty($integration)){
+                return true;
+            }
+            return false;
+    }
 
     public static function this_document_signed($document_id) {
 
@@ -213,7 +220,7 @@ class Access_Control_Setting {
         $document_type = WP_E_Sig()->document->getDocumenttype($document_id);
 
         if ($document_type == "stand_alone") {
-
+            
             if (self::is_user_signed_already($email_address, $document_id)) {
                 return true;
             } else {

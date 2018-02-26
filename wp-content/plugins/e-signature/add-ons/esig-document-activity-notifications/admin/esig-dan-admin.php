@@ -3,7 +3,7 @@
 /**
  *
  * @package ESIG_DAN_Admin
- * @author  Abu Shoaib <abushoaib73@gmail.com>
+ * @author  Abu Shoaib
  */
 if (!class_exists('ESIG_DAN_Admin')) :
 
@@ -99,7 +99,7 @@ if (!class_exists('ESIG_DAN_Admin')) :
 
 
             $display = "none";
-            $html = '<p style="padding-left:100px;display:' . $display . ';" id="esig-notification-settings"><input type="checkbox" id="esig_stop_email_after_sign" name="esig_stop_email_after_sign" ' . $checked . ' value="1">' . __('Before the document is signed continue emailing me whenever It is viewed', 'esig-dan') . '</p>';
+            $html = '<p style="padding-left:100px;display:' . $display . ';" id="esig-notification-settings"><input type="checkbox" id="esig_stop_email_after_sign" name="esig_stop_email_after_sign" ' . $checked . ' value="1">' . __('Before the document is signed continue emailing me whenever it is viewed', 'esig-dan') . '</p>';
             return $html;
         }
 
@@ -238,16 +238,9 @@ if (!class_exists('ESIG_DAN_Admin')) :
             );
 
 
-            $notify_template = dirname(__FILE__) . '/views/notify.php';
-            // $signed_message = WP_E_Sig()->view->renderPartial('', $template_data, false, '', $notify_template);
-
+           
             $subject = __("Document Viewed:","esig") . $document->document_title;
 
-            // send Email
-            //$email = new WP_E_Email();
-           
-            
-            // $mailsent = WP_E_Sig()->email->esig_mail($sender, $owner->user_email, $owner->user_email, $subject, $signed_message);
             $mailsent = WP_E_Sig()->email->send(array(
                 'from_name' => $sender, // Use 'posts' to get standard post objects
                 'from_email' => $owner->user_email,

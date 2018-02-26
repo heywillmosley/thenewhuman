@@ -241,6 +241,7 @@ class WP_E_User extends WP_E_Model {
 
     public function checkEsigAdmin($user_id) {
         $admin_user_id = $this->esig_get_super_admin_id();
+        
         // if super admin wp user id not exists reset esign 
         if ($this->settings->get("initialized") == 'false') {
             return true;

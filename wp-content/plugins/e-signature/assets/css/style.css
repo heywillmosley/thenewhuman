@@ -19,8 +19,8 @@ body {
 }
 /* Form styles */
 label
-{ 
-    display:block; 
+{
+    display:block;
     font-weight: normal !important;
 }
 
@@ -61,6 +61,7 @@ label
     position:relative;
     color:red;
     font-weight:bold;
+    font-size:14px !important;
 }
 
 .e-sign-red-alert
@@ -74,7 +75,7 @@ label
     color: #444;
     padding: 5px 10px;
 }
-.e-sign-green-alert 
+.e-sign-green-alert
 {
     border-left: 4px solid #13821c!important ;
     background-color: #fff;
@@ -169,23 +170,23 @@ label
     text-transform: capitalize;
 
 }
-.sign-here 
+.sign-here
 {
     background: url('../images/sign-here_blank.jpg') no-repeat;
-    border-radius: 6px;	
+    border-radius: 6px;
 
 }
-.sign-here-type 
+.sign-here-type
 {
     background: url('../images/sign-here_blank.jpg') no-repeat;
-    border-radius: 6px;	
-    border:1px solid transparent;	       
+    border-radius: 6px;
+    border:1px solid transparent;
 }
-.sign-here-type-display 
+.sign-here-type-display
 {
     background: url('../images/sign-here_blank.jpg') no-repeat;
-    border-radius: 6px;	
-    border:1px solid transparent;	       
+    border-radius: 6px;
+    border:1px solid transparent;
 }
 .sign-arrow
 {
@@ -200,7 +201,7 @@ label
 .sign-here.signed
 {
     background:url('../images/sign-here_blank.jpg') no-repeat;
-    background-position:left bottom; 
+    background-position:left bottom;
 }
 .signatures
 {
@@ -211,8 +212,8 @@ label
     width:320px;
     display:inline-block;
     position:relative;
-    background:#FFF;	
-}	      
+    background:#FFF;
+}
 .signature-wrapper-displayonly .sign-here
 {
     cursor:pointer;
@@ -221,7 +222,7 @@ label
     background-position:bottom left;
     height: 100px;
     border-width:1px;
-    border-radius:0; 
+    border-radius:0;
 
 }
 
@@ -253,7 +254,7 @@ label
     background-size: 100% auto;
     height:100px ;
     border-width:1px;
-    border-radius:0; 
+    border-radius:0;
 
 
 }
@@ -286,14 +287,14 @@ label
     height: 33px;
     border-radius: 0;
     width: 136px;
-    left: 289px;	
-    font-size: 15px;	
+    left: 289px;
+    font-size: 15px;
 }
 
 .e-signature_page_esign-settings .signature-wrapper .saveButton{
     left: 309px;
     line-height: 1.2;
-    top: 56px;	
+    top: 56px;
 }
 .e-signature_page_esign-settings .signature-wrapper .saveButton:hover{
     color: #fff;
@@ -301,7 +302,7 @@ label
 
 .e-signature_page_esign-settings #esig-type-in-text-accept-signature{
     left: 40px;
-    top: 45px;
+    top: 25px;
 }
 
 #esig-type-in-text-accept-signature{
@@ -435,7 +436,7 @@ label
     border: none!important;
     margin: 10px 0 0 0;
 }
-.wp-e-saveButton:hover 
+.wp-e-saveButton:hover
 {
     background: #03a2f1!important;
 }
@@ -457,7 +458,7 @@ label
   text-decoration: none !important;
 }
 .esig-alert-btn:hover{
-  background: #e8071b;  
+  background: #e8071b;
 }
 .esig-mini-red-btn
 {
@@ -479,11 +480,11 @@ label
     text-decoration: none;
     float: right;
 }
-.esig-mini-red-btn:hover 
+.esig-mini-red-btn:hover
 {
     background:#46a7cd;
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#C01C18',endColorstr='#EA0000');
-    background:-moz-linear-gradient(top,#C01C18,#EA0000);		    
+    background:-moz-linear-gradient(top,#C01C18,#EA0000);
     background:-webkit-gradient(linear,left top,left bottom,from(#C01C18),to(#EA0000));
     color: #FFF;
     cursor: pointer;
@@ -491,7 +492,7 @@ label
 }
 
 /* Blue Buttons */
-.esig-blue-btn 
+.esig-blue-btn
 {
     letter-spacing: 1px;
     height: 32px;
@@ -564,7 +565,7 @@ label
     /*margin: 4em 4em 0em 1.2em;*/
     position: relative;
 }
-.esign-form-document-panel 
+.esign-form-document-panel
 {
     margin:15px 0px 0px 0px ;
 }
@@ -620,12 +621,12 @@ label
 }
 
 /* Agree button Tool tip */
-.esig-template-page .sig-tooltip, .arrow:after 
+.esig-template-page .sig-tooltip, .arrow:after
 {
     background: white;
     border: 0px solid white;
 }
-.esig-template-page .sig-tooltip 
+.esig-template-page .sig-tooltip
 {
     opacity: 0 !important;
     display: inline-block;
@@ -637,7 +638,7 @@ label
     text-decoration: none;
     max-width:300px;
     font-size:14px;
-    
+
 }
 .esig-template-page .sig-tooltip
 {
@@ -646,7 +647,7 @@ label
     -moz-box-shadow: 2px 5px 12px -4px black,
         2px 5px 12px -4px black;
     box-shadow: 2px 5px 12px -4px black,
-        2px 5px 12px -4px black;	
+        2px 5px 12px -4px black;
 }
 .esig-template-page .sig-tooltip .header
 {
@@ -670,7 +671,7 @@ label
     text-shadow:none;
     font-weight: 300;
 }
-.form-control 
+.form-control
 {
     width:255px!important;
 }
@@ -678,7 +679,7 @@ label
 {
     text-shadow:none;
 }
-.esig-template-page .arrow 
+.esig-template-page .arrow
 {
     width: 70px;
     height: 16px;
@@ -688,7 +689,7 @@ label
     margin-left: -35px;
     bottom: -16px;
 }
-.esig-template-page .arrow:after 
+.esig-template-page .arrow:after
 {
     content: "";
     position: absolute;
@@ -707,7 +708,7 @@ label
     -ms-transform:     rotate(45deg);
     -o-transform:      rotate(45deg);
 }
-.esig-template-page .sig-tooltip.active 
+.esig-template-page .sig-tooltip.active
 {
     opacity: 1 !important;
     margin-top: 5px;
@@ -717,7 +718,7 @@ label
     -o-transition:      all 0.2s ease;
     border-radius: 6px;
 }
-.esig-template-page .sig-tooltip.out 
+.esig-template-page .sig-tooltip.out
 {
     opacity: 0;
     margin-top: -20px;
@@ -737,25 +738,25 @@ label
 /* \end tool tip */
 
 /* CSS for Settings Page */
-#esig-settings-container 
+#esig-settings-container
 {
     float:left;
     width:100%;
 }
-#esig-settings-col1 
+#esig-settings-col1
 {
     float:left;
     width:26%;
     margin-left:22px;
 }
-#esig-settings-col2 
+#esig-settings-col2
 {
     float:left;
     width:62%;
 }
 .settings-form .esig-settings-form
 {
-    width:100%;	
+    width:100%;
 }
 .esig-settings-form th label {
     font-weight: 600 !important;
@@ -779,7 +780,7 @@ label
 }
 .esig-sidebar-ad .esig-ad-subline
 {
-    font-weight:bold;	
+    font-weight:bold;
     font-size:14px;
 }
 .esig-sidebar-ad .esig-ad-text
@@ -799,29 +800,40 @@ label
 {
     width:100%;
     text-align:center ;
-    display: inline-block ; 
+    display: inline-block ;
     margin:auto;
-    position: relative; 
+    position: relative;
 }
-#esig-view-page 
+#esig-view-page
 {
     width:auto;
     text-align:center ;
-    display: inline-block ; 
+    display: inline-block ;
     margin:auto;
-    position: relative; 
+    position: relative;
 }
-#esig-settings-col_head 
+.expired-warning { width: 75%; }
+.expired-warning #esig-settings-col3 p,
+.expired-warning #esig-settings-col3 ol {
+    font-size: 1.25em;
+}
+.expired-warning #esig-settings-col3 ol {
+    width: 80%;
+    margin: 0 auto;
+    
+}
+
+#esig-settings-col_head
 {
     float:left;
-    width:49%;  
+    width:49%;
 }
-#esig-settings-col3 
+#esig-settings-col3
 {
-    float:left ; 
+    float:left ;
     text-align:center ;
 }
-#esig-settings-col3 .benefits p,	
+#esig-settings-col3 .benefits p,
 #esig-settings-col3 .benefits div
 {
     position:relative;
@@ -850,7 +862,7 @@ label
     padding-left:28px;
     background:url(../images/icon-plus.png) left center no-repeat;
 }
-#esig-settings-col4 
+#esig-settings-col4
 {
     float:left;
     width:100%;
@@ -864,7 +876,7 @@ label
     margin-top: 100px;
     text-decoration: underline;
 }
-.esig-add-document-hover 
+.esig-add-document-hover
 {
     cursor: pointer;
     cursor: hand;
@@ -897,17 +909,17 @@ label
 {
     background-image: url(../images/esig-options-template.svg);
 }
-.esign-signing-options .esig-add-document-hover .icon 
+.esign-signing-options .esig-add-document-hover .icon
 {
     height: 136px;
 }
-.esig-add-document-hover .icon 
+.esig-add-document-hover .icon
 {
     background-color: #f1f1f1;;
     background-position: center;
     background-repeat: no-repeat;
 }
-.esig-add-document-hover .text 
+.esig-add-document-hover .text
 {
     padding: 16px 0;
     font-size: 24px;
@@ -918,14 +930,14 @@ label
     border-top: 1px solid #ddd;
     background:#E4E4E4;
 }
-.esign-signing-options 
+.esign-signing-options
 {
     float: left;
     margin-right: 10px;
     text-align: center;
     border-bottom: 1px #c9c9c9 solid;
 }
-.esign-signing-options .esig-doc-options 
+.esign-signing-options .esig-doc-options
 {
     width: 190px;
 }
@@ -950,7 +962,7 @@ label
 {
     font-weight: 600;
 }
-.esig-settingstitle 
+.esig-settingstitle
 {
     text-transform: uppercase;
     font-weight: 800;
@@ -991,7 +1003,7 @@ label
 }
 .invitation-emails {
     display:block;
-    position:relative;   
+    position:relative;
 }
 
 .invitations-container h2
@@ -1012,13 +1024,13 @@ label
 {
     display: block;
     position:relative;
-    width:100% ; 
-    text-align:center ; 
+    width:100% ;
+    text-align:center ;
 }
 .invitations-container_ajax {
     display:block;
     position:relative;
-    
+
 }
 .invitations-container_ajax.af-inner{
     display:block;
@@ -1032,12 +1044,12 @@ label
     text-align: center;
 }
 
-#esig-headlink-col1 
+#esig-headlink-col1
 {
     float:left;
     width:75%;
 }
-#esig-headlink-col2 
+#esig-headlink-col2
 {
     float:left;
     width:25%;
@@ -1055,14 +1067,14 @@ label
     font-family: "Open Sans",sans-serif;
     color: #575757;
 }
-li.esig-extension-headimg 
+li.esig-extension-headimg
 {
     background: url('../images/esig-headlink.svg') 0 0 no-repeat;
     padding: 0 0 0 21px;
     height: 24px;
 }
-li.esig-support 
-{ 
+li.esig-support
+{
     background: url('../images/tick.svg') 0 0 no-repeat;
     padding: 0 0 9px 29px;
     height: 20px;
@@ -1075,7 +1087,7 @@ li.esig-support
     font-size: 17px;
     font-weight: 300;
 }
-.pad-left 
+.pad-left
 {
     display:block;
     position:relative ;
@@ -1083,18 +1095,18 @@ li.esig-support
     margin-top:0px;
     margin-right:2px;
 }
-.pad-right 
+.pad-right
 {
     display:block;
     position:relative;
     float:left;
     margin-left:3px;
 }
-.esig-feedback 
-{ 
+.esig-feedback
+{
     font-size: 14px;
     text-decoration: none;
-    font-weight: 600; 
+    font-weight: 600;
 }
 .esign-feedback-alert
 {
@@ -1103,19 +1115,19 @@ li.esig-support
     border-left: 6px solid rgba(0,83,159,0.65);
     border-right: 1px solid #e2e2e2;
 }
-.esig-feedback-survey-align 
+.esig-feedback-survey-align
 {
-    text-align:center;	
+    text-align:center;
 }
-.esig-feedback-span 
-{ 
+.esig-feedback-span
+{
     display:inline-block;
     background: url('../images/shout-icon.svg') no-repeat;
     height:16px;
     width:16px;
-    margin-right: 6px; 
+    margin-right: 6px;
 }
-.esig-404-page-template 
+.esig-404-page-template
 {
     font-size: 16px;
     margin-top: 33px;
@@ -1142,8 +1154,8 @@ li.esig-support
     font-weight: 700;
     padding: 14px 37px 14px 37px;
 }
-.esig-404-btn:hover 
-{ 
+.esig-404-btn:hover
+{
     background-image:-webkit-linear-gradient(#bb1618, #e22123);
     background-image:linear-gradient(#bb1618, #e22123);
     box-shadow:0 1px 7px 0 rgba(0, 0, 0, 0.5) inset;
@@ -1151,7 +1163,7 @@ li.esig-support
     text-shadow:0 1px rgba(0, 0, 0, 0.6);
     -webkit-transition: background, color, .3s; /* Safari */
 }
-.esig-404-search 
+.esig-404-search
 {
     padding: 0px 0px 38px 80px;
 }
@@ -1166,7 +1178,7 @@ li.esig-support
 
 .esig-documents-list-wrap
 {
-    margin: 0 0 12px 0;	
+    margin: 0 0 12px 0;
 }
 
 /* CSS for Red Upsell Button */
@@ -1196,13 +1208,13 @@ li.esig-support
 }
 
 /* CSS for MISC Page */
-.esig-chosen-drop 
+.esig-chosen-drop
 {
     margin-bottom: 20px!important;
 }
 
 /* User Roles Extension Needed Alert on Settings Page of Non-User */
-.esig-error-message-wrap 
+.esig-error-message-wrap
 {
     width:500px;
     padding:16px 22px 22px 36px;
@@ -1214,10 +1226,10 @@ li.esig-support
 
 .esig-error-message-wrap .esig-error-text
 {
-    font-size: 16px;	
+    font-size: 16px;
 }
 
-.chosen-select 
+.chosen-select
 {
     position: relative;
     display: block;
@@ -1262,41 +1274,41 @@ li.esig-support
     opacity:1 !important;
 }
 
-a.tooltip 
+a.tooltip
 {
-    outline:none; 
-    margin-right:20px; 
+    outline:none;
+    margin-right:20px;
 }
 
-a.tooltip strong 
+a.tooltip strong
 {
     line-height:30px;
 }
-a.tooltip:hover 
+a.tooltip:hover
 {
     text-decoration:none;
     cursor:url("../images/cursor.png"),help;
     z-index: 1000000000000000000;
-} 
-a.tooltip span 
+}
+a.tooltip span
 {
     z-index:9999 !important;
-    display:none; 
+    display:none;
     padding:14px 20px;
-    margin-top:40px; 
+    margin-top:40px;
     margin-left:-140px;
-    width:240px; 
+    width:240px;
     line-height:20px;
 }
 a.tooltip:hover span
 {
-    display:inline; 
-    position:absolute; 
-    border:0px solid #FFF;  
+    display:inline;
+    position:absolute;
+    border:0px solid #FFF;
     color:#EEE;
     background:#000;
 }
-.callout 
+.callout
 {
     z-index:20;
     position:absolute;
@@ -1307,23 +1319,23 @@ a.tooltip:hover span
 
 /*CSS3 extras*/
 a.tooltip span
-{	
+{
     border-radius:5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     opacity: 0.8;
 }
 
-.esig-postbox-container 
+.esig-postbox-container
 {
     margin: 4px 10px 0px 23px;
     max-width:273px;
-    float: right; 
+    float: right;
 }
 
 
 
-.postbox .hndle 
+.postbox .hndle
 {
     height: 22px;
     font-size: 14px;
@@ -1332,14 +1344,14 @@ a.tooltip span
     line-height: 1.4;
     /*width:273px ;*/
 }
-.inside 
+.inside
 {
     display:block ;
     /*max-width:270px;*/
 }
-.minus-recipient 
+.minus-recipient
 {
-    text-decoration : none ; 
+    text-decoration : none ;
 }
 
 /*#signer_main
@@ -1349,18 +1361,18 @@ a.tooltip span
     border-radius:3px ;
     vertical-align: middle ;
     position:relative ;
-    margin-bottom:5px ;    
+    margin-bottom:5px ;
 }*/
 
 
-.signer_box 
+.signer_box
 {
     border:1px solid #F2F2F2;
-    display:block ; 
-    float:left ; 
+    display:block ;
+    float:left ;
     width:100% ;
-    text-align:center ;   
-    position: relative ; 
+    text-align:center ;
+    position: relative ;
 }
 #newsigeradded
 {
@@ -1370,21 +1382,21 @@ a.tooltip span
     position:relative ;
     text-align:center ;
 }
-#input_left 
+#input_left
 {
     float:left ;
-    text-align:center ;  
+    text-align:center ;
 }
 #input_right
 {
-    float:left; 
+    float:left;
     text-align:center ;
     margin-left:4px;
 }
-#input_right span.deleteicon 
+#input_right span.deleteicon
 {
     position: relative;
-    display:inline; 
+    display:inline;
 }
 span.deleteicon span
 {
@@ -1410,34 +1422,34 @@ span.deleteicon span:hover
     cursor: pointer;
     border:1px solid green;
 }
-span.deleteicon input 
+span.deleteicon input
 {
     padding-right: 0px;
 }
-.signer_popup_view 
+.signer_popup_view
 {
     width:100%;
-    text-align: center ; 
+    text-align: center ;
 }
 
 /* for validation error */
-label.esig-error 
-{ 
-    color: #FFFFFF; 
-    max-width:150px; 
-    height:100%; 
-    background-color:#CB3B3B; 
+label.esig-error
+{
+    color: #FFFFFF;
+    max-width:150px;
+    height:100%;
+    background-color:#CB3B3B;
 }
 
 /* css tooltip start here  */
-.document-sign-page1.ui-tooltip, .esign-arrow:after 
+.document-sign-page1.ui-tooltip, .esign-arrow:after
 {
     background: black;
     border: 1px solid black;
     width:300px;
     position:fixed;
 }
-.ui-tooltip 
+.ui-tooltip
 {
     padding: 10px 20px;
     color: white;
@@ -1447,7 +1459,7 @@ label.esig-error
     box-shadow: 0 0 7px black;
     font-weight:500;
 }
-.esign-arrow 
+.esign-arrow
 {
     width: 70px;
     height: 16px;
@@ -1459,16 +1471,16 @@ label.esig-error
     border:1px solid transparent;
 
 }
-.esign-arrow.top 
+.esign-arrow.top
 {
     top: -16px;
     bottom: auto;
 }
-.esign-arrow.left 
+.esign-arrow.left
 {
     left: 20%;
 }
-.esign-arrow:after 
+.esign-arrow:after
 {
     content: "";
     position: absolute;
@@ -1483,7 +1495,7 @@ label.esig-error
     -o-transform: rotate(45deg);
     tranform: rotate(45deg);
 }
-.esign-arrow.top:after 
+.esign-arrow.top:after
 {
     bottom: -20px;
     top: auto;
@@ -1494,17 +1506,17 @@ label.esig-error
 {
     position : relative ;
     width:100%;
-    display:block ; 
-    
+    display:block ;
+
 }
-.need_to_sign 
+.need_to_sign
 {
     display:inline;
     margin-top:7px;
     float:left;
     width:10px !important;
 }
-.need_to_sign_right 
+.need_to_sign_right
 {
    margin-left:7px;
    text-align: left !important;
@@ -1557,7 +1569,7 @@ table.esign_status_table td ul
     position:relative
 }
 
-.esig_nextstep .button-primary 
+.esig_nextstep .button-primary
 {
     -webkit-font-smoothing:subpixel-antialiased !important;
 }
@@ -1582,10 +1594,10 @@ table.esign_status_table td ul
     width:100%;
     z-index:10000000;
 }
-.esig-error-dialog-content 
+.esig-error-dialog-content
 {
     margin:10px;
-    text-align:justify ; 
+    text-align:justify ;
     display: inline-block;
     border-radius: 8px;
 }
@@ -1615,10 +1627,10 @@ table.esign_status_table td ul
     width:100%;
     z-index:103;
 }
-.esig-confirm-dialog-content 
+.esig-confirm-dialog-content
 {
     margin:10px;
-    text-align:justify ; 
+    text-align:justify ;
     display: block;
     border-radius: 8px;
 }
@@ -1635,12 +1647,12 @@ table.esign_status_table td ul
 }
 .esig-confirm-dialog-content
 {
-    padding:10px 0; 
+    padding:10px 0;
 }
 #esig_selected_admin
 {
     font-weight:bold ;
-    text-transform:uppercase; 
+    text-transform:uppercase;
     color:Red;
 }
 .e-signature_page_esign-settings .ui-widget-overlay
@@ -1648,12 +1660,12 @@ table.esign_status_table td ul
     z-index:102;
 }
 .header_left
-{   
+{
     position :relative;
     display:inline-block;
 }
-.header_right 
-{   
+.header_right
+{
     position :relative;
     float:right;
     display:inline-block;
@@ -1661,7 +1673,7 @@ table.esign_status_table td ul
 }
 
 .footer-container .header_left
-{   
+{
     position :relative;
     display:inline-block;
     margin-top:10px;
@@ -1669,12 +1681,12 @@ table.esign_status_table td ul
 }
 
 
-.footer_right 
-{   
+.footer_right
+{
     position :relative;
     float:right;
     display:inline-block;
-    width:40%; 
+    width:40%;
 
 }
 .footer_right .tablenav .tablenav-pages
@@ -1694,12 +1706,12 @@ table.esign_status_table td ul
 
 /*/ udpated class added */
 div.esig-updated,
-div.esig-error 
+div.esig-error
 {
     padding: 0 0.6em;
     margin: 5px 15px 2px;
 }
-div.esig-updated 
+div.esig-updated
 {
     border-left: 4px solid #7ad03a;
     padding: 1px 12px;
@@ -1741,9 +1753,9 @@ div.esign-update-alert a{
     text-shadow: 0px 1px 1px rgba(0,0,0,0.4)!important;
     color: #fff!important;
     border-bottom: 2px solid #A3300D!important;
-    letter-spacing: .04em!important;	
+    letter-spacing: .04em!important;
 }
-div.esig-error 
+div.esig-error
 {
     border-left: 4px solid #dd3d36;
     background: #fff;
@@ -1776,26 +1788,26 @@ div.esig-settings-column-wrap
 
 a.misc_link
 {
-    text-decoration:none; 
+    text-decoration:none;
     font-size:14px;
 }
 a.misc_current
 {
-    text-decoration:none ; 
-    font-weight:bold ; 
+    text-decoration:none ;
+    font-weight:bold ;
     font-size:14px;
     color:#000;
 }
 
 a.mails_link
 {
-    text-decoration:none; 
+    text-decoration:none;
     font-size:14px;
 }
 a.mails_current
 {
-    text-decoration:none ; 
-    font-weight:bold ; 
+    text-decoration:none ;
+    font-weight:bold ;
     font-size:14px;
     color:#000;
 }
@@ -1803,27 +1815,27 @@ a.mails_current
 /* Who Needs To Sign This Document style */
 #recipient_emails
 {
-    clear: both  
+    clear: both
 }
 
 .signer-sl
 {
     display:inline;
-    float:left ; 
+    float:left ;
     position:relative;
     width:10px;
     height:40px;
-    vertical-align:middle; 
+    vertical-align:middle;
 }
-.field_arrows 
+.field_arrows
 {
     display:inline;
-    float:left ; 
+    float:left ;
     background:-webkit-gradient(linear,left top,left bottom,from(#FFF),to(#F4F4F4));
     background:-moz-linear-gradient(top,#FFF,#F4F4F4);
     position:relative;
     width:20px;
-    
+
 }
 span.field_arrows span:hover
 {
@@ -1832,7 +1844,7 @@ span.field_arrows span:hover
     opacity:1.0
 }
 span.field_arrows span.up
-{ 
+{
     background:url('../images/arrow_up.png');
     background-repeat:no-repeat;
     background-position:3px 5px;
@@ -1855,7 +1867,7 @@ span.deleteIcon
     width: 16px;
     height: 16px;
     position: relative;
-    
+
     display: inline-block;
     cursor: pointer;
     background-repeat: no-repeat;
@@ -1871,25 +1883,25 @@ span.deleteIcon:hover
     margin-left:1%;
 }
 .esig-signer-right
-{   
+{
     position:relative;
     float:right;
     text-align:center;
     color:#0073AA;
     width: 45%;
-   
+
 }
 .add-signer
-{   
+{
     color:#0073AA !important;
 }
 .esig-signer-right a:hover
-{   
+{
     color:#0073AA;
 }
 
 .esig-signer-right-document
-{   
+{
     position:relative;
     left:20%;
 }
@@ -1907,20 +1919,20 @@ span.deleteIcon:hover
     display: block;
     right:1px;
 }
-.esign-form-panel .esig-signer-container .esig-signer-left, .esign-form-panel .esig-signer-container a{    
+.esign-form-panel .esig-signer-container .esig-signer-left, .esign-form-panel .esig-signer-container a{
     text-decoration:none;
 }
 .esign-form-panel .esig-signer-container a:hover {
     color:#fff;
 }
 #esig_recipent_left
-{   
+{
     position:relative ;
     display:block;
     width:2%;
-    float:left ; 
-    vertical-align: middle ; 
-    margin-bottom:5px ; 
+    float:left ;
+    vertical-align: middle ;
+    margin-bottom:5px ;
     border-radius:3px ;
 }
 #signer_main_recipent
@@ -1929,10 +1941,10 @@ span.deleteIcon:hover
     width:97%;
     float:right;
     border-radius:3px ;
-    vertical-align: middle ; 
+    vertical-align: middle ;
     text-align:left ;
     position:relative ;
-    margin-bottom:5px ; 
+    margin-bottom:5px ;
     border:1px solid red;
 }
 .steps-chevron
@@ -1978,7 +1990,7 @@ span.deleteIcon:hover
     opacity:.8;
 }
 
-#page-loader-admin 
+#page-loader-admin
 {
     width: 100%;
     height: 100%;
@@ -2054,22 +2066,22 @@ span.deleteIcon:hover
 @-webkit-keyframes steam
 {
     0%{height: 0px;}
-    100%{height: 6px;}            
+    100%{height: 6px;}
 }
 @-moz-keyframes steam
 {
     0%{height: 0px}
-    100%{height: 6px;}            
+    100%{height: 6px;}
 }
 @keyframes steam
 {
     0%{height: 0px}
-    100%{height: 6px;}            
+    100%{height: 6px;}
 }
 /* loader style end here */
 
 /* Bug Support Form */
-#report-bug-form input[type=text], #report-bug-form textarea 
+#report-bug-form input[type=text], #report-bug-form textarea
 {
     border-radius: 2px;
     width: 100%;
@@ -2080,9 +2092,9 @@ span.deleteIcon:hover
     height: 41px;
 }
 
-#report-bug-form textarea 
+#report-bug-form textarea
 {
-    margin: 8px 0 0 0;	
+    margin: 8px 0 0 0;
 }
 #report-bug-form{
     font-size: 1.2em;
@@ -2245,7 +2257,7 @@ span.deleteIcon:hover
 }
 #esig-custom-message-input textarea{
     max-width: 96%;
-    border-radius: 6px;	
+    border-radius: 6px;
 }
 
 /* addons progress bar style end here */
@@ -2255,26 +2267,28 @@ span.deleteIcon:hover
 .esig-colum-conainer
 {
     display:inline-block;
-    clear:both ; 
+    clear:both ;
     position:relative;
     width:100%;
 }
 
 .esig-colum-conainer .esig-left
 {
-    float:left;   
+    float:left;
 }
 
 .esig-colum-conainer .esig-right
 {
-    float:right;   
+    float:right;
 }
 .esig-preview{
     float: right;
 }
 
 
-
+.esig-text-left {
+    text-align: left !important;
+}
 
 /* esig vertical tab start here */
 
@@ -2292,18 +2306,18 @@ span.deleteIcon:hover
     display:block;
     margin:0;
     padding:0;
-    border: 0px solid #CCC; 
+    border: 0px solid #CCC;
     height:300px;
-    overflow:hidden;  
+    overflow:hidden;
     position: relative;
     min-height: 230px;
 }
-.stMain div.tabContent { 
+.stMain div.tabContent {
     display:block;
     position: absolute;
-    margin:0;  
-    padding:10px;     
-    border: 0px solid #D4D4D4;    
+    margin:0;
+    padding:10px;
+    border: 0px solid #D4D4D4;
     background-color: #FFF;
     text-align:left;
 }
@@ -2312,15 +2326,15 @@ span.deleteIcon:hover
     list-style-type: none;
     position:relative;
     padding:0;
-    margin:0;    
+    margin:0;
     padding-left: 10px;
     clear: both;
     margin-bottom: -1px;
     z-index: 100;
 }
 .stMain ul.tabAnchor li
-{ 
-    position: relative; 
+{
+    position: relative;
     border-bottom:1px solid #ccc;
     margin:0 -27px;
     padding:0 27px;
@@ -2328,19 +2342,19 @@ span.deleteIcon:hover
     float: left;
 
 }
-.stMain ul.tabAnchor li a { 
+.stMain ul.tabAnchor li a {
     display:block;
     margin:0;
     margin-right: -1px;
-    padding:5px;  
+    padding:5px;
     height:30px;
     width:215px;
     font-size: 13px;
     color:#666;
     text-decoration: none;
-    outline:none; 
-    outline-style:none;                                                                       
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */                                          
+    outline:none;
+    outline-style:none;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
 }
 
 .stMain ul.tabAnchor li a small {
@@ -2348,7 +2362,7 @@ span.deleteIcon:hover
 }
 
 
-.stMain ul.tabAnchor li a:hover 
+.stMain ul.tabAnchor li a:hover
 {
     color:#666;
 }
@@ -2391,7 +2405,7 @@ span.deleteIcon:hover
     top:40%;
     display:block;
     margin:0;
-    padding:5px; 
+    padding:5px;
     padding-top: 35px;
     font-size: 10px;
     color:#666;
@@ -2400,7 +2414,7 @@ span.deleteIcon:hover
     border: 1px solid #D4D4D4;
     background: #f6f6f6 url(../images/loader.gif) no-repeat 10px 10px ;
 }
-a.stLinks { 
+a.stLinks {
     margin:0;
     padding:5px;
     color:#666;
@@ -2462,7 +2476,7 @@ a:focus
     height:100px;
 }
 
-.sign-text 
+.sign-text
 {
     display:block;
     position:relative;
@@ -2475,42 +2489,42 @@ a:focus
     text-align:center;
     height:100%;
 }
-.sign-text-admin 
+.sign-text-admin
 {
     position:relative;
     display:inline;
     vertical-align:text-bottom;
-    text-align:center;   	
+    text-align:center;
 }
 
-.sign-text-display 
+.sign-text-display
 {
     position: absolute;
-    vertical-align:text-bottom; 
-    left:10%; 
-    bottom:0;   	
+    vertical-align:text-bottom;
+    left:10%;
+    bottom:0;
 }
 
-.sig-type 
-{  
+.sig-type
+{
     position: absolute;
-    bottom: 20px; 
+    bottom: 20px;
     left: 0;
-    margin:auto ; 
+    margin:auto ;
     width:100% ;
 
 }
 .esig-sig-type-signed
-{   
+{
     position:relative;
     vertical-align:text-bottom;
-    text-align: center ; 
+    text-align: center ;
     height:100px;
     width:100% ;
 }
 
 .esig-sig-type
-{   
+{
     position:relative;
     vertical-align:text-bottom;
     height:100px;
@@ -2519,24 +2533,24 @@ a:focus
 }
 
 .esig-sig-type1
-{   
+{
     position: absolute;
     vertical-align:text-bottom;
-    text-align:center; 
+    text-align:center;
     width:100% ;
     bottom: 0px;
 }
-.admin-sig-type 
-{  
+.admin-sig-type
+{
     position:relative;
     display: block;
-    margin:auto ; 
+    margin:auto ;
     width:100% ;
-    text-align:center; 
+    text-align:center;
 
 }
 .admin-sig-type-display
-{   
+{
     position: absolute;
     display: block;
     width: 100%;
@@ -2544,10 +2558,10 @@ a:focus
 
 }
 .admin-sig-type
-{   
+{
     position:relative;
     vertical-align:text-bottom;
-    text-align:center; 
+    text-align:center;
     width:100% ;
 
 }
@@ -2625,7 +2639,7 @@ a:focus
 input.form-control{
     border-radius: 1px;
     -webkit-box-shadow: none;
-    box-shadow: none;	
+    box-shadow: none;
 }
 
 /* mobile signature pad disabled */
@@ -2636,7 +2650,7 @@ input.form-control{
     top:-1px;
     left:-1px;
     width: 100%;
-    height: 100%;               
+    height: 100%;
     border: 2px solid #FFF;
     background: #FFF;
     z-index:1002;
@@ -2651,7 +2665,7 @@ input.form-control{
 {
     font-size:16px ;
     padding:15px;
-   
+
     max-width: 700px;
 }
 .auto-signature-strong
@@ -2680,12 +2694,12 @@ input.form-control{
 }
 .esig-preview-mode
 {
-    font-weight: bold ; 
+    font-weight: bold ;
     color: #ff0000;
 }
 
 .post-type-esign #titlediv #title{
-    padding: 29px 10px 24px;	
+    padding: 29px 10px 24px;
 }
 .esig-like-social{
     margin: 0 0 15px 1px;
@@ -2698,7 +2712,7 @@ input.form-control{
 #esig-twt-side-wrap{
     width:99%;
     margin: 0 0 14px;
-    float: left;	
+    float: left;
 }
 .esig-twt-side-wrap #twitter-widget-1{
     margin: 0 0 14px!important;
@@ -2913,7 +2927,7 @@ input.form-control{
     top:2px!important;
 }
 
-.esig-error-input 
+.esig-error-input
 {
     border:1px solid #ff0000;
 
@@ -2924,14 +2938,14 @@ input.form-control{
     padding:4px !important;
 }
 #esig-featured-image-container{
-    margin: 20px 0px 0;			
+    margin: 20px 0px 0;
 }
 #esig-char-limit #esig-char-count{
     font-weight: strong!important;
-    color: green;	
+    color: green;
 }
 #esig_wpaccess_control_role hr{
-    margin: 24px 0;	
+    margin: 24px 0;
 }
 #esig-char-limit{
     color: gray;
@@ -2946,7 +2960,7 @@ input.form-control{
     padding: 9px 19px;
     border-radius: 4px;
     color: red;
-    border: 3px solid;  
+    border: 3px solid;
 
 
 }
@@ -2983,6 +2997,62 @@ input.form-control{
     margin-bottom:10px;
     vertical-align: text-top;
 }
+
+/* Esignature Expired License CSS */
+.expired-message-admin{
+	float: none!important;	
+}
+.expired-warning{
+	width:100%!important;
+}
+.expired-warning p.center{
+	text-align:center;	
+}
+.expired-warning p.center img{
+	float:none!important;	
+}
+.expired-message-admin .esig-text-left{
+    max-width: 730px;
+    margin: 24px auto 50px;
+    float: none!important;
+    border: 1px solid #e3e3e3;
+    padding: 22px 57px;
+    background: #fff;
+    border-bottom: 2px solid #cacaca;
+    font-family: Georgia;
+    font-size: 12px;
+}
+.expired-warning li {
+    margin-bottom: 20px;
+}
+.esig-506-error {
+    max-width: 500px;
+    margin: 50px auto 0;
+    border: 3px solid red;
+    border-radius: 9px;
+    padding: 28px 40px 50px;
+    color: red;
+}
+.esig-506-error h3{
+	margin: 0 0 10px;
+	text-align: center;
+}
+.esig-506-error h4{
+	margin: 0!important;
+	text-align: center;
+}
+.esig-506-error p{
+	margin: 18px 0 0!important;	
+}
+.esig-506-error .alert-icon{
+	text-align: center;
+    margin: 0!important;
+}
+.esig-506-error  .icon-esig-alert {
+    font-size: 65px;
+}
+
+
 /*
   ********************* E-signature conflict css ****************
 */
@@ -2994,4 +3064,8 @@ input.form-control{
 .error
 {
   color:#c00;
+}
+
+.esig-invalid{
+    border: 1px solid red;
 }

@@ -28,9 +28,9 @@
          <div class="failed-check" >We recommend installing this <a href="https://wordpress.org/plugins/change-memory-limit/" target="_blank">Free Plugin</a> to raise your memory limit <br><br>More information: <a href="https://www.approveme.com/wp-digital-signature-plugin-docs/article/increase-memory-limit/" target="_blank"><?php _e("How to Increase the Memory Limit for details","esig");?></a></div>
          
          <?php }
-         if (version_compare($php_version, '5.3.0', '<')){ $is_esig_system_error = true;  ?>
+         if (version_compare($php_version, '5.4.0', '<')){ $is_esig_system_error = true;  ?>
           
-         <div class="checklist-failed"> <span class="icon-exit checklist-exit-icon"> </span><b><?php _e("Php version =>5.3 required","esig");?></b></div>
+         <div class="checklist-failed"> <span class="icon-exit checklist-exit-icon"> </span><b><?php _e("Php version =>5.4 required","esig");?></b></div>
          <div class="failed-check" >See <a href="https://www.approveme.com/wp-digital-signature-plugin-docs/article/php-requirements/" target="_blank"><?php _e("PHP Version Minimum Requirements for details","esig");?></a></div>
          
         <?php }

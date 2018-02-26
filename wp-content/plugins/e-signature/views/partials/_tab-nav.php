@@ -28,7 +28,7 @@ $this->default_vals($data, $vars);
 $this->setting = new WP_E_Setting();
 ?>
 
-<div id='esig-settings-container' class='wrap approveme_main wpd-sign' >		
+<div id='esig-settings-container' class='wrap approveme_main wpd-sign' >
 
     <div id='esig-headlink-col1'>
 
@@ -38,10 +38,12 @@ $this->setting = new WP_E_Setting();
             </a>
             <br>
 
-            <img src='<?php echo ESIGN_ASSETS_DIR_URI ; ?>/images/pen_icon_gray.svg' alt='Signing documents just got easier'>
+            <img src='<?php echo ESIGN_ASSETS_DIR_URI ; ?>/images/pen_icon_gray.svg' altSigning documents just got a lot easiera='Signing documents just got easier'>
             <span class='settings-title'><?php _e('Signing documents just got a lot easier.', 'esig'); ?></span>
-
         </div>
+
+        <!-- The following action allows the messaging component to inject the notices -->
+        <?php do_action( 'esig_after_settings_banner' ); ?>
 
     </div><!--/esig-headlink-col1-->
 
@@ -52,7 +54,7 @@ $this->setting = new WP_E_Setting();
                 <span class='esig-extension-headtext'>
 <?php _e('To enable more features and signature functions you should visit', 'esig'); ?>
                 </span>
-                <br> 
+                <br>
                 <a href='admin.php?page=esign-addons' class='esig-extension-headlink'><?php _e('E-Sign Add-On Extensions.', 'esig'); ?></a>
                 <br>
 
@@ -87,7 +89,7 @@ if ($this->setting->esign_super_admin()) {
             echo $data['Licenses'];
             ?>
 
-            
+
 
     <!-- <a class="nav-tab <?php echo $data['support_tab_class']; ?>" href="?page=esign-support-general"><?php _e('Premium Support', 'esig'); ?></a> -->
 
@@ -112,17 +114,17 @@ if ($this->setting->esign_super_admin()) {
 <?php
     //$notices ='' ;
      $notices=apply_filters('esig_notices_display','');
-     
-     
- 
+
+
+
      if($notices):
 ?>
 
 <div  class="esig-notices-wrap" >
-    
+
     <div style="margin: 10px auto;padding: auto auto;width:90%;">
-        
-   <h2 style="margin:0 !important;padding: 0px;font-size:0;"></h2> 
+
+   <h2 style="margin:0 !important;padding: 0px;font-size:0;"></h2>
 <?php echo $notices; ?>
     </div>
 

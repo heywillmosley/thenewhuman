@@ -6,7 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<div class="<?php echo $data['alert-type'] ; ?>">
+
+<div class="<?php echo $data['alert-type'] ; ?> e-sign-alert">
     
 <p class="message"><?php echo $data['alert-msg'] ; ?></p>
 

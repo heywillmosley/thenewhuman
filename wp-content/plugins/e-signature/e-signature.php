@@ -3,7 +3,7 @@
 /*
   Plugin Name: WP E-Signature
   Description: Legally sign and collect signatures on documents, contracts, proposals, estimates and more using WP E-Signature.
-  Version: 1.5.1.0
+  Version: 1.5.3.1
   Author: Approve Me
   Author URI: https://www.approveme.com
   Contributors: Kevin Michael Gray, Micah Blu, Michael Medaglia, Abu Shoaib, Earl Red, Pippin Williamson
@@ -21,13 +21,6 @@ if (!function_exists('is_admin')) {
     exit();
 }
 
-if (!class_exists('ESIG_License'))
-    include( dirname(__FILE__) . '/vendors/WP_E_License_Handler.php' );
-
-
-$license = new ESIG_License(__FILE__, __('WP E-Signature', 'esig'), 2660, '1.5.1.0', __('Approve Me', 'esig'));
-
-
 if (!class_exists('WP_E_Digital_Signature')) :
 
     final class WP_E_Digital_Signature {
@@ -36,7 +29,7 @@ if (!class_exists('WP_E_Digital_Signature')) :
 
         /**
          * Creates singleton instance of the class
-         * 
+         *
          * @since 1.0.1
          * @param null
          * @return void
@@ -47,7 +40,9 @@ if (!class_exists('WP_E_Digital_Signature')) :
                 self::$_instance = new self();
                 self::$_instance->setup_constants();
                 self::$_instance->includes();
-                // defining other variable . 
+                self::$_instance->hooks();
+
+                // defining other variable .
                 self::$_instance->view = new WP_E_View();
                 self::$_instance->invite = new WP_E_Invite;
                 self::$_instance->document = new WP_E_Document;
@@ -60,7 +55,7 @@ if (!class_exists('WP_E_Digital_Signature')) :
                 self::$_instance->meta = new WP_E_Meta;
                 self::$_instance->common = new WP_E_Common();
                 self::$_instance->signature = new WP_E_Signature;
-                // @depricated in 1.4.0 
+                // @depricated in 1.4.0
                 self::$_instance->shortcode = new WP_E_Shortcode();
             }
 
@@ -106,13 +101,17 @@ if (!class_exists('WP_E_Digital_Signature')) :
             include_once ESIGN_PLUGIN_PATH . "/lib/autoload.php";
             require_once ESIGN_PLUGIN_PATH . '/includes/Esign_core_load.php';
 
-           
+
 
             require_once ESIGN_PLUGIN_PATH . '/includes/Esign_actions.php';
             require_once ESIGN_PLUGIN_PATH . '/includes/actions.php';
+            require_once ESIGN_PLUGIN_PATH . '/includes/esig-messages.php';
+            require_once ESIGN_PLUGIN_PATH . '/includes/esig-render-shortcode.php';
+            
+            
             include_once ESIGN_PLUGIN_PATH . "/lib/export/esig-export-xml.php";
             include_once ESIGN_PLUGIN_PATH . "/lib/export/esig-migrate.php";
-            // laods some other files . 
+            // laods some other files .
             include (dirname(__FILE__) . '/includes/Esign-add-on.php' );
             include( dirname(__FILE__) . '/vendors/core-load.php');
             include( dirname(__FILE__) . '/vendors/common-function.php');
@@ -129,57 +128,69 @@ if (!class_exists('WP_E_Digital_Signature')) :
          * @return void
          */
         private function setup_constants() {
-            //prevent header sent. 
+            //prevent header sent.
             ob_start();
             // Establish OS dependant Directory Separator
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                 define('DS', "\\");
-            else
+            } else {
                 define('DS', '/');
+            }
 
-            // esig plugin directory path 
+            // esig plugin directory path
             if (!defined('ESIGN_PLUGIN_PATH'))
                 define('ESIGN_PLUGIN_PATH', dirname(__FILE__));
 
-            // esig plugin directory file path 
+            // esig plugin directory file path
             if (!defined('ESIGN_PLUGIN_FILE'))
                 define('ESIGN_PLUGIN_FILE', __FILE__);
 
-            // esig plugin directory file path 
+            // esig plugin directory file path
             if (!defined('ESIGN_PLUGIN_BASENAME'))
                 define('ESIGN_PLUGIN_BASENAME', plugin_basename(__FILE__));
-            //esig venders directory path 
+            //esig venders directory path
             if (!defined('ESIGN_VENDORS_PATH'))
                 define('ESIGN_VENDORS_PATH', ESIGN_PLUGIN_PATH . DS . 'vendors' . DS);
 
-            //esig template directory path 
+            //esig template directory path
             if (!defined('ESIGN_TEMPLATES_PATH'))
                 define('ESIGN_TEMPLATES_PATH', ESIGN_PLUGIN_PATH . DS . 'page-template' . DS);
 
-            // esig signatures directory path 
+            // esig signatures directory path
             if (!defined('ESIGN_SIGNATURES_PATH'))
                 define('ESIGN_SIGNATURES_PATH', ESIGN_PLUGIN_PATH . DS . 'e-signature-files'); // SECURITY option to be unique/random/custom
 
 
-
-                
-//esig plugin directory url 
+            //esig plugin directory url
             if (!defined('ESIGN_DIRECTORY_URI'))
                 define('ESIGN_DIRECTORY_URI', plugins_url("/", __FILE__));
 
-            // esig asset directory url 
+            // esig asset directory url
             if (!defined('ESIGN_ASSETS_DIR_URI'))
                 define('ESIGN_ASSETS_DIR_URI', plugins_url('assets', __FILE__));
 
-            // define encription key 
+            // define encription key
             if (!defined('ENCRYPTION_KEY'))
                         define("ENCRYPTION_KEY", "!@#$%^&*");
 
-            // esig log directory full path 
+            // esig log directory full path
             if (!defined('ESIG_LOG_DIR')) {
                 $upload_dir = wp_upload_dir();
                 define('ESIG_LOG_DIR', $upload_dir['basedir'] . '/esig-logs/');
             }
+        }
+
+        private function hooks() {
+            add_action( 'plugins_loaded', array( $this, 'load_updater' ) );
+        }
+
+        public function load_updater() {
+            if (!class_exists('ESIG_License')) {
+                include( dirname(__FILE__) . '/vendors/WP_E_License_Handler.php' );
+            }
+
+
+            $license = new ESIG_License(ESIGN_PLUGIN_BASENAME, __('WP E-Signature', 'esig'), 2660, '1.5.3.1', __('Approve Me', 'esig'));
         }
 
     }
@@ -194,5 +205,5 @@ function WP_E_Sig() {
     return WP_E_Digital_Signature::instance();
 }
 
-// run esignature 
+// run esignature
 WP_E_Sig();

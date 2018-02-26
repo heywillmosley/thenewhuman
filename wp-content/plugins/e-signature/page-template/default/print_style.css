@@ -50,6 +50,9 @@ pre {
     {
         display:none;
     }
+    a[href]:after {
+        content: none !important;
+    }
 
 }
 
@@ -119,7 +122,6 @@ pre {
     margin-top:0px; 
     display:inline; 
     font-family: 'Open Sans', sans-serif,chinese-msyh;
-
     font-weight: normal;
     font-size:14px;
 
@@ -257,6 +259,7 @@ input[type=text]
     text-align:center ;
     width:50% ; 
     font-family: 'Open Sans', sans-serif,chinese-msyh;
+   
 }
 
 
@@ -272,6 +275,7 @@ input[type=text]
     font-family: 'Open Sans', sans-serif,chinese-msyh;
     font-weight: normal;
     font-size:14px;  
+   
 }
 
 .signed-value
@@ -397,7 +401,7 @@ input.esig-sif-todaydate.signed
     height:1em !important;
     width:1.5em !important;
 }
-
+ 
 .sifreadonly
 {
     opacity: 0.5!important;
@@ -664,7 +668,7 @@ tr {
     border-width:1px;
     border-radius:0;    
     height:100px;
-    border:1px solid red;    
+
 }
 
 .esig-signature-type-font
@@ -696,7 +700,6 @@ tr {
     left: 0;
     text-align:left !important;
     vertical-align:text-bottom;
-
     width:100% ;
     height:auto !important;
 }

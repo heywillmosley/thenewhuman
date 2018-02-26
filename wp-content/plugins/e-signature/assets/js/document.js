@@ -37,23 +37,25 @@
         if (esign.validate_signers('#esig-signer-edit-wrapper #recipient_emails', 'recipient_emails', 'recipient_fnames'))
         {
             return false;
-        }
-        else
+        } else
         {
             // saving removed any error msg 
             $('.esig-error-box').remove();
         }
 
+        
         // validation for same email address . 
-        if ($.fn.cc_users_email_duplicate('#esig-signer-edit-wrapper', '#esig-signer-edit-wrapper .error12'))
-        {
-            return false;
-        }
-        else
-        {
-            // saving removed any error msg 
-            $('.esig-error-box').remove();
-        }
+        //if (typeof cc_users_email_duplicate !== 'undefined' && $.isFunction(cc_users_email_duplicate)) {
+            
+            if (esign.ccValidate('#esig-signer-edit-wrapper', '#esig-signer-edit-wrapper .error12'))
+            {
+                return false;
+            } else
+            {
+                // saving removed any error msg 
+                $('.esig-error-box').remove();
+            }
+       // }
 
 
 
@@ -263,8 +265,7 @@
         if (this['document_title'].value == "") {
 
             valid = false;
-        }
-        else if (!esig_get_tinymce_content()) {
+        } else if (!esig_get_tinymce_content()) {
 
             valid = false;
         }
@@ -415,7 +416,7 @@
      *  @description  Iphone double click issue http://cssmenumaker.com/blog/solving-the-double-tap-issue-on-ios-devices
      *  https://www.pivotaltracker.com/story/show/143229261 original isssue is here 
      */
-    
+
     if (esign.isIphone()) {
 
         $('a').on('click touchend', function (e) {

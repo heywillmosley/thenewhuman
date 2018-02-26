@@ -100,10 +100,12 @@ if (!function_exists('ESIG_POST')) {
 }
 
 if (!function_exists('esigRequest')) {
+
     function esigRequest($key) {
         $data = filter_var($_REQUEST[$key]);
         return sanitize_text_field($data);
     }
+
 }
 
 
@@ -204,6 +206,14 @@ if (!function_exists('esig_create_nonce')) {
 if (!function_exists('esig_verify_nonce')) {
 
     function esig_verify_nonce($value, $nonce) {
+
+        // wp nonce verification does not work for non logged in user with page cache and woocommerce. 
+        if (function_exists('wc')) {
+            global $woocommerce;
+            if (!is_null(WC()->session) && sizeof($woocommerce->cart->cart_contents) > 0) {
+                return true;
+            }
+        }
         if (wp_verify_nonce($value, 'esig-nonce-all' . $nonce)) {
             return true;
         }
@@ -277,16 +287,155 @@ if (!function_exists('getAddonVersion')) {
 if (!function_exists('esigHtml')) {
 
     function esigHtml($value) {
-         $value = stripslashes($value);
-         return esc_html($value);
+        $value = stripslashes($value);
+        return esc_html($value);
     }
 
 }
 
 
 if (!function_exists('esig_is_func_disabled')) {
+
     function esig_is_func_disabled($function) {
         $disabled = explode(',', ini_get('disable_functions'));
         return in_array($function, $disabled);
     }
+
+}
+
+
+if (!function_exists('esig_strip_shortcodes')) {
+
+    function esig_strip_shortcodes($content) {
+
+        $shortcode_tags = array();
+
+        if (false === strpos($content, '[')) {
+            return $content;
+        }
+
+
+        // Find all registered tag names in $content.
+        preg_match_all('@\[([^<>&/\[\]\x00-\x20=]++)@', $content, $matches);
+
+        $tags_to_remove = array_keys($shortcode_tags);
+
+        /**
+         * Filters the list of shortcode tags to remove from the content.
+         *
+         * @since 4.7.0
+         *
+         * @param array  $tag_array Array of shortcode tags to remove.
+         * @param string $content   Content shortcodes are being removed from.
+         */
+        $tags_to_remove = apply_filters('esig_strip_shortcodes_tagnames', $tags_to_remove);
+
+        $tagnames = array_intersect($tags_to_remove, $matches[1]);
+
+        if (empty($tagnames)) {
+            return $content;
+        } else {
+            $adminName = WP_E_Sig()->user->getUserFullName();
+            $msg = sprintf(__("Hey %s! :-) Looks like you’re trying to insert a form into your document, which will break your document (oh no!). The proper way to make this work is to create a page and put your form on that page. Then, come back to this document and ‘call’ your form information into the document using Singer Input Fields. Then, it will work properly (yay!).", "esig"), $adminName);
+            WP_E_Notice::instance()->set("error", $msg);
+        }
+
+        $content = do_shortcodes_in_html_tags($content, true, $tagnames);
+
+        $pattern = get_shortcode_regex($tagnames);
+        $content = preg_replace_callback("/$pattern/", 'strip_shortcode_tag', $content);
+
+        // Always restore square braces so we don't break things like <!--[if IE ]>
+        $content = unescape_invalid_shortcodes($content);
+
+        return $content;
+    }
+
+}
+
+/**
+ *  Remove all shortcodes from basic document 
+ */
+if (!function_exists('esig_strip_other_shortcodes')) {
+
+    function esig_strip_other_shortcodes($content) {
+
+
+        global $shortcode_tags;
+
+        $tags_to_keep = array("esigget", "esigtextfield", "esigtextarea", "esigtodaydate", "esigdatepicker", "esigradio", "esigcheckbox", "esigdropdown", "esigfile",
+            "esigcf7", "esigformidable", "esigninja", "esigcaldera","esigwpform", "esig-woo-order-details", "esig-edd-order-details","esigtemptextfield",
+            "esigtemptextarea","esigtempdatepicker","esigtempradio","esigtempcheckbox","esigtempdropdown","esiggravity");
+
+        if (false === strpos($content, '[')) {
+            return $content;
+        }
+
+        // Find all registered tag names in $content.
+        preg_match_all('@\[([^<>&/\[\]\x00-\x20=]++)@', $content, $matches);
+        /**
+         * Filters the list of shortcode tags to remove from the content.
+         *
+         * @since 4.7.0
+         *
+         * @param array  $tag_array Array of shortcode tags to remove.
+         * @param string $content   Content shortcodes are being removed from.
+         */
+        $tags_to_keep = apply_filters('esig_donot_remove_shortcode_name', $tags_to_keep);
+
+        $tagnames = $matches[1];
+
+        if (empty($tagnames)) {
+            return $content;
+        }
+        
+        $tags_to_remove = array();
+
+        foreach ($tagnames as $key => $name) {
+
+            if (!shortcode_exists($name)) {
+                $tags_to_remove[] = $name;
+                unset($tagnames[$key]);
+                continue;
+            }
+
+            if (in_array($name, $tags_to_keep)) {
+                unset($tagnames[$key]);
+            }
+        }
+
+        $adminName = WP_E_Sig()->user->getUserFullName();
+        
+        // striping non exist shortcode 
+        if (!empty($tags_to_remove)) {
+
+            $msg = sprintf(__("Hey %s! :-) Looks like you inserted a non e-signature shortcode into your document, which is not active and has been removed automatically.", "esig"), $adminName);
+            WP_E_Notice::instance()->set("error striped", $msg);
+
+            $content = do_shortcodes_in_html_tags($content, true, $tags_to_remove);
+
+            //first strip non shortcode tag. 
+            $nonPattern = get_shortcode_regex($tags_to_remove);
+            $content = preg_replace_callback("/$nonPattern/", 'strip_shortcode_tag', $content);
+        }
+       
+        if (!empty($tagnames)) {
+
+            $msg = sprintf(__("Hey %s! :-) Looks like you inserted a non e-signature shortcode into your document, which we have rendered and stored into database permanently.", "esig"), $adminName);
+            WP_E_Notice::instance()->set("error stored", $msg);
+        }else {
+            return $content;
+        }
+        // rendering non e-signature shortcode. 
+        $content = do_shortcodes_in_html_tags($content, true, $tagnames);
+        $pattern = get_shortcode_regex($tagnames);
+
+
+        $content = preg_replace_callback("/$pattern/", 'do_shortcode_tag', $content);
+        // Always restore square braces so we don't break things like <!--[if IE ]>
+        $content = unescape_invalid_shortcodes($content);
+
+        return $content;
+    }
+
 }

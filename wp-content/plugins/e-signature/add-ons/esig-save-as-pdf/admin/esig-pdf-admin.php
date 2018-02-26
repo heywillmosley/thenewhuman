@@ -3,7 +3,7 @@
 /**
  *
  * @package ESIG_PDF_Admin
- * @author  Abu Shoaib <abushoaib73@gmail.com>
+ * @author  Abu Shoaib
  */
 if (!class_exists('ESIG_PDF_Admin')) :
 
@@ -134,7 +134,7 @@ if (!class_exists('ESIG_PDF_Admin')) :
 
             $file_name = $this->esig_sanitize_file_name($file_name);
 
-            return $file_name;
+            return apply_filters("esig_pdf_file_name",$file_name,$document_id);
         }
 
         public function esig_sanitize_file_name($filename) {
@@ -179,7 +179,7 @@ if (!class_exists('ESIG_PDF_Admin')) :
             if ($document_id) {
                 $doc_id = $document_id;
                 $document = $this->document->getDocumentById($doc_id);
-                $document_report = $api->shortcode->auditReport($doc_id, $document);
+                //$document_report = $api->shortcode->auditReport($doc_id, $document);
                 set_transient('is_esig_pdf', 'yes', 60);
                 // get shortcoded document content by document id   
                 $unfiltered_content = $this->document->esig_do_shortcode($document_id);
@@ -238,10 +238,10 @@ if (!class_exists('ESIG_PDF_Admin')) :
                             $font = $this->signature->get_font_type($doc_id, $invite->user_id);
                             //echo strlen($sign_data);
                             $font_size = abs(50 - strlen($sign_data)*1.2);
-                            
+                           
                             $sign = '<div class="sign-text-pdf" >
 						
-						<span class="esig-signature-type-font" style="font-family:' . $font . ';font-size:' . $font_size . '!important;" width="400">' . $sign_data . '</span></div>';
+						<span class="esig-signature-type-font" style="font-family:' . $font . ';font-size:' . $font_size . ';" width="400">' . $sign_data . '</span></div>';
                         } elseif ($signature_type == "full") {
 
                             $signature_url = $this->get_signature_image_url($invite->user_id, $document->document_checksum);
@@ -288,7 +288,7 @@ if (!class_exists('ESIG_PDF_Admin')) :
                         }
                         $sign_admin = '<div class="sign-text-pdf">
 						
-						<span class="esig-signature-type-font" style="font-family:' . $font . ';font-size:' . $font_size . '!important;" width="400" >' . $sign_data . '</span></div>';
+						<span class="esig-signature-type-font" style="font-family:' . $font . ';font-size:' . $font_size . ';" width="400" >' . $sign_data . '</span></div>';
                     } elseif ($signature_type == "full") {
                         $signature_url = $this->get_signature_image_url($owner->user_id, $document->document_checksum);
                         $sign_admin = '<img src="' . $signature_url . '" width="255px" height="100px">';
@@ -307,6 +307,9 @@ if (!class_exists('ESIG_PDF_Admin')) :
 					</div><div class="signature-top">';
                     $html .= sprintf(__("Signed By %s %s", "esig-pdf"), $owner->first_name, $owner->last_name);
                     $html .= "<br>".__("Signed On","esig") .": " . $this->document->esig_date_format($document->last_modified,$document_id) . "</div></div>";
+                   
+                  
+                   
                 }
                 // admin signature end here
 
@@ -356,7 +359,7 @@ if (!class_exists('ESIG_PDF_Admin')) :
 
                 $pdf->WriteHTML($html);
                 $pdf->SetHTMLHeader('');
-                $page_count = $pdf->docPageNum($pdf->page, true) - 1;
+                //$page_count = $pdf->docPageNum($pdf->page, true) - 1;
                 $audit_trail_html = "{$api->shortcode->auditReport($doc_id, $document)}";
                 //$audit_trail_html = str_replace('{PAGENO}', $page_count + $this->get_audit_trail_page_count($audit_trail_html), $audit_trail_html);
 
@@ -715,7 +718,7 @@ if (!class_exists('ESIG_PDF_Admin')) :
 
         private function create_pdf_document() {
 
-            $current_error_reporting = error_reporting(0);
+            //$current_error_reporting = error_reporting(0);
 
             if (file_exists(WP_CONTENT_DIR . "/esign_customization/mpdf/mpdf.php")) {
                 require_once ( WP_CONTENT_DIR . "/esign_customization/mpdf/mpdf.php" );
@@ -739,8 +742,8 @@ if (!class_exists('ESIG_PDF_Admin')) :
             $stylefile = apply_filters("esig-pdf-export-stylesheet", $stylesheet);
             $pdf->WriteHTML($stylefile, 1);
             //reset error reporting
-            error_reporting($current_error_reporting);
-            @ini_set('display_errors', 0);
+            //error_reporting($current_error_reporting);
+            //@ini_set('display_errors', 0);
             return $pdf;
         }
 

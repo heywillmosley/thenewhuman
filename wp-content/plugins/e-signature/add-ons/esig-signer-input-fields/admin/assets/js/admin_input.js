@@ -81,8 +81,8 @@ var esig_sif_admin_controls = null;
             }
             var label = $(".esig-sif-panel-textfield input[name='textbox']").val();
 
-            var htmltext = 'Enter your placeholder text <br> <input type="text" name="textbox" style="width:' + maxsize + 'px;"  class="sif_input_field label" value="' + label + '" placeholder="' + label + '"><input type="hidden" name="maxsize" value="' + maxsize + '">';
-
+            var htmltext = 'Enter your placeholder text <br> <input type="text" name="textbox" style="width:' + maxsize + 'px;" value="' + label + '" placeholder="' + label + '"><input type="hidden" name="maxsize" value="' + maxsize + '">';
+           
             $('.esig-sif-panel-textfield .sif_text_placeholder_Text').html(htmltext);
             $('.esig-sif-panel-textfield #esign-sif-size-msg').hide();
         });
@@ -218,17 +218,16 @@ var esig_sif_admin_controls = null;
 
         // files
         $('body').on('click', '.esig-sif-panel-file .insert-file', function () {
-
+            
             var name = 'esig-sif-file-' + Date.now();
 
             var file_label = $("input[name='filelabel']").val();
 
             var file_extension = $("input[name='file_extension']").val();
-
-            var file_size = Math.abs($("input[name='max_file_size']").val());
+            var file_size= $("input[name='max_file_size']").val();
             if (typeof (file_size) != "undefined" && !$.isNumeric(file_size))
             {
-                // $('.esig-sif-panel-textfield #esign-sif-size-msg').show();
+                $('.esig-sif-panel-textfield #esign-sif-size-msg').show();
                 return false;
             }
             var verifysigner_file = $(".sif_popup_main_file #sif_invite_select option:selected").val();
@@ -247,7 +246,7 @@ var esig_sif_admin_controls = null;
 
 
             var return_text = '[esigfile name="' + name + '" label="' + file_label + '"  verifysigner="' + verifysigner_file + '" extensions="' + file_extension + '" filesize="' + file_size + '"   ' + required + ']';
-
+            
             esig_sif_admin_controls.insertContent(return_text);
 
             $('.esig-sif-panel-file #esign-sif-extension-msg').hide();
@@ -672,7 +671,13 @@ var esig_sif_admin_controls = null;
 
                     self.insertContent('[esigtodaydate]');
 
-                } else if (cmd == 'radio') {
+                } 
+                else if (cmd == 'page_break') {
+
+                    self.insertContent('[esig-page-break]');
+
+                }
+                else if (cmd == 'radio') {
 
                     self.popupMenuShow(cmd);
 
@@ -738,9 +743,6 @@ var esig_sif_admin_controls = null;
 
                         //if ($("#signer_display").length == 0){
 
-
-
-
                         if (cmd == 'textfield') {
                             $("#sif_text_advanced_button").show();
                             jQuery(".sif_text_signer_info").html(data);
@@ -785,6 +787,11 @@ var esig_sif_admin_controls = null;
             if (cmd == 'todaydate')
             {
                 esig_sif_admin_controls.insertContent('[esigtodaydate]');
+                return;
+            }
+             if (cmd == 'page_break')
+            {
+                esig_sif_admin_controls.insertContent('[esig-page-break]');
                 return;
             }
 

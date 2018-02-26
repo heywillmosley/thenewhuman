@@ -2,7 +2,8 @@
 
 (function ($) {
 
-
+    "use strict";
+    
     var popup_contenat_id = 'signer-signature'; //Id of the pop-up content
 
     var sender_input = $('input[name="sender_signature"]');
@@ -122,7 +123,7 @@
 
                     $('#esignature-in-text').val(fname);
 
-                    $('#esig-iam').html(fname);
+                    //$('#esig-iam').html(fname);
                     $('#esig-iam-draw').html(fname);
                     $('#esig-iam-type').html(fname);
 

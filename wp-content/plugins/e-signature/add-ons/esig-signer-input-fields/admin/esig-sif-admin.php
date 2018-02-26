@@ -227,7 +227,8 @@ if (!class_exists('ESIG_SIF_Admin')) :
              {text:"'. __("Insert Radio Buttons","esig") .'",value: "radio",onclick: function () {esig_sif_admin_controls.popupMenuShow(this.value());}},
              {text:"'. __("Insert Checkboxes","esig") .'",value: "checkbox",onclick: function () {esig_sif_admin_controls.popupMenuShow(this.value());}},
              {text:"'. __("Insert Dropdown","esig") .'",value: "dropdown",onclick: function () {esig_sif_admin_controls.popupMenuShow(this.value());}},
-             {text:"'. __("Insert Upload Option","esig") .'",value: "file",onclick: function () {esig_sif_admin_controls.popupMenuShow(this.value());}},';
+             {text:"'. __("Insert Upload Form","esig") .'",value: "file",onclick: function () {esig_sif_admin_controls.popupMenuShow(this.value());}},
+             {text:"'. __("Insert Page Break","esig") .'",value: "page_break",onclick: function () {esig_sif_admin_controls.popupMenuShow(this.value());}},';
              
              
                 $sif_menu = apply_filters('esig_sif_buttons_filter', $sif_menu);
@@ -255,7 +256,8 @@ if (!class_exists('ESIG_SIF_Admin')) :
                 "radio" => array("label" => __("Insert Radio Buttons","esig")),
                 "checkbox" => array("label" => __("Insert Checkboxes","esig")),
                 "dropdown" => array("label" => __("Insert Dropdown","esig")),
-                "file" => array("label" => __("Insert Upload Option","esig")),
+                "file" => array("label" => __("Insert Upload Form","esig")),
+                 "page_break" => array("label" => __("Insert Page Break","esig")),
             );
 
             $filterMenu = apply_filters("esig_text_editor_sif_menu", $textMenu);
@@ -304,6 +306,7 @@ if (!class_exists('ESIG_SIF_Admin')) :
          * @return    null    Return early if no settings page is registered.
          */
         public function enqueue_admin_scripts() {
+            
             $screen = get_current_screen();
             $current = $screen->id;
             // Show if we're adding or editing a document
