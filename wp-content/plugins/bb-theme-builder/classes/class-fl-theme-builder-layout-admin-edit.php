@@ -69,10 +69,12 @@ final class FLThemeBuilderLayoutAdminEdit {
 
 			// Styles
 			wp_enqueue_style( 'jquery-tiptip', FL_BUILDER_URL . 'css/jquery.tiptip.css', array(), $version );
+			wp_enqueue_style( 'select2', FL_THEME_BUILDER_URL . 'css/select2.min.css', array(), $version );
 			wp_enqueue_style( 'fl-theme-builder-layout-admin-edit', FL_THEME_BUILDER_URL . 'css/fl-theme-builder-layout-admin-edit.css', array(), $version );
 
 			// Scripts
 			wp_enqueue_script( 'jquery-tiptip', FL_BUILDER_URL . 'js/jquery.tiptip.min.js', array( 'jquery' ), $version, true );
+			wp_enqueue_script( 'select2', FL_THEME_BUILDER_URL . 'js/select2.full.min.js', array( 'jquery' ), $version, true );
 			wp_enqueue_script( 'fl-theme-builder-layout-admin-edit', FL_THEME_BUILDER_URL . 'js/fl-theme-builder-layout-admin-edit.js', array( 'wp-util' ), $version );
 
 			// JS Config
@@ -86,8 +88,10 @@ final class FLThemeBuilderLayoutAdminEdit {
 					'allObjects' => _x( 'All %s', '%s is the post or taxonomy name.', 'fl-theme-builder' ),
 					'alreadySaved' => _x( 'This location has already been added to the "%1$s" %2$s. Would you like to remove it and add it to this %1$s?', '%1$s is the post title. %2$s is the post type label.', 'fl-theme-builder' ),
 					'assignedTo' => _x( 'Assigned to %s', '%s stands for post title.', 'fl-theme-builder' ),
+					'choose' => __( 'Choose...', 'fl-theme-builder' ),
 					'postTypePlural' => $object->label,
 					'postTypeSingular' => $object->labels->singular_name,
+					'search' => __( 'Search...', 'fl-theme-builder' ),
 				),
 			) );
 		}
@@ -130,6 +134,8 @@ final class FLThemeBuilderLayoutAdminEdit {
 
 				if ( $location_post['id'] == $post->ID ) {
 					continue;
+				} elseif ( 'publish' != get_post_status( $location_post['id'] ) ) {
+					continue;
 				}
 
 				$post_users = FLThemeBuilderRulesUser::get_saved( $location_post['id'] );
@@ -144,9 +150,11 @@ final class FLThemeBuilderLayoutAdminEdit {
 					continue;
 				}
 
-				$common[] = $location_post['title'];
+				$common[ $location_post['id'] ] = $location_post['title'];
 			}
 		}
+
+		$common = apply_filters( 'fl_theme_builder_location_notice_posts', $common );
 
 		if ( ! empty( $common ) ) {
 
@@ -161,7 +169,7 @@ final class FLThemeBuilderLayoutAdminEdit {
 				$posts = '<strong>' . $posts . '</strong>';
 
 				if ( 0 === count( $common ) ) {
-					$message = sprintf( _x('The layout %s is assigned to the same location and may not show.', '% is a post title.', 'fl-theme-builder' ), $posts );
+					$message = sprintf( _x( 'The layout %s is assigned to the same location and may not show.', '% is a post title.', 'fl-theme-builder' ), $posts );
 				} else {
 					$message = sprintf( _x( 'The layouts %s are assigned to the same location and may not show.', '% is post titles.', 'fl-theme-builder' ), $posts );
 				}
@@ -193,7 +201,7 @@ final class FLThemeBuilderLayoutAdminEdit {
 
 		add_meta_box(
 			'fl-theme-builder-settings',
-			__( 'Theme Layout Settings', 'fl-theme-builder' ),
+			__( 'Themer Layout Settings', 'fl-theme-builder' ),
 			__CLASS__ . '::settings_meta_box',
 			'fl-theme-layout',
 			'normal',

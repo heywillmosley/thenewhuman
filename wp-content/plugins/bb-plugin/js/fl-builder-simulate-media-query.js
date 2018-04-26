@@ -133,7 +133,7 @@
 		 * @since 1.10
 		 * @method update
 		 * @param {Number} width The viewport width to simulate.
-		 * @param {Function) callback
+		 * @param {Function} callback
 		 */
 		update: function( width, callback )
 		{
@@ -152,7 +152,7 @@
 
 		/**
 		 * Adds all sheets that aren't already cached
-		 * to the AJAX queue.
+		 * to the AJAX queue for fetching <link> sheets.
 		 *
 		 * @since 1.10
 		 * @method queueSheets
@@ -160,27 +160,35 @@
 		 */
 		queueSheets: function()
 		{
-			var links  = $( 'link' ),
-				sheet  = null,
-				href   = null,
-				media  = null,
-				isCSS  = null,
-				ignore = false,
-				i      = 0,
-				k      = 0;
+			var elements  	= $( 'link, style' ),
+				sheet  		= null,
+				href   		= null,
+				id   		= null,
+				tagName		= null,
+				rel			= null,
+				media  		= null,
+				key			= null,
+				isCSS  		= null,
+				ignore 		= false,
+				i      		= 0,
+				k      		= 0;
 
-			for ( ; i < links.length; i++ ) {
+			for ( ; i < elements.length; i++ ) {
 
-				sheet  = links[ i ];
-				href   = sheet.href;
-				media  = sheet.media;
-				isCSS  = sheet.rel && sheet.rel.toLowerCase() === 'stylesheet';
-				ignore = false;
+				element  = elements[ i ];
+				href   	 = element.href;
+				id		 = element.id;
+				tagName  = element.tagName.toLowerCase();
+				rel		 = element.rel;
+				media  	 = element.media;
+				key		 = !! href ? href : !! id ? id : 'style-' + i;
+				isCSS 	 = true;
+				ignore 	 = false;
 
-				if ( !! href && isCSS ) {
+				if ( 'style' === tagName || ( !! href && rel && rel.toLowerCase() === 'stylesheet' ) ) {
 
 					for ( k = 0; k < this.ignored.length; k++ ) {
-						if ( href.indexOf( this.ignored[ k ] ) > -1 ) {
+						if ( key.indexOf( this.ignored[ k ] ) > -1 ) {
 							ignore = true;
 							break;
 						}
@@ -191,17 +199,20 @@
 					}
 
 					for ( k = 0; k < this.reparsed.length; k++ ) {
-						if ( href.indexOf( this.reparsed[ k ] ) > -1 ) {
-							this.sheets[ href ] = null;
+						if ( key.indexOf( this.reparsed[ k ] ) > -1 ) {
+							this.sheets[ key ] = null;
 							break;
 						}
 					}
 
-					if ( undefined === this.sheets[ href ] || ! this.sheets[ href ] ) {
+					if ( undefined === this.sheets[ key ] || ! this.sheets[ key ] ) {
 						this.queue.push( {
-							link  : links.eq( i ),
-							href  : href,
-							media : media
+							element  : elements.eq( i ),
+							key		 : key,
+							tagName  : tagName,
+							href  	 : href,
+							id		 : id,
+							media 	 : media
 						} );
 					}
 				}
@@ -225,10 +236,15 @@
 
 				item = this.queue.shift();
 
-				$.get( item.href, $.proxy( function( response ) {
-					this.parse( response, item );
+				if ( 'style' === item.tagName ) {
+					this.parse( item.element.html(), item );
 					this.runQueue();
-				}, this ) );
+				} else {
+					$.get( item.href, $.proxy( function( response ) {
+						this.parse( response, item );
+						this.runQueue();
+					}, this ) );
+				}
 			}
 			else {
 				this.applyStyles();
@@ -267,10 +283,12 @@
 				all = styles;
 			}
 
-			this.sheets[ item.href ] = {
-				link    : item.link,
-				href    : item.href,
-				link    : item.link,
+			this.sheets[ item.key ] = {
+				element : item.element,
+				key		: item.key,
+				tagName : item.tagName,
+				href  	: item.href,
+				id		: item.id,
 				all     : all,
 				queries : []
 			};
@@ -300,7 +318,7 @@
 						continue;
 					}
 
-					this.sheets[ item.href ].queries.push( {
+					this.sheets[ item.key ].queries.push( {
 						minw     : query.match( re.minw ) && parseFloat( RegExp.$1 ) + ( RegExp.$2 || '' ),
 						maxw     : query.match( re.maxw ) && parseFloat( RegExp.$1 ) + ( RegExp.$2 || '' ),
 						styles   : styles
@@ -321,7 +339,7 @@
 				styles  = null,
 				style   = null,
 				sheet   = null,
-				href    = null,
+				key     = null,
 				query   = null,
 				i       = null,
 				min     = null,
@@ -330,11 +348,11 @@
 
 			this.clearStyles();
 
-			for ( href in this.sheets ) {
+			for ( key in this.sheets ) {
 
 				styles = '';
 				style  = $( '<style></style>' );
-				sheet  = this.sheets[ href ];
+				sheet  = this.sheets[ key ];
 
 				if ( ! sheet.queries.length || ! this.width ) {
 					continue;
@@ -372,7 +390,7 @@
 				this.styles.push( style );
 				head.append( style );
 				style.html( styles );
-				sheet.link.remove();
+				sheet.element.remove();
 			}
 		},
 
@@ -386,14 +404,14 @@
 		clearStyles: function()
 		{
 			var head   = $( 'head' ),
-				href   = null,
+				key    = null,
 				styles = this.styles.slice( 0 );
 
 			this.styles = [];
 
-			for ( href in this.sheets ) {
-				if ( ! this.sheets[ href ].link.parent().length ) {
-					head.append( this.sheets[ href ].link );
+			for ( key in this.sheets ) {
+				if ( ! this.sheets[ key ].element.parent().length ) {
+					head.append( this.sheets[ key ].element );
 				}
 			}
 
@@ -416,6 +434,10 @@
 		 */
 		convertURLs: function( styles, href )
 		{
+			if ( ! href ) {
+				return styles;
+			}
+
 			href = href.substring( 0, href.lastIndexOf( '/' ) );
 
 			if ( href.length ) {

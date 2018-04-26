@@ -117,7 +117,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 	public 	$freight_handling_unit_one_type_code='PLT';
 	public  $freight_class=50;
 	
-	private $ups_surepost_services = array(92, 93, 95, 95);
+	private $ups_surepost_services = array(92, 93, 94, 95);
 
 	private $eu_array = array('BE','BG','CZ','DK','DE','EE','IE','GR','ES','FR','HR','IT','CY','LV','LT','LU','HU','MT','NL','AT','PT','RO','SI','SK','FI','GB');
 	
@@ -504,6 +504,16 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 	function generate_services_html() {
 		ob_start();
 		?>
+		<style>
+		/*Style for tooltip*/
+		.xa-tooltip { position: relative;  }
+		.xa-tooltip .xa-tooltiptext { visibility: hidden; width: 150px; background-color: black; color: #fff; text-align: center; border-radius: 6px; 
+			padding: 5px 0;
+			/* Position the tooltip */
+			position: absolute; z-index: 1;}
+		.xa-tooltip:hover .xa-tooltiptext {visibility: visible;}
+		/*End of tooltip styling*/
+		</style>
 		<tr valign="top" id="service_options">
 			<td class="forminp" colspan="2" style="padding-left:0px">
 				<table class="ups_services widefat">
@@ -541,7 +551,9 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 							} else {
 								$use_services = $this->services;
 							}
-							if($this->enable_freight==true) $use_services=$use_services + $this->freigth_services;
+							if($this->enable_freight==true) {
+								$use_services= (array)$use_services + (array)$this->freigth_services;	    //array + NULL will throw fatal error in php version 5.6.21
+							}
 							foreach ( $use_services as $code => $name ) {
 
 								if ( isset( $this->custom_services[ $code ]['order'] ) ) {
@@ -564,7 +576,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 								?>
 								<tr>
 									<td class="sort"><input type="hidden" class="order" name="ups_service[<?php echo $code; ?>][order]" value="<?php echo isset( $this->custom_services[ $code ]['order'] ) ? $this->custom_services[ $code ]['order'] : ''; ?>" /></td>
-									<td><strong><?php echo $code; ?></strong></td>
+									<td><strong><?php echo $code; ?></strong><?php if( $code == 96 ) echo '<span class="xa-tooltip"><img src="'.site_url("/wp-content/plugins/woocommerce/assets/images/help.png").'" height="16" width="16" /><span class="xa-tooltiptext">In case of Weight Based Packaging, Package Dimensions will be 47x47x47 inches or 119x119x119 cm.</span></span>' ?></td>
 									<td><input type="text" name="ups_service[<?php echo $code; ?>][name]" placeholder="<?php echo $name; ?> (<?php echo $this->title; ?>)" value="<?php echo isset( $this->custom_services[ $code ]['name'] ) ? $this->custom_services[ $code ]['name'] : ''; ?>" size="50" /></td>
 									<td><input type="checkbox" name="ups_service[<?php echo $code; ?>][enabled]" <?php checked( ( ! isset( $this->custom_services[ $code ]['enabled'] ) || ! empty( $this->custom_services[ $code ]['enabled'] ) ), true ); ?> /></td>
 									<td><input type="text" name="ups_service[<?php echo $code; ?>][adjustment]" placeholder="N/A" value="<?php echo isset( $this->custom_services[ $code ]['adjustment'] ) ? $this->custom_services[ $code ]['adjustment'] : ''; ?>" size="4" /></td>
@@ -1559,20 +1571,27 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 
 			$rate_requests 		= $this->get_rate_requests( $package_requests, $package );
 
-			$rates =  $this->process_result( $this->get_result($rate_requests) );					
+			$rates =  $this->process_result( $this->get_result($rate_requests) );
+			
+			//For Worldwide Express Freight Service
+			if( isset($this->custom_services[96]['enabled']) && $this->custom_services[96]['enabled'] ) {
+				$rate_requests	= $this->get_rate_requests( $package_requests, $package, 'Pallet', 96 );
+				$pallet_rates	= $this->process_result( $this->get_result($rate_requests) );
+				$rates = array_merge($rates, $pallet_rates);
+			}
 		}
 
 		if( $this->enable_freight ){
 			$freight_ups=new wf_freight_ups($this);
 			foreach ($this->freigth_services as $service_code => $value) {
 				$rate_requests = $freight_ups->get_rate_request($package,$service_code);
-				$rates[$service_code] = $this->process_result( $this->get_result($rate_requests, 'freight') );
+				$rates = array_merge( $rates, $this->process_result( $this->get_result($rate_requests, 'freight'), 'json' ) );
 			}
 		}
 
 		//Surepost
 		foreach ( $this->ups_surepost_services as $service_code ) {
-			if($this->custom_services[$service_code]['enabled'] != 1 ){
+			if( empty($this->custom_services[$service_code]['enabled']) || ( $this->custom_services[$service_code]['enabled'] != 1 ) ){	//It will be not set for European origin address
 					continue;
 			}
 			$rate_requests = $this->get_rate_requests( $package_requests, $package, 'surepost', $service_code );
@@ -1604,14 +1623,11 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				$cheapest_rate = '';
 
 				foreach ( $rates as $key => $rate ) {
-					if ( ! $cheapest_rate || $cheapest_rate['cost'] > $rate['cost'] )
+					if ( ! $cheapest_rate || ( $cheapest_rate['cost'] > $rate['cost'] && !empty($rate['cost']) ) )
 						$cheapest_rate = $rate;
 				}
-
 				$cheapest_rate['label'] = $this->title;
-
 				$this->add_rate( $cheapest_rate );
-
 			}
 		// Fallback
 		} elseif ( $this->fallback ) {
@@ -1625,7 +1641,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 		}
 	}
 
-	private function process_result( $ups_response, $type='' )
+	public function process_result( $ups_response, $type='' )
 	{
 		//for freight response
 		if( $type == 'json' ){
@@ -1642,7 +1658,8 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 		if ( ( property_exists($xml,'Response') && $xml->Response->ResponseStatusCode == 1)  || ( $type =='json' && !property_exists($xml,'Fault') ) ) {
 
 			$xml = apply_filters('wf_ups_rate', $xml);
-			foreach ( $xml->RatedShipment as $response ) {
+			$xml_response = isset($xml->RatedShipment) ? $xml->RatedShipment : $xml;	// Normal rates : freight rates
+			foreach ( $xml_response as $response ) {
 				$code = (string)$response->Service->Code;
 
 				if($this->custom_services[$code]['enabled'] != 1 ){
@@ -1651,11 +1668,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 										
 				if(in_array("$code",array_keys($this->freigth_services)) && property_exists($xml,'FreightRateResponse')){
 					$service_name = $this->freigth_services[$code];
-					/*if ( $this->negotiated && isset( $xml->NegotiatedRates) ){
-						$rate_cost = (float) $xml->FreightRateResponse->TotalShipmentCharge->MonetaryValue;
-					}else{ */
-						$rate_cost = (float) $xml->FreightRateResponse->TotalShipmentCharge->MonetaryValue;
-					//}							
+						$rate_cost = (float) $xml->FreightRateResponse->TotalShipmentCharge->MonetaryValue;	
 				}
 				else{	
 					$service_name = $this->services[ $code ];
@@ -1699,7 +1712,13 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 					'sort'  => $sort
 				);
 			} 
-		}else {
+		}
+		elseif($type == 'json') {
+			$this->debug( sprintf( __( '[UPS] No rate returned,  %s (UPS code: %s)', 'ups-woocommerce-shipping' ),
+									$xml->Fault->detail->Errors->ErrorDetail->PrimaryErrorCode->Description,
+									$xml->Fault->detail->Errors->ErrorDetail->PrimaryErrorCode->Code ), 'error' );						
+		}
+		else {
 			// Either there was an error on this rate, or the rate is not valid (i.e. it is a domestic rate, but shipping international)
 			
 			$this->debug( sprintf( __( '[UPS] No rate returned,  %s (UPS code: %s)', 'ups-woocommerce-shipping' ),
@@ -1710,7 +1729,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 		return $rates;
 	}
 
-	private function get_result($request, $request_type='')
+	public function get_result($request, $request_type='')
 	{
 		$send_request		   = str_replace( array( "\n", "\r" ), '', $request );
 		$transient			  = 'ups_quote_' . md5( $request );
@@ -1779,7 +1798,10 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 	 * @return void
 	 */
 	private function get_package_requests( $package,$params=array()) {
-
+		if( empty($package['contents']) && class_exists('wf_admin_notice') ) {
+			wf_admin_notice::add_notice( __("UPS - Something wrong with products associated with order, or no products associated with order.", "ups-woocommerce-shipping"), 'error');
+			return false;
+		}
 		// Choose selected packing
 		switch ( $this->packing_method ) {
 			case 'box_packing' :
@@ -1804,7 +1826,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 	 * @return array of strings - XML
 	 *
 	 */
-	private function  get_rate_requests( $package_requests, $package, $request_type='', $service_code='' ) {
+	public function  get_rate_requests( $package_requests, $package, $request_type='', $service_code='' ) {
 		global $woocommerce;
 
 		$customer = $woocommerce->customer;		
@@ -1871,7 +1893,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				// Shipment information
 				$request .= "	<Shipment>" . "\n";
 				
-				if($this->accesspoint_locator){
+				if($this->accesspoint_locator ){
 					$access_point_node = $this->get_acccesspoint_rate_request();					
 					if(!empty($access_point_node)){// Access Point Addresses Are All Commercial
 						$this->residential	=	false;
@@ -1937,6 +1959,14 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				$request .= "			</Address>" . "\n";
 				$request .= "		</ShipFrom>" . "\n";
 
+				//For Worldwide Express Freight Service
+				if( $request_type == 'Pallet' && $service_code == 96 && isset($package['contents']) && is_array($package['contents'] ) ) {
+					$total_item_count = 0;
+					foreach ( $package['contents'] as $product ) {
+						$total_item_count += $product['quantity'];
+					}
+					$request .= "	<NumOfPieces>".$total_item_count."</NumOfPieces>"."\n";
+				}
 				//Ground Freight Pricing Rates option indicator. If the Ground Freight Pricing Shipment indicator is enabled and  hipper number is authorized then Ground Freight Pricing rates should be returned in the response
 				/*if( $this->ground_freight ){
 					$request .= "		<FRSPaymentInformation>" . "\n";
@@ -1962,6 +1992,23 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 					if( $request_type == 'surepost' ){
 						unset($package_request['Package']['PackageServiceOptions']['InsuredValue']);
 					}
+					//For Worldwide Express Freight Service
+					if( $request_type == "Pallet" ) {
+						$package_request['Package']['PackagingType']['Code'] = 30;
+						// Setting Length, Width and Height for weight based packing.
+						if( empty($package_request['Package']['Dimensions']) ) {
+							
+							$package_request['Package']['Dimensions'] = array(
+								'UnitOfMeasurement' => array(
+								    'Code'  =>	($package_request['Package']['PackageWeight']['UnitOfMeasurement']['Code'] == 'LBS') ? 'IN' : 'CM',
+								),
+								'Length'    =>	($package_request['Package']['PackageWeight']['UnitOfMeasurement']['Code'] == 'LBS') ? 47 : 119,
+								'Width'	    =>	($package_request['Package']['PackageWeight']['UnitOfMeasurement']['Code'] == 'LBS') ? 47 : 119,
+								'Height'    =>	($package_request['Package']['PackageWeight']['UnitOfMeasurement']['Code'] == 'LBS') ? 47 : 119
+							);
+						}
+					}
+					unset($package_request['Package']['items']);		//Not required further
 					$request .= $this->wf_array_to_xml($package_request);
 				}
 				// negotiated rates flag
@@ -1983,6 +2030,17 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 
 	}
 	private function wf_get_accesspoint_datas( $order_details='' ){
+		// For getting the rates in backend
+		if( is_admin() ){
+			if( isset($_GET['wf_ups_generate_packages_rates']) ) {
+				$order_id = base64_decode($_GET['wf_ups_generate_packages_rates']);
+				$order_details = new WC_Order($order_id);
+			}
+			else {
+				return;
+			}
+		}
+		
 		if( !empty( $order_details ) ){
 			if( WC()->version < '2.7.0' ){
 				return ( isset($order_details->shipping_accesspoint) ) ? json_decode( stripslashes($order_details->shipping_accesspoint) ) : '';
@@ -2186,6 +2244,15 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				}
 			}
 			
+			//Adding all the items to the stored packages
+			$request['Package']['items'] = array($values['data']->obj);
+			
+			// Direct Delivery option
+			$directdeliveryonlyindicator = $this->get_individual_product_meta( array($values['data']), '_wf_ups_direct_delivery' );
+			if( $directdeliveryonlyindicator == 'yes' ) {
+				$request['Package']['DirectDeliveryOnlyIndicator'] = $directdeliveryonlyindicator;
+			}
+			
 			// Delivery Confirmation
 				if(isset($params['delivery_confirmation_applicable']) && $params['delivery_confirmation_applicable'] == true){
 					$signature_option = $this->get_package_signature(array($values['data']));
@@ -2260,52 +2327,59 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 		
 		// Add items
 		$ctr = 0;
-		foreach ( $package['contents'] as $item_id => $values ) {
-			$values['data'] = $this->wf_load_product( $values['data'] );
-			
-			$ctr++;
-			
-			$skip_product = apply_filters('wf_shipping_skip_product',false, $values, $package['contents']);
-			if($skip_product){
-				continue;
-			}
-			
-			if ( !( $values['quantity'] > 0 && $values['data']->needs_shipping() ) ) {
-				$this->debug( sprintf( __( 'Product #%d is virtual. Skipping.', 'ups-woocommerce-shipping' ), $ctr ) );
-				continue;
-			}
-			
-			$pre_packed = get_post_meta($values['data']->id , '_wf_pre_packed_product_var', 1);
-			if( empty( $pre_packed ) ){
-				$pre_packed = get_post_meta(wp_get_post_parent_id($values['data']->id) , '_wf_pre_packed_product', 1);
-			}
-			$pre_packed = apply_filters('wf_ups_is_pre_packed',$pre_packed,$values);
-			
-			if( !empty($pre_packed) && $pre_packed == 'yes' ){
-				$pre_packed_contents[$item_id] = $values;
-				$this->debug( sprintf( __( 'Pre Packed product. Skipping the product '.$values['data']->id, 'ups-woocommerce-shipping' ), $item_id ) );
-				continue;
-			}
+		if( isset($package['contents']) ) {
+			foreach ( $package['contents'] as $item_id => $values ) {
+				$values['data'] = $this->wf_load_product( $values['data'] );
 
-			if ( $values['data']->length && $values['data']->height && $values['data']->width && $values['data']->weight ) {
+				$ctr++;
 
-				$dimensions = array( $values['data']->length, $values['data']->height, $values['data']->width );
-
-				for ( $i = 0; $i < $values['quantity']; $i ++ ) {
-					$boxpack->add_item(
-						number_format( wc_get_dimension( $dimensions[2], $this->dim_unit ), 2, '.', ''),
-						number_format( wc_get_dimension( $dimensions[1], $this->dim_unit ), 2, '.', ''),
-						number_format( wc_get_dimension( $dimensions[0], $this->dim_unit ), 2, '.', ''),
-						number_format( wc_get_weight( $values['data']->get_weight(), $this->weight_unit ), 2, '.', ''),
-						$this->wf_get_insurance_amount($values['data']),
-						$values['data'] // Adding Item as meta
-					);
+				$skip_product = apply_filters('wf_shipping_skip_product',false, $values, $package['contents']);
+				if($skip_product){
+					continue;
 				}
 
-			} else {
-				$this->debug( sprintf( __( 'UPS Parcel Packing Method is set to Pack into Boxes. Product #%d is missing dimensions. Aborting.', 'ups-woocommerce-shipping' ), $ctr ), 'error' );
-				return;
+				if ( !( $values['quantity'] > 0 && $values['data']->needs_shipping() ) ) {
+					$this->debug( sprintf( __( 'Product #%d is virtual. Skipping.', 'ups-woocommerce-shipping' ), $ctr ) );
+					continue;
+				}
+
+				$pre_packed = get_post_meta($values['data']->id , '_wf_pre_packed_product_var', 1);
+				if( empty( $pre_packed ) ){
+					$parent_product_id = wp_get_post_parent_id($values['data']->id);
+					$pre_packed = get_post_meta( !empty($parent_product_id) ? $parent_product_id : $values['data']->id , '_wf_pre_packed_product', 1);
+				}
+				
+				$pre_packed = apply_filters('wf_ups_is_pre_packed',$pre_packed,$values);
+
+				if( !empty($pre_packed) && $pre_packed == 'yes' ){
+					$pre_packed_contents[$item_id] = $values;
+					$this->debug( sprintf( __( 'Pre Packed product. Skipping the product '.$values['data']->id, 'ups-woocommerce-shipping' ), $item_id ) );
+					continue;
+				}
+
+				if ( $values['data']->length && $values['data']->height && $values['data']->width && $values['data']->weight ) {
+
+					$dimensions = array( $values['data']->length, $values['data']->height, $values['data']->width );
+
+					for ( $i = 0; $i < $values['quantity']; $i ++ ) {
+						$boxpack->add_item(
+							number_format( wc_get_dimension( $dimensions[2], $this->dim_unit ), 2, '.', ''),
+							number_format( wc_get_dimension( $dimensions[1], $this->dim_unit ), 2, '.', ''),
+							number_format( wc_get_dimension( $dimensions[0], $this->dim_unit ), 2, '.', ''),
+							number_format( wc_get_weight( $values['data']->get_weight(), $this->weight_unit ), 2, '.', ''),
+							$this->wf_get_insurance_amount($values['data']),
+							$values['data'] // Adding Item as meta
+						);
+					}
+
+				} else {
+					$this->debug( sprintf( __( 'UPS Parcel Packing Method is set to Pack into Boxes. Product #%d is missing dimensions. Aborting.', 'ups-woocommerce-shipping' ), $ctr ), 'error' );
+					return;
+				}
 			}
+		}
+		else {
+			wf_admin_notice::add_notice('No package found. Your product may be missing weight/length/width/height');
 		}
 		// Pack it
 		$boxpack->pack();
@@ -2427,6 +2501,19 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				}				
 			}
 			
+			//Adding all the items to the stored packages
+			if( isset($box_package->unpacked) && $box_package->unpacked && isset($box_package->obj) ) {
+				$request['Package']['items'] = array($box_package->obj);
+			}
+			else {
+				$request['Package']['items'] = $packed_items;
+			}
+			// Direct Delivery option
+			$directdeliveryonlyindicator = ! empty($packed_items) ? $this->get_individual_product_meta( $packed_items, '_wf_ups_direct_delivery' ) : $this->get_individual_product_meta( array($box_package), '_wf_ups_direct_delivery' ); // else part is for unpacked item
+			if( $directdeliveryonlyindicator == 'yes' ) {
+				$request['Package']['DirectDeliveryOnlyIndicator'] = $directdeliveryonlyindicator;
+			}
+			
 			// Delivery Confirmation
 			if(isset($params['delivery_confirmation_applicable']) && $params['delivery_confirmation_applicable'] == true){
 				$signature_option = $this->get_package_signature($packed_items);			
@@ -2434,6 +2521,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 					$request['Package']['PackageServiceOptions']['DeliveryConfirmation']['DCISType']= $signature_option;
 				}
 			}
+			
 			$requests[] = $request;
 		}
 		//add pre packed item with the package
@@ -2486,7 +2574,8 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 			
 			$pre_packed = get_post_meta($values['data']->id , '_wf_pre_packed_product_var', 1);
 			if( empty( $pre_packed ) ){
-				$pre_packed = get_post_meta(wp_get_post_parent_id($values['data']->id) , '_wf_pre_packed_product', 1);
+				$parent_product_id = wp_get_post_parent_id($values['data']->id);
+				$pre_packed = get_post_meta( !empty($parent_product_id) ? $parent_product_id : $values['data']->id , '_wf_pre_packed_product', 1);
 			}
 			$pre_packed = apply_filters('wf_ups_is_pre_packed',$pre_packed,$values);
 			if( !empty($pre_packed) && $pre_packed == 'yes' ){
@@ -2602,6 +2691,12 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 					}
 				}
 				
+				// Direct Delivery option
+				$directdeliveryonlyindicator = $this->get_individual_product_meta( $packed_products, '_wf_ups_direct_delivery' );
+				if( $directdeliveryonlyindicator == 'yes' ) {
+					$request['Package']['DirectDeliveryOnlyIndicator'] = $directdeliveryonlyindicator;
+				}
+				
 				// Delivery Confirmation
 				if(isset($params['delivery_confirmation_applicable']) && $params['delivery_confirmation_applicable'] == true){
 					$signature_option = $this->get_package_signature($packed_products);
@@ -2609,6 +2704,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 						$request['Package']['PackageServiceOptions']['DeliveryConfirmation']['DCISType']= $signature_option;
 					}
 				}
+				$request['Package']['items'] = $package['items'];	    //Required for numofpieces in case of worldwidefreight
 				$requests[] = $request;
 			}
 		}
@@ -2627,12 +2723,14 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 	public function wf_get_insurance_amount( $product ) {
 
 		if( WC()->version > 2.7 ) {
-			$product_id = ! empty($parent_id = $product->get_parent_id()) ? $parent_id : $product->get_id();
+			$parent_id = $product->get_parent_id();
+			$product_id = ! empty($parent_id) ? $parent_id : $product->get_id();
 		}
 		else {
 			$product_id = ($product instanceof WC_Product_Variable) ? $product->parent->id : $product->id ;
 		}
-		return ( ! empty( $insured_price = get_post_meta( $product_id, '_wf_ups_custom_declared_value', true ) ) ? $insured_price : $product->get_price() );	
+		$insured_price = get_post_meta( $product_id, '_wf_ups_custom_declared_value', true );
+		return ( ! empty( $insured_price ) ? $insured_price : $product->get_price() );
 	}
 
 	/**
@@ -2657,6 +2755,23 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 	
 	public function wf_set_service_code($service_code){
 		$this->service_code=$service_code;
+	}
+	
+	/**
+	 * Get product meta data for single occurance in request
+	 * @param array|object $products array of wf_product object
+	 * @param string $option
+	 * @return mixed Return option value
+	 */
+	public function get_individual_product_meta( $products, $option = '' ) {
+		$meta_result = '';
+		foreach( $products as $product ) {
+		    if( empty($meta_result) ) {
+			    $meta_result = ! empty($product->obj) ? $product->obj->get_meta($option) : '';	// $product->obj actual product
+		    }
+		}
+		
+		return $meta_result;
 	}
 	
 	public function get_package_signature($products){
@@ -2793,6 +2908,12 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				'Description'	=>	'Rate',
 			);
 			
+			// Direct Delivery option
+			$directdeliveryonlyindicator = $this->get_individual_product_meta( array($values['data']), '_wf_ups_direct_delivery' );
+			if( $directdeliveryonlyindicator == 'yes' ) {
+				$request['Package']['DirectDeliveryOnlyIndicator'] = $directdeliveryonlyindicator;
+			}
+			
 			if ( $values['data']->length && $values['data']->height && $values['data']->width ) {
 				$request['Package']['Dimensions']	=	array(
 					'UnitOfMeasurement'	=>	array(
@@ -2863,6 +2984,8 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 						$request['Package']['PackageServiceOptions']['DeliveryConfirmation']['DCISType']= $signature_option;
 					}
 				}
+			//Setting the product object in package request	
+			$request['Package']['items'] = array($values['data']->obj);
 
 			for ( $i=0; $i < $cart_item_qty ; $i++)
 				$requests[] = $request;

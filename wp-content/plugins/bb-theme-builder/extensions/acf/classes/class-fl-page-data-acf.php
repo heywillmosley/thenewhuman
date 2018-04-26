@@ -19,6 +19,8 @@ final class FLPageDataACF {
 
 	/**
 	 * @since 1.0
+	 * @param object $settings
+	 * @param array $property
 	 * @return string
 	 */
 	static public function string_field( $settings, $property ) {
@@ -28,23 +30,69 @@ final class FLPageDataACF {
 		if ( empty( $object ) || ! isset( $object['type'] ) ) {
 			return $content;
 		}
-
 		switch ( $object['type'] ) {
 			case 'text':
+				$content = self::general_compare( $settings, $object );
+				break;
 			case 'textarea':
 			case 'number':
+				$content = self::general_compare( $settings, $object );
+				break;
 			case 'email':
+				$content = self::general_compare( $settings, $object );
+				break;
 			case 'url':
+				$content = self::general_compare( $settings, $object );
+				break;
 			case 'password':
 			case 'wysiwyg':
 			case 'oembed':
 			case 'select':
 			case 'radio':
 			case 'page_link':
-			case 'date_picker':
 			case 'date_time_picker':
 			case 'time_picker':
 				$content = isset( $object['value'] ) ? $object['value'] : '';
+				break;
+			case 'checkbox':
+				$values = array();
+
+				if ( ! is_array( $object['value'] ) ) {
+					break;
+				} elseif ( 'text' !== $settings->checkbox_format ) {
+					$content .= '<' . $settings->checkbox_format . '>';
+				}
+
+				foreach ( $object['value'] as $value ) {
+					$values[] = is_array( $value ) ? $value['label'] : $value;
+				}
+
+				if ( 'text' === $settings->checkbox_format ) {
+					$content = implode( ', ', $values );
+				} else {
+					$content .= '<li>' . implode( '</li><li>', $values ) . '</li>';
+					$content .= '</' . $settings->checkbox_format . '>';
+				}
+				break;
+			case 'date_picker':
+				if ( isset( $object['date_format'] ) && ! isset( $object['return_format'] ) ) {
+					$format  = self::js_date_format_to_php( $object['display_format'] );
+					$date    = DateTime::createFromFormat( 'Ymd',  $object['value'] );
+
+					// Only pass to format() if vaid date, DateTime returns false if not valid.
+					if ( $date ) {
+						$content = $date->format( $format );
+					} else {
+						$content = '';
+					}
+				} else {
+					if ( isset( $settings->format ) && '' !== $settings->format && isset( $object['value'] ) ) {
+						$date = str_replace( '/', '-', $object['value'] );
+						$content = date( $settings->format, strtotime( $date ) );
+					} else {
+						$content = isset( $object['value'] ) ? $object['value'] : '';
+					}
+				}
 				break;
 			case 'google_map':
 				$value = isset( $object['value'] ) ? $object['value'] : '';
@@ -62,15 +110,62 @@ final class FLPageDataACF {
 			case 'file':
 				$content = self::get_file_url_from_object( $object );
 				break;
+			case 'true_false':
+				$content = ( $object['value'] ) ? '1' : '0';
+				break;
 			default:
 				$content = '';
+		}// End switch().
+		return is_string( $content ) ? $content : '';
+	}
+
+	static public function general_compare( $settings, $object ) {
+
+		if ( ! isset( $settings->exp ) ) {
+			return isset( $object['value'] ) ? $object['value'] : '';
 		}
 
-		return is_string( $content ) ? $content : '';
+		$meta = isset( $object['value'] ) ? untrailingslashit( $object['value'] ) : '';
+
+		$expression = $settings->exp;
+
+		$compare    = untrailingslashit( $settings->value );
+
+		switch ( $expression ) {
+			case 'less':
+				return ( intval( $meta ) < intval( $compare ) ) ? $meta : '';
+				break;
+
+			case 'lessequals':
+				return ( intval( $meta ) <= intval( $compare ) ) ? $meta : '';
+				break;
+
+			case 'greater':
+				return ( intval( $meta ) > intval( $compare ) ) ? $meta : '';
+				break;
+
+			case 'greaterequals':
+				return ( intval( $meta ) >= intval( $compare ) ) ? $meta : '';
+				break;
+
+			case 'equals':
+				return ( $meta === $compare ) ? $meta : '';
+				break;
+
+			case 'notequals':
+				return ( $meta !== $compare ) ? $meta : '';
+				break;
+
+			default:
+			break;
+		}
+		return $meta;
 	}
 
 	/**
 	 * @since 1.0
+	 * @param object $settings
+	 * @param array $property
 	 * @return string
 	 */
 	static public function url_field( $settings, $property ) {
@@ -102,6 +197,8 @@ final class FLPageDataACF {
 
 	/**
 	 * @since 1.0
+	 * @param object $settings
+	 * @param array $property
 	 * @return string|array
 	 */
 	static public function photo_field( $settings, $property ) {
@@ -132,13 +229,15 @@ final class FLPageDataACF {
 
 	/**
 	 * @since 1.0
+	 * @param object $settings
+	 * @param array $property
 	 * @return array
 	 */
 	static public function multiple_photos_field( $settings, $property ) {
 		$content = array();
 		$object  = get_field_object( trim( $settings->name ), self::get_object_id( $property ) );
 
-		if ( empty( $object ) || ! isset( $object['type'] ) || $object['type'] != 'gallery' ) {
+		if ( empty( $object ) || ! isset( $object['type'] ) || 'gallery' != $object['type'] ) {
 			return $content;
 		} elseif ( is_array( $object['value'] ) ) {
 			foreach ( $object['value'] as $key => $value ) {
@@ -151,6 +250,26 @@ final class FLPageDataACF {
 
 	/**
 	 * @since 1.0
+	 * @param object $settings
+	 * @param array $property
+	 * @return string
+	 */
+	static public function color_field( $settings, $property ) {
+		$content = '';
+		$object  = get_field_object( trim( $settings->name ), self::get_object_id( $property ) );
+
+		if ( empty( $object ) || ! isset( $object['type'] ) || 'color_picker' != $object['type'] ) {
+			return $content;
+		} else {
+			$content = str_replace( '#', '', $object['value'] );
+		}
+
+		return $content;
+	}
+
+	/**
+	 * @since 1.0
+	 * @param array $property
 	 * @return string
 	 */
 	static public function get_object_id( $property ) {
@@ -164,7 +283,6 @@ final class FLPageDataACF {
 				$location = explode( ':', $location['object'] );
 				$id = $location[1] . '_' . $location[2];
 			}
-
 		} elseif ( is_object( $post ) && strstr( $property['key'], 'acf_author' ) ) {
 			$id = 'user_' . $post->post_author;
 		} elseif ( strstr( $property['key'], 'acf_user' ) ) {
@@ -181,6 +299,8 @@ final class FLPageDataACF {
 
 	/**
 	 * @since 1.0
+	 * @param array $object
+	 * @param string $size
 	 * @return string
 	 */
 	static public function get_file_url_from_object( $object, $size = 'thumbnail' ) {
@@ -213,6 +333,7 @@ final class FLPageDataACF {
 
 	/**
 	 * @since 1.0
+	 * @param array $object
 	 * @return int
 	 */
 	static public function get_image_id_from_object( $object ) {
@@ -235,6 +356,7 @@ final class FLPageDataACF {
 
 	/**
 	 * @since 1.0
+	 * @param array $object
 	 * @return int
 	 */
 	static public function get_object_return_format( $object ) {
@@ -245,6 +367,41 @@ final class FLPageDataACF {
 		} elseif ( isset( $object['save_format'] ) ) {
 			$format = $object['save_format'];
 		}
+
+		return $format;
+	}
+
+	/**
+	 * Converts a JS date format to a PHP date format.
+	 * Needed because ACF 4 stores the date format in
+	 * the JS format /shrug.
+	 *
+	 * @since 1.0
+	 * @param string $format
+	 * @return string
+	 */
+	static public function js_date_format_to_php( $format ) {
+
+		$symbols = array(
+			// Day
+			'dd' => '{1}', // d
+			'DD' => 'l',
+			'd'  => 'j',
+			'o'  => 'z',
+			// Month
+			'MM' => 'F',
+			'mm' => '{2}', // m
+			'm'  => 'n',
+			// Year
+			'yy' => 'Y',
+		);
+
+		foreach ( $symbols as $js => $php ) {
+			$format = str_replace( $js, $php, $format );
+		}
+
+		$format = str_replace( '{1}', 'd', $format );
+		$format = str_replace( '{2}', 'm', $format );
 
 		return $format;
 	}

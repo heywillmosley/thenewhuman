@@ -13,19 +13,20 @@ final class FLThemeBuilderWooCommerceArchive {
 	 */
 	static public function init() {
 		// Actions
-		add_action( 'fl_builder_posts_module_before_posts', __CLASS__ . '::print_notices', 10, 2 );
-		add_action( 'fl_builder_posts_module_before_posts', __CLASS__ . '::posts_module_before_posts' );
-		add_action( 'fl_builder_post_grid_before_image',    __CLASS__ . '::post_grid_before_image' );
-		add_action( 'fl_builder_post_grid_before_content',  __CLASS__ . '::post_grid_before_content' );
-		add_action( 'fl_builder_post_grid_after_content',   __CLASS__ . '::post_grid_after_content' );
-		add_action( 'fl_builder_post_feed_before_image',    __CLASS__ . '::post_grid_before_image' );
-		add_action( 'fl_builder_post_feed_after_meta',      __CLASS__ . '::post_feed_after_meta' );
-		add_action( 'fl_builder_post_feed_after_content',   __CLASS__ . '::post_feed_after_content' );
-		add_action( 'fl_builder_post_gallery_after_meta',   __CLASS__ . '::post_gallery_after_meta' );
+		add_action( 'fl_builder_posts_module_before_posts', 	__CLASS__ . '::print_notices', 10, 2 );
+		add_action( 'fl_builder_posts_module_before_posts', 	__CLASS__ . '::posts_module_before_posts' );
+		add_action( 'fl_builder_posts_module_after_pagination', __CLASS__ . '::posts_module_after_pagination', 10, 2 );
+		add_action( 'fl_builder_post_grid_before_image',    	__CLASS__ . '::post_grid_before_image' );
+		add_action( 'fl_builder_post_grid_before_content',  	__CLASS__ . '::post_grid_before_content' );
+		add_action( 'fl_builder_post_grid_after_content',   	__CLASS__ . '::post_grid_after_content' );
+		add_action( 'fl_builder_post_feed_before_image',    	__CLASS__ . '::post_grid_before_image' );
+		add_action( 'fl_builder_post_feed_after_meta',      	__CLASS__ . '::post_feed_after_meta' );
+		add_action( 'fl_builder_post_feed_after_content',   	__CLASS__ . '::post_feed_after_content' );
+		add_action( 'fl_builder_post_gallery_after_meta',   	__CLASS__ . '::post_gallery_after_meta' );
 
 		// Filters
-		add_filter( 'fl_builder_register_settings_form',    __CLASS__ . '::post_grid_settings', 10, 2 );
-		add_filter( 'fl_builder_render_css',                __CLASS__ . '::post_grid_css', 10, 2 );
+		add_filter( 'fl_builder_register_settings_form',    	__CLASS__ . '::post_grid_settings', 10, 2 );
+		add_filter( 'fl_builder_render_css',                	__CLASS__ . '::post_grid_css', 10, 2 );
 	}
 
 	/**
@@ -53,10 +54,25 @@ final class FLThemeBuilderWooCommerceArchive {
 	static public function posts_module_before_posts( $settings ) {
 		if ( 'show' == $settings->woo_ordering ) {
 			echo '<div class="fl-post-module-woo-ordering">';
-			echo FLPageData::get_value( 'archive', 'woocommerce_result_count' );
-			echo FLPageData::get_value( 'archive', 'woocommerce_catalog_ordering' );
+			do_action( 'woocommerce_before_shop_loop' );
 			echo '<div class="fl-clear"></div>';
 			echo '</div>';
+		}
+	}
+
+	/**
+	 * Fires the woocommerce_after_shop_loop hook to support
+	 * third party plugins.
+	 *
+	 * @since 1.0.1
+	 * @param object $settings
+	 * @param object $query
+	 * @return void
+	 */
+	static public function posts_module_after_pagination( $settings, $query = null ) {
+		if ( is_object( $query ) && 'product' == $query->query_vars['post_type'] ) {
+			remove_action( 'woocommerce_after_shop_loop', 'woocommerce_pagination' );
+			do_action( 'woocommerce_after_shop_loop' );
 		}
 	}
 
@@ -339,7 +355,7 @@ final class FLThemeBuilderWooCommerceArchive {
 		);
 
 		$form['style']['sections']['woo_button'] = array(
-			'title'  => __( 'Add to Cart Button', 'fl-theme-builder' ),
+			'title'  => __( 'WooCommerce Cart Button', 'fl-theme-builder' ),
 			'fields' => array(
 				'woo_button_bg_color' => array(
 					'type'          => 'color',

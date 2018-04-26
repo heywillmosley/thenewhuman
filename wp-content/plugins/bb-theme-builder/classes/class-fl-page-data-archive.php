@@ -15,8 +15,7 @@ final class FLPageDataArchive {
 		// Category
 		if ( is_category() ) {
 			$title = single_cat_title( '', false );
-		} // Tag
-		elseif ( is_tag() ) {
+		} elseif ( is_tag() ) {
 			$title = single_tag_title( '', false );
 		} // Taxonomy
 		elseif ( is_tax() ) {

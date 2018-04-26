@@ -1,24 +1,42 @@
 <?php
-
-
-
 	$shipping_setting =get_option('woocommerce_wf_shipping_ups_settings');
 
 	if(isset($shipping_setting['automate_package_generation']) && $shipping_setting['automate_package_generation']=='yes' )
 	{
-		add_filter( 'woocommerce_payment_complete_order_status', 'wf_automatic_package_and_label_generation_ups',100,2 );
+		add_action( 'woocommerce_order_status_changed', 'wf_automatic_package_and_label_generation_ups',100,4 );
 	}
-	function wf_automatic_package_and_label_generation_ups($status,$order_id)
+	function wf_automatic_package_and_label_generation_ups( $order_id, $order_status_old, $order_status_new, $order )
 	{
-		$order = new WC_Order($order_id);
+		$ups_shipping_setting =get_option('woocommerce_wf_shipping_ups_settings');
+		$allowed_order_status = apply_filters( 'xa_automatic_label_generation_allowed_order_status', array('processing'), $order_status_new, $order_id );	// Allowed order status for automatic label generation
+		
+		if( ! in_array($order_status_new, $allowed_order_status) ) {
+			if($ups_shipping_setting['debug'] == 'yes') {
+				WC_Admin_Meta_Boxes::add_error( __( "Since Order Status is ", 'ups-woocommerce-shipping' ).$order_status_new.__( ". Automatic label generation has been suspended.", 'ups-woocommerce-shipping' ) );
+			}
+			return;
+		}
+		if( ! ($order instanceof WC_Order) ) {
+			$order = new WC_Order($order_id);
+		}
+		
+		$order_items = $order->get_items();
+		if( empty($order_items) && class_exists('WC_Admin_Meta_Boxes') ) {
+			WC_Admin_Meta_Boxes::add_error( __( 'UPS - No product Found. Please check the products in order.', 'ups-woocommerce-shipping' ) );
+			return;
+		}
 		//  Automatically Generate Packages		
 		$current_minute=(integer)date('i');
 		$package_url=admin_url( '/post.php?wf_ups_generate_packages='.base64_encode('|'.$order_id).'&auto_generate='.md5($current_minute) );
 		$ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL,$package_url);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		$output=curl_exec($ch);
+		if( ! $output && curl_errno($ch) ) {
+			WC_Admin_Meta_Boxes::add_error( __( 'UPS - Curl error while automatic package generation. Error number - ', 'ups-woocommerce-shipping' ). curl_errno($ch) );
+		}
 		curl_close($ch);
-		return $status;
 	}
 	if( isset($shipping_setting['automate_label_generation']) && $shipping_setting['automate_label_generation']=='yes' )
 	{	
@@ -31,9 +49,29 @@
 				return false;
 
 			$order = new WC_Order( $order_id );
-			$order_shipping_method = ( WC()->version > '2.7' ) ? current( $order->get_items( 'shipping' ) )->get_method_id() : current( $order->get_items( 'shipping' ) )['method_id'] ;
-			$service_code=explode(':',$order_shipping_method);
-			return $service_code[1];
+			$order_shipping_method = current( $order->get_items( 'shipping' ) );
+			$order_shipping_method = ( WC()->version > '2.7' ) ? ( is_object($order_shipping_method) ? $order_shipping_method->get_method_id() : '' ) : ( isset($order_shipping_method['method_id']) ? $order_shipping_method['method_id'] : '' );
+			if( ! empty($order_shipping_method) ) {
+				$service_code=explode(':',$order_shipping_method);
+				if( $service_code[0] == WF_UPS_ID ) {
+					return $service_code[1];
+				}
+			}
+			$settings = get_option( 'woocommerce_'.WF_UPS_ID.'_settings', null );
+
+			//Origin coutry without state
+			$country = explode( ':', $settings['origin_country_state'] );	//It may be in Country : State format or only country
+			$origin_country = array_shift( $country ) ;
+
+			if( $origin_country == $order->get_shipping_country() ){
+				if( !empty($settings['default_dom_service']) ){
+					return $settings['default_dom_service'];	//Return default service for domestic
+				}
+			}else{
+				if( !empty($settings['default_int_service']) ){
+					return $settings['default_int_service'];	//Return default service for international
+				}
+			}
 		}
 	}
 
@@ -56,12 +94,11 @@
 			foreach($val as $key2=>$package)
 			{	
 				if(isset($package['PackageWeight'])) $weight[]=$package['PackageWeight']['Weight'];
-				if(isset($package['Dimensions']))
-				{
-					$length[]=$package['Dimensions']['Length'];
-					$width[]=$package['Dimensions']['Width'];
-					$height[]=$package['Dimensions']['Height'];
-				}
+
+					$length[]	= ! empty($package['Dimensions']['Length']) ? $package['Dimensions']['Length'] : 0;
+					$width[]	= ! empty($package['Dimensions']['Width']) ? $package['Dimensions']['Width'] : 0;
+					$height[]	= ! empty($package['Dimensions']['Height']) ? $package['Dimensions']['Height'] : 0;
+					
 				if(isset($package['PackageServiceOptions']) && isset($package['PackageServiceOptions']['InsuredValue']) && isset($package['PackageServiceOptions']['InsuredValue']['MonetaryValue']))
 				{
 					$insurance[]=$package['PackageServiceOptions']['InsuredValue']['MonetaryValue'];
@@ -80,7 +117,12 @@
 		$package_url.='&insurance=["'.implode('","',$insurance).'"]';
 		$ch = curl_init();
 		@curl_setopt($ch,CURLOPT_URL,$package_url);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 		@$output=curl_exec($ch);
+		if( ! $output && curl_errno($ch) ) {
+			WC_Admin_Meta_Boxes::add_error( __( 'UPS - Curl error while automatic label generation. Error number - ', 'ups-woocommerce-shipping' ). curl_errno($ch) );
+		}
 		curl_close($ch);
 
 	}
@@ -111,9 +153,7 @@
 			$order = new WC_Order( $order_id );
 			$to_emails = array($order->get_billing_email());
 			
-			$to_emails = apply_filters( 'xa_add_email_addresses_to_send_label',$to_emails, $shipment_id, $order, 10,3);	
-			print_r($to_emails);
-//			//$to_emails = array_merge($to,$xa_emails);
+			$to_emails = apply_filters( 'xa_add_email_addresses_to_send_label',$to_emails, $shipment_id, $order, 10,3);
 			
 			$subject = 'Shipment Label For Your Order';
 			$img_url=admin_url('/post.php?wf_ups_print_label='.base64_encode( $shipment_id.'|'.$order_id.'|'.$label_extn_code.'|'.$index.'|'.$tracking_number ));

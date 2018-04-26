@@ -1,0 +1,16 @@
+[06-Mar-2018 12:47:16 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home/thenewhu/public_html/wp-content/plugins/formidable/formidable.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/plugins/formidable/formidable.php on line 24
+[15-Mar-2018 19:57:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home/thenewhu/public_html/wp-content/plugins/formidable/formidable.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/plugins/formidable/formidable.php on line 24
+[19-Mar-2018 01:23:29 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home/thenewhu/public_html/wp-content/plugins/formidable/formidable.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/plugins/formidable/formidable.php on line 24
+[19-Mar-2018 09:05:29 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home/thenewhu/public_html/wp-content/plugins/formidable/formidable.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/plugins/formidable/formidable.php on line 24

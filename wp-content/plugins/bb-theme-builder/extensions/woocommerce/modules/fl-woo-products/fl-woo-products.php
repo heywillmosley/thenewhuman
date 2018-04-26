@@ -9,7 +9,8 @@ FLBuilder::register_module_alias( 'fl-woo-products', array(
 	'module'      => 'post-grid',
 	'name'        => __( 'Products', 'fl-theme-builder' ),
 	'description' => __( 'Displays a grid of products for the current archive.', 'fl-theme-builder' ),
-	'category'    => __( 'WooCommerce Modules', 'fl-theme-builder' ),
+	'group'       => __( 'Themer Modules', 'fl-theme-builder' ),
+	'category'    => __( 'WooCommerce', 'fl-theme-builder' ),
 	'enabled'     => FLThemeBuilderLayoutData::current_post_is( 'archive' ),
 	'settings'    => array(
 		'layout'         => 'columns',

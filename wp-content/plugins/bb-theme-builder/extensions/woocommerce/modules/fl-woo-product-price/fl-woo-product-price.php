@@ -7,13 +7,15 @@
 class FLWooProductPriceModule extends FLBuilderModule {
 
 	/**
-	 * @method __construct
+	 * @since 1.0
+	 * @return void
 	 */
 	public function __construct() {
 		parent::__construct(array(
 			'name'          	=> __( 'Product Price', 'fl-theme-builder' ),
 			'description'   	=> __( 'Displays the price for the current product.', 'fl-theme-builder' ),
-			'category'      	=> __( 'WooCommerce Modules', 'fl-theme-builder' ),
+			'group'       		=> __( 'Themer Modules', 'fl-theme-builder' ),
+			'category'      	=> __( 'WooCommerce', 'fl-theme-builder' ),
 			'partial_refresh'	=> true,
 			'dir'               => FL_THEME_BUILDER_DIR . 'extensions/woocommerce/modules/fl-woo-product-price/',
 			'url'               => FL_THEME_BUILDER_URL . 'extensions/woocommerce/modules/fl-woo-product-price/',

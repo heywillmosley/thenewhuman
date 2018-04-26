@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bb-plugin\n"
 "Report-Msgid-Bugs-To: hello@wpbeaverbuilder.com\n"
-"POT-Creation-Date: 2018-02-15 18:59:08+00:00\n"
+"POT-Creation-Date: 2018-02-27 19:47:45+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,7 +30,7 @@ msgstr ""
 
 #: classes/class-fl-builder-admin-settings.php:158
 #: classes/class-fl-builder-admin-settings.php:222
-#: classes/class-fl-builder-model.php:5733
+#: classes/class-fl-builder-model.php:5736
 #: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:122
 #: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:239
 #: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:464
@@ -164,7 +164,7 @@ msgstr ""
 msgid "This does not appear to be a WXR file, missing/invalid WXR version number"
 msgstr ""
 
-#: classes/class-fl-builder-loader.php:134
+#: classes/class-fl-builder-loader.php:138
 msgid ""
 "Beaver Builder may not be functioning correctly as it does not have "
 "permission to write files to the WordPress uploads directory on your "
@@ -172,7 +172,7 @@ msgid ""
 "continuing or contact your host for assistance."
 msgstr ""
 
-#: classes/class-fl-builder-loader.php:147
+#: classes/class-fl-builder-loader.php:151
 msgid ""
 "You currently have two versions of Beaver Builder active on this site. "
 "Please <a href=\"%s\">deactivate one</a> before continuing."
@@ -289,14 +289,14 @@ msgstr ""
 msgid "Left & Right Sidebar"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:4335
-#: classes/class-fl-builder-model.php:4373
-#: classes/class-fl-builder-model.php:4442
-#: classes/class-fl-builder-model.php:5605 includes/ui-js-config.php:176
+#: classes/class-fl-builder-model.php:4338
+#: classes/class-fl-builder-model.php:4376
+#: classes/class-fl-builder-model.php:4445
+#: classes/class-fl-builder-model.php:5608 includes/ui-js-config.php:176
 msgid "Uncategorized"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5560
+#: classes/class-fl-builder-model.php:5563
 #: extensions/fl-builder-core-templates-admin/includes/core-template-settings.php:20
 #: extensions/fl-builder-user-templates/includes/node-template-settings.php:6
 #: extensions/fl-builder-user-templates/includes/user-template-settings.php:7
@@ -321,11 +321,11 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5561 includes/ui-js-config.php:204
+#: classes/class-fl-builder-model.php:5564 includes/ui-js-config.php:204
 msgid "Landing Pages"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5562 includes/ui-js-config.php:207
+#: classes/class-fl-builder-model.php:5565 includes/ui-js-config.php:207
 msgid "Content Pages"
 msgstr ""
 
@@ -6837,7 +6837,7 @@ msgctxt "%s stands for post/page title."
 msgid "Copy of %s"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:4390
+#: classes/class-fl-builder-model.php:4393
 msgctxt "Default user template category."
 msgid "Uncategorized"
 msgstr ""

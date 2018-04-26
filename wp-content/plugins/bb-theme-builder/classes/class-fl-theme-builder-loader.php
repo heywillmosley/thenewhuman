@@ -8,6 +8,15 @@
 final class FLThemeBuilderLoader {
 
 	/**
+	 * An array of slugs for theme builder modules that
+	 * have been loaded.
+	 *
+	 * @since 1.0.1
+	 * @var array $loaded_modules
+	 */
+	static private $loaded_modules = array();
+
+	/**
 	 * Sets up the plugins_loaded action to load the theme builder.
 	 *
 	 * @since 1.0
@@ -60,7 +69,8 @@ final class FLThemeBuilderLoader {
 
 		self::load_files();
 
-		add_action( 'wp',  __CLASS__ . '::load_modules', 1 );
+		add_action( 'after_setup_theme',  __CLASS__ . '::load_admin_files', 11 );
+		add_action( 'wp',  				  __CLASS__ . '::load_modules', 1 );
 	}
 
 	/**
@@ -71,7 +81,7 @@ final class FLThemeBuilderLoader {
 	 * @return void
 	 */
 	static private function define_constants() {
-		define( 'FL_THEME_BUILDER_VERSION', '1.0' );
+		define( 'FL_THEME_BUILDER_VERSION', '1.1.0.3' );
 		define( 'FL_THEME_BUILDER_FILE', trailingslashit( dirname( dirname( __FILE__ ) ) ) . 'bb-theme-builder.php' );
 		define( 'FL_THEME_BUILDER_DIR', plugin_dir_path( FL_THEME_BUILDER_FILE ) );
 		define( 'FL_THEME_BUILDER_URL',plugins_url( '/', FL_THEME_BUILDER_FILE ) );
@@ -88,6 +98,7 @@ final class FLThemeBuilderLoader {
 		// Classes
 		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-page-data.php';
 		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder.php';
+		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-admin-bar.php';
 		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-admin-customize.php';
 		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-field-connections.php';
 		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-frontend-edit.php';
@@ -100,15 +111,6 @@ final class FLThemeBuilderLoader {
 		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-rules-location.php';
 		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-rules-user.php';
 
-		// Admin Classes
-		if ( is_admin() && FLBuilderUserAccess::current_user_can( 'theme_builder_editing' ) ) {
-			require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-admin-menu.php';
-			require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-admin-settings.php';
-			require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-layout-admin-add.php';
-			require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-layout-admin-edit.php';
-			require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-layout-admin-list.php';
-		}
-
 		// Includes
 		if ( ! strstr( FL_THEME_BUILDER_VERSION, 'FL_THEME_BUILDER_VERSION' ) ) {
 			require_once FL_THEME_BUILDER_DIR . 'includes/updater-config.php';
@@ -116,6 +118,26 @@ final class FLThemeBuilderLoader {
 
 		// Extensions
 		FLBuilderExtensions::init( FL_THEME_BUILDER_DIR . 'extensions/' );
+	}
+
+	/**
+	 * Loads classes and includes for the admin.
+	 *
+	 * @since 1.0.1.1
+	 * @access private
+	 * @return void
+	 */
+	static public function load_admin_files() {
+		if ( ! is_admin() || ! FLBuilderUserAccess::current_user_can( 'theme_builder_editing' ) ) {
+			return;
+		}
+
+		// Classes
+		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-admin-menu.php';
+		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-admin-settings.php';
+		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-layout-admin-add.php';
+		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-layout-admin-edit.php';
+		require_once FL_THEME_BUILDER_DIR . 'classes/class-fl-theme-builder-layout-admin-list.php';
 	}
 
 	/**
@@ -135,12 +157,25 @@ final class FLThemeBuilderLoader {
 
 		foreach ( $modules as $path ) {
 
-			$file = trailingslashit( $path ) . basename( $path ) . '.php';
+			$slug = basename( $path );
+			$file = trailingslashit( $path ) . $slug . '.php';
 
 			if ( file_exists( $file ) ) {
+				self::$loaded_modules[] = $slug;
 				require_once $file;
 			}
 		}
+	}
+
+	/**
+	 * Returns an array of slugs for theme builder modules
+	 * that have been loaded.
+	 *
+	 * @since 1.0.1
+	 * @return array
+	 */
+	static public function get_loaded_modules() {
+		return self::$loaded_modules;
 	}
 
 	/**

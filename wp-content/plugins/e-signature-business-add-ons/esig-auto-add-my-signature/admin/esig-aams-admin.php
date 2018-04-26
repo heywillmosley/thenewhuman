@@ -40,7 +40,9 @@ if (!class_exists('ESIG_AAMS_Admin')) :
             add_filter('esig-edit-document-template-data', array($this, 'show_aams_more_action'), 10, 2);
             add_filter('esig-edit-document-template-data', array($this, 'show_aams_add_signature'), 10, 2);
             add_filter('esig-shortcode-display-owner-signature', array($this, 'record_view_shortcode'), 10, 2);
-
+            
+            add_filter('esig_is_document_owner', array($this, 'is_document_owner'), 10, 2);
+            add_filter('esig_non_document_owner_content', array($this, 'non_document_owner_content'), 10, 2);
             //actions 
             add_action('esig_document_after_save', array($this, 'document_after_save_aasm'), 10, 1);
             add_action('esig_sad_document_after_save', array($this, 'document_after_save_aasm'), 10, 1);
@@ -57,6 +59,23 @@ if (!class_exists('ESIG_AAMS_Admin')) :
             //adding auto add signature popup from div 
             add_filter("esig_document_form_additional_content", array($this, "auto_add_content"), 10, 1);
             add_filter('esig_add_signature_check', array($this, 'auto_add_signature_check'), 10, 2);
+        }
+        
+        public function non_document_owner_content($content,$ownerId){
+            $loggedInId= get_current_user_id();
+              if($loggedInId != $ownerId){
+                   $message = sprintf(__("Hey there! This document was previously signed by %s. By saving the changes you’ve made to this document, you agree to automatically add your signature to this document.","esig"), WP_E_Sig()->user->get_esig_admin_name($ownerId));
+                   $content .=  '<div id="esig-auto-add-signature-warning-msg" style="display:none;">'. $message .'</div>';
+                   return $content;
+              }
+        }
+        
+        public function is_document_owner($ret , $documentOwner){
+              $loggedInId= get_current_user_id();
+              if($loggedInId == $documentOwner){
+                   return true;
+              }
+              return $ret ;
         }
 
         public function auto_add_signature_check($addSignature, $doc) {

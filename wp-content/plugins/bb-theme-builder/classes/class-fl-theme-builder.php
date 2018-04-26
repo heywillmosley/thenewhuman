@@ -14,10 +14,8 @@ final class FLThemeBuilder {
 	 * @return void
 	 */
 	static public function init() {
-		self::register_user_access_settings();
-
-		// Actions
-		add_action( 'plugins_loaded', __CLASS__ . '::load_plugin_textdomain' );
+		add_action( 'after_setup_theme', __CLASS__ . '::register_user_access_settings' );
+		add_action( 'plugins_loaded', 	 __CLASS__ . '::load_plugin_textdomain', 15 );
 	}
 
 	/**
@@ -30,8 +28,9 @@ final class FLThemeBuilder {
 		FLBuilderUserAccess::register_setting( 'theme_builder_editing', array(
 			'default'     => array( 'administrator' ),
 			'group'       => __( 'Admin', 'fl-theme-builder' ),
-			'label'       => __( 'Theme Builder Editing', 'fl-theme-builder' ),
-			'description' => __( 'The selected roles will be able to edit themes using the builder.', 'fl-theme-builder' ),
+			'label'       => __( 'Themer Layout Editing', 'fl-theme-builder' ),
+			'description' => __( 'The selected roles will be able to edit Themer layouts.', 'fl-theme-builder' ),
+			'order'		  => '110',
 		) );
 	}
 
@@ -43,8 +42,14 @@ final class FLThemeBuilder {
 	 * @return string|bool The translation file path or false if none is found.
 	 */
 	static public function load_plugin_textdomain() {
+
 		// Traditional WordPress plugin locale filter
-		$locale = apply_filters( 'plugin_locale', get_locale(), 'fl-theme-builder' );
+		// Uses get_user_locale() which was added in 4.7 so we need to check its available.
+		if ( function_exists( 'get_user_locale' ) ) {
+			$locale = apply_filters( 'plugin_locale', get_user_locale(), 'fl-theme-builder' );
+		} else {
+			$locale = apply_filters( 'plugin_locale', get_locale(), 'fl-theme-builder' );
+		}
 
 		// Setup paths to current locale file
 		$mofile_global = trailingslashit( WP_LANG_DIR ) . 'plugins/bb-theme-builder/' . $locale . '.mo';

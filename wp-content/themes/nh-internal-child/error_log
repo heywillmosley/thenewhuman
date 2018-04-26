@@ -14,3 +14,7 @@
 [17-Oct-2017 15:37:40 UTC] PHP Fatal error:  Call to undefined function language_attributes() in /home/thenewhu/public_html/wp-content/themes/nh-internal-child/header.php on line 2
 [20-Oct-2017 10:31:22 UTC] PHP Fatal error:  Call to undefined function language_attributes() in /home/thenewhu/public_html/wp-content/themes/nh-internal-child/header.php on line 2
 [24-Oct-2017 00:52:27 UTC] PHP Fatal error:  Call to undefined function language_attributes() in /home/thenewhu/public_html/wp-content/themes/nh-internal-child/header.php on line 2
+[19-Mar-2018 15:49:01 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function language_attributes() in /home/thenewhu/public_html/wp-content/themes/nh-internal-child/header.php:2
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/nh-internal-child/header.php on line 2

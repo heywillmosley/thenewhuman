@@ -250,7 +250,7 @@ class Affiliate_WP_Tracking {
 	public function js_debug_data() {
 
 		$integrations  = affiliate_wp()->integrations->get_enabled_integrations();
-		$affwp_version =  defined( 'AFFILIATEWP_VERSION' ) ? AFFILIATEWP_VERSION : 'undefined';
+		$affwp_version = defined( 'AFFILIATEWP_VERSION' ) ? AFFILIATEWP_VERSION : 'undefined';
 		$currency      = affwp_get_currency();
 
 
@@ -480,6 +480,7 @@ class Affiliate_WP_Tracking {
 		$affiliate_id = absint( $affiliate_id );
 		$is_valid     = $this->is_valid_affiliate( $affiliate_id );
 		$visit_id     = $this->get_visit_id();
+		$campaign     = $this->get_campaign();
 		$referrer     = ! empty( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( $_SERVER['HTTP_REFERER'] ) : '';
 
 		/** This filter is documented in includes/class-tracking.php. */
@@ -503,11 +504,13 @@ class Affiliate_WP_Tracking {
 					'affiliate_id' => $affiliate_id,
 					'ip'           => $this->get_ip(),
 					'url'          => $this->get_current_page_url(),
-					'campaign'     => $this->get_campaign(),
+					'campaign'     => $campaign,
 					'referrer'     => $referrer,
 				) );
 
 				$this->set_visit_id( $visit_id );
+
+				$this->set_campaign( $campaign );
 			}
 
 		} elseif( ! $is_valid ) {
@@ -753,6 +756,15 @@ class Affiliate_WP_Tracking {
 	 */
 	public function set_affiliate_id( $affiliate_id = 0 ) {
 		setcookie( 'affwp_ref', $affiliate_id, strtotime( '+' . $this->get_expiration_time() . ' days' ), COOKIEPATH, $this->get_cookie_domain() );
+	}
+
+	/**
+	 * Set the campaign
+	 *
+	 * @since 2.1.15
+	 */
+	public function set_campaign( $campaign = '' ) {
+		setcookie( 'affwp_campaign', $campaign, strtotime( '+' . $this->get_expiration_time() . ' days' ), COOKIEPATH, $this->get_cookie_domain() );
 	}
 
 	/**

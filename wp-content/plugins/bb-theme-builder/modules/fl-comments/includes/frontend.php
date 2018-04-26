@@ -1,10 +1,10 @@
 <?php
 
 ob_start();
-comments_template();
+comments_template( '', true );
 $comments = ob_get_clean();
 
-if ( empty( $comments ) ) {
+if ( empty( $comments ) && FLBuilderModel::is_builder_active() ) {
 	echo '<div class="fl-builder-module-placeholder-message">';
 	_e( 'Comments', 'fl-theme-builder' );
 	echo '</div>';

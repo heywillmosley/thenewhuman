@@ -1,0 +1,344 @@
+# Copyright (C) 2018 PW WooCommerce BOGO
+# This file is distributed under the same license as the PW WooCommerce BOGO package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PW WooCommerce BOGO 2.60\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pw-bogo\n"
+"POT-Creation-Date: 2018-04-09 14:58:30+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: plugin-update-checker/github-checker.php:119
+msgid "There is no changelog available."
+msgstr ""
+
+#: plugin-update-checker/plugin-update-checker.php:776
+msgid "Check for updates"
+msgstr ""
+
+#: plugin-update-checker/plugin-update-checker.php:820
+msgid "This plugin is up to date."
+msgstr ""
+
+#: plugin-update-checker/plugin-update-checker.php:822
+msgid "A new version of this plugin is available."
+msgstr ""
+
+#: plugin-update-checker/plugin-update-checker.php:824
+msgid "Unknown update checker status \"%s\""
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:102
+msgctxt "Post Type General Name"
+msgid "PW BOGO"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:103
+msgctxt "Post Type Singular Name"
+msgid "PW BOGO"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:104 pw-woocommerce-bogo-free.php:105
+#: pw-woocommerce-bogo-free.php:108 pw-woocommerce-bogo-free.php:130
+#: pw-woocommerce-bogo-free.php:131 pw-woocommerce-bogo-free.php:173
+#: pw-woocommerce-bogo-free.php:184
+msgid "PW BOGO"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:106
+msgid "PW BOGO Archives"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:107
+msgid "Parent PW BOGO:"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:109
+msgid "Add New PW BOGO"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:110
+msgid "Create New PW BOGO"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:111
+msgid "New PW BOGO"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:112
+msgid "Edit PW BOGO"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:113
+msgid "Update PW BOGO"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:114
+msgid "View PW BOGO"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:115
+msgid "Search PW BOGO"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:116
+msgid "Not found"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:117
+msgid "Not found in Trash"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:118
+msgid "PW BOGO Logo"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:119
+msgid "Set PW BOGO Logo"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:120
+msgid "Remove PW BOGO Logo"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:121
+msgid "Use as PW BOGO Logo"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:122
+msgid "Insert into item"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:123
+msgid "Uploaded to this item"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:124
+msgid "PW BOGO list"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:125
+msgid "PW BOGO list navigation"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:126
+msgid "Filter PW BOGO list"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:156
+msgid "About"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:159
+msgid "Discount"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:160
+msgid "Eligible Products"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:161
+msgid "Discounted Products"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:162
+msgid "Dates"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:163
+msgid "Restrictions"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:165
+msgid "Activation Required"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:174 pw-woocommerce-bogo-free.php:185
+#: pw-woocommerce-bogo-free.php:197
+msgid "Pimwick Plugins"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:198
+msgid "Our Plugins"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:243
+msgctxt "pimwick"
+msgid "Name"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:244
+msgid "Buy One, Get One"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:245
+msgid "Begin Date"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:246
+msgid "End Date"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:258
+msgid "Free"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:261
+msgid "% off"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:672
+msgid "Invalid bogo parameter for get_bogo()."
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:676
+msgid "%s is not a valid type for get_bogo()."
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:854
+msgid "PW BOGO: %s"
+msgstr ""
+
+#: pw-woocommerce-bogo-free.php:1168 pw-woocommerce-bogo-free.php:1173
+msgid "Coupon: %s"
+msgstr ""
+
+#: ui/meta-boxes.php:80 ui/meta-boxes.php:237
+msgid "Products (leave blank if BOGO is available for all products)"
+msgstr ""
+
+#: ui/meta-boxes.php:81 ui/meta-boxes.php:98 ui/meta-boxes.php:115
+#: ui/meta-boxes.php:133 ui/meta-boxes.php:204 ui/meta-boxes.php:221
+#: ui/meta-boxes.php:238 ui/meta-boxes.php:256
+msgid "Search for a product&hellip;"
+msgstr ""
+
+#: ui/meta-boxes.php:97 ui/meta-boxes.php:132 ui/meta-boxes.php:220
+#: ui/meta-boxes.php:255
+msgid "Exclude products"
+msgstr ""
+
+#: ui/meta-boxes.php:114
+msgid "Specific Products (leave blank if BOGO is available for all products)"
+msgstr ""
+
+#: ui/meta-boxes.php:151 ui/meta-boxes.php:274
+msgid "Product categories"
+msgstr ""
+
+#: ui/meta-boxes.php:152 ui/meta-boxes.php:275
+msgid "Any category"
+msgstr ""
+
+#: ui/meta-boxes.php:168 ui/meta-boxes.php:291
+msgid "Exclude categories"
+msgstr ""
+
+#: ui/meta-boxes.php:169 ui/meta-boxes.php:292
+msgid "No categories"
+msgstr ""
+
+#: ui/meta-boxes.php:194
+msgid "Same as Eligible Products "
+msgstr ""
+
+#: ui/meta-boxes.php:203
+msgid "Specific Products (leave blank if discount can apply to any product)"
+msgstr ""
+
+#: ui/meta-boxes.php:314
+msgid "Automatically add discounted product(s) to the cart "
+msgstr ""
+
+#: ui/meta-boxes.php:315
+msgid ""
+"<br>Check this box if you would like the Discounted Products to be "
+"automatically added to the cart when the criteria is met."
+msgstr ""
+
+#: ui/meta-boxes.php:326
+msgid "Restrict discounted product quantity "
+msgstr ""
+
+#: ui/meta-boxes.php:327
+msgid ""
+"<br>Forces the quantity of the discounted products to match the deal. Will "
+"not allow the customer to purchase the discounted products at regular price."
+msgstr ""
+
+#: ui/meta-boxes.php:336
+msgid "Only discount identical products "
+msgstr ""
+
+#: ui/meta-boxes.php:347
+msgid "Only discount identical variations "
+msgstr ""
+
+#: ui/meta-boxes.php:435
+msgid "Begin date<br>"
+msgstr ""
+
+#: ui/meta-boxes.php:436 ui/meta-boxes.php:448
+msgctxt "placeholder"
+msgid "YYYY-MM-DD"
+msgstr ""
+
+#: ui/meta-boxes.php:447
+msgid "End date<br>"
+msgstr ""
+
+#: ui/meta-boxes.php:463
+msgid ""
+"The number of times this deal can be applied, per order. Leave blank or 0 "
+"for no limit.<br>"
+msgstr ""
+
+#: ui/meta-boxes.php:467
+msgid ""
+"<br>For example: a BOGO deal has a limit of 2 and there are 10 items in the "
+"cart. Only the first 4 items participate in the BOGO, resulting in 2 free "
+"items."
+msgstr ""
+
+#: ui/meta-boxes.php:477
+msgid "Coupon Code<br>"
+msgstr ""
+
+#: ui/meta-boxes.php:487
+msgid "No other coupons allowed "
+msgstr ""
+
+#: ui/meta-boxes.php:488
+msgid "<br>Check this box if other coupons are not allowed for BOGO items."
+msgstr ""
+
+#: ui/meta-boxes.php:498
+msgid "Exclude sale items "
+msgstr ""
+
+#: ui/meta-boxes.php:499
+msgid "<br>Check this box if the BOGO deal should not apply to items on sale."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "PW WooCommerce BOGO"
+msgstr ""
+
+#. #-#-#-#-#  pimwick.pot (PW WooCommerce BOGO 2.60)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  pimwick.pot (PW WooCommerce BOGO 2.60)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "https://pimwick.com/pw-bogo"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Makes Buy One, Get One promotions so easy!"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Pimwick, LLC"
+msgstr ""

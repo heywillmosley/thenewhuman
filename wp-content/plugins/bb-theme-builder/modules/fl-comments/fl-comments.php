@@ -13,7 +13,8 @@ class FLCommentsModule extends FLBuilderModule {
 		parent::__construct(array(
 			'name'          	=> __( 'Comments', 'fl-theme-builder' ),
 			'description'   	=> __( 'Displays the comments for the current post.', 'fl-theme-builder' ),
-			'category'      	=> __( 'Post Modules', 'fl-theme-builder' ),
+			'group'       		=> __( 'Themer Modules', 'fl-theme-builder' ),
+			'category'      	=> __( 'Posts', 'fl-theme-builder' ),
 			'partial_refresh'	=> true,
 			'dir'               => FL_THEME_BUILDER_DIR . 'modules/fl-comments/',
 			'url'               => FL_THEME_BUILDER_URL . 'modules/fl-comments/',

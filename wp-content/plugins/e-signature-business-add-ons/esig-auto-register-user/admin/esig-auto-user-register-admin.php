@@ -445,8 +445,8 @@ if (!class_exists('ESIG_AUTO_REGISTER_Admin')) :
            
             $advanced_more_options .='</select>
 										</div><br>
-								<div class="checkbox leftPadding"><input type="checkbox" id="esig_auto_register_enable_email" name="esig_auto_register_enable_email" value="1" ' . $esig_auto_register_enable_email_checked . '><label class="leftPadding-5">' . __("Disable the email that's sent to the user that contains login details", "esig") . '</label></div><br>
-								<div class="checkbox leftPadding"><input type="checkbox" id="esig_enable_admin_email" name="esig_enable_admin_email" value="1" ' . $esig_enable_admin_email_checked . '><label class="leftPadding-5">' . __("Disable the new user registration email that's sent to the admin", "esig") . '</label></div><br>
+								<div class="leftPadding"><label><input type="checkbox" id="esig_auto_register_enable_email" name="esig_auto_register_enable_email" value="1" ' . $esig_auto_register_enable_email_checked . '>' . __("Disable the email that's sent to the user that contains login details", "esig") . '</label></div><br>
+								<div class="leftPadding"><label><input type="checkbox" id="esig_enable_admin_email" name="esig_enable_admin_email" value="1" ' . $esig_enable_admin_email_checked . '>' . __("Disable the new user registration email that's sent to the admin", "esig") . '</label></div><br>
 					</div>
 										<div id="esig-auto-register-error" class="esig-error" style="display:none;"></div>
 								</div>

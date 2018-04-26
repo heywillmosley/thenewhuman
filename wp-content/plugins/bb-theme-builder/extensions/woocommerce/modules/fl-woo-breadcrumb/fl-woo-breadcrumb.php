@@ -7,13 +7,15 @@
 class FLWooBreadcrumbModule extends FLBuilderModule {
 
 	/**
-	 * @method __construct
+	 * @since 1.0
+	 * @return void
 	 */
 	public function __construct() {
 		parent::__construct(array(
 			'name'          	=> __( 'Breadcrumb', 'fl-theme-builder' ),
 			'description'   	=> __( 'Displays the WooCommerce breadcrumb for the current page.', 'fl-theme-builder' ),
-			'category'      	=> __( 'WooCommerce Modules', 'fl-theme-builder' ),
+			'group'       		=> __( 'Themer Modules', 'fl-theme-builder' ),
+			'category'      	=> __( 'WooCommerce', 'fl-theme-builder' ),
 			'partial_refresh'	=> true,
 			'dir'               => FL_THEME_BUILDER_DIR . 'extensions/woocommerce/modules/fl-woo-breadcrumb/',
 			'url'               => FL_THEME_BUILDER_URL . 'extensions/woocommerce/modules/fl-woo-breadcrumb/',
@@ -57,13 +59,23 @@ FLBuilder::register_module( 'FLWooBreadcrumbModule', array(
 							'unit'          => 'px',
 						),
 					),
+					'link_color'    => array(
+						'type'          => 'color',
+						'label'         => __( 'Link Color', 'fl-theme-builder' ),
+						'show_reset'    => true,
+						'preview'       => array(
+							'type'          => 'css',
+							'selector'      => '.woocommerce-breadcrumb a',
+							'property'      => 'color',
+						),
+					),
 					'text_color'    => array(
 						'type'          => 'color',
 						'label'         => __( 'Text Color', 'fl-theme-builder' ),
 						'show_reset'    => true,
 						'preview'       => array(
 							'type'          => 'css',
-							'selector'      => '.woocommerce-breadcrumb, .woocommerce-breadcrumb a',
+							'selector'      => '.woocommerce-breadcrumb',
 							'property'      => 'color',
 						),
 					),

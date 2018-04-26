@@ -13,7 +13,8 @@ class FLAuthorBioModule extends FLBuilderModule {
 		parent::__construct(array(
 			'name'          	=> __( 'Author Bio', 'fl-theme-builder' ),
 			'description'   	=> __( 'Displays the author bio box for a post.', 'fl-theme-builder' ),
-			'category'      	=> __( 'Post Modules', 'fl-theme-builder' ),
+			'group'       		=> __( 'Themer Modules', 'fl-theme-builder' ),
+			'category'      	=> __( 'Posts', 'fl-theme-builder' ),
 			'partial_refresh'	=> true,
 			'dir'               => FL_THEME_BUILDER_DIR . 'modules/fl-author-bio/',
 			'url'               => FL_THEME_BUILDER_URL . 'modules/fl-author-bio/',

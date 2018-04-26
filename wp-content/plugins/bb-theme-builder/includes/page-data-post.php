@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Post Title
  */
 FLPageData::add_post_property( 'title', array(
@@ -11,7 +11,7 @@ FLPageData::add_post_property( 'title', array(
 	'placeholder' => 'Lorem Ipsum Dolor',
 ) );
 
-/*
+/**
  * Post Excerpt
  */
 FLPageData::add_post_property( 'excerpt', array(
@@ -38,19 +38,18 @@ FLPageData::add_post_property_settings_fields( 'excerpt', array(
 	),
 ) );
 
-/*
+/**
  * Post Content
  */
 FLPageData::add_post_property( 'content', array(
 	'label'       => __( 'Post Content', 'fl-theme-builder' ),
 	'group'       => 'posts',
 	'type'        => 'string',
-	'post_type'   => 'fl-theme-layout',
 	'getter'      => 'FLPageDataPost::get_content',
 	'placeholder' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas tempor arcu nisl. Sed ac tempus nulla.',
 ) );
 
-/*
+/**
  * Post Link
  */
 FLPageData::add_post_property( 'link', array(
@@ -82,7 +81,7 @@ FLPageData::add_post_property_settings_fields( 'link', array(
 	),
 ) );
 
-/*
+/**
  * Post URL
  */
 FLPageData::add_post_property( 'url', array(
@@ -92,7 +91,7 @@ FLPageData::add_post_property( 'url', array(
 	'getter'      => 'get_permalink',
 ) );
 
-/*
+/**
  * Post Date
  */
 FLPageData::add_post_property( 'date', array(
@@ -121,7 +120,37 @@ FLPageData::add_post_property_settings_fields( 'date', array(
 	),
 ) );
 
-/*
+/**
+ * Post Modified Date
+ */
+FLPageData::add_post_property( 'modified_date', array(
+	'label'       => __( 'Post Modified Date', 'fl-theme-builder' ),
+	'group'       => 'posts',
+	'type'        => 'string',
+	'getter'      => 'FLPageDataPost::get_modified_date',
+) );
+
+FLPageData::add_post_property_settings_fields( 'modified_date', array(
+	'format' => array(
+		'type'          => 'select',
+		'label'         => __( 'Modified Date Format', 'fl-theme-builder' ),
+		'default'       => '',
+		'options'       => array(
+			''		        => __( 'Default', 'fl-theme-builder' ),
+			'M j, Y'        => date( 'M j, Y' ),
+			'F j, Y'        => date( 'F j, Y' ),
+			'm/d/Y'         => date( 'm/d/Y' ),
+			'm-d-Y'         => date( 'm-d-Y' ),
+			'd M Y'         => date( 'd M Y' ),
+			'd F Y'         => date( 'd F Y' ),
+			'Y-m-d'         => date( 'Y-m-d' ),
+			'Y/m/d'         => date( 'Y/m/d' ),
+			'human'         => __( '3 days ago', 'fl-theme-builder' ),
+		),
+	),
+) );
+
+/**
  * Post Featured Image
  */
 FLPageData::add_post_property( 'featured_image', array(
@@ -151,7 +180,10 @@ FLPageData::add_post_property_settings_fields( 'featured_image', array(
 		),
 		'toggle' => array(
 			'tag'    => array(
-				'fields' => array( 'linked', 'align' ),
+				'fields' => array( 'linked', 'align', 'size' ),
+			),
+			'url' => array(
+				'fields' => array( 'size' ),
 			),
 		),
 	),
@@ -178,7 +210,7 @@ FLPageData::add_post_property_settings_fields( 'featured_image', array(
 	),
 ) );
 
-/*
+/**
  * Post Featured Image URL
  */
 FLPageData::add_post_property( 'featured_image_url', array(
@@ -196,11 +228,11 @@ FLPageData::add_post_property_settings_fields( 'featured_image_url', array(
 	),
 	'default_img' => array(
 		'type' => 'photo',
-		'label' => __('Default Image', 'fl-theme-builder')
-	)
+		'label' => __( 'Default Image', 'fl-theme-builder' ),
+	),
 ) );
 
-/*
+/**
  * Post Attached Images
  */
 FLPageData::add_post_property( 'attached_images', array(
@@ -210,7 +242,7 @@ FLPageData::add_post_property( 'attached_images', array(
 	'getter'      => 'FLPageDataPost::get_attached_images',
 ) );
 
-/*
+/**
  * Post Terms List
  */
 FLPageData::add_post_property( 'terms_list', array(
@@ -232,9 +264,19 @@ FLPageData::add_post_property_settings_fields( 'terms_list', array(
 		'label'         => __( 'Separator', 'fl-theme-builder' ),
 		'default'       => __( ', ', 'fl-theme-builder' ),
 	),
+	'linked' => array(
+		'type'          => 'select',
+		'label'         => __( 'Linked', 'fl-theme-builder' ),
+		'default'       => 'yes',
+		'options'       => array(
+			'yes'        	=> __( 'Yes', 'fl-theme-builder' ),
+			'no'        	=> __( 'No', 'fl-theme-builder' ),
+		),
+		'help'			=> __( 'Link terms to their archive page.', 'fl-theme-builder' ),
+	),
 ) );
 
-/*
+/**
  * Comments Number
  */
 FLPageData::add_post_property( 'comments_number', array(
@@ -248,10 +290,10 @@ FLPageData::add_post_property_settings_fields( 'comments_number', array(
 	'link' => array(
 		'type'          => 'select',
 		'label'         => __( 'Link', 'fl-theme-builder' ),
-		'default'       => '1',
+		'default'       => 'yes',
 		'options'       => array(
-			'1'        	=> __( 'Yes', 'fl-theme-builder' ),
-			'0'        	=> __( 'No', 'fl-theme-builder' ),
+			'yes'        	=> __( 'Yes', 'fl-theme-builder' ),
+			'no'        	=> __( 'No', 'fl-theme-builder' ),
 		),
 		'help'          => __( 'Link the comments text to the comments section for this post.', 'fl-theme-builder' ),
 	),
@@ -272,7 +314,7 @@ FLPageData::add_post_property_settings_fields( 'comments_number', array(
 	),
 ) );
 
-/*
+/**
  * Comments URL
  */
 FLPageData::add_post_property( 'comments_url', array(
@@ -282,7 +324,7 @@ FLPageData::add_post_property( 'comments_url', array(
 	'getter'      => 'FLPageDataPost::get_comments_url',
 ) );
 
-/*
+/**
  * Author Name
  */
 FLPageData::add_post_property( 'author_name', array(
@@ -293,19 +335,47 @@ FLPageData::add_post_property( 'author_name', array(
 ) );
 
 FLPageData::add_post_property_settings_fields( 'author_name', array(
+	'type' => array(
+		'type'          => 'select',
+		'label'         => __( 'Type', 'fl-theme-builder' ),
+		'default'       => 'display',
+		'options'		=> array(
+			'display'		=> __( 'Display Name', 'fl-theme-builder' ),
+			'first'			=> __( 'First Name', 'fl-theme-builder' ),
+			'last'			=> __( 'Last Name', 'fl-theme-builder' ),
+			'firstlast'		=> __( 'First &amp; Last Name', 'fl-theme-builder' ),
+			'lastfirst'		=> __( 'Last, First Name', 'fl-theme-builder' ),
+			'nickname'		=> __( 'Nickname', 'fl-theme-builder' ),
+			'username'		=> __( 'Username', 'fl-theme-builder' ),
+		),
+	),
 	'link' => array(
 		'type'          => 'select',
 		'label'         => __( 'Link', 'fl-theme-builder' ),
-		'default'       => 'yes',
+		'default'       => 'no',
 		'options'       => array(
 			'yes'        	=> __( 'Yes', 'fl-theme-builder' ),
 			'no'        	=> __( 'No', 'fl-theme-builder' ),
 		),
-		'help'          => __( 'Link to the archive for this author.', 'fl-theme-builder' ),
+		'toggle'		=> array(
+			'yes'			=> array(
+				'fields'		=> array( 'link_type' ),
+			),
+		),
+		'help'          => __( 'Link to the archive or website for this author.', 'fl-theme-builder' ),
+	),
+	'link_type' => array(
+		'type'          => 'select',
+		'label'         => __( 'Link Type', 'fl-theme-builder' ),
+		'default'       => 'archive',
+		'options'       => array(
+			'archive'        => __( 'Post Archive', 'fl-theme-builder' ),
+			'website'        => __( 'Website', 'fl-theme-builder' ),
+		),
 	),
 ) );
 
-/*
+/**
  * Author Bio
  */
 FLPageData::add_post_property( 'author_bio', array(
@@ -315,7 +385,7 @@ FLPageData::add_post_property( 'author_bio', array(
 	'getter'      => 'FLPageDataPost::get_author_bio',
 ) );
 
-/*
+/**
  * Author URL
  */
 FLPageData::add_post_property( 'author_url', array(
@@ -325,7 +395,19 @@ FLPageData::add_post_property( 'author_url', array(
 	'getter'      => 'FLPageDataPost::get_author_url',
 ) );
 
-/*
+FLPageData::add_post_property_settings_fields( 'author_url', array(
+	'type' => array(
+		'type'          => 'select',
+		'label'         => __( 'Type', 'fl-theme-builder' ),
+		'default'       => 'archive',
+		'options'		=> array(
+			'archive'		=> __( 'Post Archive', 'fl-theme-builder' ),
+			'website'		=> __( 'Website', 'fl-theme-builder' ),
+		),
+	),
+) );
+
+/**
  * Author Picture
  */
 FLPageData::add_post_property( 'author_profile_picture', array(
@@ -339,12 +421,26 @@ FLPageData::add_post_property_settings_fields( 'author_profile_picture', array(
 	'link' => array(
 		'type'          => 'select',
 		'label'         => __( 'Link', 'fl-theme-builder' ),
-		'default'       => '1',
+		'default'       => 'no',
 		'options'       => array(
-			'1'        	=> __( 'Yes', 'fl-theme-builder' ),
-			'0'        	=> __( 'No', 'fl-theme-builder' ),
+			'yes'        	=> __( 'Yes', 'fl-theme-builder' ),
+			'no'        	=> __( 'No', 'fl-theme-builder' ),
 		),
-		'help'          => __( 'Link to the archive for this author.', 'fl-theme-builder' ),
+		'toggle'		=> array(
+			'yes'			=> array(
+				'fields'		=> array( 'link_type' ),
+			),
+		),
+		'help'          => __( 'Link to the archive or website for this author.', 'fl-theme-builder' ),
+	),
+	'link_type' => array(
+		'type'          => 'select',
+		'label'         => __( 'Link Type', 'fl-theme-builder' ),
+		'default'       => 'archive',
+		'options'       => array(
+			'archive'        => __( 'Post Archive', 'fl-theme-builder' ),
+			'website'        => __( 'Website', 'fl-theme-builder' ),
+		),
 	),
 	'size' => array(
 		'type'          => 'text',
@@ -356,7 +452,7 @@ FLPageData::add_post_property_settings_fields( 'author_profile_picture', array(
 	),
 ) );
 
-/*
+/**
  * Author Picture URL
  */
 FLPageData::add_post_property( 'author_profile_picture_url', array(
@@ -377,11 +473,28 @@ FLPageData::add_post_property_settings_fields( 'author_profile_picture_url', arr
 	),
 	'default_img' => array(
 		'type' => 'photo',
-		'label' => __('Default Image', 'fl-theme-builder')
-	)
+		'label' => __( 'Default Image', 'fl-theme-builder' ),
+	),
 ) );
 
-/*
+/**
+ * Author Meta
+ */
+FLPageData::add_post_property( 'author_meta', array(
+	'label'       => __( 'Author Meta', 'fl-theme-builder' ),
+	'group'       => 'author',
+	'type'        => 'all',
+	'getter'      => 'FLPageDataPost::get_author_meta',
+) );
+
+FLPageData::add_post_property_settings_fields( 'author_meta', array(
+	'key' => array(
+		'type'          => 'text',
+		'label'         => __( 'Key', 'fl-theme-builder' ),
+	),
+) );
+
+/**
  * Custom Field
  */
 FLPageData::add_post_property( 'custom_field', array(

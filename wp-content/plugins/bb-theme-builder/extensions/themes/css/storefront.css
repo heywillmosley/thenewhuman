@@ -1,0 +1,42 @@
+/* Headers/Footers */
+.fl-theme-builder-header #masthead,
+.fl-theme-builder-footer #colophon {
+	background: transparent;
+	margin: 0;
+	padding: 0;
+}
+.fl-theme-builder-header #masthead .col-full,
+.fl-theme-builder-header #colophon .col-full {
+	margin: 0;
+    max-width: 100%;
+	padding: 0;
+	width: 100%;
+}
+.fl-theme-builder-header #colophon.site-footer a:not(.button) {
+	color: inherit;
+}
+
+/* Content */
+.fl-theme-builder-singular .col-full > .woocommerce-breadcrumb,
+.fl-theme-builder-archive .col-full > .woocommerce-breadcrumb,
+.fl-theme-builder-404 .col-full > .woocommerce-breadcrumb {
+	display: none;
+}
+
+.fl-theme-builder-singular .fl-module-fl-woo-breadcrumb .woocommerce-breadcrumb,
+.fl-theme-builder-archive .fl-module-fl-woo-breadcrumb .woocommerce-breadcrumb,
+.fl-theme-builder-404 .fl-module-fl-woo-breadcrumb .woocommerce-breadcrumb {
+	padding: 10px;
+}
+
+/* Full Width Content */
+.fl-theme-builder-full-width #content .col-full {
+	margin: 0;
+    max-width: 100%;
+	padding: 0;
+	width: 100%;
+}
+
+body.single-product.fl-theme-builder-singular .fl-module-fl-woo-product-price p.price {
+	margin: 0px;
+}

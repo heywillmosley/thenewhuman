@@ -18,9 +18,11 @@ final class FLThemeBuilderSupportGenesis {
 		add_theme_support( 'fl-theme-builder-footers' );
 		add_theme_support( 'fl-theme-builder-parts' );
 
-		add_filter( 'fl_theme_builder_part_hooks', __CLASS__ . '::register_part_hooks' );
+		add_filter( 'fl_theme_builder_part_hooks', 		__CLASS__ . '::register_part_hooks' );
+		add_filter( 'theme_fl-theme-layout_templates',  __CLASS__ . '::register_php_templates' );
+		add_filter( 'body_class',                 		__CLASS__ . '::body_class' );
 
-		add_action( 'wp', __CLASS__ . '::setup_headers_and_footers' );
+		add_action( 'wp', 								__CLASS__ . '::setup_headers_and_footers' );
 	}
 
 	/**
@@ -104,6 +106,44 @@ final class FLThemeBuilderSupportGenesis {
 			remove_action( 'genesis_footer', 'genesis_footer_markup_close', 15 );
 			add_action( 'genesis_footer', 'FLThemeBuilderLayoutRenderer::render_footer' );
 		}
+	}
+
+	/**
+	 * Registers custom PHP templates for theme layouts.
+	 *
+	 * @since 1.0.1
+	 * @param array $templates
+	 * @return array
+	 */
+	static public function register_php_templates( $templates ) {
+
+		if ( FLThemeBuilderLayoutData::current_post_is( array( 'singular', 'archive', '404' ) ) ) {
+			$templates = array_merge( $templates, array(
+				'fl-theme-layout-full-width.php' => __( 'Full Width', 'fl-theme-builder' ),
+			) );
+		}
+
+		return $templates;
+	}
+
+	/**
+	 * Sets the full width body class if the full width page
+	 * template has been selected for this theme layout.
+	 *
+	 * @since 1.0.1
+	 * @param array $classes
+	 * @return array
+	 */
+	static public function body_class( $classes ) {
+
+		$ids = FLThemeBuilderLayoutData::get_current_page_content_ids();
+
+		if ( ! empty( $ids ) && 'fl-theme-layout-full-width.php' == get_page_template_slug( $ids[0] ) ) {
+			$classes[] = 'fl-theme-builder-full-width';
+			wp_enqueue_style( 'fl-theme-builder-genesis', FL_THEME_BUILDER_THEMES_URL . 'css/genesis.css', array(), FL_THEME_BUILDER_VERSION );
+		}
+
+		return $classes;
 	}
 }
 

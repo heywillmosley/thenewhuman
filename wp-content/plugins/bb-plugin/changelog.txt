@@ -1,3 +1,15 @@
+<h4>2.0.5.1 - 02/27/2018</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Refined responsive preview logic to make sure all media queries are parsed.</li>
+	<li>Added support for showing translated global rows and modules with WPML.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed responsive preview not working when you publish out of the builder and re-enter without refreshing.</li>
+	<li>Removed WPML language switcher widget as it only works when placed inside of a registered sidebar.</li>
+</ul>
+
 <h4>2.0.5 - 02/15/2018</h4>
 <p><strong>Enhancements</strong></p>
 <ul>

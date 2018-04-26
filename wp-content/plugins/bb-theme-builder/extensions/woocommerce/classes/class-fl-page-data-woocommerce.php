@@ -24,7 +24,8 @@ final class FLPageDataWooCommerce {
 	static public function get_template_html( $function ) {
 		global $product;
 
-		$html = '';
+		$html     = '';
+		$function = apply_filters( "fl_theme_builder_woocommerce_template_html_$function", $function );
 
 		if ( is_object( $product ) && function_exists( $function ) ) {
 			ob_start();

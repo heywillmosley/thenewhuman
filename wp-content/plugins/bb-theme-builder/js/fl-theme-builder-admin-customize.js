@@ -48,6 +48,10 @@
 
 			$( '#theme-builder-header-footer-message' ).remove();
 
+			if( 'undefined' == typeof config ) {
+				return false;
+			}
+
 			if ( config.hasHeader || config.hasFooter ) {
 
 				if ( config.hasHeader && config.hasFooter ) {

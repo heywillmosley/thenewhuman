@@ -94,7 +94,7 @@ final class FLThemeBuilderSupportBBTheme {
 			add_filter( 'fl_topbar_enabled', '__return_false' );
 			add_filter( 'fl_fixed_header_enabled', '__return_false' );
 			add_filter( 'fl_header_enabled', '__return_false' );
-			add_action( 'fl_before_header', 'FLThemeBuilderLayoutRenderer::render_header' );
+			add_action( 'fl_before_header', 'FLThemeBuilderLayoutRenderer::render_header', 999 );
 		}
 		if ( ! empty( $footer_ids ) ) {
 			add_filter( 'fl_footer_enabled', '__return_false' );
@@ -110,11 +110,11 @@ final class FLThemeBuilderSupportBBTheme {
 	 * @return void
 	 */
 	static public function render_footer() {
-		do_action('fl_before_footer_widgets');
-		do_action('fl_before_footer');
+		do_action( 'fl_before_footer_widgets' );
+		do_action( 'fl_before_footer' );
 		FLThemeBuilderLayoutRenderer::render_footer();
-		do_action('fl_after_footer_widgets');
-		do_action('fl_after_footer');
+		do_action( 'fl_after_footer_widgets' );
+		do_action( 'fl_after_footer' );
 	}
 }
 

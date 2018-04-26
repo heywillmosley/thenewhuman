@@ -8,7 +8,7 @@
  * URI:        https://approveme.com/wp-digital-e-signature
  * Description:       Most document signing companies charge $10, $15, even $30 per month… PER USER that can send documents! You get unlimited users (and no monthly fees) with this powerful add-on.
  * mini-description add an unlimited number of document senders
- * Version:           1.5.3.0
+ * Version:           1.5.3.3
  * Author:            Approve Me
  * Author URI:        https://approveme.com/
  * Documentation:     http://aprv.me/24Mh8YF
@@ -23,7 +23,7 @@ if (!defined('WPINC')) {
 
 if (class_exists('WP_E_Addon')) {
     $esign_addons = new WP_E_Addon();
-    $esign_addons->esign_update_check('4330', '1.5.3.0');
+    $esign_addons->esign_update_check('4330', '1.5.3.3');
 }
 
  // esig plugin directory path 

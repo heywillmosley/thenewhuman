@@ -57,7 +57,7 @@
 		init: function()
 		{
 			var editing = $( 'html.fl-builder-edit' ).length,
-				header  = $( 'header.fl-builder-content' );
+				header  = $( '.fl-builder-content[data-type=header]' );
 
 			if ( ! editing && header.length ) {
 

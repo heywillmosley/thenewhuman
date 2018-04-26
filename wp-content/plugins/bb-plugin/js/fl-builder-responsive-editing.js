@@ -86,7 +86,10 @@
 				FLBuilderConfig.pluginUrl,
 				'fl-theme-builder',
 				'/wp-includes/',
-				'/wp-admin/'
+				'/wp-admin/',
+				'admin-bar-inline-css',
+				'ace-tm',
+				'ace_editor.css'
 			] );
 
 			// Reparse stylesheets that match these paths on each update.
@@ -94,7 +97,9 @@
 				FLBuilderConfig.postId + '-layout-draft.css?',
 				FLBuilderConfig.postId + '-layout-draft-partial.css?',
 				FLBuilderConfig.postId + '-layout-preview.css?',
-				FLBuilderConfig.postId + '-layout-preview-partial.css?'
+				FLBuilderConfig.postId + '-layout-preview-partial.css?',
+				'fl-builder-global-css',
+				'fl-builder-layout-css'
 			] );
 		},
 

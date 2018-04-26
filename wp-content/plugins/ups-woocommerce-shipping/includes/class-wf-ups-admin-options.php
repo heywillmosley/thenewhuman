@@ -7,13 +7,13 @@ if( !class_exists('WF_UPS_Admin_Options') ){
 
         function init(){
             //add a custome field in product page
-            add_action( 'woocommerce_product_options_shipping', array($this,'wf_add_deliveryconfirmation_field')  );
+            add_action( 'woocommerce_product_options_shipping', array($this,'wf_add_custom_field_ups')  );
 
             //Saving the values
-            add_action( 'woocommerce_process_product_meta', array( $this, 'wf_save_deliveryconfirmation_field' ) );
+            add_action( 'woocommerce_process_product_meta', array( $this, 'wf_save_custom_field_ups' ) );
         }
 
-        function wf_add_deliveryconfirmation_field() {
+        function wf_add_custom_field_ups() {
 			 
 		// Print a custom select field
 		woocommerce_wp_select( array(
@@ -35,10 +35,18 @@ if( !class_exists('WF_UPS_Admin_Options') ){
 			'desc_tip'	=> 'true',
 			'placeholder'	=> __( 'Insurance amount UPS', 'ups-woocommerce-shipping' )
 		) );
+		
+		//Direct Delivery Option under Product Shipping tab
+		woocommerce_wp_checkbox( array(
+			'id'		=> '_wf_ups_direct_delivery',
+			'label'		=> __( 'Direct Delivery (UPS)', 'ups-woocommerce-shipping' ),
+			'description'	=> __('Check this to enable direct delivery.','ups-woocommerce-shipping'),
+			'desc_tip'	=> 'true',
+                ) );
         }
 		
 
-        function wf_save_deliveryconfirmation_field( $post_id ) {
+        function wf_save_custom_field_ups( $post_id ) {
 
 		if ( isset( $_POST['_wf_ups_deliveryconfirmation'] ) ) {
 			update_post_meta( $post_id, '_wf_ups_deliveryconfirmation', esc_attr( $_POST['_wf_ups_deliveryconfirmation'] ) );
@@ -48,6 +56,10 @@ if( !class_exists('WF_UPS_Admin_Options') ){
 		if( isset($_POST['_wf_ups_custom_declared_value'] ) ) {
 			update_post_meta( $post_id, '_wf_ups_custom_declared_value', esc_attr( $_POST['_wf_ups_custom_declared_value'] ) );
 		}
+		
+		//Update Direct Delivery option
+		$is_direct_delivery =  ( isset( $_POST['_wf_ups_direct_delivery'] ) && esc_attr($_POST['_wf_ups_direct_delivery']=='yes')  ) ? esc_attr($_POST['_wf_ups_direct_delivery']) : false;
+		update_post_meta( $post_id, '_wf_ups_direct_delivery', $is_direct_delivery );
 	}
     }
     new WF_UPS_Admin_Options();

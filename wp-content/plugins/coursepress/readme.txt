@@ -5,8 +5,8 @@ Author: WPMU DEV
 Author URI: http://premium.wpmudev.org/
 Tags: LMS, learning management system, online course, education, e-learning, classes, courses, teach, assignments, lessons
 Requires at least: 4.1
-Tested up to: 4.9
-Stable tag: 2.1.3
+Tested up to: 4.9.2
+Stable tag: 2.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -110,6 +110,20 @@ You can find [in-depth setup and usage instructions with screenshots here »](ht
 7. Massively customizable
 
 == Changelog ==
+
+= 2.1.4 =
+* Fixed: Course certificate email settings were hidden for nonpremium users.
+* Fixed: Discussion layout issue.
+* Fixed: Missing new instructor on instructors list.
+* Fixed: On a course structure show section without modules if "Show units without modules" is checked.
+* Fixed: PHP notices when try to edit not exited unit.
+* Fixed: Problem with display course sub-menu on the frontend.
+* Fixed: Show unit progress on admin panel.
+* Fixed: There was no ability to remove instructor.
+* Fixed: Typo in notifications configuration.
+* Fixed: Typo in MarketPress integration box.
+* Improved: Added filters to get_time_estimation() functions: coursepress_course_get_time_estimation, coursepress_unit_get_time_estimation, coursepress_module_get_time_estimation.
+* Improved: Prevent saves units before fetching all data.
 
 = 2.1.3 =
 * Fixed: Unit and Pages TinyMCE editor does not work after WordPress update to 4.9.

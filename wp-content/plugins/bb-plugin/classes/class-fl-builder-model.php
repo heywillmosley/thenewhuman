@@ -4206,6 +4206,9 @@ final class FLBuilderModel {
 			'post_content'	=> $editor_content,
 		));
 
+		// Rerender the assets for this layout.
+		FLBuilder::render_assets();
+
 		// Fire the after action.
 		do_action( 'fl_builder_after_save_layout', $post_id, $publish, $data, $settings );
 	}
@@ -4803,9 +4806,9 @@ final class FLBuilderModel {
 				return false;
 			}
 
-			self::$node_template_post_ids[ $template_id ] = $posts[0]->ID;
-
-			return $posts[0]->ID;
+			$post_id = apply_filters( 'fl_builder_node_template_post_id', $posts[0]->ID );
+			self::$node_template_post_ids[ $template_id ] = $post_id;
+			return $post_id;
 		}
 	}
 

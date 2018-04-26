@@ -52,10 +52,10 @@
     text-transform: none;
 }
 input[type=text].fl-field-connections-search {
-	background-color: #fff; 
+	background-color: #fff;
 	border-color: #dfdfdf;
 	border-style: solid;
-	border-width: 1px; 
+	border-width: 1px;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -101,11 +101,13 @@ input[type=text].fl-field-connections-search:focus {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+.fl-field-connections-property-connect,
 .fl-field-connections-property-token {
+	background: #9E9E9E;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
 	bottom: 0;
-	color: #BFBFBF !important;
+	color: #fff !important;
 	display: none;
 	overflow: hidden;
     padding: 4px 4px 4px 4px;
@@ -117,15 +119,20 @@ input[type=text].fl-field-connections-search:focus {
 	white-space: nowrap;
     width: 80px;
 }
+.fl-field-connections-property:hover .fl-field-connections-property-connect,
 .fl-field-connection-tokens-visible .fl-field-connections-property:hover .fl-field-connections-property-token {
-	background: #ECECEC;
     border-left: 2px solid #fff;
-	color: #999 !important;
 	display: block;
 }
+.fl-field-connection-tokens-visible .fl-field-connections-property:hover .fl-field-connections-property-connect:hover,
 .fl-field-connection-tokens-visible .fl-field-connections-property:hover .fl-field-connections-property-token:hover {
-	background: #D9D9D9 !important;
-    color: #333 !important;
+	background: #808080 !important;
+    color: #fff !important;
+}
+.fl-field-connection-tokens-visible .fl-field-connections-property-has-token .fl-field-connections-property-connect {
+	border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+	right: 80px;
 }
 
 /* Connection */

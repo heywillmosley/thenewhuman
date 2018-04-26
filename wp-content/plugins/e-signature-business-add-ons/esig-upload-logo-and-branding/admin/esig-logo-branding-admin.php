@@ -198,17 +198,18 @@ if (!class_exists('ESIG_LOGO_BRANDING_Admin')) :
 
 
                 $admin_user = $api->user->getUserby('wp_user_id', $documents->user_id);
-
-                $pdf_front_page .='<span class="document_sender">Document Sender : ' . $admin_user->first_name . " " . $admin_user->last_name . '</span><br>';
+                $docSenderText = __("Document Sender","esig");
+                $pdf_front_page .='<span class="document_sender">'. $docSenderText .' : ' . $admin_user->first_name . " " . $admin_user->last_name . '</span><br>';
 
                 $allinvitation = $api->invite->getInvitations($doc_id);
+                $signerText  =  __("Signer","esig");
                 if ($documents->add_signature) {
-                    $pdf_front_page .='<span class="document_signer" ' . $font_family . '>Signer: ' . $admin_user->first_name . " " . $admin_user->last_name . "</span> <br>";
+                    $pdf_front_page .='<span class="document_signer" ' . $font_family . '>'. $signerText .': ' . $admin_user->first_name . " " . $admin_user->last_name . "</span> <br>";
                 }
                 foreach ($allinvitation as $invite) {
 
                     $full_name = $api->user->get_esig_signer_name($invite->user_id, $doc_id);
-                    $pdf_front_page .='<span class="document_signer" ' . $font_family . '>Signer: ' . $full_name . "</span> <br>";
+                    $pdf_front_page .='<span class="document_signer" ' . $font_family . '>'. $signerText .': ' . $full_name . "</span> <br>";
                 }
 
                 $pdf_front_page .= ' </div></div>';
@@ -229,8 +230,7 @@ if (!class_exists('ESIG_LOGO_BRANDING_Admin')) :
                 return $document_logo;
             }
             if ($display == "1") {
-                $document_logo .='<a href="' . home_url() . '" target="_blank"><img
-                               src=' . $logo . ' alt="' . get_bloginfo('name') . '" border="0" style="margin-top: -8px;max-width:200px; max-height:200px;"></a>';
+                $document_logo .='<a href="' . home_url() . '" target="_blank"><img src=' . $logo . ' alt="' . get_bloginfo('name') . '" border="0" style="margin-top: -8px;max-width:200px; max-height:200px;"></a>';
             }
             return $document_logo;
         }
@@ -245,8 +245,7 @@ if (!class_exists('ESIG_LOGO_BRANDING_Admin')) :
             if (isset($logo) && empty($logo)) {
                 return $esig_logo;
             }
-            $esig_logo = '<a href="' . home_url() . '" target="_blank"><img
-                               src=' . $logo . '  alt="' . get_bloginfo('name') . '" border="0" align="center" style="margin-top: -8px;" class="esig_company_logo"></a>';
+            $esig_logo = '<a href="' . home_url() . '" target="_blank"><img src=' . $logo . '  alt="' . get_bloginfo('name') . '" border="0" align="center" style="margin-top: -8px;" class="esig_company_logo"></a>';
 
             return $esig_logo;
         }
@@ -385,18 +384,20 @@ if (!class_exists('ESIG_LOGO_BRANDING_Admin')) :
             $success_paragraph = str_replace('{document_title}', esig_unslash($document_title), $this->successParagraphText($args['document']->user_id));
 
             $logo_align = $this->success_logo_alignment($args['document']->user_id);
+            
+            $successText = __("You're done signing!","esig");
 
             if (!$display) {
                 if ($success_paragraph != false && $success_image != false) {
                     $success_msg = "<p class=\"success_title\" align=\"center\">{$success_paragraph}</h2> <p " . $logo_align . " class='s_logo'><a href='#pricingPlans'>{$success_image}</a></p>";
                 } elseif ($success_paragraph == false && $success_image != false) {
-                    $success_msg = "<p class=\"success_title\" align=\"center\"><h2>You're done signing! {$document_title}</h2> <p " . $logo_align . " class='s_logo'><a href='#pricingPlans'>{$success_image}</a></p>";
+                    $success_msg = "<p class=\"success_title\" align=\"center\"><h2>{$successText} {$document_title}</h2> <p " . $logo_align . " class='s_logo'><a href='#pricingPlans'>{$success_image}</a></p>";
                 } 
                 elseif ($success_paragraph != false && $success_image == false) {
                     $success_msg = "<p class=\"success_title\" align=\"center\">{$success_paragraph}</h2> <p align='center' class='s_logo'><span class=\"icon-success-check\"></span></p>";
                 }
                 else {
-                    $success_msg = "<p class=\"success_title\" align=\"center\"><h2>You're done signing! {$document_title}</h2> <p align='center' class='s_logo'><span class=\"icon-success-check\"></span></p>";
+                    $success_msg = "<p class=\"success_title\" align=\"center\"><h2>{$successText} {$document_title}</h2> <p align='center' class='s_logo'><span class=\"icon-success-check\"></span></p>";
                 }
             } else {
 

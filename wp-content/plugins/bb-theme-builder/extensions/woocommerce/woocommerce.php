@@ -1,7 +1,7 @@
 <?php
 
 define( 'FL_THEME_BUILDER_WOOCOMMERCE_DIR', FL_THEME_BUILDER_DIR . 'extensions/woocommerce/' );
-define( 'FL_THEME_BUILDER_WOOCOMMERCE_URL', FL_THEME_BUILDER_DIR . 'extensions/woocommerce/' );
+define( 'FL_THEME_BUILDER_WOOCOMMERCE_URL', FL_THEME_BUILDER_URL . 'extensions/woocommerce/' );
 
 if ( class_exists( 'WooCommerce' ) ) {
 

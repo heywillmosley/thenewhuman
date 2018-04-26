@@ -85,7 +85,7 @@ class WF_Boxpack {
 	public function pack() {
 		try {
 			// We need items
-			if ( sizeof( $this->items ) == 0 ) {
+			if ( empty($this->items) || sizeof( $this->items ) == 0 ) {
 				throw new Exception( 'No items to pack!' );
 			}
 
@@ -153,6 +153,7 @@ class WF_Boxpack {
 					$package->height   = $item->get_height();
 					$package->value    = $item->get_value();
 					$package->packtype = '';
+					$package->obj	    = !empty($item->meta->obj) ? $item->meta->obj : '';		//wc_product object
 					$package->unpacked = true;
 					$this->packages[]  = $package;
 				}

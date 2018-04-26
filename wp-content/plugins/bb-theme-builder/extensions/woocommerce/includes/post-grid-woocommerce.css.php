@@ -29,13 +29,13 @@
 <?php endif; ?>
 
 <?php if ( ! empty( $settings->woo_price_color ) ) : ?>
-.fl-node-<?php echo $id; ?> .fl-post-module-woo-meta .price {
+.fl-node-<?php echo $id; ?> .fl-post-module-woo-meta .price span.woocommerce-Price-amount {
 	color: #<?php echo $settings->woo_price_color; ?>;
 }
 <?php endif; ?>
 
 <?php if ( ! empty( $settings->woo_price_font_size ) ) : ?>
-.fl-node-<?php echo $id; ?> .fl-post-module-woo-meta .price {
+.fl-node-<?php echo $id; ?> .fl-post-module-woo-meta .price span.woocommerce-Price-amount {
 	font-size: <?php echo $settings->woo_price_font_size; ?>px;
 }
 <?php endif; ?>

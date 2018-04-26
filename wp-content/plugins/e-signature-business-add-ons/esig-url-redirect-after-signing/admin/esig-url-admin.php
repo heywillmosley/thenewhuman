@@ -47,6 +47,8 @@ if (!class_exists('ESIG_URL_Admin')) :
         //add_action('esig_display_right_sidebar', array($this, 'add_document_sidebar'), 10, 1);
             
             add_action('esig_signature_loaded', array($this, 'esig_url_redirect'), 10, 1);
+            add_action('esig_approval_signer_added', array($this, 'esig_url_redirect'), 10, 1);
+            add_action('esig_after_sad_process_done', array($this, 'esig_url_redirect'), 10, 1);
            // add_action('esig_sad_document_invite_send', array($this, 'sad_document_after_save'), 10, 1);
             //add_action('esig_sad_document_after_save', array($this, 'sad_document_after_save'), 10, 1);
 
@@ -186,7 +188,8 @@ if (!class_exists('ESIG_URL_Admin')) :
 
             $urlRedirect=$this->prepareUrl($get_url_redirect);
             
-            wp_redirect($urlRedirect, 301);
+            $redirect= apply_filters("esig_url_redirect",$urlRedirect);
+            wp_redirect($redirect, 301);
             exit;
         }
         

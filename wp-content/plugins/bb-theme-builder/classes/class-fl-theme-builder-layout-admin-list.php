@@ -38,9 +38,13 @@ final class FLThemeBuilderLayoutAdminList {
 		$orderby = $query->get( 'orderby' );
 		$order   = $query->get( 'order' );
 
-		if ( $query->is_main_query() && ( ! $orderby || 'fl_type' == $orderby ) ) {
-			$query->set( 'meta_key', '_fl_theme_layout_type' );
-			$query->set( 'orderby', 'meta_value' );
+		if ( $query->is_main_query() ) {
+			if ( ! $orderby ) {
+				$query->set( 'orderby', 'title' );
+			} elseif ( 'fl_type' == $orderby ) {
+				$query->set( 'meta_key', '_fl_theme_layout_type' );
+				$query->set( 'orderby', 'meta_value' );
+			}
 			$query->set( 'order', ( $order ? $order : 'ASC' ) );
 		}
 	}

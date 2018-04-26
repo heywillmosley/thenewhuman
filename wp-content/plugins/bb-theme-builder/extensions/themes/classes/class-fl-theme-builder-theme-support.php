@@ -28,12 +28,12 @@ final class FLThemeBuilderThemeSupport {
 
 		if ( defined( 'FL_THEME_VERSION' ) ) {
 			$slug = 'bb-theme';
-		}
-		elseif ( function_exists( 'genesis' ) ) {
+		} elseif ( function_exists( 'genesis' ) ) {
 			$slug = 'genesis';
-		}
-		elseif ( defined( 'GENERATE_VERSION' ) ) {
+		} elseif ( defined( 'GENERATE_VERSION' ) ) {
 			$slug = 'generatepress';
+		} elseif ( function_exists( 'storefront_is_woocommerce_activated' ) ) {
+			$slug = 'storefront';
 		}
 
 		if ( $slug ) {

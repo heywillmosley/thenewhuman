@@ -17,7 +17,7 @@
 	<div class="fl-theme-builder-saved-user-rule fl-theme-builder-saved-rule">
 		<div class="fl-theme-builder-saved-rule-select">
 			<select name="fl-theme-builder-user-rule[]"  class="fl-theme-builder-user-rule">
-				<option value=""><?php _e( 'All Users', 'fl-theme-builder' ); ?></option>
+				<option value=""><?php _e( 'Choose...', 'fl-theme-builder' ); ?></option>
 				<?php foreach ( $rules as $group_key => $group_data ) : ?>
 				<optgroup label="<?php echo $group_data['label']; ?>">
 					<?php foreach ( $group_data['rules'] as $rule_key => $rule_data ) : ?>

@@ -140,6 +140,9 @@ class WF_Shipping_UPS_Admin
 		else if ( isset( $_GET['wf_ups_generate_packages'] ) ) {
 			add_action( 'init', array( $this, 'wf_ups_generate_packages' ), 15 );
 		}
+		elseif (isset($_GET['wf_ups_generate_packages_rates'])) {				// To get the rates in UPS admin side
+			add_action('admin_init', array($this, 'wf_ups_generate_packages_rates'), 15 );
+		}
 	}
 
 	private function wf_init() {
@@ -242,16 +245,13 @@ class WF_Shipping_UPS_Admin
 			$stored_packages	=	get_post_meta( $post->ID, '_wf_ups_stored_packages', true );
 			if(empty($stored_packages)	&&	!is_array($stored_packages)){
 				echo '<strong>'.__( 'Step 1: Auto generate packages.', 'ups-woocommerce-shipping' ).'</strong></br>';
+				?>
+				<a class="button button-primary tips ups_generate_packages" href="<?php echo admin_url( '/?wf_ups_generate_packages='.base64_encode( $shipmentId.'|'.$post->ID ) ); ?>" data-tip="<?php _e( 'Generate Packages', 'ups-woocommerce-shipping' ); ?>"><?php _e( 'Generate Packages', 'ups-woocommerce-shipping' ); ?></a><hr style="border-color:#0074a2">
+				<?php
 			}else{
 				echo '<strong>'.__( 'Step 2: Initiate your shipment.', 'ups-woocommerce-shipping' ).'</strong></br>';
 
 				echo '<ul>';
-				
-				echo '<li><label for="ups_cod"><input type="checkbox" style="" id="ups_cod" name="ups_cod" class="">' . __('Collect On Delivery', 'ups-woocommerce-shipping') . '</label><img class="help_tip" style="float:none;" data-tip="'.__( 'Collect On Delivery would be applicable only for single package which may contain single or multiple product(s).', 'ups-woocommerce-shipping' ).'" src="'.WC()->plugin_url().'/assets/images/help.png" height="16" width="16" /></li>';
-				
-				echo '<li><label for="ups_return"><input type="checkbox" style="" id="ups_return" name="ups_return" class="">' . __('Include Return Label', 'ups-woocommerce-shipping') . '</label><img class="help_tip" style="float:none;" data-tip="'.__( 'You can generate the return label only for single package order.', 'ups-woocommerce-shipping' ).'" src="'.WC()->plugin_url().'/assets/images/help.png" height="16" width="16" /></li>';
-				
-				echo '<li><label for="ups_sat_delivery"><input type="checkbox" style="" id="ups_sat_delivery" name="ups_sat_delivery" class="">' . __('Saturday Delivery', 'ups-woocommerce-shipping') . '</label><img class="help_tip" style="float:none;" data-tip="'.__( 'Saturday Delivery from UPS allows you to stretch your business week to Saturday', 'ups-woocommerce-shipping' ).'" src="'.WC()->plugin_url().'/assets/images/help.png" height="16" width="16" /></li>';
 				
 				/*if($this->ground_freight){
 					echo '<li><label for="ups_gfp_shipment"><input type="checkbox" style="" id="ups_gfp_shipment" name="ups_gfp_shipment" class="">' . __('GFP Shipment', 'ups-woocommerce-shipping') . '</label><img class="help_tip" style="float:none;" data-tip="'.__( 'Ground reight Pricing (GFP)', 'ups-woocommerce-shipping' ).'" src="'.WC()->plugin_url().'/assets/images/help.png" height="16" width="16" /></li>';
@@ -324,10 +324,7 @@ class WF_Shipping_UPS_Admin
 										else{
 											foreach($this->settings['services'] as $service_code => $sdata){
 												if($sdata['enabled']==1){
-													$service_name=$this->ups_services[$service_code];
-													if(!isset($service_name)){
-														$service_name=$this->freight_services[$service_code];
-													}
+													$service_name= (isset($this->ups_services[$service_code])) ? $this->ups_services[$service_code] : $this->freight_services[$service_code];
 												  	echo '<option value="'.$service_code.'" ' . selected($default_service_type, $service_code) . ' >'.$service_name.'</option>';
 
 												}
@@ -380,15 +377,17 @@ class WF_Shipping_UPS_Admin
                                                         <td>&nbsp;</td>
                                                 </tr>
                                                 <?php
-                                        }
+                                        } 
                                 echo '</table>';
                                 echo '</div>';
 
 				echo '<a class="wf-action-button wf-add-button" style="font-size: 12px;" id="wf_ups_add_package">Add Package</a>';
-				
+				?>
+					<a class="button tips ups_generate_packages" href="<?php echo admin_url( '/?wf_ups_generate_packages='.base64_encode( $shipmentId.'|'.$post->ID ) ); ?>" data-tip="<?php _e( 'Generate Packages', 'ups-woocommerce-shipping' ); ?>"><?php _e( 'Generate Packages', 'ups-woocommerce-shipping' ); ?></a>
+				<?php
 				echo '</li>';
 				?>
-				<a class="button button-primary tips ups_create_shipment" href="<?php echo $download_url; ?>" data-tip="<?php _e( 'Confirm Shipment', 'ups-woocommerce-shipping' ); ?>"><?php _e( 'Confirm Shipment', 'ups-woocommerce-shipping' ); ?></a></br></br>
+
 				<script type="text/javascript">
 					jQuery(document).ready(function(){
                                                 jQuery('input[type="checkbox"]').click(function()
@@ -428,10 +427,8 @@ class WF_Shipping_UPS_Admin
 							else{
 								foreach($this->settings['services'] as $service_code => $sdata){
 									if($sdata['enabled']==1){
-										$service_name=$this->ups_services[$service_code];
-										if(!isset($service_name)){
-											$service_name=$this->freight_services[$service_code];
-										}?>
+										$service_name=isset($this->ups_services[$service_code]) ? $this->ups_services[$service_code] : $this->freight_services[$service_code];
+									?>
 									new_row +='<option value="<?php echo $service_code;?>"><?php echo $service_name;?></option>';
 									<?php
 									}	
@@ -469,113 +466,190 @@ class WF_Shipping_UPS_Admin
 						jQuery(document).on('click', '.wf_ups_package_line_remove', function(){
 							jQuery(this).closest('tr').remove();
 						});
-					});
-					jQuery("a.ups_create_shipment").on("click", function() {
-						var manual_weight_arr 	= 	jQuery("input[id='ups_manual_weight']").map(function(){return jQuery(this).val();}).get();
-						var manual_weight 		=	JSON.stringify(manual_weight_arr);
 						
-						var manual_height_arr 	= 	jQuery("input[id='ups_manual_height']").map(function(){return jQuery(this).val();}).get();
-						var manual_height 		=	JSON.stringify(manual_height_arr);
-						
-						var manual_width_arr 	= 	jQuery("input[id='ups_manual_width']").map(function(){return jQuery(this).val();}).get();
-						var manual_width 		=	JSON.stringify(manual_width_arr);
-						
-						var manual_length_arr 	= 	jQuery("input[id='ups_manual_length']").map(function(){return jQuery(this).val();}).get();
-						var manual_length 		=	JSON.stringify(manual_length_arr);
-						
-						var manual_insurance_arr 	= 	jQuery("input[id='ups_manual_insurance']").map(function(){return jQuery(this).val();}).get();
-						var manual_insurance 		=	JSON.stringify(manual_insurance_arr);
-						
-						var manual_service_arr	=	[];
-						jQuery('.ups_manual_service').each(function(){
-							manual_service_arr.push(jQuery(this).val());
-						});
-						var manual_service 		=	JSON.stringify(manual_service_arr);
-                                                var rt_manual_weight_arr        =       jQuery("input[id='rt_ups_manual_weight']").map(function(){return jQuery(this).val();}).get();
-                                                var rt_manual_weight            =       JSON.stringify(rt_manual_weight_arr);
-                                                
-                                                var rt_manual_height_arr        =       jQuery("input[id='rt_ups_manual_height']").map(function(){return jQuery(this).val();}).get();
-                                                var rt_manual_height            =       JSON.stringify(rt_manual_height_arr);
-                                                
-                                                var rt_manual_width_arr         =       jQuery("input[id='rt_ups_manual_width']").map(function(){return jQuery(this).val();}).get();
-                                                var rt_manual_width             =       JSON.stringify(rt_manual_width_arr);
-                                                
-                                                var rt_manual_length_arr        =       jQuery("input[id='rt_ups_manual_length']").map(function(){return jQuery(this).val();}).get();
-                                                var rt_manual_length            =       JSON.stringify(rt_manual_length_arr);
-                                                
-                                                var rt_manual_insurance_arr     =       jQuery("input[id='rt_ups_manual_insurance']").map(function(){return jQuery(this).val();}).get();
-                                                var rt_manual_insurance                 =       JSON.stringify(rt_manual_insurance_arr);
-                                                
-                                                var rt_manual_service_arr       =       [];
-                                                jQuery('.rt_ups_manual_service').each(function(){
-                                                        rt_manual_service_arr.push(jQuery(this).val());
-                                                });
-                                                var rt_manual_service           =       JSON.stringify(rt_manual_service_arr);
-                                                
-                                             if(jQuery('#ups_return').is(':checked'))
-                                              {
-						
-						location.href = this.href + '&weight=' + manual_weight +
-						'&length=' + manual_length
-						+ '&width=' + manual_width
-						+ '&height=' + manual_height
-						+ '&insurance=' + manual_insurance
-						+ '&service=' + manual_service
-						+ '&cod=' + jQuery('#ups_cod').is(':checked')
-						+ '&sat_delivery=' + jQuery('#ups_sat_delivery').is(':checked')
-                                                + '&rt_weight=' + rt_manual_weight
-                                                + '&rt_length=' + rt_manual_length
-                                                + '&rt_width=' + rt_manual_width
-                                                + '&rt_height=' + rt_manual_height
-                                                + '&rt_insurance=' + rt_manual_insurance
-                                                + '&rt_service=' + rt_manual_service
-						+ '&is_gfp_shipment=' + jQuery('#ups_gfp_shipment').is(':checked')
-						+ '&is_return_label=' + jQuery('#ups_return').is(':checked')
-						+ '&HolidayPickupIndicator=' + jQuery('#HolidayPickupIndicator').is(':checked')
-						+ '&InsidePickupIndicator=' + jQuery('#InsidePickupIndicator').is(':checked')
-						+ '&ResidentialPickupIndicator=' + jQuery('#ResidentialPickupIndicator').is(':checked')
-						+ '&WeekendPickupIndicator=' + jQuery('#WeekendPickupIndicator').is(':checked')
-						+ '&LiftGateRequiredIndicator=' + jQuery('#LiftGateRequiredIndicator').is(':checked')
-						+ '&LimitedAccessPickupIndicator=' + jQuery('#LimitedAccessPickupIndicator').is(':checked')
-						+ '&PickupInstructions=' + jQuery('#PickupInstructions').val()
-						+ '&FreightPackagingType=' + jQuery('#FreightPackagingType').val()
-						+ '&FreightClass=' + jQuery('#FreightClass').val();
-                                               }
-                                                 else
-                                                 {
-                                                     
-                                                     location.href = this.href + '&weight=' + manual_weight +
-                                                '&length=' + manual_length
-                                                + '&width=' + manual_width
-                                                + '&height=' + manual_height
-                                                + '&insurance=' + manual_insurance
-                                                + '&service=' + manual_service
-                                                + '&cod=' + jQuery('#ups_cod').is(':checked')
-                                                + '&sat_delivery=' + jQuery('#ups_sat_delivery').is(':checked')
-                                                + '&is_gfp_shipment=' + jQuery('#ups_gfp_shipment').is(':checked')
-                                                + '&is_return_label=' + jQuery('#ups_return').is(':checked')
-                                                + '&HolidayPickupIndicator=' + jQuery('#HolidayPickupIndicator').is(':checked')
-                                                + '&InsidePickupIndicator=' + jQuery('#InsidePickupIndicator').is(':checked')
-                                                + '&ResidentialPickupIndicator=' + jQuery('#ResidentialPickupIndicator').is(':checked')
-                                                + '&WeekendPickupIndicator=' + jQuery('#WeekendPickupIndicator').is(':checked')
-                                                + '&LiftGateRequiredIndicator=' + jQuery('#LiftGateRequiredIndicator').is(':checked')
-                                                + '&LimitedAccessPickupIndicator=' + jQuery('#LimitedAccessPickupIndicator').is(':checked')
-                                                + '&PickupInstructions=' + jQuery('#PickupInstructions').val()
-                                                + '&FreightPackagingType=' + jQuery('#FreightPackagingType').val()
-                                                + '&FreightClass=' + jQuery('#FreightClass').val();
-                                                 }
+						// To create Shipment
+						jQuery("a.ups_create_shipment").on("click", function() {
+							var manual_weight_arr 	= 	jQuery("input[id='ups_manual_weight']").map(function(){return jQuery(this).val();}).get();
+							var manual_weight 		=	JSON.stringify(manual_weight_arr);
 
-						return false;
+							var manual_height_arr 	= 	jQuery("input[id='ups_manual_height']").map(function(){return jQuery(this).val();}).get();
+							var manual_height 		=	JSON.stringify(manual_height_arr);
+
+							var manual_width_arr 	= 	jQuery("input[id='ups_manual_width']").map(function(){return jQuery(this).val();}).get();
+							var manual_width 		=	JSON.stringify(manual_width_arr);
+
+							var manual_length_arr 	= 	jQuery("input[id='ups_manual_length']").map(function(){return jQuery(this).val();}).get();
+							var manual_length 		=	JSON.stringify(manual_length_arr);
+
+							var manual_insurance_arr 	= 	jQuery("input[id='ups_manual_insurance']").map(function(){return jQuery(this).val();}).get();
+							var manual_insurance 		=	JSON.stringify(manual_insurance_arr);
+
+							var manual_service_arr	=	[];
+							jQuery('.ups_manual_service').each(function(){
+								manual_service_arr.push(jQuery(this).val());
+							});
+							var manual_service 		=	JSON.stringify(manual_service_arr);
+							var rt_manual_weight_arr        =       jQuery("input[id='rt_ups_manual_weight']").map(function(){return jQuery(this).val();}).get();
+							var rt_manual_weight            =       JSON.stringify(rt_manual_weight_arr);
+
+							var rt_manual_height_arr        =       jQuery("input[id='rt_ups_manual_height']").map(function(){return jQuery(this).val();}).get();
+							var rt_manual_height            =       JSON.stringify(rt_manual_height_arr);
+
+							var rt_manual_width_arr         =       jQuery("input[id='rt_ups_manual_width']").map(function(){return jQuery(this).val();}).get();
+							var rt_manual_width             =       JSON.stringify(rt_manual_width_arr);
+
+							var rt_manual_length_arr        =       jQuery("input[id='rt_ups_manual_length']").map(function(){return jQuery(this).val();}).get();
+							var rt_manual_length            =       JSON.stringify(rt_manual_length_arr);
+
+							var rt_manual_insurance_arr     =       jQuery("input[id='rt_ups_manual_insurance']").map(function(){return jQuery(this).val();}).get();
+							var rt_manual_insurance                 =       JSON.stringify(rt_manual_insurance_arr);
+
+							var rt_manual_service_arr       =       [];
+							jQuery('.rt_ups_manual_service').each(function(){
+								rt_manual_service_arr.push(jQuery(this).val());
+							});
+							var rt_manual_service           =       JSON.stringify(rt_manual_service_arr);
+
+						     if(jQuery('#ups_return').is(':checked'))
+						      {
+
+							location.href = this.href + '&weight=' + manual_weight +
+							'&length=' + manual_length
+							+ '&width=' + manual_width
+							+ '&height=' + manual_height
+							+ '&insurance=' + manual_insurance
+							+ '&service=' + manual_service
+							+ '&cod=' + jQuery('#ups_cod').is(':checked')
+							+ '&sat_delivery=' + jQuery('#ups_sat_delivery').is(':checked')
+							+ '&rt_weight=' + rt_manual_weight
+							+ '&rt_length=' + rt_manual_length
+							+ '&rt_width=' + rt_manual_width
+							+ '&rt_height=' + rt_manual_height
+							+ '&rt_insurance=' + rt_manual_insurance
+							+ '&rt_service=' + rt_manual_service
+							+ '&is_gfp_shipment=' + jQuery('#ups_gfp_shipment').is(':checked')
+							+ '&is_return_label=' + jQuery('#ups_return').is(':checked')
+							+ '&HolidayPickupIndicator=' + jQuery('#HolidayPickupIndicator').is(':checked')
+							+ '&InsidePickupIndicator=' + jQuery('#InsidePickupIndicator').is(':checked')
+							+ '&ResidentialPickupIndicator=' + jQuery('#ResidentialPickupIndicator').is(':checked')
+							+ '&WeekendPickupIndicator=' + jQuery('#WeekendPickupIndicator').is(':checked')
+							+ '&LiftGateRequiredIndicator=' + jQuery('#LiftGateRequiredIndicator').is(':checked')
+							+ '&LimitedAccessPickupIndicator=' + jQuery('#LimitedAccessPickupIndicator').is(':checked')
+							+ '&PickupInstructions=' + jQuery('#PickupInstructions').val()
+							+ '&FreightPackagingType=' + jQuery('#FreightPackagingType').val()
+							+ '&FreightClass=' + jQuery('#FreightClass').val();
+						       }
+							 else
+							 {
+
+							     location.href = this.href + '&weight=' + manual_weight +
+							'&length=' + manual_length
+							+ '&width=' + manual_width
+							+ '&height=' + manual_height
+							+ '&insurance=' + manual_insurance
+							+ '&service=' + manual_service
+							+ '&cod=' + jQuery('#ups_cod').is(':checked')
+							+ '&sat_delivery=' + jQuery('#ups_sat_delivery').is(':checked')
+							+ '&is_gfp_shipment=' + jQuery('#ups_gfp_shipment').is(':checked')
+							+ '&is_return_label=' + jQuery('#ups_return').is(':checked')
+							+ '&HolidayPickupIndicator=' + jQuery('#HolidayPickupIndicator').is(':checked')
+							+ '&InsidePickupIndicator=' + jQuery('#InsidePickupIndicator').is(':checked')
+							+ '&ResidentialPickupIndicator=' + jQuery('#ResidentialPickupIndicator').is(':checked')
+							+ '&WeekendPickupIndicator=' + jQuery('#WeekendPickupIndicator').is(':checked')
+							+ '&LiftGateRequiredIndicator=' + jQuery('#LiftGateRequiredIndicator').is(':checked')
+							+ '&LimitedAccessPickupIndicator=' + jQuery('#LimitedAccessPickupIndicator').is(':checked')
+							+ '&PickupInstructions=' + jQuery('#PickupInstructions').val()
+							+ '&FreightPackagingType=' + jQuery('#FreightPackagingType').val()
+							+ '&FreightClass=' + jQuery('#FreightClass').val();
+							 }
+
+							return false;
+						});
 					});
+					
 				</script>
 				<?php
+				
+				// Rates on order page
+				$generate_packages_rates = get_post_meta( $_GET['post'], 'wf_ups_generate_packages_rates_response', true );
+				echo '<li><table id="wf_ups_service_select" class="wf-shipment-package-table" style="margin-bottom: 5px;margin-top: 15px;box-shadow:.5px .5px 5px lightgrey;">';
+					echo '<tr>';
+						echo '<th>Select Service</th>';
+						echo '<th style="text-align:left;padding:5px; font-size:13px;">'.__('Service Name', 'ups-woocommerce-shipping').'</th>';
+						echo '<th style="text-align:left;font-size:13px;">'.__('Cost (', 'ups-woocommerce-shipping').get_woocommerce_currency_symbol().__(')', 'ups-woocommerce-shipping').' </th>';
+					echo '</tr>';
+					
+					echo '<tr>';
+						echo "<td style = 'padding-bottom: 10px; padding-left: 15px; '><input name='wf_ups_service_choosing_radio' id='wf_ups_service_choosing_radio' value='wf_ups_individual_service' type='radio' checked='true'></td>";
+						echo "<td colspan = '3' style= 'padding-bottom: 10px; text-align:left;'><b>Choose Shipping Methods</b> - Select this option to choose UPS services for each package (Shipping rates will be applied accordingly).</td>";
+					echo "</tr>";
+					
+					if( ! empty($generate_packages_rates) ) {
+						$wp_date_format = get_option('date_format');
+						foreach( $generate_packages_rates as $key => $rates ) {
+							$ups_service = explode( ':', $rates['id']);
+							echo '<tr style="padding:10px;">';
+								echo "<td style = 'padding-left: 15px;'><input name='wf_ups_service_choosing_radio' id='wf_ups_service_choosing_radio' value='".end($ups_service)."' type='radio' ></td>";
+								echo "<td>".$rates['label']."</td>";
+								echo "<td>".$rates['cost']."</td>";
+							echo "</tr>";
+						}
+					}
+
+				echo '</table></li>';
+				//End of Rates on order page
+				?>
+				<a style="margin: 4px" class="button tips wf_ups_generate_packages_rates button-secondary" href="<?php echo admin_url( '/post.php?wf_ups_generate_packages_rates='.base64_encode($post->ID) ); ?>" data-tip="<?php _e( 'Calculate the shipping rates for UPS services.', 'wf-shipping-ups' ); ?>"><?php _e( 'Calculate Shipping Cost', 'wf-shipping-ups' ); ?></a>
+				<?php				
+					echo '<li><label for="ups_cod"><input type="checkbox" style="" id="ups_cod" name="ups_cod" class="">' . __('Collect On Delivery', 'ups-woocommerce-shipping') . '</label><img class="help_tip" style="float:none;" data-tip="'.__( 'Collect On Delivery would be applicable only for single package which may contain single or multiple product(s).', 'ups-woocommerce-shipping' ).'" src="'.WC()->plugin_url().'/assets/images/help.png" height="16" width="16" /></li>';
+					echo '<li><label for="ups_return"><input type="checkbox" style="" id="ups_return" name="ups_return" class="">' . __('Include Return Label', 'ups-woocommerce-shipping') . '</label><img class="help_tip" style="float:none;" data-tip="'.__( 'You can generate the return label only for single package order.', 'ups-woocommerce-shipping' ).'" src="'.WC()->plugin_url().'/assets/images/help.png" height="16" width="16" /></li>';
+					echo '<li><label for="ups_sat_delivery"><input type="checkbox" style="" id="ups_sat_delivery" name="ups_sat_delivery" class="">' . __('Saturday Delivery', 'ups-woocommerce-shipping') . '</label><img class="help_tip" style="float:none;" data-tip="'.__( 'Saturday Delivery from UPS allows you to stretch your business week to Saturday', 'ups-woocommerce-shipping' ).'" src="'.WC()->plugin_url().'/assets/images/help.png" height="16" width="16" /></li>';
+				?>
+				<li>
+					<a class="button button-primary tips ups_create_shipment" href="<?php echo $download_url; ?>" data-tip="<?php _e( 'Confirm Shipment', 'ups-woocommerce-shipping' ); ?>"><?php _e( 'Confirm Shipment', 'ups-woocommerce-shipping' ); ?></a><hr style="border-color:#0074a2">
+				</li>
+				<?php
+			
 			}
-			?>			
-			<a class="button button-primary tips ups_generate_packages" href="<?php echo admin_url( '/?wf_ups_generate_packages='.base64_encode( $shipmentId.'|'.$post->ID ) ); ?>" data-tip="<?php _e( 'Generate Packages', 'ups-woocommerce-shipping' ); ?>"><?php _e( 'Generate Packages', 'ups-woocommerce-shipping' ); ?></a><hr style="border-color:#0074a2">
+			
+			?>
+
 			<script type="text/javascript">
 				jQuery("a.ups_generate_packages").on("click", function() {
 					location.href = this.href;
 				});
+				
+				// To get rates on order page
+				jQuery("a.wf_ups_generate_packages_rates").one("click", function() {		
+					jQuery(this).click(function () { return false; });
+						var manual_weight_arr		= 	jQuery("input[id='ups_manual_weight']").map(function(){return jQuery(this).val();}).get();
+						var manual_height_arr		= 	jQuery("input[id='ups_manual_height']").map(function(){return jQuery(this).val();}).get();
+						var manual_width_arr		= 	jQuery("input[id='ups_manual_width']").map(function(){return jQuery(this).val();}).get();
+						var manual_length_arr		= 	jQuery("input[id='ups_manual_length']").map(function(){return jQuery(this).val();}).get();
+						var manual_insurance_arr 	= 	jQuery("input[id='ups_manual_insurance']").map(function(){return jQuery(this).val();}).get();
+						
+						location.href = this.href + '&weight=' + manual_weight_arr +
+							'&length=' + manual_length_arr
+							+ '&width=' + manual_width_arr
+							+ '&height=' + manual_height_arr
+							+ '&insurance=' + manual_insurance_arr;
+						return false;
+				});
+				//End of jQuery for getting the rates
+				
+				//For sitching between the services of get rates and services after every generated packages
+				jQuery(document).ready( function() {
+					jQuery(document).on("change", "#wf_ups_service_choosing_radio", function(){
+					    if (jQuery("#wf_ups_service_choosing_radio:checked").val() == 'wf_ups_individual_service') {
+						    jQuery(".ups_manual_service").prop("disabled", false);
+					    } else {
+						    jQuery(".ups_manual_service").val(jQuery("#wf_ups_service_choosing_radio:checked").val()).change();
+						    jQuery(".ups_manual_service").prop("disabled", true);  
+					    }
+				    });
+				});
+				//End For sitching between the services of get rates and services after every generated packages
+				
 			</script>
 			<?php
 		}
@@ -597,6 +671,7 @@ class WF_Shipping_UPS_Admin
 					// Multiple labels for each package.
 					$index = 0;
 					if( !empty($ups_label_details_array[$shipmentId]) ){
+						$packages = $order->get_meta('_wf_ups_stored_packages',true);		//For displaying the products name with label on order page
 						foreach ( $ups_label_details_array[$shipmentId] as $ups_label_details ) {
 							$label_extn_code 	= $ups_label_details["Code"];
 							$tracking_number 	= isset( $ups_label_details["TrackingNumber"] ) ? $ups_label_details["TrackingNumber"] : '';
@@ -608,7 +683,32 @@ class WF_Shipping_UPS_Admin
 							}
 							?>
 							<strong><?php _e( 'Tracking No: ', 'ups-woocommerce-shipping' ); ?></strong><a href="http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=<?php echo $ups_label_details["TrackingNumber"] ?>" target="_blank"><?php echo $ups_label_details["TrackingNumber"] ?></a><br/>
-							<a class="button button-primary tips" href="<?php echo $download_url; ?>" data-tip="<?php _e( 'Print Label ', 'ups-woocommerce-shipping' );echo $post_fix_label; ?>" target="<?php echo $target_val; ?>"><?php _e( 'Print Label ', 'ups-woocommerce-shipping' );echo $post_fix_label ?></a>
+							
+							<?php 
+								$package = array_shift($packages);
+								if( ! empty($package['Package']['items']) ) {
+									echo "<strong>Products in Package : </strong>";
+									$product_quantity	= array();
+									$products_name		= array();
+									foreach( $package['Package']['items'] as $product) {
+										$product_quantity[$product->get_id()] = isset($product_quantity[$product->get_id()]) ? ( $product_quantity[$product->get_id()] +1 ) : 1;
+										$products_name[$product->get_id()] = $product->get_name();
+									}
+									$no_of_products_in_package = count($products_name);
+									$count = 0;
+									foreach( $products_name as $product_id => $product_name) {
+										$count ++;
+										echo $product_name.' X '.$product_quantity[$product_id];
+										if( $count < $no_of_products_in_package ) {
+											echo '<strong>,</strong>';
+										}
+										else {
+											echo '.';
+										}
+									}
+								}
+							?>
+							<br /><a style="margin-top: 7px" class="button button-primary tips" href="<?php echo $download_url; ?>" data-tip="<?php _e( 'Print Label ', 'ups-woocommerce-shipping' );echo $post_fix_label; ?>" target="<?php echo $target_val; ?>"><?php _e( 'Print Label ', 'ups-woocommerce-shipping' );echo $post_fix_label ?></a>
 							<hr style="border-color:#0074a2">
 							<?php						
 							// Return Label Link
@@ -659,8 +759,8 @@ class WF_Shipping_UPS_Admin
 		
 		//Address standard followed in all xadapter plugins. 
 		$from_address = array(
-			'name'		=> isset( $ups_settings['ups_user_name'] ) ? $ups_settings['ups_user_name'] : '',
-			'company' 	=> isset( $ups_settings['ups_display_name'] ) ? $ups_settings['ups_display_name'] : '',
+			'name'		=> isset( $ups_settings['ups_display_name'] ) ? $ups_settings['ups_display_name'] : '-',
+			'company' 	=> isset( $ups_settings['ups_user_name'] ) ? $ups_settings['ups_user_name'] : '-',
 			'phone' 	=> (strlen($shipper_phone_number) < 10) ? '0000000000' :  htmlspecialchars( $shipper_phone_number ),
 			'email' 	=> isset( $ups_settings['email'] ) ? $ups_settings['email'] : '',
 
@@ -679,11 +779,11 @@ class WF_Shipping_UPS_Admin
 		//Address standard followed in all xadapter plugins. 
 		return array(
 			'name'		=> $order->shipping_first_name.' '.$order->shipping_last_name,
-			'company' 	=> $order->shipping_company,
+			'company' 	=> !empty($order->shipping_company) ? $order->shipping_company : '-',
 			'phone' 	=> $order->billing_phone,
 			'email' 	=> $order->billing_email,
-			'address_1' => $order->shipping_address_1,
-			'address_2' => $order->shipping_address_2,
+			'address_1'	=> $order->shipping_address_1,
+			'address_2'	=> $order->shipping_address_2,
 			'city' 		=> $order->shipping_city,
 			'state' 	=> $order->shipping_state,
 			'country' 	=> $order->shipping_country,
@@ -770,6 +870,7 @@ class WF_Shipping_UPS_Admin
 			$str 			= isset($_GET['service']) ? str_replace( '\"','', str_replace(']','', str_replace('[','',$_GET['service'])) ) : '';
 			$svc_code 		= explode(',',$str);
 			foreach($shipments as $shipment){
+				$directdeliveryonlyindicator = null;
 				$shipping_service=$svc_code[$service_index];
 				if(in_array($shipping_service,array_keys($this->freight_services)))
 				{
@@ -799,8 +900,8 @@ class WF_Shipping_UPS_Admin
 						// Taking Confirm Shipment Data Into Array for Better Processing and Filtering
 					$request_arr['Shipment']=array();
 
-						//request for access point
-						if($this->accesspoint_locator){// Access Point Addresses Are All Commercial So Overridding ResidentialAddress Condition
+						//request for access point, not required for return label, confirmed by UPS
+						if($this->accesspoint_locator && ! $return_label){// Access Point Addresses Are All Commercial So Overridding ResidentialAddress Condition
 							$access_point_node	=	$this->get_confirm_shipment_accesspoint_request($order);
 							if(!empty($access_point_node)){
 								$ups_residential	=	false;
@@ -891,7 +992,7 @@ class WF_Shipping_UPS_Admin
 
 						$request_arr['Shipment']['Service']	=	array(
 							'Code'			=>	$this->get_service_code_for_country( $shipment['shipping_service'], $from_address['country'] ),
-							'Description'	=>	htmlspecialchars( $shipping_service_name ),					
+							'Description'	=>	( $this->get_service_code_for_country( $shipment['shipping_service'], $from_address['country'] ) == 96 ) ? 'WorldWide Express Freight' : htmlspecialchars( $shipping_service_name ),
 							);
 
 						//Save service id, Required for pickup 
@@ -905,14 +1006,41 @@ class WF_Shipping_UPS_Admin
 								),					
 							);
 						$request_arr['Shipment']['package']['multi_node']	=	1;
+						$numofpieces = 0;	//For Worldwide Express Freight Service
+						
 						foreach ( $shipment['packages'] as $package ) {
 							// InsuredValue should not send with Sure post
 							if( $this->wf_is_surepost( $shipment['shipping_service'] ) ){
 								unset( $package['Package']['PackageServiceOptions']['InsuredValue'] );
 							}
+							
+							//Get direct delivery option from package to set in order level
+							if( empty($directdeliveryonlyindicator) && !empty($package['Package']['DirectDeliveryOnlyIndicator']) ) {
+								$directdeliveryonlyindicator = $package['Package']['DirectDeliveryOnlyIndicator'];
+							}
+							
+							// Unset DirectDeliveryOnlyIndicator, it is not applicable at package level
+							if( isset($package['Package']['DirectDeliveryOnlyIndicator']) ) {
+								unset($package['Package']['DirectDeliveryOnlyIndicator']);
+							}
+							
+							//For Worldwide Express Freight Service
+							if( $shipment['shipping_service'] == 96 ) {
+								$package['Package']['PackagingType']['Code'] = 30;
+								if( isset($package['Package']['items']) ) {
+									$numofpieces    += count($package['Package']['items']);
+								}
+							}
+							$items_in_packages[] = isset($package['Package']['items']) ? $package['Package']['items'] : null ;	    //Contains product which are being packed together
+							unset($package['Package']['items']);
+							
 							$request_arr['Shipment']['package'][] = $package;
 						}
 
+						//For Worldwide Express Freight Service
+						if( $shipment['shipping_service'] == 96 ) {
+							$request_arr['Shipment']['NumOfPiecesInShipment'] = $numofpieces;
+						}
 						// Negotiated Rates Flag
 						if ( $ups_negotiated ) {
 							$request_arr['Shipment']['RateInformation']['NegotiatedRatesIndicator']	=	'';
@@ -926,7 +1054,7 @@ class WF_Shipping_UPS_Admin
 								'AttentionName'	=>	htmlspecialchars( $to_address['company'] ),
 								'Address'		=>	array(
 									'AddressLine1'	=>	htmlspecialchars( $to_address['address_1'] ),
-									'City'			=>	$to_address['city'],
+									'City'		=>	$to_address['city'],
 									'PostalCode'	=>	$to_address['postcode'],
 									'CountryCode'	=>	$to_address['country'],
 									),
@@ -943,18 +1071,35 @@ class WF_Shipping_UPS_Admin
 						}
 						
 						if( $commercial_invoice && ( $from_address['country'] != $to_address['country'] ) ){ // Commercial Invoice is available only for international shipments
-							$soldToPhone	=	(strlen($billing_phone) < 10) ? '0000000000' : htmlspecialchars( $billing_phone ); 
 							
-							$sold_to_arr	=	array(
-								'CompanyName'	=>	substr( htmlspecialchars($to_address['company']), 0, 35 ),
-								'AttentionName'	=>	htmlspecialchars( $to_address['name'] ),
-								'PhoneNumber'	=>	$to_address['phone'],
+							if($return_label){
+								$soldToPhone	=	(strlen($from_address['phone']) < 10) ? '0000000000' : htmlspecialchars( $from_address['phone'] );
+								$company_name	=	substr( htmlspecialchars($from_address['company']), 0, 35 );
+								$sold_to_arr	=	array(
+								'CompanyName'	=>	! empty($company_name) ? $company_name : '-',
+								'AttentionName'	=>	htmlspecialchars( $from_address['name'] ),
+								'PhoneNumber'	=>	$from_address['phone'],
 								'Address'		=>	array(
-									'AddressLine1'	=>	htmlspecialchars( $to_address['address_1'] ),
-									'City'			=>	$to_address['city'],
-									'CountryCode'	=>	$to_address['country']
+									'AddressLine1'	=>	htmlspecialchars( $from_address['address_1'] ),
+									'City'		=>	$from_address['city'],
+									'CountryCode'	=>	$from_address['country']
 									),
 								);
+							}
+							else {
+								$soldToPhone	=	(strlen($to_address['phone']) < 10) ? '0000000000' : htmlspecialchars( $to_address['phone'] );
+								$company_name	=	substr( htmlspecialchars($to_address['company']), 0, 35 );
+								$sold_to_arr	=	array(
+									'CompanyName'	=>	! empty($company_name) ? $company_name : '-',
+									'AttentionName'	=>	htmlspecialchars( $to_address['name'] ),
+									'PhoneNumber'	=>	$to_address['phone'],
+									'Address'		=>	array(
+										'AddressLine1'	=>	htmlspecialchars( $to_address['address_1'] ),
+										'City'		=>	$to_address['city'],
+										'CountryCode'	=>	$to_address['country']
+									),
+								);
+							}
 							if(in_array($to_address['country'], $this->countries_with_statecodes)){ // State Code valid for certain countries only
 								$sold_to_arr['Address']['StateProvinceCode']	=	$to_address['state'];
 							}
@@ -1018,7 +1163,22 @@ class WF_Shipping_UPS_Admin
 								'CurrencyCode'			=>	$this->wcsups->get_ups_currency(),
 								'AdditionalDocumentIndicator'	=>	'1',
 								);
-							
+							if( $return_label ) {
+								$shipmentServiceOptions['InternationalForms']['Contacts']['SoldTo'] = array(
+									'Name'				=>  htmlspecialchars( $from_address['company'] ),
+									'AttentionName'			=>  htmlspecialchars( $from_address['name'] ),
+									'TaxIdentificationNumber'	=>  '',
+									'Phone'				=>	array(
+											'Number'	=>	$soldToPhone,
+									),
+									'Address'			=>	array(
+											'AddressLine'	=>	htmlspecialchars( $from_address['address_1'] ).' '.htmlspecialchars( $from_address['address_2'] ),
+											'City'		=>	$from_address['city'],
+											'PostalCode'	=>	$from_address['postcode'],
+											'CountryCode'	=>	$from_address['country'],
+											)
+									);
+							}
 							$declaration_statement = isset($this->settings[ 'declaration_statement']) ?  $this->settings[ 'declaration_statement'] : '';
 							if( !empty($declaration_statement) ){
 								$shipmentServiceOptions['InternationalForms']['DeclarationStatement'] = $declaration_statement;
@@ -1027,8 +1187,11 @@ class WF_Shipping_UPS_Admin
 							if( !empty($this->reason_export)  && $this->reason_export != 'none' ){
 								$shipmentServiceOptions['InternationalForms']['ReasonForExport']	=	$this->reason_export;
 							}
-							if(in_array($to_address['country'], $this->countries_with_statecodes)){
-								$shipmentServiceOptions['InternationalForms']['Contacts']['SoldTo']['Address']['StateProvinceCode']	=	$to_address['state'];
+							if( $return_label && in_array($from_address['country'], $this->countries_with_statecodes) ) {
+								$shipmentServiceOptions['InternationalForms']['Contacts']['SoldTo']['Address']['StateProvinceCode']	= $from_address['state'];
+							}
+							elseif( ! $return_label && in_array($to_address['country'], $this->countries_with_statecodes)){
+								$shipmentServiceOptions['InternationalForms']['Contacts']['SoldTo']['Address']['StateProvinceCode']	= $to_address['state'];
 							}
 							$shipmentServiceOptions['InternationalForms']['Product']	=	array_merge(array('multi_node'=>1), $invoice_products);
 						}
@@ -1071,6 +1234,12 @@ class WF_Shipping_UPS_Admin
 								$shipmentServiceOptions['Notification']['EMailMessage']['UndeliverableEMailAddress'] = $shipper_email;
 							}
 						}
+						
+						//Set Direct delivery in the actual request
+						if( !empty($directdeliveryonlyindicator) ) {
+							$shipmentServiceOptions['DirectDeliveryOnlyIndicator'] = $directdeliveryonlyindicator;
+						}
+						
 						if(sizeof($shipmentServiceOptions)){
 							$request_arr['Shipment']['ShipmentServiceOptions']	=	empty( $request_arr['Shipment']['ShipmentServiceOptions'] ) ? $shipmentServiceOptions : array_merge($shipmentServiceOptions,$request_arr['Shipment']['ShipmentServiceOptions'] );
 						}
@@ -1270,7 +1439,7 @@ function wf_create_package( $order, $to_address=array() ){
 		$items[$item_id] 	= array('data' => $product_data , 'quantity' => $orderItem['qty']);
 	}
 
-	$package['contents'] = $items;
+	$package['contents'] = isset($items) ? $items : array();	//If no items exist in order $items won't be set
 	$package['destination'] = array (
 		'country' 	=> !empty($to_address) ? $to_address['country'] : $order->shipping_country,
 		'state' 	=> !empty($to_address) ? $to_address['state'] : $order->shipping_state,
@@ -1284,8 +1453,14 @@ function wf_create_package( $order, $to_address=array() ){
 
 function wf_ups_generate_packages(){
 	$query_string 		= 	explode('|', base64_decode($_GET['wf_ups_generate_packages']));
-	$post_id 			= 	$query_string[1];
-	$order				= 	$this->wf_load_order( $post_id );
+	$post_id 		= 	$query_string[1];
+	$order			= 	$this->wf_load_order( $post_id );
+	$order_items		=	$order->get_items();
+	if( empty($order_items) && class_exists('WC_Admin_Meta_Boxes') ) {
+		WC_Admin_Meta_Boxes::add_error(__('UPS - No product Found.'));
+		wp_redirect( admin_url( '/post.php?post='.$post_id.'&action=edit') );
+		exit();
+	}
 	$package_data		=	$this->wf_get_package_data($order);
 
 	if(empty($package_data)) {
@@ -1328,9 +1503,13 @@ function wf_ups_generate_packages(){
 		update_post_meta( $post_id, '_wf_ups_stored_packages', $package_data );
 	}
 	do_action( 'wf_after_package_generation', $post_id,$package_data);
-	wp_redirect( admin_url( '/post.php?post='.$post_id.'&action=edit') );
+	
+	// If automatic label generation is on then don't redirect otherwise it will throw warning Cannot modify header information - headers already sent
+	if( ( ! $this->debug ) || ( $this->settings['automate_label_generation'] == 'no' ) ) {
+		wp_redirect( admin_url( '/post.php?post='.$post_id.'&action=edit') );
+	}
 	exit;
-}	
+}
 
 function wf_ups_shipment_confirm(){
 	if( !$this->wf_user_check(isset($_GET['auto_generate'])?$_GET['auto_generate']:null) ) {
@@ -2422,7 +2601,9 @@ function split_shipment_by_services($ship_packages, $order, $return_label=false)
                  }
 
 		foreach($service_arr as $count => $service_code){
-			$shipment_arr[$service_code][]	=	$ship_packages[$count];
+			if(isset($ship_packages[$count] ) ) {
+				$shipment_arr[$service_code][]	=	$ship_packages[$count];
+			}
 		}
 
 
@@ -2995,6 +3176,89 @@ function ups_accept_shipment($order_id){
 	public function wf_save_variation_settings_fields( $post_id ){
 		$checkbox = isset( $_POST['_wf_pre_packed_product_var'][ $post_id ] ) ? 'yes' : 'no';
 		update_post_meta( $post_id, '_wf_pre_packed_product_var', $checkbox );
+	}
+	
+	/**
+	 * To calculate the shipping cost on order page.
+	 */
+	public function wf_ups_generate_packages_rates() {
+		if( ! $this->wf_user_check() ) {
+			echo "You don't have admin privileges to view this page.";
+			exit;
+		}
+		
+		$post_id		= base64_decode($_GET['wf_ups_generate_packages_rates']);
+		$length_arr		= explode(',',$_GET['length']);
+		$width_arr		= explode(',',$_GET['width']);
+		$height_arr		= explode(',',$_GET['height']);
+		$weight_arr		= explode(',',$_GET['weight']);
+		$insurance_arr		= explode(',',$_GET['insurance']);
+		$get_stored_packages	= get_post_meta( $post_id, '_wf_ups_stored_packages', true );
+		$package_data		= $get_stored_packages;
+		
+		$shipping_obj	    = new WF_Shipping_UPS();
+		$order		    = wc_get_order($post_id);
+		
+		$shipping_address	= $order->get_address();
+
+		$address_package    = array(
+			'destination'	=> array(
+				'address'	=>	$shipping_address['address_1'].' '.$shipping_address['address_2'],
+				'country'	=>	$shipping_address['country'],
+				'state'		=>	$shipping_address['state'],
+				'postcode'	=>	$shipping_address['postcode'],
+				'city'		=>	$shipping_address['city'],
+
+			),
+		);
+
+		foreach ($get_stored_packages as $package_key => $package) {
+			if(!empty($package))
+			{
+				foreach ($package as $key => $value) {
+					if( ! empty($weight_arr[$package_key] ) ) {
+						$package_data[$package_key][$key]['PackageWeight']['Weight']			= $weight_arr[$package_key];
+						$package_data[$package_key][$key]['PackageWeight']['UnitOfMeasurement']['Code']	= $shipping_obj->weight_unit;
+					}
+					else {
+						wf_admin_notice::add_notice( sprintf( __( 'UPS rate request failed - Weight is missing. Aborting.', 'ups-woocommerce-shipping' ) ), 'error' );
+						// Redirect to same order page
+						wp_redirect( admin_url( '/post.php?post='.$post_id.'&action=edit') );
+						exit;	    //To stay on same order page
+					}
+
+					if( ! empty($length_arr[$package_key]) && ! empty($width_arr[$package_key]) && ! empty($height_arr[$package_key]) ) {
+						$package_data[$package_key][$key]['Dimensions'] = array(
+							'UnitOfMeasurement'	=> array( 'Code' => $shipping_obj->dim_unit ),
+							'Length'		=>  $length_arr[$package_key],
+							'Width'			=>  $width_arr[$package_key],
+							'Height'		=>  $height_arr[$package_key],
+						);
+					}
+					else {
+						unset($package_data[$package_key][$key]['Dimensions']);
+					}
+					
+					if( ! empty($insurance_arr[$package_key]) ) {
+						$package_data[$package_key][$key]['PackageServiceOptions']['InsuredValue'] = array(
+							'CurrencyCode'	=>  $shipping_obj->get_ups_currency(),
+							'MonetaryValue'	=>  $insurance_arr[$package_key],
+						);
+					}
+				}
+			}
+		}
+//		$_GET['order_id'] = $post_id;	    // To save the rate request response
+		if( $get_stored_packages != $package_data) {
+			update_post_meta( $post_id, '_wf_ups_stored_packages', $package_data );	// Update the packages in database
+		}
+
+		$rate_request = $shipping_obj->get_rate_requests( $package_data, $address_package );
+		$rates =  $shipping_obj->process_result( $shipping_obj->get_result($rate_request) );
+		update_post_meta( $post_id, 'wf_ups_generate_packages_rates_response', $rates );
+		// Redirect to same order page
+		wp_redirect( admin_url( '/post.php?post='.$post_id.'&action=edit#CyDUPS_metabox') );
+		exit;	    //To stay on same order page
 	}
 }
 new WF_Shipping_UPS_Admin();

@@ -7,13 +7,15 @@
 class FLWooCartButtonModule extends FLBuilderModule {
 
 	/**
-	 * @method __construct
+	 * @since 1.0
+	 * @return void
 	 */
 	public function __construct() {
 		parent::__construct(array(
 			'name'          	=> __( 'Add to Cart Button', 'fl-theme-builder' ),
 			'description'   	=> __( 'Displays the cart button for the current product.', 'fl-theme-builder' ),
-			'category'      	=> __( 'WooCommerce Modules', 'fl-theme-builder' ),
+			'group'       		=> __( 'Themer Modules', 'fl-theme-builder' ),
+			'category'      	=> __( 'WooCommerce', 'fl-theme-builder' ),
 			'partial_refresh'	=> true,
 			'dir'               => FL_THEME_BUILDER_DIR . 'extensions/woocommerce/modules/fl-woo-cart-button/',
 			'url'               => FL_THEME_BUILDER_URL . 'extensions/woocommerce/modules/fl-woo-cart-button/',

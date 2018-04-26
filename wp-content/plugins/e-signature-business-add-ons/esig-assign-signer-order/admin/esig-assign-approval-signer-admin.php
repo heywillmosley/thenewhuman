@@ -33,7 +33,7 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
             $this->plugin_slug = "esig-order";
             add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
 
-            add_action('esig_signature_saved', array($this, 'signature_saved'),998, 1);
+            add_action('esig_document_pre_close', array($this, 'signature_saved'),998, 1);
 
             add_filter('esig_admin_advanced_document_contents', array($this, 'assign_approval_signer'), 10, 1);
 
@@ -226,6 +226,7 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
                 return;
             }
             // sending invitation and saveing 
+           
             $this->send_invite_approval_signer($old_doc_id, $document_id);
 
             $api->document->updateType($document_id, "normal");
@@ -236,11 +237,14 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
             $pageID = $api->setting->get_generic('default_display_page');
             // preparing redirect link 
             $siteURL = add_query_arg(array('invite' => $args['invitation']->invite_hash, 'csum' => $api->document->document_checksum_by_id($document_id)), get_permalink($pageID));
-            if (!ESIG_URL_Admin::is_url_exists($old_doc_id)) {
+            //if (!ESIG_URL_Admin::is_url_exists($old_doc_id)) {
+                // trigger a hook before redirecting to normal view page.
+                do_action('esig_approval_signer_added', array('document_id' => $document_id,'sad_doc_id' => $old_doc_id));
+                
                 wp_redirect($siteURL);
                 exit;
-            }
-            return ;
+           // }
+            //return ;
         }
 
         public function send_invite_approval_signer($old_doc_id, $document_id, $first_signer_id = false) {
@@ -313,6 +317,7 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
                         $invitationsController->save($invitation);
                     }
                 } else {
+                    
                     $invitationsController->saveThenSend($invitation, $doc);
                 }
 

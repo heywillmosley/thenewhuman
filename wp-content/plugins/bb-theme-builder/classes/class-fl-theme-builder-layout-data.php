@@ -73,9 +73,10 @@ final class FLThemeBuilderLayoutData {
 	 */
 	static public function get_settings( $post_id ) {
 		$defaults = array(
-			'sticky'  => 0,
-			'shrink'  => 0,
-			'overlay' => 0,
+			'sticky'     => 0,
+			'shrink'     => 0,
+			'overlay'    => 0,
+			'overlay_bg' => 'transparent',
 		);
 
 		$settings = get_post_meta( $post_id, '_fl_theme_layout_settings', true );
@@ -199,6 +200,9 @@ final class FLThemeBuilderLayoutData {
 		if ( ! self::$current_page_layouts ) {
 
 			$layouts    = array();
+			$headers    = get_theme_support( 'fl-theme-builder-headers' );
+			$footers    = get_theme_support( 'fl-theme-builder-footers' );
+			$parts      = get_theme_support( 'fl-theme-builder-parts' );
 			$posts      = FLThemeBuilderRulesLocation::get_current_page_posts();
 			$post_id    = get_the_ID();
 			$post_type  = get_post_type();
@@ -209,10 +213,22 @@ final class FLThemeBuilderLayoutData {
 				$saved_type = get_post_meta( $post_id, '_fl_theme_layout_type', true );
 
 				if ( ! isset( $posts[ $post_id ] ) ) {
-					$posts[ $post_id ] = array(
+					// php 5.6 and below we can just add the array to $posts
+					if ( version_compare( PHP_VERSION, '7.0.0', '<' ) ) {
+						$posts[ $post_id ] = array(
 						'id'        => $post_id,
 						'locations' => array( 'general:single' ),
-					);
+						);
+					} else {
+						// php7 and above we need to merge in the array
+						$temp = array();
+						$temp[ $post_id ] = array(
+							'id'        => $post_id,
+							'locations' => array( 'general:single' ),
+						);
+						$posts = array_merge( $temp, $posts );
+						unset( $temp );
+					}
 				}
 			}
 
@@ -222,6 +238,14 @@ final class FLThemeBuilderLayoutData {
 				$post['type']  = $meta['_fl_theme_layout_type'][0];
 				$post['hook']  = isset( $meta['_fl_theme_layout_hook'] ) ? $meta['_fl_theme_layout_hook'][0] : false;
 				$post['order'] = isset( $meta['_fl_theme_layout_order'] ) ? $meta['_fl_theme_layout_order'][0] : false;
+
+				if ( ! $headers && 'header' == $post['type'] ) {
+					continue;
+				} elseif ( ! $footers && 'footer' == $post['type'] ) {
+					continue;
+				} elseif ( ! $parts && 'part' == $post['type'] ) {
+					continue;
+				}
 
 				if ( 'singular' == $post['type'] ) {
 
@@ -250,7 +274,7 @@ final class FLThemeBuilderLayoutData {
 				uasort( $layouts[ $layout_type ], array( 'FLThemeBuilderLayoutData', 'order_layouts' ) );
 			}
 
-			self::$current_page_layouts = $layouts;
+			self::$current_page_layouts = apply_filters( 'fl_theme_builder_current_page_layouts', $layouts );
 		}
 
 		if ( ! $type ) {

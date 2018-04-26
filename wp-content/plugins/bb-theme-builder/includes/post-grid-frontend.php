@@ -7,7 +7,7 @@
 
 	FLPostGridModule::schema_meta();
 
-	echo do_shortcode( $settings->custom_post_layout->html );
+	echo do_shortcode( FLThemeBuilderFieldConnections::parse_shortcodes( $settings->custom_post_layout->html ) );
 
 	?>
 </div>

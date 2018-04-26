@@ -12,6 +12,9 @@ final class FLThemeBuilderWooCommerce {
 	 * @return void
 	 */
 	static public function init() {
+		// As of WooCommerce 3.3.3, if we don't have this, things break.
+		add_theme_support( 'woocommerce' );
+
 		// Actions
 		add_action( 'wp',  __CLASS__ . '::load_modules', 1 );
 	}

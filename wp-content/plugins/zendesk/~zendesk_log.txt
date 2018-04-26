@@ -9,3 +9,9 @@
     #8: WP_Hook->do_action() - /home/thenewhu/public_html/wp-includes/plugin.php:453
     #9: do_action() - /home/thenewhu/public_html/wp-admin/admin.php:154
     #10: require_once() - /home/thenewhu/public_html/wp-admin/index.php:10
+2018-04-09 16:08:25 - Zendesk API GET Error (https://newhuman1.zendesk.com/api/v2/views.json): cURL error 28: Operation timed out after 5001 milliseconds with 0 bytes received
+    #1: Zendesk_Wordpress_API->_get() - plugins/zendesk/classes/zendesk-wordpress-api.php:255
+    #2: Zendesk_Wordpress_API->get_views() - plugins/zendesk/classes/zendesk-wordpress-dashboard-widget.php:230
+    #3: Zendesk_Wordpress_Dashboard_Widget->_dashboard_widget_tickets() - /home/thenewhu/public_html/wp-admin/includes/template.php:1063
+    #4: do_meta_boxes() - /home/thenewhu/public_html/wp-admin/includes/dashboard.php:224
+    #5: wp_dashboard() - /home/thenewhu/public_html/wp-admin/index.php:134

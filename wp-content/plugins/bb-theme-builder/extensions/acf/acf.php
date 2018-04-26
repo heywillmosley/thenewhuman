@@ -1,7 +1,7 @@
 <?php
 
 define( 'FL_THEME_BUILDER_ACF_DIR', FL_THEME_BUILDER_DIR . 'extensions/acf/' );
-define( 'FL_THEME_BUILDER_ACF_URL', FL_THEME_BUILDER_DIR . 'extensions/acf/' );
+define( 'FL_THEME_BUILDER_ACF_URL', FL_THEME_BUILDER_URL . 'extensions/acf/' );
 
 add_action( 'fl_page_data_add_properties', function() {
 	if ( class_exists( 'acf' ) ) {

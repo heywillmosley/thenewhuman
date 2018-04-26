@@ -2,7 +2,7 @@
 	text-align: <?php echo $settings->align; ?>;
 }
 
-<?php if ( ! empty( $settings->font ) && $settings->font['family'] != 'Default' ) : ?>
+<?php if ( ! empty( $settings->font ) && 'Default' != $settings->font['family'] ) : ?>
 .fl-node-<?php echo $id; ?> .fl-module-content .product_title {
 	<?php FLBuilderFonts::font_css( $settings->font ); ?>
 }

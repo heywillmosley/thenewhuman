@@ -35,32 +35,33 @@ final class FLThemeBuilderLayoutPostType {
 
 		register_post_type( 'fl-theme-layout', apply_filters( 'fl_theme_builder_layout_register_post_type_args', array(
 			'labels'                => array(
-				'name'                  => _x( 'Theme Layouts', 'Custom post type label.', 'fl-theme-builder' ),
-				'singular_name'         => _x( 'Theme Layout', 'Custom post type label.', 'fl-theme-builder' ),
-				'menu_name'             => _x( 'Theme Layouts', 'Custom post type label.', 'fl-theme-builder' ),
-				'name_admin_bar'        => _x( 'Theme Layout', 'Custom post type label.', 'fl-theme-builder' ),
+				'name'                  => _x( 'Themer Layouts', 'Custom post type label.', 'fl-theme-builder' ),
+				'singular_name'         => _x( 'Themer Layout', 'Custom post type label.', 'fl-theme-builder' ),
+				'menu_name'             => _x( 'Themer Layouts', 'Custom post type label.', 'fl-theme-builder' ),
+				'name_admin_bar'        => _x( 'Themer Layout', 'Custom post type label.', 'fl-theme-builder' ),
 				'add_new'               => _x( 'Add New', 'Custom post type label.', 'fl-theme-builder' ),
-				'add_new_item'          => _x( 'Add New Theme Layout', 'Custom post type label.', 'fl-theme-builder' ),
-				'new_item'              => _x( 'New Theme Layout', 'Custom post type label.', 'fl-theme-builder' ),
-				'edit_item'             => _x( 'Edit Theme Layout', 'Custom post type label.', 'fl-theme-builder' ),
-				'view_item'             => _x( 'View Theme Layout', 'Custom post type label.', 'fl-theme-builder' ),
-				'all_items'             => _x( 'All Theme Layouts', 'Custom post type label.', 'fl-theme-builder' ),
-				'search_items'          => _x( 'Search Theme Layouts', 'Custom post type label.', 'fl-theme-builder' ),
-				'parent_item_colon'     => _x( 'Parent Theme Layout:', 'Custom post type label.', 'fl-theme-builder' ),
-				'not_found'             => _x( 'No theme layouts found.', 'Custom post type label.', 'fl-theme-builder' ),
-				'not_found_in_trash'    => _x( 'No theme layouts found in Trash.', 'Custom post type label.', 'fl-theme-builder' ),
+				'add_new_item'          => _x( 'Add New Themer Layout', 'Custom post type label.', 'fl-theme-builder' ),
+				'new_item'              => _x( 'New Themer Layout', 'Custom post type label.', 'fl-theme-builder' ),
+				'edit_item'             => _x( 'Edit Themer Layout', 'Custom post type label.', 'fl-theme-builder' ),
+				'view_item'             => _x( 'View Themer Layout', 'Custom post type label.', 'fl-theme-builder' ),
+				'all_items'             => _x( 'All Themer Layouts', 'Custom post type label.', 'fl-theme-builder' ),
+				'search_items'          => _x( 'Search Themer Layouts', 'Custom post type label.', 'fl-theme-builder' ),
+				'parent_item_colon'     => _x( 'Parent Themer Layout:', 'Custom post type label.', 'fl-theme-builder' ),
+				'not_found'             => _x( 'No Themer layouts found.', 'Custom post type label.', 'fl-theme-builder' ),
+				'not_found_in_trash'    => _x( 'No Themer layouts found in Trash.', 'Custom post type label.', 'fl-theme-builder' ),
 			),
 			'supports'              => array(
 				'title',
 				'revisions',
-				'thumbnail'
+				'thumbnail',
 			),
 			'taxonomies'		=> array(
 				'fl-builder-template-category'
 			),
 			'menu_icon'			    => 'dashicons-welcome-widgets-menus',
-			'public'                => $can_edit,
+			'public'                => false,
 			'publicly_queryable'    => $can_edit,
+			'show_ui'    			=> $can_edit,
 			'show_in_menu'          => false,
 			'show_in_nav_menus'     => false,
 			'show_in_admin_bar'     => $can_edit && $builder_admin,
@@ -78,7 +79,7 @@ final class FLThemeBuilderLayoutPostType {
 	static public function load_page_template( $template ) {
 		global $post;
 
-		if ( 'string' == gettype( $template ) && is_object( $post ) && $post->post_type == 'fl-theme-layout' ) {
+		if ( 'string' == gettype( $template ) && is_object( $post ) && 'fl-theme-layout' == $post->post_type ) {
 
 			$type = get_post_meta( $post->ID, '_fl_theme_layout_type', true );
 

@@ -75,8 +75,8 @@ final class FLThemeBuilderFieldConnections {
 			wp_enqueue_style( $slug, FL_THEME_BUILDER_URL . 'css/' . $slug . '.css', array(), FL_THEME_BUILDER_VERSION );
 			wp_enqueue_style( 'tether', FL_THEME_BUILDER_URL . 'css/tether.min.css', array(), FL_THEME_BUILDER_VERSION );
 
-			wp_enqueue_script( $slug, FL_THEME_BUILDER_URL . 'js/' . $slug . '.js', array(), FL_THEME_BUILDER_VERSION );
-			wp_enqueue_script( 'tether', FL_THEME_BUILDER_URL . 'js/tether.min.js', array(), FL_THEME_BUILDER_VERSION );
+			wp_enqueue_script( $slug, FL_THEME_BUILDER_URL . 'js/' . $slug . '.js', array( 'jquery' ), FL_THEME_BUILDER_VERSION );
+			wp_enqueue_script( 'tether', FL_THEME_BUILDER_URL . 'js/tether.min.js', array( 'jquery' ), FL_THEME_BUILDER_VERSION );
 		}
 	}
 
@@ -221,7 +221,7 @@ final class FLThemeBuilderFieldConnections {
 					'archive'   => array(),
 					'post'      => array(),
 					'site'      => array(),
-				)
+				),
 			);
 		}
 
@@ -247,9 +247,9 @@ final class FLThemeBuilderFieldConnections {
 		// Remove any empty groups from the menu data.
 		foreach ( $menu as $group_key => $group ) {
 
-			$no_archive = 0 === count( $group['properties']['archive'] );
-			$no_post    = 0 === count( $group['properties']['post'] );
-			$no_site    = 0 === count( $group['properties']['site'] );
+			$no_archive = 0 === count( $group['properties']['archive'] ); // @codingStandardsIgnoreLine
+			$no_post    = 0 === count( $group['properties']['post'] ); // @codingStandardsIgnoreLine
+			$no_site    = 0 === count( $group['properties']['site'] ); // @codingStandardsIgnoreLine
 
 			if ( $no_archive && $no_post && $no_site ) {
 				unset( $menu[ $group_key ] );
@@ -322,19 +322,19 @@ final class FLThemeBuilderFieldConnections {
 	 * @return void
 	 */
 	static public function connect_all_layout_settings() {
-	    if ( ! self::is_connecting_allowed() ) {
-		    return;
-	    }
+		if ( ! self::is_connecting_allowed() ) {
+			return;
+		}
 
-	    $layout_ids  = FLThemeBuilderLayoutData::get_current_page_layout_ids();
-	    $node_status = FLBuilderModel::get_node_status();
-	    $connected   = false;
+		$layout_ids  = FLThemeBuilderLayoutData::get_current_page_layout_ids();
+		$node_status = FLBuilderModel::get_node_status();
+		$connected   = false;
 
-	    if ( empty( $layout_ids ) ) {
-		    return;
-	    }
+		if ( empty( $layout_ids ) ) {
+			return;
+		}
 
-	    FLThemeBuilderRulesLocation::set_preview_query();
+		FLThemeBuilderRulesLocation::set_preview_query();
 
 		while ( have_posts() ) {
 
@@ -372,41 +372,49 @@ final class FLThemeBuilderFieldConnections {
 	 * @return object
 	 */
 	static public function connect_node_settings( $settings, $node ) {
-	    $nested = array();
+		$repeater = array();
+		$nested   = array();
 
-	    // Gather any nested settings.
-	    foreach ( $settings as $key => $value ) {
-		    if ( is_array( $value ) && count( $value ) && isset( $value[0]->connections ) ) {
-			    $nested[] = $key;
-		    }
-	    }
-
-	    // Return if we don't have connections.
-	    if ( ! isset( $settings->connections ) && empty( $nested ) ) {
-		    return $settings;
-		}
-
-	    // Return if connecting isn't allowed right now.
-		if ( ! self::is_connecting_allowed() ) {
-	    	return $settings;
-		}
-
-		// Return cached connections?
-	    if ( isset( self::$connected_settings[ $node->node ] ) ) {
-		    return self::$connected_settings[ $node->node ];
-	    }
-
-	    // Connect the main settings object.
-	    $settings = self::connect_settings( $settings );
-
-	    // Connect any nested settings.
-	    foreach ( $nested as $key ) {
-		    for ( $i = 0; $i < count( $settings->$key ); $i++ ) {
-			    $settings->{ $key }[ $i ] = self::connect_settings( $settings->{ $key }[ $i ] );
+		// Gather any repeater or nested settings.
+		foreach ( $settings as $key => $value ) {
+			if ( is_array( $value ) && count( $value ) && isset( $value[0]->connections ) ) {
+				$repeater[] = $key;
+			} elseif ( is_object( $value ) && isset( $value->connections ) ) {
+				$nested[] = $key;
 			}
 		}
 
-	    // Cache the connected settings.
+		// Return if we don't have connections.
+		if ( ! isset( $settings->connections ) && empty( $repeater ) && empty( $nested ) ) {
+			return $settings;
+		}
+
+		// Return if connecting isn't allowed right now.
+		if ( ! self::is_connecting_allowed() ) {
+			return $settings;
+		}
+
+		// Return cached connections?
+		if ( isset( self::$connected_settings[ $node->node ] ) ) {
+			return self::$connected_settings[ $node->node ];
+		}
+
+		// Connect the main settings object.
+		$settings = self::connect_settings( $settings );
+
+		// Connect any repeater settings.
+		foreach ( $repeater as $key ) {
+			for ( $i = 0; $i < count( $settings->$key ); $i++ ) {
+				$settings->{ $key }[ $i ] = self::connect_settings( $settings->{ $key }[ $i ] );
+			}
+		}
+
+		// Connect any nested settings.
+		foreach ( $nested as $key ) {
+			$settings->{ $key } = self::connect_settings( $settings->{ $key } );
+		}
+
+		// Cache the connected settings.
 		self::$connected_settings[ $node->node ] = $settings;
 
 		return $settings;
@@ -421,28 +429,28 @@ final class FLThemeBuilderFieldConnections {
 	 * @return object
 	 */
 	static public function connect_settings( $settings ) {
-	    global $post;
+		global $post;
 
-	    // Return if we don't have connections.
-	    if ( ! isset( $settings->connections ) ) {
-		    return $settings;
+		// Return if we don't have connections.
+		if ( ! isset( $settings->connections ) ) {
+			return $settings;
 		}
 
 		// Loop through the settings and connect them.
 		foreach ( $settings->connections as $key => $data ) {
 
-	        if ( is_string( $data ) ) {
-		        $data = json_decode( $data );
-	        }
+			if ( is_string( $data ) ) {
+				$data = json_decode( $data );
+			}
 
 			if ( ! empty( $data ) && is_object( $data ) ) {
 
-	            $property       = FLPageData::get_property( $data->object, $data->property );
-	            $data->settings = isset( $data->settings ) ? $data->settings : null;
+				$property       = FLPageData::get_property( $data->object, $data->property );
+				$data->settings = isset( $data->settings ) ? $data->settings : null;
 
-	            if ( ! $property ) {
-		            continue;
-	            } elseif ( isset( $property['placeholder'] ) && is_object( $post ) && 'fl-theme-layout' == $post->post_type ) {
+				if ( ! $property ) {
+					continue;
+				} elseif ( isset( $property['placeholder'] ) && is_object( $post ) && 'fl-theme-layout' == $post->post_type ) {
 					$settings->{ $key } = $property['placeholder'];
 				} else {
 					$settings->{ $key } = FLPageData::get_value( $data->object, $data->property, $data->settings );
@@ -461,7 +469,7 @@ final class FLThemeBuilderFieldConnections {
 			}
 		}
 
-	    return $settings;
+		return $settings;
 	}
 
 	/**
@@ -487,33 +495,33 @@ final class FLThemeBuilderFieldConnections {
 	 * @return string
 	 */
 	static public function parse_shortcode( $attrs ) {
-	    global $post;
+		global $post;
 
-	    if ( ! isset( $attrs ) || ! isset( $attrs[0] ) ) {
-		    return;
-	    }
+		if ( ! isset( $attrs ) || ! isset( $attrs[0] ) ) {
+			return;
+		}
 
-	    $type     = explode( ':', $attrs[0] );
-	    $settings = null;
+		$type     = explode( ':', $attrs[0] );
+		$settings = null;
 
-	    if ( count( $type ) < 2 ) {
-		    return '';
-	    }
+		if ( count( $type ) < 2 ) {
+			return '';
+		}
 
-	    if ( count( $attrs ) > 1 ) {
-		    unset( $attrs[0] );
-		    $settings = (object) $attrs;
-	    }
+		if ( count( $attrs ) > 1 ) {
+			unset( $attrs[0] );
+			$settings = (object) $attrs;
+		}
 
-	    $property = FLPageData::get_property( $type[0], $type[1] );
+		$property = FLPageData::get_property( $type[0], $type[1] );
 
-	    if ( ! $property ) {
+		if ( ! $property ) {
 			return '';
 		} elseif ( isset( $property['placeholder'] ) && is_object( $post ) && 'fl-theme-layout' == $post->post_type ) {
 			return $property['placeholder'];
 		}
 
-	    return FLPageData::get_value( $type[0], $type[1], $settings );
+		return FLPageData::get_value( $type[0], $type[1], $settings );
 	}
 
 	/**
@@ -525,27 +533,34 @@ final class FLThemeBuilderFieldConnections {
 	 * @return string
 	 */
 	static public function parse_conditional_shortcode( $attrs, $content = '' ) {
-	    if ( ! isset( $attrs ) || ! isset( $attrs[0] ) ) {
-		    return __( 'Incorrect wpbb-if shortcode attributes.', 'fl-theme-builder' );
-	    }
+		if ( ! isset( $attrs ) || ! isset( $attrs[0] ) ) {
+			return __( 'Incorrect wpbb-if shortcode attributes.', 'fl-theme-builder' );
+		}
 
-	    $parts = explode( ':', $attrs[0] );
+		$parts = explode( ':', $attrs[0] );
 
-	    if ( count( $parts ) < 2 ) {
-		    return __( 'Incorrect wpbb-if shortcode attributes.', 'fl-theme-builder' );
-	    }
+		if ( count( $parts ) < 2 ) {
+			return __( 'Incorrect wpbb-if shortcode attributes.', 'fl-theme-builder' );
+		}
 
-	    $not      = 0 === strpos( $parts[0], '!' );
-	    $attrs[0] = str_replace( '!', '', $attrs[0] );
-	    $value    = self::parse_shortcode( $attrs );
+		$else     = false;
+		$not      = 0 === strpos( $parts[0], '!' ); // @codingStandardsIgnoreLine
+		$attrs[0] = str_replace( '!', '', $attrs[0] );
+		$value    = self::parse_shortcode( $attrs );
+		if ( false !== strpos( $content, '[wpbb-else]' ) ) {
+			$else     = substr( $content, strpos( $content, '[wpbb-else]' ) );
+			$content  = str_replace( $else, '',  $content );
+		}
 
-	    if ( $not && empty( $value ) ) {
-		    return do_shortcode( $content );
-	    } elseif ( ! $not && $value ) {
-		    return do_shortcode( $content );
-	    }
-
-	    return '';
+		if ( $not && empty( $value ) ) {
+			return do_shortcode( $content );
+		} elseif ( ! $not && $value ) {
+			return do_shortcode( $content );
+		}
+		if ( $else ) {
+			return do_shortcode( str_replace( '[wpbb-else]', '', $else ) );
+		}
+		return '';
 	}
 
 	/**
@@ -556,17 +571,17 @@ final class FLThemeBuilderFieldConnections {
 	 * @return bool
 	 */
 	static public function is_connecting_allowed() {
-	    if ( defined( 'DOING_AJAX' ) ) {
+		if ( defined( 'DOING_AJAX' ) ) {
 
-		    if ( FLBuilderModel::is_builder_active() ) {
+			if ( FLBuilderModel::is_builder_active() ) {
 
-			    $action = 'fl_builder_before_render_ajax_layout';
+				$action = 'fl_builder_before_render_ajax_layout';
 
-			    if ( doing_action( $action ) || did_action( $action ) ) {
-				    return true;
-			    } else {
-				    return false;
-			    }
+				if ( doing_action( $action ) || did_action( $action ) ) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 

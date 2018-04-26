@@ -43,7 +43,7 @@ final class FLThemeBuilderRulesUser {
 				$saved = self::get_saved( $post['id'] );
 			}
 
-			if ( 0 === count( $saved ) ) {
+			if ( 0 === count( $saved ) || in_array( 'general:all', $saved ) ) {
 				$posts['all'][] = $post;
 			} else {
 
@@ -64,6 +64,14 @@ final class FLThemeBuilderRulesUser {
 			if ( in_array( $rule, $user->roles ) ) {
 				return $rule_posts;
 			}
+		}
+
+		/**
+		 * If on post type 'fl-theme-layout' return $posts['all']
+		 * @since 1.0.3
+		 */
+		if ( 'fl-theme-layout' === get_post_type() ) {
+			return $posts['all'];
 		}
 
 		foreach ( $posts['general'] as $rule => $rule_posts ) {
@@ -157,6 +165,11 @@ final class FLThemeBuilderRulesUser {
 			'general' => array(
 				'label' => __( 'General', 'fl-theme-builder' ),
 				'rules' => array(
+					'all' => array(
+						'id'     => 'all',
+						'label' => __( 'All Users', 'fl-theme-builder' ),
+						'type'  => 'general',
+					),
 					'logged-in' => array(
 						'id'     => 'logged-in',
 						'label' => __( 'Logged In', 'fl-theme-builder' ),

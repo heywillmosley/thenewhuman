@@ -33,34 +33,17 @@ final class FLThemeBuilderLayoutTemplates {
 	 */
 	static public function register_templates() {
 
-		if ( class_exists( 'FLBuilderAddon' ) ) {
-			// 2.0 style register
-			FLBuilder::register_templates( array(
-					FL_THEME_BUILDER_DIR . 'data/templates-header.dat',
-					FL_THEME_BUILDER_DIR . 'data/templates-footer.dat',
-					FL_THEME_BUILDER_DIR . 'data/templates-singular.dat',
-					FL_THEME_BUILDER_DIR . 'data/templates-archive.dat',
-					FL_THEME_BUILDER_DIR . 'data/templates-404.dat',
-				), array(
-					'name'     => __( 'Themer Templates', 'fl-builder' ),
-					'handle'   => 'standard',
-					'_builtin' => true
-				)
-			);
-		} else {
-			// 1.0 style register
-			$templates = array(
-				FL_THEME_BUILDER_DIR . 'data/templates-header.dat',
-				FL_THEME_BUILDER_DIR . 'data/templates-footer.dat',
-				FL_THEME_BUILDER_DIR . 'data/templates-singular.dat',
-				FL_THEME_BUILDER_DIR . 'data/templates-archive.dat',
-				FL_THEME_BUILDER_DIR . 'data/templates-404.dat',
-			);
+		$templates = array(
+			FL_THEME_BUILDER_DIR . 'data/templates-header.dat',
+			FL_THEME_BUILDER_DIR . 'data/templates-footer.dat',
+			FL_THEME_BUILDER_DIR . 'data/templates-singular.dat',
+			FL_THEME_BUILDER_DIR . 'data/templates-archive.dat',
+			FL_THEME_BUILDER_DIR . 'data/templates-404.dat',
+		);
 
-			foreach ( $templates as $path ) {
-				if ( file_exists( $path ) ) {
-					FLBuilder::register_templates( $path );
-				}
+		foreach ( $templates as $path ) {
+			if ( file_exists( $path ) ) {
+				FLBuilder::register_templates( $path );
 			}
 		}
 	}
@@ -110,6 +93,21 @@ final class FLThemeBuilderLayoutTemplates {
 			$filter[] = 'Products';
 		}
 
+		if ( ! defined( 'TRIBE_EVENTS_FILE' ) ) {
+			$filter[] = 'Event';
+			$filter[] = 'Events';
+		}
+
+		if ( ! defined( 'EVENTS_CALENDAR_PRO_FILE' ) ) {
+			$filter[] = 'Event Venue';
+			$filter[] = 'Event Organizer';
+		}
+
+		if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
+			$filter[] = 'Download';
+			$filter[] = 'Downloads';
+		}
+
 		if ( empty( $filter ) ) {
 			return $data;
 		}
@@ -150,7 +148,12 @@ final class FLThemeBuilderLayoutTemplates {
 
 			if ( $layout_type && in_array( $layout_type, $types ) ) {
 
-				FLBuilderModel::apply_core_template( $data['index'], $data['append'], $layout_type );
+				// In BB 2.0 we must return the result instead of a boolean value.
+				$result = FLBuilderModel::apply_core_template( $data['index'], $data['append'], $layout_type );
+
+				if ( ! empty( $result ) ) {
+					return $result;
+				}
 
 				return true;
 			}

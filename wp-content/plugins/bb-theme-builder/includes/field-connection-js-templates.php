@@ -8,17 +8,19 @@
 				<div class="fl-field-connections-properties">
 					<# for ( var object in data.menuData[ group ].properties ) { #>
 						<# for ( var property in data.menuData[ group ].properties[ object ] ) { #>
-						<div class="fl-field-connections-property" data-object="{{object}}" data-property="{{property}}"<# if ( data.menuData[ group ].properties[ object ][ property ].form ) { #> data-form="{{data.menuData[ group ].properties[ object ][ property ].form.id}}"<# } #>>
+						<# var hasToken = jQuery.inArray( data.fieldType, [ 'text', 'textarea', 'editor', 'code' ] ) > -1; #>
+						<div class="fl-field-connections-property <# if ( hasToken ) { #>fl-field-connections-property-has-token<# } #>" data-object="{{object}}" data-property="{{property}}"<# if ( data.menuData[ group ].properties[ object ][ property ].form ) { #> data-form="{{data.menuData[ group ].properties[ object ][ property ].form.id}}"<# } #>>
 							<div class="fl-field-connections-property-label">{{data.menuData[ group ].properties[ object ][ property ].label}}</div>
-							<# if ( jQuery.inArray( data.fieldType, [ 'text', 'textarea', 'editor', 'code' ] ) > -1 ) { #>
+							<div class="fl-field-connections-property-connect"><?php _e( 'Connect', 'fl-theme-builder' ); ?></div>
+							<# if ( hasToken ) { #>
 							<div class="fl-field-connections-property-token" data-token="{{object}}:{{property}}"><?php _e( 'Insert', 'fl-theme-builder' ); ?></div>
 							<# } #>
 						</div>
 						<# } #>
 					<# } #>
 				</div>
-			</div>	
-		<# } #>	
+			</div>
+		<# } #>
 		</div>
 	</div>
 </script>

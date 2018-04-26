@@ -65,45 +65,6 @@ function custom_wp_mail_from_name( $original_email_from )
 }
 
 
-// Add EIN Field to Affiliate WP
-add_action( 'show_user_profile', 'affwp_custom_extra_profile_fields', 10 );
-add_action( 'edit_user_profile', 'affwp_custom_extra_profile_fields', 10 );
-/**
- * Save the fields when the values are changed on the profile page
-*/
-function affwp_custom_save_extra_profile_fields( $user_id ) {
-	if ( ! current_user_can( 'edit_user', $user_id ) )
-		return false;
-	update_user_meta( $user_id, 'ein', $_POST['ein'] );
-}
-add_action( 'personal_options_update', 'affwp_custom_save_extra_profile_fields' );
-add_action( 'edit_user_profile_update', 'affwp_custom_save_extra_profile_fields' );
-/**
- * Update the user's profile with the new ein value on affiliate registration
-*/
-function affwp_custom_user_register( $user_id ) {
-    $user_id = $user_id ? $user_id : get_current_user_id();
-    if ( isset( $_POST['affwp_ein'] ) ) {
-        update_user_meta( $user_id, 'ein', $_POST['affwp_ein'] );
-    }
-}
-add_action( 'user_register', 'affwp_custom_user_register' );
-add_action( 'affwp_process_register_form', 'affwp_custom_user_register' );
-/**
- * Make the ein field required and show an error message when not filled in
- * Requires AffiliateWP 1.1+
- */
-function affwp_custom_process_register_form() {
-	$affiliate_wp = affiliate_wp();
-	if ( empty( $_POST['affwp_ein'] ) ) {
-		$affiliate_wp->register->add_error( 'ein_invalid', 'Please enter your EIN Number' );
-	}
-	if (strlen ($_POST['affwp_ein']) != 10 ) {
-		$affiliate_wp->register->add_error( 'ein_invalid', 'Please enter a valid EIN Number' );
-	}
-}
-add_action( 'affwp_process_register_form', 'affwp_custom_process_register_form' );
-
 // Skill Certificate Verification for Network Update
 //add_filter( 'https_local_ssl_verify', '__return_false' );
 

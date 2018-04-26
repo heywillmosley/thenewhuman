@@ -57,19 +57,37 @@ class ESIG_SAD {
         add_action('wpmu_new_blog', array($this, 'activate_new_site'));
 
         // Load public-facing style sheet and JavaScript.
-        add_action('esig_footer', array($this, 'enqueue_scripts'));
+        add_filter("esig_print_footer_scripts", array($this, "enqueue_scripts"), 10, 1);
+        add_action('esig_register_scripts', array($this, 'register_scripts'));
+
         add_filter('esig_document_template', array($this, 'document_template'), 20, 3);
-        add_filter('the_content', array($this, 'profile_data_on_sad_documents'), 10, 1);
+
+        add_filter('esignature_content', array($this, 'profile_data_on_sad_documents'), 10, 2);
+
+        add_filter('esig_document_clone_content', array($this, 'replace_user_data'), 11, 3);
+
         add_shortcode('wp_e_signature_sad', array($this, 'display_document'), 9);
-
-
 
         add_action('esig_document_after_delete', array($this, 'sad_permanent_delete'), 20, 1);
 
         add_filter('esig-shortcode-display-template-data', array($this, 'shortcode_display_template'), 20, 2);
     }
 
-    public function profile_data_on_sad_documents($content) {
+    public function register_scripts() {
+        wp_register_script('esig-sad-public-js', plugins_url('public/assets/js/public.js', dirname(__FILE__)), array('jquery'), esigGetVersion(), true);
+    }
+
+    public function replace_user_data($content, $documentId, $documentType) {
+        return $this->profile_data_on_sad_documents($content, $documentId);
+    }
+
+    public function profile_data_on_sad_documents($content, $document_id) {
+
+        global $document;
+
+        if (!is_null($document) && $document->document_type != 'stand_alone') {
+            return $content;
+        }
 
         preg_match("/{Esigdata:/", $content, $matches);
 
@@ -304,7 +322,7 @@ class ESIG_SAD {
 
             $old_doc_timezone = $api->document->esig_get_document_timezone($old_doc_id);
 
-           
+
 
             // save new doc timezone 
             $main_api->meta->add($doc_id, 'esig-timezone-document', $old_doc_timezone);
@@ -346,10 +364,10 @@ class ESIG_SAD {
             $invite_controller = new WP_E_invitationsController;
             $invitation_id = $invite_controller->save($invitation);
             $invite_hash = $api->invite->getInviteHash($invitation_id);
-            
-            
 
-           
+
+
+
 
             // trigger an action after document save .
             do_action('esig_sad_document_after_save', array(
@@ -413,14 +431,33 @@ class ESIG_SAD {
                 'post_fields' => $_POST,
                 'sad_doc_id' => $old_doc_id
             ));
-            
-             //Fire this action on end of the all signing operation to render all shortcode
+
+
+            //Fire this action on end of the all signing operation to render all shortcode
             do_action('esig_agreement_cloned_from_stand_alone', $doc_id);
+
+
+            do_action('esig_document_before_closing', array(
+                'signature_id' => $signature_id,
+                'recipient' => $recipient_obj,
+                'invitation' => $invitation,
+                'post_fields' => $_POST,
+                'sad_doc_id' => $old_doc_id
+            ));
 
             $allSigned = WP_E_Sig()->document->getSignedresult($doc_id);
             // close this document . 	
             //$api->document->recordEvent($doc_id, 'all_signed', null, null);
             // Update the document's status to signed
+            do_action('esig_document_pre_close', array(
+                'signature_id' => $signature_id,
+                'recipient' => $recipient_obj,
+                'invitation' => $invitation,
+                'post_fields' => $_POST,
+                'sad_doc_id' => $old_doc_id
+            ));
+
+
             if ($allSigned) {
 
                 $api->document->updateStatus($doc_id, "signed");
@@ -430,7 +467,8 @@ class ESIG_SAD {
                 $api->document->updateStatus($doc_id, "awaiting");
             }
 
-            // Fire post-sign action
+
+            // / Fire post-sign action
             do_action('esig_document_complate', array(
                 'signature_id' => $signature_id,
                 'recipient' => $recipient_obj,
@@ -439,9 +477,8 @@ class ESIG_SAD {
                 'sad_doc_id' => $old_doc_id
             ));
 
-
             //grab doc again after singing 
-         //   $doc = $api->document->getDocument($doc_id);
+            //   $doc = $api->document->getDocument($doc_id);
 
 
             $attachments = apply_filters('esig_email_pdf_attachment', array('document' => $doc));
@@ -481,6 +518,8 @@ class ESIG_SAD {
             );
 
 
+
+
             do_action('esig_document_before_display', array(
                 'signature_id' => $signature_id,
                 'recipient' => $recipient_obj,
@@ -489,6 +528,9 @@ class ESIG_SAD {
                 'sad_doc_id' => $old_doc_id
             ));
 
+
+            if (count($_POST) > 0)
+                do_action('esig_after_sad_process_done', array('document_id' => $doc_id, 'sad_doc_id' => $old_doc_id));
 
 
             return $esig_shortcode->displayDocumentToSign($doc_id, "sign-preview", $template_data, true);
@@ -671,7 +713,7 @@ class ESIG_SAD {
      *
      * @since     0.1
      */
-    public function enqueue_scripts() {
+    public function enqueue_scripts($scripts) {
         $current_page = get_queried_object_id();
         global $wpdb;
 
@@ -681,9 +723,10 @@ class ESIG_SAD {
 
         // If we're on a stand alone page
         if (is_page($current_page) && in_array($current_page, $this->sad_pages)) {
-
-            echo "<script type='text/javascript' src='" . plugins_url('public/assets/js/public.js?ver=' . self::VERSION, dirname(__FILE__)) . "'></script>";
+            $scripts[]="esig-sad-public-js";
+            
         }
+        return $scripts;
     }
 
     /**

@@ -78,8 +78,15 @@ td.fl-mb-row-content p:last-child {
 }
 
 /* Row Inputs */
-td.fl-mb-row-content select {
+td.fl-mb-row-content select,
+td.fl-mb-row-content .select2 {
 	width: 100%;
+}
+td.fl-mb-row-content .select2 .select2-selection {
+	border-color: #ccc;
+}
+li.select2-results__option {
+	margin: 0;
 }
 
 /* Loading Overlay */
@@ -93,6 +100,7 @@ td.fl-mb-row-content select {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	z-index: 1;
 }
 
 /* TipTip
@@ -153,7 +161,8 @@ td.fl-mb-row-content select {
 /* Header Settings */
 .fl-theme-layout-header-sticky,
 .fl-theme-layout-header-shrink,
-.fl-theme-layout-header-overlay {
+.fl-theme-layout-header-overlay,
+.fl-theme-layout-header-overlay-bg {
 	display: none;
 }
 
@@ -168,16 +177,19 @@ td.fl-mb-row-content select {
 .fl-theme-builder-saved-rule-select {
 	width: 100%;
 }
-.fl-theme-builder-rule-objects {
+.fl-theme-builder-rule-objects,
+.fl-theme-builder-rule-objects + .select2 {
 	display: none;
 }
 .fl-theme-builder-rule-objects-visible {
 	display: flex;
 }
-td.fl-mb-row-content .fl-theme-builder-rule-objects-visible select {
+td.fl-mb-row-content .fl-theme-builder-rule-objects-visible select,
+td.fl-mb-row-content .fl-theme-builder-rule-objects-visible .select2 {
 	width: 50%;
 }
-.fl-theme-builder-rule-objects-visible .fl-theme-builder-rule-objects {
+.fl-theme-builder-rule-objects-visible .fl-theme-builder-rule-objects,
+.fl-theme-builder-rule-objects-visible .fl-theme-builder-rule-objects + .select2 {
 	display: inline;
 	margin-left: 7px;
 }

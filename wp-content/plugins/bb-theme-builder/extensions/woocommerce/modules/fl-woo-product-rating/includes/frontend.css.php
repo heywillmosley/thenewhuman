@@ -1,7 +1,7 @@
 .fl-node-<?php echo $id; ?> .fl-module-content {
-	
+
 	text-align: <?php echo $settings->align; ?>;
-	
+
 	<?php if ( ! empty( $settings->font_size ) ) : ?>
 	font-size: <?php echo $settings->font_size; ?>px;
 	<?php endif; ?>

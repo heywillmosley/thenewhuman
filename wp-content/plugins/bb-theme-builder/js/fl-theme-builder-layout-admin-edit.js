@@ -31,6 +31,7 @@
 			this._initLayoutSettings();
 			this._initLocationRules();
 			this._initUserRules();
+			this._initSelect2();
 		},
 
 		/**
@@ -48,6 +49,7 @@
 
 			// Header events
 			$( 'select[name="fl-theme-layout-settings[sticky]"]' ).on( 'change', this._stickyChanged );
+			$( 'select[name="fl-theme-layout-settings[overlay]"]' ).on( 'change', this._overlayChanged );
 
 			// Location events
 			$( '.fl-theme-builder-saved-locations' ).delegate( '.fl-theme-builder-location', 'change', this._locationSelectChanged );
@@ -86,6 +88,7 @@
 				sticky    = $( '.fl-theme-layout-header-sticky' ),
 				shrink    = $( '.fl-theme-layout-header-shrink' ),
 				overlay   = $( '.fl-theme-layout-header-overlay' ),
+				overlayBg = $( '.fl-theme-layout-header-overlay-bg' ),
 				hookRow   = $( '.fl-theme-layout-hook-row' ),
 				hook      = $( 'select[name=fl-theme-layout-hook]' ),
 				orderRow  = $( '.fl-theme-layout-order-row' ),
@@ -93,11 +96,12 @@
 
 			if ( 'header' == type ) {
 				sticky.show().find( 'select' ).trigger( 'change' );
-				overlay.show();
+				overlay.show().find( 'select' ).trigger( 'change' );
 			} else {
 				sticky.hide();
 				shrink.hide();
 				overlay.hide();
+				overlayBg.hide();
 			}
 
 			if ( 'part' == type ) {
@@ -267,10 +271,15 @@
 		{
 			$( '.fl-theme-builder-location-objects' ).each( function() {
 				var select   = $( this ),
+					option   = null,
 					location = select.attr( 'data-location' );
 
-				if ( /post:[a-zA-Z]+:post:[a-zA-Z]+/.test( location ) ) {
-					select.find( 'option' ).eq( 0 ).remove();
+				if ( /post:[a-zA-Z0-9_-]+:post:[a-zA-Z0-9_-]+$/.test( location ) ) {
+					option = select.find( 'option' ).eq( 0 );
+
+					if ( '' === option.attr( 'value' ) ) {
+						option.remove();
+					}
 				}
 			} );
 		},
@@ -407,6 +416,7 @@
 			savedWrap.find( '.fl-theme-builder-remove-rule-button' ).show();
 
 			self._removeLocationOptions();
+			self._initSelect2();
 		},
 
 		/**
@@ -434,6 +444,7 @@
 			if ( 1 === locations.length ) {
 
 				select.val( '' ).parent().removeClass( 'fl-theme-builder-rule-objects-visible' );
+				select.next( '.select2' ).find( '.select2-selection__rendered' ).html( FLThemeBuilderConfig.strings.choose );
 
 				if ( ! isExclusion ) {
 					remove.hide();
@@ -463,6 +474,8 @@
 
 			button.hide();
 			exclusions.show();
+
+			FLThemeBuilderLayoutAdminEdit._initSelect2();
 		},
 
 		/**
@@ -484,6 +497,7 @@
 
 			if ( 0 === saved.length ) {
 				savedWrap.append( template() );
+				savedWrap.find( '[data-rule="general:all"]' ).attr( 'selected', 'selected' );
 				return;
 			}
 
@@ -491,7 +505,7 @@
 
 				savedWrap.append( template() );
 
-				parts          = saved[ i ].split( ':' );
+				parts      = saved[ i ].split( ':' );
 				ruleWrap   = $( '.fl-theme-builder-saved-user-rule' ).last();
 				ruleSelect = ruleWrap.find( '.fl-theme-builder-user-rule' );
 				selected   = ruleWrap.find( '[data-rule="' + parts[0] + ':' + parts[1] + '"]' );
@@ -540,6 +554,8 @@
 
 			savedWrap.append( template() );
 			savedWrap.find( '.fl-theme-builder-remove-rule-button' ).show();
+
+			FLThemeBuilderLayoutAdminEdit._initSelect2();
 		},
 
 		/**
@@ -564,10 +580,37 @@
 
 			if ( 1 === rules.length ) {
 				select.val( '' );
+				select.next( '.select2' ).find( '.select2-selection__rendered' ).html( FLThemeBuilderConfig.strings.choose );
 				remove.hide();
 			} else if ( 2 === rules.length && '' == $( '.fl-theme-builder-user-rule' ).val() ) {
 				remove.hide();
 			}
+		},
+
+		/**
+		 * Initializes select2 select objects.
+		 *
+		 * @since 1.0.4
+		 * @access private
+		 * @method _initSelect2
+		 */
+		_initSelect2: function()
+		{
+			var selects = $( '.fl-theme-builder-saved-rules select:not(.select2-init)' );
+
+			selects.each( function() {
+				var select = $( this ),
+					config = {
+						width: 'style'
+					};
+
+				select.select2( config );
+				select.addClass( 'select2-init' );
+
+				select.on( 'select2:open', function() {
+					$( '.select2-search__field' ).attr( 'placeholder', FLThemeBuilderConfig.strings.search );
+				} );
+			} );
 		},
 
 		/**
@@ -598,6 +641,18 @@
 		_stickyChanged: function()
 		{
 			$( '.fl-theme-layout-header-shrink' ).toggle( '1' == $( this ).val() );
+		},
+
+		/**
+		 * Callback for then the header overlay select is changed.
+		 *
+		 * @since 1.0.2
+		 * @access private
+		 * @method _overlayChanged
+		 */
+		_overlayChanged: function()
+		{
+			$( '.fl-theme-layout-header-overlay-bg' ).toggle( '1' == $( this ).val() );
 		},
 
 		/**

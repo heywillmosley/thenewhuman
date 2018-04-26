@@ -202,6 +202,7 @@
 				FLThemeBuilderFieldConnections._triggerPreview( { target : field } );
 			} else {
 				connection.attr( 'data-form', formId );
+				connection.addClass( 'fl-field-connection-clear-on-cancel' );
 				FLThemeBuilderFieldConnections._showSettingsForm( field, formId, config );
 			}
 		},
@@ -294,29 +295,35 @@
 		 */
 		_menuSearchKeyup: function( e )
 		{
-			var input  = $( e.target ),
+			var input = $( e.target ),
 				value = input.val().toLowerCase(),
-				menu   = input.closest( '.fl-field-connections-menu' ),
-				groups = menu.find( '.fl-field-connections-group' ),
-				labels = menu.find( '.fl-field-connections-property-label' );
+				menu  = input.closest( '.fl-field-connections-menu' );
 
-			labels.each( function() {
+			menu.find( '.fl-field-connections-group' ).each( function() {
 
-				var label = $( this ),
-					prop  = label.closest( '.fl-field-connections-property' );
+				var group = $( this ),
+					label = group.find( '.fl-field-connections-group-label' ),
+					props = group.find( '.fl-field-connections-property' );
 
 				if ( label.text().toLowerCase().indexOf( value ) > -1 ) {
-					prop.attr( 'data-hidden', 0 );
-					prop.show();
+					props.attr( 'data-hidden', 0 );
+					props.show();
+					group.show();
 				} else {
-					prop.attr( 'data-hidden', 1 );
-					prop.hide();
+					props.each( function() {
+
+						var prop  = $( this ),
+							label = prop.find( '.fl-field-connections-property-label' );
+
+						if ( label.text().toLowerCase().indexOf( value ) > -1 ) {
+							prop.attr( 'data-hidden', 0 );
+							prop.show();
+						} else {
+							prop.attr( 'data-hidden', 1 );
+							prop.hide();
+						}
+					} );
 				}
-			} );
-
-			groups.each( function() {
-
-				var group = $( this );
 
 				if ( group.find( '.fl-field-connections-property[data-hidden=0]' ).length ) {
 					group.show();
@@ -411,6 +418,7 @@
 			}
 
 			field.removeClass( 'fl-field-connection-editing' );
+			connection.removeClass( 'fl-field-connection-clear-on-cancel' );
 			FLBuilder._closeNestedSettings();
 		},
 
@@ -425,12 +433,16 @@
 		 */
 		_cancelSettingsFormClicked: function( e )
 		{
-			var field = $( '.fl-field-connection-editing' ),
-				val   = field.find( '.fl-field-connection-value' ).val();
+			var field 	   = $( '.fl-field-connection-editing' ),
+				connection = field.find( '.fl-field-connection' ),
+				val   	   = field.find( '.fl-field-connection-value' ).val();
 
 			field.removeClass( 'fl-field-connection-editing' );
 
-			if ( '' != val ) {
+			if ( connection.hasClass( 'fl-field-connection-clear-on-cancel' ) ) {
+				field.find( '.fl-field-connection-remove' ).trigger( 'click' );
+			}
+			else if ( '' != val ) {
 				FLThemeBuilderFieldConnections._triggerPreview( { target: field } );
 			}
 		},
@@ -491,8 +503,9 @@
 			if ( $( '.fl-form-field-settings:visible' ).length ) {
 				return;
 			}
-
-			FLBuilder.preview.delayPreview( e );
+			if( FLBuilder.preview ) {
+				FLBuilder.preview.delayPreview( e );
+			}
 		}
 	};
 
