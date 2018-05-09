@@ -36,8 +36,6 @@ class USIN_Reports_Page{
 		add_action ( 'admin_init', array($this, 'create_nonce') );
 
 		if(self::is_reports_page() || USIN_Reports_Ajax::is_reports_ajax()){
-			USIN_includes::include_reports();
-
 			$this->assets = new USIN_Reports_Assets($this);
 			$this->assets->init();
 

@@ -55,6 +55,15 @@ final class FLThemeBuilderRulesLocation {
 	static private $preview_query = null;
 
 	/**
+	 * Cache expensive db queries
+	 *
+	 * @since 1.0.4
+	 * @access private
+	 * @var array $query_cache
+	 */
+	static private $query_cache = array();
+
+	/**
 	 * Initializes hooks.
 	 *
 	 * @since 1.0
@@ -184,11 +193,17 @@ final class FLThemeBuilderRulesLocation {
 			$meta_query .= " OR pm.meta_value RLIKE '\"{$location}:taxonomy:.*\"'";
 			$meta_query .= " OR pm.meta_value LIKE '%\"general:single\"%'";
 		}
-		// @codingStandardsIgnoreStart
-		$posts = $wpdb->get_results( $query . ' AND (' . $meta_query . ')' );
-		// @codingStandardsIgnoreEnd
 
-		foreach ( $posts as $post ) {
+		// cache query
+		$query = $query . ' AND (' . $meta_query . ')';
+		$hash  = md5( $query );
+		if ( ! isset( self::$query_cache[ $hash ] ) ) {
+			// @codingStandardsIgnoreStart
+			self::$query_cache[$hash] = $wpdb->get_results( $query );
+			// @codingStandardsIgnoreEnd
+		}
+
+		foreach ( self::$query_cache[ $hash ] as $post ) {
 			self::$current_page_posts[ $post->ID ] = array(
 				'id'        => $post->ID,
 				'locations' => unserialize( $post->meta_value ),

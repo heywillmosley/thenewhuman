@@ -4,15 +4,15 @@ Plugin Name: WooCommerce Advance Sales Report Premium Gold
 Plugin URI: http://plugins.infosofttech.com/
 Author: Infosoft Consultants
 Description: The latest release of our WooCommerce Report Plug-in has all features of Gold version plus new features like Projected Vs Actual Sales, Comprehensive Tax based Reporting, Improvised Dashboard, Filters by Variation Attributes, Sales summary by Map View, Graphs and much more.
-Version: 3.0
+Version: 4.0
 Author URI: http://www.infosofttech.com
 
 Copyright: © 2017 - www.infosofttech.com - All Rights Reserved
 
-Tested WooCommerce Version: 3.2.4
-Tested Wordpress Version: 4.9
+Tested WooCommerce Version: 3.3.4
+Tested Wordpress Version: 4.9.4
 
-Last Update Date:Nov 17, 2017
+Last Update Date:Apr 03, 2018
 
 Text Domain: icwoocommerce_textdomains
 Domain Path: /languages/
@@ -40,7 +40,7 @@ if(!function_exists('init_icwoocommercepremiumgold')){
 		global $ic_woocommerce_advance_sales_report_premium_golden, $ic_woocommerce_advance_sales_report_premium_golden_constant;
 		
 		$constants = array(
-				"version"				  => "3.0"
+				"version"				  => "4.0"
 				,"product_id"			  => "1583"
 				,"plugin_key"			  => "icwoocommercepremiumgold"
 				,"plugin_api_url"		  => "http://plugins.infosofttech.com/api-woo-prem-golden.php"
@@ -70,9 +70,9 @@ if(!function_exists('init_icwoocommercepremiumgold')){
 		
 		load_plugin_textdomain('icwoocommerce_textdomains', WP_PLUGIN_DIR.'/'.$constants['plugin_dir'].'/languages',$constants['plugin_dir'].'/languages');
 		$constants['plugin_name'] 		= __('WooCommerce Advance Sales Report Premium Gold', 	'icwoocommerce_textdomains');
-		$constants['plugin_menu_name'] 	= __('WooCommerce Report Premium',						'icwoocommerce_textdomains');
-		$constants['admin_page'] 		= isset($_REQUEST['page']) ? $_REQUEST['page'] : "";
-		$constants['is_admin'] 			= is_admin();
+		$constants['plugin_menu_name']   = __('WooCommerce Report Premium',						'icwoocommerce_textdomains');
+		$constants['admin_page'] 		 = isset($_REQUEST['page']) ? $_REQUEST['page'] : "";
+		$constants['is_admin'] 		   = is_admin();
 		
 		$constants = apply_filters('ic_commerce_premium_golden_init_constants', $constants, $constants['plugin_key']);
 		do_action('ic_commerce_premium_golden_textdomain_loaded',$constants, $constants['plugin_key']);

@@ -13,8 +13,7 @@ class USIN_Ultimate_Member_Reports extends USIN_Module_Reports{
 		
 		return array(
 			'id' => $this->group,
-			'name' => 'Ultimate Member',
-			'loader_path' => 'plugin-modules/ultimate-member/reports/loaders/'
+			'name' => 'Ultimate Member'
 		);
 	}
 
@@ -34,7 +33,6 @@ class USIN_Ultimate_Member_Reports extends USIN_Module_Reports{
 							'group' => $this->group,
 							'visible' => $this->get_default_report_visibility(),
 							'field_id' => $field['meta_key'],
-							'loader_file' => false,
 							'loader_class' => 'USIN_Meta_Field_Loader'
 						)
 					);
@@ -47,7 +45,6 @@ class USIN_Ultimate_Member_Reports extends USIN_Module_Reports{
 							'group' => $this->group,
 							'visible' => $this->get_default_report_visibility(),
 							'field_id' => $field['meta_key'],
-							'loader_file' => 'ultimate-member-serialized-option-loader.php', 
 							'loader_class' => 'USIN_Ultimate_Member_Serialized_Option_Loader'
 						)
 					);
@@ -60,13 +57,18 @@ class USIN_Ultimate_Member_Reports extends USIN_Module_Reports{
 							'group' => $this->group,
 							'visible' => $this->get_default_report_visibility(),
 							'field_id' => $field['meta_key'],
-							'loader_file' => false,
 							'loader_class' => 'USIN_Multioption_Field_Loader',
 							'type' => USIN_Report::BAR
 						)
 					);
 				break;
 				case 'number':
+					if(isset($field['um_type']) && $field['um_type'] == 'rating'){
+						$loader = 'USIN_Ultimate_Member_Rating_Loader';
+					}else{
+						$loader = 'USIN_Numeric_Meta_Field_Loader';
+					}
+
 					$reports[]= new USIN_Standard_Report(
 						$field['id'], 
 						$field['name'], 
@@ -74,8 +76,7 @@ class USIN_Ultimate_Member_Reports extends USIN_Module_Reports{
 							'group' => $this->group,
 							'visible' => $this->get_default_report_visibility(),
 							'field_id' => $field['meta_key'],
-							'loader_file' => false,
-							'loader_class' => 'USIN_Numeric_Meta_Field_Loader',
+							'loader_class' => $loader,
 							'type' => USIN_Report::BAR
 						)
 					);

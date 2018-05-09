@@ -229,7 +229,7 @@ final class FLBuilderFonts {
 	 */
 	static public function add_font( $font ) {
 
-		if ( 'Default' != $font['family'] ) {
+		if ( is_array( $font ) && 'Default' != $font['family'] ) {
 
 			$system_fonts = apply_filters( 'fl_builder_font_families_system', FLBuilderFontFamilies::$system );
 
@@ -319,9 +319,9 @@ final class FLBuilderFonts {
 								}
 							}
 						}
-					}// End if().
-				}// End if().
-			}// End foreach().
+					}
+				}
+			}
 
 			// Start combining all enqueued google fonts
 			if ( count( $enqueued_google_fonts ) > 0 ) {
@@ -355,7 +355,7 @@ final class FLBuilderFonts {
 					$enqueued_google_fonts = array();
 				}
 			}
-		}// End if().
+		}
 	}
 
 }

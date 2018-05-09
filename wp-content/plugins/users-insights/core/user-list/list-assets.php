@@ -71,6 +71,10 @@ class USIN_List_Assets extends USIN_Assets{
 			'pageOptions' => array(10, 20, 50)
 		);
 
+		$error_tip = sprintf('%s (<a href="https://usersinsights.com/troubleshooting-user-table-loading/?ref=dash" target="_blank">%s</a>)',
+			__('Tip: Try to hide all the columns from the eye-icon menu and refresh the page', 'usin'),
+			__('more info', 'usin'));
+
 		$strings = array(
 			'daysAgo' => __('days ago', 'usin'),
 			'day' => __('day', 'usin'),
@@ -79,6 +83,7 @@ class USIN_List_Assets extends USIN_Assets{
 			'loadMore' => __('Load More', 'usin'),
 			'error' => __('Error', 'usin'),
 			'errorLoading' => __('Error loading data', 'usin'),
+			'errorTip' => $error_tip,
 			'addFilter' => __('Add Filter', 'usin'),
 			'noResults' => __('0 results found', 'usin'),
 			'title' => $this->page->title,

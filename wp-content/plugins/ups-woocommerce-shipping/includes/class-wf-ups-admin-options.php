@@ -36,6 +36,13 @@ if( !class_exists('WF_UPS_Admin_Options') ){
 			'placeholder'	=> __( 'Insurance amount UPS', 'ups-woocommerce-shipping' )
 		) );
 		
+		woocommerce_wp_text_input( array(
+			'id'		=> '_wf_ups_hst',
+			'label'		=> __( 'H.S. tariff (UPS)', 'ups-woocommerce-shipping' ),
+			'description'	=> __('H.S. tariff number','ups-woocommerce-shipping'),
+			'desc_tip'	=> 'true',
+		) );
+		
 		//Direct Delivery Option under Product Shipping tab
 		woocommerce_wp_checkbox( array(
 			'id'		=> '_wf_ups_direct_delivery',
@@ -55,6 +62,9 @@ if( !class_exists('WF_UPS_Admin_Options') ){
 		// Update the Insurance amount on individual product page
 		if( isset($_POST['_wf_ups_custom_declared_value'] ) ) {
 			update_post_meta( $post_id, '_wf_ups_custom_declared_value', esc_attr( $_POST['_wf_ups_custom_declared_value'] ) );
+		}
+		if( isset($_POST['_wf_ups_hst'] ) ) {
+			update_post_meta( $post_id, '_wf_ups_hst', esc_attr( $_POST['_wf_ups_hst'] ) );
 		}
 		
 		//Update Direct Delivery option

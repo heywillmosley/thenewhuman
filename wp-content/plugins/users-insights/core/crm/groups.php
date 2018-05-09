@@ -12,18 +12,35 @@ class USIN_Groups{
 	protected $parent_slug;
 	protected $capability;
 	protected static $all_groups;
+	protected static $instance;
 	
-	public function __construct($parent_slug){
+	protected function __construct($parent_slug){
 		$this->parent_slug = $parent_slug;
 		$this->capability = USIN_Capabilities::MANAGE_GROUPS;
+		$this->add_actions();
+	}
+
+	/**
+	 * Returns the instance of the class, it is a singleton class.
+	 */
+	public static function init($parent_slug){
+		if(! self::$instance ){
+			self::$instance = new USIN_Groups($parent_slug);
+		}
+		return self::$instance;
 	}
 	
 	/**
 	 * Registers the required hooks to create the user group taxonomy
 	 * and the color meta for the group.
 	 */
-	public function init(){
+	public function add_actions(){
 		add_action( 'init', array($this, 'register_taxonomy'));
+
+		if(!is_admin()){
+			return;
+		}
+
 		add_action( 'admin_menu', array($this, 'add_page_to_menu') );
 		add_filter( 'parent_file', array($this, 'highlight_parent_menu'));
 		
@@ -85,6 +102,15 @@ class USIN_Groups{
 	 */
 	public static function get_user_groups($user_id){
 		return wp_get_object_terms( $user_id, self::$slug, array('fields'=>'ids') );
+	}
+
+	public static function delete_all_user_groups($user_id){
+		$groups = self::get_user_groups($user_id);
+		if(!empty($groups)){
+			foreach ($groups as $group_id ) {
+				wp_remove_object_terms( $user_id, $group_id, self::$slug );
+			}
+		}
 	}
 	
 	public static function update_user_groups_bulk($users, $group_id, $action){

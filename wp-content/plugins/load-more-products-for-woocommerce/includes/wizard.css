@@ -1,0 +1,32 @@
+.berocket_wizard_autoselectors .berocket_autoselect_spin,
+.berocket_wizard_autoselectors .berocket_autoselect_ready,
+.berocket_wizard_autoselectors .berocket_autoselect_error {
+    font-size: 9px;
+}
+.berocket_wizard_autoselectors .berocket_autoselect_ready {
+    color: #33bb33;
+}
+.berocket_wizard_autoselectors .berocket_autoselect_error {
+    color: #bb3333;
+}
+.berocket_wizard_autoselectors .berocket_autoselector_load {
+    border: 1px solid #777;
+    height: 22px;
+    width: 300px;
+    margin-top: 10px;
+    position: relative;
+}
+.berocket_wizard_autoselectors .berocket_autoselector_load .berocket_line {
+    height: 100%;
+    background-color: #FF8800;
+}
+.berocket_wizard_autoselectors .berocket_autoselector_action {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    line-height: 22px;
+    font-size: 16px;
+    text-align: center;
+}

@@ -1,20 +1,22 @@
 <div class="usin-options-wrap">
 	<div class="usin-bulk-actions usin-float-left" ng-if="listView && canUpdateUsers"></div>
-	<div class="usin-segments" ng-hide="!listView || !total.current"></div>
+	<div class="usin-segments" ng-hide="!listView"></div>
 	
-	<button class="usin-btn usin-btn-export" ng-if="canExportUsers" ng-hide="!listView || !total.current" 
-		ng-click="showConfirm()" ng-disabled="bulkActions.isAnyChecked()"> 
+	<button class="usin-btn usin-btn-export" ng-if="canExportUsers" ng-hide="!listView" 
+		ng-click="showConfirm()" ng-disabled="bulkActions.isAnyChecked() || loading.isLoading() || !total.current"> 
 		<span class="usin-icon-export" />
 		<md-tooltip md-direction="top">{{strings.export.replace('%d', total.current)}}</md-tooltip>
 	</button>
 
-	<button class="usin-btn usin-btn-list-options" ng-click="toggleDisplayed()" ng-hide="!listView || !total.current" ng-disabled="bulkActions.isAnyChecked()"> 
+	<button class="usin-btn usin-btn-list-options" ng-click="toggleDisplayed()" ng-hide="!listView" 
+		ng-disabled="bulkActions.isAnyChecked() || loading.isLoading()"> 
 		<span class="usin-icon-visible usin-btn-drop-down" ng-class="{'usin-btn-drop-down-opened' : displayed === true}"/>
 		<md-tooltip md-direction="top">{{strings.toggleColumns}}</md-tooltip>
 	</button>
 		
-	<button class="usin-btn usin-btn-map" ng-click="onToggleView()" ng-disabled="bulkActions.isAnyChecked()"
-		ng-class="{'usin-btn-map-active' : !listView}" ng-if="showMap" ng-hide="listView && !total.current"> 
+	<button class="usin-btn usin-btn-map" ng-click="onToggleView()" ng-disabled="bulkActions.isAnyChecked() || 
+		loading.isLoading()  || (listView && !total.current)"
+		ng-class="{'usin-btn-map-active' : !listView}" ng-if="showMap"> 
 		<span class="usin-icon-map"/>
 		<md-tooltip md-direction="top" md-autohide>{{listView ? strings.enterMapView : strings.exitMapView}}</md-tooltip>
 	</button>

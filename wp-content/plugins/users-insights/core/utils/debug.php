@@ -232,5 +232,3 @@ class USIN_Debug{
 	}
 	
 }
-
-new USIN_Debug();

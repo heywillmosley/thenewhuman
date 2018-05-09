@@ -151,8 +151,9 @@ final class FLThemeBuilderLayoutRenderer {
 
 		// Enqueue layout styles and scripts.
 		$post = FLThemeBuilderRulesLocation::get_preview_original_post();
+		$inline = apply_filters( 'fl_builder_render_assets_inline', false );
 
-		if ( $post && 'fl-theme-layout' == $post->post_type ) {
+		if ( $inline || $post && 'fl-theme-layout' == $post->post_type ) {
 			self::enqueue_individual_scripts();
 		} else {
 			self::enqueue_bundled_scripts();
@@ -260,7 +261,7 @@ final class FLThemeBuilderLayoutRenderer {
 		$expires = get_option( '_fl_theme_builder_assets_expire', false );
 
 		if ( ! $expires ) {
-			update_option( '_fl_theme_builder_assets_expire', strtotime( '+24 hours' ) );
+			update_option( '_fl_theme_builder_assets_expire', self::get_cache_timeout() );
 		} elseif ( $expires && $expires < time() ) {
 			self::delete_all_bundled_scripts();
 		}
@@ -286,7 +287,14 @@ final class FLThemeBuilderLayoutRenderer {
 			array_map( 'unlink', $js );
 		}
 
-		update_option( '_fl_theme_builder_assets_expire', strtotime( '+24 hours' ) );
+		update_option( '_fl_theme_builder_assets_expire', self::get_cache_timeout() );
+	}
+
+	/**
+	 * @since 1.1.1
+	 */
+	static public function get_cache_timeout() {
+		return apply_filters( 'fl_theme_builder_assets_expire', strtotime( '+30 days' ) );
 	}
 
 	/**

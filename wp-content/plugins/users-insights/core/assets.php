@@ -159,6 +159,10 @@ abstract class USIN_Assets{
 			width:100%;
 			clear:both;
 		}
+
+		li#toplevel_page_'.usin_manager()->slug.' .update-plugins{
+			display:none !important;
+		}
 		</style>';
 
 		echo $output;

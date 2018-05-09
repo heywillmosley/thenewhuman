@@ -46,7 +46,7 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 		 * @return void
 		 */
 		static private function define_constants() {
-			define( 'FL_BUILDER_VERSION', '2.0.5.1' );
+			define( 'FL_BUILDER_VERSION', '2.1.1.2' );
 			define( 'FL_BUILDER_FILE', trailingslashit( dirname( dirname( __FILE__ ) ) ) . 'fl-builder.php' );
 			define( 'FL_BUILDER_DIR', plugin_dir_path( FL_BUILDER_FILE ) );
 			define( 'FL_BUILDER_URL', plugins_url( '/', FL_BUILDER_FILE ) );
@@ -67,8 +67,10 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 		 */
 		static private function load_files() {
 			/* Classes */
+			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-filesystem.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-admin.php';
+			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-admin-pointers.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-admin-posts.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-admin-settings.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-ajax.php';
@@ -79,7 +81,9 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-extensions.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-fonts.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-debug.php';
+			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-usage.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-icons.php';
+			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-iframe-preview.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-import.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-loop.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-model.php';
@@ -91,6 +95,7 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-timezones.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-ui-content-panel.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-ui-settings-forms.php';
+			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-notifications.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-update.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-user-access.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-user-settings.php';
@@ -99,12 +104,19 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 
 			/* WP CLI Commands */
 			if ( defined( 'WP_CLI' ) ) {
-				require __DIR__ . '/class-fl-builder-wpcli-command.php';
+				require_once FL_BUILDER_DIR . 'classes/class-fl-builder-wpcli-command.php';
 			}
+
+			/* WP Blocks Support */
+			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-wp-blocks.php';
 
 			/* Includes */
 			require_once FL_BUILDER_DIR . 'includes/compatibility.php';
-			require_once FL_BUILDER_DIR . 'includes/updater/updater.php';
+
+			/* Updater */
+			if ( file_exists( FL_BUILDER_DIR . 'includes/updater/updater.php' ) ) {
+				require_once FL_BUILDER_DIR . 'includes/updater/updater.php';
+			}
 		}
 
 		/**
@@ -176,6 +188,6 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 			echo '</div>';
 		}
 	}
-}// End if().
+}
 
 FLBuilderLoader::init();

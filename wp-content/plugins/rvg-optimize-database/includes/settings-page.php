@@ -6,9 +6,6 @@
  ********************************************************************************************/
 ?>
 <?php
-if(isset($_REQUEST['delete_log']))
-	if($_REQUEST['delete_log'] == "Y") @unlink(dirname(__FILE__).'/rvg-optimize-db-log.html');	
-
 if (isset($_POST['info_update'])) {
 	// SAVE SETTINGS
 	check_admin_referer('odb_action', 'odb_nonce');	
@@ -59,6 +56,9 @@ if (isset($_POST['info_update'])) {
 
 	if(isset($_POST['rvg_clear_pingbacks'])) $this->odb_rvg_options['clear_pingbacks'] = sanitize_text_field($_POST['rvg_clear_pingbacks']);
 	else $this->odb_rvg_options['clear_pingbacks'] = 'N';	
+
+	if(isset($_POST['rvg_clear_oembed'])) $this->odb_rvg_options['clear_oembed'] = sanitize_text_field($_POST['rvg_clear_oembed']);
+	else $this->odb_rvg_options['clear_oembed'] = 'N';	
 
 	if(isset($_POST['rvg_odb_logging_on'])) $this->odb_rvg_options['logging_on'] = sanitize_text_field($_POST['rvg_odb_logging_on']);
 	else $this->odb_rvg_options['logging_on'] = 'N';
@@ -206,6 +206,7 @@ $cb_trash           = ($this->odb_rvg_options['clear_trash']      == "Y") ? $c :
 $cb_spam            = ($this->odb_rvg_options['clear_spam']       == "Y") ? $c : '';
 $cb_tags            = ($this->odb_rvg_options['clear_tags']       == "Y") ? $c : '';
 $cb_ping            = ($this->odb_rvg_options['clear_pingbacks']  == "Y") ? $c : '';
+$cb_oembed          = ($this->odb_rvg_options['clear_oembed']     == "Y") ? $c : '';
 $cb_logging         = ($this->odb_rvg_options['logging_on']       == "Y") ? $c : '';
 $cb_adminbar        = ($this->odb_rvg_options['adminbar']         == "Y") ? $c : '';
 $cb_adminmenu       = ($this->odb_rvg_options['adminmenu']        == "Y") ? $c : '';
@@ -333,6 +334,12 @@ echo '
                 </span></td>
               <td width="50%" valign="top"><input name="rvg_clear_pingbacks" type="checkbox" value="Y" '.$cb_ping.'></td>
             </tr>
+            <tr>
+              <td width="50%" align="right" valign="top"><span class="odb-bold">
+                '.__('Clear oEmbed cache',$this->odb_txt_domain).'
+                </span></td>
+              <td width="50%" valign="top"><input name="rvg_clear_oembed" type="checkbox" value="Y" '.$cb_oembed.'></td>
+            </tr>			
             <tr>
               <td align="right" valign="top"><span class="odb-bold">
                 '. __('Optimize InnoDB tables too',$this->odb_txt_domain).'

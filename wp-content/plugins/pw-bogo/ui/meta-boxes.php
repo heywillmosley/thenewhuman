@@ -478,6 +478,16 @@ class PW_BOGO_Meta_Boxes {
                 'description' => '<br>If a coupon code is required to activate the BOGO, enter it here. The coupon does not have to exist already.'
             ) );
 
+            // Free Shipping
+            $free_shipping = get_post_meta( $post->ID, 'free_shipping', true );
+            woocommerce_wp_checkbox( array(
+                'id' => 'pw-bogo-free-shipping',
+                'name' => 'free_shipping',
+                'value' => $free_shipping,
+                'label' => __( 'Allow free shipping ', 'woocommerce' ),
+                'description' => sprintf( __( '<br>Check this box if the BOGO deal grants free shipping. A <a href="%s" target="_blank">free shipping method</a> must be enabled in your shipping zone and be set to require "a valid free shipping coupon" (see the "Free Shipping Requires" setting).', 'pimwick' ), 'https://docs.woocommerce.com/document/free-shipping/' )
+            ) );
+
             // Individual use
             $individual_use = get_post_meta( $post->ID, 'individual_use', true );
             woocommerce_wp_checkbox( array(

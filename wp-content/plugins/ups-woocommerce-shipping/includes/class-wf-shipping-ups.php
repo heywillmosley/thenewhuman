@@ -11,6 +11,13 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 	private $endpoint = 'https://wwwcie.ups.com/ups.app/xml/Rate';
 	private $freight_endpoint = 'https://wwwcie.ups.com/rest/FreightRate';
 
+	/**
+	 * For Delivery Confirmation below array of countries will be considered as domestic, Confirmed by UPS.
+	 * US to US, CA to CA, PR to PR are considered as domestic, all other shipments are international.
+	 * @var array 
+	 */
+	public $dc_domestic_countries = array( 'US', 'CA', 'PR');
+	
 	private $pickup_code = array(
 		'01' => "Daily Pickup",
 		'03' => "Customer Counter",
@@ -885,6 +892,12 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 			$pickup_close_time_options[(string)$pickup_close_time]	=	date("H:i",strtotime(date('Y-m-d'))+3600*$pickup_close_time);
 		}
 
+		$ship_from_address_options	=	apply_filters( 'wf_filter_label_ship_from_address_options', array(
+					'origin_address'   => __( 'Origin Address', 'ups-woocommerce-shipping' ),
+					'billing_address'  => __( 'Shipping Address', 'ups-woocommerce-shipping' ),
+				)
+		);
+
 		$this->form_fields  = array(
 		   'licence'  => array(
 				'type'			=> 'activate_box'
@@ -1089,10 +1102,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				'type'			=> 'select',
 				'default'		 => 'origin_address',
 				'class'				 => 'wc-enhanced-select',
-				'options'		 => array(
-					'origin_address'   => __( 'Origin Address', 'ups-woocommerce-shipping' ),
-					'billing_address'  => __( 'Shipping Address', 'ups-woocommerce-shipping' ),
-				),
+				'options'		 => $ship_from_address_options,
 				'description'	 => __( 'Change the preference of Ship From Address printed on the label. You can make  use of Billing Address from Order admin page, if you ship from a different location other than shipment origin address given below.', 'ups-woocommerce-shipping' ),
 				'desc_tip'		=> true
 			),
@@ -1559,49 +1569,120 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 			return;
 		}
 
-		
-		$package_params	=	array();
-		if($this->origin_country == $package['destination']['country']){
-			$package_params['delivery_confirmation_applicable']	=	true;
-		}
-		
-		$package_requests = $this->get_package_requests( $package, $package_params );
-		
-		if ( $package_requests ) {	
+		// To Support Multi Vendor plugin
+		$packages = apply_filters('wf_filter_package_address', array($package) , $this->ship_from_address);
+		//Woocommerce packages after dividing the products based on vendor, if vendor plugin exist
+		$wc_total_packages_count = count($packages);
 
-			$rate_requests 		= $this->get_rate_requests( $package_requests, $package );
-
-			$rates =  $this->process_result( $this->get_result($rate_requests) );
+		foreach( $packages as $package ) {
+			$package_params	=	array();
+			if( ($this->origin_country == $package['destination']['country']) && in_array( $this->origin_country, $this->dc_domestic_countries ) ){
+				$package_params['delivery_confirmation_applicable']	=	true;
+				$this->international_delivery_confirmation_applicable = false;
+			}
+			else {
+				$this->international_delivery_confirmation_applicable = true;
+			}
 			
-			//For Worldwide Express Freight Service
-			if( isset($this->custom_services[96]['enabled']) && $this->custom_services[96]['enabled'] ) {
-				$rate_requests	= $this->get_rate_requests( $package_requests, $package, 'Pallet', 96 );
-				$pallet_rates	= $this->process_result( $this->get_result($rate_requests) );
-				$rates = array_merge($rates, $pallet_rates);
+			$package_requests		= $this->get_package_requests( $package, $package_params );
+			// $all_package_requests	= empty($all_package_requests) ? $package_requests : array_merge( $all_package_requests, $package_requests);
+		
+			if ( $package_requests ) {
+				
+				// To get rate for services like ups ground, 3 day select etc.
+				$rate_requests 		= $this->get_rate_requests( $package_requests, $package );
+				$rates['general'][] =  $this->process_result( $this->get_result($rate_requests) );
+				// End of get rates for services like ups ground, 3 day select etc.
+				
+				//For Worldwide Express Freight Service
+				if( isset($this->custom_services[96]['enabled']) && $this->custom_services[96]['enabled'] ) {
+					$rate_requests	= $this->get_rate_requests( $package_requests, $package, 'Pallet', 96 );
+					$rates[96][]	= $this->process_result( $this->get_result($rate_requests) );
+				}
+				
+				// For Freight services 308, 309, 334, 349
+				if( $this->enable_freight ){
+					$freight_ups=new wf_freight_ups($this);
+					foreach ($this->freigth_services as $service_code => $value) {
+						if( ! empty($this->settings['services'][$service_code]['enabled']) ) {
+							$this->debug( "UPS FREIGHT SERVICE START: $service_code" );
+							$freight_rate	= array();
+							$cost			= 0;
+
+							$freight_rate_requests = $freight_ups->get_rate_request( $package, $service_code, $package_requests );		// Freight rate request
+							
+							foreach( $package_requests as $package_key => $package_request) {
+								//Freight rate response for individual packages request
+								$freight_rate_response = $this->process_result( $this->get_result($freight_rate_requests[$package_key], 'freight'), 'json' );
+								if( ! empty($freight_rate_response[WF_UPS_ID.":$service_code"]['cost']) ) {
+									$cost += $freight_rate_response[WF_UPS_ID.":$service_code"]['cost']; // Cost of freight packages till now processed for individual freight service
+									$freight_rate_response[WF_UPS_ID.":$service_code"]['cost'] = $cost;
+									$freight_rate = $freight_rate_response;
+								}
+								else {				// If no response comes for any packages then we won't show the response for that Freight service
+									$freight_rate = array();
+									$this->debug( "UPS FREIGHT SERVICE RESPONSE FAILED FOR SOME PACKAGES : $service_code" );
+									break;
+								}
+							}
+							$this->debug( "UPS FREIGHT SERVICE END : $service_code" );
+						}
+						// If rate comes for freight sevices then merge it in rates array
+						if( ! empty($freight_rate) ) {
+							$rates[$service_code][] = $freight_rate;
+						}
+
+					}
+				}
+				// End code for Freight services 308, 309, 334, 349
+				
+				//Surepost
+				foreach ( $this->ups_surepost_services as $service_code ) {
+					if( empty($this->custom_services[$service_code]['enabled']) || ( $this->custom_services[$service_code]['enabled'] != 1 ) ){	//It will be not set for European origin address
+							continue;
+					}
+					$rate_requests			= $this->get_rate_requests( $package_requests, $package, 'surepost', $service_code );
+					$rates[$service_code][]	= $this->process_result( $this->get_result($rate_requests, 'surepost') );
+				}
+			}
+		}
+		if( ! empty($rates) ) {
+			foreach ($rates as $rate_type => $all_packages_rates ) {
+				//For every woocommerce package there must be response, so number of woocommerce package and UPS response must be equal
+				if( count($rates[$rate_type]) == $wc_total_packages_count ) {
+					//UPS services keys in rate response
+					$ups_found_services_keys = array_keys(current($all_packages_rates));
+					
+					foreach( $ups_found_services_keys as $ups_sevice) {
+						$count = 0;
+						foreach( $all_packages_rates as $package_rates ) {
+							if( ! empty($package_rates[$ups_sevice] ) ) {
+								if( empty($all_rates[$ups_sevice]) )
+								{
+									$all_rates[$ups_sevice] = $package_rates[$ups_sevice];
+								}
+								else {
+									$all_rates[$ups_sevice]['cost'] = (float) $all_rates[$ups_sevice]['cost'] + (float) $package_rates[$ups_sevice]['cost'];
+								}
+								$count++;
+							}
+						}
+						// If number of package requests not equal to number of response for any particular service
+						if( $count != $wc_total_packages_count ) {
+							unset($all_rates[$ups_sevice]);
+						}
+					}
+				}
 			}
 		}
 
-		if( $this->enable_freight ){
-			$freight_ups=new wf_freight_ups($this);
-			foreach ($this->freigth_services as $service_code => $value) {
-				$rate_requests = $freight_ups->get_rate_request($package,$service_code);
-				$rates = array_merge( $rates, $this->process_result( $this->get_result($rate_requests, 'freight'), 'json' ) );
-			}
-		}
-
-		//Surepost
-		foreach ( $this->ups_surepost_services as $service_code ) {
-			if( empty($this->custom_services[$service_code]['enabled']) || ( $this->custom_services[$service_code]['enabled'] != 1 ) ){	//It will be not set for European origin address
-					continue;
-			}
-			$rate_requests = $this->get_rate_requests( $package_requests, $package, 'surepost', $service_code );
-			$rates[$service_code] = $this->process_result( $this->get_result($rate_requests, 'surepost') );
-		}
-		if(	!empty( $rates ) ){
-			$this->xa_add_rates($rates);
+		
+		if(	!empty( $all_rates ) ){
+			$this->xa_add_rates($all_rates);
 		}
 	}
-
+	// End of Calculate Shipping function
+	
 	function xa_add_rates( $rates ){
 		if ( $rates ) {
 			$this->conversion_rate = apply_filters( 'xa_conversion_rate', $this->conversion_rate, ( isset($xml->RatedShipment[0]->TotalCharges->CurrencyCode) ? (string)$xml->RatedShipment[0]->TotalCharges->CurrencyCode : null ) );
@@ -1662,7 +1743,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 			foreach ( $xml_response as $response ) {
 				$code = (string)$response->Service->Code;
 
-				if($this->custom_services[$code]['enabled'] != 1 ){
+				if( ! empty( $this->custom_services[$code] ) && $this->custom_services[$code]['enabled'] != 1 ){		// For Freight service code custom services won't be set
 					continue;
 				}
 										
@@ -1691,11 +1772,11 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				if ( ! empty( $this->custom_services[ $code ]['name'] ) )
 					$rate_name = $this->custom_services[ $code ]['name'];
 
-				// Cost adjustment %
-				if ( ! empty( $this->custom_services[ $code ]['adjustment_percent'] ) )
+				// Cost adjustment %, don't apply on order page rates
+				if ( ! empty( $this->custom_services[ $code ]['adjustment_percent'] ) && ! isset($_GET['wf_ups_generate_packages_rates']) )
 					$rate_cost = $rate_cost + ( $rate_cost * ( floatval( $this->custom_services[ $code ]['adjustment_percent'] ) / 100 ) );
-				// Cost adjustment
-				if ( ! empty( $this->custom_services[ $code ]['adjustment'] ) )
+				// Cost adjustment, don't apply on order page rates
+				if ( ! empty( $this->custom_services[ $code ]['adjustment'] ) && ! isset($_GET['wf_ups_generate_packages_rates']) )
 					$rate_cost = $rate_cost + floatval( $this->custom_services[ $code ]['adjustment'] );
 
 				// Sort
@@ -1831,12 +1912,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 
 		$customer = $woocommerce->customer;		
 		
-			if($service_code==92){
-				$package_requests_to_append = $this->get_package_requests( $package,array('service_code'=>$service_code));
-			}
-			else{
-				$package_requests_to_append	= $package_requests;
-			}
+			$package_requests_to_append	= $package_requests;
 			
 			$rate_request_data	=	array(
 				'user_id'			=>	$this->user_id,
@@ -1850,7 +1926,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				'origin_country'	=>	$this->origin_country,
 			);
 			
-			$rate_request_data	=	apply_filters('wf_ups_rate_request_data', $rate_request_data, $package);
+			$rate_request_data	=	apply_filters('wf_ups_rate_request_data', $rate_request_data, $package, $package_requests);
 			
 			// Security Header
 			$request  = "<?xml version=\"1.0\" ?>" . "\n";
@@ -1991,6 +2067,9 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				foreach ( $package_requests_to_append as $key => $package_request ) {
 					if( $request_type == 'surepost' ){
 						unset($package_request['Package']['PackageServiceOptions']['InsuredValue']);
+						if( $service_code == 92 ) {
+							$package_request = $this->convert_weight( $package_request, $service_code );
+						}
 					}
 					//For Worldwide Express Freight Service
 					if( $request_type == "Pallet" ) {
@@ -2008,6 +2087,13 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 							);
 						}
 					}
+					
+					// To Set deliveryconfirmation at shipment level if shipment is international or outside of $this->dc_domestic_countries
+					if( $this->international_delivery_confirmation_applicable ) {
+						$shipment_delivery_confirmation = $this->get_package_signature($package_request['Package']['items']);
+						$delivery_confirmation = ( isset( $delivery_confirmation) && $delivery_confirmation >= $shipment_delivery_confirmation) ? $delivery_confirmation : $shipment_delivery_confirmation;
+					}
+					
 					unset($package_request['Package']['items']);		//Not required further
 					$request .= $this->wf_array_to_xml($package_request);
 				}
@@ -2022,6 +2108,15 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 					$request .= "		<TaxInformationIndicator/>" . "\n";
 				}				
 				
+				// Set deliveryconfirmation at shipment level for international shipment
+				if( !empty($delivery_confirmation ) ){
+					$delivery_confirmation = ($delivery_confirmation == 3) ? 2 : 1;
+					$request .= "\n		<ShipmentServiceOptions>"."\n";
+					$request .= "			<DeliveryConfirmation>"
+							. "<DCISType>$delivery_confirmation</DCISType>"
+							. "</DeliveryConfirmation>"."\n";
+					$request .= "		</ShipmentServiceOptions>"."\n";
+				}
 				$request .= "	</Shipment>" . "\n";
 				$request .= "</RatingServiceSelectionRequest>" . "\n";
 
@@ -2134,135 +2229,141 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 
 		$ctr=0;
 		$this->cod=sizeof($package['contents'])>1?false:$this->cod; // For multiple packages COD is turned off
+		$this->destination = $package['destination'];
 		foreach ( $package['contents'] as $item_id => $values ) {
 			$values['data'] = $this->wf_load_product( $values['data'] );
 			$ctr++;
-			
-			$skip_product = apply_filters('wf_shipping_skip_product',false, $values, $package['contents']);
-			if($skip_product){
-				continue;
-			}
 
-			if ( !( $values['quantity'] > 0 && $values['data']->needs_shipping() ) ) {
-				$this->debug( sprintf( __( 'Product #%d is virtual. Skipping.', 'ups-woocommerce-shipping' ), $ctr ) );
-				continue;
-			}
+			$additional_products = apply_filters( 'xa_ups_alter_products_list', array($values) );	// To support product addon
 
-			if ( ! $values['data']->get_weight() ) {
-				$this->debug( sprintf( __( 'Product #%d is missing weight. Aborting.', 'ups-woocommerce-shipping' ), $ctr ), 'error' );
-				return;
-			}
-
-			// get package weight
-			$weight = wc_get_weight( $values['data']->get_weight(), $this->weight_unit );
-			//$weight = apply_filters('wf_ups_filter_product_weight', $weight, $package, $item_id );
-
-			// get package dimensions
-			if ( $values['data']->length && $values['data']->height && $values['data']->width ) {
-
-				$dimensions = array( number_format( wc_get_dimension( $values['data']->length, $this->dim_unit ), 2, '.', ''),
-									 number_format( wc_get_dimension( $values['data']->height, $this->dim_unit ), 2, '.', ''),
-									 number_format( wc_get_dimension( $values['data']->width, $this->dim_unit ), 2, '.', '') );
-				sort( $dimensions );
-
-			}
-
-			// get quantity in cart
-			$cart_item_qty = $values['quantity'];
-			// get weight, or 1 if less than 1 lbs.
-			// $_weight = ( floor( $weight ) < 1 ) ? 1 : $weight;
-			
-			$request['Package']	=	array(
-				'PackagingType'	=>	array(
-					'Code'			=>	'02',
-					'Description'	=>	'Package/customer supplied'
-				),
-				'Description'	=>	'Rate',
-			);
-			
-			if ( $values['data']->length && $values['data']->height && $values['data']->width ) {
-				$request['Package']['Dimensions']	=	array(
-					'UnitOfMeasurement'	=>	array(
-						'Code'	=>	$this->dim_unit
-					),
-					'Length'	=>	$dimensions[2],
-					'Width'		=>	$dimensions[1],
-					'Height'	=>	$dimensions[0]
-				);
-			}
-			if((isset($params['service_code'])&&$params['service_code']==92)||($this->service_code==92))// Surepost Less Than 1LBS
-			{
-				if($this->weight_unit=='LBS'){ // make sure weight in pounds
-					$weight_ozs=$weight*16;
-				}else{
-					$weight_ozs=$weight*35.274; // From KG
-				}
-				$request['Package']['PackageWeight']	=	array(
-					'UnitOfMeasurement'	=>	array(
-						'Code'	=>	'OZS'
-					),
-					'Weight'	=>	$weight_ozs,
-				);
-			}else{
-				$request['Package']['PackageWeight']	=	array(
-					'UnitOfMeasurement'	=>	array(
-						'Code'	=>	$this->weight_unit
-					),
-					'Weight'	=>	$weight,
-				);
-			}
-
-			
-			if( $this->insuredvalue || $this->cod ) {
+			foreach( $additional_products as $values ) {
 				
-				// InsuredValue
-				if( $this->insuredvalue ) {
-					
-					$request['Package']['PackageServiceOptions']['InsuredValue']	=	array(
-						'CurrencyCode'	=>	$this->get_ups_currency(),
-						'MonetaryValue'	=>	(string) ( $this->wf_get_insurance_amount($values['data']) * $this->conversion_rate )
+				$skip_product = apply_filters('wf_shipping_skip_product',false, $values, $package['contents']);
+				if($skip_product){
+					continue;
+				}
+
+				if ( !( $values['quantity'] > 0 && $values['data']->needs_shipping() ) ) {
+					$this->debug( sprintf( __( 'Product #%d is virtual. Skipping.', 'ups-woocommerce-shipping' ), $values['data']->id ) );
+					continue;
+				}
+
+				if ( ! $values['data']->get_weight() ) {
+					$this->debug( sprintf( __( 'Product #%d is missing weight. Aborting.', 'ups-woocommerce-shipping' ), $values['data']->id ), 'error' );
+					return;
+				}
+
+				// get package weight
+				$weight = wc_get_weight( $values['data']->get_weight(), $this->weight_unit );
+				//$weight = apply_filters('wf_ups_filter_product_weight', $weight, $package, $item_id );
+
+				// get package dimensions
+				if ( $values['data']->length && $values['data']->height && $values['data']->width ) {
+
+					$dimensions = array( number_format( wc_get_dimension( $values['data']->length, $this->dim_unit ), 2, '.', ''),
+										 number_format( wc_get_dimension( $values['data']->height, $this->dim_unit ), 2, '.', ''),
+										 number_format( wc_get_dimension( $values['data']->width, $this->dim_unit ), 2, '.', '') );
+					sort( $dimensions );
+
+				}
+
+				// get quantity in cart
+				$cart_item_qty = $values['quantity'];
+				// get weight, or 1 if less than 1 lbs.
+				// $_weight = ( floor( $weight ) < 1 ) ? 1 : $weight;
+				
+				$request['Package']	=	array(
+					'PackagingType'	=>	array(
+						'Code'			=>	'02',
+						'Description'	=>	'Package/customer supplied'
+					),
+					'Description'	=>	'Rate',
+				);
+				
+				if ( $values['data']->length && $values['data']->height && $values['data']->width ) {
+					$request['Package']['Dimensions']	=	array(
+						'UnitOfMeasurement'	=>	array(
+							'Code'	=>	$this->dim_unit
+						),
+						'Length'	=>	$dimensions[2],
+						'Width'		=>	$dimensions[1],
+						'Height'	=>	$dimensions[0]
 					);
 				}
-				
-				//Code
-				if($this->cod){
-					if(!$this->is_european_country($package['destination']['country'])){
-						// European countries doen't suppot cod in package level. It is in shipment level
-						//$cod_value=sizeof($package['contents'])>1?(string) ( $values['data']->get_price() * $cart_item_qty ):$this->cod_total; // For multi packages COD is turned off
-						
-						$cod_value=$this->cod_total;
-						
-						$request['Package']['PackageServiceOptions']['COD']	=	array(
-							'CODCode'		=>	3,
-							'CODFundsCode'	=>	0,
-							'CODAmount'		=>	array(
-								'CurrencyCode'	=>	$this->get_ups_currency(),
-								'MonetaryValue'	=>	(string) ($cod_value * $this->conversion_rate),
-							),
-						);
+				if((isset($params['service_code'])&&$params['service_code']==92)||($this->service_code==92))// Surepost Less Than 1LBS
+				{
+					if($this->weight_unit=='LBS'){ // make sure weight in pounds
+						$weight_ozs=$weight*16;
+					}else{
+						$weight_ozs=$weight*35.274; // From KG
 					}
-				}
-			}
-			
-			//Adding all the items to the stored packages
-			$request['Package']['items'] = array($values['data']->obj);
-			
-			// Direct Delivery option
-			$directdeliveryonlyindicator = $this->get_individual_product_meta( array($values['data']), '_wf_ups_direct_delivery' );
-			if( $directdeliveryonlyindicator == 'yes' ) {
-				$request['Package']['DirectDeliveryOnlyIndicator'] = $directdeliveryonlyindicator;
-			}
-			
-			// Delivery Confirmation
-				if(isset($params['delivery_confirmation_applicable']) && $params['delivery_confirmation_applicable'] == true){
-					$signature_option = $this->get_package_signature(array($values['data']));
-					if(!empty($signature_option)&& ($signature_option > 0) ){
-						$request['Package']['PackageServiceOptions']['DeliveryConfirmation']['DCISType']= $signature_option;
-					}
+					$request['Package']['PackageWeight']	=	array(
+						'UnitOfMeasurement'	=>	array(
+							'Code'	=>	'OZS'
+						),
+						'Weight'	=>	$weight_ozs,
+					);
+				}else{
+					$request['Package']['PackageWeight']	=	array(
+						'UnitOfMeasurement'	=>	array(
+							'Code'	=>	$this->weight_unit
+						),
+						'Weight'	=>	$weight,
+					);
 				}
 
-			for ( $i=0; $i < $cart_item_qty ; $i++)
-				$requests[] = $request;
+				
+				if( $this->insuredvalue || $this->cod ) {
+					
+					// InsuredValue
+					if( $this->insuredvalue ) {
+						
+						$request['Package']['PackageServiceOptions']['InsuredValue']	=	array(
+							'CurrencyCode'	=>	$this->get_ups_currency(),
+							'MonetaryValue'	=>	(string) ( $this->wf_get_insurance_amount($values['data']) * $this->conversion_rate )
+						);
+					}
+					
+					//Code
+					if($this->cod){
+						if(!$this->is_european_country($this->destination['country'])){
+							// European countries doen't suppot cod in package level. It is in shipment level
+							//$cod_value=sizeof($package['contents'])>1?(string) ( $values['data']->get_price() * $cart_item_qty ):$this->cod_total; // For multi packages COD is turned off
+							
+							$cod_value=$this->cod_total;
+							
+							$request['Package']['PackageServiceOptions']['COD']	=	array(
+								'CODCode'		=>	3,
+								'CODFundsCode'	=>	0,
+								'CODAmount'		=>	array(
+									'CurrencyCode'	=>	$this->get_ups_currency(),
+									'MonetaryValue'	=>	(string) ($cod_value * $this->conversion_rate),
+								),
+							);
+						}
+					}
+				}
+				
+				//Adding all the items to the stored packages
+				$request['Package']['items'] = array($values['data']->obj);
+				
+				// Direct Delivery option
+				$directdeliveryonlyindicator = $this->get_individual_product_meta( array($values['data']), '_wf_ups_direct_delivery' );
+				if( $directdeliveryonlyindicator == 'yes' ) {
+					$request['Package']['DirectDeliveryOnlyIndicator'] = $directdeliveryonlyindicator;
+				}
+				
+				// Delivery Confirmation
+					if(isset($params['delivery_confirmation_applicable']) && $params['delivery_confirmation_applicable'] == true){
+						$signature_option = $this->get_package_signature(array($values['data']));
+						if(!empty($signature_option)&& ($signature_option > 0) ){
+							$request['Package']['PackageServiceOptions']['DeliveryConfirmation']['DCISType']= $signature_option;
+						}
+					}
+					$request['Package']['items'][] = $values['data'];
+				for ( $i=0; $i < $cart_item_qty ; $i++)
+					$requests[] = $request;
+			}
 		}
 
 		return $requests;
@@ -2327,54 +2428,59 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 		
 		// Add items
 		$ctr = 0;
+		$this->destination = $package['destination'];
 		if( isset($package['contents']) ) {
 			foreach ( $package['contents'] as $item_id => $values ) {
 				$values['data'] = $this->wf_load_product( $values['data'] );
 
 				$ctr++;
 
-				$skip_product = apply_filters('wf_shipping_skip_product',false, $values, $package['contents']);
-				if($skip_product){
-					continue;
-				}
+				$additional_products = apply_filters( 'xa_ups_alter_products_list', array($values) );	// To support product addon
 
-				if ( !( $values['quantity'] > 0 && $values['data']->needs_shipping() ) ) {
-					$this->debug( sprintf( __( 'Product #%d is virtual. Skipping.', 'ups-woocommerce-shipping' ), $ctr ) );
-					continue;
-				}
-
-				$pre_packed = get_post_meta($values['data']->id , '_wf_pre_packed_product_var', 1);
-				if( empty( $pre_packed ) ){
-					$parent_product_id = wp_get_post_parent_id($values['data']->id);
-					$pre_packed = get_post_meta( !empty($parent_product_id) ? $parent_product_id : $values['data']->id , '_wf_pre_packed_product', 1);
-				}
-				
-				$pre_packed = apply_filters('wf_ups_is_pre_packed',$pre_packed,$values);
-
-				if( !empty($pre_packed) && $pre_packed == 'yes' ){
-					$pre_packed_contents[$item_id] = $values;
-					$this->debug( sprintf( __( 'Pre Packed product. Skipping the product '.$values['data']->id, 'ups-woocommerce-shipping' ), $item_id ) );
-					continue;
-				}
-
-				if ( $values['data']->length && $values['data']->height && $values['data']->width && $values['data']->weight ) {
-
-					$dimensions = array( $values['data']->length, $values['data']->height, $values['data']->width );
-
-					for ( $i = 0; $i < $values['quantity']; $i ++ ) {
-						$boxpack->add_item(
-							number_format( wc_get_dimension( $dimensions[2], $this->dim_unit ), 2, '.', ''),
-							number_format( wc_get_dimension( $dimensions[1], $this->dim_unit ), 2, '.', ''),
-							number_format( wc_get_dimension( $dimensions[0], $this->dim_unit ), 2, '.', ''),
-							number_format( wc_get_weight( $values['data']->get_weight(), $this->weight_unit ), 2, '.', ''),
-							$this->wf_get_insurance_amount($values['data']),
-							$values['data'] // Adding Item as meta
-						);
+				foreach( $additional_products as $values ) {
+					$skip_product = apply_filters('wf_shipping_skip_product',false, $values, $package['contents']);
+					if($skip_product){
+						continue;
 					}
 
-				} else {
-					$this->debug( sprintf( __( 'UPS Parcel Packing Method is set to Pack into Boxes. Product #%d is missing dimensions. Aborting.', 'ups-woocommerce-shipping' ), $ctr ), 'error' );
-					return;
+					if ( !( $values['quantity'] > 0 && $values['data']->needs_shipping() ) ) {
+						$this->debug( sprintf( __( 'Product #%d is virtual. Skipping.', 'ups-woocommerce-shipping' ), $values['data']->id ) );
+						continue;
+					}
+
+					$pre_packed = get_post_meta($values['data']->id , '_wf_pre_packed_product_var', 1);
+					if( empty( $pre_packed ) ){
+						$parent_product_id = wp_get_post_parent_id($values['data']->id);
+						$pre_packed = get_post_meta( !empty($parent_product_id) ? $parent_product_id : $values['data']->id , '_wf_pre_packed_product', 1);
+					}
+					
+					$pre_packed = apply_filters('wf_ups_is_pre_packed',$pre_packed,$values);
+
+					if( !empty($pre_packed) && $pre_packed == 'yes' ){
+						$pre_packed_contents[] = $values;
+						$this->debug( sprintf( __( 'Pre Packed product. Skipping the product # %d', 'ups-woocommerce-shipping' ), $values['data']->id ) );
+						continue;
+					}
+
+					if ( $values['data']->length && $values['data']->height && $values['data']->width && $values['data']->weight ) {
+
+						$dimensions = array( $values['data']->length, $values['data']->height, $values['data']->width );
+
+						for ( $i = 0; $i < $values['quantity']; $i ++ ) {
+							$boxpack->add_item(
+								number_format( wc_get_dimension( $dimensions[2], $this->dim_unit ), 2, '.', ''),
+								number_format( wc_get_dimension( $dimensions[1], $this->dim_unit ), 2, '.', ''),
+								number_format( wc_get_dimension( $dimensions[0], $this->dim_unit ), 2, '.', ''),
+								number_format( wc_get_weight( $values['data']->get_weight(), $this->weight_unit ), 2, '.', ''),
+								$this->wf_get_insurance_amount($values['data']),
+								$values['data'] // Adding Item as meta
+							);
+						}
+
+					} else {
+						$this->debug( sprintf( __( 'UPS Parcel Packing Method is set to Pack into Boxes. Product #%d is missing dimensions. Aborting.', 'ups-woocommerce-shipping' ), $ctr ), 'error' );
+						return;
+					}
 				}
 			}
 		}
@@ -2484,7 +2590,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				}
 				//Code
 				if($this->cod){
-					if(!$this->is_european_country($package['destination']['country'])){
+					if(!$this->is_european_country($this->destination['country'])){
 						// European countries doen't suppot cod in package level. It is in shipment level
 						//$cod_value=sizeof($box_packages)>1?$box_package->value:$this->cod_total; // For multiple packages cod not allowed
 						$cod_value=$this->cod_total;
@@ -2553,37 +2659,41 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 		$requests = array();
 		$ctr = 0;
 		$this->cod = sizeof($package['contents']) > 1 ? false : $this->cod; // For multiple packages COD is turned off
+		$this->destination = $package['destination'];
 		foreach ($package['contents'] as $item_id => $values) {
 			$values['data'] = $this->wf_load_product( $values['data'] );
 			$ctr++;
 			
-			$skip_product = apply_filters('wf_shipping_skip_product',false, $values, $package['contents']);
-			if($skip_product){
-				continue;
-			}
-			
-			if (!($values['quantity'] > 0 && $values['data']->needs_shipping())) {
-				$this->debug(sprintf(__('Product #%d is virtual. Skipping.', 'ups-woocommerce-shipping'), $ctr));
-				continue;
-			}
+			$additional_products = apply_filters( 'xa_ups_alter_products_list', array($values) );	// To support product addon
+			foreach ( $additional_products as $values ) {
+				$skip_product = apply_filters('wf_shipping_skip_product',false, $values, $package['contents']);
+				if($skip_product){
+					continue;
+				}
+				
+				if (!($values['quantity'] > 0 && $values['data']->needs_shipping())) {
+					$this->debug(sprintf(__('Product # %d is virtual. Skipping.', 'ups-woocommerce-shipping'), $values['data']->id));
+					continue;
+				}
 
-			if (!$values['data']->get_weight()) {
-				$this->debug(sprintf(__('Product #%d is missing weight. Aborting.', 'ups-woocommerce-shipping'), $ctr), 'error');
-				return;
+				if (!$values['data']->get_weight()) {
+					$this->debug(sprintf(__('Product # %d is missing weight. Aborting.', 'ups-woocommerce-shipping'), $values['data']->id), 'error');
+					return;
+				}
+				
+				$pre_packed = get_post_meta($values['data']->id , '_wf_pre_packed_product_var', 1);
+				if( empty( $pre_packed ) ){
+					$parent_product_id = wp_get_post_parent_id($values['data']->id);
+					$pre_packed = get_post_meta( !empty($parent_product_id) ? $parent_product_id : $values['data']->id , '_wf_pre_packed_product', 1);
+				}
+				$pre_packed = apply_filters('wf_ups_is_pre_packed',$pre_packed,$values);
+				if( !empty($pre_packed) && $pre_packed == 'yes' ){
+					$pre_packed_contents[] = $values;
+					$this->debug( sprintf( __( 'Pre Packed product. Skipping the product # %d', 'ups-woocommerce-shipping' ), $values['data']->id ) );
+					continue;
+				}
+				$weight_pack->add_item(wc_get_weight( $values['data']->get_weight(), $this->weight_unit ), $values['data'], $values['quantity']);
 			}
-			
-			$pre_packed = get_post_meta($values['data']->id , '_wf_pre_packed_product_var', 1);
-			if( empty( $pre_packed ) ){
-				$parent_product_id = wp_get_post_parent_id($values['data']->id);
-				$pre_packed = get_post_meta( !empty($parent_product_id) ? $parent_product_id : $values['data']->id , '_wf_pre_packed_product', 1);
-			}
-			$pre_packed = apply_filters('wf_ups_is_pre_packed',$pre_packed,$values);
-			if( !empty($pre_packed) && $pre_packed == 'yes' ){
-				$pre_packed_contents[$item_id] = $values;
-				$this->debug( sprintf( __( 'Pre Packed product. Skipping the product '.$values['data']->id, 'ups-woocommerce-shipping' ), $item_id ) );
-				continue;
-			}
-			$weight_pack->add_item(wc_get_weight( $values['data']->get_weight(), $this->weight_unit ), $values['data'], $values['quantity']);
 		}
 		
 		$pack	=	$weight_pack->pack_items();		
@@ -2638,6 +2748,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 					),
 					'Description'	=>	'Rate',
 				);
+									
 				if ((isset($params['service_code']) && $params['service_code'] == 92) || ($this->service_code == 92)) { // Surepost Less Than 1LBS
 					if ($this->weight_unit == 'LBS') { // make sure weight in pounds
 						$weight_ozs = $package_total_weight * 16;
@@ -2659,7 +2770,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 						),
 						'Weight'	=>	$package_total_weight
 					);
-				}				
+				}
 
 				// InsuredValue
 
@@ -2674,7 +2785,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 
 				if ($this->cod) {
 					
-					if(!$this->is_european_country($package['destination']['country'])){
+					if(!$this->is_european_country($this->destination['country'])){
 						// European countries doen't suppot cod in package level. It is in shipment level
 						// $cod_value=sizeof($package['contents'])>1?(string) ( $values['data']->get_price() * $cart_item_qty ):$this->cod_total; // For multi packages COD is turned off
 
@@ -2714,6 +2825,30 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 			$requests = array_merge($requests, $prepacked_requests);
 		}		
 		return $requests;
+	}
+	
+
+	/**
+	* Get UPS package weight converted for rate request for service 92
+	* @param $package_request array UPS package request array
+	* @return $service_code array UPS Package request
+	*/
+	public function convert_weight( $package_request, $service_code = null){
+		if ( $service_code = 92 ) { // Surepost Less Than 1 LBS
+			if ($this->weight_unit == 'LBS') { // make sure weight in pounds
+				$weight_ozs = (float) $package_request['Package']['PackageWeight']['Weight'] * 16;
+			} else {
+				$weight_ozs = (float) $package_request['Package']['PackageWeight']['Weight'] * 35.274; // From KG
+			}
+			
+			$package_request['Package']['PackageWeight']	=	array(
+				'UnitOfMeasurement'	=>	array(
+					'Code'	=>	'OZS'
+				),
+				'Weight'	=>	$weight_ozs
+			);
+		}
+		return $package_request;
 	}
 	
 	/**
@@ -2884,7 +3019,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				continue;
 			}
 			
-			 if (!$values['data']->get_weight()) {
+			 if ( ! $values['data']->get_weight() ) {
 				$this->debug(sprintf(__('Product #%d is missing weight. Aborting.', 'ups-woocommerce-shipping'), $ctr), 'error');
 				return;
 			}
@@ -2959,7 +3094,7 @@ class WF_Shipping_UPS extends WC_Shipping_Method {
 				}
 				//Code
 				if($this->cod){
-					if(!$this->is_european_country($package['destination']['country'])){
+					if(!$this->is_european_country($this->destination['country']['country'])){
 						// European countries doen't suppot cod in package level. It is in shipment level
 						//$cod_value=sizeof($package['contents'])>1?(string) ( $values['data']->get_price() * $cart_item_qty ):$this->cod_total; // For multi packages COD is turned off
 						

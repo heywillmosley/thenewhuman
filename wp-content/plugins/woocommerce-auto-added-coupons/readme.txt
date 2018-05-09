@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQ
 Tags: woocommerce, coupons, discount
 Requires at least: 4.7
 Requires PHP: 5.3
-Tested up to: 4.9.2
-Stable tag: 2.6.1.1
+Tested up to: 4.9.4
+Stable tag: 2.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,11 +16,11 @@ Additional functionality for WooCommerce Coupons: Allow discounts to be automati
 "WooCommerce Extended Coupon Features" adds functionality to the WooCommerce coupons and allows for automatic discount rules. 
 Very easy to use, the functionality is conveniently integrated to the WooCommerce Edit Coupon panel.
 
-Compatible with WooCommerce 3.3.0. Backwards compatible with older WooCommerce versions (2.6.0 confirmed).
+Compatible with WooCommerce 3.3.4. Backwards compatible with older WooCommerce versions (2.6.0 confirmed).
 
 Full documentation is available at [www.soft79.nl](http://www.soft79.nl/documentation/wjecf).
 
-* *Auto coupons*: Allow coupons to be automatically added to the users cart if it's restrictions are met,
+* *Auto coupons*: Allow coupons to be automatically added to the users cart if its restrictions are met,
 * Apply coupon via an url,
 * Restrict coupon by shipping method,
 * Restrict coupon by payment method,
@@ -90,8 +90,8 @@ Paste this snippet in your theme's functions.php:
 `
 //Update the cart preview when the billing email is changed by the customer
 add_filter( 'woocommerce_checkout_fields', function( $checkout_fields ) {
-    $checkout_fields['billing']['billing_email']['class'][] = 'update_totals_on_change';
-    return $checkout_fields;    
+	$checkout_fields['billing']['billing_email']['class'][] = 'update_totals_on_change';
+	return $checkout_fields;	
 } );
 `
 
@@ -109,6 +109,9 @@ Sure! [This](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQ
 == Changelog ==
 
 = 2.6.2 =
+* FEATURE: Auto-coupon compatibility with the 'WooCommerce Free Gift Coupons'-plugin
+* FIX: CATEGORIES AND in combination with variable products
+* FIX: Call to undefined function wc_add_notice()
 * FIX: (PRO) First order purchase: Ignore cancelled/waiting for payment order statuses
 * FIX: (PRO) Auto updater plugins_api return $def instead of false
 
@@ -358,7 +361,7 @@ Sure! [This](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQ
 = 2.0.0 =
 * RENAME: Renamed plugin from "WooCommerce auto added coupons" to "WooCommerce Extended Coupon Features"
 * FEATURE: Restrict coupons by payment method
-* FEATURE: Restrict coupons by shipping method  
+* FEATURE: Restrict coupons by shipping method	
 * FEATURE: Use AND-operator for the selected products (default is OR)
 * FIX: Validate email restrictions for auto coupons
 * Norwegian translation added (Thanks to Anders Zorensen)
@@ -372,7 +375,7 @@ Sure! [This](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQ
 * Included translations: Dutch, German, Spanish (Thanks to stephan.sperling for the german translation)
 
 = 1.1.3.1 =
-* FIX: Apply auto coupon if discount is 0.00 and free shipping is ticked    
+* FIX: Apply auto coupon if discount is 0.00 and free shipping is ticked	
 
 = 1.1.3 =
 * Don't apply coupon if the discount is 0.00

@@ -2,7 +2,7 @@
 .fl-node-<?php echo $row->node; ?> {
 	color: #<?php echo $row->settings->text_color; ?>;
 }
-.fl-builder-content .fl-node-<?php echo $row->node; ?> *:not(input):not(textarea):not(select):not(a):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.fl-heading-text):not(.fl-menu-mobile-toggle) {
+.fl-builder-content .fl-node-<?php echo $row->node; ?> *:not(input):not(textarea):not(select):not(a):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.fl-menu-mobile-toggle) {
 	color: inherit;
 }
 <?php endif; ?>
@@ -66,7 +66,7 @@
 }
 <?php endif; ?>
 
-<?php if ( 'photo' == $row->settings->bg_type && ! empty( $row->settings->bg_image ) ) : // Background Photo ?>
+<?php if ( 'photo' == $row->settings->bg_type && ! empty( $row->settings->bg_image_src ) ) : // Background Photo ?>
 .fl-node-<?php echo $row->node; ?> > .fl-row-content-wrap {
 	background-image: url(<?php echo $row->settings->bg_image_src; ?>);
 	background-repeat: <?php echo $row->settings->bg_repeat; ?>;

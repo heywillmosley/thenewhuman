@@ -1,6 +1,6 @@
 <?php
 
-class USIN_GF_User_Activity{
+class USIN_Gravity_Forms_User_Activity{
 	
 	public function init(){
 		add_filter('usin_user_activity', array($this, 'filter_user_activity'), 10, 2);

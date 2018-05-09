@@ -7,8 +7,7 @@ class USIN_WC_Memberships_Reports extends USIN_Module_Reports{
 	public function get_group(){
 		return array(
 			'id' => $this->group,
-			'name' => 'WooCommerce Memberships',
-			'loader_path' => 'plugin-modules/wc-memberships/reports/loaders/'
+			'name' => 'WooCommerce Memberships'
 		);
 	}
 
@@ -22,7 +21,7 @@ class USIN_WC_Memberships_Reports extends USIN_Module_Reports{
 
 		return array(
 			new USIN_Period_Report('wc_memberships_new_members', __('New members', 'usin'), array('group' => $this->group)),
-			new USIN_Period_Report('wc_ended_memberships', __('Ended memberships', 'usin'), 
+			new USIN_Period_Report('wc_memberships_ended_memberships', __('Ended memberships', 'usin'), 
 				array('group' => $this->group, 'info' => __('Cancelled & expired memberships', 'usin'))),
 			new USIN_Standard_Report('wc_memberships_per_plan', __('Number of memberships per plan', 'usin'), 
 				array(

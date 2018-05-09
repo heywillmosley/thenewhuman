@@ -16,14 +16,14 @@ if(!class_exists('IC_Commerce_Premium_Golden_Init')){
 					
 					add_action( 'admin_notices', array( $this, 'admin_notices'));
 					
-					$this->file 								= $file;					
-					$this->constants 							= $constants;					
-					$icpgpluginkey 								= $this->constants['plugin_key'];
-					$icperpagedefault 							= $this->constants['per_page_default'];
-					$this->constants['plugin_options'] 			= get_option($this->constants['plugin_key']);
-					$ic_commercepro_pages						= array($icpgpluginkey.'_page',$icpgpluginkey.'_details_page',$icpgpluginkey.'_options_page',$icpgpluginkey,$icpgpluginkey.'_stock_list_page',$icpgpluginkey.'_report_page',$icpgpluginkey.'_cross_tab_page',$icpgpluginkey.'_google_analytics_page',$icpgpluginkey."_variation_page",$icpgpluginkey."_customer_page",$icpgpluginkey."_variation_stock_page",$icpgpluginkey."_projected_actual_sales_page",$icpgpluginkey."_tax_report_page",$icpgpluginkey."_guest_report_page",$icpgpluginkey."_add_ons_page");
-					$ic_commercepro_pages 						= apply_filters('ic_commerce_premium_golden_pages', $ic_commercepro_pages, $icpgpluginkey);
-					$ic_current_page							= $this->get_request('page',NULL,false);
+					$this->file 							  = $file;					
+					$this->constants 						 = $constants;					
+					$icpgpluginkey 						   = $this->constants['plugin_key'];
+					$icperpagedefault 						= $this->constants['per_page_default'];
+					$this->constants['plugin_options'] 	   = get_option($this->constants['plugin_key']);
+					$ic_commercepro_pages					= array($icpgpluginkey.'_page',$icpgpluginkey.'_details_page',$icpgpluginkey.'_options_page',$icpgpluginkey,$icpgpluginkey.'_stock_list_page',$icpgpluginkey.'_report_page',$icpgpluginkey.'_cross_tab_page',$icpgpluginkey.'_google_analytics_page',$icpgpluginkey."_variation_page",$icpgpluginkey."_customer_page",$icpgpluginkey."_variation_stock_page",$icpgpluginkey."_projected_actual_sales_page",$icpgpluginkey."_tax_report_page",$icpgpluginkey."_guest_report_page",$icpgpluginkey."_add_ons_page");
+					$ic_commercepro_pages 					= apply_filters('ic_commerce_premium_golden_pages', $ic_commercepro_pages, $icpgpluginkey);
+					$ic_current_page						 = $this->get_request('page',NULL,false);
 					
 					$this->check_parent_plugin();					
 					$this->define_constant();
@@ -81,38 +81,38 @@ if(!class_exists('IC_Commerce_Premium_Golden_Init')){
 				global $icpgpluginkey, $icperpagedefault, $iccurrent_page, $wp_version;
 				
 				//New Change ID 20140918
-				$this->constants['detault_stauts_slug'] 	= array("completed","on-hold","processing");
-				$this->constants['detault_order_status'] 	= array("wc-completed","wc-on-hold","wc-processing");
-				$this->constants['hide_order_status'] 		= array();
+				$this->constants['detault_stauts_slug'] 	    = array("completed","on-hold","processing");
+				$this->constants['detault_order_status'] 	   = array("wc-completed","wc-on-hold","wc-processing");
+				$this->constants['hide_order_status'] 		  = array();
 				
-				$this->constants['sub_version'] 			= '20171117';
-				$this->constants['last_updated'] 		   = '20171117';
-				$this->constants['customized'] 			 = 'no';
-				$this->constants['customized_date'] 		= '';
+				$this->constants['sub_version'] 			    = '20180403';
+				$this->constants['last_updated'] 		       = '20180403';
+				$this->constants['customized'] 			     = 'no';
+				$this->constants['customized_date'] 		    = '20180403';
 				
-				$this->constants['first_order_date'] 		= $this->first_order_date($this->constants['plugin_key']);
-				$this->constants['total_shop_day'] 			= $this->get_total_shop_day($this->constants['plugin_key']);
-				$this->constants['today_date'] 				= date_i18n("Y-m-d");
+				$this->constants['first_order_date'] 		   = $this->first_order_date($this->constants['plugin_key']);
+				$this->constants['total_shop_day'] 			 = $this->get_total_shop_day($this->constants['plugin_key']);
+				$this->constants['today_date'] 				 = date_i18n("Y-m-d");
 				
 				$this->constants['post_status']				= $this->get_setting2('post_status',$this->constants['plugin_options'],array());
-				$this->constants['hide_order_status']		= $this->get_setting2('hide_order_status',$this->constants['plugin_options'],$this->constants['hide_order_status']);
-				$this->constants['start_date']				= $this->get_setting('start_date',$this->constants['plugin_options'],$this->constants['first_order_date']);
-				$this->constants['end_date']				= $this->get_setting('end_date',$this->constants['plugin_options'],$this->constants['today_date']);
+				$this->constants['hide_order_status']		  = $this->get_setting2('hide_order_status',$this->constants['plugin_options'],$this->constants['hide_order_status']);
+				$this->constants['start_date']				 = $this->get_setting('start_date',$this->constants['plugin_options'],$this->constants['first_order_date']);
+				$this->constants['end_date']				   = $this->get_setting('end_date',$this->constants['plugin_options'],$this->constants['today_date']);
 				
-				$this->constants['wp_version'] 				= $wp_version;
+				$this->constants['wp_version'] 				 = $wp_version;
 				
-				$file 										= $this->constants['plugin_file'];
-				$this->constants['plugin_slug'] 			= plugin_basename( $file );
-				$this->constants['plugin_file_name'] 		= basename($this->constants['plugin_slug']);
-				$this->constants['plugin_file_id'] 			= basename($this->constants['plugin_slug'], ".php" );
-				$this->constants['plugin_folder']			= dirname($this->constants['plugin_slug']);
-				$this->constants['plugin_url'] 				= plugins_url("", $file);
-				$this->constants['plugin_dir'] 				= WP_PLUGIN_DIR ."/". $this->constants['plugin_folder'];				
-				$this->constants['http_user_agent'] 		= isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-				$this->constants['siteurl'] 				= site_url();
-				$this->constants['admin_page_url']			= $this->constants['siteurl'].'/wp-admin/admin.php';				
+				$file 										  = $this->constants['plugin_file'];
+				$this->constants['plugin_slug'] 			    = plugin_basename( $file );
+				$this->constants['plugin_file_name'] 		   = basename($this->constants['plugin_slug']);
+				$this->constants['plugin_file_id'] 			 = basename($this->constants['plugin_slug'], ".php" );
+				$this->constants['plugin_folder']			  = dirname($this->constants['plugin_slug']);
+				$this->constants['plugin_url'] 				 = plugins_url("", $file);
+				$this->constants['plugin_dir'] 				 = WP_PLUGIN_DIR ."/". $this->constants['plugin_folder'];				
+				$this->constants['http_user_agent'] 		    = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+				$this->constants['siteurl'] 				    = site_url();
+				$this->constants['admin_page_url']			 = $this->constants['siteurl'].'/wp-admin/admin.php';				
 				$this->constants['post_order_status_found']	= isset($this->constants['post_order_status_found']) ? $this->constants['post_order_status_found'] : 0;//Added 20150225
-				$this->constants['classes_path'] 			= $this->constants['plugin_dir'].'/includes/';
+				$this->constants['classes_path'] 		       = $this->constants['plugin_dir'].'/includes/';
 
 				$this->is_active();
 			}

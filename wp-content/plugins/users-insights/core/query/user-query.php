@@ -35,6 +35,10 @@ class USIN_User_Query extends USIN_Query{
 	public function get_user($user_id){
 		global $wpdb;
 
+		ob_start();
+		$start_time = microtime(true);
+		$wpdb->show_errors();
+
 		$filter = new stdClass();
 		$filter->by = 'ID';
 		$filter->operator = 'equals';
@@ -52,9 +56,18 @@ class USIN_User_Query extends USIN_Query{
 		$this->build_query($all_fields);
 
 		$db_user = $wpdb->get_row ( $this->query );
-		$db_user = apply_filters('usin_single_user_db_data', $db_user);
+
+		$wpdb->hide_errors();
+		$error = ob_get_clean();
+
+		if(!empty($error)){
+			$error.= sprintf("%s: %fs", __('Execution time', 'usin'), round((microtime(true) - $start_time), 5));
+			return new WP_Error('usin_db_error', __('Database error', 'usin'), $error);
+		}
 
 		if(!empty($db_user)){
+			$db_user = apply_filters('usin_single_user_db_data', $db_user);
+			
 			return new USIN_User($db_user);
 		}
 	}

@@ -35,6 +35,7 @@ class USIN_WC_Subscriptions_User_Activity{
 			$list = array();
 			foreach ($subscriptions as $subscription) {
 				$title = '';
+				$details = array();
 				
 				if(class_exists('WC_Subscription')){
 					$wc_subscription = new WC_Subscription($subscription->ID);
@@ -55,9 +56,15 @@ class USIN_WC_Subscriptions_User_Activity{
 					//get the items
 					if(method_exists($wc_subscription, 'get_items')){
 						$subscription_items = $wc_subscription->get_items();
-						
+
 						if(!empty($subscription_items) && is_array($subscription_items)){
-							$details = array_values(wp_list_pluck($subscription_items, 'name'));
+							foreach ($subscription_items as $item ) {
+								if(is_array($item) && isset($item['name'])){
+									$details[]=$item['name'];
+								}elseif(method_exists($item, 'get_name')){
+									$details[]=$item->get_name();
+								}
+							}
 						}
 					}
 					

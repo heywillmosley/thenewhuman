@@ -57,7 +57,7 @@ class USIN_BuddyPress_XProfile{
 				$field['order'] = false;
 			}
 			
-			if($type=='select'){
+			if($type=='select' || $type == 'serialized_multioption'){
 				$field['filter']['options'] = $this->get_select_field_options($db_data->id);
 			}elseif($type=='date'){
 				$field['filter']['yearsRange'] = array(-110, 20);
@@ -103,7 +103,7 @@ class USIN_BuddyPress_XProfile{
 				break;
 			case 'checkbox':
 			case 'multiselectbox':
-				return 'multioption_text';
+				return 'serialized_multioption';
 				break;
 			default:
 				return 'text';

@@ -2,8 +2,8 @@
 Contributors: Alignak
 Tags: PHP Minify, YUI Compressor, GTmetrix, Pingdom, Pagespeed, CSS Merging, JS Merging, CSS Minification, JS Minification, Speed Optimization, HTML Minification, Performance
 Requires at least: 4.5
-Stable tag: 2.2.6
-Tested up to: 4.9.1
+Stable tag: 2.2.8
+Tested up to: 4.9.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -255,6 +255,16 @@ Note: Kindly re-save all options and purge all caches (the plugin cache as well 
 
 
 == Changelog ==
+
+= 2.2.8 [2018.01.21] =
+* rollback to 2.2.6 + bugfixes
+
+= 2.2.7 [2018.02.19] =
+* fixed a bug with the blacklist functionality
+* replaced PHP Minify with JSMin as the default JS minification 
+* replaced PHP Minify with CSSTidy as the default CSS minification
+* replaced PHP Minify with Minify HTML as the default HTML minification
+* moved the intermediary cache from transients to disk files
 
 = 2.2.6 [2018.01.06] =
 * fixed a bug with html minification on some files that should not be minified

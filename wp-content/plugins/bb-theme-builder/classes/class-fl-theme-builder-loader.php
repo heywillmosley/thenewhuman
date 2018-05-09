@@ -81,7 +81,7 @@ final class FLThemeBuilderLoader {
 	 * @return void
 	 */
 	static private function define_constants() {
-		define( 'FL_THEME_BUILDER_VERSION', '1.1.0.3' );
+		define( 'FL_THEME_BUILDER_VERSION', '1.1.1' );
 		define( 'FL_THEME_BUILDER_FILE', trailingslashit( dirname( dirname( __FILE__ ) ) ) . 'bb-theme-builder.php' );
 		define( 'FL_THEME_BUILDER_DIR', plugin_dir_path( FL_THEME_BUILDER_FILE ) );
 		define( 'FL_THEME_BUILDER_URL',plugins_url( '/', FL_THEME_BUILDER_FILE ) );
@@ -156,13 +156,26 @@ final class FLThemeBuilderLoader {
 		}
 
 		foreach ( $modules as $path ) {
+			// Paths to check.
+			$slug 			= basename( $path );
+			$child_path		= get_stylesheet_directory() . '/fl-builder/modules/' . $slug . '/' . $slug . '.php';
+			$theme_path		= get_template_directory() . '/fl-builder/modules/' . $slug . '/' . $slug . '.php';
+			$themer_path	= trailingslashit( $path ) . $slug . '.php';
+			$load_path		= null;
 
-			$slug = basename( $path );
-			$file = trailingslashit( $path ) . $slug . '.php';
+			// Check for the module class in a theme or child theme.
+			if ( is_child_theme() && file_exists( $child_path ) ) {
+				$load_path = $child_path;
+			} elseif ( file_exists( $theme_path ) ) {
+				$load_path = $theme_path;
+			} elseif ( file_exists( $themer_path ) ) {
+				$load_path = $themer_path;
+			}
 
-			if ( file_exists( $file ) ) {
+			// Load the module if we have a path.
+			if ( $load_path ) {
 				self::$loaded_modules[] = $slug;
-				require_once $file;
+				require_once $load_path;
 			}
 		}
 	}

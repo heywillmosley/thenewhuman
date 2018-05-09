@@ -3650,5 +3650,232 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 			return $value;
 		}
 		
+		/*GetDataGrid*/
+		/*
+			* Function Name GetPdfDataGrid
+			*
+			* Get data grid
+			*
+			* @param array $rows
+			*
+			* @param array $columns
+			*
+			* @param array $summary
+			*
+			* @param array $price_columns
+			*
+			* @param array $total_columns
+			*
+			* @return array|object $out
+			*			
+		*/
+		function GetPdfDataGrid($rows=array(),$columns=array(),$summary=array(),$price_columns=array(),$total_columns = array()){
+			global $wpdb;
+			$csv_terminated = "\n";
+			$csv_separator = ",";
+			$csv_enclosed = '"';
+			$csv_escaped = "\\";
+			$fields_cnt = count($columns); 
+			$schema_insert = '';
+			
+			$th_open = "\n<th class=\"#class#\">";
+			$th_close = "</th>";
+			
+			$td_open = "\n<td class=\"#class#\">";
+			$td_close = "</td>";
+			
+			$tr_open = "\n<tr>";
+			$tr_close = "\n</tr>";			
+			
+			
+			foreach($columns as $key => $value):
+				$l = str_replace("#class#",$key,$th_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $value) . $th_close;
+				$schema_insert .= $l;				
+			endforeach;// end for
+			
+			//New Change ID 20140918
+			$company_name	= $this->get_request('company_name','');
+			$report_title	= $this->get_request('report_title','');
+			$display_logo	= $this->get_request('display_logo','');
+			$display_date	= $this->get_request('display_date','');
+			$display_center	= $this->get_request('display_center','');
+			$report_name	= $this->get_request('report_name',"details_view");
+			$zero			= $this->price(0);
+			
+			$keywords		= $this->get_request('pdf_keywords','keywords');
+			$description	= $this->get_request('pdf_description','description');
+			$detail_view 	= $this->get_request('detail_view',"no");
+			
+			$all_columns			= array_merge($columns,$total_columns);
+			
+			$column_align_style = $this->get_pdf_style_align($all_columns,'right','','', $report_name);
+			$date_format 		= get_option( 'date_format' );
+			
+			//New Change ID 20140918
+			$out ='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+					<title>'.$report_title.'</title>
+						<meta name="description" content="'.$description.'" />
+						<meta name="keywords" content="'.$keywords.'" />
+						<meta name="author" content="'.$company_name.'" />
+						<style type="text/css"><!--
+					.header {position: fixed; top: -40px; text-align:center;}
+						  .footer { position: fixed; bottom: 0px; text-align:center;}
+						  .pagenum:before { content: counter(page); }
+					/*.Container{width:750px; margin:0 auto; border:1px solid black;}*/
+					body{font-family: "Source Sans Pro", sans-serif; font-size:10px;}
+					span{font-weight:bold;}
+					.Clear{clear:both; margin-bottom:10px;}
+					/*label{width:100px; float:left; }*/
+					table.grid_table{width:100%}
+					table {border-collapse: collapse;}
+					.sTable3{border:1px solid #DFDFDF; }
+					.sTable3 th{
+						padding:10px 10px 7px 10px;
+						background:#eee url(../images/thead.png) repeat-x top left;
+						/*border-bottom:1px solid #DFDFDF;*/
+						text-align:left;
+						}
+					.Form{padding:1% 1% 11% 1%; margin:5px 5px 5px 5px;}
+					.myclass{border:1px solid black;}
+						
+					.sTable3 tbody tr td{padding:8px 10px; background:#fff; border-top:1px solid #DFDFDF; border-right:1px solid #DFDFDF;}
+					.sTable3 tbody tr.AltRow td{background:#FBFBFB;}
+					.header.center_header{margin:auto;  text-align:center;}
+					.header_logo.center_header{text-align:center;}
+					'.$column_align_style.'--></style>
+					</head>
+					<body>';
+			
+			$date_format 	= get_option( 'date_format' );
+			
+			$logo_html		=	"";
+			
+			if(strlen($display_logo) > 0){
+				$company_logo	=	$logo_image 			= $this->get_setting('logo_image',$this->constants['plugin_options'], '');
+				$upload_dir 	  = wp_upload_dir(); // Array of key => value pairs
+				$company_logo	= str_replace($upload_dir['baseurl'],$upload_dir['basedir'],$company_logo);				
+				$logo_html 	   = "<div class='header_logo ".$display_center."'><img src='".$company_logo."' alt='' /></div>";
+			}
+			
+			if(strlen($company_name) > 0)	$out .="<div class='header ".$display_center."'><h2>".stripslashes($company_name)."</h2></div>";	
+			
+			if(strlen($company_name) > 0 || strlen($display_logo) > 0){
+				$out .= "<hr class='myclass1'>";
+			}
+						
+			
+			$out .="<div class='footer'>Page: <span class='pagenum'></span></div>";
+			$out .= "<div class='Container1'>";
+			$out .= "<div class='Form1'>";
+			
+			$out .= $logo_html;			
+			$out .= "<div class='Clear'></div>";
+			if(strlen($report_title) > 0){
+				$out .= "<div class='Clear'></div>";
+				$out .= "<div><label>".__( 'Report Title:', 'icwoocommerce_textdomains' )." </label>".stripslashes($report_title)."</div>";
+			}
+			
+			$out .= "<div class='Clear'></div>";
+			
+			if($display_date){
+				$out .= "<div class='Clear'></div>";
+				$out .= "<div><label>".__( 'Date:', 'icwoocommerce_textdomains' )." </label>".date_i18n($date_format)."</div>";
+			}
+			
+			$out .= "<div class='Clear'></div>";
+			$out .= "<div class='Clear'>";			
+			$out .= "<table class='sTable3 grid_table'>";
+			$out .= "<thead>";
+			$out .= $tr_open;			
+			//$out .= trim(substr($schema_insert, 0, -1));
+			$out .= $schema_insert;
+			$out .= $tr_close;
+			$out .= "</thead>";			
+			$out .= "<tbody>";			
+			$out .= $csv_terminated;
+			
+				
+			
+			$last_order_id = 0;
+			$alt_order_id = 0; 
+			for($i =0;$i<count($rows);$i++){			
+				$j = 0;
+				$schema_insert = '';
+				foreach($columns as $key => $value){
+						 if (isset($rows[$i][$key]) and ($rows[$i][$key] == '0' || $rows[$i][$key] != '')){
+							if ($csv_enclosed == '')
+							{
+								$schema_insert .= $rows[$i][$key];
+							} else
+							{
+								//$schema_insert .= $td_open . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $rows[$i][$key]) . $td_close;
+								//$schema_insert .= str_replace("#class#",$key,$td_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $rows[$i][$key]) . $td_close;
+								
+								switch($key){
+										case 'item_name':
+										case 'product_sku':
+										case 'product_name':
+										case 'country_name':
+										case 'payment_method':
+										case 'status_name':	
+										case 'id':
+										case 'final_sku':
+										case 'product_name':
+										case 'color':
+										case 'size':
+										case 'height':
+										case 'manufuture':
+										case 'project':
+										case 'card':
+										case 'giftcard':
+											$schema_insert .= str_replace("#class#",$key,$td_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $rows[$i][$key]) . $td_close;	
+											break;
+										case "product_total":
+											$schema_insert .= str_replace("#class#",'td_pdf_amount',$td_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $rows[$i][$key]) . $td_close;	
+											break;
+										default:
+											$schema_insert .= str_replace("#class#",$key,$td_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $rows[$i][$key]) . $td_close;
+											break;
+									}
+								
+							}
+							
+						 }else{
+							$schema_insert .= $td_open.''.$td_close;;
+						 }
+						$j++;
+				}				
+				$out .= $tr_open;
+				$out .= $schema_insert;
+				$out .= $tr_close;			
+			}
+
+			$out .= "</tbody>";
+			$out .= "</table>";	
+			$out .= "</div>";
+			
+			if(count($summary)>0){
+				$report_name	= $this->get_request('report_name',"");
+				$report_name	= $this->get_request('detail_view',$report_name);
+				
+				$summary_data = $this->result_grid($report_name,$summary,$zero, $total_columns, $price_columns);
+				if(!empty($summary_data)){
+					$out .= "<div class=\"print_summary_bottom\">";
+					
+					$out .= __("Summary Total:",'icwoocommerce_textdomains');
+					$out .= "</div>";
+					$out .= "<div class=\"print_summary_bottom2\">";
+					$out .= "<br />";
+					$out .= $summary_data;
+					$out .= "</div>";
+				}
+			}
+			$out .= "</div></div></body>";			
+			$out .="</html>";
+			
+			return  $out;
+		 
+		}
+		
 	}//End Class
 }

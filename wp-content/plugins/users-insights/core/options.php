@@ -74,7 +74,7 @@ class USIN_Options{
 		$fields = $this->get_fields();
 		$visible_fields = array();
 		foreach ($fields as $field ) {
-			if($field['show']){
+			if(isset($field['show']) && $field['show']){
 				$visible_fields[]=$field['id'];
 			}
 		}

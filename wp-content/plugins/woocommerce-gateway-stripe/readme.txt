@@ -1,10 +1,10 @@
 === WooCommerce Stripe Payment Gateway ===
 Contributors: automattic, royho, akeda, mattyza, bor0, woothemes
-Tags: credit card, stripe, apple pay, payment request, google pay, sepa, sofort, bancontact, alipay, giropay, ideal, bitcoin, p24, woocommerce, automattic
+Tags: credit card, stripe, apple pay, payment request, google pay, sepa, sofort, bancontact, alipay, giropay, ideal, p24, woocommerce, automattic
 Requires at least: 4.4
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 4.0.7
+Stable tag: 4.1.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Attributions: thorsten-stripe
@@ -91,10 +91,6 @@ For help setting up and configuring, please refer to our [user guide](https://do
 
 If you get stuck, you can ask for help in the Plugin Forum.
 
-= When will the older credit card form ( pre version 4.0.0 ) be deprecated? =
-
-We will completely remove the older form by version 4.1.0.
-
 == Screenshots ==
 
 1. The settings panel used to configure the gateway.
@@ -105,14 +101,18 @@ We will completely remove the older form by version 4.1.0.
 
 == Changelog ==
 
-= 4.0.7 - 2018-02-23 =
-* Fix - Potential conflict issue when adding payment method from another payment gateway.
-* Fix - Issue when using saved card before sources were introduced.
-* Add - Description field/setting for Stripe Checkout Modal/popup.
+= 4.1.3 - 2018-05-07 =
+* Add - Hook to manipulate payment request shipping posted values `wc_stripe_payment_request_shipping_posted_values`.
+* Add - Accessibility attribute for credit card label.
+* Add - Hook to change Stripe supported countries `wc_stripe_supported_countries`.
+* Fix - WC 2.6 compatibility issue during a refund.
+* Fix - Payment Request JS error when default country setting is not supported.
+* Fix - Failed payments were sending two failed emails to admin instead of one.
+* Tweak - Remove payment methods links from WC Payment Settings page for WC 3.4+.
 
 [See changelog for all versions](https://raw.githubusercontent.com/woothemes/woocommerce-gateway-stripe/master/changelog.txt).
 
 == Upgrade Notice ==
 
-= 4.0 =
-4.0 is a major update. Please do a full site backup and test on a staging site before deploying to a live/production server.
+= 4.1 =
+4.1 is a minor release. Please do a full site backup and test on a staging site before deploying to a live/production server.

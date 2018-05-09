@@ -137,8 +137,22 @@ class USIN_User{
 		foreach ($allowed_post_types as $post_type) {
 			$post_type_data = get_post_type_object( $post_type );
 			if(!in_array($post_type, $exclude_types)){
-				$query = new WP_Query(array('author'=>$this->ID, 'post_type'=>$post_type, 
-						'posts_per_page'=>5, 'orderby'=>'date', 'order'=>'desc', 'post_status'=>$allowed_statuses));
+
+				$args = array(
+					'author'=>$this->ID, 
+					'post_type'=>$post_type, 
+					'posts_per_page'=>5, 
+					'orderby'=>'date', 
+					'order'=>'desc', 
+					'post_status'=>$allowed_statuses
+				);
+				
+				$suppress_filters = apply_filters("usin_suppress_filters_$post_type", false);
+				if($suppress_filters){
+					$args['suppress_filters'] = true;
+				}
+
+				$query = new WP_Query($args);
 
 				$count = $query->found_posts;
 

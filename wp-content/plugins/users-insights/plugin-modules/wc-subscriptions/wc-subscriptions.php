@@ -19,9 +19,6 @@ class USIN_WC_Subscriptions extends USIN_Plugin_Module{
 	
 
 	public function init(){
-		require_once 'wc-subscriptions-query.php';
-		require_once 'wc-subscriptions-user-activity.php';
-		
 		new USIN_WC_Subscriptions_Query($this->post_type);
 		new USIN_WC_Subscriptions_User_Activity($this->post_type);
 	}
@@ -81,6 +78,22 @@ class USIN_WC_Subscriptions extends USIN_Plugin_Module{
 			'filter' => array(
 				'type' => 'date',
 				'nodaysago' => true
+			),
+			'module' => $this->module_name
+		);
+
+		$product_search = new USIN_Post_Option_Search(USIN_Woocommerce::PRODUCT_POST_TYPE);
+		$fields[]=array(
+			'name' => __('Is subscribed to', 'usin'),
+			'id' => 'is_subscribed_to',
+			'show' => false,
+			'hideOnTable' => true,
+			'fieldType' => $this->module_name,
+			'icon' => 'woocommerce',
+			'filter' => array(
+				'type' => 'select_option',
+				'options' => $product_search->get_options(),
+				'searchAction' => $product_search->ajax_search_enabled() ? $product_search->key : null
 			),
 			'module' => $this->module_name
 		);

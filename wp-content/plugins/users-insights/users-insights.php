@@ -3,7 +3,7 @@
  * Plugin Name: Users Insights
  * Plugin URI: https://usersinsights.com/
  * Description: Everything about your WordPress users in one place
- * Version: 3.5.1
+ * Version: 3.6.2
  * Author: Pexeto
  * Text Domain: usin
  * Domain Path: /lang
@@ -61,6 +61,10 @@ if(! class_exists('USIN_Manager')){
 			$this->module_options = USIN_Module_Options::get_instance();
 
 			if(is_admin()){
+				USIN_Plugin_Module_Initializer::init();
+				
+				new USIN_Capabilities();
+
 				$this->options = new USIN_Options();
 
 				$this->list_page = new USIN_List_Page($this->title, $this->slug, $this->options);
@@ -72,19 +76,16 @@ if(! class_exists('USIN_Manager')){
 				$this->module_page = new USIN_Module_Page($this->slug, $this->module_options);
 				$this->module_page->init();
 				
+				new USIN_Custom_Fields();
 				$this->cf_page = new USIN_Custom_Fields_Page($this->slug);
 				$this->cf_page->init();
 
-				$filters = new USIN_Filters();
-				$filters->init();
-				$actions = new USIN_Actions();
-				$actions->init();
-				
-				$groups = new USIN_Groups($this->slug);
-				$groups->init();
+				USIN_Filters::init();
 				
 				$notes = new USIN_Notes();
 				$notes->init();
+
+				USIN_Notice::register_ajax_handlers();
 				
 				//updater
 				$updates_license = $this->module_options->get_license('globallicense');
@@ -95,7 +96,12 @@ if(! class_exists('USIN_Manager')){
 
 				USIN_Assets::load_global_inline_css();
 
+				new USIN_Debug();
+
 			}
+
+			USIN_Actions::init();
+			USIN_Groups::init($this->slug);
 
 			$user_detect = new USIN_User_Detect();
 			$user_detect->init();
@@ -119,11 +125,15 @@ if(! class_exists('USIN_Manager')){
 
 			//set constants
 			if ( ! defined( 'USIN_VERSION' ) ) {
-				define( 'USIN_VERSION', '3.5.1' );
+				define( 'USIN_VERSION', '3.6.2' );
 			}
 
 			if ( ! defined( 'USIN_PLUGIN_FILE' ) ) {
 				define( 'USIN_PLUGIN_FILE', __FILE__);
+			}
+
+			if ( ! defined( 'USIN_PLUGIN_PATH' ) ) {
+				define( 'USIN_PLUGIN_PATH', plugin_dir_path(__FILE__));
 			}
 
 		}

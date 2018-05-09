@@ -38,6 +38,7 @@ class FLPhotoModule extends FLBuilderModule {
 		if ( $this->settings && 'lightbox' == $this->settings->link_type ) {
 			if ( ! $override_lightbox ) {
 				$this->add_js( 'jquery-magnificpopup' );
+				$this->add_css( 'font-awesome-5' );
 				$this->add_css( 'jquery-magnificpopup' );
 			} else {
 				wp_dequeue_script( 'jquery-magnificpopup' );
@@ -71,8 +72,8 @@ class FLPhotoModule extends FLBuilderModule {
 	public function delete() {
 		$cropped_path = $this->_get_cropped_path();
 
-		if ( file_exists( $cropped_path['path'] ) ) {
-			unlink( $cropped_path['path'] );
+		if ( fl_builder_filesystem()->file_exists( $cropped_path['path'] ) ) {
+			fl_builder_filesystem()->unlink( $cropped_path['path'] );
 		}
 	}
 
@@ -140,7 +141,7 @@ class FLPhotoModule extends FLBuilderModule {
 
 			// Return the new url.
 			return $cropped_path['url'];
-		}// End if().
+		}
 
 		return false;
 	}
@@ -159,8 +160,7 @@ class FLPhotoModule extends FLBuilderModule {
 				$this->data->link = $this->settings->photo_url;
 				$this->data->url = $this->settings->photo_url;
 				$this->settings->photo_src = $this->settings->photo_url;
-			} // End if().
-			elseif ( is_object( $this->settings->photo ) ) {
+			} elseif ( is_object( $this->settings->photo ) ) {
 				$this->data = $this->settings->photo;
 			} else {
 				$this->data = FLBuilderPhoto::get_attachment_data( $this->settings->photo );
@@ -219,10 +219,9 @@ class FLPhotoModule extends FLBuilderModule {
 			$cropped_path = $this->_get_cropped_path();
 
 			// See if the cropped photo already exists.
-			if ( file_exists( $cropped_path['path'] ) ) {
+			if ( fl_builder_filesystem()->file_exists( $cropped_path['path'] ) ) {
 				$src = $cropped_path['url'];
-			} // End if().
-			elseif ( stristr( $src, FL_BUILDER_DEMO_URL ) && ! stristr( FL_BUILDER_DEMO_URL, $_SERVER['HTTP_HOST'] ) ) {
+			} elseif ( stristr( $src, FL_BUILDER_DEMO_URL ) && ! stristr( FL_BUILDER_DEMO_URL, $_SERVER['HTTP_HOST'] ) ) {
 				$src = $this->_get_cropped_demo_url();
 			} // It doesn't, check if this is a OLD demo image.
 			elseif ( stristr( $src, FL_BUILDER_OLD_DEMO_URL ) ) {
@@ -300,6 +299,10 @@ class FLPhotoModule extends FLBuilderModule {
 			}
 		}
 
+		if ( ! empty( $photo->title ) ) {
+			$attrs .= 'title="' . htmlspecialchars( $photo->title ) . '" ';
+		}
+
 		return $attrs;
 	}
 
@@ -327,7 +330,7 @@ class FLPhotoModule extends FLBuilderModule {
 			$url_path  = $this->_get_uncropped_url();
 			$file_path = str_ireplace( home_url(), ABSPATH, $url_path );
 
-			if ( file_exists( $file_path ) ) {
+			if ( fl_builder_filesystem()->file_exists( $file_path ) ) {
 				$this->_editor = wp_get_image_editor( $file_path );
 			} else {
 				$this->_editor = wp_get_image_editor( $url_path );
@@ -400,6 +403,25 @@ class FLPhotoModule extends FLBuilderModule {
 
 		return FL_BUILDER_DEMO_CACHE_URL . $info['filename'];
 	}
+
+	/**
+	 * Returns link rel
+	 * @since 2.0.6
+	 */
+	public function get_rel() {
+		$rel = array();
+		if ( '_blank' == $this->settings->link_target ) {
+			$rel[] = 'noopener';
+		}
+		if ( isset( $this->settings->link_nofollow ) && 'yes' == $this->settings->link_nofollow ) {
+			$rel[] = 'nofollow';
+		}
+		$rel = implode( ' ', $rel );
+		if ( $rel ) {
+			$rel = ' rel="' . $rel . '" ';
+		}
+		return $rel;
+	}
 }
 
 /**
@@ -433,6 +455,7 @@ FLBuilder::register_module('FLPhotoModule', array(
 						'type'          => 'photo',
 						'label'         => __( 'Photo', 'fl-builder' ),
 						'connections'   => array( 'photo' ),
+						'show_remove'   => true,
 					),
 					'photo_url'     => array(
 						'type'          => 'text',
@@ -527,6 +550,18 @@ FLBuilder::register_module('FLPhotoModule', array(
 						),
 						'preview'         => array(
 							'type'            => 'none',
+						),
+					),
+					'link_nofollow'          => array(
+						'type'          => 'select',
+						'label'         => __( 'Link No Follow', 'fl-builder' ),
+						'default'       => 'no',
+						'options' 		=> array(
+							'yes' 			=> __( 'Yes', 'fl-builder' ),
+							'no' 			=> __( 'No', 'fl-builder' ),
+						),
+						'preview'       => array(
+							'type'          => 'none',
 						),
 					),
 				),

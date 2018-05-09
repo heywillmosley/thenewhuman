@@ -156,10 +156,12 @@
 		{
 			if ( this.win.width() >= FLBuilderLayoutConfig.breakpoints.medium ) {
 				this.win.on( 'scroll.fl-theme-builder-header-shrink', $.proxy( this._doShrink, this ) );
+				this._setImageMaxHeight();
 			} else {
 				this.body.css( 'padding-top', '0' );
 				this.win.off( 'scroll.fl-theme-builder-header-shrink' );
 				this._removeShrink();
+				this._removeImageMaxHeight();
 			}
 		},
 
@@ -235,7 +237,52 @@
 			modules.removeClass( 'fl-theme-builder-header-shrink-module-bottom' );
 			modules.removeClass( 'fl-theme-builder-header-shrink-module-top' );
 			this.header.removeClass( 'fl-theme-builder-header-shrink' );
-		}
+		},
+
+		/**
+		 * Adds max height to images in modules for smooth scrolling.
+		 *
+		 * @since 1.1.1
+		 * @access private
+		 * @method _setImageMaxHeight
+		 */
+		_setImageMaxHeight: function()
+		{
+			var head = $( 'head' ),
+				stylesId = 'fl-header-styles-' + this.header.data( 'post-id' ),
+				styles = '',
+				images = this.header.find( '.fl-module-content img' );
+
+			if ( $( '#' + stylesId ).length ) {
+				return;
+			}
+
+			images.each( function( i ) {
+				var image = $( this ),
+					height = image.height(),
+					node = image.closest( '.fl-module' ).data( 'node' ),
+					className = 'fl-node-' + node + '-img-' + i;
+
+				image.addClass( className );
+				styles += '.' + className + ' { max-height: ' + height + 'px }';
+			} );
+
+			if ( '' !== styles ) {
+				head.append( '<style id="' + stylesId + '">' + styles + '</style>' );
+			}
+		},
+
+		/**
+		 * Removes max height on images in modules for smooth scrolling.
+		 *
+		 * @since 1.1.1
+		 * @access private
+		 * @method _removeImageMaxHeight
+		 */
+		_removeImageMaxHeight: function()
+		{
+			$( '#fl-header-styles-' + this.header.data( 'post-id' ) ).remove();
+		},
 	};
 
 	$( function() { FLThemeBuilderHeaderLayout.init(); } );

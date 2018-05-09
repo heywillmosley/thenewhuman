@@ -12,7 +12,8 @@ class ODB_Displayer {
 	 ********************************************************************************************/	
     function __construct() {
 	} // __construct()
-
+	
+	
 	/********************************************************************************************
 	 *	DISPLAY THE PAGE HEADER
 	 ********************************************************************************************/	
@@ -68,6 +69,7 @@ class ODB_Displayer {
 		
 		//$trans  = ($odb_class->odb_rvg_options['clear_transients'] == 'Y') ? $y : $n;
 		$ping   = ($odb_class->odb_rvg_options['clear_pingbacks']  == 'Y') ? $y : $n;
+		$oembed = ($odb_class->odb_rvg_options['clear_oembed']     == 'Y') ? $y : $n;
 		$log    = ($odb_class->odb_rvg_options['logging_on']       == 'Y') ? $y : $n;
 		$innodb = ($odb_class->odb_rvg_options['optimize_innodb']  == 'Y') ? $y : $n;
 		
@@ -121,6 +123,7 @@ class ODB_Displayer {
 		  <span class="odb-bold">'.__('Delete unused tags', $odb_class->odb_txt_domain).':</span> <span class="odb-bold odb-blue">'.$tag.'</span><br>
 		  <span class="odb-bold">'.__('Delete transients', $odb_class->odb_txt_domain).':</span> <span class="odb-bold odb-blue">'.$trans.'</span><br>
 		  <span class="odb-bold">'.__('Delete pingbacks and trackbacks', $odb_class->odb_txt_domain).':</span> <span class="odb-bold odb-blue">'.$ping.'</span><br>
+		  <span class="odb-bold">'.__('Clear oEmbed cache', $odb_class->odb_txt_domain).':</span> <span class="odb-bold odb-blue">'.$oembed.'</span><br>		  
 		  <span class="odb-bold">'.__('Keep a log', $odb_class->odb_txt_domain).':</span> <span class="odb-bold odb-blue">'.$log.'</span><br>
 		  <span class="odb-bold">'.__('Optimize InnoDB tables', $odb_class->odb_txt_domain).':</span> <span class="odb-bold odb-blue">'.$innodb.'</span><br>
 		  <span class="odb-bold">'.__('Number of excluded tables', $odb_class->odb_txt_domain).':</span> <span class="odb-bold odb-blue">'.count($odb_class->odb_rvg_excluded_tabs).'</span><br>
@@ -149,10 +152,18 @@ class ODB_Displayer {
 	/********************************************************************************************
 	 *	CONVERT SECONDS TO DAYS, HOURS, MINUTES AND SECONDS
 	 ********************************************************************************************/
-	function secondsToTime($seconds) {
+	private function secondsToTime($seconds) {
+		global $odb_class;
+		
 		$dtF = new \DateTime('@0');
 		$dtT = new \DateTime("@$seconds");
-		return $dtF->diff($dtT)->format('%a days, %h hours, %i minutes and %s seconds');
+		// v4.5.2
+		$d = __('days', $odb_class->odb_txt_domain);
+		$h = __('hours', $odb_class->odb_txt_domain);
+		$i = __('minutes', $odb_class->odb_txt_domain);
+		$a = __('and', $odb_class->odb_txt_domain);
+		$s = __('seconds', $odb_class->odb_txt_domain);
+		return $dtF->diff($dtT)->format('%a ' . $d . ', %h ' . $h . ', %i ' . $i . ' ' . $a . ' %s ' . $s);
 	} // secondsToTime()
 	
 
@@ -169,22 +180,36 @@ class ODB_Displayer {
 		  <input class="button odb-normal" type="button" name="change_options" value="'.__('Change Settings', $odb_class->odb_txt_domain).'" onclick="self.location=\'options-general.php?page=odb_settings_page\'">
 			';
 	
-			if(file_exists($odb_class->odb_plugin_path.'logs/rvg-optimize-db-log.html')) {
+			// v4.6
+			if($odb_class->odb_logger_obj->odb_log_count() > 0) {
 				// THERE IS A LOG FILE
-				echo '
-		  &nbsp;
-		  <input class="button odb-normal" type="button" name="view_log" value="'.__('View Log File', $odb_class->odb_txt_domain).'" onclick="window.open(\''.$odb_class->odb_logfile_url.'\')">
-		  &nbsp;
-		  <input class="button odb-normal" type="button" name="delete_log" value="'.__('Delete Log File', $odb_class->odb_txt_domain).'" onclick="self.location=\'tools.php?page=rvg-optimize-database&action=delete_log\'">		
-				';
+				echo "
+<script>
+function confirm_delete() {
+	if(confirm('" . __('Clear the log?', $odb_class->odb_txt_domain) . "')) {
+		self.location = 'tools.php?page=rvg-optimize-database&action=delete_log'
+		return;
+	}
+} // confirm_delete()
+</script>
+				";
 			} // if(file_exists($this->odb_plugin_path.'logs/rvg-optimize-db-log.html'))
 
 			if($action != 'run') {
-				// NOT RUNNING: SHOW START BUTTON
+				// NOT RUNNING: SHOW LOG- AND START BUTTONS
+				if($odb_class->odb_logger_obj->odb_log_count() > 0) {
+					echo '
+		  &nbsp;
+		  <input class="button odb-normal" type="button" name="view_log" value="'.__('View Log', $odb_class->odb_txt_domain).'" onclick="self.location=\'tools.php?page=rvg-optimize-database&action=show_log\'">
+		  &nbsp;
+		  <input class="button odb-normal" type="button" name="delete_log" value="'.__('Clear Log', $odb_class->odb_txt_domain).'" onclick="return confirm_delete();">				
+					';					
+				} // if($odb_class->odb_logger_obj->odb_log_count() > 0)
+				
 				echo '
 		  &nbsp;<input class="button-primary button-large" type="button" name="start_optimization" value="'.__('Start Optimization', $odb_class->odb_txt_domain).'" onclick="self.location=\'tools.php?page=rvg-optimize-database&action=run\'" class="odb-bold" />
 				';
-			}
+			} // if($odb_class->odb_logger_obj->odb_log_count() > 0)
 		
 			echo '		  
 		  </p>

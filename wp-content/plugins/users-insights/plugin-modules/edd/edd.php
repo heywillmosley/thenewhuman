@@ -29,8 +29,6 @@ class USIN_EDD extends USIN_Plugin_Module{
 	 */
 	public function init(){
 		add_filter('usin_exclude_post_types', array($this , 'exclude_post_types'));
-		require_once 'edd-query.php';
-		require_once 'edd-user-activity.php';
 		
 		$this->edd_query = new USIN_EDD_Query(self::ORDER_POST_TYPE);
 		$this->edd_query->init();
@@ -40,7 +38,6 @@ class USIN_EDD extends USIN_Plugin_Module{
 	}
 
 	protected function init_reports(){
-		require_once 'reports/edd-reports.php';
 		new USIN_EDD_Reports();
 	}
 
@@ -185,7 +182,7 @@ class USIN_EDD extends USIN_Plugin_Module{
 	 * EDD custom post types
 	 */
 	public function exclude_post_types($exclude){
-		return array_merge ($exclude,  array('edd_log','edd_payment','edd_discount'));
+		return array_merge ($exclude,  array('edd_log','edd_payment','edd_discount', 'edd_license_log'));
 	}
 	
 	public function exclude_edd_private_comment_types($exclude){

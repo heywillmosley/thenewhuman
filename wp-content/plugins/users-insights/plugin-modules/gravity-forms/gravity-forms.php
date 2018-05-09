@@ -25,14 +25,10 @@ class USIN_Gravity_Forms extends USIN_Plugin_Module{
 	public function init(){
 		$this->is_user_reg_active = USIN_Helper::is_plugin_activated('gravityformsuserregistration/userregistration.php');
 
-		require_once 'gravity-forms-user-registration.php';
-		require_once 'gravity-forms-query.php';
-		require_once 'gravity-forms-user-activity.php';
-		
-		$this->gf_query = new USIN_GF_Query();
+		$this->gf_query = new USIN_Gravity_Forms_Query();
 		$this->gf_query->init();
 		
-		$gf_user_activity = new USIN_GF_User_Activity();
+		$gf_user_activity = new USIN_Gravity_Forms_User_Activity();
 		$gf_user_activity->init();
 		
 		if($this->is_user_reg_active){
@@ -45,7 +41,6 @@ class USIN_Gravity_Forms extends USIN_Plugin_Module{
 	}
 
 	protected function init_reports(){
-		require_once 'reports/gravity-forms-reports.php';
 		new USIN_Gravity_Forms_Reports($this);
 	}
 	

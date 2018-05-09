@@ -38,16 +38,15 @@ class ODB_Cleaner {
 		// GET THE SIZE OF THE DATABASE BEFORE OPTIMIZATION
 		$this->start_size = $odb_class->odb_utilities_obj->odb_get_db_size();
 	
-		// TIMESTAMP FOR LOG FILE
+		// TIMESTAMP FOR LOG FILE - v4.6
 		$ct = ($scheduler) ? ' (cron)' : '';
-		// v4.5
-		$current_datetime = current_time('m/d/YH:i:s', 0);
-		$odb_class->log_arr = array("time" => substr($current_datetime, 0, 10).'<br>'.substr($current_datetime,10).$ct);
 
+		$odb_class->log_arr["timestamp"]  = current_time('YmdHis', 0);
 		$odb_class->log_arr["after"]      = 0;
 		$odb_class->log_arr["before"]     = 0;
 		$odb_class->log_arr["orphans"]    = 0;
 		$odb_class->log_arr["pingbacks"]  = 0;
+		$odb_class->log_arr["oembeds"]    = 0;
 		$odb_class->log_arr["revisions"]  = 0;
 		$odb_class->log_arr["savings"]    = 0;
 		$odb_class->log_arr["spam"]       = 0;
@@ -301,7 +300,7 @@ class ODB_Cleaner {
 		 *	DELETE PINGBACKS AND TRACKBACKS
 		 ****************************************************************************************/	
 		if($odb_class->odb_rvg_options['clear_pingbacks'] == 'Y') {
-			// DELETE UNUSED TAGS
+			// DELETE PINGBACKS AND TRACKBACKS
 			$total_deleted = $this->odb_delete_pingbacks();
 			if($total_deleted > 0) {
 				// PINGBACKS / TRACKBACKS DELETED\
@@ -324,6 +323,35 @@ class ODB_Cleaner {
 			// NUMBER OF pingbacks / trackbacks DELETED (FOR LOG FILE)
 			$odb_class->log_arr["pingbacks"] = $total_deleted;	
 		} // if($odb_class->odb_rvg_options['clear_pingbacks'] == 'Y')
+
+
+		/****************************************************************************************
+		 *	DELETE OEMBED CACHE
+		 ****************************************************************************************/	
+		if($odb_class->odb_rvg_options['clear_oembed'] == 'Y') {
+			// DELETE OEMBED CACHE
+			$total_deleted = $this->odb_delete_oembed();
+			if($total_deleted > 0) {
+				// OEMBED CACHE CLEARED
+				if (!$scheduler) {
+	?>
+	<div class="odb-found-number">
+	  <?php _e('NUMBER OF oEmbed RECORDS DELETED', $odb_class->odb_txt_domain);?>: <span class="odb-blue"><?php echo $total_deleted;?></span> </div>
+	<?php
+				} // if (!$scheduler)
+			} else {
+				if (!$scheduler) {
+	?>
+	<div class="odb-not-found">
+	  <?php _e('No oEmbed records found to delete', $odb_class->odb_txt_domain);?>
+	</div>
+	<?php
+				} // if (!$scheduler)
+			} // if(count($results)>0)
+		
+			// NUMBER OF OEMBED RECORDS DELETED (FOR LOG FILE)
+			$odb_class->log_arr["oembeds"] = $total_deleted;	
+		} // if($odb_class->odb_rvg_options['clear_oembed'] == 'Y')
 
 	
 		/****************************************************************************************
@@ -411,8 +439,9 @@ class ODB_Cleaner {
 		$odb_class->log_arr["after"] = $odb_class->odb_utilities_obj->odb_format_size($end_size,3);
 		// TOTAL SAVING
 		$odb_class->log_arr["savings"] = $odb_class->odb_utilities_obj->odb_format_size(($this->start_size - $end_size),3);
-		// WRITE RESULTS TO LOG FILE
-		$odb_class->odb_logger_obj->write_log($odb_class->log_arr);
+		
+		// WRITE RESULTS TO LOG FILE - v4.6
+		$odb_class->odb_logger_obj->odb_add_log($odb_class->log_arr);
 	
 		$total_savings = $odb_class->odb_rvg_options['total_savings'];
 		$total_savings += ($this->start_size - $end_size);
@@ -475,23 +504,30 @@ class ODB_Cleaner {
 			<?php _e('DONE!', $odb_class->odb_txt_domain);?>
 		  </h2>
 		</div>
-		<br />
-		<br />
+		<br>
+		<br>
 		<span class="odb-padding-left"><?php _e('Optimization took', $odb_class->odb_txt_domain)?>&nbsp;<strong><?php echo $total_time;?></strong>&nbsp;<?php _e('seconds', $odb_class->odb_txt_domain)?>.</span>
 		<?php
 		// v4.5.1
 		$odb_class->odb_last_run_seconds = $total_time;
-		if(file_exists($odb_class->odb_plugin_path.'logs/rvg-optimize-db-log.html'))
-		{
+		
+		if($odb_class->odb_logger_obj->odb_log_count() > 0) {
 		?>
-		<br />
-		<br />
+<script>
+function confirm_delete() {
+	if(confirm('<?php _e('Clear the log?', $odb_class->odb_txt_domain)?>')) {
+		self.location = 'tools.php?page=rvg-optimize-database&action=delete_log'
+		return;
+	}
+} // confirm_delete()
+</script>    
+		<br><br>
 		&nbsp;
-		<input class="button odb-normal" type="button" name="view_log" value="<?php _e('View Log File', $odb_class->odb_txt_domain);?>" onclick="window.open('<?php echo $odb_class->odb_logfile_url?>')" />
+		<input class="button odb-normal" type="button" name="view_log" value="<?php _e('View Log', $odb_class->odb_txt_domain);?>" onclick="self.location='tools.php?page=rvg-optimize-database&action=show_log'" />
 		&nbsp;
-		<input class="button odb-normal" type="button" name="delete_log" value="<?php _e('Delete Log File', $odb_class->odb_txt_domain);?>" onclick="self.location='tools.php?page=rvg-optimize-database&action=delete_log'" />
+		<input class="button odb-normal" type="button" name="delete_log" value="<?php _e('Clear Log', $odb_class->odb_txt_domain);?>" onclick="return confirm_delete();" />
 		<?php	
-		}
+		} // if($odb_class->odb_logger_obj->odb_log_count() > 0)
 ?>
       </div><!-- /odb-done -->		
 <?php	
@@ -707,7 +743,7 @@ class ODB_Cleaner {
 				$results_get_posts = $wpdb->get_results($sql_get_posts);
 				
 				for($j=0; $j<$nr_to_delete; $j++) {
-					if(!$scheduler) echo $results_get_posts[$j]->post_modified.'<br />';
+					if(!$scheduler) echo $results_get_posts[$j]->post_modified.'<br>';
 										
 					$sql_delete = sprintf ("
 					DELETE FROM %sposts
@@ -1080,6 +1116,41 @@ class ODB_Cleaner {
 		return $total_deleted;
 	} // odb_delete_pingbacks()
 
+
+	/********************************************************************************************
+	 *	CLEAR OEMBED CACHE
+	 ********************************************************************************************/
+	function odb_delete_oembed() {
+		global $wpdb, $odb_class;
+		
+		$total_deleted = 0;
+	
+		// LOOP THROUGH THE NETWORK
+		for($i=0; $i<count($odb_class->odb_ms_prefixes); $i++) {
+			
+			//SELECT * FROM `cage2016_postmeta` WHERE `meta_value` LIKE '_OEMBED_%' 
+			// SELECT * FROM `cage2016_postmeta` WHERE `meta_key` LIKE '_oembed_%' 
+			
+			$sql = sprintf ("
+			SELECT `meta_id`
+			FROM %spostmeta
+			WHERE `meta_key` LIKE '_oembed_%%'
+			", $odb_class->odb_ms_prefixes[$i]);
+		
+			$results = $wpdb->get_results($sql);
+			$total_deleted = count($results);
+	
+			// DELETE COMMENTS			
+			$sql_delete_comments = sprintf ("
+			DELETE FROM %spostmeta
+			WHERE `meta_key` LIKE '_oembed_%%'	
+			", $odb_class->odb_ms_prefixes[$i]);
+			$wpdb->get_results($sql_delete_comments);
+		} // for($i=0; $i<count($odb_class->odb_ms_prefixes); $i++)
+	
+		return $total_deleted;
+	} // odb_delete_oembed()
+	
 
 	/********************************************************************************************
 	 *	DELETE ORPHAN POSTMETA AND MEDIA RECORDS

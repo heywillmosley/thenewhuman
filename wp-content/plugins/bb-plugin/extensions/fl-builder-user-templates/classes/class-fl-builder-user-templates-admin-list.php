@@ -17,6 +17,7 @@ final class FLBuilderUserTemplatesAdminList {
 		/* Actions */
 		add_action( 'plugins_loaded',                                  __CLASS__ . '::redirect' );
 		add_action( 'wp',                  				               __CLASS__ . '::page_heading' );
+		add_action( 'pre_get_posts',                                   __CLASS__ . '::pre_get_posts' );
 		add_action( 'admin_enqueue_scripts',          	               __CLASS__ . '::admin_enqueue_scripts' );
 		add_action( 'manage_fl-builder-template_posts_custom_column',  __CLASS__ . '::add_column_content', 10, 2 );
 
@@ -24,6 +25,7 @@ final class FLBuilderUserTemplatesAdminList {
 		add_filter( 'views_edit-fl-builder-template',                  __CLASS__ . '::modify_views' );
 		add_filter( 'manage_fl-builder-template_posts_columns',        __CLASS__ . '::add_column_headings' );
 		add_filter( 'post_row_actions',                                __CLASS__ . '::row_actions' );
+		add_action( 'restrict_manage_posts',                           __CLASS__ . '::restrict_listings' );
 	}
 
 	/**
@@ -78,7 +80,7 @@ final class FLBuilderUserTemplatesAdminList {
 	}
 
 	/**
-	 * Overrides the list table page headings for saved rows and modules.
+	 * Overrides the list table page headings for saved rows, cols and modules.
 	 *
 	 * @since 1.10
 	 * @return void
@@ -97,9 +99,27 @@ final class FLBuilderUserTemplatesAdminList {
 
 			if ( 'row' == $_GET['fl-builder-template-type'] ) {
 				$wp_post_types['fl-builder-template']->labels->name = __( 'Saved Rows', 'fl-builder' );
+			} elseif ( 'column' == $_GET['fl-builder-template-type'] ) {
+				$wp_post_types['fl-builder-template']->labels->name = __( 'Saved Columns', 'fl-builder' );
 			} elseif ( 'module' == $_GET['fl-builder-template-type'] ) {
 				$wp_post_types['fl-builder-template']->labels->name = __( 'Saved Modules', 'fl-builder' );
 			}
+		}
+	}
+
+	/**
+	 * Orders templates by title.
+	 *
+	 * @since 2.0.6
+	 * @param object $query
+	 * @return void
+	 */
+	static public function pre_get_posts( $query ) {
+		if ( ! isset( $_GET['post_type'] ) || 'fl-builder-template' != $_GET['post_type'] ) {
+			return;
+		} elseif ( $query->is_main_query() && ! $query->get( 'orderby' ) ) {
+			$query->set( 'orderby', 'title' );
+			$query->set( 'order', 'ASC' );
 		}
 	}
 
@@ -138,7 +158,7 @@ final class FLBuilderUserTemplatesAdminList {
 		if ( ! isset( $_GET['fl-builder-template-type'] ) ) {
 			return;
 		}
-		if ( in_array( $_GET['fl-builder-template-type'], array( 'row', 'module' ) ) ) {
+		if ( in_array( $_GET['fl-builder-template-type'], array( 'row', 'column', 'module' ) ) ) {
 			$columns['fl_global'] = __( 'Global', 'fl-builder' );
 		}
 
@@ -180,6 +200,33 @@ final class FLBuilderUserTemplatesAdminList {
 
 		return $actions;
 	}
+
+	/**
+	 * Add filter dropdown for Categories
+	 *
+	 * @since 1.10.8
+	 */
+	static public function restrict_listings() {
+		global $typenow;
+		if ( 'fl-builder-template' == $typenow ) {
+			$taxonomy = 'fl-builder-template-category';
+			$tax = get_taxonomy( $taxonomy );
+			$term = $_GET['fl-builder-template-type'];
+			wp_dropdown_categories( array(
+				'show_option_all' => __( 'Show All Categories', 'fl-builder' ),
+				'taxonomy'        => $taxonomy,
+				'value_field'     => 'slug',
+				'orderby'         => 'name',
+				'selected'        => $term,
+				'name'            => $taxonomy,
+				'depth'           => 1,
+				'show_count'      => false,
+				'hide_empty'      => false,
+				)
+			);
+		}
+	}
+
 }
 
 FLBuilderUserTemplatesAdminList::init();

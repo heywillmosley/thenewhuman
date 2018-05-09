@@ -1,118 +1,96 @@
 <?php
 
 class USIN_Includes{
-	
-	public static function call(){
-		
-		include_once('core/schema.php');
-		include_once('core/user-data.php');
 
-		//include the library files
-		include_once('core/lib/browser.php');
-		include_once('core/geolocation-status.php');
-		include_once('core/user-detect.php');
-		include_once('core/ajax.php');
+	public static $paths = array();
 
-		include_once('core/functions.php');
-
-		include_once('core/modules/license.php');
-		include_once('core/modules/module.php');
-		include_once('core/modules/remote-license.php');
-		include_once('core/modules/module-default-options.php');
-		include_once('core/modules/module-options.php');
-
-		include_once('core/helper.php');
-		include_once('core/templates.php');
-		include_once('core/actions.php');
-		
-		if(is_admin()){
-			
-			include_once('core/field.php');
-			include_once('core/capabilities.php');
-			include_once('core/notice.php');
-			include_once('core/assets.php');
-
-			//include the user list page files
-			include_once('core/user-list/list-export.php');
-			include_once('core/user-list/list-assets.php');
-			include_once('core/user-list/list-ajax.php');
-			include_once('core/user-list/list-page.php');
-
-			//include the module options page files
-			include_once('core/modules/module-page.php');
-			include_once('core/modules/module-assets.php');
-			include_once('core/modules/module-ajax.php');
-
-			//include the report page files
-			include_once('core/reports/reports-page.php');
-			include_once('core/reports/reports-ajax.php');
-
-			//include the query files
-			include_once('core/query/query.php');
-			include_once('core/query/user-query.php');
-			include_once('core/query/coordinates-query.php');
-			include_once('core/query/meta-query.php');
-			
-			//include the custom fields page files
-			include_once('core/crm/custom-fields/custom-fields-page.php');
-			include_once('core/crm/custom-fields/custom-fields-assets.php');
-			include_once('core/crm/custom-fields/custom-fields-options.php');
-			include_once('core/crm/custom-fields/custom-fields-ajax.php');
-			include_once('core/crm/custom-fields/custom-fields.php');
+	protected static $autoload_files = array(
+		'core/' => array(
+			'schema', 'user-data', 'geolocation-status', 'user-detect', 'ajax', 'helper', 
+			'templates', 'actions', 'field', 'capabilities', 'notice', 'assets',
+		 	'filters', 'field-defaults', 'options', 'user', 'user-exported', 'segments'
+		),
+		'core/modules/' => array(
+			'license', 'module', 'remote-license', 'module-default-options', 'module-options', 
+			'module-page', 'module-assets', 'module-ajax'
+		),
+		'core/reports/' => array(
+			'report','report-options','period-report','standard-report',
+			'reports-defaults','reports-page','reports-assets','reports-ajax','report-periods'
+		),
+		'core/reports/loaders/' => array(
+			'report-loader', 'period-report-loader', 'standard-report-loader', 
+			'numeric-field-loader', 'meta-field-loader', 'multioption-field-loader', 'numeric-meta-field-loader',
+			'registered-users-loader', 'user-browsers-loader', 'user-cities-loader', 'user-countries-loader',
+			'user-groups-loader', 'user-platforms-loader', 'user-regions-loader'
+		),
+		'core/crm/custom-fields/' => array(
+			'custom-fields-page', 'custom-fields-assets', 'custom-fields-options', 'custom-fields-ajax', 'custom-fields'
+		),
+		'core/user-list/' => array('list-export', 'list-assets', 'list-ajax', 'list-page'),
+		'core/query/' => array('query', 'user-query', 'coordinates-query', 'meta-query', 'post-query'),
+		'core/lib/' => array('browser'),
+		'core/crm/' => array('groups'),
+		'core/crm/notes/' => array('notes', 'note'),
+		'core/updates/' => array('plugin-updater'),
+		'core/utils/' => array('debug'),
+		'plugin-modules/' => array(
+			'plugin-module', 'module-reports', 'option-search', 'post-option-search',
+			'plugin-module-initializer'	
+		)
+	);
 
 
-			include_once('core/filters.php');
-			include_once('core/field-defaults.php');
-			include_once('core/options.php');
-			include_once('core/user.php');
-			include_once('core/user-exported.php');
-			include_once('core/segments.php');
-			
-			include_once('core/crm/groups.php');
-			include_once('core/crm/notes/notes.php');
-			include_once('core/crm/notes/note.php');
-			
-			include_once('core/updates/plugin-updater.php');
-			
-			include_once('core/utils/debug.php');
-			
-			//include the plugin modules files
-			include_once('plugin-modules/plugin-module.php');
-			include_once('plugin-modules/module-reports.php');
-			include_once('plugin-modules/woocommerce/woocommerce.php');
-			include_once('plugin-modules/wc-subscriptions/wc-subscriptions.php');
-			include_once('plugin-modules/wc-memberships/wc-memberships.php');
-			include_once('plugin-modules/bbpress/bbpress.php');
-			include_once('plugin-modules/buddypress/buddypress.php');
-			include_once('plugin-modules/edd/edd.php');
-			include_once('plugin-modules/ultimate-member/ultimate-member.php');
-			include_once('plugin-modules/gravity-forms/gravity-forms.php');
-			include_once('plugin-modules/learndash/learndash.php');
-			include_once('plugin-modules/pmpro/pmpro.php');
+	/**
+	 * Builds an array of the paths of each classes. The key is the class name
+	 * while the value is the relative path to the file of the class.
+	 * E.g. array('USIN_Schema' => 'core/schema.php')
+	 *
+	 * @param array $files array where in each element the key is the path of the folder
+	 * and the value is an array containing the names of the files without .php extension.
+	 * e.g. array('core/' => array('schema', 'ajax'))
+	 * @return array
+	 */
+	public static function build_paths($files){
+		$paths = array();
+		foreach ($files as $path => $names ) {
+			foreach ($names	as $name) {
+				$class_name = self::build_class_name($name);
+				$paths[$class_name] = USIN_PLUGIN_PATH.$path.$name.'.php';
+			}
+		}
+
+		return $paths;
+	}
+
+	/**
+	 * Builds a class name based on a file name (without the extension).
+	 * E.g. user-data will become USIN_User_Data
+	 *
+	 * @param string $name the file name without the .php extension
+	 * @return string the class name
+	 */
+	public static function build_class_name($name){
+		$parts = explode('-', $name);
+		$parts = array_map('ucfirst', $parts);
+		return 'USIN_'.implode('_', $parts);
+	}
+
+	public static function autoload_class($class_name){
+		if(isset(self::$paths[$class_name])){
+			include_once(self::$paths[$class_name]);
 		}
 		
-		
-		do_action('usin_files_loaded');
-		
-	}
-
-	public static function include_reports(){
-		include_once('core/reports/report.php');
-		include_once('core/reports/report-options.php');
-		include_once('core/reports/period-report.php');
-		include_once('core/reports/standard-report.php');
-		include_once('core/reports/reports-defaults.php');
-		include_once('core/reports/reports-assets.php');
-		include_once('core/reports/report-periods.php');
-		include_once('core/reports/loaders/report-loader.php');
-		include_once('core/reports/loaders/period-report-loader.php');
-		include_once('core/reports/loaders/standard-report-loader.php');
-		include_once('core/reports/loaders/numeric-field-loader.php');
-		include_once('core/reports/loaders/meta-field-loader.php');
-		include_once('core/reports/loaders/multioption-field-loader.php');
-		include_once('core/reports/loaders/numeric-meta-field-loader.php');
-
-		do_action('usin_report_files_loaded');
 	}
 	
+	public static function call(){
+
+		self::$paths = self::build_paths(self::$autoload_files);
+
+		spl_autoload_register( array('USIN_Includes', 'autoload_class'));
+		
+		include_once('core/functions.php');
+
+		do_action('usin_files_loaded');
+	}
 }

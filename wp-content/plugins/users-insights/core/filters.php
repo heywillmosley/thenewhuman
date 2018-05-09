@@ -3,12 +3,12 @@
 
 class USIN_Filters{
 
-	public function init(){
-		add_action('pre_get_comments', array($this, 'admin_comments_filter'));
-		add_action('pre_get_posts', array($this, 'admin_posts_filter'));
+	public static function init(){
+		add_action('pre_get_comments', array('USIN_Filters', 'admin_comments_filter'));
+		add_action('pre_get_posts', array('USIN_Filters', 'admin_posts_filter'));
 	}
 
-	public function admin_comments_filter($args){
+	public static function admin_comments_filter($args){
 		if( is_admin() && isset($_GET['usin_user']) && isset($_GET['usin_post_type'])) {
 			$user_id = intval($_GET['usin_user']);
 			if($user_id){
@@ -21,7 +21,7 @@ class USIN_Filters{
 		return $args;
 	}
 
-	public function admin_posts_filter($query){
+	public static function admin_posts_filter($query){
 		if( is_admin() && isset($_GET['usin_user']) && isset($_GET['usin_post_type'])
 			 && $query->get('post_type') == $_GET['usin_post_type']){
 			$user_id = intval($_GET['usin_user']);

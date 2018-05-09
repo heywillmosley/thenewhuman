@@ -43,7 +43,7 @@ class USIN_Custom_Fields{
 					'name' => $custom_field['name'],
 					'id' => $this->prefix.$custom_field['key'],
 					'order' => $order,
-					'show' => true,
+					'show' => false,
 					'fieldType' => 'general',
 					'filter' => array(
 						'type' => $custom_field['type']
@@ -88,5 +88,3 @@ class USIN_Custom_Fields{
 	}
 	
 }
-
-new USIN_Custom_Fields();

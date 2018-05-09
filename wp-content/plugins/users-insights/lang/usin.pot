@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-02-06 11:34+1100\n"
-"PO-Revision-Date: 2018-02-06 11:34+1100\n"
+"POT-Creation-Date: 2018-04-12 11:11+1000\n"
+"PO-Revision-Date: 2018-04-12 11:11+1000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -49,12 +49,12 @@ msgstr ""
 #: core/crm/custom-fields/custom-fields-assets.php:44
 #: core/crm/custom-fields/custom-fields-options.php:44
 #: core/crm/custom-fields/custom-fields-options.php:170
-#: core/user-list/list-assets.php:107
+#: core/user-list/list-assets.php:112
 msgid "Error updating fields"
 msgstr ""
 
 #: core/crm/custom-fields/custom-fields-assets.php:45
-#: core/user-list/list-assets.php:106
+#: core/user-list/list-assets.php:111
 msgid "Are you sure?"
 msgstr ""
 
@@ -71,7 +71,7 @@ msgid "Update"
 msgstr ""
 
 #: core/crm/custom-fields/custom-fields-assets.php:49
-#: core/user-list/list-assets.php:105
+#: core/user-list/list-assets.php:110
 msgid "Delete"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgid "Failed to update group of %d users"
 msgstr ""
 
 #: core/crm/groups.php:121 core/crm/groups.php:172 core/crm/groups.php:174
-#: core/user-list/list-assets.php:99
+#: core/user-list/list-assets.php:104
 msgid "User Groups"
 msgstr ""
 
@@ -171,7 +171,7 @@ msgid "Note"
 msgstr ""
 
 #: core/crm/notes/notes.php:22 core/field-defaults.php:125
-#: core/user-list/list-assets.php:101
+#: core/user-list/list-assets.php:106
 msgid "Notes"
 msgstr ""
 
@@ -211,7 +211,7 @@ msgstr ""
 msgid "Posts Created"
 msgstr ""
 
-#: core/field-defaults.php:115 core/user.php:176
+#: core/field-defaults.php:115 core/user.php:190
 msgid "Comments"
 msgstr ""
 
@@ -412,7 +412,7 @@ msgid "License deactivated"
 msgstr ""
 
 #: core/modules/module-assets.php:56 core/updates/plugin-updater.php:353
-#: core/user-list/list-assets.php:80
+#: core/user-list/list-assets.php:84
 msgid "Error"
 msgstr ""
 
@@ -461,12 +461,13 @@ msgstr ""
 #: core/modules/module-default-options.php:49
 #: plugin-modules/bbpress/bbpress.php:41
 #: plugin-modules/buddypress/buddypress.php:59 plugin-modules/edd/edd.php:59
+#: plugin-modules/events-calendar/events-calendar.php:81
 #: plugin-modules/gravity-forms/gravity-forms.php:62
 #: plugin-modules/learndash/learndash.php:74 plugin-modules/pmpro/pmpro.php:37
 #: plugin-modules/ultimate-member/ultimate-member.php:53
 #: plugin-modules/wc-memberships/wc-memberships.php:38
 #: plugin-modules/wc-subscriptions/wc-subscriptions.php:37
-#: plugin-modules/woocommerce/woocommerce.php:44
+#: plugin-modules/woocommerce/woocommerce.php:74
 msgid "Learn More"
 msgstr ""
 
@@ -536,7 +537,7 @@ msgstr ""
 msgid "Missing filter parameter"
 msgstr ""
 
-#: core/reports/reports-assets.php:45 core/user-list/list-assets.php:81
+#: core/reports/reports-assets.php:45 core/user-list/list-assets.php:85
 msgid "Error loading data"
 msgstr ""
 
@@ -619,237 +620,246 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: core/user-list/list-ajax.php:68
+#: core/user-list/list-ajax.php:47 core/user-list/list-ajax.php:68
 msgid "No data found for this user"
 msgstr ""
 
 #: core/user-list/list-assets.php:75
-msgid "days ago"
+msgid ""
+"Tip: Try to hide all the columns from the eye-icon menu and refresh the page"
 msgstr ""
 
 #: core/user-list/list-assets.php:76
-msgid "day"
-msgstr ""
-
-#: core/user-list/list-assets.php:77
-msgid "month"
-msgstr ""
-
-#: core/user-list/list-assets.php:78
-msgid "year"
+msgid "more info"
 msgstr ""
 
 #: core/user-list/list-assets.php:79
-msgid "Load More"
+msgid "days ago"
+msgstr ""
+
+#: core/user-list/list-assets.php:80
+msgid "day"
+msgstr ""
+
+#: core/user-list/list-assets.php:81
+msgid "month"
 msgstr ""
 
 #: core/user-list/list-assets.php:82
-msgid "Add Filter"
+msgid "year"
 msgstr ""
 
 #: core/user-list/list-assets.php:83
-msgid "0 results found"
-msgstr ""
-
-#: core/user-list/list-assets.php:85
-msgid "Activity"
-msgstr ""
-
-#: core/user-list/list-assets.php:86
-msgid "No activity found"
+msgid "Load More"
 msgstr ""
 
 #: core/user-list/list-assets.php:87
-msgid "Back to user list"
+msgid "Add Filter"
 msgstr ""
 
 #: core/user-list/list-assets.php:88
-msgid "of"
-msgstr ""
-
-#: core/user-list/list-assets.php:89
-msgid "Users per page"
+msgid "0 results found"
 msgstr ""
 
 #: core/user-list/list-assets.php:90
-msgid "View"
+msgid "Activity"
 msgstr ""
 
 #: core/user-list/list-assets.php:91
-msgid "users"
+msgid "No activity found"
 msgstr ""
 
 #: core/user-list/list-assets.php:92
-msgid "user locations detected"
+msgid "Back to user list"
 msgstr ""
 
 #: core/user-list/list-assets.php:93
-msgid "online"
+msgid "of"
 msgstr ""
 
 #: core/user-list/list-assets.php:94
+msgid "Users per page"
+msgstr ""
+
+#: core/user-list/list-assets.php:95
+msgid "View"
+msgstr ""
+
+#: core/user-list/list-assets.php:96
+msgid "users"
+msgstr ""
+
+#: core/user-list/list-assets.php:97
+msgid "user locations detected"
+msgstr ""
+
+#: core/user-list/list-assets.php:98
+msgid "online"
+msgstr ""
+
+#: core/user-list/list-assets.php:99
 #, php-format
 msgid "Export this list of %d users"
 msgstr ""
 
-#: core/user-list/list-assets.php:95 core/user-list/list-assets.php:133
+#: core/user-list/list-assets.php:100 core/user-list/list-assets.php:138
 msgid "Cancel"
 msgstr ""
 
-#: core/user-list/list-assets.php:96
+#: core/user-list/list-assets.php:101
 msgid "Export"
 msgstr ""
 
-#: core/user-list/list-assets.php:97
+#: core/user-list/list-assets.php:102
 #, php-format
 msgid ""
 "Are you sure that you want to export the current list of <span class=\"usin-"
 "dialog-highlight\">%s</span> users?"
 msgstr ""
 
-#: core/user-list/list-assets.php:98
+#: core/user-list/list-assets.php:103
 msgid "Error exporting data"
 msgstr ""
 
-#: core/user-list/list-assets.php:100
+#: core/user-list/list-assets.php:105
 msgid "Error updating user groups"
 msgstr ""
 
-#: core/user-list/list-assets.php:102
+#: core/user-list/list-assets.php:107
 msgid "Add Note"
 msgstr ""
 
-#: core/user-list/list-assets.php:103
+#: core/user-list/list-assets.php:108
 msgid "by"
 msgstr ""
 
-#: core/user-list/list-assets.php:104
+#: core/user-list/list-assets.php:109
 msgid "Error updating notes list"
 msgstr ""
 
-#: core/user-list/list-assets.php:108
+#: core/user-list/list-assets.php:113
 msgid "Toggle Columns"
 msgstr ""
 
-#: core/user-list/list-assets.php:109
+#: core/user-list/list-assets.php:114
 msgid "Enter Map View"
 msgstr ""
 
-#: core/user-list/list-assets.php:110
+#: core/user-list/list-assets.php:115
 msgid "Exit Map View"
 msgstr ""
 
-#: core/user-list/list-assets.php:111
+#: core/user-list/list-assets.php:116
 msgid "Select"
 msgstr ""
 
-#: core/user-list/list-assets.php:112
+#: core/user-list/list-assets.php:117
 #, php-format
 msgid "%d Users Selected"
 msgstr ""
 
-#: core/user-list/list-assets.php:113
+#: core/user-list/list-assets.php:118
 msgid "1 User Selected"
 msgstr ""
 
-#: core/user-list/list-assets.php:114
+#: core/user-list/list-assets.php:119
 msgid "Bulk Actions"
 msgstr ""
 
-#: core/user-list/list-assets.php:115
+#: core/user-list/list-assets.php:120
 msgid "Segments"
 msgstr ""
 
-#: core/user-list/list-assets.php:116
+#: core/user-list/list-assets.php:121
 msgid "Save the current filters as a segment"
 msgstr ""
 
-#: core/user-list/list-assets.php:117
+#: core/user-list/list-assets.php:122
 msgid "Apply filters to create a segment"
 msgstr ""
 
-#: core/user-list/list-assets.php:118
+#: core/user-list/list-assets.php:123
 msgid "Create new segment"
 msgstr ""
 
-#: core/user-list/list-assets.php:119
+#: core/user-list/list-assets.php:124
 msgid "Save segment"
 msgstr ""
 
-#: core/user-list/list-assets.php:120
+#: core/user-list/list-assets.php:125
 msgid "Delete segment"
 msgstr ""
 
-#: core/user-list/list-assets.php:121
+#: core/user-list/list-assets.php:126
 msgid "Segment name"
 msgstr ""
 
-#: core/user-list/list-assets.php:122
+#: core/user-list/list-assets.php:127
 #, php-format
 msgid ""
 "Are you sure that you want to delete the segment <span class=\"usin-dialog-"
 "highlight\">%s</span>?"
 msgstr ""
 
-#: core/user-list/list-assets.php:123
+#: core/user-list/list-assets.php:128
 msgid "Error creating the segment"
 msgstr ""
 
-#: core/user-list/list-assets.php:124
+#: core/user-list/list-assets.php:129
 msgid "This field does not exist anymore"
 msgstr ""
 
-#: core/user-list/list-assets.php:125
+#: core/user-list/list-assets.php:130
 msgid "Add to group"
 msgstr ""
 
-#: core/user-list/list-assets.php:126
+#: core/user-list/list-assets.php:131
 msgid "Add the selected user to the following group"
 msgstr ""
 
-#: core/user-list/list-assets.php:127
+#: core/user-list/list-assets.php:132
 #, php-format
 msgid "Add the selected %d users to the following group"
 msgstr ""
 
-#: core/user-list/list-assets.php:128
+#: core/user-list/list-assets.php:133
 msgid "Remove from group"
 msgstr ""
 
-#: core/user-list/list-assets.php:129
+#: core/user-list/list-assets.php:134
 msgid "Remove the selected user from the following group"
 msgstr ""
 
-#: core/user-list/list-assets.php:130
+#: core/user-list/list-assets.php:135
 #, php-format
 msgid "Remove the selected %d users from the following group"
 msgstr ""
 
-#: core/user-list/list-assets.php:131
+#: core/user-list/list-assets.php:136
 msgid "Select all users"
 msgstr ""
 
-#: core/user-list/list-assets.php:132
+#: core/user-list/list-assets.php:137
 msgid "Clear Selection"
 msgstr ""
 
-#: core/user-list/list-assets.php:134
+#: core/user-list/list-assets.php:139
 msgid "Apply"
 msgstr ""
 
-#: core/user-list/list-assets.php:135
+#: core/user-list/list-assets.php:140
 msgid "Select a group"
 msgstr ""
 
-#: core/user-list/list-assets.php:136
+#: core/user-list/list-assets.php:141
 msgid "Show debug info"
 msgstr ""
 
-#: core/user-list/list-assets.php:137
+#: core/user-list/list-assets.php:142
 msgid "Hide debug info"
 msgstr ""
 
-#: core/user-list/list-assets.php:138
+#: core/user-list/list-assets.php:143
 msgid ""
 "There are no user groups created. Go to Users Insights -> User Groups to "
 "create a new group."
@@ -863,11 +873,11 @@ msgstr ""
 msgid "Just now"
 msgstr ""
 
-#: core/user.php:176
+#: core/user.php:190
 msgid "Comment"
 msgstr ""
 
-#: core/user.php:214
+#: core/user.php:228
 msgid "Edit User"
 msgstr ""
 
@@ -979,11 +989,11 @@ msgid ""
 "the WordPress users."
 msgstr ""
 
-#: plugin-modules/edd/edd.php:74 plugin-modules/woocommerce/woocommerce.php:62
+#: plugin-modules/edd/edd.php:74 plugin-modules/woocommerce/woocommerce.php:89
 msgid "Orders"
 msgstr ""
 
-#: plugin-modules/edd/edd.php:87 plugin-modules/woocommerce/woocommerce.php:96
+#: plugin-modules/edd/edd.php:87 plugin-modules/woocommerce/woocommerce.php:123
 msgid "Lifetime Value"
 msgstr ""
 
@@ -1005,37 +1015,115 @@ msgid "Sales"
 msgstr ""
 
 #: plugin-modules/edd/reports/edd-reports.php:23
+msgid "Earnings"
+msgstr ""
+
+#: plugin-modules/edd/reports/edd-reports.php:25
 #: plugin-modules/woocommerce/reports/woocommerce-reports.php:30
 msgid "New customers"
 msgstr ""
 
-#: plugin-modules/edd/reports/edd-reports.php:25
+#: plugin-modules/edd/reports/edd-reports.php:27
 msgid "Number of sales per customer"
 msgstr ""
 
-#: plugin-modules/edd/reports/edd-reports.php:27
+#: plugin-modules/edd/reports/edd-reports.php:29
 msgid "Order statuses"
 msgstr ""
 
-#: plugin-modules/edd/reports/edd-reports.php:29
+#: plugin-modules/edd/reports/edd-reports.php:31
 msgid "Customer Lifetime value"
 msgstr ""
 
-#: plugin-modules/edd/reports/edd-reports.php:31
+#: plugin-modules/edd/reports/edd-reports.php:33
 msgid "Best sellers"
 msgstr ""
 
-#: plugin-modules/edd/reports/edd-reports.php:36
+#: plugin-modules/edd/reports/edd-reports.php:38
 msgid "License statuses"
 msgstr ""
 
-#: plugin-modules/edd/reports/edd-reports.php:39
+#: plugin-modules/edd/reports/edd-reports.php:41
 msgid "License renewals"
 msgstr ""
 
 #: plugin-modules/edd/reports/loaders/edd-order-number-loader.php:27
 msgid "sale"
 msgid_plural "sales"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin-modules/events-calendar/event-ticket-orders/event-ticket-orders-user-activity.php:32
+#: plugin-modules/events-calendar/event-tickets/event-tickets-user-activity.php:32
+msgctxt "date preposition"
+msgid "on"
+msgstr ""
+
+#: plugin-modules/events-calendar/event-ticket-orders/event-ticket-orders-user-activity.php:52
+msgid "Ticket Ordered"
+msgid_plural "Tickets Ordered"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin-modules/events-calendar/event-tickets/event-tickets-user-activity.php:50
+msgid "RSVP"
+msgid_plural "RSVPs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin-modules/events-calendar/events-calendar.php:77
+msgid ""
+"Detects the user data from the Events Calendar Events Tickets, Events "
+"Tickets Plus and Community Events extensions."
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:96
+msgid "RSVPs yes"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:109
+msgid "RSVPs no"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:122
+msgid "Has RSVP'd"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:138
+msgid "Tickets ordered"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:151
+msgid "Has ordered ticket for event"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:165
+msgid "Has not ordered ticket for event"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:180
+msgid "Events created"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:214
+msgid "yes for"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:215
+msgid "no for"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:216
+msgid "any for"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:217
+msgid "none for"
+msgstr ""
+
+#: plugin-modules/events-calendar/events-calendar.php:234
+msgid "Event Created"
+msgid_plural "Events Created"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1414,6 +1502,10 @@ msgstr ""
 msgid "Next payment"
 msgstr ""
 
+#: plugin-modules/wc-subscriptions/wc-subscriptions.php:90
+msgid "Is subscribed to"
+msgstr ""
+
 #: plugin-modules/woocommerce/reports/loaders/woocommerce-order-number-loader.php:33
 msgid "order"
 msgid_plural "orders"
@@ -1464,41 +1556,62 @@ msgid_plural "Coupons Used"
 msgstr[0] ""
 msgstr[1] ""
 
-#: plugin-modules/woocommerce/woocommerce.php:40
+#: plugin-modules/woocommerce/woocommerce-wishlists/woocommerce-wishlists-user-activity.php:31
+#: plugin-modules/woocommerce/yith-wishlists/yith-wishlists-user-activity.php:31
+msgid "added on"
+msgstr ""
+
+#: plugin-modules/woocommerce/woocommerce-wishlists/woocommerce-wishlists-user-activity.php:42
+#: plugin-modules/woocommerce/yith-wishlists/yith-wishlists-user-activity.php:42
+msgid "Product in Wishlist"
+msgid_plural "Products in Wishlist"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin-modules/woocommerce/woocommerce.php:70
 msgid "WooCommerce"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:41
+#: plugin-modules/woocommerce/woocommerce.php:71
 msgid ""
 "Retrieves and displays data from the WooCommerce orders made by the "
 "WordPress users."
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:74
+#: plugin-modules/woocommerce/woocommerce.php:101
 msgid "First order"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:85
+#: plugin-modules/woocommerce/woocommerce.php:112
 msgid "Last order"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:108
+#: plugin-modules/woocommerce/woocommerce.php:135
 msgid "Ordered products"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:122
+#: plugin-modules/woocommerce/woocommerce.php:149
 msgid "Orders status"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:135
+#: plugin-modules/woocommerce/woocommerce.php:162
 msgid "Reviews"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:147
+#: plugin-modules/woocommerce/woocommerce.php:174
 msgid "Has used coupon"
 msgstr ""
 
-#: plugin-modules/woocommerce/woocommerce.php:237
+#: plugin-modules/woocommerce/woocommerce.php:190
+msgid "Wishlist products"
+msgstr ""
+
+#: plugin-modules/woocommerce/woocommerce.php:202
+#: plugin-modules/woocommerce/woocommerce.php:219
+msgid "Has product in wishlist"
+msgstr ""
+
+#: plugin-modules/woocommerce/woocommerce.php:296
 msgid "Users Insights Profile"
 msgstr ""
 

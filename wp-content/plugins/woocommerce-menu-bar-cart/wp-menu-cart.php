@@ -3,13 +3,13 @@
  * Plugin Name: WooCommerce Menu Cart
  * Plugin URI: www.wpovernight.com/plugins
  * Description: Extension for WooCommerce that places a cart icon with number of items and total cost in the menu bar. Activate the plugin, set your options and you're ready to go! Will automatically conform to your theme styles.
- * Version: 2.6.1
+ * Version: 2.7.0
  * Author: Jeremiah Prummer, Ewout Fernhout
  * Author URI: www.wpovernight.com/
  * License: GPL2
- * Text Domain: wpmenucart
+ * Text Domain: wp-menu-cart
  * WC requires at least: 2.0.0
- * WC tested up to: 3.2.0
+ * WC tested up to: 3.3.0
  */
 
 class WpMenuCart {	 
@@ -28,6 +28,7 @@ class WpMenuCart {
 
 		// load the localisation & classes
 		add_action( 'plugins_loaded', array( &$this, 'languages' ), 0 ); // or use init?
+		add_filter( 'load_textdomain_mofile', array( $this, 'textdomain_fallback' ), 10, 2 );
 		add_action( 'init', array( &$this, 'wpml' ), 0 );
 		add_action( 'init', array( $this, 'load_classes' ) );
 
@@ -55,9 +56,7 @@ class WpMenuCart {
 					case 'woocommerce':
 						include_once( 'includes/wpmenucart-woocommerce.php' );
 						$this->shop = new WPMenuCart_WooCommerce();
-						if ( isset($this->options['builtin_ajax']) ) {
-							add_action("wp_enqueue_scripts", array( &$this, 'load_custom_ajax' ), 0 );
-						} else {
+						if ( !isset($this->options['builtin_ajax']) ) {
 							if ( defined('WOOCOMMERCE_VERSION') && version_compare( WOOCOMMERCE_VERSION, '2.7', '>=' ) ) {
 								add_filter( 'woocommerce_add_to_cart_fragments', array( $this, 'woocommerce_ajax_fragments' ) );
 							} else {
@@ -68,28 +67,30 @@ class WpMenuCart {
 					case 'jigoshop':
 						include_once( 'includes/wpmenucart-jigoshop.php' );
 						$this->shop = new WPMenuCart_Jigoshop();
-						if ( isset($this->options['builtin_ajax']) ) {
-							add_action("wp_enqueue_scripts", array( &$this, 'load_custom_ajax' ), 0 );
-						} else {
+						if ( !isset($this->options['builtin_ajax']) ) {
 							add_filter( 'add_to_cart_fragments', array( &$this, 'woocommerce_ajax_fragments' ) );
 						}
 						break;
 					case 'wp-e-commerce':
 						include_once( 'includes/wpmenucart-wpec.php' );
 						$this->shop = new WPMenuCart_WPEC();
-						add_action("wp_enqueue_scripts", array( &$this, 'load_custom_ajax' ), 0 );
 						break;
 					case 'eshop':
 						include_once( 'includes/wpmenucart-eshop.php' );
 						$this->shop = new WPMenuCart_eShop();
-						add_action("wp_enqueue_scripts", array( &$this, 'load_custom_ajax' ), 0 );
 						break;
 					case 'easy-digital-downloads':
 						include_once( 'includes/wpmenucart-edd.php' );
 						$this->shop = new WPMenuCart_EDD();
-						add_action("wp_enqueue_scripts", array( &$this, 'load_custom_ajax' ), 0 );
+						if ( !isset($this->options['builtin_ajax']) ) {
+							add_action("wp_enqueue_scripts", array( &$this, 'load_edd_ajax' ), 0 );
+						}
 						break;
 				}
+				if ( isset( $this->options['builtin_ajax'] ) || in_array( $this->options['shop_plugin'], array( 'WP e-Commerce', 'wp-e-commerce', 'eShop', 'eshop' ) ) ) {
+					add_action("wp_enqueue_scripts", array( &$this, 'load_custom_ajax' ), 0 );
+				}
+
 			}
 		}
 	}
@@ -197,13 +198,13 @@ class WpMenuCart {
 	 * @return string Fallack notice.
 	 */
 	public function need_shop() {
-		$error = __( 'WP Menu Cart Pro could not detect an active shop plugin. Make sure you have activated at least one of the supported plugins.' , 'wpmenucart' );
-		$message = sprintf('<div class="error"><p>%1$s <a href="%2$s">%3$s</a></p></div>', $error, add_query_arg( 'hide_wpmenucart_shop_check', 'true' ), __( 'Hide this notice', 'wpmenucart' ) );
+		$error = __( 'WP Menu Cart could not detect an active shop plugin. Make sure you have activated at least one of the supported plugins.' , 'wp-menu-cart' );
+		$message = sprintf('<div class="error"><p>%1$s <a href="%2$s">%3$s</a></p></div>', $error, add_query_arg( 'hide_wpmenucart_shop_check', 'true' ), __( 'Hide this notice', 'wp-menu-cart' ) );
 		echo $message;
 	}
 
 	public function woocommerce_version_active() {
-		$error = __( 'An old version of WooCommerce Menu Cart is currently activated, you need to disable or uninstall it for WP Menu Cart to function properly' , 'wpmenucart' );
+		$error = __( 'An old version of WooCommerce Menu Cart is currently activated, you need to disable or uninstall it for WP Menu Cart to function properly' , 'wp-menu-cart' );
 		$message = '<div class="error"><p>' . $error . '</p></div>';
 		echo $message;
 	}
@@ -212,22 +213,41 @@ class WpMenuCart {
 	 * Load translations.
 	 */
 	public function languages() {
-		$locale = apply_filters( 'plugin_locale', get_locale(), 'wpmenucart' );
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'wp-menu-cart' );
 		$dir    = trailingslashit( WP_LANG_DIR );
 
 		/**
 		 * Frontend/global Locale. Looks in:
 		 *
-		 * 		- WP_LANG_DIR/wpmenucart/wpmenucart-LOCALE.mo
-		 * 	 	- WP_LANG_DIR/plugins/wpmenucart-LOCALE.mo
-		 * 	 	- wpmenucart/languages/wpmenucart-LOCALE.mo (which if not found falls back to:)
-		 * 	 	- WP_LANG_DIR/plugins/wpmenucart-LOCALE.mo
+		 * 		- WP_LANG_DIR/wp-menu-cart/wp-menu-cart-LOCALE.mo
+		 * 	 	- WP_LANG_DIR/plugins/wp-menu-cart-LOCALE.mo
+		 * 	 	- wp-menu-cart/languages/wp-menu-cart-LOCALE.mo (which if not found falls back to:)
+		 * 	 	- WP_LANG_DIR/plugins/wp-menu-cart-LOCALE.mo
 		 */
-		load_textdomain( 'wpmenucart', $dir . 'wpmenucart/wpmenucart-' . $locale . '.mo' );
-		load_textdomain( 'wpmenucart', $dir . 'plugins/wpmenucart-' . $locale . '.mo' );
-		load_plugin_textdomain( 'wpmenucart', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_textdomain( 'wp-menu-cart', $dir . 'wp-menu-cart/wp-menu-cart-' . $locale . '.mo' );
+		load_textdomain( 'wp-menu-cart', $dir . 'plugins/wp-menu-cart-' . $locale . '.mo' );
+		load_plugin_textdomain( 'wp-menu-cart', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
+	/**
+	 * Maintain textdomain compatibility between main plugin (wp-menu-cart) and WooCommerce version (woocommerce-menu-bar-cart)
+	 * so that wordpress.org language packs can be used for both
+	 */
+	public function textdomain_fallback( $mofile, $textdomain ) {
+		$main_domain = 'wp-menu-cart';
+		$wc_domain = 'woocommerce-menu-bar-cart';
+
+		// check if this is filtering the mofile for this plugin
+		if ( $textdomain === $main_domain ) {
+			$wc_mofile = str_replace( "{$textdomain}-", "{$wc_domain}-", $mofile ); // with trailing dash to target file and not folder
+			if ( file_exists( $wc_mofile ) ) {
+				// we have a wc override - use it
+				return $wc_mofile;
+			}
+		}
+
+		return $mofile;
+	}
 
 	/**
 	* Register strings for WPML String Translation
@@ -251,7 +271,7 @@ class WpMenuCart {
 			'wpmenucart',
 			plugins_url( '/javascript/wpmenucart.js' , __FILE__ ),
 			array( 'jquery' ),
-			'2.6.0',
+			'2.7.0',
 			true
 		);
 
@@ -272,6 +292,29 @@ class WpMenuCart {
 			)
 		);
 	}
+
+	/**
+	 * Load EDD ajax helper
+	 */
+	public function load_edd_ajax() {
+		wp_enqueue_script(
+			'wpmenucart-edd-ajax',
+			plugins_url( '/javascript/wpmenucart-edd-ajax.js', __FILE__ ),
+			array( 'jquery' ),
+			'2.7.0'
+		);
+
+		wp_localize_script(
+			'wpmenucart-edd-ajax',
+			'wpmenucart_ajax',
+			array(  
+				'ajaxurl'        => function_exists( 'edd_get_ajax_url' ) ? edd_get_ajax_url() : admin_url( 'admin-ajax.php' ),
+				'nonce'          => wp_create_nonce('wpmenucart'),
+				'always_display' => isset($this->options['always_display']) ? $this->options['always_display'] : '',
+			)
+		);
+	}
+
 
 	/**
 	 * Load CSS
@@ -396,7 +439,8 @@ class WpMenuCart {
 	 * @return string        flat (imploded) list of common classes
 	 */
 	public function get_common_li_classes($items) {
-		if (empty($items)) return;
+		if (empty($items)) return '';
+		if (!class_exists('DOMDocument')) return '';
 		
 		$libxml_previous_state = libxml_use_internal_errors(true); // enable user error handling
 
@@ -466,9 +510,9 @@ class WpMenuCart {
 			$cart_contents = $item_data['cart_contents_count'] .' '. ( $item_data['cart_contents_count'] == 1 ?  icl_t('WP Menu Cart', 'item text', 'item') :  icl_t('WP Menu Cart', 'items text', 'items') );
 		} else {
 			//use regular WP i18n
-			$viewing_cart = __('View your shopping cart', 'wpmenucart');
-			$start_shopping = __('Start shopping', 'wpmenucart');
-			$cart_contents = sprintf(_n('%d item', '%d items', $item_data['cart_contents_count'], 'wpmenucart'), $item_data['cart_contents_count']);
+			$viewing_cart = __('View your shopping cart', 'wp-menu-cart');
+			$start_shopping = __('Start shopping', 'wp-menu-cart');
+			$cart_contents = sprintf(_n('%d item', '%d items', $item_data['cart_contents_count'], 'wp-menu-cart'), $item_data['cart_contents_count']);
 		}	
 
 		$this->menu_items['menu']['cart_contents'] = $cart_contents;
@@ -522,6 +566,8 @@ class WpMenuCart {
 	}
 	
 	public function wpmenucart_ajax() {
+		check_ajax_referer( 'wpmenucart', 'security' );
+
 		$variable = $this->wpmenucart_menu_item();
 		echo $variable;
 		die();

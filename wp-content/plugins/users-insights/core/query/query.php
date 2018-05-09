@@ -424,7 +424,7 @@ class USIN_Query{
 					}else{
 						$clause = &$this->query_where;
 					}
-
+					
 					switch ($filter->operator) {
 						case 'is':
 						case 'contains':
@@ -458,9 +458,7 @@ class USIN_Query{
 						case 'notcontains_ser':
 							$this->add_serialized_search_filter($filter, $clause);
 							break;
-						case 'include':
-						case 'exclude':
-						case 'custom':
+						default:
 							$custom_query_data = array(
 								'where' => '',
 								'having' => '',

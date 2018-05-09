@@ -3,7 +3,7 @@
 /**
  * Gravity Forms module query functionality.
  */
-class USIN_GF_Query{
+class USIN_Gravity_Forms_Query{
 	
 	protected $gf_fields;
 	protected $prefix;

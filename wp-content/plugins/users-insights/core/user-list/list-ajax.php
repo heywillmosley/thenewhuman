@@ -60,12 +60,14 @@ class USIN_List_Ajax extends USIN_Ajax{
 			$user_query = new USIN_User_Query();
 			$user = $user_query->get_user($user_id);
 
-			if(!empty($user)){
+			if(empty($user)){
+				$this->respond_error(__('No data found for this user', 'usin'));
+			}elseif(is_wp_error($user)){
+				$this->respond($user);
+			}else{
 				$user->set_profile_data();
 				$user = apply_filters('usin_user_profile_data', $user);
 				$this->respond_success($user);
-			}else{
-				$this->respond_error(__('No data found for this user', 'usin'));
 			}
 		}
 	}

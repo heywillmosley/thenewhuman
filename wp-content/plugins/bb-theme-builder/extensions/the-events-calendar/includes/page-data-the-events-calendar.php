@@ -24,6 +24,17 @@ FLPageData::add_post_property( 'the_events_calendar_start_date', array(
 	'getter'  => 'FLPageDataTheEventsCalendar::start_date',
 ) );
 
+FLPageData::add_post_property_settings_fields( 'the_events_calendar_start_date', array(
+	'format' => array(
+		'type'          => 'text',
+		'label'         => __( 'Format', 'fl-theme-builder' ),
+		'default'       => '',
+		'size'          => '5',
+		'description'   => __( 'Date Format', 'fl-theme-builder' ),
+		'placeholder'   => 'M d Y',
+	),
+) );
+
 /**
  * Event Start Time
  */
@@ -42,6 +53,17 @@ FLPageData::add_post_property( 'the_events_calendar_end_date', array(
 	'group'   => 'the-events-calendar',
 	'type'    => 'string',
 	'getter'  => 'FLPageDataTheEventsCalendar::end_date',
+) );
+
+FLPageData::add_post_property_settings_fields( 'the_events_calendar_end_date', array(
+	'format' => array(
+		'type'          => 'text',
+		'label'         => __( 'Format', 'fl-theme-builder' ),
+		'default'       => '',
+		'size'          => '5',
+		'description'   => __( 'Date Format', 'fl-theme-builder' ),
+		'placeholder'   => 'M d Y',
+	),
 ) );
 
 /**

@@ -8,7 +8,6 @@ class USIN_WooCommerce_Reports extends USIN_Module_Reports{
 		return array(
 			'id' => $this->group,
 			'name' => 'WooCommerce',
-			'loader_path' => 'plugin-modules/woocommerce/reports/loaders/',
 			'info' => '* All of the WooCommerce reports reflect both user and guest orders'
 		);
 	}

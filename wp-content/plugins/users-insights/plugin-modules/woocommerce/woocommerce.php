@@ -8,18 +8,21 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 
 	protected $module_name = 'woocommerce';
 	protected $plugin_path = 'woocommerce/woocommerce.php';
+	protected $yith_wishlist_active = false;
+	protected $wc_wishlist_active = false;
+
 	const ORDER_POST_TYPE = 'shop_order';
 	const PRODUCT_POST_TYPE = 'product';
-	const MAX_PRODUCT_OPTIONS = 200;
+	const WC_WISHLIST_POST_TYPE = 'wishlist';
 
 	protected function apply_module_actions(){
 		add_filter('usin_exclude_post_types', array($this , 'exclude_post_types'));
 	}
 
 	public function init(){
-		require_once 'woocommerce-query.php';
-		require_once 'woocommerce-user-activity.php';
-		require_once 'woocommerce-ajax.php';
+		$this->set_active_extensions();
+
+		$this->product_search = new USIN_Post_Option_Search(self::PRODUCT_POST_TYPE);
 
 		$this->wc_query = new USIN_Woocommerce_Query(self::ORDER_POST_TYPE);
 		$this->wc_query->init();
@@ -27,11 +30,31 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 		$wc_user_activity = new USIN_Woocommerce_User_Activity(self::ORDER_POST_TYPE);
 		$wc_user_activity->init();
 
-		$wc_ajax = new USIN_Woocommerce_Ajax();
-		$wc_ajax->add_actions();
+		if($this->yith_wishlist_active){
+			$this->yiwl_query = new USIN_Woocommerce_Yith_Wishlists_Query();
+			$this->yiwl_query->init();
+
+			$this->yiwl_user_activity = new USIN_Woocommerce_Yith_Wishlists_User_Activity();
+			$this->yiwl_user_activity->init();
+		}
+
+		if($this->wc_wishlist_active){
+			$this->wcwl_query = new USIN_Woocommerce_Wishlists_Query();
+			$this->wcwl_query->init();
+
+			$this->wcwl_user_activity = new USIN_Woocommerce_Wishlists_User_Activity();
+			$this->wcwl_user_activity->init();
+		}
 
 		add_action('woocommerce_admin_order_data_after_order_details', array($this, 'add_usin_profile_link_to_order'));
 
+	}
+
+	protected function set_active_extensions(){
+		$this->yith_wishlist_active = USIN_Helper::is_plugin_activated('yith-woocommerce-wishlist/init.php') ||
+			USIN_Helper::is_plugin_activated('yith-woocommerce-wishlist-premium/init.php');
+		
+		$this->wc_wishlist_active = USIN_Helper::is_plugin_activated('woocommerce-wishlists/woocommerce-wishlists.php');
 	}
 
 	public function register_module(){
@@ -48,16 +71,12 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 	}
 
 	protected function init_reports(){
-		require_once 'reports/woocommerce-reports.php';
 		new USIN_WooCommerce_Reports();
 	}
 
 	public function register_fields(){
 		
-		$product_count = wp_count_posts(self::PRODUCT_POST_TYPE);
-		$product_search_enabled = (int)$product_count->publish > self::MAX_PRODUCT_OPTIONS ? true : false;
-
-		return array(
+		$fields = array(
 			array(
 				'name' => __('Orders', 'usin'),
 				'id' => 'order_num',
@@ -113,8 +132,8 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 				'fieldType' => $this->module_name,
 				'filter' => array(
 					'type' => 'include_exclude',
-					'options' => self::get_product_options(),
-					'searchAction' => $product_search_enabled ? 'usin_wc_product_search' : null
+					'options' => $this->product_search->get_options(),
+					'searchAction' => $this->product_search->ajax_search_enabled() ? $this->product_search->key : null
 				),
 				'module' => $this->module_name
 			),
@@ -156,24 +175,56 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 				'module' => $this->module_name
 			),
 		);
+
+		if($this->yith_wishlist_active){
+			$fields = array_merge($fields, array(
+				array(
+					'name' => __('Wishlist products', 'usin'),
+					'id' => 'yiwl_product_num',
+					'show' => false,
+					'order' => 'DESC',
+					'fieldType' => $this->module_name,
+					'filter' => array(
+						'type' => 'number',
+						'disallow_null' => true
+					),
+					'module' => $this->module_name
+				),
+				array(
+					'name' => __('Has product in wishlist', 'usin'),
+					'id' => 'yiwl_has_wishlist_product',
+					'show' => false,
+					'hideOnTable' => true,
+					'fieldType' => $this->module_name,
+					'filter' => array(
+						'type' => 'select_option',
+						'options' => $this->product_search->get_options(),
+						'searchAction' => $this->product_search->ajax_search_enabled() ? $this->product_search->key : null
+					),
+					'module' => $this->module_name
+				),
+			));
+		}
+
+		if($this->wc_wishlist_active){
+			$fields[]=array(
+				'name' => __('Has product in wishlist', 'usin'),
+				'id' => 'wc_has_wishlist_product',
+				'show' => false,
+				'hideOnTable' => true,
+				'fieldType' => $this->module_name,
+				'filter' => array(
+					'type' => 'select_option',
+					'options' => $this->product_search->get_options(),
+					'searchAction' => $this->product_search->ajax_search_enabled() ? $this->product_search->key : null
+				),
+				'module' => $this->module_name
+			);
+		}
+
+		return $fields;
 	}
 
-	public static function get_product_options($search = null){
-		$product_options = array();
-		$args = array( 'post_type' => self::PRODUCT_POST_TYPE, 'posts_per_page' => self::MAX_PRODUCT_OPTIONS );
-		if(!empty($search)){
-			$args['s'] = $search;
-		}
-		$products = get_posts($args);
-
-		foreach ($products as $product) {
-			$product_options[] = array('key'=>$product->ID, 'val'=>$product->post_title);
-		}
-
-		
-
-		return $product_options;
-	}
 
 	protected function get_order_status_options(){
 		$status_options = array();

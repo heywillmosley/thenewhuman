@@ -256,7 +256,8 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
                                             array(
                                                 'key'       => '_price',
                                                 'value'     => 0,
-                                                'compare'   => '>='
+                                                'compare'   => '>=',
+                                                'type'      => 'DECIMAL'
                                             )
                                         );
                     $tax_query  = array();
@@ -271,7 +272,8 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
                                             array(
                                                 'key'     => '_price',
                                                 'value'   => 0,
-                                                'compare' => '>='
+                                                'compare' => '>=',
+                                                'type'    => 'DECIMAL'
                                             )
                                         );
                     $tax_query  = array();
@@ -322,16 +324,16 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
                 // Sort related args ---------------------------------------------------------------------------------------
                 switch( $sort_by ){
                     case 'menu_order':
-                        $args[ 'order' ] = $sort_order;
+                        $args[ 'order' ]    = $sort_order;
                         $args[ 'orderby' ]  = 'menu_order title';
                         break;
                     case 'name':
-                        $args[ 'order' ] = $sort_order;
-                        $args[ 'orderby' ] = 'title';
+                        $args[ 'order' ]    = $sort_order;
+                        $args[ 'orderby' ]  = 'title';
                         break;
                     case 'date':
-                        $args[ 'order' ] = $sort_order;
-                        $args[ 'orderby' ] = 'date';
+                        $args[ 'order' ]    = $sort_order;
+                        $args[ 'orderby' ]  = 'date';
                         break;
                     case 'sku':
                         $args[ 'order' ]    = $sort_order;
@@ -613,6 +615,7 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
 
                 $product_loop = new WP_Query( $args );
                 $product_loop = apply_filters( 'wwof_filter_product_listing_query' , $product_loop );
+
                 do_action( 'wwof_action_before_product_listing' );
 
                 if ( get_option( 'wwof_general_use_alternate_view_of_wholesale_page' ) == 'yes' )

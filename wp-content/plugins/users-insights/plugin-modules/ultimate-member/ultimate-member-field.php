@@ -1,6 +1,6 @@
 <?php
 
-class USIN_UM_Field{
+class USIN_Ultimate_Member_Field{
 	
 	protected $options;
 	protected $prefix;
@@ -31,6 +31,7 @@ class USIN_UM_Field{
 		$field = array(
 			'id' => $this->prefix.$meta_key,
 			'meta_key' => $meta_key,
+			'um_type' => $this->get_um_type(),
 			'name' => $this->options['title'],
 			'order' => 'ASC',
 			'show' => false,
@@ -114,10 +115,15 @@ class USIN_UM_Field{
 	protected function is_visible_for_current_user(){
 		if(isset($this->options['public'])){
 			$public = $this->options['public'];
-			if($public == -3){
+			if($public == -1){
+				// -1: profile owners and admins
+				return current_user_can('administrator');
+			}elseif($public == -2 || $public == -3){
+				// -2: profile owner and specific roles
+				// -3: specific roles
 				if(!empty($this->options['roles']) && is_array($this->options['roles'])){
 					foreach ($this->options['roles'] as $role ) {
-						if(current_user_can($role)){
+						if($this->current_user_has_role($role)){
 							return true;
 						}
 					}
@@ -127,6 +133,22 @@ class USIN_UM_Field{
 			}
 		}
 		return true;
+	}
+
+	protected function current_user_has_role($role){
+		if(USIN_Ultimate_Member::is_um_older_than_v2()){
+			// handle community role of older UM versions
+			global $ultimatemember;
+			if(isset($ultimatemember->user) && method_exists($ultimatemember->user, 'get_role')){
+				if($ultimatemember->user->get_role() == $role){
+					return true;
+				}
+			}
+		}else{
+			return current_user_can($role);
+		}
+
+		return false;
 	}
 	
 	/**
@@ -140,7 +162,11 @@ class USIN_UM_Field{
 		$options = array();
 		
 		foreach ($arr as $key => $value) {
-			$options[]= array('key'=>$value, 'val'=>$value);
+			// if an option is set with a trailing space, such as "Value ",
+			// the option is saved for the user without the trailing space, e.g. "Value"
+			// so we need to use rtrim in order for the filters to work properly.
+			// at this point leading space is not trimmed by UM when saving the values
+			$options[]= array('key'=>rtrim($value), 'val'=>$value);
 		}
 		return $options;
 	}

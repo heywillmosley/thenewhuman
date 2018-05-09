@@ -153,15 +153,15 @@ if ( ! function_exists( 'berocket_font_select_upload' ) ) {
             ' . ( ( @ $value ) ? ( ( substr( $value, 0, 3 ) == 'fa-' ) ? '<i class="fa ' . $value . '"></i>' : '<i class="fa">
             <image src="' . $value . '" alt=""></i>' ) : '' ) . '</span>';
         if ( $show_fa ) {
-            $result .= '<input type="button" class="berocket_aapf_font_awesome_icon_select button" value="'.__('Font awesome', BeRocket_LMP_domain).'"/>
+            $result .= '<input type="button" class="berocket_aapf_font_awesome_icon_select button" value="'.__('Font awesome', 'BeRocket_LMP_domain').'"/>
             <div style="display: none;" class="berocket_aapf_select_icon"><div><p>Font Awesome Icons<i class="fa fa-times"></i></p>
             ' . $font_awesome . '</div></div>';
         }
         if ( $show_upload ) {
-            $result .= '<input type="button" class="berocket_aapf_upload_icon button" value="'.__('Upload', BeRocket_LMP_domain).'"/> ';
+            $result .= '<input type="button" class="berocket_aapf_upload_icon button" value="'.__('Upload', 'BeRocket_LMP_domain').'"/> ';
         }
         if ( $show_remove ) {
-            $result .= '<input type="button" class="berocket_aapf_remove_icon button" value="'.__('Remove', BeRocket_LMP_domain).'"/>';
+            $result .= '<input type="button" class="berocket_aapf_remove_icon button" value="'.__('Remove', 'BeRocket_LMP_domain').'"/>';
         }
         $result .= '</div>';
 

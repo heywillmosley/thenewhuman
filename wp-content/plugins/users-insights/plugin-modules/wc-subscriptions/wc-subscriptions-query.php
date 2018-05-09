@@ -4,6 +4,7 @@ class USIN_WC_Subscriptions_Query{
 	
 	protected $post_type;
 	protected $has_subscription_status_join_applied = false;
+	protected $subscribed_to_join_applied = false;
 	
 	public function __construct($post_type){
 		$this->post_type = $post_type;
@@ -21,6 +22,7 @@ class USIN_WC_Subscriptions_Query{
 		$db_map['subscription_num'] = array('db_ref'=>'subscription_num', 'db_table'=>'subscriptions', 'null_to_zero'=>true, 'set_alias'=>true);
 		$db_map['subscripton_statuses'] = array('db_ref'=>'statuses', 'db_table'=>'subscriptions', 'nulls_last'=>true);
 		$db_map['subscripton_next_payment'] = array('db_ref'=>'next_payment', 'db_table'=>'subscripton_payments', 'set_alias'=>true, 'nulls_last'=>true);
+		$db_map['is_subscribed_to'] = array('db_ref'=>'', 'db_table'=>'', 'no_select'=>true);
 		return $db_map;
 	}
 
@@ -58,33 +60,63 @@ class USIN_WC_Subscriptions_Query{
 
 	public function apply_filters($custom_query_data, $filter){
 
-		if(in_array($filter->operator, array('include', 'exclude'))){
-			global $wpdb;
-			
-			$operator = $filter->operator == 'include' ? '>' : '=';
-		
-			if($filter->by == 'subscripton_statuses'){
-		
-				if(!$this->has_subscription_status_join_applied){
-					//apply the joins only once, even when this type of filter is applied multiple times
-					$custom_query_data['joins'] .=
-						" INNER JOIN $wpdb->postmeta AS wcs_meta ON $wpdb->users.ID = wcs_meta.meta_value".
-						" INNER JOIN $wpdb->posts AS wcs_posts ON wcs_meta.post_id = wcs_posts.ID AND wcs_posts.post_type = '$this->post_type'";
-		
-					$this->has_subscription_status_join_applied = true;
-				}
-		
-		
-				$custom_query_data['where'] = " AND wcs_meta.meta_key = '_customer_user'";
-				if($filter->operator == 'exclude'){
-					$custom_query_data['where'].=" AND subscription_num > 0";
-				}
-		
-				$custom_query_data['having'] = $wpdb->prepare(" AND SUM(wcs_posts.post_status IN (%s)) $operator 0", $filter->condition);
-			
-			}
+		if($filter->by == 'subscripton_statuses'){
+			return $this->set_subsciption_statuses_join($custom_query_data, $filter);
+		}
+
+		if($filter->by == 'is_subscribed_to'){
+			return $this->set_subscribed_to_join($custom_query_data, $filter);
 		}
 		
+		return $custom_query_data;
+	}
+
+
+
+	protected function set_subsciption_statuses_join($custom_query_data, $filter){
+		global $wpdb;
+
+		$operator = $filter->operator == 'include' ? '>' : '=';
+		
+		if(!$this->has_subscription_status_join_applied){
+			//apply the joins only once, even when this type of filter is applied multiple times
+			$custom_query_data['joins'] .=
+				" INNER JOIN $wpdb->postmeta AS wcs_meta ON $wpdb->users.ID = wcs_meta.meta_value".
+				" INNER JOIN $wpdb->posts AS wcs_posts ON wcs_meta.post_id = wcs_posts.ID AND wcs_posts.post_type = '$this->post_type'";
+
+			$this->has_subscription_status_join_applied = true;
+		}
+
+
+		$custom_query_data['where'] = " AND wcs_meta.meta_key = '_customer_user'";
+		if($filter->operator == 'exclude'){
+			$custom_query_data['where'].=" AND subscription_num > 0";
+		}
+
+		$custom_query_data['having'] = $wpdb->prepare(" AND SUM(wcs_posts.post_status IN (%s)) $operator 0", $filter->condition);
+
+		return $custom_query_data;
+	}
+
+
+
+
+	protected function set_subscribed_to_join($custom_query_data, $filter){
+		global $wpdb;
+
+		if(!$this->subscribed_to_join_applied){
+			$custom_query_data['joins'] .= 
+				" INNER JOIN $wpdb->postmeta AS wcs_subscription_meta ON $wpdb->users.ID = wcs_subscription_meta.meta_value".
+				" INNER JOIN $wpdb->posts AS wcs_subscriptions ON wcs_subscription_meta.post_id = wcs_subscriptions.ID AND wcs_subscriptions.post_type = '$this->post_type' AND wcs_subscriptions.post_status = 'wc-active'".
+				" INNER JOIN ".$wpdb->prefix."woocommerce_order_items AS wcs_items ON wcs_subscriptions.ID =  wcs_items.order_id".
+				" INNER JOIN ".$wpdb->prefix."woocommerce_order_itemmeta AS wcs_item_meta ON wcs_items.order_item_id = wcs_item_meta.order_item_id AND wcs_item_meta.meta_key = '_product_id'";
+
+			$this->subscribed_to_join_applied = true;
+		}
+
+		$custom_query_data['where'] = " AND wcs_subscription_meta.meta_key = '_customer_user'";
+		$custom_query_data['having'] = $wpdb->prepare(" AND SUM(wcs_item_meta.meta_value IN (%d)) > 0", $filter->condition);
+
 		return $custom_query_data;
 	}
 	

@@ -3,13 +3,13 @@ Contributors: CAGE Web Design | Rolf van Gelder
 Donate link: http://cagewebdev.com/donations-odb/
 Plugin Name: Optimize Database after Deleting Revisions
 Plugin URI: http://cagewebdev.com/optimize-database-after-deleting-revisions-wordpress-plugin
-Tags: database, delete, revisions, optimize, post, posts, page, pages, clean, clean up, trash, spam, trashed, spammed, database size, scheduler, transients, unused tags, pingback, trackback, unix cron tab, crontab, multisite, custom post types
+Tags: database, delete, revisions, optimize, post, posts, page, pages, clean, clean up, trash, spam, trashed, spammed, database size, scheduler, transients, unused tags, pingback, trackback, unix cron tab, crontab, multisite, custom post types, oembed
 Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.8
-Tested up to: 4.9.2
-Stable tag: 4.5.1
-Version: 4.5.1
+Tested up to: 4.9.5
+Stable tag: 4.6
+Version: 4.6
 License: GPLv2 or later
 
 == Description ==
@@ -23,9 +23,10 @@ This plugin is a 'One Click' WordPress Database Cleaner / Optimizer.
 * Deletes unused tags (optional)
 * Deletes 'expired or all transients' (optional)
 * Deletes 'pingbacks' and 'trackbacks' (optional)
+* Clears the 'OEMBED cache' (optional)
 * Deletes 'orphan postmeta items'
 * Optimizes the database tables (optionally you can exclude certain tables, or even specific posts/pages, from optimization)
-* Creates a log file of the optimizations (optional)
+* Creates a log of the optimizations (optional)
 * Optimization can be scheduled to automatically run once hourly, twice daily, once daily or once weekly at a specific time (optional)
 * 'Optimize DB (1 click)' link in the admin bar (optional)
 * 'Optimize Database' Icon in the admin menu (optional)
@@ -103,6 +104,14 @@ http://cagewebdev.com/wordpress-plugins/
 * If you run the plugin from any of the sites, it will cleanup ALL the sites in the network!
 
 == Changelog ==
+= 4.6 [05/08/2018] =
+* NEW: Logging system has been totally rewritten (from now it will store the logs in the database)
+* NEW: Export the log to a CSV file
+
+= 4.5.2 [03/21/2018] =
+* NEW: Clear OEMBED cache
+* BUG FIX: Translation corrected ('Next scheduled run: 0 days, 9 hours, 35 minutes and 27 seconds')
+
 = 4.5.1 [01/29/2018] =
 * NEW: Added last run seconds
 * NEW: French translation added

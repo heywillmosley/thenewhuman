@@ -99,7 +99,7 @@ class USIN_BuddyPress_Query{
 					$query_joins .= " LEFT JOIN (SELECT user_id, COUNT(".$this->prefix."bp_activity.id) as activity_updates FROM ".$this->prefix."bp_activity WHERE type='activity_update' GROUP BY user_id) au on $wpdb->users.ID = au.user_id";
 					break;
 				case 'bpg':
-					$query_joins .= " LEFT JOIN ".$this->prefix."bp_groups_members AS bpg ON $wpdb->users.ID = bpg.user_id";
+					$query_joins .= " LEFT JOIN ".$this->prefix."bp_groups_members AS bpg ON $wpdb->users.ID = bpg.user_id AND bpg.is_confirmed = 1";
 					break;
 				
 			}

@@ -11,9 +11,6 @@ class USIN_Pmpro extends USIN_Plugin_Module{
 	
 
 	public function init(){
-		require_once 'pmpro-query.php';
-		require_once 'pmpro-user-activity.php';
-		
 		$query = new USIN_Pmpro_Query();
 		$query->init();
 
@@ -22,7 +19,6 @@ class USIN_Pmpro extends USIN_Plugin_Module{
 	}
 
 	protected function init_reports(){
-		require_once 'reports/pmpro-reports.php';
 		new USIN_Pmpro_Reports();
 	}
 

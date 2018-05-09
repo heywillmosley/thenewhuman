@@ -18,9 +18,6 @@ class USIN_bbPress{
 	public function init(){
 		if(usin_module_options()->is_module_active('bbpress')){
 			
-			require_once 'bbpress-query.php';
-			require_once 'bbpress-user-activity.php';
-
 			$bb_query = new USIN_bbPress_Query();
 			$bb_query->init();
 

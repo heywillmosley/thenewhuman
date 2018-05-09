@@ -1,10 +1,10 @@
 <div>
 	<div class="usin-table-wrap">
-	<table class="usin-table usin-user-table" ng-show="userList.users.length" ng-class="{'usin-bulk-actions-checked': bulkActions.isAnyChecked()}">
+	<table class="usin-table usin-user-table" ng-class="{'usin-bulk-actions-checked': bulkActions.isAnyChecked(), 'usin-table-no-rows': !userList.users.length}">
 	<thead>
 		<tr>
 			<th ng-repeat="field in showFields" ng-class="{'usin-sortable' : field.order !== false}">
-				<span ng-if="field.id=='username'" class="usin-heading-checkbox">
+				<span ng-if="field.id=='username' && userList.users.length" class="usin-heading-checkbox">
 					<md-checkbox aria-label="Select All"
 								ng-checked="bulkActions.isAllChecked()"
 								md-indeterminate="bulkActions.isAllIndeterminate()"
@@ -43,7 +43,7 @@
 			</span>
 		</td>
 	</tr>
-	<tfoot>
+	<tfoot ng-show="userList.users.length" >
 		<tr>
 			<th ng-repeat="field in showFields" ng-class="{'usin-sortable' : field.order !== false}">
 				<span ng-click="setOrderBy(field.id)">

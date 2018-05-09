@@ -22,7 +22,7 @@ class USIN_Report{
 		$this->id = $id;
 		$this->name = $name;
 
-		$optional_fields = array('type', 'group', 'info', 'loader_class', 'loader_file', 
+		$optional_fields = array('type', 'group', 'info', 'loader_class',
 			'type', 'field_id', 'filters', 'visible', 'format');
 
 		foreach ($optional_fields as $key) {
@@ -72,7 +72,6 @@ class USIN_Report{
 	 * @return array with the data if successful or WP_Error on error
 	 */
 	public function get_data($options = array()){
-		$this->load_loader();
 		$loader_class_name = $this->get_loader_class_name();
 
 		if(!class_exists($loader_class_name)){
@@ -89,42 +88,6 @@ class USIN_Report{
 			return $this->field_id;
 		}
 		return $this->id;
-	}
-
-	/**
-	 * Load the loader class - this class will be responsible of loading the
-	 * report data.
-	 *
-	 * @return void
-	 */
-	protected function load_loader(){
-		$group_options = $this->get_group_options();
-
-		$file_name = $this->get_loader_filename();
-		
-		if($file_name){
-			$file_path = plugin_dir_path(USIN_PLUGIN_FILE).$group_options['loader_path'].
-			$this->get_loader_filename();
-		
-			include_once $file_path;
-		}
-	}
-
-	/**
-	 * Generate the filename of the loader to load based on the report ID.
-	 * For example, a report with ID registered_users should have a loader
-	 * with filename registered-users-loader.php
-	 *
-	 * @return string the file name
-	 */
-	protected function get_loader_filename(){
-		if(isset($this->loader_file)){
-			return $this->loader_file;
-		}
-
-		$filename = str_replace('_', '-', $this->id).'-loader.php';
-
-		return strtolower($filename);
 	}
 
 	/**
@@ -171,7 +134,7 @@ class USIN_Report{
 	 */
 	public static function groups(){
 		$groups = array(
-			array('id' => self::GENERAL_GROUP, 'name' => __('General', 'usin'), 'loader_path' => 'core/reports/loaders/')
+			array('id' => self::GENERAL_GROUP, 'name' => __('General', 'usin'))
 		);
 
 		return apply_filters('usin_report_groups', $groups);

@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: Admin Custom Login
- * Version: 2.5.8
+ * Version: 2.5.9
  * Description: Customize Your WordPress Login Screen Amazingly
  * Author: Weblizar
  * Author URI: http://weblizar.com/plugins/
  * Plugin URI: http://weblizar.com/plugins/
  * Text Domain: admin-custom-login
- * Domain Path: /languages/
+ * Domain Path: /languages
  */
  
 // Exit if accessed directly

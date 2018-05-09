@@ -9,7 +9,6 @@ class USIN_EDD_Reports extends USIN_Module_Reports{
 		return array(
 			'id' => $this->group,
 			'name' => 'EDD',
-			'loader_path' => 'plugin-modules/edd/reports/loaders/',
 			'info' => '* All of the EDD reports reflect both user and guest orders'
 		);
 	}
@@ -20,6 +19,8 @@ class USIN_EDD_Reports extends USIN_Module_Reports{
 		$reports = array(
 			new USIN_Period_Report('edd_sales', __('Sales', 'usin'), 
 				array('group'=>$this->group)),
+			new USIN_Period_Report('edd_earnings', __('Earnings', 'usin'), 
+				array('group'=>$this->group, 'format' => 'float', 'info' => 'Total earnings including taxes')),
 			new USIN_Period_Report('edd_new_customers', __('New customers', 'usin'), 
 				array('group'=>$this->group)),
 			new USIN_Standard_Report('edd_order_number', __('Number of sales per customer', 'usin'), 

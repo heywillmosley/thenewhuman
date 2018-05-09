@@ -1,12 +1,12 @@
 <div class="usin-segments-wrap">
 	<button class="usin-btn" ng-click="toggleOptions()" ng-class="{'usin-btn-drop-down-opened' : optionsVisible === true}"
-		ng-disabled="bulkActions.isAnyChecked()">
+		ng-disabled="bulkActions.isAnyChecked() || loading.isLoading()">
 		<span class="usin-icon-segment"/>
 		<span class="usin-icon-drop-down usin-btn-drop-down"></span>
 		<md-tooltip md-direction="top">{{strings.segments}}</md-tooltip>
 	</button>
 	
-	<div class="usin-drop-down usin-segments-options usin-animate" ng-show="optionsVisible" click-outside="optionsVisible=false">
+	<div class="usin-drop-down usin-segments-options usin-animate ng-hide" ng-show="optionsVisible" click-outside="optionsVisible=false">
 		<ul class="usin-segments-list">
 			<li class="usin-create-segment-wrapper" ng-if="canManageSegments">
 				<md-tooltip md-direction="top" md-autohide>{{(filters | appliedFilters).length ? strings.saveSegmentTooltip : strings.disabledSegmentTooltip}}</md-tooltip>

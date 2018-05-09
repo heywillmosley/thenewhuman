@@ -499,7 +499,7 @@ jQuery( document ).ready( function( $ ) {
             productType = $current_tr.find( ".product_meta_col" ).find( ".product_type" ).text(),
             productID = $current_tr.find( ".product_meta_col" ).find( ".main_product_id" ).text(),
             variationID = $current_tr.find( ".product_title_col" ).find( ".product_variations" ).find( "option:selected" ).val() || 0,
-            quantityField = $current_tr.find( ".product_quantity_col" ).find( ".qty" ),
+            quantityField = $current_tr.find( ".product_quantity_col" ).find( "input[name=quantity]" ),
             quantity = parseInt( quantityField.val() );
 
         // validate quantity

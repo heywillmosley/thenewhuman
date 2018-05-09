@@ -39,15 +39,11 @@ class USIN_LearnDash extends USIN_Plugin_Module{
 	}
 	
 	public function init(){
-		require_once 'learndash-query.php';
-		require_once 'learndash-user-activity.php';
-		
 		new USIN_LearnDash_Query();
 		new USIN_LearnDash_User_Activity($this->module_name);
 	}
 
 	protected function init_reports(){
-		require_once 'reports/learndash-reports.php';
 		new USIN_LearnDash_Reports($this);
 	}
 	

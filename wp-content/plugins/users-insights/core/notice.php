@@ -90,7 +90,9 @@ class USIN_Notice{
 	protected static function dismissed_key($id){
 		return self::DISMISSED_KEY.$id;
 	}
+
+	public static function register_ajax_handlers(){
+		add_action( 'wp_ajax_usin_mark_notice_as_dismissed', array('USIN_Notice', 'mark_as_dismissed') );
+	}
 	
 }
-
-add_action( 'wp_ajax_usin_mark_notice_as_dismissed', array('USIN_Notice', 'mark_as_dismissed') );

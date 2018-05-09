@@ -65,6 +65,16 @@ class ODB_Utilities {
 		return $res[0]->size;
 	} // odb_get_db_size()
 
+
+	/********************************************************************************************
+	 *	PARSE A TIMESTAMP - v4.6
+	 ********************************************************************************************/	
+	function odb_parse_timestamp($timestamp) {
+		$d = substr($timestamp, 4, 2).'/'.substr($timestamp, 6, 2).'/'.substr($timestamp, 0, 4);
+		$d .= ' ' . substr($timestamp, 8, 2).':'.substr($timestamp, 10, 2).':'.substr($timestamp, 12, 2);
+		return $d;
+	} // odb_parse_timestamp($timestamp)
+
 	
 	/********************************************************************************************
 	 *	GET DATABASE TABLES

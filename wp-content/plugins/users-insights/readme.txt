@@ -3,7 +3,7 @@
 - Plugin Name: Users Insights
 - Plugin URI: https://usersinsights.com/
 - Description: Everything about your WordPress users in one place
-- Version: 3.5.1
+- Version: 3.6.2
 - Author: Pexeto
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,27 @@ Users Insights is distributed in the hope that it will be useful, but WITHOUT AN
 
 
 == Changelog ==
+
+3.6.2
+- Improved: implemented autoload for the plugin fields
+- Improved: Ultimate Member - make fields available on the Users Insights table based on their privacy settings
+- Fixed: Ultimate Member - bug with filtering by an option field when the option has a trailing space
+- General code improvements and minor bug fixes
+
+3.6.1
+- New: WooCommerce module - added support for the YITH Wishlist and WooCommerce Wishlist plugins, allowing to filter users based on the products that they have in wishlist, as well as explore the individual user wishlists in the user profile section
+- New: Easy Digital Downloads module - introduced an "Earnings" report
+- New: Event Tickets module - add support for the new PayPal ticket sales functionality, allowing to filter users based on the tickets purchased
+- New: WooCommerce subscriptions - introduced a filter allowing to segment the users based on the subscription product that they are subscribed to
+- Improved: BuddyPress module - provide a dropdown of the available options when filtering a checkboxes or multiselect field
+- Improved: Ultimate Member module - make the 10-star based rating reports show each rating in a separate bar, instead of combining them into ranges
+- Fixed: BuddyPress module - do not show unconfirmed group users when filtering by BuddyPress group
+- General improvements and minor bug fixes
+
+
+3.6.0
+- New: Events Calendar integration, detecting the data from the Events Calendar and its Events Tickets & Events Tickets Plus extensions
+- General code improvements and minor bug fixes
 
 3.5.1
 - Optimized the loading of the WooCommerce First Order field - it is now loaded as part of the main query only when used in the filters or the table is sorted by it.

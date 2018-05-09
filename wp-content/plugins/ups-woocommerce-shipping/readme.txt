@@ -1,6 +1,6 @@
 === UPS WooCommerce Shipping ===
 Contributors: Xadapter
-Version: 3.9.12
+Version: 3.9.14
 
 Tags: UPS, UPS Shipping, United Parcel Service, Shipping rates, Label printing, Shipping, WooCommerce, Wordpress
 Requires at least: 3.0.1

@@ -133,7 +133,7 @@ function fastvelocity_min_in_arrayi($hurl, $ignore){
 		foreach ($ignore as $i) {
 		$i = str_ireplace(array('http://', 'https://'), '//', $i); # better compatibility
 		$i = strtok(urldecode(rawurldecode($i)), '?'); # no query string, decode entities
-		$i = trim(trim($i, '/'), '*'); # wildcard removal
+		$i = trim(trim(trim(rtrim($i, '/')), '*')); # wildcard char removal
 		if (stripos($hurl, $i) !== false) { return true; } 
 		} 
 	}

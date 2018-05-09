@@ -14,11 +14,6 @@
 		 * @method init
 		 */
 		init: function() {
-
-			if ( 'module' === FLBuilderConfig.userTemplateType || FLBuilderConfig.simpleUi ) {
-				return;
-			}
-
 			this.initPanel();
 			this.pinOrUnpin();
 			this.bind();
@@ -77,6 +72,7 @@
 			}
 
 			FLBuilder._resizeLayout();
+			FLBuilder.triggerHook( 'didPinContentPanel' );
 		},
 
 		/**
@@ -95,6 +91,7 @@
 			}
 
 			FLBuilder._resizeLayout();
+			FLBuilder.triggerHook( 'didUnpinContentPanel' );
 		},
 
 		/**
@@ -108,7 +105,9 @@
 			var panel  = $( '.fl-builder--content-library-panel' ),
 				pinned = this.isPinned();
 
-			if ( window.innerWidth <= 500 ) {
+			if ( panel.hasClass( 'fl-builder-ui-pinned-hidden' ) ) {
+				return;
+			} else if ( window.innerWidth <= 500 ) {
 				if ( pinned ) {
 					this.unpin( false );
 				}
@@ -154,6 +153,7 @@
 				panel.addClass( 'fl-builder-ui-pinned-hidden' );
 				panel.hide();
 				body.css( 'margin', '' );
+				FLBuilder._resizeLayout();
 			}
 		},
 
@@ -591,6 +591,9 @@
 				body.removeClass( 'fl-builder-ui-show-pin-zone-right' );
 			} else if( panel.find( '.fl-lightbox' ).length ) {
 				this.unpin( true );
+				if ( 'module' === FLBuilderConfig.userTemplateType || FLBuilderConfig.simpleUi ) {
+					panel.hide();
+				}
 			} else {
 				panel.attr( 'style', '' );
 				this.savePosition();

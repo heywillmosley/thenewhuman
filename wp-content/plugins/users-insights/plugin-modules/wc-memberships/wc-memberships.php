@@ -20,9 +20,6 @@ class USIN_WC_Memberships extends USIN_Plugin_Module{
 	
 
 	public function init(){
-		require_once 'wc-memberships-query.php';
-		require_once 'wc-memberships-user-activity.php';
-		
 		new USIN_WC_Memberships_Query(self::POST_TYPE);
 		new USIN_WC_Memberships_User_Activity(self::POST_TYPE);
 	}
@@ -42,7 +39,6 @@ class USIN_WC_Memberships extends USIN_Plugin_Module{
 	}
 
 	protected function init_reports(){
-		require_once 'reports/wc-memberships-reports.php';
 		new USIN_WC_Memberships_Reports($this);
 	}
 

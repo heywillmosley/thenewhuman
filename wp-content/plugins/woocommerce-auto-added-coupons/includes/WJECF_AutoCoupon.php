@@ -17,7 +17,8 @@ class WJECF_AutoCoupon extends Abstract_WJECF_Plugin {
     }
     
     public function init_hook() {
-        if ( ! class_exists('WC_Coupon') ) {
+        //Since 2.6.2 check for frontend request. Prevents 'Call to undefined function wc_add_notice()'.
+        if ( ! class_exists('WC_Coupon') || ! WJECF()->is_request( 'frontend' ) ) {
             return;
         }
 
@@ -596,9 +597,13 @@ class WJECF_AutoCoupon extends Abstract_WJECF_Plugin {
         
         $has_a_value = false;
         
-        if ( WJECF_Wrap( $coupon )->get_free_shipping() ) {
+        if ( $coupon->is_type('free_gift') ) { // 'WooCommerce Free Gift Coupons'-plugin
             $has_a_value = true;
-        } else {
+        }
+        elseif ( WJECF_Wrap( $coupon )->get_free_shipping() ) {
+            $has_a_value = true;
+        }
+        else {
             //Test whether discount > 0
             //See WooCommerce: class-wc-cart.php function get_discounted_price
             global $woocommerce;
@@ -611,7 +616,6 @@ class WJECF_AutoCoupon extends Abstract_WJECF_Plugin {
         }
         
         return apply_filters( 'wjecf_coupon_has_a_value', $has_a_value, $coupon );
-        
     }
     
     

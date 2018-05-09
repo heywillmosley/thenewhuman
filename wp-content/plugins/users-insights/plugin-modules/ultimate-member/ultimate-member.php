@@ -24,18 +24,14 @@ class USIN_Ultimate_Member extends USIN_Plugin_Module{
 
 		add_filter('usin_user_db_data', array($this , 'filter_user_data'));
 		add_filter('usin_user_actions', array($this, 'add_user_profile_button'), 20, 2);
-			
-		require_once 'ultimate-member-query.php';
-		require_once 'ultimate-member-field.php';
 
 		$um_fields = $this->get_form_fields();
-		$this->um_query = new USIN_UM_Query($um_fields, self::PREFIX);
+		$this->um_query = new USIN_Ultimate_Member_Query($um_fields, self::PREFIX);
 		$this->um_query->init();
 
 	}
 
 	protected function init_reports(){
-		require_once 'reports/ultimate-member-reports.php';
 		new USIN_Ultimate_Member_Reports($this);
 	}
 	
@@ -95,7 +91,7 @@ class USIN_Ultimate_Member extends USIN_Plugin_Module{
 				
 				foreach ($custom_fields as $field_id => $field_options) {
 						
-					$field = new USIN_UM_Field($field_options, self::PREFIX, $this->module_name);
+					$field = new USIN_Ultimate_Member_Field($field_options, self::PREFIX, $this->module_name);
 					$meta_key = $field->get_meta_key();
 					
 					if(!$field->should_be_ignored() && !isset($fields[$meta_key])){

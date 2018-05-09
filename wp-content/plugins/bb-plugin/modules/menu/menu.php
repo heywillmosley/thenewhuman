@@ -24,7 +24,6 @@ class FLMenuModule extends FLBuilderModule {
 		));
 
 		add_action( 'pre_get_posts', 		__CLASS__ . '::set_pre_get_posts_query', 10, 2 );
-		add_filter( 'wp_nav_menu_objects',  __CLASS__ . '::sort_nav_objects', 10, 2 );
 	}
 
 	public static function _get_menus() {
@@ -68,9 +67,9 @@ class FLMenuModule extends FLBuilderModule {
 
 			if ( in_array( $toggle, array( 'hamburger', 'hamburger-label' ) ) ) {
 
-				echo '<button class="fl-menu-mobile-toggle ' . $toggle . '"><div class="svg-container">';
+				echo '<button class="fl-menu-mobile-toggle ' . $toggle . '"><span class="svg-container">';
 				include FL_BUILDER_DIR . 'img/svg/hamburger-menu.svg';
-				echo '</div>';
+				echo '</span>';
 
 				if ( 'hamburger-label' == $toggle ) {
 					echo '<span class="fl-menu-mobile-toggle-label">' . __( 'Menu', 'fl-builder' ) . '</span>';
@@ -109,7 +108,7 @@ class FLMenuModule extends FLBuilderModule {
 			$classes = (array) $menu_item->classes;
 
 			// Setup classes for current menu item.
-			if ( $menu_item->ID == self::$fl_builder_page_id ) {
+			if ( $menu_item->ID == self::$fl_builder_page_id || self::$fl_builder_page_id == $menu_item->object_id ) {
 				$parent_items[ $menu_item->object_id ] = $menu_item->menu_item_parent;
 
 				if ( ! in_array( 'current-menu-item', $classes ) ) {
@@ -242,7 +241,7 @@ FLBuilder::register_module('FLMenuModule', array(
 								'fields'		=> array( 'mobile_full_width', 'mobile_breakpoint' ),
 							),
 							'text'	=> array(
-								'fields'		=> array( 'mobile_breakpoint' ),
+								'fields'		=> array( 'mobile_full_width', 'mobile_breakpoint' ),
 							),
 						),
 					),

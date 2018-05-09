@@ -13,8 +13,7 @@ class USIN_BuddyPress_Reports extends USIN_Module_Reports{
 		
 		return array(
 			'id' => $this->group,
-			'name' => 'BuddyPress',
-			'loader_path' => 'plugin-modules/buddypress/reports/loaders/'
+			'name' => 'BuddyPress'
 		);
 	}
 
@@ -40,7 +39,6 @@ class USIN_BuddyPress_Reports extends USIN_Module_Reports{
 				array(
 					'group' => $this->group,
 					'field_id' => 'total_friend_count',
-					'loader_file' => false,
 					'loader_class' => 'USIN_Numeric_Meta_Field_Loader',
 					'type' => USIN_Report::BAR
 				)
@@ -65,7 +63,6 @@ class USIN_BuddyPress_Reports extends USIN_Module_Reports{
 							'group' => $this->group, 
 							'visible' => $this->get_default_report_visibility(),
 							'field_id' => $field['bpx_id'], 
-							'loader_file' => 'buddypress-field-loader.php',
 							'loader_class' => 'USIN_BuddyPress_Field_Loader'
 						)
 					);
@@ -78,7 +75,6 @@ class USIN_BuddyPress_Reports extends USIN_Module_Reports{
 							'group' => $this->group, 
 							'visible' => $this->get_default_report_visibility(),
 							'field_id' => $field['bpx_id'], 
-							'loader_file' => 'buddypress-multioption-loader.php',
 							'loader_class' => 'USIN_BuddyPress_Multioption_Loader',
 							'type' => USIN_Report::BAR
 						)
@@ -92,7 +88,6 @@ class USIN_BuddyPress_Reports extends USIN_Module_Reports{
 							'group' => $this->group, 
 							'visible' => $this->get_default_report_visibility(),
 							'field_id' => $field['bpx_id'], 
-							'loader_file' => 'buddypress-numeric-loader.php',
 							'loader_class' => 'USIN_BuddyPress_Numeric_Loader',
 							'type' => USIN_Report::BAR
 						)

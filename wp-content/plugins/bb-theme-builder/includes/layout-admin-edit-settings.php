@@ -1,4 +1,4 @@
-<table class="fl-mb-table widefat">
+<table class="fl-theme-builder-settings-form fl-mb-table widefat">
 
 	<tr class="fl-mb-row">
 		<td  class="fl-mb-row-heading">

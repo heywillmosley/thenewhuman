@@ -3,7 +3,7 @@
 /**
  * Ultimate Member module query functionality.
  */
-class USIN_UM_Query{
+class USIN_Ultimate_Member_Query{
 	
 	protected $um_fields;
 	protected $prefix;

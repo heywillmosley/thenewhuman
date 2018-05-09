@@ -201,16 +201,22 @@ tfoot .usin-heading-username {
 }
 /* Rounded corners for the table head and footer */
 .usin-table thead th:first-child {
-  border-radius: 4px 0 0 0;
+  border-top-left-radius: 4px;
+}
+.usin-table-no-rows thead th:first-child {
+  border-bottom-left-radius: 4px;
 }
 .usin-table thead th:last-child {
-  border-radius: 0 4px 0 0;
+  border-top-right-radius: 4px;
+}
+.usin-table-no-rows thead th:last-child {
+  border-bottom-right-radius: 4px;
 }
 .usin-table tfoot th:first-child {
-  border-radius: 0 0 0 4px;
+  border-bottom-left-radius: 4px;
 }
 .usin-table tfoot th:last-child {
-  border-radius: 0 0 4px 0;
+  border-bottom-right-radius: 4px;
 }
 .usin-table td {
   background-color: #fff;
@@ -666,7 +672,7 @@ usin-report-toggle .usin-fields-settings ul li {
   background-size: 500px 375px;
   width: 500px;
   height: 375px;
-  margin: auto;
+  margin: 50px auto 0 auto;
 }
 .usin-no-results h3 {
   margin: 20px auto;
@@ -1100,7 +1106,7 @@ a.usin-act-more {
   text-decoration: underline;
 }
 .usin-module-ultimate-member .usin-module-head {
-  background: #4caade;
+  background: #6596ff;
   background-size: 50px 30px;
 }
 .usin-module-ultimate-member .usin-module-head .usin-icon-ultimate-member:before {
@@ -1112,6 +1118,9 @@ a.usin-act-more {
 }
 .usin-module-learndash .usin-module-head {
   background: #3ab2e8;
+}
+.usin-module-events-calendar .usin-module-head {
+  background: #149fd5;
 }
 .usin-module-head .usin-module-title {
   color: #fff;
@@ -1238,8 +1247,8 @@ a.usin-act-more {
 /* Icon Fonts */
 @font-face {
   font-family: 'usin';
-  src: url('fonts/usin.eot?ko4izf');
-  src: url('fonts/usin.eot?ko4izf#iefix') format('embedded-opentype'), url('fonts/usin.ttf?ko4izf') format('truetype'), url('fonts/usin.woff?ko4izf') format('woff'), url('fonts/usin.svg?ko4izf#usin') format('svg');
+  src: url('fonts/usin.eot?z80xql');
+  src: url('fonts/usin.eot?z80xql#iefix') format('embedded-opentype'), url('fonts/usin.ttf?z80xql') format('truetype'), url('fonts/usin.woff?z80xql') format('woff'), url('fonts/usin.svg?z80xql#usin') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -1287,9 +1296,6 @@ a.usin-act-more {
 .usin-icon-edd:before {
   content: "\e884";
 }
-.usin-icon-bbpress:before {
-  content: "\e0c9";
-}
 .usin-icon-segment:before {
   content: "\e6c4";
 }
@@ -1328,6 +1334,9 @@ a.usin-act-more {
 }
 .usin-icon-visible:before {
   content: "\e604";
+}
+.usin-icon-events-calendar:before {
+  content: "\e908";
 }
 .usin-icon-arrow-drop-down:before,
 .usin-icon-list:before {
@@ -1390,6 +1399,9 @@ a.usin-act-more {
 }
 .usin-icon-star-border:before {
   content: "\e83a";
+}
+.usin-icon-bbpress:before {
+  content: "\e0b7";
 }
 /* Paid Membership Pro icon */
 .usin-icon-pmpro:before {
@@ -1467,21 +1479,25 @@ a.usin-act-more {
 .usin-tag-wcm-active,
 .usin-tag-active,
 .usin-tag-completed,
-.usin-tag-complete {
+.usin-tag-complete,
+.usin-tag-yes {
   background-color: #d1efdc;
 }
 .usin-tag-wcm-cancelled,
 .usin-tag-cancelled,
-.usin-tag-failed {
+.usin-tag-failed,
+.usin-tag-denied {
   background-color: #fbdde9;
 }
 .usin-tag-wcm-delayed,
-.usin-tag-on-hold {
+.usin-tag-on-hold,
+.usin-tag-pending {
   background-color: #fff4d3;
 }
 .usin-tag-wcm-expired,
 .usin-tag-expired,
-.usin-tag-refunded {
+.usin-tag-refunded,
+.usin-tag-no {
   background-color: #ffe5da;
 }
 .usin-tag-wcm-free_trial,
@@ -1948,6 +1964,9 @@ span.usin-dialog-highlight {
   display: inline-block;
   width: 190px;
 }
+.usin .usin-filter-wrap .select2-container {
+  width: 220px;
+}
 .usin .usin-operator-select .select2-container {
   width: 140px;
 }
@@ -2060,7 +2079,7 @@ span.usin-dialog-highlight {
 .usin .select2-results li .usin-icon-ultimate-member,
 .usin .usin-fields-settings .usin-icon-ultimate-member,
 .usin .usin-activity-item .usin-icon-ultimate-member {
-  color: #4caade;
+  color: #6596ff;
 }
 .usin .select2-results li .usin-icon-edd,
 .usin .usin-fields-settings .usin-icon-edd,
@@ -2081,6 +2100,11 @@ span.usin-dialog-highlight {
 .usin .usin-fields-settings .usin-icon-pmpro,
 .usin .usin-activity-item .usin-icon-pmpro {
   color: #2596c8;
+}
+.usin .select2-results li .usin-icon-events-calendar,
+.usin .usin-fields-settings .usin-icon-events-calendar,
+.usin .usin-activity-item .usin-icon-events-calendar {
+  color: #149fd5;
 }
 /* END Select-2 styles*/
 /* breakes the long lists on two lines */
@@ -2504,4 +2528,11 @@ usin-report-toggle {
 }
 .usin-chart-info p {
   color: #aec2c1;
+}
+.usin-rsvp-count {
+  letter-spacing: 0.06em;
+  color: #3b444f;
+}
+.usin-activity-dark-text {
+  color: #3b444f;
 }

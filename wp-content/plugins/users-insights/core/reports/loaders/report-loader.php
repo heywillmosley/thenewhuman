@@ -5,7 +5,7 @@ class USIN_Report_Loader{
 	public $label_col = 'label';
 	public $total_col = 'total';
 
-	const MAX_ITEMS = 8;
+	public $max_items  = 8;
 
 	public function __construct($report, $options = array()){
 		$this->report = $report;
@@ -13,7 +13,7 @@ class USIN_Report_Loader{
 
 		$this->setup();
 
-		$this->max_items = apply_filters('usin_max_report_items', self::MAX_ITEMS, $report);
+		$this->max_items = apply_filters('usin_max_report_items', $this->max_items, $report);
 		
 	}
 

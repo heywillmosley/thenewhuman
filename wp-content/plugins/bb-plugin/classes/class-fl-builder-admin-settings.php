@@ -155,7 +155,7 @@ final class FLBuilderAdminSettings {
 		$item_data = apply_filters( 'fl_builder_admin_settings_nav_items', array(
 			'welcome' => array(
 				'title' 	=> __( 'Welcome', 'fl-builder' ),
-				'show'		=> FLBuilderModel::get_branding() == __( 'Page Builder', 'fl-builder' ) && ( is_network_admin() || ! self::multisite_support() ),
+				'show'		=> ! FLBuilderModel::is_white_labeled() && ( is_network_admin() || ! self::multisite_support() ),
 				'priority'	=> 50,
 			),
 			'license' => array(
@@ -219,7 +219,7 @@ final class FLBuilderAdminSettings {
 	 */
 	static public function render_forms() {
 		// Welcome
-		if ( FLBuilderModel::get_branding() == __( 'Page Builder', 'fl-builder' ) && ( is_network_admin() || ! self::multisite_support() ) ) {
+		if ( ! FLBuilderModel::is_white_labeled() && ( is_network_admin() || ! self::multisite_support() ) ) {
 			self::render_form( 'welcome' );
 		}
 
@@ -414,12 +414,17 @@ final class FLBuilderAdminSettings {
 				return;
 			}
 
-			$filesystem	   = FLBuilderUtils::get_filesystem();
 			$enabled_icons = array();
 
 			// Sanitize the enabled icons.
 			if ( isset( $_POST['fl-enabled-icons'] ) && is_array( $_POST['fl-enabled-icons'] ) ) {
 				$enabled_icons = array_map( 'sanitize_text_field', $_POST['fl-enabled-icons'] );
+			}
+
+			// we cant have fa4 and fa5 active at same time.
+			if ( in_array( 'font-awesome', $enabled_icons ) && (bool) array_intersect( array( 'font-awesome-5-brands', 'font-awesome-5-regular', 'font-awesome-5-solid' ), $enabled_icons ) ) {
+				self::add_error( __( 'Use either Font Awesome 4 or Font Awesome 5. They are not compatible. Modules already in use will continue to use Font Awesome 4 regardless of your choice here.', 'fl-builder' ) );
+				return;
 			}
 
 			// Update the enabled sets.
@@ -436,7 +441,7 @@ final class FLBuilderAdminSettings {
 					unset( $enabled_icons[ $index ] );
 				}
 				if ( isset( $sets[ $key ] ) ) {
-					$filesystem->rmdir( $sets[ $key ]['path'], true );
+					fl_builder_filesystem()->rmdir( $sets[ $key ]['path'], true );
 					FLBuilderIcons::remove_set( $key );
 				}
 			}
@@ -448,6 +453,9 @@ final class FLBuilderAdminSettings {
 				$id			 = (int) $_POST['fl-new-icon-set'];
 				$path		 = get_attached_file( $id );
 				$new_path	 = $dir['path'] . 'icon-' . time() . '/';
+
+				fl_builder_filesystem()->get_filesystem();
+
 				$unzipped	 = unzip_file( $path, $new_path );
 
 				// Unzip failed.
@@ -457,7 +465,7 @@ final class FLBuilderAdminSettings {
 				}
 
 				// Move files if unzipped into a subfolder.
-				$files = $filesystem->dirlist( $new_path );
+				$files = fl_builder_filesystem()->dirlist( $new_path );
 
 				if ( 1 == count( $files ) ) {
 
@@ -465,36 +473,36 @@ final class FLBuilderAdminSettings {
 					$subfolder_info = array_shift( $values );
 					$subfolder		= $new_path . $subfolder_info['name'] . '/';
 
-					if ( file_exists( $subfolder ) && is_dir( $subfolder ) ) {
+					if ( fl_builder_filesystem()->file_exists( $subfolder ) && fl_builder_filesystem()->is_dir( $subfolder ) ) {
 
-						$files = $filesystem->dirlist( $subfolder );
+						$files = fl_builder_filesystem()->dirlist( $subfolder );
 
 						if ( $files ) {
 							foreach ( $files as $file ) {
-								$filesystem->move( $subfolder . $file['name'], $new_path . $file['name'] );
+								fl_builder_filesystem()->move( $subfolder . $file['name'], $new_path . $file['name'] );
 							}
 						}
 
-						$filesystem->rmdir( $subfolder );
+						fl_builder_filesystem()->rmdir( $subfolder );
 					}
 				}
 
 				// Check for supported sets.
-				$is_icomoon	 = file_exists( $new_path . 'selection.json' );
-				$is_fontello = file_exists( $new_path . 'config.json' );
+				$is_icomoon	 = fl_builder_filesystem()->file_exists( $new_path . 'selection.json' );
+				$is_fontello = fl_builder_filesystem()->file_exists( $new_path . 'config.json' );
 
 				// Show an error if we don't have a supported icon set.
 				if ( ! $is_icomoon && ! $is_fontello ) {
-					$filesystem->rmdir( $new_path, true );
+					fl_builder_filesystem()->rmdir( $new_path, true );
 					self::add_error( __( 'Error! Please upload an icon set from either Icomoon or Fontello.', 'fl-builder' ) );
 					return;
 				}
 
 				// check for valid Icomoon
 				if ( $is_icomoon ) {
-					$data = json_decode( file_get_contents( $new_path . 'selection.json' ) );
+					$data = json_decode( fl_builder_filesystem()->file_get_contents( $new_path . 'selection.json' ) );
 					if ( ! isset( $data->metadata ) ) {
-						$filesystem->rmdir( $new_path, true );
+						fl_builder_filesystem()->rmdir( $new_path, true );
 						self::add_error( __( 'Error! When downloading from Icomoon, be sure to click the Download Font button and not Generate SVG.', 'fl-builder' ) );
 						return;
 					}
@@ -505,11 +513,11 @@ final class FLBuilderAdminSettings {
 					$key = FLBuilderIcons::get_key_from_path( $new_path );
 					$enabled_icons[] = $key;
 				}
-			}// End if().
+			}
 
 			// Update the enabled sets again in case they have changed.
 			self::update_enabled_icons( $enabled_icons );
-		}// End if().
+		}
 	}
 
 	/**

@@ -16,10 +16,6 @@ class USIN_BuddyPress extends USIN_Plugin_Module{
 	}
 
 	public function init(){
-		require_once 'buddypress-query.php';
-		require_once 'buddypress-user-activity.php';
-		require_once 'buddypress-xprofile.php';
-
 		$this->xprofile = new USIN_BuddyPress_XProfile();
 		
 		$bp_query = new USIN_BuddyPress_Query($this->xprofile);
@@ -32,7 +28,6 @@ class USIN_BuddyPress extends USIN_Plugin_Module{
 	}
 
 	protected function init_reports(){
-		require_once 'reports/buddypress-reports.php';
 		new USIN_BuddyPress_Reports($this);
 	}
 

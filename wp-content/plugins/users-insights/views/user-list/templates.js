@@ -214,21 +214,23 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
   $templateCache.put('views/user-list/list-options.html',
     "<div class=\"usin-options-wrap\">\n" +
     "	<div class=\"usin-bulk-actions usin-float-left\" ng-if=\"listView && canUpdateUsers\"></div>\n" +
-    "	<div class=\"usin-segments\" ng-hide=\"!listView || !total.current\"></div>\n" +
+    "	<div class=\"usin-segments\" ng-hide=\"!listView\"></div>\n" +
     "	\n" +
-    "	<button class=\"usin-btn usin-btn-export\" ng-if=\"canExportUsers\" ng-hide=\"!listView || !total.current\" \n" +
-    "		ng-click=\"showConfirm()\" ng-disabled=\"bulkActions.isAnyChecked()\"> \n" +
+    "	<button class=\"usin-btn usin-btn-export\" ng-if=\"canExportUsers\" ng-hide=\"!listView\" \n" +
+    "		ng-click=\"showConfirm()\" ng-disabled=\"bulkActions.isAnyChecked() || loading.isLoading() || !total.current\"> \n" +
     "		<span class=\"usin-icon-export\" />\n" +
     "		<md-tooltip md-direction=\"top\">{{strings.export.replace('%d', total.current)}}</md-tooltip>\n" +
     "	</button>\n" +
     "\n" +
-    "	<button class=\"usin-btn usin-btn-list-options\" ng-click=\"toggleDisplayed()\" ng-hide=\"!listView || !total.current\" ng-disabled=\"bulkActions.isAnyChecked()\"> \n" +
+    "	<button class=\"usin-btn usin-btn-list-options\" ng-click=\"toggleDisplayed()\" ng-hide=\"!listView\" \n" +
+    "		ng-disabled=\"bulkActions.isAnyChecked() || loading.isLoading()\"> \n" +
     "		<span class=\"usin-icon-visible usin-btn-drop-down\" ng-class=\"{'usin-btn-drop-down-opened' : displayed === true}\"/>\n" +
     "		<md-tooltip md-direction=\"top\">{{strings.toggleColumns}}</md-tooltip>\n" +
     "	</button>\n" +
     "		\n" +
-    "	<button class=\"usin-btn usin-btn-map\" ng-click=\"onToggleView()\" ng-disabled=\"bulkActions.isAnyChecked()\"\n" +
-    "		ng-class=\"{'usin-btn-map-active' : !listView}\" ng-if=\"showMap\" ng-hide=\"listView && !total.current\"> \n" +
+    "	<button class=\"usin-btn usin-btn-map\" ng-click=\"onToggleView()\" ng-disabled=\"bulkActions.isAnyChecked() || \n" +
+    "		loading.isLoading()  || (listView && !total.current)\"\n" +
+    "		ng-class=\"{'usin-btn-map-active' : !listView}\" ng-if=\"showMap\"> \n" +
     "		<span class=\"usin-icon-map\"/>\n" +
     "		<md-tooltip md-direction=\"top\" md-autohide>{{listView ? strings.enterMapView : strings.exitMapView}}</md-tooltip>\n" +
     "	</button>\n" +
@@ -259,11 +261,11 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
   $templateCache.put('views/user-list/list.html',
     "<div>\n" +
     "	<div class=\"usin-table-wrap\">\n" +
-    "	<table class=\"usin-table usin-user-table\" ng-show=\"userList.users.length\" ng-class=\"{'usin-bulk-actions-checked': bulkActions.isAnyChecked()}\">\n" +
+    "	<table class=\"usin-table usin-user-table\" ng-class=\"{'usin-bulk-actions-checked': bulkActions.isAnyChecked(), 'usin-table-no-rows': !userList.users.length}\">\n" +
     "	<thead>\n" +
     "		<tr>\n" +
     "			<th ng-repeat=\"field in showFields\" ng-class=\"{'usin-sortable' : field.order !== false}\">\n" +
-    "				<span ng-if=\"field.id=='username'\" class=\"usin-heading-checkbox\">\n" +
+    "				<span ng-if=\"field.id=='username' && userList.users.length\" class=\"usin-heading-checkbox\">\n" +
     "					<md-checkbox aria-label=\"Select All\"\n" +
     "								ng-checked=\"bulkActions.isAllChecked()\"\n" +
     "								md-indeterminate=\"bulkActions.isAllIndeterminate()\"\n" +
@@ -302,7 +304,7 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "			</span>\n" +
     "		</td>\n" +
     "	</tr>\n" +
-    "	<tfoot>\n" +
+    "	<tfoot ng-show=\"userList.users.length\" >\n" +
     "		<tr>\n" +
     "			<th ng-repeat=\"field in showFields\" ng-class=\"{'usin-sortable' : field.order !== false}\">\n" +
     "				<span ng-click=\"setOrderBy(field.id)\">\n" +
@@ -351,6 +353,16 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "	<div usin-filter fields=\"filterFields\" filters=\"filters\" loading=\"loading\" broadcast-change=\"applyFilters()\"></div>\n" +
     "</div>\n" +
     "\n" +
+    "<div class=\"usin-error\" ng-show=\"error.msg\">\n" +
+    "	{{strings.error}}: {{error.msg}}\n" +
+    "	<br><span ng-bind-html=\"strings.errorTip\" ng-if=\"listView\"></span>\n" +
+    "	<div class=\"usin-error-data\" ng-if=\"error.info\">\n" +
+    "		<button class=\"usin-btn-small\" ng-click=\"error.infoVisible = !error.infoVisible\">\n" +
+    "			{{ error.infoVisible ? strings.hideDebugInfo : strings.showDebugInfo }}\n" +
+    "		</button>\n" +
+    "		<pre class=\"usin-debug-info\" ng-show=\"error.infoVisible\" ng-bind-html=\"error.info\"></pre>\n" +
+    "	</div>\n" +
+    "</div>\n" +
     "\n" +
     "<div class=\"usin-float-right usin-options-menu\">\n" +
     "	<div class=\"usin-circular-loading\" ng-class=\"{'usin-in-loading': loading.isLoading() && (total.current || !listView)}\"></div>\n" +
@@ -358,14 +370,16 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "</div>\n" +
     "\n" +
     "<div class=\"usin-total\">\n" +
-    "	<span class=\"usin-list-total\" ng-show=\"total.current && listView\">\n" +
+    "	<!-- show if in list view and (when it's loading, but total is > 0 (so it doesn't blink between filters) or when it's not loading, but total is 0) -->\n" +
+    "	<span class=\"usin-list-total\" ng-show=\"listView && (!loading.isLoading() || total.all)\">\n" +
     "		<span class=\"usin-icon-people\"></span>\n" +
     "		<span class=\"usin-total-current-number\" ng-show=\"total.current !== total.all\">\n" +
     "			{{ total.current }} / \n" +
     "		</span>\n" +
     "		<span class=\"usin-total-number\" >\n" +
     "			{{ total.all }} \n" +
-    "		</span> <span>{{strings.users}}</span>\n" +
+    "		</span> \n" +
+    "		<span>{{strings.users}}</span>\n" +
     "	</span>\n" +
     "	<span class=\"usin-map-total\" ng-show=\"!listView && total.map!==null\">\n" +
     "		<span class=\"usin-icon-map\"></span>\n" +
@@ -375,15 +389,6 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "</div>\n" +
     "<div class=\"clear\"></div>\n" +
     "\n" +
-    "<div class=\"usin-error\" ng-show=\"error.msg\">\n" +
-    "	{{strings.error}}: {{error.msg}}\n" +
-    "	<div class=\"usin-error-data\" ng-if=\"error.info\">\n" +
-    "		<button class=\"usin-btn-small\" ng-click=\"error.infoVisible = !error.infoVisible\">\n" +
-    "			{{ error.infoVisible ? strings.hideDebugInfo : strings.showDebugInfo }}\n" +
-    "		</button>\n" +
-    "		<pre class=\"usin-debug-info\" ng-show=\"error.infoVisible\" ng-bind-html=\"error.info\"></pre>\n" +
-    "	</div>\n" +
-    "</div>\n" +
     "\n" +
     "<div class=\"usin-map-view\" ng-if=\"!listView\" ng-controller=\"UsinMapCtrl\">\n" +
     "	<div usin-map id=\"usin-list-map\" map-options=\"mapOptions\"></div>\n" +
@@ -487,8 +492,14 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "		<div class=\"usin-loading\"> <span class=\"usin-loading-dot\"></span><span class=\"usin-loading-dot usna-dot2\"></span></div>\n" +
     "	</div>\n" +
     "\n" +
-    "	<div class=\"usin-error\" ng-show=\"errorMsg\">\n" +
-    "	{{strings.error}}: {{errorMsg}}\n" +
+    "	<div class=\"usin-error\" ng-show=\"error.msg\">\n" +
+    "		{{strings.error}}: {{error.msg}}\n" +
+    "		<div class=\"usin-error-data\" ng-if=\"error.info\">\n" +
+    "			<button class=\"usin-btn-small\" ng-click=\"error.infoVisible = !error.infoVisible\">\n" +
+    "				{{ error.infoVisible ? strings.hideDebugInfo : strings.showDebugInfo }}\n" +
+    "			</button>\n" +
+    "			<pre class=\"usin-debug-info\" ng-show=\"error.infoVisible\" ng-bind-html=\"error.info\"></pre>\n" +
+    "		</div>\n" +
     "	</div>\n" +
     "\n" +
     "<div ng-show=\"user && !loading\" class=\"usin-user-profile-container\" >\n" +
@@ -548,7 +559,7 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "							<a ng-href=\"{{listItem.link}}\" target=\"_blank\" ng-bind-html=\"listItem.title\"></a>\n" +
     "							<div ng-if=\"listItem.details.length\" ng-repeat=\"details in listItem.details\" ng-bind-html=\"details\" class=\"usin-activity-details\"></div>\n" +
     "						</li>\n" +
-    "						<li ng-if=\"item.list.length < item.count\" class=\"usin-list-more\">[...]</li>\n" +
+    "						<li ng-if=\"item.list.length < item.count && listItem.link\" class=\"usin-list-more\">[...]</li>\n" +
     "					</ul>\n" +
     "					<a class=\"usin-act-more\" ng-href=\"{{item.link}}\" ng-if=\"item.link\" target=\"_blank\">{{strings.view}}</a>\n" +
     "				</li>\n" +
@@ -587,13 +598,13 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
   $templateCache.put('views/user-list/segments.html',
     "<div class=\"usin-segments-wrap\">\n" +
     "	<button class=\"usin-btn\" ng-click=\"toggleOptions()\" ng-class=\"{'usin-btn-drop-down-opened' : optionsVisible === true}\"\n" +
-    "		ng-disabled=\"bulkActions.isAnyChecked()\">\n" +
+    "		ng-disabled=\"bulkActions.isAnyChecked() || loading.isLoading()\">\n" +
     "		<span class=\"usin-icon-segment\"/>\n" +
     "		<span class=\"usin-icon-drop-down usin-btn-drop-down\"></span>\n" +
     "		<md-tooltip md-direction=\"top\">{{strings.segments}}</md-tooltip>\n" +
     "	</button>\n" +
     "	\n" +
-    "	<div class=\"usin-drop-down usin-segments-options usin-animate\" ng-show=\"optionsVisible\" click-outside=\"optionsVisible=false\">\n" +
+    "	<div class=\"usin-drop-down usin-segments-options usin-animate ng-hide\" ng-show=\"optionsVisible\" click-outside=\"optionsVisible=false\">\n" +
     "		<ul class=\"usin-segments-list\">\n" +
     "			<li class=\"usin-create-segment-wrapper\" ng-if=\"canManageSegments\">\n" +
     "				<md-tooltip md-direction=\"top\" md-autohide>{{(filters | appliedFilters).length ? strings.saveSegmentTooltip : strings.disabledSegmentTooltip}}</md-tooltip>\n" +

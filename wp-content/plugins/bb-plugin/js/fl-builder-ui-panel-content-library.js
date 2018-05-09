@@ -523,7 +523,7 @@
             data.queryResults = FLBuilder.Search.byQuery({
                 kind: "template",
                 type: "user",
-                content: ["module", "row"]
+                content: ["module", "column", "row"]
             });
 
             return data;
@@ -834,6 +834,10 @@
         * @return void
         */
         show: function(tabName) {
+
+			if ( 'module' === FLBuilderConfig.userTemplateType || FLBuilderConfig.simpleUi ) {
+				return;
+			}
 
             FLBuilder.triggerHook('willShowContentPanel');
 

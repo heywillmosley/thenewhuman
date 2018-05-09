@@ -21,8 +21,15 @@ final class FLPageDataTheEventsCalendar {
 	 * @since TBD
 	 * @return string
 	 */
-	static public function start_date() {
-		return tribe_get_start_date( null, false );
+	static public function start_date( $settings, $property ) {
+
+		$format = isset( $settings->format ) ? $settings->format : false;
+		if ( $format ) {
+			return tribe_get_start_date( null, false, $format );
+		} else {
+			return tribe_get_start_date( null, false );
+		}
+
 	}
 
 	/**
@@ -38,8 +45,14 @@ final class FLPageDataTheEventsCalendar {
 	 * @since TBD
 	 * @return string
 	 */
-	static public function end_date() {
-		return tribe_get_display_end_date( null, false );
+	static public function end_date( $settings, $property ) {
+
+		$format = isset( $settings->format ) ? $settings->format : false;
+		if ( $format ) {
+			return tribe_get_display_end_date( null, false, $format );
+		} else {
+			return tribe_get_display_end_date( null, false );
+		}
 	}
 
 	/**

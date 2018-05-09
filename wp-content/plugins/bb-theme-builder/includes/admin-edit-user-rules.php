@@ -1,4 +1,4 @@
-<table class="fl-mb-table widefat">
+<table class="fl-theme-builder-users-form fl-mb-table widefat">
 	<tr class="fl-mb-row">
 		<td  class="fl-mb-row-heading">
 			<label><?php _e( 'Users', 'fl-theme-builder' ); ?></label>

@@ -335,6 +335,8 @@ class USIN_Field_Defaults{
 				'type' => 'date'
 			)
 		);
+
+		$field_types = apply_filters('usin_field_types', $field_types);
 		
 		return $field_types;
 	}

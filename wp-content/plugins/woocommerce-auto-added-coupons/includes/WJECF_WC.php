@@ -259,7 +259,7 @@ class WJECF_WC {
     }
 
     /**
-     * Get attibutes/data for an individual variation from the database and maintain it's integrity.
+     * Get attibutes/data for an individual variation from the database and maintain its integrity.
      * @since  2.5.1
      * @param  int $variation_id
      * @return array

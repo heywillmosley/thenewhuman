@@ -13,8 +13,7 @@ class USIN_Gravity_Forms_Reports extends USIN_Module_Reports{
 		
 		return array(
 			'id' => $this->group,
-			'name' => 'Gravity Forms',
-			'loader_path' => 'plugin-modules/gravity-forms/reports/loaders/'
+			'name' => 'Gravity Forms'
 		);
 	}
 
@@ -45,7 +44,6 @@ class USIN_Gravity_Forms_Reports extends USIN_Module_Reports{
 						array(
 							'group' => $this->group,
 							'visible' => $this->get_default_report_visibility(), 
-							'loader_file' => false,
 							'loader_class' => 'USIN_Meta_Field_Loader'
 						)
 					);
@@ -57,7 +55,6 @@ class USIN_Gravity_Forms_Reports extends USIN_Module_Reports{
 					array(
 						'group' => $this->group,
 						'visible' => $this->get_default_report_visibility(), 
-						'loader_file' => 'gravity-forms-multioption-loader.php', 
 						'loader_class' => 'USIN_Gravity_Forms_Multioption_Loader',
 						'type' => USIN_Report::BAR
 					)
@@ -70,7 +67,6 @@ class USIN_Gravity_Forms_Reports extends USIN_Module_Reports{
 					array(
 						'group' => $this->group,
 						'visible' => $this->get_default_report_visibility(), 
-						'loader_file' => false,
 						'loader_class' => 'USIN_Numeric_Meta_Field_Loader',
 						'type' => USIN_Report::BAR
 					)

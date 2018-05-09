@@ -41,7 +41,7 @@ final class FLThemeBuilderWhiteLabel {
 	 */
 	static public function plugin_gettext( $text ) {
 		global $pagenow;
-		if ( is_admin() && false !== strpos( $text, 'Beaver Themer' ) ) {
+		if ( is_admin() && in_array( $pagenow, array( 'plugins.php', 'update-core.php' ) ) && 'Beaver Themer' == $text ) {
 			$brand    = FLBuilderModel::get_branding();
 			$default  = __( 'Page Builder', 'fl-theme-builder' );
 			if ( $default != $brand ) {

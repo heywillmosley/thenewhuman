@@ -88,7 +88,8 @@
 		 * @property {Object} _regex
 		 */
 		regex: {
-			media: /@media[^\{]+\{([^\{\}]*\{[^\}\{]*\})+[^\}]+\}/ig,
+			media: /@media[^{]*{([\s\S]+?})\s*}/ig,
+			empty: /@media[^{]*{([^{}]*?)}/ig,
 			keyframes: /@(?:\-(?:o|moz|webkit)\-)?keyframes[^\{]+\{(?:[^\{\}]*\{[^\}\{]*\})+[^\}]*\}/gi,
 			comments: /\/\*[^*]*\*+([^/][^*]*\*+)*\//gi,
 			urls: /(url\()['"]?([^\/\)'"][^:\)'"]+)['"]?(\))/g,
@@ -263,7 +264,8 @@
 		parse: function( styles, item )
 		{
 			var re         = this.regex,
-				allQueries = styles.replace( re.comments, '' ).replace( re.keyframes, '' ).match( re.media ),
+				cleaned    = this.cleanStyles( styles ),
+				allQueries = cleaned.match( re.media ),
 				length     = allQueries && allQueries.length || 0,
 				useMedia   = ! length && item.media,
 				query      = null,
@@ -274,13 +276,13 @@
 				k          = 0;
 
 			if ( allQueries ) {
-				all = styles.replace( re.media, '' );
+				all = cleaned.replace( re.media, '' );
 			}
 			else if ( useMedia && 'all' != item.media ) {
 				length = 1;
 			}
 			else {
-				all = styles;
+				all = cleaned;
 			}
 
 			this.sheets[ item.key ] = {
@@ -296,12 +298,12 @@
 			for ( i = 0; i < length; i++ ) {
 
 				if ( useMedia ) {
-					query  = item.media;
-					styles = this.convertURLs( styles, item.href );
+					query   = item.media;
+					cleaned = this.convertURLs( cleaned, item.href );
 				}
 				else{
-					query  = allQueries[ i ].match( re.findStyles ) && RegExp.$1;
-					styles = RegExp.$2 && this.convertURLs( RegExp.$2, item.href );
+					query   = allQueries[ i ].match( re.findStyles ) && RegExp.$1;
+					cleaned = RegExp.$2 && this.convertURLs( RegExp.$2, item.href );
 				}
 
 				queries = query.split( ',' );
@@ -321,7 +323,7 @@
 					this.sheets[ item.key ].queries.push( {
 						minw     : query.match( re.minw ) && parseFloat( RegExp.$1 ) + ( RegExp.$2 || '' ),
 						maxw     : query.match( re.maxw ) && parseFloat( RegExp.$1 ) + ( RegExp.$2 || '' ),
-						styles   : styles
+						styles   : cleaned
 					} );
 				}
 			}
@@ -421,6 +423,19 @@
 					styles[ i ].remove();
 				}
 			}, 50 );
+		},
+
+		/**
+		 * Removes comments, keyframes and empty media
+		 * queries from a CSS style string.
+		 *
+		 * @since 2.0.6
+		 * @method styles
+		 */
+		cleanStyles: function( styles )
+		{
+			var re = this.regex;
+			return styles.replace( re.comments, '' ).replace( re.keyframes, '' ).replace( re.empty, '' );
 		},
 
 		/**

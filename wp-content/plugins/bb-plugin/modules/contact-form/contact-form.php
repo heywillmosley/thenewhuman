@@ -57,15 +57,42 @@ class FLContactFormModule extends FLBuilderModule {
 	}
 
 	/**
+	 * Connects Beaver Themer field connections before sending mail
+	 * as those won't be connected during a wp_ajax call.
+	 *
+	 * @method connect_field_connections_before_send
+	 */
+	public function connect_field_connections_before_send() {
+		if ( class_exists( 'FLPageData' ) && isset( $_REQUEST['post_id'] ) ) {
+
+			$posts = query_posts( array(
+				'p' => absint( $_REQUEST['post_id'] ),
+				'post_type' => 'any',
+			) );
+
+			if ( count( $posts ) ) {
+				global $post;
+				$post = $posts[0];
+				setup_postdata( $post );
+				FLPageData::init_properties();
+			}
+		}
+	}
+
+	/**
 	 * @method send_mail
 	 */
 	public function send_mail() {
+
+		// Try to connect Themer connections before sending.
+		self::connect_field_connections_before_send();
 
 		// Get the contact form post data
 		$node_id			= isset( $_POST['node_id'] ) ? sanitize_text_field( $_POST['node_id'] ) : false;
 		$template_id	 	= isset( $_POST['template_id'] ) ? sanitize_text_field( $_POST['template_id'] ) : false;
 		$template_node_id	  = isset( $_POST['template_node_id'] ) ? sanitize_text_field( $_POST['template_node_id'] ) : false;
 		$recaptcha_response	= isset( $_POST['recaptcha_response'] ) ? $_POST['recaptcha_response'] : false;
+		$terms_checked	    = isset( $_POST['terms_checked'] ) && 1 == $_POST['terms_checked'] ? true : false;
 
 		$subject 			= (isset( $_POST['subject'] ) ? $_POST['subject'] : __( 'Contact Form Submission', 'fl-builder' ));
 		$admin_email 		= get_option( 'admin_email' );
@@ -97,6 +124,15 @@ class FLContactFormModule extends FLBuilderModule {
 				$subject   = $settings->subject_hidden;
 			}
 
+			// Validate terms and conditions if enabled
+			if ( ( isset( $settings->terms_checkbox ) && 'show' == $settings->terms_checkbox ) && ! $terms_checked ) {
+				$response = array(
+					'error'   => true,
+					'message' => __( 'You must accept the Terms and Conditions.', 'fl-builder' ),
+				);
+				wp_send_json( $response );
+			}
+
 			// Validate reCAPTCHA if enabled
 			if ( isset( $settings->recaptcha_toggle ) && 'show' == $settings->recaptcha_toggle && $recaptcha_response ) {
 				if ( ! empty( $settings->recaptcha_secret_key ) && ! empty( $settings->recaptcha_site_key ) ) {
@@ -117,6 +153,10 @@ class FLContactFormModule extends FLBuilderModule {
 
 			$fl_contact_from_email = (isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : null);
 			$fl_contact_from_name = (isset( $_POST['name'] ) ? $_POST['name'] : '');
+
+			if ( isset( $_POST['name'] ) ) {
+				$site_name = apply_filters( 'fl_contact_form_from', $site_name, $_POST['name'] );
+			}
 
 			$headers = array(
 				'From: ' . $site_name . ' <' . $admin_email . '>',
@@ -142,7 +182,7 @@ class FLContactFormModule extends FLBuilderModule {
 			}
 
 			wp_send_json( $response );
-		}// End if().
+		}
 	}
 }
 
@@ -257,6 +297,36 @@ FLBuilder::register_module('FLContactFormModule', array(
 						'label'		=> __( 'Your Message Placeholder', 'fl-builder' ),
 						'default'	=> __( 'Your message', 'fl-builder' ),
 					),
+					'terms_checkbox' => array(
+						'type'		  => 'select',
+						'label'		  => __( 'Terms and Conditions Checkbox', 'fl-builder' ),
+						'default'		  => 'hide',
+						'options'		  => array(
+							'show'	   => __( 'Show', 'fl-builder' ),
+							'hide'	   => __( 'Hide', 'fl-builder' ),
+						),
+						'toggle'		=> array(
+							'show'			=> array(
+								'fields'		=> array( 'terms_checkbox_text', 'terms_text' ),
+							),
+						),
+					),
+					'terms_checkbox_text'	=> array(
+						'type'		=> 'text',
+						'label'		=> __( 'Checkbox Text', 'fl-builder' ),
+						'default'	=> __( 'I Accept the Terms and Conditions', 'fl-builder' ),
+					),
+					'terms_text' => array(
+						'type'		  => 'editor',
+						'label'		  => 'Terms and Conditions',
+						'media_buttons' => false,
+						'rows'          => 8,
+						'preview'       => array(
+							'type'          => 'text',
+							'selector'      => '.fl-terms-checkbox-text',
+						),
+						'connections'   => array( 'string' ),
+					),
 				),
 			),
 			'success'	   => array(
@@ -314,7 +384,11 @@ FLBuilder::register_module('FLContactFormModule', array(
 					'btn_text'		 => array(
 						'type'		  => 'text',
 						'label'		  => __( 'Button Text', 'fl-builder' ),
-						'default'		  => __( 'Send', 'fl-builder' ),
+						'default'		  	=> __( 'Send', 'fl-builder' ),
+						'preview'			=> array(
+							'type'				=> 'text',
+							'selector'			=> '.fl-button-text',
+						),
 					),
 					'btn_icon'		 => array(
 						'type'		  => 'icon',

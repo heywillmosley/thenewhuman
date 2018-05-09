@@ -39,5 +39,3 @@ class USIN_Capabilities{
 	}
 	
 }
-
-new USIN_Capabilities();

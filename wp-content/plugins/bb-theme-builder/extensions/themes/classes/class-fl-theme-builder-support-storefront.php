@@ -35,9 +35,40 @@ final class FLThemeBuilderSupportStorefront {
 	static public function register_part_hooks() {
 		return array(
 			array(
+				'label' => __( 'General', 'fl-theme-builder' ),
+				'hooks' => array(
+					'storefront_before_site' => __( 'Before Site', 'fl-theme-builder' ),
+				),
+			),
+			array(
 				'label' => __( 'Header', 'fl-theme-builder' ),
 				'hooks' => array(
 					'storefront_before_header' => __( 'Before Header', 'fl-theme-builder' ),
+					'storefront_header'        => __( 'Header', 'fl-theme-builder' ),
+				),
+			),
+			array(
+				'label' => __( 'Homepage', 'fl-theme-builder' ),
+				'hooks' => array(
+					'storefront_homepage'                                  => __( 'Homepage', 'fl-theme-builder' ),
+					'storefront_homepage_before_product_categories'        => __( 'Before Product Categories', 'fl-theme-builder' ),
+					'storefront_homepage_after_product_categories_title'   => __( 'After Product Categories Title', 'fl-theme-builder' ),
+					'storefront_homepage_after_product_categories'         => __( 'After Product Categories', 'fl-theme-builder' ),
+					'storefront_homepage_before_recent_products'           => __( 'Before Recent Products', 'fl-theme-builder' ),
+					'storefront_homepage_after_recent_products_title'      => __( 'After Recent Products Title', 'fl-theme-builder' ),
+					'storefront_homepage_after_recent_products'            => __( 'After Recent Products', 'fl-theme-builder' ),
+					'storefront_homepage_before_featured_products'         => __( 'Before Featured Products', 'fl-theme-builder' ),
+					'storefront_homepage_after_featured_products_title'    => __( 'After Featured Products Title', 'fl-theme-builder' ),
+					'storefront_homepage_after_featured_products'          => __( 'After Featured Products', 'fl-theme-builder' ),
+					'storefront_homepage_before_popular_products'          => __( 'Before Popular Products', 'fl-theme-builder' ),
+					'storefront_homepage_after_popular_products_title'     => __( 'After Popular Products Title', 'fl-theme-builder' ),
+					'storefront_homepage_after_popular_products'           => __( 'After Popular Products', 'fl-theme-builder' ),
+					'storefront_homepage_before_on_sale_products'          => __( 'Before On Sale Products', 'fl-theme-builder' ),
+					'storefront_homepage_after_on_sale_products_title'     => __( 'After On Sale Products Title', 'fl-theme-builder' ),
+					'storefront_homepage_after_on_sale_products'           => __( 'After On Sale Products', 'fl-theme-builder' ),
+					'storefront_homepage_before_best_selling_products'     => __( 'Before Best Selling Products', 'fl-theme-builder' ),
+					'storefront_homepage_after_best_selling_products_title' => __( 'After Best Selling Products Title', 'fl-theme-builder' ),
+					'storefront_homepage_after_best_selling_products'       => __( 'After Best Selling Products', 'fl-theme-builder' ),
 				),
 			),
 			array(
@@ -51,7 +82,13 @@ final class FLThemeBuilderSupportStorefront {
 				'label' => __( 'Footer', 'fl-theme-builder' ),
 				'hooks' => array(
 					'storefront_before_footer' => __( 'Before Footer', 'fl-theme-builder' ),
+					'storefront_footer'        => __( 'Footer', 'fl-theme-builder' ),
 					'storefront_after_footer'  => __( 'After Footer', 'fl-theme-builder' ),
+				),
+			),array(
+				'label' => __( 'Sidebar', 'fl-theme-builder' ),
+				'hooks' => array(
+					'storefront_sidebar' => __( 'Sidebar', 'fl-theme-builder' ),
 				),
 			),
 			array(
@@ -59,6 +96,7 @@ final class FLThemeBuilderSupportStorefront {
 				'hooks' => array(
 					'storefront_single_post_before' => __( 'Before Post', 'fl-theme-builder' ),
 					'storefront_single_post_top'    => __( 'Post Top', 'fl-theme-builder' ),
+					'storefront_single_post'        => __( 'Post', 'fl-theme-builder' ),
 					'storefront_single_post_bottom' => __( 'Post Bottom', 'fl-theme-builder' ),
 					'storefront_single_post_after'  => __( 'After Post', 'fl-theme-builder' ),
 				),
@@ -67,6 +105,7 @@ final class FLThemeBuilderSupportStorefront {
 				'label' => __( 'Pages', 'fl-theme-builder' ),
 				'hooks' => array(
 					'storefront_page_before' => __( 'Before Page', 'fl-theme-builder' ),
+					'storefront_page'        => __( 'Page', 'fl-theme-builder' ),
 					'storefront_page_after'  => __( 'After Page', 'fl-theme-builder' ),
 				),
 			),
@@ -75,6 +114,8 @@ final class FLThemeBuilderSupportStorefront {
 				'hooks' => array(
 					'storefront_loop_before' => __( 'Before Loop', 'fl-theme-builder' ),
 					'storefront_loop_after'  => __( 'After Loop', 'fl-theme-builder' ),
+					'storefront_post_content_before' => __( 'Post Content Before', 'fl-theme-builder' ),
+					'storefront_post_content_after' => __( 'Post Content After', 'fl-theme-builder' ),
 				),
 			),
 		);

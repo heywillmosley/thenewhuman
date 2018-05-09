@@ -3,7 +3,7 @@
 class USIN_Numeric_Meta_Field_Loader extends USIN_Numeric_Field_Loader{
 
 	protected function get_default_data(){
-		return $this->load_meta_data($this->report->get_field_id(), $this->label_col);
+		return $this->load_meta_data($this->report->get_field_id());
 	}
 
 	protected function get_data_in_ranges($chunk_size){

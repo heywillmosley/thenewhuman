@@ -3,12 +3,12 @@
  * Plugin Name: PW WooCommerce BOGO
  * Plugin URI: https://pimwick.com/pw-bogo
  * Description: Makes Buy One, Get One promotions so easy!
- * Version: 2.60
+ * Version: 2.66
  * Author: Pimwick, LLC
  * Author URI: https://pimwick.com/pw-bogo
  *
  * WC requires at least: 2.6.13
- * WC tested up to: 3.3.2
+ * WC tested up to: 3.3.5
  *
  * Copyright: © Pimwick, LLC
 */
@@ -44,6 +44,7 @@ final class PW_BOGO {
 
         defined( 'PW_BOGO_LICENSE_PRODUCT_NAME' ) or define( 'PW_BOGO_LICENSE_PRODUCT_NAME', 'PW BOGO' );
         defined( 'PW_BOGO_LICENSE_OPTION_NAME' ) or define( 'PW_BOGO_LICENSE_OPTION_NAME', 'pw-bogo-license' );
+        defined( 'PW_BOGO_REQUIRES_PRIVILEGE' ) or define( 'PW_BOGO_REQUIRES_PRIVILEGE', 'manage_woocommerce' );
 
         $this->use_coupons = boolval( get_option( 'pw_bogo_use_coupons', true ) );
 
@@ -132,7 +133,7 @@ final class PW_BOGO {
             'labels'                => $labels,
             'supports'              => array( 'title' ),
             'show_ui'               => true,
-            'show_in_menu'          => current_user_can( 'manage_woocommerce' ) ? 'pimwick' : false,
+            'show_in_menu'          => current_user_can( PW_BOGO_REQUIRES_PRIVILEGE ) ? 'pimwick' : false,
             'has_archive'           => true
         );
 
@@ -172,7 +173,7 @@ final class PW_BOGO {
             add_menu_page(
                 __( 'PW BOGO', 'pimwick' ),
                 __( 'Pimwick Plugins', 'pimwick' ),
-                'manage_woocommerce',
+                PW_BOGO_REQUIRES_PRIVILEGE,
                 'pimwick',
                 '',
                 plugins_url( '/assets/images/pimwick-icon-120x120.png', __FILE__ ),
@@ -183,7 +184,7 @@ final class PW_BOGO {
                 'pimwick',
                 __( 'PW BOGO', 'pimwick' ),
                 __( 'Pimwick Plugins', 'pimwick' ),
-                'manage_woocommerce',
+                PW_BOGO_REQUIRES_PRIVILEGE,
                 'pimwick',
                 ''
             );
@@ -196,7 +197,7 @@ final class PW_BOGO {
             'pimwick',
             __( 'Pimwick Plugins', 'pimwick' ),
             __( 'Our Plugins', 'pimwick' ),
-            'manage_woocommerce',
+            PW_BOGO_REQUIRES_PRIVILEGE,
             'pimwick-plugins',
             array( $this, 'other_plugins_page' )
         );
@@ -337,6 +338,7 @@ final class PW_BOGO {
 
         $discount_limit                         = isset( $_POST['discount_limit'] ) ? absint( $_POST['discount_limit'] ) : '';
         $coupon_code                            = isset( $_POST['coupon_code'] ) ? wc_clean( trim( $_POST['coupon_code'] ) ) : '';
+        $free_shipping                          = isset( $_POST['free_shipping'] ) ? 'yes' : 'no';
         $individual_use                         = isset( $_POST['individual_use'] ) ? 'yes' : 'no';
         $exclude_sale_items                     = isset( $_POST['exclude_sale_items'] ) ? 'yes' : 'no';
 
@@ -366,6 +368,7 @@ final class PW_BOGO {
 
         update_post_meta( $post_id, 'discount_limit', $discount_limit );
         update_post_meta( $post_id, 'coupon_code', $coupon_code );
+        update_post_meta( $post_id, 'free_shipping', $free_shipping );
         update_post_meta( $post_id, 'individual_use', $individual_use );
         update_post_meta( $post_id, 'exclude_sale_items', $exclude_sale_items );
     }
@@ -425,7 +428,14 @@ final class PW_BOGO {
                 }
             }
 
+            // When considering eligible items, add the non-discounted items first. This will make it so that we can discount more expensive
+            // items if necessary, when the Eligible Products are wide-open and the Discounted Products are for a specific category.
             $eligible_items = array();
+            foreach ( $cart_items_desc as $ci ) {
+                if ( $this->is_cart_item_valid_for_bogo( $ci['cart_item'], $bogo ) && !$this->is_cart_item_valid_for_bogo( $ci['cart_item'], $bogo, true ) ) {
+                    $eligible_items[ $ci['key'] ] = $ci['cart_item'];
+                }
+            }
             foreach ( $cart_items_desc as $ci ) {
                 if ( $this->is_cart_item_valid_for_bogo( $ci['cart_item'], $bogo ) ) {
                     $eligible_items[ $ci['key'] ] = $ci['cart_item'];
@@ -500,7 +510,22 @@ final class PW_BOGO {
                         break;
                     }
 
-                    $price = $discounted_cart_item['data']->get_price();
+                    $price = 0;
+                    if ( function_exists( 'wc_get_price_excluding_tax' ) && function_exists( 'wc_get_price_including_tax' ) ) {
+                        $product = $discounted_cart_item['data'];
+                        if ( 'excl' === $cart->tax_display_cart ) {
+                            $product_price = wc_get_price_excluding_tax( $product );
+                        } else {
+                            $product_price = wc_get_price_including_tax( $product );
+                        }
+                        $price = apply_filters( 'woocommerce_cart_product_price', $product_price, $product );
+                    }
+
+                    // Old way of getting price.
+                    if ( empty( $price ) ) {
+                        $price = $discounted_cart_item['data']->get_price();
+                    }
+
                     if ( !empty( $bogo->type ) && $bogo->type != 'free' ) {
                         $discount += $price * $percentage;
                     } else {
@@ -738,7 +763,7 @@ final class PW_BOGO {
             }
         }
 
-        return $bogos;
+        return apply_filters( 'pw_bogo_active_bogos', $bogos );
     }
 
     function sort_bogos( &$bogos ) {
@@ -1082,6 +1107,8 @@ final class PW_BOGO {
 
         foreach ( $this->get_active_bogos( true ) as $bogo ) {
             if ( $this->is_bogo_coupon( $code, $bogo ) ) {
+                $free_shipping = ( $bogo->free_shipping == 'yes' );
+
                 $amount = isset( $discounts[ $bogo->ID ] ) ? $discounts[ $bogo->ID ] : 0;
 
                 // Creates a virtual coupon
@@ -1090,7 +1117,8 @@ final class PW_BOGO {
                     'code' => $code,
                     'description' => $bogo->post_title,
                     'amount' => $amount,
-                    'coupon_amount' => $amount
+                    'coupon_amount' => $amount,
+                    'free_shipping' => $free_shipping
                 );
                 break;
             }

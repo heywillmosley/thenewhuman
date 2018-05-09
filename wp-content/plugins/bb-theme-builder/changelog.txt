@@ -1,3 +1,21 @@
+<h4>1.1.1 - 03/20/2018</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Added support for using ACF relationship fields as the query source in all post modules.</li>
+ 	<li>Added the ability for Themer modules to be overridden in a theme or child theme.</li>
+	<li>Added support for displaying Themer parts in more Storefront hook locations.</li>
+	<li>Added the ability to change the format of Event Calendar start and end dates.</li>
+	<li>Added the ability to enqueue Themer CSS/JS assets inline using the <code>fl_builder_render_assets_inline</code> filter.</li>
+	<li>Added the ability to change the time to expiration for Themer CSS/JS assets using the <code>fl_theme_builder_assets_expire</code> filter.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+ 	<li>Fixed images in header layouts not transitioning when it shrinks on scroll.</li>
+	<li>Fixed other plugins with Beaver Themer in the title getting white labeled incorrectly.</li>
+	<li>Fixed duplicate database queries running more than once on the same page load.</li>
+	<li>Fixed CSS issues with the display of WooCommerce product grids in the Storefront theme.</li>
+</ul>
+
 <h4>1.1.0.3 - 02/27/2018</h4>
 <strong>Hot Fix</strong>
 <ul>

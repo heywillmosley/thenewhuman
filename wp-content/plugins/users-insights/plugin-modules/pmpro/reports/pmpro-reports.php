@@ -7,8 +7,7 @@ class USIN_Pmpro_Reports extends USIN_Module_Reports{
 	public function get_group(){
 		return array(
 			'id' => $this->group,
-			'name' => 'Paid Memberships Pro',
-			'loader_path' => 'plugin-modules/pmpro/reports/loaders/'
+			'name' => 'Paid Memberships Pro'
 		);
 	}
 

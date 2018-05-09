@@ -352,7 +352,9 @@ class WJECF_Controller {
             foreach( $items as $item_key => $item ) {
                 if ( $item->product === false ) continue;
 
-                $product_cats = array_merge ( $product_cats,  wp_get_post_terms( WJECF_Wrap( $item->product )->get_id(), 'product_cat', array( "fields" => "ids" ) ) );
+                $product_id = WJECF_Wrap( $item->product )->get_id();
+                if ('product_variation' == get_post_type( $product_id )) $product_id = WJECF_Wrap( $item->product )->get_variable_product_id();
+                $product_cats = array_merge( $product_cats,  wp_get_post_terms( $product_id, 'product_cat', array( "fields" => "ids" ) ) );
             }
             //Filter used by WJECF_WPML hook
             $product_cats = apply_filters( 'wjecf_get_product_cat_ids', $product_cats );
@@ -795,7 +797,26 @@ class WJECF_Controller {
         WC()->session->set( '_wjecf_session_data', $this->_session_data );
     }
 
-
+    /**
+     * (Copied from class-woocommerce.php) What type of request is this?
+     *
+     * @since 2.6.2
+     * @param  string $type admin, ajax, cron or frontend.
+     * @return bool
+     */
+    public function is_request( $type ) {
+        switch ( $type ) {
+            case 'admin':
+                return is_admin();
+            case 'ajax':
+                return defined( 'DOING_AJAX' );
+            case 'cron':
+                return defined( 'DOING_CRON' );
+            case 'frontend':
+                return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
+        }
+    }
+    
     /**
      * Get overwritable template filename
      * 

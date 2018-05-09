@@ -13,8 +13,7 @@ class USIN_Learndash_Reports extends USIN_Module_Reports{
 		
 		return array(
 			'id' => $this->group,
-			'name' => 'LearnDash',
-			'loader_path' => 'plugin-modules/learndash/reports/loaders/'
+			'name' => 'LearnDash'
 		);
 	}
 

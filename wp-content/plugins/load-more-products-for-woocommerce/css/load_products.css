@@ -7,7 +7,7 @@
     width: 2em;
     height: 2em;
     font-size: 2em;
-    line-height: 1.3em;
+    line-height: 2em;
 }
 .lmp_products_loading .fa img {
     max-width: 100%;
@@ -37,4 +37,7 @@
 .lmp_load_more_button .lmp_button:hover {
     background-color: #9999ff;
     color: #111;
+}
+.berocket_lmp_hidden {
+    display: none!important;
 }

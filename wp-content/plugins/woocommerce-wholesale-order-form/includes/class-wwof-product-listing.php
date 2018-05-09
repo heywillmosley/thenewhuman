@@ -466,13 +466,13 @@ class WWOF_Product_Listing {
 
                     if ( WWOF_Functions::wwof_is_woocommerce_version_3() ) {
                         if ( $attribute->is_taxonomy() ) {
-                            $tax = $attribute->get_taxonomy_object();
-                            $attribute_name = $tax->attribute_label;
-                            $attribute_term = get_term_by( 'slug', $value, $attr_key );
-                            $attribute_value = $attribute_term->name;
+                            $tax                = $attribute->get_taxonomy_object();
+                            $attribute_name     = $tax->attribute_label;
+                            $attribute_term     = get_term_by( 'slug', $value, $attr_key );
+                            $attribute_value    = $attribute_term->name;
                         } else {
-                            $attribute_name = $attribute->get_name();
-                            $attribute_value = wc_attribute_label( $value );
+                            $attribute_name     = $attribute->get_name();
+                            $attribute_value    = wc_attribute_label( $value );
                         }
                     } else { // WC 2.6 and below
         				if ( taxonomy_exists( wc_sanitize_taxonomy_name( $attr_key ) ) ) {
