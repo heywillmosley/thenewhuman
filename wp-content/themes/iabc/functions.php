@@ -32,6 +32,10 @@ add_filter( 'login_redirect', 'login_redirect', 10, 3 );
 function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/' );
   $whitelist[] = site_url( '/terms/' );
+  $whitelist[] = site_url( '/features/' );
+  $whitelist[] = site_url( '/client/' );
+  $whitelist[] = site_url( '/about/' );
+  $whitelist[] = site_url( '/help/' );
   return $whitelist;
 }
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);

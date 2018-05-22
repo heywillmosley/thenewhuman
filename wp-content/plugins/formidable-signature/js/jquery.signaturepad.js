@@ -517,7 +517,7 @@ function SignaturePad (selector, options) {
    */
   function type (val) {
     var typed = $(settings.typed, context)
-      , cleanedVal = val.replace(/>/g, '&gt;').replace(/</g, '&lt;').trim()
+      , cleanedVal = $.trim(val.replace(/>/g, '&gt;').replace(/</g, '&lt;'))
       , oldLength = typeItNumChars
       , edgeOffset = typeItCurrentFontSize * 0.5
 
@@ -680,28 +680,28 @@ function SignaturePad (selector, options) {
     if (element.getContext) {
       canvasContext = element.getContext('2d')
 
-      $(settings.sig, context).show()
+		$(settings.sig, context).show();
 
       if (!settings.displayOnly) {
         if (!settings.drawOnly) {
           $(settings.name, context).bind('keyup.signaturepad', function () {
-            type($(this).val())
+			  type($(this).val());
           })
 
           $(settings.name, context).bind('blur.signaturepad', function () {
-            type($(this).val())
+			  type($(this).val());
           })
 
           $(settings.drawIt, context).bind('click.signaturepad', function (e) {
-            e.preventDefault()
-            drawIt()
+			  e.preventDefault();
+			  drawIt();
           })
         }
 
         if (settings.drawOnly || settings.defaultAction === 'drawIt') {
-          drawIt()
+			drawIt();
         } else {
-          typeIt()
+			typeIt();
         }
 
         if (settings.validateFields) {
@@ -712,7 +712,7 @@ function SignaturePad (selector, options) {
           }
         }
 
-        $(settings.sigNav, context).show()
+        $(settings.sigNav, context).show();
       }
     }
   }
@@ -888,4 +888,4 @@ $.fn.signaturePad.defaults = {
   , onDrawEnd : null // Pass a callback to be exectued after the drawing process
 }
 
-}(jQuery))
+}(jQuery));

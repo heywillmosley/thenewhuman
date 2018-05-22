@@ -295,9 +295,9 @@ if (!class_exists('ESIG_ASSIGN_ORDER_Admin')) :
             }
             $invitation_count = WP_E_Sig()->invite->getInvitationCount($document_id);
             if ($invitation_count > 1) {
-                $order_content = '<div class="checkbox" id="esign-signer-order-show"> <label><input class="positionRelative" type="checkbox" id="esign-assign-signer-order" name="esign_assign_signer_order" ' . $checked . ' value="1">' . __('Assign signer order', 'esig_order'). ' </label></div>';
+                $order_content = '<div class="checkbox" id="esign-signer-order-show"> <label><input class="positionRelative" type="checkbox" id="esign-assign-signer-order" name="esign_assign_signer_order" ' . $checked . ' value="1">' . __('Assign signer order', 'esig'). ' </label></div>';
             } else {
-                $order_content = '<div class="container-fluid noPadding" id="esign-signer-order-show" style="display:none;"><div class="row"><div class="col-sm-12"><div class="checkbox" ><input type="checkbox" id="esign-assign-signer-order" name="esign_assign_signer_order" ' . $checked . ' value="1"><label class="leftPadding-5">' . __('Assign signer order', 'esig_order') . ' </label></div></div></div></div>';
+                $order_content = '<div class="container-fluid noPadding" id="esign-signer-order-show" style="display:none;"><div class="row"><div class="col-sm-12"><div class="checkbox" ><label class="leftPadding-5"><input type="checkbox" id="esign-assign-signer-order" name="esign_assign_signer_order" ' . $checked . ' value="1">' . __('Assign signer order', 'esig') . ' </label></div></div></div></div>';
             }
             return $order_content;
         }

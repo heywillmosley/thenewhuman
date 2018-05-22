@@ -19,7 +19,7 @@ function frmSignatureJS(){
             defaultAction:'drawIt',validateFields:false
         };
         var w = opts.width;
-        var sigField = jQuery(document.getElementById('frm_field_'+opts.id+'_container'));
+        var sigField = jQuery('.frm_field_'+opts.id+'_container, #frm_field_'+opts.id+'_container');
         if ( sigField.length < 1 ) {
             return;
         }
@@ -32,7 +32,7 @@ function frmSignatureJS(){
             sigPad.attr('style','max-width:'+ w +'px !important;');
             sigField.find('.typed input').attr('style','max-width:'+(w-11)+'px !important;');
             sigPad.find('canvas').attr('width',w-2);
-            jQuery('input[name="item_meta['+opts.id+'][width]"]').val(w-2);
+            sigField.find('input[name$="[width]"]').val(w-2);
         }
         sigPad.signaturePad(frmsigopts);
     }

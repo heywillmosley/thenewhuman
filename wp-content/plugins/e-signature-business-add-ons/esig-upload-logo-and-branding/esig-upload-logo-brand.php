@@ -8,7 +8,7 @@
  * URI:        https://approveme.com/wp-digital-e-signature
  * Description:       This add-on gives you the ability to customize the email branding, upload your logo to documents (and emails), create a cover page, customize the success page and more.
  * mini-description upload your logo and branding
- * Version:           1.5.3.3
+ * Version:           1.5.3.4
  * Author:            Approve Me
  * Author URI:        https://approveme.com/
  * Documentation:     http://aprv.me/1Pp8593
@@ -24,7 +24,7 @@ if (!defined('WPINC')) {
 
 if (class_exists('WP_E_Addon')) {
     $esign_addons = new WP_E_Addon();
-    $esign_addons->esign_update_check('6169', '1.5.3.3');
+    $esign_addons->esign_update_check('6169', '1.5.3.4');
 }
 
 

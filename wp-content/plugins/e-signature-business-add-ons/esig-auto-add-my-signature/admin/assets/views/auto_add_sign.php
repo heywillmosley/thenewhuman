@@ -33,7 +33,7 @@ $WPuser = $user->getUserByWPID($wp_user_id);
                                     $signatureId = $settings->get('esig-admin-signature-id-'.$wp_user_id);
                                     $sig_data = $signature->signatureData($signatureId);
 
-                                    $signature_type = $sig_data->signature_type;
+                                    $signature_type = esigget("signature_type",$sig_data); 
 
                                     $signature_full = '';
 

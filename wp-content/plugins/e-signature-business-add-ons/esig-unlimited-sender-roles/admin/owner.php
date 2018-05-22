@@ -38,10 +38,10 @@ class esigOwner extends Esig_Roles {
 
         WP_E_Sig()->document->recordEvent($docId, 'owner_change', $eventText);
 
-        $addSignature = esigpost('add_signature');
+       /* $addSignature = esigpost('add_signature');
         if ($addSignature) {
             WP_E_Sig()->meta->add($docId, "auto_add_signature", $ownerId);
-        }
+        }*/
        
         self::notify($ownerId,$esigOwnerId, $args['document']);
     }

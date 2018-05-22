@@ -1,7 +1,4 @@
-<?php 
-
-$typed_value = is_array( $field['value'] ) && isset( $field['value']['typed'] ) ? $field['value']['typed'] : '';
-$drawn_value = is_array( $field['value'] ) && isset( $field['value']['output'] ) ? $field['value']['output'] : '';
+<?php
 
 if ( $entry_id && $field['value'] && ! empty( $drawn_value ) ) {
     echo FrmSigAppController::get_final_signature_value( $field['value'], array(

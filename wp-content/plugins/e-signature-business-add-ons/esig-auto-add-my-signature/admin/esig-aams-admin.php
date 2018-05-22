@@ -40,7 +40,7 @@ if (!class_exists('ESIG_AAMS_Admin')) :
             add_filter('esig-edit-document-template-data', array($this, 'show_aams_more_action'), 10, 2);
             add_filter('esig-edit-document-template-data', array($this, 'show_aams_add_signature'), 10, 2);
             add_filter('esig-shortcode-display-owner-signature', array($this, 'record_view_shortcode'), 10, 2);
-            
+
             add_filter('esig_is_document_owner', array($this, 'is_document_owner'), 10, 2);
             add_filter('esig_non_document_owner_content', array($this, 'non_document_owner_content'), 10, 2);
             //actions 
@@ -60,29 +60,38 @@ if (!class_exists('ESIG_AAMS_Admin')) :
             add_filter("esig_document_form_additional_content", array($this, "auto_add_content"), 10, 1);
             add_filter('esig_add_signature_check', array($this, 'auto_add_signature_check'), 10, 2);
         }
-        
-        public function non_document_owner_content($content,$ownerId){
-            $loggedInId= get_current_user_id();
-              if($loggedInId != $ownerId){
-                   $message = sprintf(__("Hey there! This document was previously signed by %s. By saving the changes you’ve made to this document, you agree to automatically add your signature to this document.","esig"), WP_E_Sig()->user->get_esig_admin_name($ownerId));
-                   $content .=  '<div id="esig-auto-add-signature-warning-msg" style="display:none;">'. $message .'</div>';
-                   return $content;
-              }
+
+        public function non_document_owner_content($content, $ownerId) {
+            $loggedInId = get_current_user_id();
+            if ($loggedInId != $ownerId) {
+                $message = sprintf(__("Hey there! This document was previously signed by %s. By saving the changes you’ve made to this document, you agree to automatically add your signature to this document.", "esig"), WP_E_Sig()->user->get_esig_admin_name($ownerId));
+                $content .= '<div id="esig-auto-add-signature-warning-msg" style="display:none;">' . $message . '</div>';
+                return $content;
+            }
         }
-        
-        public function is_document_owner($ret , $documentOwner){
-              $loggedInId= get_current_user_id();
-              if($loggedInId == $documentOwner){
-                   return true;
-              }
-              return $ret ;
+
+        public function is_document_owner($ret, $documentOwner) {
+            $loggedInId = get_current_user_id();
+            if ($loggedInId == $documentOwner) {
+                return true;
+            }
+            return $ret;
         }
 
         public function auto_add_signature_check($addSignature, $doc) {
+
             $oldOwnerId = WP_E_Sig()->meta->get($doc->document_id, 'auto_add_signature');
-            if (!$oldOwnerId) {
+            if ($oldOwnerId) {
                 return $addSignature;
             }
+
+            $superAdminId = WP_E_Sig()->user->esig_get_super_admin_id();
+            if ($superAdminId == $oldOwnerId) {
+                return $addSignature;
+            }
+
+
+
             $owner = WP_E_Sig()->user->getUserBy('wp_user_id', $doc->user_id);
             $owner_id = is_object($owner) ? $owner->user_id : NULL;
             if ($oldOwnerId != $owner_id) {
@@ -109,12 +118,23 @@ if (!class_exists('ESIG_AAMS_Admin')) :
 
             if ($auto_signature) {
 
+                if (is_esig_super_admin()) {
+                    $admin_id = WP_E_Sig()->user->esig_get_super_admin_id();
+                } else {
 
-                $admin_id = $args['document']->user_id;
+
+                    $admin_id = $args['document']->user_id;
+                }
 
                 $owner = $api->user->getUserBy('wp_user_id', $admin_id);
 
                 $owner_id = is_object($owner) ? $owner->user_id : NULL;
+
+                ///$old_owner_id = WP_E_Sig()->meta->get($document_id, "auto_add_signature");
+                
+               /* if ($old_owner_id != $owner_id) {
+                    $owner_id = $old_owner_id;  
+                }*/
 
                 if (!$owner_id) {
                     return FALSE;
@@ -123,17 +143,18 @@ if (!class_exists('ESIG_AAMS_Admin')) :
                 if ($autoSave) {
                     $formData = ESIG_POST('formData');
                     parse_str($formData, $data);
-                    $auto_add_signature_change = esigget('auto_add_signature_change',$data);
-                   
+                    $auto_add_signature_change = esigget('auto_add_signature_change', $data);
                 } else {
                     $auto_add_signature_change = ESIG_POST('auto_add_signature_change');
                 }
-                
+
+
+
                 if ($api->signature->userHasSignedDocument($owner_id, $document_id) && !$auto_add_signature_change) {
                     return false;
                 }
 
-                
+
                 /* if ($auto_add_signature_change) {
                   $sig_data = $api->signature->getSignatureData($owner_id);
                   }
@@ -159,8 +180,11 @@ if (!class_exists('ESIG_AAMS_Admin')) :
                     $api->setting->set('esig-signature-type-sa-font' . $owner_id . $document_id, $sa_admin_font);
                 }
 
-                WP_E_Sig()->meta->add($document_id, "auto_add_signature", $owner_id);
-                WP_E_Sig()->meta->add($document_id, "auto_add_signature_id", $signature_id);
+                if (!empty($auto_add_signature_change)) {
+
+                    WP_E_Sig()->meta->add($document_id, "auto_add_signature", $owner_id);
+                    WP_E_Sig()->meta->add($document_id, "auto_add_signature_id", $signature_id);
+                }
             }
         }
 
@@ -230,7 +254,7 @@ if (!class_exists('ESIG_AAMS_Admin')) :
             }
 
             $owner_id = WP_E_Sig()->meta->get($document->document_id, 'auto_add_signature');
-
+           
             if (!$owner_id) {
                 // $api->user->getUserBy('wp_user_id', $owner_id);
                 $owner_id = $document->user_id;
@@ -257,6 +281,7 @@ if (!class_exists('ESIG_AAMS_Admin')) :
                     $output_type = '';
                     $font_type = '';
                 }
+
                 $owner_sig = ($signature_type == "typed") ? 'no' : 'yes';
                 $my_nonce = wp_create_nonce($owner->user_id . $document->document_checksum);
             } else {
@@ -324,6 +349,14 @@ if (!class_exists('ESIG_AAMS_Admin')) :
         }
 
     }
+
+    
+
+    
+
+    
+
+    
 
     
 

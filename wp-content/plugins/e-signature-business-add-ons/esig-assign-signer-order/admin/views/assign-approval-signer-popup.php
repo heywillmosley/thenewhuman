@@ -119,15 +119,15 @@
                     <div class="row">
                         <div class="col-sm-6 text-left"> <span id="esign-approval-signer-order" style="display: <?php echo $display; ?>;" >
 
-                                <div class="checkbox"> <input type="checkbox" id="esign_assign_approval_signer_order" name="esign_assign_approval_signer_order" value="1" <?php echo $signer_order_checked; ?> >
-                                    <label class="leftPadding-5"><?php _e('Assign signer order', 'esig'); ?></label></div>
+                                <div><label> <input type="checkbox" id="esign_assign_approval_signer_order" name="esign_assign_approval_signer_order" value="1" <?php echo $signer_order_checked; ?> >
+                                    <?php _e('Assign signer order', 'esig'); ?></label></div>
 
                             </span></div>
                         <div class="col-sm-6 text-right topMargin bottomMargin">
                             <div class="container-fluid">
                                 <div class="row">
-                                    <div class="col-sm-5"></div>
-                                    <div class="col-sm-7 text-center"><a href="#" id="add-approval-signer"><?php _e('+ Add Signer', 'esig'); ?></a></div>
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-8 text-left"><a href="#" id="add-approval-signer"><?php _e('+ Add Signer', 'esig'); ?></a></div>
                                 </div>
                             </div>
 

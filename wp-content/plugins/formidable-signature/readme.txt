@@ -1,4 +1,19 @@
+=== Formidable Signature ===
+Requires at least: 3.8
+Tested up to: 4.7.2
+Stable tag: 1.10
+
 == Changelog ==
+= 1.10 =
+* Show signature image with field ID shortcode in free version
+
+= 1.09 =
+* Prevent the signature field from being black if no background color is selected in the styling settings
+* Fix error when signature is empty
+* Make sure px doesn't break signature image size
+* Update use of frm_graph_value hook
+* Add translation template file
+
 = 1.08 =
 * Add compatibility with free version of Formidable
 * Get the plugin URL based on the plugin

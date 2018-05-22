@@ -93,11 +93,11 @@ if (!class_exists('ESIG_CUSTOM_MESSAGE')) :
         }
 
         public function saveCustomMessageText($docId, $value) {
-            WP_E_Sig()->meta->add($docId, self::CUSTOM_MESSAGE_TEXT, sanitize_text_field($value));
+            WP_E_Sig()->meta->add($docId, self::CUSTOM_MESSAGE_TEXT, esc_attr($value));
         }
 
         public function saveConfirmMessageText($docId, $value) {
-            WP_E_Sig()->meta->add($docId, self::CONFIRM_CUSTOM_MESSAGE_TEXT, sanitize_text_field($value));
+            WP_E_Sig()->meta->add($docId, self::CONFIRM_CUSTOM_MESSAGE_TEXT, esc_attr($value));
         }
 
         public function getCustomMessage($docId) {
@@ -111,13 +111,13 @@ if (!class_exists('ESIG_CUSTOM_MESSAGE')) :
         public function getCustomMessageText($docId) {
             $customMessageText = WP_E_Sig()->meta->get($docId, self::CUSTOM_MESSAGE_TEXT);
             if ($customMessageText) {
-                return $customMessageText;
+                return html_entity_decode($customMessageText);
             }
             return WP_E_Sig()->setting->get_generic(self::CUSTOM_MESSAGE_TEXT . $docId);
         }
 
         public function getComfirmMessageText($docId) {
-            return WP_E_Sig()->meta->get($docId, self::CONFIRM_CUSTOM_MESSAGE_TEXT);
+            return html_entity_decode(WP_E_Sig()->meta->get($docId, self::CONFIRM_CUSTOM_MESSAGE_TEXT));
         }
 
         public function esig_template_document_create($args) {

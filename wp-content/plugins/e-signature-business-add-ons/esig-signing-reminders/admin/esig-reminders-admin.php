@@ -55,14 +55,12 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
 
             //add_action('wp_ajax_nopriv_esig_reminders_settings', array($this, 'esig_reminders_settings'));
             add_action('esig_send_daily_reminders', array($this, 'esig_send_reminder_email')); //
-
             //add_action('init', array($this, 'esig_send_reminder_email')); //
             // permanently delete triger action. 
             add_action('esig_document_after_delete', array($this, "esig_delete_document_permanently"), 10, 1);
 
             // esig schedule event 
             add_action("wp", array($this, "esig_schedule_event"));
-           
         }
 
         public function esig_schedule_event() {
@@ -72,8 +70,8 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
 
             if (!wp_next_scheduled('esig_send_daily_reminders')) {
                 //Schedule the event for right now, then to repeat daily using the hook 'esig_send_daily_reminders'
-                wp_schedule_event(current_time( 'timestamp', true), 'daily', 'esig_send_daily_reminders');
-            } 
+                wp_schedule_event(current_time('timestamp', true), 'daily', 'esig_send_daily_reminders');
+            }
         }
 
         public function esig_delete_document_permanently($args) {
@@ -108,9 +106,6 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
             return round(abs($d1 - $d2) / 3600);
         }
 
-    
-
-
         /**
          * This is method esig_send_reminder_email
          *
@@ -125,9 +120,9 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
 
             $api = WP_E_Sig();
 
-            
+
             // get document list by status awaiting 
-            $docs = $api->document->fetchAllOnStatus('awaiting',true);
+            $docs = $api->document->fetchAllOnStatus('awaiting', true);
 
 
             // loops starts 
@@ -188,8 +183,6 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
                         }
                     }
                 }
-
-                
             }
 
 
@@ -531,9 +524,9 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
          */
         public function document_after_save($args) {
 
-            if (!isset($_POST['esig_reminders'])) {
+           /* if (!isset($_POST['esig_reminders'])) {
                 return;
-            }
+            }*/
             // settings an array reminder settings 
             $esig_reminders_settings = array(
                 "esig_reminder_for" => absint(esigpost('esig_reminder_for')),
@@ -542,7 +535,12 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
             );
 
             self::save_reminder_settings($args['document']->document_id, $esig_reminders_settings);
-            self::enable_reminder($args['document']->document_id);
+            $esigReminders = (esigpost('esig_reminders')) ? true : false;
+            if ($esigReminders) {
+                self::enable_reminder($args['document']->document_id);
+            } else {
+                self::disable_reminder($args['document']->document_id);
+            }
         }
 
         /**
@@ -665,17 +663,17 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
             $checked = apply_filters('esig-signer-reminder-checked-filter', '');
             $display_select = 'display:block;';
 
-            /*if (isset($_GET['esig_type']) && $_GET['esig_type'] == 'sad') {
-                return $more_contents;
-            }*/
+            /* if (isset($_GET['esig_type']) && $_GET['esig_type'] == 'sad') {
+              return $more_contents;
+              } */
 
             $document_id = isset($_GET['document_id']) ? $_GET['document_id'] : NULL;
 
-           /* $document_type = $api->document->getDocumenttype($document_id);
-            if ($document_type == "stand_alone") {
+            /* $document_type = $api->document->getDocumenttype($document_id);
+              if ($document_type == "stand_alone") {
 
-                return $more_contents;
-            }*/
+              return $more_contents;
+              } */
 
             //$doc_type = $api->document->getDocumenttype($document_id) ; 
             if (isset($_GET['temp_id']) || isset($_GET['document_id'])) {
@@ -735,6 +733,10 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
         }
 
     }
+
+    
+
+    
 
    
 

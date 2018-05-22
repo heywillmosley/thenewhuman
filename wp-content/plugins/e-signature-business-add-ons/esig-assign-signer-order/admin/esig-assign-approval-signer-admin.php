@@ -213,7 +213,7 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
                    $old_doc_id = $document_id; 
                 }
                 else {
-                $old_doc_id = $args['sad_doc_id'];
+                    $old_doc_id = esigget("sad_doc_id",$args); 
                 }
             }
 
