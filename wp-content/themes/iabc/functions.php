@@ -36,6 +36,7 @@ function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/client/' );
   $whitelist[] = site_url( '/about/' );
   $whitelist[] = site_url( '/help/' );
+  $whitelist[] = site_url( '/ux/' );
   return $whitelist;
 }
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
