@@ -26,10 +26,12 @@ class USIN_Gravity_Forms_Query{
 	public function apply_custom_query_filters($custom_query_data, $filter){
 		global $wpdb;
 		$ref = 'rgl_'.++$this->count;
+
+		$table_name = USIN_Gravity_Forms::get_entries_db_table_name();
 		
 		if($filter->by == 'has_completed_form' || $filter->by == 'has_not_completed_form'){
 			$custom_query_data['joins'] .= $wpdb->prepare(" LEFT JOIN ".
-				"(SELECT form_id, created_by FROM ".$wpdb->prefix."rg_lead WHERE form_id = %d GROUP BY created_by) AS $ref ON ".
+				"(SELECT form_id, created_by FROM $table_name WHERE form_id = %d GROUP BY created_by) AS $ref ON ".
 				"$wpdb->users.ID = $ref.created_by", $filter->condition);
 				
 			$operator = $filter->by == 'has_completed_form' ? 'IS NOT NULL' : 'IS NULL';

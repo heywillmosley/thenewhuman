@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Membership 2
  * Plugin URI:  https://wordpress.org/plugins/membership
- * Version:     4.1.2
- * Build Stamp: 2018-01-04T18:43:49.568Z
+ * Version:     4.1.5
+ * Build Stamp: 2018-05-24T15:06:45.857Z
  * Description: The most powerful, easy to use and flexible membership plugin for WordPress sites available.
  * Author:      WPMU DEV
  * Author URI:  http://premium.wpmudev.org/
@@ -69,7 +69,7 @@ function membership2_init_app() {
 	 *
 	 * @since  1.0.0
 	 */
-	define( 'MS_PLUGIN_VERSION', '4.1.2' );
+	define( 'MS_PLUGIN_VERSION', '4.1.5' );
 
 	/**
 	 * Free or pro plugin?
@@ -196,6 +196,17 @@ function membership2_init_app() {
 	MS_Auth::check_ms_ajax();
 	
 }
+
+
+if ( ! function_exists( 'is_plugin_active' ) ) {
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+}
+
+
+if ( is_plugin_active( 'membership-pro/membership2.php' ) ) {
+	return;
+}
+
 
 function membership2_init_old_app() {
 	require_once 'app_old/membership.php';

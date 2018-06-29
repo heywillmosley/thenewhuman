@@ -3,7 +3,7 @@
 - Plugin Name: Users Insights
 - Plugin URI: https://usersinsights.com/
 - Description: Everything about your WordPress users in one place
-- Version: 3.6.2
+- Version: 3.6.5
 - Author: Pexeto
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -35,8 +35,30 @@ Users Insights is distributed in the hope that it will be useful, but WITHOUT AN
 
 == Changelog ==
 
+3.6.5
+- Easy Digital Downloads reports: Support the Software Licensing 3.6 database structure changes
+
+3.6.4
+- Privacy Policy suggestions: Updated the suggested text when the Geolocation module is active to include more details about how the geolocation works, such as how the data is processed and stored
+- Removed the usage of the wp_doing_ajax() function on the reports page, to support older WordPress versions
+
+3.6.3
+- Implemented GDPR tools available when running WordPress 4.9.6 or newer:
+    - Tools to export the Users Insights data when using the WordPress 4.9.6 Personal Data Exporter
+    - Tools to remove the Users Insights data when using the WordPress 4.9.6 Personal Data Eraser
+    - Regsiters a Privacy module in Module Options where the settings can be configured
+    - Suggests texts to add to the WordPress Privacy Policy page
+    - More info: https://usersinsights.com/gdpr/
+- Moved the Last Seen and Sessions fields to a separate "Activity" module that can be deactivated if needed. This module will be inactive on new installations by default
+- Changed the way Geolocation and Device Info are detected, so it also works with the "Activity" module deactivated (it used to depend on the last seen date)
+- Make the user table ordered by Date Registered by default when the Activity module is inactive
+- Activity module: Increased the minimum time of inactivity required to one hour in order to consider a new user visit as a new session
+- Removed the functionality that copies the BuddyPress last login date to the Users Insights last seen field upon module activation
+- Fixed: Support the Gravity Forms 2.3 database table name changes
+- General code improvements
+
 3.6.2
-- Improved: implemented autoload for the plugin fields
+- Improved: implemented autoload for the plugin files
 - Improved: Ultimate Member - make fields available on the Users Insights table based on their privacy settings
 - Fixed: Ultimate Member - bug with filtering by an option field when the option has a trailing space
 - General code improvements and minor bug fixes

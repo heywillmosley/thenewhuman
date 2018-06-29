@@ -5,7 +5,7 @@ class MS_Gateway_Paypalstandard_View_Button extends MS_View {
 	public function to_html() {
 		$fields 		= $this->prepare_fields();
 		$subscription 	= $this->data['ms_relationship'];
-		$invoice 		= $subscription->get_current_invoice();
+		$invoice 		= $subscription->get_next_billable_invoice();
 		$gateway 		= $this->data['gateway'];
 
 		$action_url 	= apply_filters(
@@ -81,10 +81,9 @@ class MS_Gateway_Paypalstandard_View_Button extends MS_View {
 		}
 
 		$gateway 			= $this->data['gateway'];
-		$invoice 			= $subscription->get_current_invoice();
+		$invoice 			= $subscription->get_next_billable_invoice();
 		$regular_invoice 	= null;
 		$settings 			= MS_Factory::load( 'MS_Model_Settings' );
-
 		$nonce 				= wp_create_nonce( $gateway->id. '_' . $subscription->id );
 		$cancel_url 		= MS_Model_Pages::get_page_url( MS_Model_Pages::MS_PAGE_REGISTER );
 		$return_url 		= esc_url_raw(
@@ -380,7 +379,9 @@ class MS_Gateway_Paypalstandard_View_Button extends MS_View {
 		// Membership price
 		$membership_price 	= $once_duration ? $invoice->amount : $invoice->total;
 		$membership_price 	= MS_Helper_Billing::format_price( $membership_price );
-
+		if ( $membership_price <= 0 ) {
+			return;
+		}
 		$fields['a3'] 		= array(
 			'id' 	=> 'a3',
 			'type' 	=> MS_Helper_Html::INPUT_TYPE_HIDDEN,

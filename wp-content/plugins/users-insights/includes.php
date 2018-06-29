@@ -11,7 +11,7 @@ class USIN_Includes{
 		 	'filters', 'field-defaults', 'options', 'user', 'user-exported', 'segments'
 		),
 		'core/modules/' => array(
-			'license', 'module', 'remote-license', 'module-default-options', 'module-options', 
+			'license', 'module', 'remote-license', 'module-defaults', 'modules', 
 			'module-page', 'module-assets', 'module-ajax'
 		),
 		'core/reports/' => array(
@@ -26,6 +26,12 @@ class USIN_Includes{
 		),
 		'core/crm/custom-fields/' => array(
 			'custom-fields-page', 'custom-fields-assets', 'custom-fields-options', 'custom-fields-ajax', 'custom-fields'
+		),
+		'core/settings/' => array(
+			'settings-manager', 'settings-field', 'checkboxes-field'
+		),
+		'core/privacy/' => array(
+			'privacy', 'privacy-exporter', 'privacy-eraser'
 		),
 		'core/user-list/' => array('list-export', 'list-assets', 'list-ajax', 'list-page'),
 		'core/query/' => array('query', 'user-query', 'coordinates-query', 'meta-query', 'post-query'),

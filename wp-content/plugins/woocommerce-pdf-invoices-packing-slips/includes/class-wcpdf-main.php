@@ -38,8 +38,8 @@ class Main {
 			add_action( 'wpo_wcpdf_before_pdf', array($this, 'use_currency_font' ), 10, 2 );
 		}
 
-		// scheduled attachments cleanup - disabled for now
-		// add_action( 'wp_scheduled_delete', array( $this, 'attachments_cleanup') );
+		// scheduled attachments cleanup (following settings on Status tab)
+		add_action( 'wp_scheduled_delete', array( $this, 'attachments_cleanup') );
 	}
 
 	/**
@@ -233,6 +233,12 @@ class Main {
 	 */
 	public function get_tmp_path ( $type = '' ) {
 		$tmp_base = $this->get_tmp_base();
+
+		// don't continue if we don't have an upload dir
+		if ($tmp_base === false) {
+			return false;
+		}
+
 		// check if tmp folder exists => if not, initialize
 		if ( !@is_dir( $tmp_base ) ) {
 			$this->init_tmp( $tmp_base );
@@ -280,8 +286,18 @@ class Main {
 		// May also be overridden by the wpo_wcpdf_tmp_path filter
 
 		$upload_dir = wp_upload_dir();
-		$upload_base = trailingslashit( $upload_dir['basedir'] );
-		$tmp_base = trailingslashit( apply_filters( 'wpo_wcpdf_tmp_path', $upload_base . 'wpo_wcpdf/' ) );
+		if (!empty($upload_dir['error'])) {
+			$tmp_base = false;
+		} else {
+			$upload_base = trailingslashit( $upload_dir['basedir'] );
+			$tmp_base = $upload_base . 'wpo_wcpdf/';
+		}
+
+		$tmp_base = apply_filters( 'wpo_wcpdf_tmp_path', $tmp_base );
+		if ($tmp_base !== false) {
+			$tmp_base = trailingslashit( $tmp_base );
+		}
+
 		return $tmp_base;
 	}
 
@@ -465,12 +481,19 @@ class Main {
 	 * Remove attachments older than 1 week (daily, hooked into wp_scheduled_delete )
 	 */
 	public function attachments_cleanup() {
-		if ( !function_exists("glob") || !function_exists('filemtime')) {
-			// glob is disabled
+		if ( !function_exists("glob") || !function_exists('filemtime') ) {
+			// glob is required
 			return;
 		}
 
-		$delete_timestamp = time() - ( DAY_IN_SECONDS * 7 );
+		
+		if ( !isset( WPO_WCPDF()->settings->debug_settings['enable_cleanup'] ) ) {
+			return;
+		}
+
+
+		$cleanup_age_days = isset(WPO_WCPDF()->settings->debug_settings['cleanup_days']) ? floatval(WPO_WCPDF()->settings->debug_settings['cleanup_days']) : 7.0;
+		$delete_timestamp = time() - ( intval ( DAY_IN_SECONDS * $cleanup_age_days ) );
 
 		$tmp_path = $this->get_tmp_path('attachments');
 
@@ -484,7 +507,6 @@ class Main {
 				}
 			}
 		}
-
 	}
 
 	/**

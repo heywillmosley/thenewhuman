@@ -1,11 +1,11 @@
 <?php
 /**
  * The Net component.
- * Access via function `lib3()->net`.
+ * Access via function `mslib3()->net`.
  *
  * @since  2.0.0
  */
-class TheLib_Net extends TheLib {
+class MsTheLib_Net extends MsTheLib {
 
 	/**
 	 * Returns the current URL.
@@ -54,7 +54,7 @@ class TheLib_Net extends TheLib {
 			}
 
 			if ( ( ! $is_ssl && '80' != $_SERVER['SERVER_PORT'] ) ||
-				( $is_ssl && '443' != $_SERVER['SERVER_PORT'] )
+				( $is_ssl && !in_array( $_SERVER['SERVER_PORT'], array( '80', '443' ) ) )
 			) {
 				$cur_url .= ':' . $_SERVER['SERVER_PORT'];
 			}

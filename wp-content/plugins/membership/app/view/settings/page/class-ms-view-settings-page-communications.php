@@ -88,10 +88,11 @@ class MS_View_Settings_Page_Communications extends MS_View_Settings_Edit {
 
 			MS_Helper_Html::html_element( $fields['subject'] );
 			MS_Helper_Html::html_element( $fields['email_body'] );
-
-			MS_Helper_Html::html_element( $fields['cc_enabled'] );
-			echo ' &nbsp; ';
-			MS_Helper_Html::html_element( $fields['cc_email'] );
+			if ( $comm->show_admin_cc ) {
+				MS_Helper_Html::html_element( $fields['cc_enabled'] );
+				echo ' &nbsp; ';
+				MS_Helper_Html::html_element( $fields['cc_email'] );
+			}
 			MS_Helper_Html::html_separator();
 			MS_Helper_Html::html_element( $fields['save_email'] );
 			?>
@@ -109,7 +110,7 @@ class MS_View_Settings_Page_Communications extends MS_View_Settings_Edit {
 	public function wp_footer() {
 		$comm = $this->data['comm'];
 		$vars = $comm->comm_vars;
-		$vars = lib3()->array->get( $vars );
+		$vars = mslib3()->array->get( $vars );
 
 		/**
 		 * Print JS details for the custom TinyMCE "Insert Variable" button
@@ -152,18 +153,18 @@ class MS_View_Settings_Page_Communications extends MS_View_Settings_Edit {
 			}
 		}
 
-                if ( version_compare( PHP_VERSION, '5.3' ) >= 0 ) {
-                    lib3()->array->equip(
-                            $comm,
-                            'type',
-                            'enabled',
-                            'period',
-                            'subject',
-                            'description',
-                            'cc_enabled',
-                            'cc_email'
-                    );
-                }
+		if ( version_compare( PHP_VERSION, '5.3' ) >= 0 ) {
+			mslib3()->array->equip(
+					$comm,
+					'type',
+					'enabled',
+					'period',
+					'subject',
+					'description',
+					'cc_enabled',
+					'cc_email'
+			);
+		}
 
 		$action = MS_Controller_Communication::AJAX_ACTION_UPDATE_COMM;
 		$nonce = wp_create_nonce( $action );

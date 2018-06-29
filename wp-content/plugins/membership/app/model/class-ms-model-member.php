@@ -307,7 +307,7 @@ class MS_Model_Member extends MS_Model {
 	public static function get_members_count( $args = null ) {
 		
 		$total 		= 0;
-		$cache_key 	= MS_Helper_Cache::generate_cache_key( 'ms_model_members_total', $args );
+		$cache_key 	= MS_Helper_Cache::generate_cache_key( 'ms_model_members_total_' . $args['subscription_status'], $args );
 		$results 	= MS_Helper_Cache::get_transient( $cache_key );
 		if ( $results ) {
 			$total = $results;
@@ -488,11 +488,11 @@ class MS_Model_Member extends MS_Model {
 			)
 		);
 
-		$args = lib3()->array->get( $args );
-		lib3()->array->equip( $args, 'meta_query', 'membership_id', 'subscription_status' );
+		$args = mslib3()->array->get( $args );
+		mslib3()->array->equip( $args, 'meta_query', 'membership_id', 'subscription_status' );
 
 		if ( 'none' !== $args['meta_query'] ) {
-			$args['meta_query'] = lib3()->array->get( $args['meta_query'] );
+			$args['meta_query'] = mslib3()->array->get( $args['meta_query'] );
 
 			switch ( $search_option ) {
 				case self::SEARCH_ONLY_MEMBERS:
@@ -820,6 +820,13 @@ class MS_Model_Member extends MS_Model {
 		if ( ! empty ($users ) ) {
 			foreach ( $users as $user ) {
 				$admins[ $user->user_email ] = $user->user_email;
+			}
+		}
+
+		$site_email = get_bloginfo( 'admin_email' );
+		if ( $site_email ) {
+			if ( !isset( $admins[ $site_email ] ) ) {
+				$admins[ $site_email ] = $site_email;
 			}
 		}
 
@@ -1944,6 +1951,82 @@ class MS_Model_Member extends MS_Model {
 			'key' => $key,
 			'url' => $reset_url,
 		);
+	}
+
+	/**
+	 * Generate the account verification url
+	 * 
+	 * @since 1.0.0
+	 */
+	public function account_verification_key() {
+		global $wpdb, $wp_hasher;
+
+		// Generate something random for a password reset key.
+		$key = wp_generate_password( 20, false );
+
+		do_action( 'ms_account_verification_key', $this->username, $key );
+
+		update_user_meta( $this->id, '_ms_user_activation_key', $key ); 
+		update_user_meta( $this->id, '_ms_user_activation_status', 0 );
+
+		MS_Model_Pages::create_missing_pages();
+		$verify_url = MS_Model_Pages::get_page_url( MS_Model_Pages::MS_PAGE_ACCOUNT );
+		$verify_url = esc_url_raw(
+			add_query_arg(
+				array(
+					'action' 	=> MS_Controller_Frontend::ACTION_VIEW_ACTIVATEACCOUNT,
+					'key' 		=> $key
+				),
+				$verify_url
+			)
+		);
+
+		return (object) array(
+			'key' => $key,
+			'url' => $verify_url,
+		);
+	}
+
+	/**
+	 * Verify activation code
+	 * 
+	 * @since 1.1.5
+	 * 
+	 * @param string $code - the verifiication code
+	 * 
+	 * @return string
+	 */
+	public static function verification_account_id( $code ) {
+		global $wpdb;
+		$user_id = $wpdb->get_var( $wpdb->prepare( "SELECT user_id FROM {$wpdb->usermeta} WHERE meta_value = %s AND meta_key = %s", $code, '_ms_user_activation_key' ) );
+		if ( $user_id ) {
+			return $user_id;
+		}
+		return false;
+	}
+
+	/**
+	 * Verify activation code
+	 * 
+	 * @since 1.1.3
+	 * 
+	 * @param int $id - the user id
+	 * 
+	 * @return string
+	 */
+	public static function verify_activation_code( $user_id ) {
+		if ( $user_id ) {
+			$user_activation_status = get_user_meta( $user_id, '_ms_user_activation_status', true );
+			if ( $user_activation_status != 1 ) {
+				update_user_meta( $user_id, '_ms_user_activation_status', 1 );
+				return __( 'Account verified. Proceed to login', 'membership' );
+			} else {
+				return __( 'Account already verified', 'membership' );
+			}
+			
+		} else {
+			return __( 'Invalid code. Please check your email or try again', 'membership' );
+		}
 	}
 
 	/**

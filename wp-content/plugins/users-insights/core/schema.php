@@ -55,6 +55,8 @@ class USIN_Schema{
 	}
 
 	protected function update_version(){
+		$installed_version = get_option($this->option_key);
+		do_action('usin_version_update', $this->version, $installed_version);
 		update_option($this->option_key, $this->version);
 	}
 

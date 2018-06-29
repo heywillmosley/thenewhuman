@@ -389,12 +389,12 @@ class MS_Factory {
 				$model->id 			= $wp_user->ID;
 				$model->username 	= $wp_user->user_login;
 				$model->email 		= $wp_user->user_email;
-				$model->name 		= $wp_user->display_name;
+				$model->name 		= trim( $wp_user->display_name );
 				$model->first_name 	= $wp_user->first_name;
 				$model->last_name 	= $wp_user->last_name;
 				$model->wp_user 	= $wp_user;
 
-				if ( ! $model->name ) {
+				if ( ! $model->name || empty( $model->name ) ) {
 					if ( $model->first_name ) {
 						$model->name = $model->first_name . ' ' . $model->last_name;
 					} else {
@@ -417,6 +417,8 @@ class MS_Factory {
 					$wp_user
 				);
 
+				self::populate_model( $model, $member_details, 'ms_' );
+
 				// Remove automatic populated values from metadata, if present.
 				unset( $member_details['ms_username'] );
 				unset( $member_details['ms_email'] );
@@ -424,15 +426,13 @@ class MS_Factory {
 				unset( $member_details['ms_first_name'] );
 				unset( $member_details['ms_last_name'] );
 
-				self::populate_model( $model, $member_details, 'ms_' );
-
 				// Load membership_relationships
 				$model->subscriptions = MS_Model_Relationship::get_subscriptions(
 					array( 'user_id' => $model->id )
 				);
 			}
 		}
-
+		
 		return apply_filters(
 			'ms_factory_load_from_wp_user',
 			$model,

@@ -11,6 +11,16 @@
 .odb-title-bar h2 {
 	color: #FFF;
 }
+.odb-subheader-container {
+	width: 96%;
+}
+.odb-subheader-left {
+	float: left;
+}
+.odb-subheader-right {
+	float: right;
+	margin-top: 20px;
+}
 .odb-bold {
 	font-weight: 900;
 }

@@ -163,6 +163,9 @@ class MS_View_Shortcode_RegisterUser extends MS_View {
 	public function prepare_fields() {
 		$data = $this->data;
 
+		$privacy_link = get_option( 'wp_page_for_privacy_policy', 0 );
+		$privacy_link = esc_url( get_permalink( $privacy_link ) );
+
 		$fields = array(
 			'membership_id' => array(
 				'id' => 'membership_id',
@@ -229,6 +232,13 @@ class MS_View_Shortcode_RegisterUser extends MS_View {
 				'type' => MS_Helper_Html::INPUT_TYPE_HIDDEN,
 				'value' => $data['step'],
 			),
+
+			'privacy_check' => array(
+				'id' 	=> 'privacy_check',
+				'title' => sprintf( __( 'By creating an account you agree to the sites %sPrivacy and Policy%s'), '<a href="'.$privacy_link.'" target="_blank">', '</a>' ),
+				'type' 	=> MS_Helper_Html::INPUT_TYPE_CHECKBOX,
+				'value' => 'privacy',
+			),
 		);
 
 		return apply_filters(
@@ -262,6 +272,10 @@ class MS_View_Shortcode_RegisterUser extends MS_View {
 				'required' => true,
 				'equalTo' => '.ms-form-element #password',
 			),
+			'privacy_check' => array(
+				'required' => true,
+				'equalTo' => '.ms-form-element #privacy_check',
+			),
 		);
 
 		/**
@@ -293,8 +307,8 @@ class MS_View_Shortcode_RegisterUser extends MS_View {
 		
 		<?php
 		$script = ob_get_clean();
-		lib3()->ui->js( 'jquery-validate' );
-		lib3()->ui->script( $script );
+		mslib3()->ui->js( 'jquery-validate' );
+		mslib3()->ui->script( $script );
 	}
 
 	/**

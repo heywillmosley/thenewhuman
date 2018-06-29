@@ -1,7 +1,7 @@
 /*!
  * https://github.com/select2/select2/blob/master/dist/css/select2.css
  *
- * Select2 4.0.0
+ * Select2 4.0.3
  * https://select2.github.io
  *
  * Released under the MIT license
@@ -31,6 +31,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.select2-container .select2-selection--single .select2-selection__clear {
+  position: relative;
 }
 
 .select2-container[dir="rtl"] .select2-selection--single .select2-selection__rendered {
@@ -247,6 +251,10 @@
   width: 100%;
 }
 
+.select2-container--default .select2-selection--multiple .select2-selection__rendered li {
+  list-style: none;
+}
+
 .select2-container--default .select2-selection--multiple .select2-selection__placeholder {
   color: #999;
   margin-top: 5px;
@@ -331,6 +339,7 @@
   border: none;
   outline: 0;
   box-shadow: none;
+  -webkit-appearance: textfield;
 }
 
 .select2-container--default .select2-results > .select2-results__options {

@@ -81,6 +81,15 @@ var usinHelpers = {
 		_key : function(key){
 			return "_usin"+key;
 		}
+	},
+
+	ngTheme : {
+		config : function($mdThemingProvider){
+			$mdThemingProvider.theme('usin')
+				.primaryPalette('teal')
+				.accentPalette('blue-grey');
+			$mdThemingProvider.setDefaultTheme('usin');
+		}
 	}
 };
 

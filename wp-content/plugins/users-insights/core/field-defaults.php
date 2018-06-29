@@ -140,7 +140,8 @@ class USIN_Field_Defaults{
 				'filter' => array(
 					'type' => 'date',
 					'yearsRange' => array(-10, 0)
-				)
+				),
+				'module'=>'activity'
 			),
 			array(
 				'name' => __('Sessions', 'usin'),
@@ -150,7 +151,8 @@ class USIN_Field_Defaults{
 				'fieldType' => 'general',
 				'filter' => array(
 					'type' => 'number'
-				)
+				),
+				'module'=>'activity'
 			),
 			array(
 				'name' => __('Browser', 'usin'),

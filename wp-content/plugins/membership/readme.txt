@@ -2,8 +2,8 @@
 Contributors: WPMUDEV
 Tags: Content Protection, Control Access, Membership, Membership 2, Multisite Membership, Paid Membership, Pay Wall, Paying Users, Registration, Restrict Content, Subscription, WordPress Membership, WPMU DEV
 Requires at least: 3.7
-Tested up to: 4.9.1
-Stable tag: 4.1.2
+Tested up to: 4.9.6
+Stable tag: 4.1.5
 
 Membership 2 transforms your WordPress website into a fully functional membership site.
 
@@ -109,6 +109,37 @@ We provide comprehensive and guaranteed support on the <a href='http://premium.w
 11. Convince your users with a modern, clean and professional checkout form
 
 == Changelog ==
+
+= 4.1.5 =
+* Added: New filter ms_controller_frontend_resources_load to disable membership front scripts from loading on all pages
+* Added: Bulk action on users list to resend verification email
+* Added: Privacy Policy registration checkbox confirmation
+* Added: Member GDPR tools
+* Improved: Membership front scripts load on all pages
+* Fix: Subscription Email for free membership
+* Fix: Draft invoice created on PayPal on first payments
+* Fix: After account verification, show the payment page
+* Fix: Old members show account status as active
+* Fix: Email sending for free membership
+
+= 4.1.3 =
+* Added: ms_auth_ajax_login_can_login filter to select usernames allowed to login
+* Added: When normal user is made to admin user , subscriptions are removed
+* Added: Account approval setting and email template
+* Added: Account approval user management
+* Improved: Check if membership is free on trial periods
+* Improved: Unique nonce field names for login and registration forms
+* Improved: Cache enabled by default on media protection
+* Improved: More filters
+* Fixed: Login page script loading
+* Fixed: Login page login_footer action to load in wp_footer
+* Fixed: Protection rule for All BuddyPress Pages is not protecting pages like activity, groups, members.
+* Fixed: Duplicate memberships when subscribed to a previous membership
+* Fixed: Category protection should not check for pages
+* Fixed: Category protection of post when individual post protection addon is enabled
+* Fixed: More tag protection when multi-membership add-on is active
+* Fixed: Bulk user import first and last name
+* Fixed: Minor UI fixes
 
 = 4.1.2 =
 * Added: Membership List Export to CSV

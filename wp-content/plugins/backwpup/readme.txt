@@ -1,16 +1,18 @@
 === BackWPup - WordPress Backup Plugin ===
 Contributors: inpsyde, cocreation, danielhuesken, Bueltge, nullbyte
-Tags: Amazon, Amazon S3, back up, backup, chinese, cloud, cloud files, database, db backup, dropbox, dump, file, french, ftp, ftps, german, migrate, multisite, russian, schedule, sftp, storage, S3, time, upload, xml
+Tags: backup, restore, back up, Amazon, Amazon S3, chinese, cloud, cloud files, database, db backup, dropbox, dump, file, french, ftp, ftps, german, migrate, multisite, russian, schedule, sftp, storage, S3, time, upload, xml
 Requires at least: 3.9
-Tested up to: 4.9.5
+Tested up to: 4.9.6
 Requires PHP: 5.3
-Stable tag: 3.4.5
+Stable tag: 3.6.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Schedule complete automatic backups of your WordPress installation. Decide which content will be stored (Dropbox, S3…). This is the free version
 
 == Description ==
+
+SALE NOW - GET 20% OFF - ONLY VALID UNTIL JUNE 22. CELEBRATE WITH US THE BRAND NEW ENCRYPTION FEATURE! [GO PRO](https://backwpup.com)
 
 The **backup plugin** **[BackWPup](https://backwpup.com/)** can be used to save your complete installation including /wp-content/ and push them to an external Backup Service, like **Dropbox**, **S3**, **FTP** and many more, see list below. With a single backup .zip file you are able to easily restore an installation. Please understand: this free version will not be supported as good as the [BackWPup Pro version](https://backwpup.com). With our premium version you get first class support and more features.
 
@@ -34,6 +36,10 @@ The **backup plugin** **[BackWPup](https://backwpup.com/)** can be used to save 
 * Send logs and backups by email
 * Multi-site support only as network admin
 * Pro version and support available - [BackWPup Pro](https://backwpup.com)
+* NEW - PRO: Restore your backups with only a few clicks from your WordPress backend. Also available as Standalone App.
+* NEW - PRO: Encrypt backup archives and restore from encrypted backups.
+
+In case you need to comply with the new GDPR regulation, check out our post [BacKWPup, Backups and GDPR](https://backwpup.com/docs/backwpup-backups-and-gdpr/).
 
 = Requirements =
 * WordPress 3.9 and PHP 5.3 required! (read more about [recommended php version and why you should switch to modern php](https://inpsyde.com/en/wordpress-recommended-php-version-update-php))
@@ -158,6 +164,33 @@ Yes. You need to have writing access to the wp-config.php file (usually residing
 [You can find a detailed tutorial in the BackWPup documentation.](http://docs.backwpup.com/article/118-install-backwpup)
 
 == Changelog ==
+= Version 3.6.0 =
+Release Date: June 14, 2018
+
+* Added: Pro Feature - Encrypt before sending backups to the cloud
+* Fixed: Handling of special Amazon S3 regions such as Google Storage
+* Fixed: Downloading of large files encountered PHP memory error
+* Improved: Delete pro-only scss files in free version
+* Fixed: Version constraints of composer dependencies
+* Fixed: Localized strings from restore
+* Fixed: Deleting FTP backup resulted in error
+* Fixed: openssl_encrypt compatibility with PHP 5.3
+
+= Version 3.5.1 =
+Release Date: May 23, 2018
+
+* Fixed: call to a member function close() on null
+* Fixed: Cannot use object of type WP_Error as array
+* Fixed: Can't use function return value in write context
+* Fixed: Compatibility with PHP 5.3
+* Fixed: Decreased size of plugin by purging unneeded files
+
+= Version 3.5.0 =
+Release Date: May 16, 2018
+
+* Added: Restore for pro version
+* Fixed: stylesheet was being included on frontend
+
 = Version 3.4.5 =
 * Added: Support for PclZip.
 * Fixed: Disable use of mysqldump if it is not available.

@@ -108,17 +108,21 @@ function fvm_get_generalinfo() {
 ### Function: Format Bytes Into TiB/GiB/MiB/KiB/Bytes
 if(!function_exists('fvm_format_filesize')) {
     function fvm_format_filesize($rawSize) {
-        if($rawSize / 1099511627776 > 1) {
-            return number_format_i18n($rawSize/1099511627776, 1).' '.__('TiB', 'fvm-serverinfo');
-        } elseif($rawSize / 1073741824 > 1) {
-            return number_format_i18n($rawSize/1073741824, 1).' '.__('GiB', 'fvm-serverinfo');
-        } elseif($rawSize / 1048576 > 1) {
-            return number_format_i18n($rawSize/1048576, 1).' '.__('MiB', 'fvm-serverinfo');
-        } elseif($rawSize / 1024 > 1) {
-            return number_format_i18n($rawSize/1024, 1).' '.__('KiB', 'fvm-serverinfo');
-        } elseif($rawSize > 1) {
-            return number_format_i18n($rawSize, 0).' '.__('bytes', 'fvm-serverinfo');
-        } else {
+		if(is_numeric($rawSize)) {
+			if($rawSize / 1099511627776 > 1) {
+				return number_format_i18n($rawSize/1099511627776, 1).' '.__('TiB', 'fvm-serverinfo');
+			} elseif($rawSize / 1073741824 > 1) {
+				return number_format_i18n($rawSize/1073741824, 1).' '.__('GiB', 'fvm-serverinfo');
+			} elseif($rawSize / 1048576 > 1) {
+				return number_format_i18n($rawSize/1048576, 1).' '.__('MiB', 'fvm-serverinfo');
+			} elseif($rawSize / 1024 > 1) {
+				return number_format_i18n($rawSize/1024, 1).' '.__('KiB', 'fvm-serverinfo');
+			} elseif($rawSize > 1) {
+				return number_format_i18n($rawSize, 0).' '.__('bytes', 'fvm-serverinfo');
+			} else {
+				return __('unknown', 'fvm-serverinfo');
+			}
+		} else {
             return __('unknown', 'fvm-serverinfo');
         }
     }
@@ -232,7 +236,7 @@ if(!function_exists('fvm_get_mysql_data_usage')) {
         $data_usage = '';
         $tablesstatus = $wpdb->get_results("SHOW TABLE STATUS");
         foreach($tablesstatus as  $tablestatus) {
-            $data_usage += $tablestatus->Data_length;
+			if(is_numeric($tablestatus->Data_length)) { $data_usage += $tablestatus->Data_length; } else { $data_usage += 0; }
         }
         if (!$data_usage) {
             $data_usage = __('N/A', 'fvm-serverinfo');
@@ -249,7 +253,7 @@ if(!function_exists('fvm_get_mysql_index_usage')) {
         $index_usage = '';
         $tablesstatus = $wpdb->get_results("SHOW TABLE STATUS");
         foreach($tablesstatus as  $tablestatus) {
-            $index_usage +=  $tablestatus->Index_length;
+            if(is_numeric($tablestatus->Index_length)) { $index_usage +=  $tablestatus->Index_length; } else { $index_usage += 0; }
         }
         if (!$index_usage){
             $index_usage = __('N/A', 'fvm-serverinfo');
@@ -324,8 +328,12 @@ if(!function_exists('fvm_get_serverload')) {
 			} else {
                 $data = @system('uptime');
                 preg_match('/(.*):{1}(.*)/', $data, $matches);
-                $load_arr = explode(',', $matches[2]);
-                $server_load = trim($load_arr[0]);
+				if(isset($matches[2])) {
+					$load_arr = explode(',', $matches[2]);
+					$server_load = trim($load_arr[0]);
+				} else {
+					$server_load = __('N/A', 'fvm-serverinfo');
+				}
             }
         }
         if(empty($server_load)) {

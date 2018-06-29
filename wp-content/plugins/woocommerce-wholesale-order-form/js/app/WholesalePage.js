@@ -10,10 +10,10 @@ jQuery( document ).ready( function( $ ) {
         $bottomListActions              = $( ".bottom_list_actions" ),
         // Shortcode Atts
         $shortcodeAtts                  = {
-                                            'categories' : $wwofProductListingContainer.attr( 'data-categories' ),
-                                            'products'   : $wwofProductListingContainer.attr( 'data-products' )
+                                                'categories' : $wwofProductListingContainer.attr( 'data-categories' ),
+                                                'products'   : $wwofProductListingContainer.attr( 'data-products' )
                                         },
-        productData = [],
+        productData                     = [],
         fancyboxIsOpen                  = false;
 
 
@@ -161,6 +161,13 @@ jQuery( document ).ready( function( $ ) {
                 } );
 
             }
+
+            $wwofProductListingContainer.find( '#wwof_product_listing_table tbody tr' ).each( function() {
+                
+                if( $( this ).find( '.product_price_col' ).find( '.product-addons-total' ).length > 0 )
+                    $( this ).wwof_init_addon_totals();
+
+            });
 
             $( window ).scroll();
 
@@ -324,7 +331,8 @@ jQuery( document ).ready( function( $ ) {
             $popup_wrap  = $this.closest( '.wwof-popup-product-summary' );
 
         // Get the available variations on this product
-        var available_variations_json = $this.closest( 'tr' ).find( '.product_meta_col' ).data('product_variations');
+        var available_variations_json = $this.closest( 'tr' ).find( '.product_meta_col' ).data( 'product_variations' );
+
         if ( !available_variations_json )
             return;
 
@@ -352,7 +360,15 @@ jQuery( document ).ready( function( $ ) {
         // Set new data
         if ( new_variation ) {
 
-            product_price_col.html( new_variation.price_html );
+            if( $this.closest( 'tr' ).find( '.product_price_col' ).find( '.product-addons-total' ).length > 0 ) {
+
+                product_price_col.find( '.price' ).remove();
+                product_price_col.html( new_variation.price_html + product_price_col.html() );
+                $this.closest( 'tr' ).trigger( 'found_variation', [ new_variation ] );
+
+            } else product_price_col.html( new_variation.price_html );
+
+
             product_sku_col.html( new_variation.sku );
 
             var availability_html = new_variation.availability_html ? new_variation.availability_html : '',
@@ -370,6 +386,9 @@ jQuery( document ).ready( function( $ ) {
 
             // Set step on qty input
             qty_field.prop( 'step', new_variation.step ? parseInt(new_variation.step) : '' );
+
+            // For product addons compatibility. WWOF-305
+            $this.trigger( 'wwof-product-addons-update' );
 
         } else {
             console.log( 'Could not retrieve variation data. Please contact support.' );
@@ -966,8 +985,12 @@ jQuery( document ).ready( function( $ ) {
                         }
                     },
                     afterShow   :   function() {
+
                         $( 'body table.dummy-table' ).find( '.product_meta_col' ).attr( 'data-product_variations' , productData );
                         $( 'body .wwof-popup-product-summary .product_variations' ).trigger( 'change' );
+
+                        if( $( 'body table.dummy-table tr .product_price_col' ).find( '.product-addons-total' ).length > 0 )
+                            $( 'body table.dummy-table tr' ).wwof_init_addon_totals();
 
                         if ( productData ) {
                             productData = JSON.parse( productData );

@@ -10,11 +10,6 @@ class USIN_BuddyPress extends USIN_Plugin_Module{
 	protected $plugin_path = 'buddypress/bp-loader.php';
 	public $xprofile;
 	
-
-	protected function apply_module_actions(){
-		add_action('usin_module_activated', array($this, 'do_on_module_activated'));
-	}
-
 	public function init(){
 		$this->xprofile = new USIN_BuddyPress_XProfile();
 		
@@ -29,12 +24,6 @@ class USIN_BuddyPress extends USIN_Plugin_Module{
 
 	protected function init_reports(){
 		new USIN_BuddyPress_Reports($this);
-	}
-
-	public function do_on_module_activated($module){
-		if($module == $this->module_name){
-			$this->save_last_seen();
-		}
 	}
 
 	public static function is_bp_feature_active($feature){
@@ -142,38 +131,6 @@ class USIN_BuddyPress extends USIN_Plugin_Module{
 
 
 		return $fields;
-	}
-	
-
-	/**
-	 * Loads the already saved "last activity" from buddy press and saves it into
-	 * the "Last seen" field of the user
-	 */
-	protected function save_last_seen(){
-		global $wpdb, $usin;
-
-		$umeta_res = $wpdb->get_results("SELECT * FROM $wpdb->usermeta WHERE meta_key = 'last_activity'");
-		
-		//get the users that already have a last seen saved
-		//so that the "last activity" value is not saved for them
-		$users_last_seen_ids = array();
-		$users_last_seen = USIN_User_Data::get_users('last_seen IS NOT NULL');
-		if(!empty($users_last_seen) && isset($users_last_seen[0]->user_id)){
-			$users_last_seen_ids = wp_list_pluck($users_last_seen, 'user_id');
-		}
-
-
-		if(!empty($umeta_res)){
-			foreach ($umeta_res as $umeta) {
-				if(!in_array($umeta->user_id, $users_last_seen_ids)){
-					//there is no last seen date saved for this user, save the value
-					//from "last activity"
-					$user_data = new USIN_User_Data($umeta->user_id);
-					$user_data->save('last_seen', $umeta->meta_value);
-				}
-			}
-		}
-
 	}
 	
 	public function filter_user_data($data){

@@ -16,7 +16,7 @@ Fonts
 
 <div id="wrapper">
 	<!-- Navigation -->
-	<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+	<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; background-color:#29282f;">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 				<span class="sr-only">Toggle navigation</span>
@@ -25,7 +25,7 @@ Fonts
 				<span class="icon-bar"></span>
 			</button>
 			<a class="sidebar-toggle hidden-xs" href="javascript:void(0);"><i class="fa fa-bars fa-2x"></i></a>
-			<a class="navbar-brand coming-soon-admin-title" href="index.html"><?php _e('Admin Custom Login', WEBLIZAR_ACL)?></a>
+			<a class="navbar-brand coming-soon-admin-title" href="index.html" style="color:#fff;"><?php _e('Admin Custom Login', WEBLIZAR_ACL)?></a>
 		</div>
 
 		<!-- /.navbar-header -->
@@ -80,7 +80,7 @@ Fonts
 						<a  class="active" href="#"  id="ui-id-1">
 							<span class="sidebar-item-icon fa-stack">
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
-								<i class="fa fa-dashboard fa-stack-1x fa-inverse"></i>
+								<i class="fas fa-tachometer-alt fa-stack-1x fa-inverse"></i>
 							</span>
 							<span class="sidebar-item-title"><?php _e('Dashboard', WEBLIZAR_ACL)?></span>
 							<span class="sidebar-item-subtitle"><?php _e('Application overview', WEBLIZAR_ACL)?></span>
@@ -112,7 +112,7 @@ Fonts
 						<a  href="#Text-And-Colour"  id="ui-id-7">
 							<span class="sidebar-item-icon fa-stack">
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
-								<i class="fa fa-dashboard fa-stack-1x fa-inverse"></i>
+								<i class="fas fa-font fa-stack-1x fa-inverse"></i>
 							</span>
 							<span class="sidebar-item-title"><?php _e('Font Setting', WEBLIZAR_ACL)?></span>
 							<span class="sidebar-item-subtitle"><?php _e('Modify Login Form Style here', WEBLIZAR_ACL)?></span>
@@ -139,6 +139,17 @@ Fonts
 							</span>
 							<span class="sidebar-item-title"><?php _e('Social Settings', WEBLIZAR_ACL)?></span>
 							<span class="sidebar-item-subtitle"><?php _e('Connect with your social profile', WEBLIZAR_ACL)?></span>
+						</a>
+					</li>
+
+					<li>
+						<a href="#"  id="ui-id-13">
+							<span class="sidebar-item-icon fa-stack">
+								<i class="fa fa-square fa-stack-2x text-primary"></i>
+								<i class="fab fa-google fa-stack-1x fa-inverse"></i>
+							</span>
+							<span class="sidebar-item-title"><?php _e('Google Captcha', WEBLIZAR_ACL)?></span> 
+							<span class="sidebar-item-subtitle"><?php _e('Explore captcha', WEBLIZAR_ACL)?></span>
 						</a>
 					</li>
 					
@@ -173,6 +184,16 @@ Fonts
 						</a>
 					</li>
 					<li>
+						<a href="#"  id="ui-id-18">
+							<span class="sidebar-item-icon fa-stack">
+								<i class="fa fa-square fa-stack-2x text-primary"></i>
+								<i class="fab fa-angellist fa-stack-1x fa-inverse"></i>
+							</span>
+							<span class="sidebar-item-title"><?php _e('Our Offers', WEBLIZAR_ACL)?></span> 
+							<span class="sidebar-item-subtitle"><?php _e('', WEBLIZAR_ACL)?></span>
+						</a>
+					</li>
+					<li>
 						<a href="#"  id="ui-id-10">
 							<span class="sidebar-item-icon fa-stack">
 								<i class="fa fa-square fa-stack-2x text-primary"></i>
@@ -182,7 +203,6 @@ Fonts
 							<span class="sidebar-item-subtitle"><?php _e('If you like us', WEBLIZAR_ACL)?></span>
 						</a>
 					</li>
-					
 				</ul>
 			</div>
 			<!-- /.sidebar-collapse -->
@@ -217,8 +237,14 @@ Fonts
 	<div class="page-wrapper ui-tabs-panel deactive" id="option-ui-id-10">
 	  <?php require_once('help/rate.php'); ?>
 	</div>
+	<div class="page-wrapper ui-tabs-panel deactive" id="option-ui-id-13">
+	  <?php require_once('googlecaptcha-settings/gcaptcha-settings.php'); ?>
+	</div>
 	<div class="page-wrapper ui-tabs-panel deactive" id="option-ui-id-12">
 	  <?php require_once('recommendations/recommendations.php'); ?>
+	</div>
+	<div class="page-wrapper ui-tabs-panel deactive" id="option-ui-id-18">
+	  <?php require_once('offers.php'); ?>
 	</div>
 </div>
 <!-- /#wrapper -->

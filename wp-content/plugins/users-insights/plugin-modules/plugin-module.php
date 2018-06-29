@@ -72,7 +72,7 @@ abstract class USIN_Plugin_Module{
 	}
 	
 	protected function is_module_active(){
-		return usin_module_options()->is_module_active($this->module_name);
+		return usin_modules()->is_module_active($this->module_name);
 	}
 	
 }

@@ -41,7 +41,7 @@ class WJECF_AutoCoupon extends Abstract_WJECF_Plugin {
         //Inhibit redirect to cart when apply_coupon supplied
         add_filter('option_woocommerce_cart_redirect_after_add', array ( $this, 'option_woocommerce_cart_redirect_after_add') );
 
-        if ( ! is_ajax() ) {
+        if ( ! WJECF()->is_request( 'ajax' ) ) {
             //Get cart should not be called before the wp_loaded action nor the add_to_cart_action (class-wc-form-handler)
             add_action( 'wp_loaded', array( &$this, 'coupon_by_url' ), 90 ); //Coupon through url
         }
@@ -272,7 +272,7 @@ class WJECF_AutoCoupon extends Abstract_WJECF_Plugin {
     /**
      ** Inhibit redirect to cart when apply_coupon supplied
      */
-    public function option_woocommerce_cart_redirect_after_add ( $value ) {
+    public function option_woocommerce_cart_redirect_after_add( $value ) {
         if ( ! $this->_executed_coupon_by_url  && isset( $_GET['apply_coupon'] ) ) {
             $value = 'no';
         }

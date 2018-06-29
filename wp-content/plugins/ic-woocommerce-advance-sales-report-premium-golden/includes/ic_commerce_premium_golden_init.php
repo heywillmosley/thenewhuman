@@ -85,10 +85,10 @@ if(!class_exists('IC_Commerce_Premium_Golden_Init')){
 				$this->constants['detault_order_status'] 	   = array("wc-completed","wc-on-hold","wc-processing");
 				$this->constants['hide_order_status'] 		  = array();
 				
-				$this->constants['sub_version'] 			    = '20180403';
-				$this->constants['last_updated'] 		       = '20180403';
+				$this->constants['sub_version'] 			    = '20180420';
+				$this->constants['last_updated'] 		       = '20180420';
 				$this->constants['customized'] 			     = 'no';
-				$this->constants['customized_date'] 		    = '20180403';
+				$this->constants['customized_date'] 		    = '20180420';
 				
 				$this->constants['first_order_date'] 		   = $this->first_order_date($this->constants['plugin_key']);
 				$this->constants['total_shop_day'] 			 = $this->get_total_shop_day($this->constants['plugin_key']);

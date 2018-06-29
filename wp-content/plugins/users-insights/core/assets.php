@@ -18,14 +18,16 @@ abstract class USIN_Assets{
 			'deps' => array('usin_angular')),
 		'usin_drag_drop' => array('path' => 'js/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js', 
 			'deps' => array('usin_angular')),
-		'usin_drag_drop' => array('path' => 'js/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js', 
-			'deps' => array('usin_angular')),
 		'usin_angular_material' => array('path' => 'js/lib/angular-material/angular-material.min.js', 
 			'deps' => array('usin_angular')),
 		'usin_select' => array('path' => 'js/lib/angular-ui-select/select.min.js', 
 			'deps' => array('usin_angular')),
 		'usin_helpers' => array('path' => 'js/helpers.js', 
-			'deps' => array('usin_angular'))
+			'deps' => array('usin_angular')),
+		'usin_partials' => array('path' => 'js/partials.min.js', 
+			'deps' => array('usin_angular', 'usin_angular_material')),
+		'usin_partial_templates' => array('path' => 'views/partials/templates.js', 
+			'deps' => array('usin_partials'))
 	);
 
 	protected $css_assets = array(

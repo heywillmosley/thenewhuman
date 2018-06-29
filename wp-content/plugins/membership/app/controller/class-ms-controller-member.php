@@ -125,9 +125,22 @@ class MS_Controller_Member extends MS_Controller {
 
 		$this->add_filter( 'set-screen-option', array($this, 'members_admin_page_set_screen_option' ) , 10, 3 );
 
-		$this->add_filter( 'manage_users_columns', array($this, 'manage_users_columns' ) , 10, 1 );
-		$this->add_filter( 'manage_users_sortable_columns', array($this, 'manage_users_columns' ) , 10, 1 );
-		$this->add_filter( 'manage_users_custom_column', array($this, 'manage_users_custom_column' ) , 10, 3 );
+		//User columns
+		$this->add_filter( 'manage_users_columns', array( $this, 'manage_users_columns' ) , 10, 1 );
+		$this->add_filter( 'manage_users_sortable_columns', array( $this, 'manage_users_columns' ) , 10, 1 );
+		$this->add_filter( 'manage_users_custom_column', array( $this, 'manage_users_custom_column' ) , 10, 3 );
+
+
+		$settings 		= MS_Factory::load( 'MS_Model_Settings' );
+
+		if ( $settings->force_registration_verification ) {
+			$this->add_filter( 'bulk_actions-users', array( $this, 'add_verify_bulk_action' ), 10, 1 );
+			$this->add_filter( 'handle_bulk_actions-users', array( $this, 'handle_verify_bulk_action' ), 10, 3 );
+			$this->add_action( 'admin_notices', array( $this, 'handle_verify_bulk_message' ) );
+		}
+
+		//Profile update hooks
+		add_action( 'profile_update', array( $this, 'handle_profile_membership' ), 10, 2 );
 	}
 
 	/**
@@ -263,7 +276,7 @@ class MS_Controller_Member extends MS_Controller {
 
 			// Execute list table bulk actions.
 			elseif ( $this->verify_nonce( 'bulk' ) ) {
-				lib3()->array->equip_post( 'action', 'action2', 'member_id' );
+				mslib3()->array->equip_post( 'action', 'action2', 'member_id' );
 				$action = $_POST['action'];
 				if ( empty( $action ) || $action == '-1' ) {
 					$action = $_POST['action2'];
@@ -419,7 +432,7 @@ class MS_Controller_Member extends MS_Controller {
 
 				// Modify existing subscriptions.
 				if ( self::validate_required( $fields_modify, 'POST' ) ) {
-					$memberships = lib3()->array->get( $_POST['memberships'] );
+					$memberships = mslib3()->array->get( $_POST['memberships'] );
 
 					foreach ( $memberships as $membership_id ) {
 						if ( empty( $_POST['mem_' . $membership_id] ) ) { continue; }
@@ -845,7 +858,7 @@ class MS_Controller_Member extends MS_Controller {
 	 * @since  1.0.0
 	 */
 	public function enqueue_styles() {
-		lib3()->ui->add( 'jquery-ui' );
+		mslib3()->ui->add( 'jquery-ui' );
 	}
 
 	/**
@@ -857,7 +870,7 @@ class MS_Controller_Member extends MS_Controller {
 		$data = array(
 			'ms_init' => array(),
 		);
-		lib3()->array->equip_get( 'action' );
+		mslib3()->array->equip_get( 'action' );
 
 		if ( 'edit_date' == $_GET['action'] ) {
 			// Start and expire date edit
@@ -871,7 +884,7 @@ class MS_Controller_Member extends MS_Controller {
 			);
 		}
 
-		lib3()->ui->data( 'ms_data', $data );
+		mslib3()->ui->data( 'ms_data', $data );
 		wp_enqueue_script( 'ms-admin' );
 	}
 
@@ -887,7 +900,7 @@ class MS_Controller_Member extends MS_Controller {
 
 		$data['ms_init'][] = 'view_member_editor';
 
-		lib3()->ui->data( 'ms_data', $data );
+		mslib3()->ui->data( 'ms_data', $data );
 		wp_enqueue_script( 'ms-admin' );
 	}
 
@@ -902,10 +915,16 @@ class MS_Controller_Member extends MS_Controller {
 		$new_columns 	= array();
         $columns_4 		= array_slice( $columns, 0, 5 );
         $columns_5 		= array_slice( $columns, 5 );
-        
-        $new_columns = $columns_4 + array( 'membership' => __('Membership' , 'membership2' ) ) + $columns_5;
+		$settings 		= MS_Factory::load( 'MS_Model_Settings' );
+
+		$membership_column = array( 'membership' => __( 'Membership' , 'membership2' ) );
+		if ( $settings->force_registration_verification ) {
+			$membership_column = array( 'membership' => __( 'Membership' , 'membership2' ), 'verified' => __( 'Verified' , 'membership2' ) );
+		}
+		
+        $new_columns = $columns_4 + $membership_column + $columns_5;
 	
-        return $new_columns;
+        return apply_filters( 'ms_controller_member_manage_users_columns', $new_columns, $columns );
 	}
 
 	/**
@@ -947,15 +966,179 @@ class MS_Controller_Member extends MS_Controller {
 				$value = $html;
 			}
 
-			if( empty( $value ) ) {
+			if ( empty( $value ) ) {
 				$value 		= __( 'None' , 'membership' );
-				if( user_can( $user_id, 'manage_options' ) ) {
+				if ( MS_Model_Member::is_admin_user( $user_id ) ) {
 					$value 	= '<span style="font-weight:bold;">' . __( 'None (Admin User)', 'membership' ) . '</span>';
 				}
 			}
 
+		} else if ( 'verified' == $column_name ) {
+
+			$user_activation_status = get_user_meta( $user_id, '_ms_user_activation_status', true );
+			$force_user_activation_status = get_user_meta( $user_id, '_ms_user_force_activation_status', true );
+			$user_activation_status = empty( $user_activation_status ) ? 0 : $user_activation_status;
+			if ( $user_activation_status != 1 && MS_Model_Member::is_admin_user( $user_id ) ) {
+				$user_activation_status = 1;
+				update_user_meta( $user_id, '_ms_user_activation_status', $user_activation_status );
+			} else {
+				if ( !$force_user_activation_status ) {
+					//Set already active users to active
+					$udata = get_userdata( $user_id );
+					$verification_cutoff_date = '2018-04-11 23:59:59';
+					if ( $udata->user_registered < $verification_cutoff_date ) {
+						$user_activation_status = 1;
+						update_user_meta( $user_id, '_ms_user_activation_status', $user_activation_status );
+					}
+				}
+			}
+			
+			if ( $user_activation_status != 1 ) {
+				if ( $force_user_activation_status ) {
+					$value 	= __( 'Verification Resent' , 'membership' );
+				} else {
+					$value 	= __( 'Not Verified' , 'membership' );
+				}
+				
+			} else {
+				$value 	= __( 'Verified' , 'membership' );
+			}
 		}
-        return $value;
+        return apply_filters( 'ms_controller_member_manage_users_custom_column', $value, $column_name, $user_id );
+	}
+
+	/**
+	 * Add bulk action to verify users
+	 * 
+	 * @since 1.1.3
+	 * 
+	 * @param array $actions - the action
+	 * 
+	 * @return $actions
+	 */
+	function add_verify_bulk_action( $actions ) {
+
+		$actions['ms_bulk_approve'] 	= __( 'Approve', 'membership' );
+		$actions['ms_bulk_disapprove'] 	= __( 'Disapprove', 'membership' );
+		$actions['ms_bulk_resend'] 		= __( 'Resend Verification Email', 'membership' );
+
+		return $actions;
+	}
+
+	/**
+	 * Hande the verify bulk action
+	 * 
+	 * @since 1.1.3
+	 * 
+	 * @param string $redirect_to - the url to redirect to
+	 * @param string $doaction - The action being taken
+	 * @param array  $items - The items to take the action on
+	 * 
+	 * @return string $redirect_to
+	 */
+	function handle_verify_bulk_action( $redirect_to, $doaction, $items ) {
+
+		switch ( $doaction ) {
+			case 'ms_bulk_approve' :
+				foreach ( $items as $user_id ) {
+					if ( !MS_Model_Member::is_admin_user( $user_id ) ) {
+						update_user_meta( $user_id, '_ms_user_activation_status', 1 );
+					}
+				}
+				$redirect_to = admin_url( 'users.php' );
+				$redirect_to = add_query_arg( '_ms_approved', count( $items ), $redirect_to );
+			break;
+
+			case 'ms_bulk_disapprove' :
+				foreach ( $items as $user_id ) {
+					if ( !MS_Model_Member::is_admin_user( $user_id ) ) {
+						update_user_meta( $user_id, '_ms_user_activation_status', 0 );
+					}
+				}
+				$redirect_to = admin_url( 'users.php' );
+				$redirect_to = add_query_arg( '_ms_disapproved', count( $items ), $redirect_to );
+			break;
+
+			case 'ms_bulk_resend' :
+				foreach ( $items as $user_id ) {
+					if ( !MS_Model_Member::is_admin_user( $user_id ) ) {
+						$member = MS_Factory::load( 'MS_Model_Member', $user_id );;
+						update_user_meta( $user_id, '_ms_user_activation_status', 0 );
+						update_user_meta( $user_id, '_ms_user_force_activation_status', 1 );
+						MS_Model_Event::save_event( MS_Model_Event::TYPE_MS_VERIFYACCOUNT, $member );
+					}
+				}
+				$redirect_to = admin_url( 'users.php' );
+				$redirect_to = add_query_arg( '_ms_resend', count( $items ), $redirect_to );
+			break;
+		}
+	
+		return $redirect_to;
+	}
+
+	/**
+	 * Handle bulk message for approval status change
+	 * 
+	 * @since 1.1.3
+	 */
+	function handle_verify_bulk_message() {
+		if ( isset ( $_REQUEST['_ms_approved'] ) ) {
+			$user_count = intval( $_REQUEST['_ms_approved'] );
+			?>
+			<div class="notice notice-success is-dismissible">
+				<p><?php echo sprintf( __( '%d user accounts approved', 'membership' ), $user_count ); ?></p>
+			</div>
+			<?php
+		} else if ( isset ( $_REQUEST['_ms_disapproved'] ) ) {
+			$user_count = intval( $_REQUEST['_ms_disapproved'] );
+			?>
+			<div class="notice notice-success is-dismissible">
+				<p><?php echo sprintf( __( '%d user accounts disapproved', 'membership' ), $user_count ); ?></p>
+			</div>
+			<?php
+		} else if ( isset ( $_REQUEST['_ms_resend'] ) ) {
+			$user_count = intval( $_REQUEST['_ms_resend'] );
+			?>
+			<div class="notice notice-success is-dismissible">
+				<p><?php echo sprintf( __( '%d user accounts resent emails', 'membership' ), $user_count ); ?></p>
+			</div>
+			<?php
+		}
+	}
+
+	/**
+	 * Check updated profile
+	 * If a normal user with a membership is update to admin, we need to clear the subscription
+	 * 
+	 * @since 1.1.3
+	 * 
+	 * @param int $user_id - the user id
+	 * @param array $old_user_data - the old user data
+	 *
+	 */
+	function handle_profile_membership( $user_id, $old_user_data ) {
+		$this->remove_membership_from_admin( $user_id );
+	}
+
+	/**
+	 * Check updated profile
+	 * If a normal user with a membership is update to admin, we need to clear the subscription
+	 * Admin edit screen
+	 * 
+	 * @since 1.1.3
+	 * 
+	 * @param int $user_id - the user id
+	 *
+	 */
+	function remove_membership_from_admin( $user_id ) {
+		if ( MS_Model_Member::is_admin_user( $user_id ) ) {
+			$member = MS_Factory::load( 'MS_Model_Member', $user_id );
+			if ( $member ) {
+				foreach ( $member->subscriptions as $subscription ) {
+					$subscription->delete();
+				}
+			}
+		}
 	}
 
 }

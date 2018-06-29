@@ -15,7 +15,6 @@ $social_digg_link=$Social_page['social_digg_link'];
 $social_youtube_link=$Social_page['social_digg_link'];
 $social_flickr_link=$Social_page['social_flickr_link'];
 $social_tumblr_link=$Social_page['social_tumblr_link'];
-$social_vkontakte_link=$Social_page['social_vkontakte_link'];
 $social_skype_link=$Social_page['social_skype_link'];
 $social_instagram_link=$Social_page['social_instagram_link'];
 
@@ -79,7 +78,7 @@ if($social_icon_size=="large") { ?>
 
 		.icon-button i {
 			background: none;
-			color: white;
+			color: <?php echo $social_icon_color; ?>;
 			height: 50px;
 			left: 0;
 			line-height: 48px;
@@ -92,13 +91,11 @@ if($social_icon_size=="large") { ?>
 			width: 50px;
 			z-index: 10;
 		}
-		.icon-button .fa{
-			color: <?php echo $social_icon_color;?>;
-		}
 
-		.icon-button:hover .fa{
-			color: <?php echo $social_icon_color_onhover;?>;
+		.icon-button i:hover {
+			color: <?php echo $social_icon_color_onhover; ?>;
 		}
+		
 	</style>
 <?php } else if($social_icon_size=="mediam")  { ?>
 	<style>
@@ -159,7 +156,7 @@ if($social_icon_size=="large") { ?>
 
 		.icon-button i {
 			background: none;
-			color: white;
+			color: <?php echo $social_icon_color; ?>;
 			height: 42px;
 			left: 0;
 			line-height: 40px;
@@ -172,13 +169,12 @@ if($social_icon_size=="large") { ?>
 			width: 42px;
 			z-index: 10;
 		}
-		.icon-button .fa{
-			color: <?php echo $social_icon_color;?>;
-		}
 
-		.icon-button:hover .fa{
-			color: <?php echo $social_icon_color_onhover;?>;
+
+		.icon-button i:hover {
+			color: <?php echo $social_icon_color_onhover; ?>;
 		}
+		
 	</style>
 <?php } else  { ?>
 	<style>
@@ -213,6 +209,11 @@ if($social_icon_size=="large") { ?>
 			text-decoration: none;
 		}
 
+
+		.icon-button i:hover {
+				color: <?php echo $social_icon_color_onhover; ?>;
+		}
+
 		.icon-button span {
 			border-radius: 0;
 			display: block;
@@ -239,7 +240,7 @@ if($social_icon_size=="large") { ?>
 
 		.icon-button i {
 			background: none;
-			color: white;
+			color: <?php echo $social_icon_color; ?>;
 			height: 28px;
 			left: 0;
 			line-height: 30px;
@@ -252,12 +253,10 @@ if($social_icon_size=="large") { ?>
 			width: 28px;
 			z-index: 10;
 		}
-		.icon-button .fa{
-			color: <?php echo $social_icon_color;?>;
-		}
 
-		.icon-button:hover .fa{
-			color: <?php echo $social_icon_color_onhover;?>;
+		.icon-button i:hover {
+			color: <?php echo $social_icon_color_onhover; ?>;
 		}
+		
 	</style>
 <?php } ?>

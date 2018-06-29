@@ -26,7 +26,7 @@ class USIN_Reports_Ajax extends USIN_Ajax{
 	}
 
 	public static function is_reports_ajax(){
-		if(wp_doing_ajax() && isset($_REQUEST['action']) && strpos($_REQUEST['action'], 'usin_') === 0
+		if((defined('DOING_AJAX') && DOING_AJAX) && isset($_REQUEST['action']) && strpos($_REQUEST['action'], 'usin_') === 0
 			&& strpos($_REQUEST['action'], 'report') !== false){
 			return true;
 		}

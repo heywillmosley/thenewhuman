@@ -55,10 +55,15 @@ if( ! class_exists('IC_Commerce_Premium_Golden_COG')){
 		
 		function init(){
 			$cogs_enable_adding = $this->get_setting('cogs_enable_adding',$this->constants['plugin_options'],0);//Added 20150323
-			if($cogs_enable_adding == 0) return true;
+			if($cogs_enable_adding == 1){
+				if($this->constants['is_wc_ge_3_0_5']){
+					add_action( 'woocommerce_new_order_item', array($this, 'woocommerce_add_order_item_meta'), 101, 3);
+				}else{
+					add_action( 'woocommerce_add_order_item_meta', array($this, 'woocommerce_add_order_item_meta' ), 101, 3);
+				}
+				add_action( 'woocommerce_checkout_update_order_meta', array($this, 'woocommerce_checkout_update_order_meta'));
+			}
 			
-			add_action( 'woocommerce_add_order_item_meta', array( $this, 'woocommerce_add_order_item_meta' ), 101, 3 );
-			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'woocommerce_checkout_update_order_meta' ) );
 		}
 		
 		function admin_init(){

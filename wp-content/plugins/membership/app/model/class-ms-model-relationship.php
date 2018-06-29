@@ -184,7 +184,7 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 	 * @since  1.0.0
 	 * @var $current_invoice_number
 	 */
-	protected $current_invoice_number = 1;
+	protected $current_invoice_number = null;
 
 	/**
 	 * The moving/change/downgrade/upgrade from membership ID.
@@ -534,7 +534,6 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 		}
 
 		$subscription->save();
-
 		return $subscription;
 	}
 
@@ -1672,6 +1671,21 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 	}
 
 	/**
+	 * Get next billable invoice
+	 * 
+	 * @since 1.1.3
+	 * 
+	 * @return MS_Model_Invoice
+	 */
+	public function get_next_billable_invoice() {
+		if ( $this->is_expired() ) {
+			return $this->get_next_invoice();
+		} else {
+			return $this->get_current_invoice();
+		}
+	}
+
+	/**
 	 * Get a list of all invoices linked to this relationship
 	 *
 	 * @since  1.0.0
@@ -2137,7 +2151,7 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 	 *         could also be TRIAL, in which case the returnv alue is false.
 	 */
 	public function add_payment( $amount, $gateway, $external_id = '' ) {
-		$this->payments = lib3()->array->get( $this->payments );
+		$this->payments = mslib3()->array->get( $this->payments );
 
 		// Update the payment-gateway.
 		$this->set_gateway( $gateway );
@@ -2190,7 +2204,16 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 					$this->expire_date, // Extend past the current expire date.
 					true                // Grant the user a full payment interval.
 				);
-				$this->set_status( self::STATUS_ACTIVE );	
+				//$this->set_status( self::STATUS_ACTIVE );	
+				/*
+				* Instead of $this->set_status, lets simply set the status property 
+				* of subscription to active, because: 
+				* we need to set invoice to paid when called from MS_Model_Invoice::pay_it(), but 
+				* $this->set_status() calls $this->calculate_status() which requires the invoice to be paid 
+				* already, in order to set status to active
+				*/
+
+				$this->status = self::STATUS_ACTIVE;
 			}	
 		}
 
@@ -2246,7 +2269,7 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 	 * @return array
 	 */
 	public function get_payments() {
-		$res = lib3()->array->get( $this->payments );
+		$res = mslib3()->array->get( $this->payments );
 
 		foreach ( $res as $key => $info ) {
 			if ( ! isset( $info['amount'] ) ) {
@@ -2334,6 +2357,26 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 			$this->status,
 			$this
 		);
+	}
+
+	/**
+	 * Get the current invoice number of the Subscription
+	 *
+	 * Uses MS_Model_Invoice::get_current_invoice_number only once to 
+	 * set the property $current_invoice_number
+	 *
+	 * @since  3.1.1
+	 *
+	 * @return integer The invoice number of subscription
+	 */
+	public function get_current_invoice_number() {
+		
+		if( is_null( $this->current_invoice_number ) ) {
+			$this->current_invoice_number = MS_Model_Invoice::get_current_invoice_number( $this );
+		}
+
+		return $this->current_invoice_number;
+
 	}
 
 	/**
@@ -2651,7 +2694,7 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 
 		if ( $debug ) {
 			// Intended debug output, leave it here.
-			lib3()->debug->dump( $debug_msg );
+			mslib3()->debug->dump( $debug_msg );
 		}
 
 		return apply_filters(
@@ -2866,7 +2909,7 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 			$is_public = true;
 		} else {
 			//now we can check if requires invitation code
-			$is_public = lib3()->is_true( $invitation_code );
+			$is_public = mslib3()->is_true( $invitation_code );
 		}
 
 		// Collection of all day-values.
@@ -3078,7 +3121,14 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 				} else {
 					// set to false to avoid creation of new invoice
 					$invoice = $this->get_current_invoice(false);
+					if ( is_null( $invoice ) ) {
+						$invoice = $this->get_previous_invoice();
+					}
+					if ( is_null( $invoice ) ) {
+						return;
+					}
 				}
+
 				/**
 				 * Todo: Move the advanced communication code into some addon
 				 *       file and use this action to trigger the messages.
@@ -3108,15 +3158,21 @@ class MS_Model_Relationship extends MS_Model_CustomPostType {
 						$comm->period['period_type']
 					);
 					if ( $comm_days == $days->remaining ) {
-						$member = $this->get_member();
-						if ( !$member->get_meta( 'ms_comm_before_finishes_sent_' . strtotime( $this->expire_date ) ) ){
+						$member 	= $this->get_member();
+						$has_sent 	= $member->get_meta( '_ms_comm_type_before_finishes_sent' );
+						if ( !is_array( $has_sent ) ) {
+							$has_sent = array();
+						}
+						$date_time 	= strtotime( $this->expire_date );
+						if ( !in_array( $date_time, $has_sent ) ){
 							$comm->add_to_queue( $this->id );
 							MS_Model_Event::save_event(
 								MS_Model_Event::TYPE_MS_BEFORE_FINISHES,
 								$this
 							);
+							$has_sent[] = $date_time;
 							// Mark the member as has received message.
-							$member->set_meta( 'ms_comm_before_finishes_sent_' . strtotime( $this->expire_date ), 1 );
+							$member->set_meta( '_ms_comm_type_before_finishes_sent', $has_sent );
 						}
 					}
 

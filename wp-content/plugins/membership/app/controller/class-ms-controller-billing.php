@@ -174,8 +174,8 @@ class MS_Controller_Billing extends MS_Controller {
 		$this->print_admin_message();
 
 		// Action view page request
-		$isset = array( 'action', 'invoice_id' );
-		if ( self::validate_required( $isset, 'GET', false ) && 'edit' == $_GET['action'] ) {
+		$valid_actions = array( 'action', 'invoice_id' );
+		if ( self::validate_required( $valid_actions, 'GET', false ) && 'edit' == $_GET['action'] ) {
 			$invoice_id 			= ! empty( $_GET['invoice_id'] ) ? $_GET['invoice_id'] : 0;
 			$data['invoice'] 		= MS_Factory::load( 'MS_Model_Invoice', $_GET['invoice_id'] );
 			$data['action'] 		= $_GET['action'];
@@ -501,7 +501,7 @@ class MS_Controller_Billing extends MS_Controller {
 		}
 
 		if ( 'edit' == $action ) {
-			lib3()->ui->add( 'jquery-ui' );
+			mslib3()->ui->add( 'jquery-ui' );
 		}
 	}
 
@@ -534,7 +534,7 @@ class MS_Controller_Billing extends MS_Controller {
 			}
 		}
 
-		lib3()->ui->data( 'ms_data', $data );
+		mslib3()->ui->data( 'ms_data', $data );
 		wp_enqueue_script( 'ms-admin' );
 	}
 

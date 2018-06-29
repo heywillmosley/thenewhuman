@@ -55,6 +55,7 @@ class MS_Model_Event extends MS_Model_CustomPostType {
 	const TYPE_MS_CANCELED 				= 'canceled';
 	const TYPE_MS_REGISTERED 			= 'registered';
 	const TYPE_MS_RESETPASSWORD 		= 'resetpassword';
+	const TYPE_MS_VERIFYACCOUNT			= 'verifyaccount';
 	const TYPE_MS_BEFORE_FINISHES 		= 'before_finishes';
 	const TYPE_MS_AFTER_FINISHES 		= 'after_finishes';
 	const TYPE_MS_BEFORE_TRIAL_FINISHES = 'before_trial_finishes';
@@ -167,6 +168,10 @@ class MS_Model_Event extends MS_Model_CustomPostType {
 				'topic' => self::TOPIC_USER,
 				'desc' 	=> __( 'Reset password.', 'membership2' ),
 			),
+			self::TYPE_MS_VERIFYACCOUNT => array(
+				'topic' => self::TOPIC_USER,
+				'desc' 	=> __( 'Verify Account.', 'membership2' ),
+			),
 			self::TYPE_UPDATED_INFO => array(
 				'topic' => self::TOPIC_USER,
 				'desc' 	=> __( 'Has updated billing information.', 'membership2' ),
@@ -222,7 +227,7 @@ class MS_Model_Event extends MS_Model_CustomPostType {
 			),
 			self::TYPE_MS_BEFORE_TRIAL_FINISHES => array(
 				'topic' => self::TOPIC_WARNING,
-				'desc' 	=> __( 'Membership % s trial about to finish warning date.', 'membership2' ),
+				'desc' 	=> __( 'Membership %s trial about to finish warning date.', 'membership2' ),
 			),
 
 			/*

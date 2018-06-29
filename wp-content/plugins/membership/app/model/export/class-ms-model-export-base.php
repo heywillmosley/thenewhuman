@@ -158,13 +158,15 @@ class MS_Model_Export_Base extends MS_Model {
 	 * @return object Export data
 	 */
 	protected function export_relationship( $src ) {
-		$obj 				= array();
-		$obj['id'] 			= $this->exp_id( 'relationship', $src->id );
-		$obj['membership'] 	= $this->exp_id( 'membership', $src->membership_id );
-		$obj['status'] 		= $src->status;
-		$obj['gateway'] 	= $src->gateway_id;
-		$obj['start'] 		= $src->start_date;
-		$obj['end'] 		= $src->expire_date;
+		$membership				= MS_Factory::load( 'MS_Model_Membership', $src->membership_id );
+		$obj 					= array();
+		$obj['id'] 				= $this->exp_id( 'relationship', $src->id );
+		$obj['membership'] 		= $this->exp_id( 'membership', $src->membership_id );
+		$obj['membership_name'] = $membership->name;
+		$obj['status'] 			= $src->status;
+		$obj['gateway'] 		= $src->gateway_id;
+		$obj['start'] 			= $src->start_date;
+		$obj['end'] 			= $src->expire_date;
 
 		$obj['trial_finished'] = $src->trial_period_completed;
 		if ( ! $obj['trial_finished'] ) {
@@ -224,7 +226,7 @@ class MS_Model_Export_Base extends MS_Model {
 		static $Counter = 10000;
 		static $Ids 	= array();
 
-		$Ids[$type] 	= lib3()->array->get( $Ids[$type] );
+		$Ids[$type] 	= mslib3()->array->get( $Ids[$type] );
 		if ( ! isset( $Ids[$type][$internal_id] ) ) {
 			$Ids[$type][$internal_id] = $Counter;
 			$Counter += 1;

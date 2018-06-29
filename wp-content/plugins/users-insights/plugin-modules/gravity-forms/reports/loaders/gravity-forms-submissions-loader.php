@@ -5,8 +5,10 @@ class USIN_Gravity_Forms_Submissions_Loader extends USIN_Standard_Report_Loader{
 	protected function load_data(){
 		global $wpdb;
 
+		$table_name = USIN_Gravity_Forms::get_entries_db_table_name();
+
 		$query = "SELECT form_id AS $this->label_col, COUNT(DISTINCT created_by) AS $this->total_col".
-			" FROM ".$wpdb->prefix."rg_lead GROUP BY form_id".
+			" FROM $table_name GROUP BY form_id".
 			"  ORDER BY $this->total_col DESC LIMIT $this->max_items";
 		$data = $wpdb->get_results( $query );
 		return $this->apply_form_names($data);

@@ -4,10 +4,12 @@ class USIN_Module{
 
 	protected $prefix = 'usin_module_';
 	protected $config = array();
-	protected $options = array();
+	protected $settings = null;
+	protected static $cache = array();
 
 	public $id;
 	public $license = null;
+	public $active = false;
 	
 	
 	protected function __construct($id, $config){
@@ -19,13 +21,19 @@ class USIN_Module{
 	 * Find a module by ID.
 	 *
 	 * @param string $id the ID of the module
-	 * @return USIN_Module object 
+	 * @return USIN_Module object
 	 */
 	public static function get($id){
-		$config = USIN_Module_Default_Options::get_by_id($id);
+		if(isset(self::$cache[$id])){
+			return self::$cache[$id];
+		}
+
+		$config = USIN_Module_Defaults::get_by_id($id);
 
 		if(!empty($config)){
-			return new USIN_Module($id, $config);
+			$module = new USIN_Module($id, $config);
+			self::$cache[$id] = $module;
+			return $module;
 		}
 	}
 
@@ -37,14 +45,32 @@ class USIN_Module{
 	 */
 	protected function init($config){
 		$this->config = $config;
-		$this->options = $this->get_saved_options();
+
+		$data = $this->get_module_data();
+
+		//set active
+		if(isset($data['active'])){
+			$this->active = $data['active'];
+		}elseif(isset($config['active_by_default'])){
+			$this->active = $config['active_by_default'];
+		}
 
 		//setup the license
 		if($this->requires_own_license()){
-			$license_options = isset($this->options['license']) ? $this->options['license'] : array();
-			$this->license = new USIN_License($license_options);
+			$license_data = isset($data['license']) ? $data['license'] : array();
+			$this->license = new USIN_License($license_data);
 		}
 
+		if($this->has_settings()){
+			$saved_settings = isset($data['settings']) ? $data['settings'] : array();
+			$this->set_settings($saved_settings);
+		}
+
+	}
+
+	protected function set_settings($settings_values = array()){
+		
+		$this->settings = new USIN_Settings_Manager($this->config['settings'], $settings_values);
 	}
 
 	public function reload(){
@@ -58,13 +84,22 @@ class USIN_Module{
 	 * @return array array presentation of the module
 	 */
 	public function to_array(){
-		return array_merge(
+		$res = array_merge(
 			$this->config,
 			array(
-				'options' => $this->get_options_array(),
-				'active' => $this->is_active(),
+				'active' => $this->active,
 				'has_options' => $this->has_options()
 			));
+
+		if($this->has_settings()){
+			$res['settings'] = $this->settings->to_array();
+		}
+
+		if($this->requires_own_license()){
+			$res['license'] = $this->license->to_array();
+		}
+
+		return $res;
 	}
 
 	/**
@@ -83,26 +118,13 @@ class USIN_Module{
 		}
 	}
 
-	/**
-	 * Checks if the module is active.
-	 *
-	 * @return boolean
-	 */
-	public function is_active(){
-		if(isset($this->options['active'])){
-			return $this->options['active'];
-		}elseif(isset($this->config['active'])){
-			return $this->config['active'];
-		}
-		return false;
-	}
 
 	/**
 	 * Activates a module.
 	 */
 	public function activate(){
-		$this->options['active'] = true;
-		return $this->save_options();
+		$this->active = true;
+		return $this->save();
 	}
 
 	/**
@@ -112,36 +134,35 @@ class USIN_Module{
 	 */
 	public function deactivate(){
 		if($this->allows_deactivate()){
-			$this->options['active'] = false;
-			return $this->save_options();
+			$this->active = false;
+			return $this->save();
 		}
 		return false;
+	}
+
+	public function update_settings($values){
+		$this->set_settings($values);
+		$this->save();
+		return true;
 	}
 
 	/**
 	 * Saves the module options.
 	 *
-	 * @return void
+	 * @return boolean the result of the update_option function
+	 * !!! IMPORTANT: update_option returns false when the data has not changed
 	 */
-	public function save_options(){
-		$options = $this->get_options_array(true);
-		return update_option( $this->prefix.$this->id, $options );
-	}
-
-
-	/**
-	 * Retrieves the options of the module in an array format, containing
-	 * the license if the module requires its own license.
-	 *
-	 * @param boolean $save_format sets whether to return the array in a format for storing
-	 * in the database
-	 * @return array the module options
-	 */
-	public function get_options_array($save_format = false){
+	public function save(){
+		$data = array(
+			'active' => $this->active
+		);
 		if($this->requires_own_license()){
-			$this->options['license'] = $this->license->to_array($save_format);
+			$data['license'] = $this->license->to_array(true);
 		}
-		return $this->options;
+		if($this->has_settings()){
+			$data['settings'] = $this->settings->get_saved_values();
+		}
+		return update_option( $this->prefix.$this->id, $data );
 	}
 
 	
@@ -151,7 +172,7 @@ class USIN_Module{
 	 * @return boolean
 	 */
 	protected function has_options(){
-		return $this->requires_own_license() || $this->has_option_fields();
+		return $this->requires_own_license() || $this->has_settings();
 	}
 
 	/**
@@ -178,8 +199,12 @@ class USIN_Module{
 	 *
 	 * @return boolean
 	 */
-	public function has_option_fields(){
-		return isset($this->config['option_fields']);
+	public function has_settings(){
+		return isset($this->config['settings']);
+	}
+
+	public function get_setting($field_id){
+		return $this->settings->get_field_value($field_id);
 	}
 
 	/**
@@ -187,7 +212,7 @@ class USIN_Module{
 	 *
 	 * @return array
 	 */
-	protected function get_saved_options(){
+	protected function get_module_data(){
 		return get_option($this->prefix.$this->id, array());
 	}
 

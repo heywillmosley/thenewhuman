@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Optimize Database after Deleting Revisions
- * @version 4.6
+ * @version 4.6.2
  */
 /*
 Plugin Name: Optimize Database after Deleting Revisions
@@ -10,7 +10,7 @@ Description: Optimizes the Wordpress Database after Cleaning it out
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Author URI: http://cagewebdev.com
 Network: True
-Version: 4.6
+Version: 4.6.2
 */
 
 /********************************************************************************************
@@ -24,8 +24,8 @@ $odb_class = new OptimizeDatabase();
 
 class OptimizeDatabase {
 	// VERSION
-	var $odb_version           = '4.6';
-	var $odb_release_date      = '05/08/2018';
+	var $odb_version           = '4.6.2';
+	var $odb_release_date      = '06/05/2018';
 
 	// PLUGIN OPTIONS
 	var $odb_rvg_options       = array();
@@ -602,11 +602,12 @@ class OptimizeDatabase {
 			$action = $_REQUEST['action'];
 			
 			// v4.6
-			if($action == 'show_log') {
+			if($action == 'view_log') {
 				// SHOW THE LOGS
-				$this->odb_logger_obj->odb_show_log();
-				exit;
-			} else if($action == "delete_log") {
+				$this->odb_logger_obj->odb_view_log();
+				// v4.6.1
+				return;
+			} else if($action == "clear_log") {
 
 				// CLEAR THE LOG TABLE
 				$this->odb_logger_obj->odb_clear_log();
@@ -619,7 +620,7 @@ class OptimizeDatabase {
 				echo "</p></div>";			
 			} else if($action == "odb_download_csv") {
 				//$this->odb_logger_obj->odb_csv_download();
-			}// if($action == "delete_log")
+			}// if($action == "clear_log")
 		} // if(isset($_REQUEST['action']))
 		
 		if(!$scheduler) {

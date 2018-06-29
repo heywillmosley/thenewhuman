@@ -1,11 +1,11 @@
 <?php
 /**
  * The Session storage component.
- * Access via function `lib3()->session`.
+ * Access via function `mslib3()->session`.
  *
  * @since  1.1.4
  */
-class TheLib_Session extends TheLib {
+class MsTheLib_Session extends MsTheLib {
 
 	/**
 	 * Adds a value to the data collection in the user session.

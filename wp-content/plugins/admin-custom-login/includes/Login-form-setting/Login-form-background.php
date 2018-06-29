@@ -1,4 +1,4 @@
-<!-- Dashboard Settings panel content --->
+<!-- Dashboard Settings panel content -->
 <?php
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -135,6 +135,22 @@ jQuery(function() {
 	jQuery( "#login-thickness-text-box" ).val( jQuery( "#button-size-slider6" ).slider( "value") );
 });
 
+
+//Button Font Size slider for login form message
+jQuery(function() {
+	jQuery( "#button-msg-font-resizer" ).slider({
+		orientation: "horizontal",
+		range: "min",
+		max: 48,
+		min:12,
+		slide: function( event, ui ) {
+			jQuery( "#login-msg-text-size" ).val( ui.value );
+		}
+	});
+	jQuery( "#button-msg-font-resizer" ).slider("value",<?php if($login_msg_fontsize != ""){echo $login_msg_fontsize;}else{echo "16";}?> );
+	jQuery( "#login-msg-text-size" ).val( jQuery( "#button-msg-font-resizer" ).slider( "value") );
+});	
+
 //Set Value of Drop Down
 jQuery(document).ready(function() {
 	//Login Background Select
@@ -251,8 +267,8 @@ function loginbgchange() {
 					</td>
 				</tr>
 		</table>
-	</div>	
-	
+	</div>
+
 	<div class="panel panel-primary panel-default content-panel">
 		<div class="panel-body">
 			<table class="form-table">
@@ -560,6 +576,77 @@ function loginbgchange() {
 			</table>
 		</div>
 	</div>
+
+	<!-- Message Display Above Login Form start-->
+	<div class="panel panel-primary panel-default content-panel">
+		<div class="panel-body">
+			<table class="form-table">
+				<tr>
+					<th scope="row" ><?php _e('Display Note To User Above Login Form', WEBLIZAR_ACL); ?></th>
+					<td></td>
+				</tr>
+				<tr  style="border-bottom:none;">
+					<td>
+						<textarea type="text" class="pro_text"  placeholder="Enter Message" id="log_form_above_msg" name="log_form_above_msg" ><?php echo $log_form_above_msg; ?></textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>	
+	<!-- Message Display Above Login Form end-->
+
+	<div class="panel panel-primary panel-default content-panel">
+		<div class="panel-body">
+			<table class="form-table">
+				<tr>
+					<th scope="row" ><?php _e('Message Font Size', WEBLIZAR_ACL)?></th>
+					<td></td>
+				</tr>
+				<tr  style="border-bottom:none;">
+					<td>
+						<div id="button-msg-font-resizer" class="size-slider" style="width: 30%;display:inline-block"></div>
+						<input type="text" class="slider-text" id="login-msg-text-size" name="login-msg-text-size"  readonly="readonly">
+						<span class="slider-text-span">Px</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>	
+
+	<div class="panel panel-primary panel-default content-panel">
+		<div class="panel-body">
+			<table class="form-table">
+				<tr>
+					<th scope="row" ><?php _e('Message Font Color', WEBLIZAR_ACL)?></th>
+					<td></td>
+				</tr>
+				<tr style="border-bottom:none;">
+					<td id="td-login-msg-font-color">
+						<input id="login-msg-font-color" name="login-msg-font-color" type="text" value="<?php echo $login_msg_font_color; ?>" class="my-color-field" data-default-color="#000000"/>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>	
+
+	<!-- Tagline message Display Below Login Form start-->
+	<div class="panel panel-primary panel-default content-panel">
+		<div class="panel-body">
+			<table class="form-table">
+				<tr>
+					<th scope="row" ><?php _e('Tagline Message Display Below Login Form', WEBLIZAR_ACL); ?></th>
+					<td></td>
+				</tr>
+				<tr  style="border-bottom:none;">
+					<td>
+						<textarea type="text" rows="4" class="pro_text"  placeholder="Enter Tagline Message" id="tagline_msg" name="tagline_msg" ><?php $edit_tagline_msg = stripslashes($tagline_msg); echo $edit_tagline_msg; ?></textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>	
+	<!-- Tagline message Display Below Login Form end-->
+
 	<div class="panel panel-primary panel-default content-panel">
 		<div class="panel-body">
 			<table class="form-table">
@@ -623,6 +710,7 @@ function loginbgchange() {
 function Custom_login_login(Action, id){
 	if(Action == "loginbgSave") {
 		(function() {
+		
 			var dlgtrigger = document.querySelector( '[data-dialog2]' ),
 			
 				somedialog = document.getElementById( dlgtrigger.getAttribute( 'data-dialog2' ) ),
@@ -669,6 +757,12 @@ function Custom_login_login(Action, id){
 		var login_bg_position = jQuery( "#login_bg_position option:selected" ).val();
 		var login_custom_css = jQuery( "#login_custom_css").val();
 		var login_redirect_user = jQuery( "#login_redirect_user").val();
+		var log_form_above_msg = jQuery( "#log_form_above_msg").val();
+		var login_msg_fontsize = jQuery("#login-msg-text-size").val();
+		var login_msg_font_color = jQuery("#login-msg-font-color").val();
+		var tagline_msg = jQuery( "#tagline_msg").val();
+		//alert(tagline_msg);
+		
 		if (document.getElementById('login_enable_shadow1').checked) {
 			var login_enable_shadow = document.getElementById('login_enable_shadow1').value;
 		} else {
@@ -676,7 +770,7 @@ function Custom_login_login(Action, id){
 		}
 		var login_shadow_color = jQuery("#login_shadow_color").val();		
 
-		var PostData = "Action=" + Action + "&login_form_position=" + login_form_position + "&Login_bg_value=" + Login_bg_value + "&login_background_color=" + login_background_color + "&login_bg_color_overlay=" + login_bg_color_overlay + "&login_bg_image=" + login_bg_image + "&login_form_opacity=" + login_form_opacity  + "&login_form_width=" + login_form_width + "&login_form_radius=" + login_form_radius + "&login_border_style=" + login_border_style + "&login_border_thikness=" + login_border_thikness + "&login_border_color=" + login_border_color + "&login_bg_repeat=" + login_bg_repeat + "&login_bg_position=" + login_bg_position + "&login_enable_shadow=" + login_enable_shadow + "&login_shadow_color=" + login_shadow_color + "&login_custom_css=" + login_custom_css + "&login_redirect_user=" + login_redirect_user +"&login_form_left=" + login_form_left + "&login_form_top=" + login_form_top + "&login_form_float=" + login_form_float;
+		var PostData = "Action=" + Action + "&login_form_position=" + login_form_position + "&Login_bg_value=" + Login_bg_value + "&login_background_color=" + login_background_color + "&login_bg_color_overlay=" + login_bg_color_overlay + "&login_bg_image=" + login_bg_image + "&login_form_opacity=" + login_form_opacity  + "&login_form_width=" + login_form_width + "&login_form_radius=" + login_form_radius + "&login_border_style=" + login_border_style + "&login_border_thikness=" + login_border_thikness + "&login_border_color=" + login_border_color + "&login_bg_repeat=" + login_bg_repeat + "&login_bg_position=" + login_bg_position + "&login_enable_shadow=" + login_enable_shadow + "&login_shadow_color=" + login_shadow_color + "&login_custom_css=" + login_custom_css + "&login_redirect_user=" + login_redirect_user +"&login_form_left=" + login_form_left + "&log_form_above_msg=" + log_form_above_msg + "&login_msg_font_color=" + login_msg_font_color + "&login_msg_fontsize=" + login_msg_fontsize  +  "&login_form_top=" + login_form_top + "&login_form_float=" + login_form_float + "&tagline_msg=" + tagline_msg;
 		jQuery.ajax({
 			dataType : 'html',
 			type: 'POST',
@@ -767,6 +861,10 @@ function Custom_login_login(Action, id){
 				//Enable Login From Shadow
 				jQuery(document).ready( function() {
 					jQuery('input[name=enable_form_shadow]').val(['yes']);
+					// Message Display Above Login Form
+					jQuery("#log_form_above_msg").val(''); 
+					// Tagline Message Display Below Login Form
+					jQuery("#tagline_msg").val('This login form is created by <a href="https://wordpress.org/plugins/admin-custom-login/" target="_blank">ACL</a> , developed by <a href="https://www.weblizar.com" target="_blank">weblizar</a>'); 
 					//login Custom Css 
 					jQuery("#login_custom_css").val(''); 
 					//login Redirect  User
@@ -781,7 +879,10 @@ function Custom_login_login(Action, id){
 				jQuery("#td-login-Border-color a.wp-color-result").closest("a").css({"background-color": "#0069A0"});
 				// Login From Shadow Color
 				jQuery("#login_shadow_color a.wp-color-result").closest("a").css({"background-color": "#C8C8C8"});	
-				
+
+				// Login Message Font Color
+				jQuery("#td-login-msg-font-color a.wp-color-result").closest("a").css({"background-color": "#ffffff"});	
+			
 				jQuery( "#login-opacity-slider" ).slider("value",10);
 				jQuery( "#login-opacity-text-box" ).val( jQuery( "#login-opacity-slider" ).slider( "value") );
 				
@@ -793,6 +894,9 @@ function Custom_login_login(Action, id){
 				
 				jQuery( "#button-size-slider6" ).slider("value",4 );
 				jQuery( "#login-thickness-text-box" ).val( jQuery( "#button-size-slider6" ).slider( "value") );
+
+				jQuery( "#button-msg-font-resizer" ).slider("value",16 );
+				jQuery( "#login-msg-text-size" ).val( jQuery( "#button-msg-font-resizer" ).slider( "value") );
 				// Reset message box open
 				jQuery(".dialog-button8").click();
 				// Function to close message box
@@ -829,7 +933,11 @@ if(isset($_POST['Action'])){
 		$login_shadow_color 	= sanitize_option('login_shadow_color', $_POST['login_shadow_color']);
 		$login_custom_css 	= sanitize_option('login_custom_css', $_POST['login_custom_css']);
 		$login_redirect_user 	= sanitize_option('login_redirect_user', $_POST['login_redirect_user']);
-
+		$log_form_above_msg 	= sanitize_option('log_form_above_msg', $_POST['log_form_above_msg']);
+		$tagline_msg 			= sanitize_option('tagline_msg', $_POST['tagline_msg']);
+		$login_msg_fontsize 	= sanitize_option('login_msg_fontsize', $_POST['login_msg_fontsize']);
+		$login_msg_font_color 	= sanitize_option('login_msg_font_color', $_POST['login_msg_font_color']);
+		
 		
 		// Save Values in Option Table
 		$login_page= serialize(array(
@@ -853,11 +961,16 @@ if(isset($_POST['Action'])){
 			'login_shadow_color' => $login_shadow_color,
 			'login_custom_css' => $login_custom_css,
 			'login_redirect_user' => $login_redirect_user,
+			'log_form_above_msg' => $log_form_above_msg,
+			'tagline_msg' => $tagline_msg,
+			'login_msg_fontsize' => $login_msg_fontsize,
+			'login_msg_font_color' => $login_msg_font_color,
+			
 			
 		));
 		update_option('Admin_custome_login_login', $login_page);
 	}
-
+	
 	if($Action == "loginbgReset") {
 		$login_page= serialize(array(
 			'login_form_position'=>'default',
@@ -869,7 +982,7 @@ if(isset($_POST['Action'])){
 			'login_bg_effect' => 'pattern-1',
 			'login_bg_image' => WEBLIZAR_NALF_PLUGIN_URL.'/images/3d-background.jpg',
 			'login_form_opacity' => '10',
-			'login_form_width' => '520',
+			'login_form_width' => '358',
 			'login_form_radius' => '10',
 			'login_border_style' => 'solid',
 			'login_border_thikness' => '4',
@@ -880,6 +993,11 @@ if(isset($_POST['Action'])){
 			'login_shadow_color' => '#C8C8C8',
 			'login_custom_css' => '',
 			'login_redirect_user' => '',
+			'log_form_above_msg' => '',
+			'tagline_msg' => 'This login form is created by <a href="https://wordpress.org/plugins/admin-custom-login/" target="_blank">ACL</a> , developed by <a href="https://www.weblizar.com" target="_blank">weblizar</a>',
+			'login_msg_fontsize' => '16',
+			'login_msg_font_color' => '#000000',	
+		
 		));
 		update_option('Admin_custome_login_login', $login_page);
 	}

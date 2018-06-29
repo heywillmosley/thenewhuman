@@ -149,6 +149,15 @@ if ( !class_exists( 'WWOF_Scripts' ) ) {
 			$products_per_page = get_option( 'wwof_general_products_per_page' );
 
             if ( isset( $post->post_content ) && has_shortcode( $post->post_content , 'wwof_product_listing' ) ) {
+                
+                global $Product_Addon_Display;
+                
+                if ( $Product_Addon_Display != null && ( get_class( $Product_Addon_Display ) == 'Product_Addon_Display' || get_class( $Product_Addon_Display ) == 'Product_Addon_Display_Legacy' ) ){
+
+                    $Product_Addon_Display->addon_scripts();
+                    wp_enqueue_script( 'wwof_init_addon_totals' , WWOF_JS_ROOT_URL . 'app/ProductAddons.js' , array( 'jquery' ) , $this->_wwof_current_version );
+                    
+                }
 
                 // Styles
                 wp_enqueue_style( 'wwof_fancybox_css' , WWOF_JS_ROOT_URL . 'lib/fancybox/jquery.fancybox.css' , array() , $this->_wwof_current_version , 'all' );
@@ -180,7 +189,7 @@ if ( !class_exists( 'WWOF_Scripts' ) ) {
 										'cart_url'                  => wc_get_cart_url()
                                     )
                                 );
-
+    
             }
 
         }

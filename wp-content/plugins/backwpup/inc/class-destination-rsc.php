@@ -204,8 +204,9 @@ class BackWPup_Destination_RSC extends BackWPup_Destinations {
 	/**
 	 * @param $jobid
 	 * @param $get_file
+	 * @param $local_file_path
 	 */
-	public function file_download( $jobid, $get_file ) {
+	public function file_download( $jobid, $get_file, $local_file_path = null ) {
 
 		try {
 			$conn = new OpenCloud\Rackspace(
@@ -238,12 +239,14 @@ class BackWPup_Destination_RSC extends BackWPup_Destinations {
 	}
 
 	/**
-	 * @param $jobdest
-	 * @return mixed
+	 * @inheritdoc
 	 */
 	public function file_get_list( $jobdest ) {
 
-		return get_site_transient( 'backwpup_' . strtolower( $jobdest ) );
+		$list = (array) get_site_transient( 'backwpup_' . strtolower( $jobdest ) );
+		$list = array_filter( $list );
+
+		return $list;
 	}
 
 	/**
@@ -324,7 +327,7 @@ class BackWPup_Destination_RSC extends BackWPup_Destinations {
 			while ( $object = $objlist->next() ) {
 				$file = basename( $object->getName() );
 				if ( $job_object->job[ 'rscdir' ] . $file == $object->getName() ) { //only in the folder and not in complete bucket
-					if ( $job_object->is_backup_archive( $file ) && $job_object->owns_backup_archive( $file ) == true )
+					if ( $this->is_backup_archive( $file ) && $this->is_backup_owned_by_job( $file, $job_object->job['jobid'] ) == true )
 						$backupfilelist[ strtotime( $object->getLastModified() ) ] = $object;
 				}
 				$files[ $filecounter ][ 'folder' ]      = "RSC://" . $job_object->job[ 'rsccontainer' ] . "/" . dirname( $object->getName() ) . "/";

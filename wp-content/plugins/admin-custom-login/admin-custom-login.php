@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Admin Custom Login
- * Version: 2.5.9
+ * Version: 2.6.1
  * Description: Customize Your WordPress Login Screen Amazingly
  * Author: Weblizar
  * Author URI: http://weblizar.com/plugins/
@@ -14,6 +14,15 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 define("WEBLIZAR_NALF_PLUGIN_URL", plugin_dir_url(__FILE__));
 define("WEBLIZAR_ACL", "admin-custom-login", true);
+
+$g_page = unserialize(get_option('Admin_custome_login_gcaptcha'));
+if(isset($g_page['login_enable_gcaptcha'])){
+	$login_enable_gcaptcha = $g_page['login_enable_gcaptcha'];
+	if($login_enable_gcaptcha=="yes"){
+		// Gcaptcha code
+		include('acl-gcaptcha.php');
+	}
+}
 
 /**
 * Redirect user after successful login.
@@ -79,14 +88,15 @@ function acl_weblizar_admin_custom_login_menu() {
 
 function acl_admin_custom_login_css() {	
 	// load CSS Files only With Admin Custom Login Menu Page
-	if(strpos($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 'admin_custom_login') == true) {
+   	if(strpos($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], 'admin_custom_login') == true) {
 		wp_enqueue_style('dashboard');
 		wp_enqueue_style('wp-color-picker');
 		wp_enqueue_style('thickbox');
-		wp_enqueue_style('acl-bootstrap-css', WEBLIZAR_NALF_PLUGIN_URL.'css/bootstrap.css');
+		wp_enqueue_style('acl-bootstrap-css', WEBLIZAR_NALF_PLUGIN_URL.'css/bootstrap.min.css');
+		wp_enqueue_style('acl-isotop-css', WEBLIZAR_NALF_PLUGIN_URL.'css/isotope_css.css');
 		wp_enqueue_style('acl-smartech-css', WEBLIZAR_NALF_PLUGIN_URL.'css/smartech.css');
 		wp_enqueue_style('acl-jquery-ui-css', WEBLIZAR_NALF_PLUGIN_URL.'css/jquery-ui.css');
-		wp_enqueue_style('acl-font-awesome_min', WEBLIZAR_NALF_PLUGIN_URL.'font-awesome/css/font-awesome.min.css');
+		wp_enqueue_style('acl-font-awesome_min', WEBLIZAR_NALF_PLUGIN_URL.'font-awesome-latest/css/fontawesome-all.min.css');
 		wp_enqueue_style('acl-font-animate', WEBLIZAR_NALF_PLUGIN_URL.'css/animate.css');
 		wp_enqueue_style('acl-fontawesome-iconpicker', WEBLIZAR_NALF_PLUGIN_URL.'css/fontawesome-iconpicker.css');
 		wp_enqueue_style('acl-recom', WEBLIZAR_NALF_PLUGIN_URL.'css/recom.css');
@@ -132,7 +142,7 @@ function acl_advanced_login_form_plugin() {
 		wp_enqueue_script('modernizr',WEBLIZAR_NALF_PLUGIN_URL.'js/modernizr.custom.86080.js');
 		wp_enqueue_style('demo', WEBLIZAR_NALF_PLUGIN_URL.'css/demo.css');
 	}
-	wp_enqueue_style('font-awesome_min', WEBLIZAR_NALF_PLUGIN_URL.'font-awesome/css/font-awesome.min.css');
+	wp_enqueue_style('font-awesome_min', WEBLIZAR_NALF_PLUGIN_URL.'font-awesome-latest/css/fontawesome-all.min.css');
 	wp_enqueue_style('custom-css', WEBLIZAR_NALF_PLUGIN_URL.'css/acl-custom.css');
 }
 add_action('login_enqueue_scripts', 'acl_advanced_login_form_plugin');
@@ -167,18 +177,35 @@ function acl_footer_func() {
 			jQuery('body.login div#login form .input, .login input[type="text"]').css('padding','5px 5px 5px 5px');
 		}
 		<?php }?>
+
+		<?php
+			 $g_page = unserialize(get_option('Admin_custome_login_gcaptcha'));
+			 $site_key = $g_page['site_key'];
+			 $secret_key = $g_page['secret_key'];
+		?>
+
 		<?php if ($top_page['top_bg_type'] == "slider-background"){ ?>
-		 jQuery('#screen').prepend('<ul class="cb-slideshow"> <li><span>Image 01</span></li> <li><span>Image 02</span></li> <li><span>Image 03</span></li>  <li><span>Image 04</span></li>  <li><span>Image 05</span></li> <li><span>Image 06</span></li>  </ul>')
+		 jQuery('#screen').prepend('<ul class="cb-slideshow"> <li><span>Image 01</span></li> <li><span>Image 02</span></li> <li><span>Image 03</span></li>  <li><span>Image 04</span></li>  <li><span>Image 05</span></li> <li><span>Image 06</span></li></ul>')
 		<?php } ?>
-		
+
 		//enable Social Icon In inner login form 
 		<?php if($Social_page['enable_social_icon'] == "inner" || $Social_page['enable_social_icon'] == "both") {?>
-		jQuery( ".forgetmenot, #lostpasswordform" ).append('<div class="acl-social-inner" style="padding-top:16px"><div class="acl-social-text" style="color:<?php echo $heading_font_color; ?>; font-size:<?php echo $heading_font_size;?>px; "><?php _e('Find Us On Social Media',WEBLIZAR_ACL); ?></div><div style="padding-top:5px"><?php if($Social_page['social_twitter_link']!=''){ ?><a href="<?php echo $Social_page['social_twitter_link'];?>" class="icon-button twitter"><i class="fa fa-twitter"></i><span></span></a><?php } if($Social_page['social_facebook_link']!=''){ ?> <a href="<?php echo $Social_page['social_facebook_link'];?>" class="icon-button facebook"><i class="fa fa-facebook"></i><span></span></a> <?php } if($Social_page['social_google_plus_link']!=''){ ?> <a href="<?php echo $Social_page['social_google_plus_link'];?>" class="icon-button google-plus"><i class="fa fa-google-plus"></i><span></span></a><?php } if($Social_page['social_linkedin_link']!=''){ ?> <a href="<?php echo $Social_page['social_linkedin_link'];?>" class="icon-button linkedin"> <i class="fa fa-linkedin"> </i> <span></span> </a> <?php } if($Social_page['social_pinterest_link']!=''){ ?><a href="<?php echo $Social_page['social_pinterest_link'];?>" class="icon-button pinterest"><i class="fa fa-pinterest"></i><span></span></a><?php } if($Social_page['social_digg_link']!=''){ ?><a href="<?php echo $Social_page['social_digg_link'];?>" class="icon-button digg"><i class="fa fa-digg"></i><span></span></a><?php } if($Social_page['social_youtube_link']!=''){ ?><a href="<?php echo $Social_page['social_youtube_link'];?>" class="icon-button youtube"><i class="fa fa-youtube"></i><span></span></a><?php } if($Social_page['social_flickr_link']!=''){ ?><a href="<?php echo $Social_page['social_flickr_link'];?>" class="icon-button flickr"><i class="fa fa-flickr"></i><span></span></a><?php } if($Social_page['social_tumblr_link']!=''){ ?><a href="<?php echo $Social_page['social_tumblr_link'];?>" class="icon-button tumblr"><i class="fa fa-tumblr"></i><span></span></a><?php }  if($Social_page['social_vkontakte_link']!=''){ ?><a href="<?php echo $Social_page['social_vkontakte_link'];?>" class="icon-button vkontakte"><i class="fa fa-vk"></i><span></span></a><?php } if($Social_page['social_skype_link']!=''){ ?><a href="<?php echo $Social_page['social_skype_link'];?>" class="icon-button skype"><i class="fa fa-skype"></i><span></span></a><?php } if($Social_page['social_instagram_link']!=''){ ?><a href="<?php echo $Social_page['social_instagram_link'];?>" class="icon-button instagram"><i class="fa fa-instagram"></i><span></span></a><?php } if($Social_page['social_telegram_link']!=''){ ?><a href="<?php echo $Social_page['social_telegram_link'];?>" class="icon-button telegram"><i class="fa fa-telegram"></i><span></span></a><?php }if($Social_page['social_whatsapp_link']!=''){ ?><a href="<?php echo $Social_page['social_whatsapp_link'];?>" class="icon-button whatsapp"><i class="fa fa-whatsapp"></i><span></span></a><?php } ?><div></div>' );
+		jQuery( ".forgetmenot, #lostpasswordform" ).append('<div class="acl-social-inner" style="padding-top:16px"><div class="acl-social-text" style="color:<?php echo $heading_font_color; ?>; font-size:<?php echo $heading_font_size;?>px; "><?php _e('Find Us On Social Media',WEBLIZAR_ACL); ?></div><div style="padding-top:5px"><?php if($Social_page['social_twitter_link']!=''){ ?><a href="<?php echo $Social_page['social_twitter_link'];?>" class="icon-button twitter"><i class="fab fa-twitter"></i><span></span></a><?php } if($Social_page['social_facebook_link']!=''){ ?> <a href="<?php echo $Social_page['social_facebook_link'];?>" class="icon-button facebook"><i class="fab fa-facebook-f"></i><span></span></a> <?php } if($Social_page['social_google_plus_link']!=''){ ?> <a href="<?php echo $Social_page['social_google_plus_link'];?>" class="icon-button google-plus"><i class="fab fa-google-plus-g"></i><span></span></a><?php } if($Social_page['social_linkedin_link']!=''){ ?> <a href="<?php echo $Social_page['social_linkedin_link'];?>" class="icon-button linkedin"> <i class="fab fa-linkedin-in"> </i> <span></span> </a> <?php } if($Social_page['social_pinterest_link']!=''){ ?><a href="<?php echo $Social_page['social_pinterest_link'];?>" class="icon-button pinterest"><i class="fab fa-pinteres-p"></i><span></span></a><?php } if($Social_page['social_digg_link']!=''){ ?><a href="<?php echo $Social_page['social_digg_link'];?>" class="icon-button digg"><i class="fab fa-digg"></i><span></span></a><?php } if($Social_page['social_youtube_link']!=''){ ?><a href="<?php echo $Social_page['social_youtube_link'];?>" class="icon-button youtube"><i class="fab fa-youtube-square"></i><span></span></a><?php } if($Social_page['social_flickr_link']!=''){ ?><a href="<?php echo $Social_page['social_flickr_link'];?>" class="icon-button flickr"><i class="fab fa-flickr"></i><span></span></a><?php } if($Social_page['social_tumblr_link']!=''){ ?><a href="<?php echo $Social_page['social_tumblr_link'];?>" class="icon-button tumblr"><i class="fab fa-tumblr"></i><span></span></a><?php } if($Social_page['social_skype_link']!=''){ ?><a href="<?php echo $Social_page['social_skype_link'];?>" class="icon-button skype"><i class="fab fa-skype"></i><span></span></a><?php } if($Social_page['social_instagram_link']!=''){ ?><a href="<?php echo $Social_page['social_instagram_link'];?>" class="icon-button instagram"><i class="fab fa-instagram"></i><span></span></a><?php } if($Social_page['social_telegram_link']!=''){ ?><a href="<?php echo $Social_page['social_telegram_link'];?>" class="icon-button telegram"><i class="fab fa-telegram-plane"></i><span></span></a><?php }if($Social_page['social_whatsapp_link']!=''){ ?><a href="<?php echo $Social_page['social_whatsapp_link'];?>" class="icon-button whatsapp"><i class="fab fa-whatsapp"></i><span></span></a><?php } ?><div></div>' );
 		<?php } ?>
 		//enable Social Icon In outer login form 
 		<?php if($Social_page['enable_social_icon'] == "outer" || $Social_page['enable_social_icon'] == "both") {?>
-		jQuery( "#backtoblog" ).append('<div class="divsocial"><?php if($Social_page['social_twitter_link']!=''){?> <a href="<?php echo $Social_page['social_twitter_link']; ?>" class="icon-button twitter"><i class="fa fa-twitter"></i><span></span></a><?php } if($Social_page['social_facebook_link']!=''){?><a href="<?php echo $Social_page['social_facebook_link']; ?>" class="icon-button facebook"><i class="fa fa-facebook"></i><span></span></a> <?php } if($Social_page['social_google_plus_link']!=''){?><a href="<?php echo $Social_page['social_google_plus_link']; ?>" class="icon-button google-plus"><i class="fa fa-google-plus"></i><span></span></a><?php } if($Social_page['social_linkedin_link']!=''){?><a href="<?php echo $Social_page['social_linkedin_link']; ?>" class="icon-button linkedin"><i class="fa fa-linkedin"></i><span></span></a><?php } if($Social_page['social_pinterest_link']!=''){?><a href="<?php echo $Social_page['social_pinterest_link']; ?>" class="icon-button pinterest"><i class="fa fa-pinterest"></i><span></span></a><?php } if($Social_page['social_digg_link']!=''){?> <a href="<?php echo $Social_page['social_digg_link']; ?>" class="icon-button digg"><i class="fa fa-digg"></i><span></span></a><?php } if($Social_page['social_youtube_link']!=''){?><a href="<?php echo $Social_page['social_youtube_link']; ?>" class="icon-button youtube"><i class="fa fa-youtube"></i><span></span></a><?php } if($Social_page['social_flickr_link']!=''){?><a href="<?php echo $Social_page['social_flickr_link']; ?>" class="icon-button flickr"><i class="fa fa-flickr"></i><span></span></a><?php } if($Social_page['social_tumblr_link']!=''){?><a href="<?php echo $Social_page['social_tumblr_link']; ?>" class="icon-button tumblr"><i class="fa fa-tumblr"></i><span></span></a><?php } if($Social_page['social_vkontakte_link']!=''){?><a href="<?php echo $Social_page['social_vkontakte_link']; ?>" class="icon-button vkontakte"><i class="fa fa-vk"></i><span></span></a><?php } if($Social_page['social_skype_link']!=''){?><a href="<?php echo $Social_page['social_skype_link']; ?>" class="icon-button skype"><i class="fa fa-skype"></i><span></span></a><?php } if($Social_page['social_instagram_link']!=''){?><a href="<?php echo $Social_page['social_instagram_link']; ?>" class="icon-button instagram"><i class="fa fa-instagram"></i><span></span></a><?php }if($Social_page['social_telegram_link']!=''){ ?><a href="<?php echo $Social_page['social_telegram_link'];?>" class="icon-button telegram"><i class="fa fa-telegram"></i><span></span></a><?php }if($Social_page['social_whatsapp_link']!=''){ ?><a href="<?php echo $Social_page['social_whatsapp_link'];?>" class="icon-button whatsapp"><i class="fa fa-whatsapp"></i><span></span></a><?php } ?></div>');
-		<?php } ?>
+		jQuery( "#backtoblog" ).append('<div class="divsocial"><?php if($Social_page['social_twitter_link']!=''){?> <a href="<?php echo $Social_page['social_twitter_link']; ?>" class="icon-button twitter"><i class="fab fa-twitter"></i><span></span></a><?php } if($Social_page['social_facebook_link']!=''){?><a href="<?php echo $Social_page['social_facebook_link']; ?>" class="icon-button facebook"><i class="fab fa-facebook-f"></i><span></span></a> <?php } if($Social_page['social_google_plus_link']!=''){?><a href="<?php echo $Social_page['social_google_plus_link']; ?>" class="icon-button google-plus"><i class="fab fa-google-plus-g"></i><span></span></a><?php } if($Social_page['social_linkedin_link']!=''){?><a href="<?php echo $Social_page['social_linkedin_link']; ?>" class="icon-button linkedin"><i class="fab fa-linkedin-in"></i><span></span></a><?php } if($Social_page['social_pinterest_link']!=''){?><a href="<?php echo $Social_page['social_pinterest_link']; ?>" class="icon-button pinterest"><i class="fab fa-pinterest-p"></i><span></span></a><?php } if($Social_page['social_digg_link']!=''){?> <a href="<?php echo $Social_page['social_digg_link']; ?>" class="icon-button digg"><i class="fab fa-digg"></i><span></span></a><?php } if($Social_page['social_youtube_link']!=''){?><a href="<?php echo $Social_page['social_youtube_link']; ?>" class="icon-button youtube"><i class="fab fa-youtube-square"></i><span></span></a><?php } if($Social_page['social_flickr_link']!=''){?><a href="<?php echo $Social_page['social_flickr_link']; ?>" class="icon-button flickr"><i class="fab fa-flickr"></i><span></span></a><?php } if($Social_page['social_tumblr_link']!=''){?><a href="<?php echo $Social_page['social_tumblr_link']; ?>" class="icon-button tumblr"><i class="fab fa-tumblr"></i><span></span></a><?php } if($Social_page['social_skype_link']!=''){?><a href="<?php echo $Social_page['social_skype_link']; ?>" class="icon-button skype"><i class="fab fa-skype"></i><span></span></a><?php } if($Social_page['social_instagram_link']!=''){?><a href="<?php echo $Social_page['social_instagram_link']; ?>" class="icon-button instagram"><i class="fab fa-instagram"></i><span></span></a><?php }if($Social_page['social_telegram_link']!=''){ ?><a href="<?php echo $Social_page['social_telegram_link'];?>" class="icon-button telegram"><i class="fab fa-telegram-plane"></i><span></span></a><?php }if($Social_page['social_whatsapp_link']!=''){ ?><a href="<?php echo $Social_page['social_whatsapp_link'];?>" class="icon-button whatsapp"><i class="fab fa-whatsapp"></i><span></span></a><?php } ?></div>');
+		<?php } 
+			$login_page = unserialize(get_option('Admin_custome_login_login'));
+			if(isset($login_page['tagline_msg'])){
+				$tagline_msg = $login_page['tagline_msg'];
+				$edit_tagline_msg = stripslashes($tagline_msg);
+			}
+			else{
+				$edit_tagline_msg = "";
+			}
+		?>
+		jQuery( "#backtoblog" ).append('<div class="divfooter"><?php echo html_entity_decode($edit_tagline_msg);?></div>');
 	})
 	</script>
 	<?php
@@ -241,6 +268,11 @@ function acl_export_settings() {
 	$login_bg_position = $login_page['login_bg_position'];
 	$login_enable_shadow = $login_page['login_enable_shadow'];
 	$login_shadow_color = $login_page['login_shadow_color'];
+	$log_form_above_msg = $login_page['log_form_above_msg'];
+	$login_msg_fontsize = $login_page['login_msg_fontsize'];
+	$login_msg_font_color = $login_page['login_msg_font_color'];
+	$tagline_msg = $login_page['tagline_msg'];
+
 
 	// Get value of Text and Color page
 	$text_and_color_page = unserialize(get_option('Admin_custome_login_text'));
@@ -303,12 +335,17 @@ function acl_export_settings() {
 	$social_youtube_link = $Social_page['social_youtube_link'];
 	$social_flickr_link = $Social_page['social_flickr_link'];
 	$social_tumblr_link = $Social_page['social_tumblr_link'];
-	$social_vkontakte_link = $Social_page['social_vkontakte_link'];
 	$social_skype_link = $Social_page['social_skype_link'];
 	$social_instagram_link = $Social_page['social_instagram_link'];
 	$social_telegram_link = $Social_page['social_telegram_link'];
 	$social_whatsapp_link = $Social_page['social_whatsapp_link'];
-	
+
+	$g_page = unserialize(get_option('Admin_custome_login_gcaptcha'));
+	$site_key = $g_page['site_key'];
+	$secret_key = $g_page['secret_key'];
+	$login_enable_gcaptcha = $g_page['login_enable_gcaptcha'];
+
+
 	$ACL_ALL_Settings= serialize(array(
 		'dashboard_status' 			=> $dashboard_status,
 		'top_bg_type'				=> $top_bg_type,
@@ -337,7 +374,11 @@ function acl_export_settings() {
 		'login_bg_position' 		=> $login_bg_position,
 		'login_enable_shadow' 		=> $login_enable_shadow,
 		'login_shadow_color' 		=> $login_shadow_color,
-		
+		'log_form_above_msg' 		=> $log_form_above_msg,
+		'login_msg_fontsize' 		=> $login_msg_fontsize,
+		'login_msg_font_color' 		=> $login_msg_font_color,
+		'tagline_msg' 				=> $tagline_msg,
+
 		'heading_font_color'		=> $heading_font_color,
 		'input_font_color'			=> $input_font_color,
 		'link_color'				=> $link_color,
@@ -378,7 +419,6 @@ function acl_export_settings() {
 		'social_youtube_link'		=> $social_youtube_link,
 		'social_flickr_link'		=> $social_flickr_link,
 		'social_tumblr_link'		=> $social_tumblr_link,
-		'social_vkontakte_link'		=> $social_vkontakte_link,
 		'social_skype_link'			=> $social_skype_link,
 		'social_instagram_link'		=> $social_instagram_link,
 		'social_telegram_link'		=> $social_telegram_link,
@@ -395,7 +435,11 @@ function acl_export_settings() {
 		'Slidshow_image_label_3'	=> $Slidshow_image_label_3,
 		'Slidshow_image_label_4'	=> $Slidshow_image_label_4,
 		'Slidshow_image_label_5'	=> $Slidshow_image_label_5,
-		'Slidshow_image_label_6'	=> $Slidshow_image_label_6 
+		'Slidshow_image_label_6'	=> $Slidshow_image_label_6,
+
+		'site_key'					=> $site_key,
+		'secret_key'				=> $secret_key,
+		'login_enable_gcaptcha'		=> $login_enable_gcaptcha
 	));
 	
 	ignore_user_abort( true );
@@ -470,6 +514,10 @@ function acl_import_settings() {
 	$login_bg_position 		= $ACL_Settings['login_bg_position'];
 	$login_enable_shadow 	= $ACL_Settings['login_enable_shadow'];
 	$login_shadow_color 	= $ACL_Settings['login_shadow_color'];
+	$log_form_above_msg 	= $ACL_Settings['log_form_above_msg'];
+	$login_msg_fontsize 	= $ACL_Settings['login_msg_fontsize'];
+	$login_msg_font_color 	= $ACL_Settings['login_msg_font_color'];
+	$tagline_msg 			= $ACL_Settings['tagline_msg'];
 	
 	$heading_font_color 	= $ACL_Settings['heading_font_color'];
 	$input_font_color 		= $ACL_Settings['input_font_color'];
@@ -530,6 +578,10 @@ function acl_import_settings() {
 	$social_instagram_link	= $ACL_Settings['social_instagram_link'];
 	$social_telegram_link	= $ACL_Settings['social_telegram_link'];
 	$social_whatsapp_link	= $ACL_Settings['social_whatsapp_link'];
+	
+	$site_key 				= $ACL_Settings['site_key'];
+	$secret_key			    = $ACL_Settings['secret_key'];
+	$login_enable_gcaptcha  = $ACL_Settings['login_enable_gcaptcha'];
 	
 	$upload_dir = wp_upload_dir();
 	$plugins_dir = plugins_url();
@@ -658,7 +710,11 @@ function acl_import_settings() {
 		'login_bg_repeat' 			=> $login_bg_repeat,
 		'login_bg_position' 		=> $login_bg_position,
 		'login_enable_shadow' 		=> $login_enable_shadow,
-		'login_shadow_color' 		=> $login_shadow_color
+		'login_shadow_color' 		=> $login_shadow_color,
+		'log_form_above_msg' 		=> $log_form_above_msg,
+		'login_msg_fontsize' 		=> $login_msg_fontsize,
+		'login_msg_font_color' 		=> $login_msg_font_color,
+		'tagline_msg' 				=> $tagline_msg
 	));
 	update_option('Admin_custome_login_login', $login_page);
 	
@@ -730,6 +786,15 @@ function acl_import_settings() {
 		'Slidshow_image_label_6'=> $Slidshow_image_label_6 
 	));
 	update_option('Admin_custome_login_Slidshow', $Slidshow_image);
+
+
+	$g_page= serialize(array(
+		'site_key'					=> $site_key,
+		'secret_key'				=> $secret_key,
+		'login_enable_gcaptcha'		=> $login_enable_gcaptcha 
+		
+	));
+	update_option('Admin_custome_login_gcaptcha', $g_page);
 
 	//wp_safe_redirect( admin_url( 'options-general.php?page=admin_custom_login' ) ); exit;
 }

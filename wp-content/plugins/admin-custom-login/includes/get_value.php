@@ -41,6 +41,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	$login_shadow_color=$login_page['login_shadow_color'];
 	$login_custom_css=$login_page['login_custom_css'];
 	$login_redirect_user=$login_page['login_redirect_user'];
+	$log_form_above_msg=$login_page['log_form_above_msg'];
+	$login_msg_fontsize= $login_page['login_msg_fontsize'];
+	$login_msg_font_color= $login_page['login_msg_font_color'];
+	$tagline_msg= $login_page['tagline_msg'];
 	
 	// Get value of Text and Color page
 	$text_and_color_page = unserialize(get_option('Admin_custome_login_text'));
@@ -70,6 +74,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	$logo_url = $logo_page['logo_url'];
 	$logo_url_title = $logo_page['logo_url_title'];
 
+	// Get value of Gcaptcha page
+	$g_page = unserialize(get_option('Admin_custome_login_gcaptcha'));
+	$site_key = $g_page['site_key'];
+	$secret_key = $g_page['secret_key'];
+	$login_enable_gcaptcha = $g_page['login_enable_gcaptcha'];
+		
 	// Get value of Slidshow image
 	$Slidshow_image = unserialize(get_option('Admin_custome_login_Slidshow'));
 	$Slidshow_image_1=$Slidshow_image['Slidshow_image_1'];

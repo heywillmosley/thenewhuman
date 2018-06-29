@@ -514,18 +514,22 @@ class ODB_Cleaner {
 		if($odb_class->odb_logger_obj->odb_log_count() > 0) {
 		?>
 <script>
-function confirm_delete() {
-	if(confirm('<?php _e('Clear the log?', $odb_class->odb_txt_domain)?>')) {
-		self.location = 'tools.php?page=rvg-optimize-database&action=delete_log'
+function odb_confirm_delete() {
+<?php
+		// v4.6.2
+		$msg = str_replace("'", "\'", __('Clear the log?', $odb_class->odb_txt_domain));
+?>	
+	if(confirm('<?php echo $msg?>')) {
+		self.location = 'tools.php?page=rvg-optimize-database&action=clear_log'
 		return;
 	}
-} // confirm_delete()
+} // odb_confirm_delete()
 </script>    
 		<br><br>
 		&nbsp;
-		<input class="button odb-normal" type="button" name="view_log" value="<?php _e('View Log', $odb_class->odb_txt_domain);?>" onclick="self.location='tools.php?page=rvg-optimize-database&action=show_log'" />
+		<input class="button odb-normal" type="button" name="view_log" value="<?php _e('View Log', $odb_class->odb_txt_domain);?>" onclick="self.location='tools.php?page=rvg-optimize-database&action=view_log'" />
 		&nbsp;
-		<input class="button odb-normal" type="button" name="delete_log" value="<?php _e('Clear Log', $odb_class->odb_txt_domain);?>" onclick="return confirm_delete();" />
+		<input class="button odb-normal" type="button" name="clear_log" value="<?php _e('Clear Log', $odb_class->odb_txt_domain);?>" onclick="return odb_confirm_delete();" />
 		<?php	
 		} // if($odb_class->odb_logger_obj->odb_log_count() > 0)
 ?>

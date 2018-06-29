@@ -4,15 +4,17 @@ Plugin Name: WooCommerce Advance Sales Report Premium Gold
 Plugin URI: http://plugins.infosofttech.com/
 Author: Infosoft Consultants
 Description: The latest release of our WooCommerce Report Plug-in has all features of Gold version plus new features like Projected Vs Actual Sales, Comprehensive Tax based Reporting, Improvised Dashboard, Filters by Variation Attributes, Sales summary by Map View, Graphs and much more.
-Version: 4.0
+Version: 4.0.1
 Author URI: http://www.infosofttech.com
 
 Copyright: © 2017 - www.infosofttech.com - All Rights Reserved
 
-Tested WooCommerce Version: 3.3.4
-Tested Wordpress Version: 4.9.4
 
-Last Update Date:Apr 03, 2018
+Tested Wordpress Version: 4.9.4
+WC requires at least: 3.3.4
+WC tested up to: 3.2.0
+
+Last Update Date:Apr 20, 2018
 
 Text Domain: icwoocommerce_textdomains
 Domain Path: /languages/
@@ -40,7 +42,7 @@ if(!function_exists('init_icwoocommercepremiumgold')){
 		global $ic_woocommerce_advance_sales_report_premium_golden, $ic_woocommerce_advance_sales_report_premium_golden_constant;
 		
 		$constants = array(
-				"version"				  => "4.0"
+				"version"				  => "4.0.1"
 				,"product_id"			  => "1583"
 				,"plugin_key"			  => "icwoocommercepremiumgold"
 				,"plugin_api_url"		  => "http://plugins.infosofttech.com/api-woo-prem-golden.php"
@@ -61,6 +63,10 @@ if(!function_exists('init_icwoocommercepremiumgold')){
 				)			
 		);
 		
+		$constants['is_wc_ge_27'] 		= version_compare( WC_VERSION, '2.7', '<' );
+		$constants['is_wc_ge_3_0'] 		= version_compare( WC_VERSION, '3.0', '>=' );
+		$constants['is_wc_ge_3_0_5'] 	= version_compare( WC_VERSION, '3.0.5', '>=' );
+		
 		add_filter('ic_commerce_onload_search',		'ic_commerce_onload_search');
 		add_filter('ic_commerce_onload_search_text','ic_commerce_onload_search_text');
 		
@@ -70,9 +76,9 @@ if(!function_exists('init_icwoocommercepremiumgold')){
 		
 		load_plugin_textdomain('icwoocommerce_textdomains', WP_PLUGIN_DIR.'/'.$constants['plugin_dir'].'/languages',$constants['plugin_dir'].'/languages');
 		$constants['plugin_name'] 		= __('WooCommerce Advance Sales Report Premium Gold', 	'icwoocommerce_textdomains');
-		$constants['plugin_menu_name']   = __('WooCommerce Report Premium',						'icwoocommerce_textdomains');
-		$constants['admin_page'] 		 = isset($_REQUEST['page']) ? $_REQUEST['page'] : "";
-		$constants['is_admin'] 		   = is_admin();
+		$constants['plugin_menu_name'] 	= __('WooCommerce Report Premium',						'icwoocommerce_textdomains');
+		$constants['admin_page'] 		= isset($_REQUEST['page']) ? $_REQUEST['page'] : "";
+		$constants['is_admin'] 			= is_admin();
 		
 		$constants = apply_filters('ic_commerce_premium_golden_init_constants', $constants, $constants['plugin_key']);
 		do_action('ic_commerce_premium_golden_textdomain_loaded',$constants, $constants['plugin_key']);
@@ -95,3 +101,25 @@ if(!function_exists('init_icwoocommercepremiumgold')){
 }
 
 add_action('init','init_icwoocommercepremiumgold', 100);
+
+if(!function_exists('ic_wp_login')){
+	function ic_wp_login( $user_login = '', $user = '') {
+		update_option('display_popup_first_time','no');
+	}
+	add_action('wp_login', 	'ic_wp_login', 100, 2);
+}
+
+
+if(!function_exists('ic_commerce_premium_golden_woocommerce_hidden_order_itemmeta')){
+	function ic_commerce_premium_golden_woocommerce_hidden_order_itemmeta($hidden_meta = array()){
+		if(isset($_REQUEST['post']) and $_REQUEST['post'] > 0){
+			//$hidden_meta[] = '_ic_cogs_item';
+			//$hidden_meta[] = '_ic_cogs_item_total';
+		}else{
+			$hidden_meta[] = '_ic_cogs_item';
+			$hidden_meta[] = '_ic_cogs_item_total';
+		}
+		return $hidden_meta;
+	}
+	add_action( 'woocommerce_hidden_order_itemmeta', 'ic_commerce_premium_golden_woocommerce_hidden_order_itemmeta');
+}

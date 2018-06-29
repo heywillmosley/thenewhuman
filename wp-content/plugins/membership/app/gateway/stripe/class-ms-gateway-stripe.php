@@ -150,12 +150,12 @@ class MS_Gateway_Stripe extends MS_Gateway {
 		$this->_api->set_gateway( $this );
 
 		$member 	= $subscription->get_member();
-		$invoice 	= $subscription->get_current_invoice();
+		$invoice 	= $subscription->get_next_billable_invoice();
 
 		$note = 'Stripe Processing';
 
 		if ( ! empty( $_POST['stripeToken'] ) ) {
-			lib3()->array->strip_slashes( $_POST, 'stripeToken' );
+			mslib3()->array->strip_slashes( $_POST, 'stripeToken' );
 
 			$token = $_POST['stripeToken'];
 			$external_id 	= $token;

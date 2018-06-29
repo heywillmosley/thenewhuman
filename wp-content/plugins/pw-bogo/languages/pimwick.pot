@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the PW WooCommerce BOGO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: PW WooCommerce BOGO 2.66\n"
+"Project-Id-Version: PW WooCommerce BOGO 2.70\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pw-bogo\n"
-"POT-Creation-Date: 2018-05-09 15:33:43+00:00\n"
+"POT-Creation-Date: 2018-06-21 14:57:11+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -32,178 +32,178 @@ msgstr ""
 msgid "Unknown update checker status \"%s\""
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:103
+#: pw-woocommerce-bogo-free.php:104
 msgctxt "Post Type General Name"
 msgid "PW BOGO"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:104
+#: pw-woocommerce-bogo-free.php:105
 msgctxt "Post Type Singular Name"
 msgid "PW BOGO"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:105 pw-woocommerce-bogo-free.php:106
-#: pw-woocommerce-bogo-free.php:109 pw-woocommerce-bogo-free.php:131
-#: pw-woocommerce-bogo-free.php:132 pw-woocommerce-bogo-free.php:174
-#: pw-woocommerce-bogo-free.php:185
+#: pw-woocommerce-bogo-free.php:106 pw-woocommerce-bogo-free.php:107
+#: pw-woocommerce-bogo-free.php:110 pw-woocommerce-bogo-free.php:132
+#: pw-woocommerce-bogo-free.php:133 pw-woocommerce-bogo-free.php:175
+#: pw-woocommerce-bogo-free.php:186
 msgid "PW BOGO"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:107
+#: pw-woocommerce-bogo-free.php:108
 msgid "PW BOGO Archives"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:108
+#: pw-woocommerce-bogo-free.php:109
 msgid "Parent PW BOGO:"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:110
+#: pw-woocommerce-bogo-free.php:111
 msgid "Add New PW BOGO"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:111
+#: pw-woocommerce-bogo-free.php:112
 msgid "Create New PW BOGO"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:112
+#: pw-woocommerce-bogo-free.php:113
 msgid "New PW BOGO"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:113
+#: pw-woocommerce-bogo-free.php:114
 msgid "Edit PW BOGO"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:114
+#: pw-woocommerce-bogo-free.php:115
 msgid "Update PW BOGO"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:115
+#: pw-woocommerce-bogo-free.php:116
 msgid "View PW BOGO"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:116
+#: pw-woocommerce-bogo-free.php:117
 msgid "Search PW BOGO"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:117
+#: pw-woocommerce-bogo-free.php:118
 msgid "Not found"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:118
+#: pw-woocommerce-bogo-free.php:119
 msgid "Not found in Trash"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:119
+#: pw-woocommerce-bogo-free.php:120
 msgid "PW BOGO Logo"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:120
+#: pw-woocommerce-bogo-free.php:121
 msgid "Set PW BOGO Logo"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:121
+#: pw-woocommerce-bogo-free.php:122
 msgid "Remove PW BOGO Logo"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:122
+#: pw-woocommerce-bogo-free.php:123
 msgid "Use as PW BOGO Logo"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:123
+#: pw-woocommerce-bogo-free.php:124
 msgid "Insert into item"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:124
+#: pw-woocommerce-bogo-free.php:125
 msgid "Uploaded to this item"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:125
+#: pw-woocommerce-bogo-free.php:126
 msgid "PW BOGO list"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:126
+#: pw-woocommerce-bogo-free.php:127
 msgid "PW BOGO list navigation"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:127
+#: pw-woocommerce-bogo-free.php:128
 msgid "Filter PW BOGO list"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:157
+#: pw-woocommerce-bogo-free.php:158
 msgid "About"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:160
+#: pw-woocommerce-bogo-free.php:161
 msgid "Discount"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:161
+#: pw-woocommerce-bogo-free.php:162
 msgid "Eligible Products"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:162
+#: pw-woocommerce-bogo-free.php:163
 msgid "Discounted Products"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:163
+#: pw-woocommerce-bogo-free.php:164
 msgid "Dates"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:164
+#: pw-woocommerce-bogo-free.php:165
 msgid "Restrictions"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:166
+#: pw-woocommerce-bogo-free.php:167
 msgid "Activation Required"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:175 pw-woocommerce-bogo-free.php:186
-#: pw-woocommerce-bogo-free.php:198
+#: pw-woocommerce-bogo-free.php:176 pw-woocommerce-bogo-free.php:187
+#: pw-woocommerce-bogo-free.php:199
 msgid "Pimwick Plugins"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:199
+#: pw-woocommerce-bogo-free.php:200
 msgid "Our Plugins"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:244
+#: pw-woocommerce-bogo-free.php:245
 msgctxt "pimwick"
 msgid "Name"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:245
+#: pw-woocommerce-bogo-free.php:246
 msgid "Buy One, Get One"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:246
+#: pw-woocommerce-bogo-free.php:247
 msgid "Begin Date"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:247
+#: pw-woocommerce-bogo-free.php:248
 msgid "End Date"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:259
+#: pw-woocommerce-bogo-free.php:260
 msgid "Free"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:262
+#: pw-woocommerce-bogo-free.php:263
 msgid "% off"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:697
+#: pw-woocommerce-bogo-free.php:709
 msgid "Invalid bogo parameter for get_bogo()."
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:701
+#: pw-woocommerce-bogo-free.php:713
 msgid "%s is not a valid type for get_bogo()."
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:879
+#: pw-woocommerce-bogo-free.php:895
 msgid "PW BOGO: %s"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:1196 pw-woocommerce-bogo-free.php:1201
+#: pw-woocommerce-bogo-free.php:1229 pw-woocommerce-bogo-free.php:1234
 msgid "Coupon: %s"
 msgstr ""
 
@@ -293,8 +293,8 @@ msgstr ""
 
 #: ui/meta-boxes.php:463
 msgid ""
-"The number of times this deal can be applied, per order. Leave blank or 0 "
-"for no limit.<br>"
+"Per Order Limit - The number of times this deal can be applied, per order. "
+"Leave blank or 0 for no limit.<br>"
 msgstr ""
 
 #: ui/meta-boxes.php:467
@@ -305,14 +305,26 @@ msgid ""
 msgstr ""
 
 #: ui/meta-boxes.php:477
+msgid ""
+"Redemption Limit - The number of times this deal can be used for all "
+"customers. Leave blank or 0 for no limit.<br>"
+msgstr ""
+
+#: ui/meta-boxes.php:489
+msgid ""
+"Redemption Counter - The number of times this deal has been used. You can "
+"manually reset the counter using this field.<br>"
+msgstr ""
+
+#: ui/meta-boxes.php:504
 msgid "Coupon Code<br>"
 msgstr ""
 
-#: ui/meta-boxes.php:487
+#: ui/meta-boxes.php:514
 msgid "Allow free shipping "
 msgstr ""
 
-#: ui/meta-boxes.php:488
+#: ui/meta-boxes.php:515
 msgid ""
 "<br>Check this box if the BOGO deal grants free shipping. A <a href=\"%s\" "
 "target=\"_blank\">free shipping method</a> must be enabled in your shipping "
@@ -320,19 +332,19 @@ msgid ""
 "Shipping Requires\" setting)."
 msgstr ""
 
-#: ui/meta-boxes.php:497
+#: ui/meta-boxes.php:524
 msgid "No other coupons allowed "
 msgstr ""
 
-#: ui/meta-boxes.php:498
+#: ui/meta-boxes.php:525
 msgid "<br>Check this box if other coupons are not allowed for BOGO items."
 msgstr ""
 
-#: ui/meta-boxes.php:508
+#: ui/meta-boxes.php:535
 msgid "Exclude sale items "
 msgstr ""
 
-#: ui/meta-boxes.php:509
+#: ui/meta-boxes.php:536
 msgid "<br>Check this box if the BOGO deal should not apply to items on sale."
 msgstr ""
 
@@ -340,9 +352,9 @@ msgstr ""
 msgid "PW WooCommerce BOGO"
 msgstr ""
 
-#. #-#-#-#-#  pimwick.pot (PW WooCommerce BOGO 2.66)  #-#-#-#-#
+#. #-#-#-#-#  pimwick.pot (PW WooCommerce BOGO 2.70)  #-#-#-#-#
 #. Plugin URI of the plugin/theme
-#. #-#-#-#-#  pimwick.pot (PW WooCommerce BOGO 2.66)  #-#-#-#-#
+#. #-#-#-#-#  pimwick.pot (PW WooCommerce BOGO 2.70)  #-#-#-#-#
 #. Author URI of the plugin/theme
 msgid "https://pimwick.com/pw-bogo"
 msgstr ""

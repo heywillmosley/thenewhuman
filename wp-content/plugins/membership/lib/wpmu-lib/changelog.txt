@@ -1,19 +1,39 @@
 Plugin Name: WPMU Dev code library
-Author:      Philipp Stracker
+Author:      Philipp Stracker, Marcin Pietrzak
 
 Change Log:
 ----------------------------------------------------------------------
+
+3.0.6
+PHP
+- Change variable name to correct one.
+
+3.0.5
+PHP
+- Added sanitization of css classes.
+- Added wpColorPicker field.
+- Added wp_media field.
+- Fixed a url port problem.
+
+3.0.4
+JS
+- Added check is function "el.wpmuiSelect" to avoid JavaScript errors.
+
+3.0.3
+----------------------------------------------------------------------
+JS
+- Improved scripts to be compatible wit select2 v4.
 
 3.0.0
 ----------------------------------------------------------------------
 PHP
 - Improve performance of initial module loading
-- Change library function from `lib2()` to `lib3()`
+- Change library function from `lib2()` to `mslib3()`
 - Add a P3P header so IE stores session data
-- Remove deprecated function `lib3()->translate_plugin()`
-- Remove deprecated function `lib3()->html->message()`
-- Add convenience function `lib3()->is_false()`
-- Rename `lib3()->html->plugin_list()` to `addon_list()`
+- Remove deprecated function `mslib3()->translate_plugin()`
+- Remove deprecated function `mslib3()->html->message()`
+- Add convenience function `mslib3()->is_false()`
+- Rename `mslib3()->html->plugin_list()` to `addon_list()`
 - Hide the "Details" link for disabled add-ons in the addon-list
 
 JS
@@ -28,7 +48,7 @@ CSS
 - Add animate.css library v3.4
 
 Migration notes
-- Rename `lib2()` to `lib3()`
+- Rename `lib2()` to `mslib3()`
 - Remove `->ui->add('scrollbar')`, add custom solution via CSS
 - Remove `->translate_plugin` with direct locationzation code
 - Replace `->html->message` with `->ui->admin_message`

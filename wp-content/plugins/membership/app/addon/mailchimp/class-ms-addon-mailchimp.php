@@ -138,7 +138,7 @@ class MS_Addon_Mailchimp extends MS_Addon {
 	 */
 	private static function mailchimp_log( $message ) {
 		if( defined( 'WP_DEBUG' ) && WP_DEBUG === true ) { 
-			lib3()->debug->log( '[M2] Mailchimp Error : ' . $message );
+			mslib3()->debug->log( '[M2] Mailchimp Error : ' . $message );
 		}
 	}
 
@@ -152,8 +152,20 @@ class MS_Addon_Mailchimp extends MS_Addon {
 	public function subscribe_registered( $event, $member ) {
 		try {
 			if ( $list_id = self::$settings->get_custom_setting( 'mailchimp', 'mail_list_registered' ) ) {
-				if ( ! self::is_user_subscribed( $member->email, $list_id ) ) {
-					self::subscribe_user( $member, $list_id );
+
+				$dont_subscribe 	= apply_filters( 'ms_dont_subscribe_registered', false, $member, $list_id, $event );
+				$already_subscribed = self::is_user_subscribed( $member->email, $list_id );
+
+				if ( $dont_subscribe ) {
+					// Unsubscribe from registered members mail list, if already subscribed.
+					if ( $already_subscribed ) {
+						self::unsubscribe_user( $member, $list_id );
+					}
+				} else {
+					// Subscribe to registered members mail list.
+					if ( ! $already_subscribed ) {
+						self::subscribe_user( $member, $list_id );
+					}
 				}
 			}
 		} catch ( Exception $e ) {
@@ -190,7 +202,6 @@ class MS_Addon_Mailchimp extends MS_Addon {
 				}
 			}
 
-			/** Subscribe to members mail list. */
 			$custom_list_id = get_option( 'ms_mc_m_id_' . $subscription->membership_id );
 
 			if ( isset( $custom_list_id ) && 0 != $custom_list_id ) {
@@ -200,8 +211,20 @@ class MS_Addon_Mailchimp extends MS_Addon {
 			}
 
 			if ( $list_id ) {
-				if ( ! self::is_user_subscribed( $member->email, $list_id ) ) {
-					self::subscribe_user( $member, $list_id );
+
+				$dont_subscribe 	= apply_filters( 'ms_dont_subscribe_members', false, $member, $list_id, $event );
+				$already_subscribed = self::is_user_subscribed( $member->email, $list_id );
+
+				if ( $dont_subscribe ) {
+					/**  Unsubscribe from members mail list, if already subscribed. */
+					if ( $already_subscribed ) {
+						self::unsubscribe_user( $member, $list_id );
+					}
+				} else {
+					/** Subscribe to members mail list. */
+					if ( ! $already_subscribed ) {
+						self::subscribe_user( $member, $list_id );
+					}
 				}
 			}
 		} catch ( Exception $e ) {
@@ -246,9 +269,19 @@ class MS_Addon_Mailchimp extends MS_Addon {
 					}
 				}
 
-				// Subscribe to deactiveted members mail list.
-				if ( ! self::is_user_subscribed( $member->email, $mail_list_deactivated ) ) {
-					self::subscribe_user( $member, $mail_list_deactivated );
+				$dont_subscribe 	= apply_filters( 'ms_dont_subscribe_deactivated', false, $member, $mail_list_deactivated, $event );
+				$already_subscribed = self::is_user_subscribed( $member->email, $mail_list_deactivated );
+
+				if ( $dont_subscribe ) {
+					// Unsubscribe from deactiveted members mail list, if already subscribed.
+					if ( $already_subscribed ) {
+						self::unsubscribe_user( $member, $mail_list_deactivated );
+					}
+				} else {
+					// Subscribe to deactiveted members mail list.
+					if ( ! $already_subscribed ) {
+						self::subscribe_user( $member, $mail_list_deactivated );
+					}
 				}
 			}
 		} catch ( Exception $e ) {
@@ -289,7 +322,7 @@ class MS_Addon_Mailchimp extends MS_Addon {
 			'ms_init' => array( 'view_settings_mailchimp' ),
 		);
 
-		lib3()->ui->data( 'ms_data', $data );
+		mslib3()->ui->data( 'ms_data', $data );
 		wp_enqueue_script( 'ms-admin' );
 	}
 
@@ -450,7 +483,7 @@ class MS_Addon_Mailchimp extends MS_Addon {
 				'mailchimp',
 				'auto_opt_in'
 			);
-			$auto_opt_in = lib3()->is_true( $auto_opt_in );
+			$auto_opt_in = mslib3()->is_true( $auto_opt_in );
 
 			$update = apply_filters(
 				'ms_addon_mailchimp_subscribe_user_update',

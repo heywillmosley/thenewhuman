@@ -6,7 +6,7 @@
  *
  * @author 		Rymera Web Co
  * @package 	WooCommerceWholeSaleOrderForm/Templates
- * @version     1.8.1
+ * @version     1.8.5
  */
 
 if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -99,6 +99,7 @@ $labels = array(
                             <span class="mobile-label"><?php echo $labels[ 'product' ]; ?></span>
                             <?php echo $product_listing->wwof_get_product_image( $product , get_the_permalink( $post_id ) , $thumbnailSize ); ?>
                             <?php echo $product_listing->wwof_get_product_title( $product , get_the_permalink( $post_id ) ); ?>
+                            <br />
                             <?php echo $product_listing->wwof_get_product_variation_field( $product ); ?>
                             <?php echo $product_listing->wwof_get_product_variation_selected_options( $product ); ?>
                             <?php echo $product_listing->wwof_get_product_addons( $product ); ?>

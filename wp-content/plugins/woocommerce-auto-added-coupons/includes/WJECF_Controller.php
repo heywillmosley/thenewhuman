@@ -376,6 +376,7 @@ class WJECF_Controller {
         //  If sale items are excluded by the coupon: the item will NOT be counted if it is a sale item
         //  If no filter exist, all items will be counted
 
+        unset( $this->coupon_multiplier_values[ $wrap_coupon->get_code() ] );
         $multiplier = null; //null = not initialized
 
         //Validate quantity
@@ -431,32 +432,34 @@ class WJECF_Controller {
             if ( ! in_array( $chosen_payment_method, $payment_method_ids ) ) {
                 throw new Exception( self::E_WC_COUPON_PAYMENT_METHOD_NOT_MET );
             }
-        }            
-
-
-        //============================
-        //Test restricted user ids and roles
-        //NOTE: If both customer id and role restrictions are provided, the coupon matches if either the id or the role matches
-        $coupon_customer_ids = $this->get_coupon_customer_ids( $coupon );
-        $coupon_customer_roles = $this->get_coupon_customer_roles( $coupon );
-        if ( sizeof( $coupon_customer_ids ) > 0 || sizeof( $coupon_customer_roles ) > 0 ) {        
-            $user = wp_get_current_user();
-
-            //If both fail we invalidate. Otherwise it's ok
-            if ( ! in_array( $user->ID, $coupon_customer_ids ) && ! array_intersect( $user->roles, $coupon_customer_roles ) ) {
-                throw new Exception( self::E_WC_COUPON_NOT_FOR_THIS_USER );
-            }
         }
-        
-        //============================
-        //Test excluded user roles
-        $coupon_excluded_customer_roles = $this->get_coupon_excluded_customer_roles( $coupon );
-        if ( sizeof( $coupon_excluded_customer_roles ) > 0 ) {        
-            $user = wp_get_current_user();
 
-            //Excluded customer roles
-            if ( array_intersect( $user->roles, $coupon_excluded_customer_roles ) ) {
-                throw new Exception( self::E_WC_COUPON_NOT_FOR_THIS_USER );
+        //Since 2.6.3: only verify customer if on frontend
+        if ( $this->is_request( 'frontend' ) ) {
+            //============================
+            //Test restricted user ids and roles
+            //NOTE: If both customer id and role restrictions are provided, the coupon matches if either the id or the role matches
+            $coupon_customer_ids = $this->get_coupon_customer_ids( $coupon );
+            $coupon_customer_roles = $this->get_coupon_customer_roles( $coupon );
+            if ( sizeof( $coupon_customer_ids ) > 0 || sizeof( $coupon_customer_roles ) > 0 ) {
+                $user = wp_get_current_user();
+
+                //If both fail we invalidate. Otherwise it's ok
+                if ( ! in_array( $user->ID, $coupon_customer_ids ) && ! array_intersect( $user->roles, $coupon_customer_roles ) ) {
+                    throw new Exception( self::E_WC_COUPON_NOT_FOR_THIS_USER );
+                }
+            }
+
+            //============================
+            //Test excluded user roles
+            $coupon_excluded_customer_roles = $this->get_coupon_excluded_customer_roles( $coupon );
+            if ( sizeof( $coupon_excluded_customer_roles ) > 0 ) {
+                $user = wp_get_current_user();
+
+                //Excluded customer roles
+                if ( array_intersect( $user->roles, $coupon_excluded_customer_roles ) ) {
+                    throw new Exception( self::E_WC_COUPON_NOT_FOR_THIS_USER );
+                }
             }
         }
 
@@ -464,20 +467,32 @@ class WJECF_Controller {
         //e.g. WC prior to 2.3.0 can't handle Exceptions; while 2.3.0 and above require exceptions
         do_action( 'wjecf_assert_coupon_is_valid', $coupon, $wc_discounts );
 
-        if ( $wrap_coupon->get_minimum_amount() ) {
-             $multiplier = self::min_value( floor( WC()->cart->subtotal / $wrap_coupon->get_minimum_amount() ), $multiplier );
+        if ( (float) $wrap_coupon->get_minimum_amount() ) {
+             $multiplier = self::min_value( floor( $this->get_subtotal( $wc_discounts ) / $wrap_coupon->get_minimum_amount() ), $multiplier );
         }
 
-
-        $this->coupon_multiplier_values[ $wrap_coupon->get_code() ] = $multiplier;
+        /**
+         * Filters the (product-)multiplier value of the coupon.
+         *
+         * @since 2.6.3
+         *
+         * @param float|null   $multiplier       Current multiplier value (or null if no multiplier yet known)
+         * @param WC_Coupon    $coupon           The coupon
+         * @param WC_Discounts $wc_discounts     Discounts class containing the cart items (NOTE: Will be a WJECF_WC_Discounts for WC < 3.2.0)
+         */
+        $multiplier = apply_filters( 'wjecf_coupon_multiplier_value', $multiplier, $coupon, $wc_discounts );
+        $this->coupon_multiplier_values[ $wrap_coupon->get_code() ] = isset( $multiplier ) ? $multiplier : 1;
 
         //$this->log( 'debug', 'Coupon ' . $wrap_coupon->get_code() . ' is valid. Multiplyer value: ' . $multiplier );
 
-        return true;    // VALID!        
+        return true;    // VALID!
     }
 
     /**
      * Return the lowest multiplier value
+     * @param float $value
+     * @param float|null $current_multiplier_value  Null means the value is not yet known
+     * @return float
      */
     private static function min_value( $value, $current_multiplier_value = null ) {
         return ( $current_multiplier_value === null || $value < $current_multiplier_value ) ? $value : $current_multiplier_value;
@@ -495,11 +510,10 @@ class WJECF_Controller {
             if ( ! $this->coupon_is_valid( true, $coupon ) ) {
                 return 0;
             }
+            //Calling coupon_is_valid enforces $this->coupon_multiplier_values to be set; if the coupon is valid.
         }
-        $multiplier = $this->coupon_multiplier_values[ WJECF_Wrap( $coupon )->get_code() ];
 
-        //error_log("get multiplier " . WJECF_Wrap( $coupon )->get_code() . " = " . $multiplier );
-        return $multiplier;
+        return $this->coupon_multiplier_values[ WJECF_Wrap( $coupon )->get_code() ];
     }
 
     //Temporary storage
@@ -542,6 +556,23 @@ class WJECF_Controller {
             if ($this->coupon_is_valid_for_product( $coupon, $item->product, $item->object ) ) {
                 $subtotal_precise += $item->price;
             }
+        }
+
+        $subtotal = WJECF_WC()->wc_remove_number_precision( $subtotal_precise );
+        return $subtotal;
+    }
+
+    /**
+     * The total value of the products in the cart
+     * since 2.2.2-b3
+     */
+    public function get_subtotal( $wc_discounts = null ) {
+        $items = WJECF_WC()->get_discount_items( $wc_discounts );
+
+        $subtotal_precise = 0;
+        foreach( $items as $item_key => $item ) {
+            if ( $item->product === false ) continue;
+            $subtotal_precise += $item->price;
         }
 
         $subtotal = WJECF_WC()->wc_remove_number_precision( $subtotal_precise );
@@ -744,7 +775,7 @@ class WJECF_Controller {
      * @return bool
      */    
     public function allow_overwrite_coupon_values() {
-        return ( $this->inhibit_overwrite == 0 ) && ! is_admin();
+        return ( $this->inhibit_overwrite == 0 ) && $this->is_request( 'frontend' );
     }
 
 //============

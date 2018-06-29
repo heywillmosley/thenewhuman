@@ -95,7 +95,7 @@ class USIN_Debug{
 		$license = USIN_Module::get('globallicense')->license;
 		$info['License status'] = sprintf('%s, expires: %s', $license->status, $license->expires);
 
-		if(usin_module_options()->is_module_active('geolocation')){
+		if(usin_modules()->is_module_active('geolocation')){
 			$info['Geolocation Status'] = USIN_Geolocation_Status::is_paused() ? 'paused' : 'active';
 		}
 		
@@ -151,8 +151,8 @@ class USIN_Debug{
 	
 	
 	protected function get_active_modules(){
-		$module_options = USIN_Module_Options::get_instance();
-		$modules = $module_options->get_module_options();
+		$modules = USIN_Modules::get_instance();
+		$modules = $modules->get_modules();
 		$active_modules = array();
 		foreach ($modules as $module ) {
 			if($module['active']){

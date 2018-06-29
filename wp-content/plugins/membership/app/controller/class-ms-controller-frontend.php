@@ -31,10 +31,11 @@ class MS_Controller_Frontend extends MS_Controller {
 	 *
 	 * @var string
 	 */
-	const ACTION_EDIT_PROFILE 		= 'edit_profile';
-	const ACTION_VIEW_INVOICES 		= 'view_invoices';
-	const ACTION_VIEW_ACTIVITIES	= 'view_activities';
-	const ACTION_VIEW_RESETPASS 	= 'rp';
+	const ACTION_EDIT_PROFILE 			= 'edit_profile';
+	const ACTION_VIEW_INVOICES 			= 'view_invoices';
+	const ACTION_VIEW_ACTIVITIES		= 'view_activities';
+	const ACTION_VIEW_RESETPASS 		= 'rp';
+	const ACTION_VIEW_ACTIVATEACCOUNT 	= 'ac'; //activate account
 
 	/**
 	 * Whether Membership2 will handle the registration process or not.
@@ -63,7 +64,7 @@ class MS_Controller_Frontend extends MS_Controller {
 	 *
 	 * @var string
 	 */
-	private $allowed_actions = array( 'signup_process', 'register_user' );
+	private $allowed_actions = array( 'signup_process', 'register_user', 'check_email' );
 
 	/**
 	 * Prepare for Member registration.
@@ -124,6 +125,13 @@ class MS_Controller_Frontend extends MS_Controller {
 			// Redirect users to their Account page after login.
 			$this->add_filter( 'login_redirect', 'login_redirect', 10, 3 );
 			$this->add_action( 'wp_logout', 'logout_redirect', 10 );
+
+			if ( ! defined( 'DOING_AJAX' ) ) {
+				//Normal WordPress login check
+				$this->add_action( 'wp_login', 'handle_verification_code', 10, 2 );
+			}
+
+			$this->add_filter( 'login_message', 'login_message', 10, 1 );
 		}
 	}
 
@@ -440,7 +448,7 @@ class MS_Controller_Frontend extends MS_Controller {
 			);
 		}
 
-		lib3()->array->equip_request( 'step', 'membership_id' );
+		mslib3()->array->equip_request( 'step', 'membership_id' );
 
 		if ( in_array( $_REQUEST['step'], $Valid_Steps ) ) {
 			$step = $_REQUEST['step'];
@@ -588,52 +596,122 @@ class MS_Controller_Frontend extends MS_Controller {
 
 			// Default WP action hook
 			do_action( 'signup_finished' );
-            do_action( 'ms_controller_frontend_register_user_before_login', $user, $_REQUEST, $this );
-
-			$user->signon_user();
+			do_action( 'ms_controller_frontend_register_user_before_login', $user, $_REQUEST, $this );
 
 			if ( MS_Model_Event::save_event( MS_Model_Event::TYPE_MS_REGISTERED, $user ) ) {
-                if ( ! defined( 'MS_DISABLE_WP_NEW_USER_NOTIFICATION' ) ) {
+				if ( ! defined( 'MS_DISABLE_WP_NEW_USER_NOTIFICATION' ) ) {
 					wp_new_user_notification( $user->id );
-                }
+				}
 			}
 
-			do_action( 'ms_controller_frontend_register_user_complete', $user, $_REQUEST, $this );
+			$settings = MS_Factory::load( 'MS_Model_Settings' );
+			if ( !$settings->force_registration_verification ) {
+				$user->signon_user();
 
-			// Go to membership signup payment form.
-			if ( empty( $_REQUEST['membership_id'] ) ) {
-				$redirect = esc_url_raw(
-					add_query_arg(
-						array(
-							'step' => self::STEP_CHOOSE_MEMBERSHIP,
+				do_action( 'ms_controller_frontend_register_user_complete', $user, $_REQUEST, $this );
+
+				// Go to membership signup payment form.
+				if ( empty( $_REQUEST['membership_id'] ) ) {
+					$redirect = esc_url_raw(
+						add_query_arg(
+							array(
+								'step' => self::STEP_CHOOSE_MEMBERSHIP,
+							)
 						)
-					)
-				);
+					);
+				} else {
+					$redirect = esc_url_raw(
+						add_query_arg(
+							array(
+								'step' => self::STEP_PAYMENT_TABLE,
+								'membership_id' => absint( $_REQUEST['membership_id'] ),
+							),
+							MS_Model_Pages::get_page_url( MS_Model_Pages::MS_PAGE_REGISTER )
+						)
+					);
+				}
+
+				wp_safe_redirect( $redirect );
+				exit;
 			} else {
+
+				MS_Model_Event::save_event( MS_Model_Event::TYPE_MS_VERIFYACCOUNT, $user );
+
+				if ( empty( $_REQUEST['membership_id'] ) ) {
+					$after_redirect = esc_url_raw(
+						add_query_arg(
+							array(
+								'step' => self::STEP_CHOOSE_MEMBERSHIP,
+							)
+						)
+					);
+				} else {
+					$after_redirect = esc_url_raw(
+						add_query_arg(
+							array(
+								'step' => self::STEP_PAYMENT_TABLE,
+								'membership_id' => absint( $_REQUEST['membership_id'] ),
+							),
+							MS_Model_Pages::get_page_url( MS_Model_Pages::MS_PAGE_REGISTER )
+						)
+					);
+				}
+
+				update_user_meta( $user->ID, '_ms_user_activation_redirect_url', $after_redirect );
+
 				$redirect = esc_url_raw(
 					add_query_arg(
 						array(
-							'step' => self::STEP_PAYMENT_TABLE,
-							'membership_id' => absint( $_REQUEST['membership_id'] ),
+							'action' => 'check_email'
 						),
-                        MS_Model_Pages::get_page_url( MS_Model_Pages::MS_PAGE_REGISTER )
+						MS_Model_Pages::get_page_url( MS_Model_Pages::MS_PAGE_REGISTER )
 					)
 				);
-			}
 
-			wp_safe_redirect( $redirect );
-			exit;
+				wp_safe_redirect( $redirect );
+				exit;
+			}
 		}
 		catch( Exception $e ) {
 			self::$register_errors = $e->getMessage();
 
 			// step back
-			$this->add_action( 'the_content', 'register_form', 1 );
+			$this->add_action( 'the_content', 'register_form', 10 );
 			do_action(
 				'ms_controller_frontend_register_user_error',
 				self::$register_errors
 			);
 		}
+	}
+
+	/**
+	 * Action to notify user to check email for the verification link
+	 *
+	 * @since 1.1.3
+	 *
+	 * @return string
+	 */
+	public function check_email() {
+		$this->add_action( 'the_content', 'verification_notification' );
+	}
+
+
+	/**
+	 * Show message to notify the user to verify
+	 *
+	 * Related action hooks:
+	 *
+	 * @since  1.1.3
+	 *
+	 * @return string
+	 */
+	public function verification_notification( $content ) {
+		return apply_filters(
+			'ms_controller_gateway_purchase_error_content',
+			__( 'Please check your email for further instructions to verify your email.', 'membership2' ),
+			$content,
+			$this
+		);
 	}
 
 	/**
@@ -653,7 +731,7 @@ class MS_Controller_Frontend extends MS_Controller {
 		$member 		= MS_Model_Member::get_current_member();
 		$membership_id 	= 0;
 
-		lib3()->array->equip_request( 'membership_id', 'move_from_id', 'ms_relationship_id' );
+		mslib3()->array->equip_request( 'membership_id', 'move_from_id', 'ms_relationship_id' );
 
 		if ( ! empty( $_POST['ms_relationship_id'] ) ) {
 			// Error path, showing payment table again with error msg
@@ -665,7 +743,7 @@ class MS_Controller_Frontend extends MS_Controller {
 			$membership_id 	= $membership->id;
 
 			if ( ! empty( $_POST['error'] ) ) {
-				lib3()->array->strip_slashes( $_POST, 'error' );
+				mslib3()->array->strip_slashes( $_POST, 'error' );
 				$data['error'] = $_POST['error'];
 			}
 		} elseif ( ! empty( $_REQUEST['membership_id'] ) ) {
@@ -820,7 +898,7 @@ class MS_Controller_Frontend extends MS_Controller {
 				$data['member'] = $member;
 				$data['action'] = $action;
 				$view->data = apply_filters( 'ms_view_frontend_profile_data', $data, $this );
-				$view->add_filter( 'the_content', 'to_html', 1 );
+				$view->add_filter( 'the_content', 'to_html', 10 );
 				break;
 
 			case self::ACTION_VIEW_INVOICES:
@@ -834,7 +912,7 @@ class MS_Controller_Frontend extends MS_Controller {
 					$data,
 					$this
 				);
-				$view->add_filter( 'the_content', 'to_html', 1 );
+				$view->add_filter( 'the_content', 'to_html', 10 );
 				break;
 
 			case self::ACTION_VIEW_ACTIVITIES:
@@ -851,7 +929,7 @@ class MS_Controller_Frontend extends MS_Controller {
 					$data,
 					$this
 				);
-				$view->add_filter( 'the_content', 'to_html', 1 );
+				$view->add_filter( 'the_content', 'to_html', 10 );
 				break;
 
 			case self::ACTION_VIEW_RESETPASS:
@@ -866,7 +944,76 @@ class MS_Controller_Frontend extends MS_Controller {
 				$view = MS_Factory::create( 'MS_View_Shortcode_Login' );
 				$view->data = array( 'action' => 'resetpass' );
 
-				$view->add_filter( 'the_content', 'to_html', 1 );
+				$view->add_filter( 'the_content', 'to_html', 10 );
+				break;
+			case self::ACTION_VIEW_ACTIVATEACCOUNT:
+				/**
+				 * activate account action
+				 * Verify the key and show login form
+				 *
+				 * @since 1.1.3
+				 */
+				$redirect_to		= false;
+				$view 				= MS_Factory::create( 'MS_View_Shortcode_Login' );
+				$data_defaults 		= array(
+					'holder'          => 'div',
+					'holderclass'     => 'ms-login-form',
+					'item'            => '',
+					'itemclass'       => '',
+					'postfix'         => '',
+					'prefix'          => '',
+					'wrapwith'        => '',
+					'wrapwithclass'   => '',
+					'redirect_login'  => MS_Model_Pages::get_url_after_login(),
+					'redirect_logout' => MS_Model_Pages::get_url_after_logout(),
+					'header'          => true,
+					'register'        => true,
+					'title'           => '',
+					'show_note'       => true,   // Show the "you are not logged in" note?
+					'form'            => '',  // [login|lost|reset|logout]
+					'show_labels'     => false,
+					'autofocus'       => true,
+					'nav_pos'         => 'top', // [top|bottom]
+
+					// form="login"
+					'show_remember'   => true,
+					'label_username'  => __( 'Username', 'membership2' ),
+					'label_password'  => __( 'Password', 'membership2' ),
+					'label_remember'  => __( 'Remember Me', 'membership2' ),
+					'label_log_in'    => __( 'Log In', 'membership2' ),
+					'id_login_form'   => 'loginform',
+					'id_username'     => 'user_login',
+					'id_password'     => 'user_pass',
+					'id_remember'     => 'rememberme',
+					'id_login'        => 'wp-submit',
+					'value_username'  => '',
+					'value_remember'  => false,
+
+					// form="lost"
+					'label_lost_username' => __( 'Username or E-mail', 'membership2' ),
+					'label_lostpass'      => __( 'Reset Password', 'membership2' ),
+					'id_lost_form'        => 'lostpasswordform',
+					'id_lost_username'    => 'user_login',
+					'id_lostpass'         => 'wp-submit',
+					'value_username'      => '',
+				);
+				$verification_key 	= wp_unslash( $_GET['key'] );
+				$user_id 			= MS_Model_Member::verification_account_id( $verification_key  );
+				$message 			= MS_Model_Member::verify_activation_code( $user_id  );
+				if ( $user_id ) {
+					$redirect_to 	= get_user_meta( $user_id, '_ms_user_activation_redirect_url', true );
+				}
+				if ( !$redirect_to ) {
+					$redirect_to 	= MS_Model_Pages::get_page_url( MS_Model_Pages::MS_PAGE_ACCOUNT );
+				} else {
+					delete_user_meta( $user_id, '_ms_user_activation_redirect_url' );
+				}
+				delete_user_meta( $user_id, '_ms_user_force_activation_status' );
+				$redirect_to						= apply_filters( 'ms_front_after_login_redirect', $redirect_to );
+				$data_defaults['error_message'] 	= $message;
+				$data_defaults['redirect_login'] 	= $redirect_to;
+				$view->data 						= apply_filters( 'ms_view_shortcode_login_data', $data_defaults, $this );
+				$view->add_filter( 'the_content', 'to_html', 10 );
 				break;
 
 			default:
@@ -961,7 +1108,7 @@ class MS_Controller_Frontend extends MS_Controller {
 			$this
 		);
 	}
-	
+
 	/**
 	 * Redirect user to page.
 	 *
@@ -992,23 +1139,77 @@ class MS_Controller_Frontend extends MS_Controller {
 		$is_ms_page = MS_Model_Pages::is_membership_page();
 		$is_profile = self::ACTION_EDIT_PROFILE == $this->get_action()
 			&& MS_Model_Pages::is_membership_page( null, MS_Model_Pages::MS_PAGE_ACCOUNT );
-
-		if ( $is_ms_page ) {
+		$load_on_front_pages = apply_filters( 'ms_controller_frontend_resources_load', true, $is_ms_page );
+		if ( $load_on_front_pages ) {
 			$data = array(
 				'ms_init' => array( 'shortcode' ),
 				'cancel_msg' => __( 'Are you sure you want to cancel?', 'membership2' ),
 			);
 
-			lib3()->ui->css( 'ms-styles' );
-			lib3()->ui->js( 'jquery-validate' );
-			lib3()->ui->js( 'ms-public' );
+			mslib3()->ui->css( 'ms-styles' );
+			mslib3()->ui->js( 'jquery-validate' );
+			mslib3()->ui->js( 'ms-public' );
 			MS_Controller_Plugin::translate_jquery_validator();
 
 			if ( $is_profile ) {
 				$data['ms_init'][] = 'frontend_profile';
 			}
 
-			lib3()->ui->data( 'ms_data', $data );
+			mslib3()->ui->data( 'ms_data', $data );
 		}
+	}
+
+	/**
+	 * Check for verification on normal login
+	 *
+	 * @since 1.1.3
+	 *
+	 * @param string $login - the user login
+	 * @param WP_User $user - the user
+	 */
+	function handle_verification_code( $login, $user ) {
+		$user_activation_status 	= get_user_meta( $user->ID, '_ms_user_force_activation_status', true );
+		$verification_cutoff_date 	= '2018-04-11 23:59:59';
+		// Require verification only for new accounts
+		if ( $user->user_registered < $verification_cutoff_date && !$user_activation_status ) {
+			return;
+		}
+
+		$settings = MS_Factory::load( 'MS_Model_Settings' );
+		if ( $settings->force_registration_verification ) {
+			if ( !MS_Model_Member::is_admin_user( $user->ID ) ) {
+				$user_activation_status = get_user_meta( $user->ID, '_ms_user_activation_status', true );
+				$user_activation_status = empty( $user_activation_status ) ? 0 : $user_activation_status;
+				if ( $user_activation_status != 1 ) {
+					wp_destroy_current_session();
+					wp_clear_auth_cookie();
+					$login_url = wp_login_url();
+					$login_url = add_query_arg( array(
+						'ms_error' 	=> true,
+					), $login_url );
+					wp_redirect( $login_url );
+					exit;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Login Message
+	 * Set our verification message
+	 *
+	 * @since 1.1.3
+	 *
+	 * @param string $message - the login message
+	 *
+	 * @return string $message
+	 */
+	function login_message( $message ) {
+		if ( isset( $_GET['ms_error'] ) ) {
+			$msg = __( 'Account not verified. Please check your email for a verification link', 'membership' );
+			$msg = htmlspecialchars( $msg, ENT_QUOTES, 'UTF-8' );
+			$message .= '<p class="login message">'. $msg . '</p>';
+		}
+		return $message;
 	}
 }

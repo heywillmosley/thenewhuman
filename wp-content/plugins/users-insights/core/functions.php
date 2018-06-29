@@ -1,7 +1,7 @@
 <?php
 
-function usin_module_options(){
-	return USIN_Module_Options::get_instance();
+function usin_modules(){
+	return USIN_Modules::get_instance();
 }
 
 function usin_manager(){
@@ -10,6 +10,11 @@ function usin_manager(){
 
 function usin_options(){
 	return usin_manager()->options;
+}
+
+function usin_get_module_setting($module_id, $setting_id){
+	$modules = usin_modules();
+	return $modules->get_setting($module_id, $setting_id);
 }
 
 function usin_is_a_users_insights_page(){
@@ -27,4 +32,12 @@ function usin_is_a_users_insights_page(){
 		}
 	}
 	return false;
+}
+
+/**
+ * @deprecated 3.6.3
+ * @deprecated No longer used by internal code and not recommended.
+ */
+function usin_module_options(){
+	return usin_modules();
 }

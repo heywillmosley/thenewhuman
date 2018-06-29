@@ -80,7 +80,7 @@ class MS_Gateway_Paypalsingle extends MS_Gateway {
 			$this
 		);
 
-		lib3()->array->strip_slashes( $_POST, 'pending_reason' );
+		mslib3()->array->strip_slashes( $_POST, 'pending_reason' );
 
 		if ( ( isset($_POST['payment_status'] ) || isset( $_POST['txn_type'] ) )
 			&& ! empty( $_POST['invoice'] )
@@ -133,6 +133,7 @@ class MS_Gateway_Paypalsingle extends MS_Gateway {
 						} else {
 							$notes .= __( 'Payment registered, though amount differs from invoice.', 'membership2' );
 						}
+						$status = MS_Model_Invoice::STATUS_PAID;
 						break;
 
 					case 'Reversed':

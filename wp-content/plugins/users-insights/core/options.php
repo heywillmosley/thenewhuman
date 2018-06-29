@@ -5,11 +5,18 @@ class USIN_Options{
 	protected $options = array(
 		'users_per_page' => 20,
 		'fields' => array(),
-		'orderby' => 'last_seen',
+		'orderby' => 'registered',
 		'order' => 'DESC',
 		'field_order' => array()
 	);
 	protected $visble_fields_cache = array();
+
+	public function __construct(){
+		if(usin_modules()->is_module_active('activity')){
+			//set default order by to be by last seen if the activity module is active
+			$this->options['orderby'] = 'last_seen';
+		}
+	}
 
 	public function get($option_key, $default = null){
 		switch ($option_key) {
@@ -165,7 +172,7 @@ class USIN_Options{
 
 		foreach ($fields as $key => $field) {
 			if( !isset($field['module']) ||
-				(isset($field['module']) && usin_module_options()->is_module_active($field['module']))){
+				(isset($field['module']) && usin_modules()->is_module_active($field['module']))){
 				$active_fields[]= $field;
 			}
 		}

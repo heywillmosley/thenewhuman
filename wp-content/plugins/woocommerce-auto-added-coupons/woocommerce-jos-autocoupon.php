@@ -3,14 +3,14 @@
  * Plugin Name: WooCommerce Extended Coupon Features
  * Plugin URI: http://www.soft79.nl
  * Description: Additional functionality for WooCommerce Coupons: Apply certain coupons automatically, allow applying coupons via an url, etc...
- * Version: 2.6.2
+ * Version: 2.6.3
  * Author: Soft79
  * License: GPL2
  * WC requires at least: 2.6.0
- * WC tested up to: 3.3.4
+ * WC tested up to: 3.4.1
  */
  
-if ( ! defined('WJECF_VERSION') ) define ('WJECF_VERSION', '2.6.2');
+if ( ! defined('WJECF_VERSION') ) define ('WJECF_VERSION', '2.6.3');
 
 // Changelog: see readme.txt
 

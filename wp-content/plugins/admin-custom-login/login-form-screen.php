@@ -209,7 +209,7 @@ function acl_er_login_logo() {
 			font-size:<?php echo $text_and_color_page['heading_font_size'] ?>px;
 			font-family:<?php echo $text_and_color_page['heading_font_style'] ?>;
 		}
-		
+
 		body.login #loginform p.submit .button-primary, body.wp-core-ui .button-primary {
 			background: <?php echo $text_and_color_page['button_color'] ?> !important;
 			font-size:<?php echo $text_and_color_page['button_font_size'] ?>px;
@@ -250,8 +250,44 @@ function acl_er_login_logo() {
 			float:right;
 		}
 		<?php } ?>
-	</style>
+		.divfooter {
+		    color: #fff;
+		    padding-top: 10px !important;
+		    text-align: center;
+		    width: 335px;
+		}
+		.divfooter a, body.login #backtoblog .divfooter a {
+		    color: #f00 !important;
+		    text-shadow: none;
+		}
+		.login-msg-above{
+		    background: #ffffff9e;
+		    padding: 12px !important;
+		    margin: 4px 0px !important;
+		    border-bottom: 3px solid #fff;
+		    border-radius: 25px;
+		    line-height: 1.4;
+		    box-shadow: 0 1px 1px 0 hsla(0, 0%, 0%, 0.1);
+		    font-size: <?php if(isset($login_page['login_msg_fontsize'])) { echo $login_page['login_msg_fontsize']; } else { echo 16; } ?>px !important;
+		    text-align: center;
+		    font-weight: 500;
+		    color: <?php if(isset($login_page['login_msg_font_color'])) { echo $login_page['login_msg_font_color']; } else { echo "#000"; } ?> !important;
+	   }
+	 </style>
 	<?php
+	// Message Above Login Form
+	add_filter('login_message','message_above_login_form');
+	function message_above_login_form(){
+		$login_page = unserialize(get_option('Admin_custome_login_login'));
+		if(isset($login_page['log_form_above_msg'])){
+			$log_form_above_msg = $login_page['log_form_above_msg'];
+			if($log_form_above_msg !=""){
+			?> 
+				<p class='login-msg-above'><?php echo $log_form_above_msg; ?></p>
+			<?php
+			}
+		}	
+	}
 }
 $dashboard_page = unserialize(get_option('Admin_custome_login_dashboard'));
 $dashboard_status = $dashboard_page['dashboard_status'];

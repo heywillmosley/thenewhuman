@@ -61,6 +61,7 @@ while ( $product_loop->have_posts() ) { $product_loop->the_post();
                 <span class="mobile-label"><?php echo $labels[ 'product' ]; ?></span>
                 <?php echo $product_listing->wwof_get_product_image( $product , get_the_permalink( $post_id ) , $thumbnail_size ); ?>
                 <?php echo $product_listing->wwof_get_product_title( $product , get_the_permalink( $post_id ) ); ?>
+                <br />
                 <?php echo $product_listing->wwof_get_product_variation_field( $product ); ?>
                 <?php echo $product_listing->wwof_get_product_variation_selected_options( $product ); ?>
                 <?php echo $product_listing->wwof_get_product_addons( $product ); ?>

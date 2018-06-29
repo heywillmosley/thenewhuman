@@ -3,12 +3,12 @@
  * Plugin Name: PW WooCommerce BOGO
  * Plugin URI: https://pimwick.com/pw-bogo
  * Description: Makes Buy One, Get One promotions so easy!
- * Version: 2.66
+ * Version: 2.70
  * Author: Pimwick, LLC
  * Author URI: https://pimwick.com/pw-bogo
  *
  * WC requires at least: 2.6.13
- * WC tested up to: 3.3.5
+ * WC tested up to: 3.4.2
  *
  * Copyright: © Pimwick, LLC
 */
@@ -73,6 +73,7 @@ final class PW_BOGO {
         }
 
         add_action( 'woocommerce_after_calculate_totals', array( $this, 'woocommerce_after_calculate_totals' ) );
+        add_action( 'woocommerce_checkout_create_order', array( $this, 'woocommerce_checkout_create_order' ), 10, 2 );
 
         if ( true === $this->use_coupons ) {
             add_filter( 'woocommerce_get_shop_coupon_data', array( $this, 'woocommerce_get_shop_coupon_data' ), 10, 2 );
@@ -337,6 +338,8 @@ final class PW_BOGO {
         $end_date                               = wc_clean( $_POST['end_date'] );
 
         $discount_limit                         = isset( $_POST['discount_limit'] ) ? absint( $_POST['discount_limit'] ) : '';
+        $redemption_limit                       = isset( $_POST['redemption_limit'] ) ? absint( $_POST['redemption_limit'] ) : '';
+        $redemption_count                       = isset( $_POST['redemption_count'] ) ? absint( $_POST['redemption_count'] ) : '';
         $coupon_code                            = isset( $_POST['coupon_code'] ) ? wc_clean( trim( $_POST['coupon_code'] ) ) : '';
         $free_shipping                          = isset( $_POST['free_shipping'] ) ? 'yes' : 'no';
         $individual_use                         = isset( $_POST['individual_use'] ) ? 'yes' : 'no';
@@ -367,6 +370,8 @@ final class PW_BOGO {
         update_post_meta( $post_id, 'end_date', $end_date );
 
         update_post_meta( $post_id, 'discount_limit', $discount_limit );
+        update_post_meta( $post_id, 'redemption_limit', $redemption_limit );
+        update_post_meta( $post_id, 'redemption_count', $redemption_count );
         update_post_meta( $post_id, 'coupon_code', $coupon_code );
         update_post_meta( $post_id, 'free_shipping', $free_shipping );
         update_post_meta( $post_id, 'individual_use', $individual_use );
@@ -406,6 +411,7 @@ final class PW_BOGO {
         $already_applied_cart_items = array();
 
         foreach ( $this->get_active_bogos() as $bogo ) {
+            $considered_for_bogo = $already_applied_cart_items;
             $bogo_percentage = !empty( $bogo->percentage ) ? $bogo->percentage : 100;
             $percentage = $bogo_percentage / 100;
             $discount_limit = absint( $bogo->discount_limit );
@@ -456,11 +462,11 @@ final class PW_BOGO {
             $discount_iterations = 0;
 
             foreach ( $eligible_items as $eligible_cart_item_key => $cart_item ) {
-                if ( in_array( $eligible_cart_item_key, $already_applied_cart_items ) ) {
+                if ( in_array( $eligible_cart_item_key, $considered_for_bogo ) ) {
                     continue;
                 }
 
-                $already_applied_cart_items[] = $eligible_cart_item_key;
+                $considered_for_bogo[] = $eligible_cart_item_key;
 
                 if ( $identical_products_only === true ) {
                     if ( $identical_variations_only === true && $cart_item['variation_id'] != '0' ) {
@@ -490,7 +496,7 @@ final class PW_BOGO {
                 }
 
                 foreach ( $discounted_items as $discounted_cart_item_key => $discounted_cart_item ) {
-                    if ( in_array( $discounted_cart_item_key, $already_applied_cart_items ) ) {
+                    if ( in_array( $discounted_cart_item_key, $considered_for_bogo ) ) {
                         continue;
                     }
 
@@ -533,7 +539,13 @@ final class PW_BOGO {
                     }
 
                     $discounted_item_count[ $id ]++;
-                    $already_applied_cart_items[] = $discounted_cart_item_key;
+                    $considered_for_bogo[] = $discounted_cart_item_key;
+
+                    foreach ( $considered_for_bogo as $cart_item_key ) {
+                        if ( !in_array( $cart_item_key, $already_applied_cart_items ) ) {
+                            $already_applied_cart_items[] = $cart_item_key;
+                        }
+                    }
                 }
             }
 
@@ -730,6 +742,10 @@ final class PW_BOGO {
                     continue;
                 }
 
+                if ( !empty( $bogo->redemption_limit ) && absint( $bogo->redemption_count ) >= absint( $bogo->redemption_limit ) ) {
+                    continue;
+                }
+
                 $this->active_bogos_cache[] = $bogo;
             }
 
@@ -777,7 +793,7 @@ final class PW_BOGO {
             // $scrooge means get the worst deal. If there are 2 active BOGOs, one is 50% off and the other
             // is 25% off, we'd return the 25% deal if $scrooge = true.
             $scrooge = false;
-            if ( false === $scrooge ) {
+            if ( true === $scrooge ) {
                 return ( $percentage_a > $percentage_b ) ? 1 : -1;
             } else {
                 return ( $percentage_a < $percentage_b ) ? 1 : -1;
@@ -830,7 +846,7 @@ final class PW_BOGO {
             }
 
         } else {
-            foreach ( $this->get_active_bogos() as $active_bogo ) {
+            foreach ( $this->get_active_bogos( true ) as $active_bogo ) {
                 if ( $this->is_bogo_coupon( $code, $active_bogo ) ) {
                     return true;
                 }
@@ -925,6 +941,23 @@ final class PW_BOGO {
         }
 
         add_action( 'woocommerce_after_calculate_totals', array( $this, 'woocommerce_after_calculate_totals' ) );
+    }
+
+    function woocommerce_checkout_create_order( $order, $data ) {
+        $all_bogos = get_posts( array(
+            'posts_per_page' => -1,
+            'post_type' => 'pw_bogo',
+            'post_status' => 'publish'
+        ) );
+
+        foreach ( $order->get_items( 'coupon' ) as $coupon ) {
+            foreach ( $all_bogos as $bogo ) {
+                if ( $this->is_bogo_coupon( $coupon->get_code(), $bogo ) ) {
+                    $redemption_count = absint( get_post_meta( $bogo->ID, 'redemption_count' ) ) + 1;
+                    update_post_meta( $bogo->ID, 'redemption_count', $redemption_count );
+                }
+            }
+        }
     }
 
     function maybe_add_discounted_item( $cart, $bogo, $identical_product_id = 0, $identical_variation_id = 0 ) {
@@ -1260,7 +1293,7 @@ final class PW_BOGO {
             }
         }
 
-        return $cart_items;
+        return apply_filters( 'pw_bogo_cart_items', $cart_items );
     }
 }
 

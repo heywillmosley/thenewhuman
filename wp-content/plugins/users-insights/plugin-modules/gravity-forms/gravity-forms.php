@@ -156,6 +156,27 @@ class USIN_Gravity_Forms extends USIN_Plugin_Module{
 		
 		return $form_options;
 	}
+
+	public static function is_db_migrated(){
+		$db_version = get_option('gf_db_version');
+		if(!$db_version && class_exists('GFForms') &&
+			property_exists('GFForms', 'version') && !empty(GFForms::$version)){
+				$db_version = GFForms::$version;
+		}
+		if(!empty($db_version)){
+			return version_compare($db_version, '2.3', '>=');
+		}
+		return false;
+	}
+
+	public static function get_entries_db_table_name(){
+		global $wpdb;
+		if(self::is_db_migrated()){
+			return $wpdb->prefix.'gf_entry';
+		}else{
+			return $wpdb->prefix.'rg_lead';
+		}
+	}
 	
 }
 

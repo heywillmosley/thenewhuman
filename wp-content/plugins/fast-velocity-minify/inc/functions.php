@@ -3,6 +3,10 @@
 # handle better utf-8 and unicode encoding
 if(function_exists('mb_internal_encoding')) { mb_internal_encoding('UTF-8'); }
 
+# must have
+@ini_set('pcre.backtrack_limit',5000000); 
+@ini_set('pcre.recursion_limit',5000000);
+
 # Consider fallback to PHP Minify [2017.12.17] from https://github.com/matthiasmullie/minify (must be defined on the outer scope)
 $path = $plugindir . 'libs/matthiasmullie';
 require_once $path . '/minify/src/Minify.php';
@@ -143,8 +147,14 @@ function fastvelocity_min_in_arrayi($hurl, $ignore){
 
 # better compatibility urls, fix bootstrap 4 svg images https://www.w3.org/TR/SVG/intro.html#NamespaceAndDTDIdentifiers
 function fvm_compat_urls($code) {
-	$code = str_ireplace(array('http://', 'https://'), '//', $code); 
-	$code = str_ireplace('//www.w3.org/2000/svg', 'http://www.w3.org/2000/svg', $code);
+	$default_protocol = get_option('fastvelocity_min_default_protocol', 'dynamic');
+	if($default_protocol == 'dynamic' || empty($default_protocol)) { 
+		$default_protocol = '//'; 
+	} else { 
+		$default_protocol = $default_protocol.'://'; 
+	}
+	$code = str_ireplace(array('http://', 'https://'), $default_protocol, $code);
+	$code = str_ireplace($default_protocol.'www.w3.org/2000/svg', 'http://www.w3.org/2000/svg', $code);
 	return $code;
 }
 
@@ -161,7 +171,10 @@ return fvm_compat_urls($css);
 
 # find if we are running windows
 function fvm_server_is_windows() {
-	if(defined('PHP_OS_FAMILY') && strtolower(PHP_OS_FAMILY) == 'windows') { return true; } # PHP 7.2.0+
+	# PHP 7.2.0+
+	if(defined('PHP_OS_FAMILY')) {
+		if(strtolower(PHP_OS_FAMILY) == 'windows') { return true; }
+	}
 	if(function_exists('php_uname')) {
 		$os = @php_uname('s');
 		if (stripos($os, 'Windows') !== false) { 
@@ -177,7 +190,7 @@ function fvm_server_is_windows() {
 function fastvelocity_min_get_js($url, $js, $disable_js_minification) {
 
 # exclude minification on already minified files + jquery (because minification might break those)
-$excl = array('jquery.js', '.min.js', '-min.js', '/uploads/fusion-scripts/'); 
+$excl = array('jquery.js', '.min.js', '-min.js', '/uploads/fusion-scripts/', '/min/'); 
 foreach($excl as $e) { if (stripos(basename($url), $e) !== false) { $disable_js_minification = true; break; } }	
 
 # remove BOM
@@ -258,14 +271,18 @@ return $html;
 
 
 # remove all cache files
-function fastvelocity_rrmdir($dir) { 
-	if(is_dir(rtrim($dir, '/'))) { 
-		if ($handle = opendir($dir.'/')) { 
-			while (false !== ($file = readdir($handle))) { 
-			@unlink($dir.'/'.$file); 
-			} 
-		closedir($handle); } 
-	} 
+function fastvelocity_rrmdir($path) { 
+	clearstatcache();
+	if(is_dir($path)) {
+		$i = new DirectoryIterator($path);
+		foreach($i as $f){
+			if($f->isFile()){ unlink($f->getRealPath());
+			} else if(!$f->isDot() && $f->isDir()){
+				fastvelocity_rrmdir($f->getRealPath());
+				rmdir($f->getRealPath());
+			}
+		}
+	}
 }
 
 
@@ -281,10 +298,13 @@ function fastvelocity_format_filesize($bytes, $decimals = 2) {
 
 # get cache size and count
 function fastvelocity_get_cachestats() {
-clearstatcache();
-$dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(fvm_cachepath()['cachebase'], FilesystemIterator::SKIP_DOTS));
-$size = 0; foreach ( $dir as $file ) { $size += $file->getSize(); }
-return fastvelocity_format_filesize($size);
+	clearstatcache();
+	$dir = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(fvm_cachepath()['cachebase'], FilesystemIterator::SKIP_DOTS));
+	$size = 0; 
+	foreach ($dir as $file) { 
+		$size += $file->getSize(); 
+	}
+	return fastvelocity_format_filesize($size);
 }
 
 
@@ -298,7 +318,9 @@ global $wp_domain;
 $css = fastvelocity_min_remove_utf8_bom($css); 
 
 # fix url paths
-if(!empty($url)) { $css = preg_replace("/url\(\s*['\"]?(?!data:)(?!http)(?![\/'\"])(.+?)['\"]?\s*\)/ui", "url(".dirname($url)."/$1)", $css); } 
+if(!empty($url)) { 
+	$css = preg_replace("/url\(\s*['\"]?(?!data:)(?!http)(?![\/'\"])(.+?)['\"]?\s*\)/ui", "url(".dirname($url)."/$1)", $css); 
+} 
 
 # remove query strings from fonts (for better seo, but add a small cache buster based on most recent updates)
 $ctime = get_option('fvm-last-cache-update', '0'); # last update or zero
@@ -361,7 +383,6 @@ if (stripos($hurl, $wp_domain) !== false) {
 		if($type == 'js') { $code = fastvelocity_min_get_js($hurl, file_get_contents($f), $disable_minification); } 
 		else { $code = fastvelocity_min_get_css($hurl, file_get_contents($f).$inline, $disable_minification); }
 		set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
-		fvm_update_transient_keys($tkey); # keep track
 		$log = "$printurl --- Debug: $printhandle File was opened from $f ---\n";
 		return array('log'=>$log, 'code'=>$code);
 	}
@@ -374,7 +395,6 @@ if (stripos($hurl, $wp_domain) !== false) {
 		if($type == 'js') { $code = fastvelocity_min_get_js($hurl, file_get_contents($f), $disable_minification); } 
 		else { $code = fastvelocity_min_get_css($hurl, file_get_contents($f).$inline, $disable_minification); }
 		set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
-		fvm_update_transient_keys($tkey); # keep track
 		$log = "$printurl --- Debug: $printhandle File was opened from $f ---\n";
 		return array('log'=>$log, 'code'=>$code);
 	}
@@ -389,7 +409,6 @@ if($code !== false) {
 	if($type == 'js') { $code = fastvelocity_min_get_js($hurl, $code, $disable_minification); } 
 	else { $code = fastvelocity_min_get_css($hurl, $code.$inline, $disable_minification); }
 	set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
-	fvm_update_transient_keys($tkey); # keep track
 	$log = "$printurl --- Debug: $printhandle Fetched url at $hurl \n";
 	return array('log'=>$log, 'code'=>$code);
 }
@@ -403,7 +422,6 @@ if(stripos($hurl, $wp_domain) !== false && home_url() != site_url()) {
 		if($type == 'js') { $code = fastvelocity_min_get_js($hurl, $code, $disable_minification); } 
 		else { $code = fastvelocity_min_get_css($hurl, $code.$inline, $disable_minification); }
 		set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
-		fvm_update_transient_keys($tkey); # keep track
 		$log = "$printurl --- Debug: $printhandle Fetched url at $hurl \n";
 		return array('log'=>$log, 'code'=>$code);
 	}
@@ -419,7 +437,6 @@ if (stripos($hurl, $wp_domain) !== false) {
 		if($type == 'js') { $code = fastvelocity_min_get_js($hurl, file_get_contents($f), $disable_minification); } 
 		else { $code = fastvelocity_min_get_css($hurl, file_get_contents($f).$inline, $disable_minification); }
 		set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
-		fvm_update_transient_keys($tkey); # keep track
 		$log = "$printurl --- Debug: $printhandle File was opened from $f ---\n";
 		return array('log'=>$log, 'code'=>$code);
 	}
@@ -432,7 +449,6 @@ if (stripos($hurl, $wp_domain) !== false) {
 		if($type == 'js') { $code = fastvelocity_min_get_js($hurl, file_get_contents($f), $disable_minification); } 
 		else { $code = fastvelocity_min_get_css($hurl, file_get_contents($f).$inline, $disable_minification); }
 		set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
-		fvm_update_transient_keys($tkey); # keep track
 		$log = "$printurl --- Debug: $printhandle File was opened from $f ---\n";
 		return array('log'=>$log, 'code'=>$code);
 	}
@@ -581,12 +597,14 @@ function fastvelocity_min_readme($url) {
 	$file = str_replace('www.', 'http://www.', $file);
 	$file = preg_replace('#(^|[^\"=]{1})(http://|ftp://|mailto:|https://)([^\s<>]+)([\s\n<>]|$)#', '$1<a target="_blank" href="$2$3">$2$3</a>$4', $file);
 	
+	# extra linebreaks
+	$file = str_replace('<p>...</p>', "", $file);
+	
 	# extract faqs
 	$prefix = "Frequently Asked Questions";
 	$faq = substr($file, strpos($file, $prefix) + strlen($prefix));
 	$faq = substr($faq, 0, strpos($faq, '<p><h3>'));
-	
-	
+
 	return trim($faq);
 }
 
@@ -643,41 +661,88 @@ function fvm_get_protocol($url) {
 	return $url;
 }
 
-# keep track of transients, whenever we save a transient.
-function fvm_update_transient_keys($new_transient_key) {
-$transient_keys = get_option('fvm_transient_keys'); # get
-$transient_keys[]= $new_transient_key; # append
-update_option( 'fvm_transient_keys', $transient_keys); # save
-}
 
 # keep track of transients, dump our plugin transients as needed
 function fvm_transients_purge() {
-update_option('fvm-last-cache-update', time()); # last cache update to now
-$transient_keys = get_option( 'fvm_transient_keys' ); # get
-update_option( 'fvm_transient_keys', array()); # reset
-foreach( $transient_keys as $t ) { delete_transient( $t ); } # delete
-} 
-
+	
+	# last cache update to now
+	update_option('fvm-last-cache-update', time());
+	
+	# delete legacy transients
+	$tk = get_option( 'fvm_transient_keys' ); 
+	if($tk !== false) {
+		delete_option('fvm_transient_keys');
+		if(is_array($tk)) {
+			foreach( $tk as $t ) { 
+				delete_transient($t); 
+			}
+		}
+	}
+}
 
 # purge all caches
 function fvm_purge_all() {
 
+	# get cache directories and urls
+	$cachepath = fvm_cachepath();
+	$cachebase = $cachepath['cachebase'];
 
-
-# get cache directories and urls
-$cachepath = fvm_cachepath();
-$tmpdir = $cachepath['tmpdir'];
-$cachedir =  $cachepath['cachedir'];
-$cachedirurl = $cachepath['cachedirurl'];
-
-# delete minification files and transients
-if(!is_dir($cachedir)) { return false; }
-fastvelocity_rrmdir($cachedir);
-fvm_transients_purge();
-
-return true;
+	# delete minification files and transients
+	if(!is_dir($cachebase)) { 
+		return false; 
+	}
+	
+	# remove cache files, set last update and clean legacy transients
+	fastvelocity_rrmdir($cachebase);
+	fvm_transients_purge(); 
+	return true;
 }
 
+
+# get transients on the disk
+function fvm_get_transient($key) {
+	$cachepath = fvm_cachepath();
+	$tmpdir = $cachepath['tmpdir'];
+	$f = $tmpdir.'/'.$key.'.transient';
+	clearstatcache();
+	if(file_exists($tmpdir.'/'.$key)) {
+		return file_get_contents($f);
+	} else {
+		return false;
+	}
+}
+
+# set transients on the disk
+function fvm_set_transient($key, $code, $ttl) {
+	if(is_null($code) || empty($code)) { return false; }
+	$cachepath = fvm_cachepath();
+	$tmpdir = $cachepath['tmpdir'];
+	$f = $tmpdir.'/'.$key.'.transient';
+	$e = $tmpdir.'/'.$key.'.exp';
+	clearstatcache();
+	
+	# update or not?
+	if(!file_exists($f)) {
+		$write = 1;
+	} else {
+		if(file_exists($e)) {
+			$t = file_get_contents($e);
+			if(is_numeric($t) && $t < time()) {
+				$write = 1;
+			}
+		}
+	}
+	
+	# proceed
+	if(isset($write) && $write == 1) {
+			file_put_contents($f, $code);
+			file_put_contents($e, time()+$ttl);
+			return true;
+	}
+	
+	# fallback
+	return false;
+}
 
 
 # exclude processing from some pages / posts / contents
@@ -750,12 +815,12 @@ function fastvelocity_ie_blacklist($url) {
 function fastvelocity_download($url, $tkey, $ttl) {
 	
 	# rate limit requests, prevent slowdowns
-	$rtlim = false; $rtlim = get_transient($tkey.'_access');
+	$rtlim = false; $rtlim = fvm_get_transient($tkey.'_access');
 	if ( $rtlim !== false) { return false; }
 	
 	# info (needed for google fonts woff files + hinted fonts)
 	$uagent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
-	$data = false; $data = get_transient($tkey);
+	$data = false; $data = fvm_get_transient($tkey);
 	if ( $data === false) {
 		
 		# get updated list from our api and cache it for 24 hours
@@ -764,8 +829,7 @@ function fastvelocity_download($url, $tkey, $ttl) {
 		if($res_code == '200') { 			
 			$data = wp_remote_retrieve_body($response);
 			if(strlen($data) > 1 && $ttl > 0) {
-				set_transient($tkey, $data, $ttl);
-				fvm_update_transient_keys($tkey); # keep track
+				fvm_set_transient($tkey, $data, $ttl);
 				return $data; 
 			}
 		}	
@@ -774,14 +838,13 @@ function fastvelocity_download($url, $tkey, $ttl) {
 		if(function_exists('curl_version')) {
 			$curl = fvm_file_get_contents_curl($url, $uagent);
 			if(!empty($curl) && strlen($curl) > 1 && $ttl > 0) {
-				set_transient($tkey, $data, $ttl);
-				fvm_update_transient_keys($tkey); # keep track
+				fvm_set_transient($tkey, $data, $ttl);
 				return $data;
 			}
 		}
 		
 		# error
-		set_transient($tkey.'_access', "Failed to fetch: $url on ".current_time('timestamp'), $ttl);
+		fvm_set_transient($tkey.'_access', "Failed to fetch: $url on ".current_time('timestamp'), $ttl);
 		return false;
 	}
 	
@@ -804,7 +867,7 @@ function fastvelocity_godaddy_request( $method, $url = null ) {
 
 function fastvelocity_purge_others(){
 	
-# wodpress default cache
+# wordpress default cache
 if (function_exists('wp_cache_flush')) {
 wp_cache_flush();
 }
@@ -877,3 +940,6 @@ if (method_exists('WpeCommon', 'purge_varnish_cache')) { WpeCommon::purge_varnis
 }
 
 }
+
+
+

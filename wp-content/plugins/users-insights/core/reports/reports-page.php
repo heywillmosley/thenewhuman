@@ -19,7 +19,7 @@ class USIN_Reports_Page{
 	/**
 	 * @param string $parent_slug    the slug of the parent menu item
 	 * @param string $capability     the user capability required to access this page
-	 * @param USIN_Module_Options $module_options the Module Options object
+	 * @param USIN_Modules $modules the Module Options object
 	 */
 	public function __construct($parent_slug){
 		$this->slug = self::$page_slug;

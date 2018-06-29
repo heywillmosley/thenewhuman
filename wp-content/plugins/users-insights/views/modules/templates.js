@@ -6,7 +6,7 @@ angular.module('usinModuleApp').run(['$templateCache', function($templateCache) 
     "	<label ng-if=\"!licenseSet()\">{{strings.enterLicense}}</label>\n" +
     "	<label ng-if=\"licenseSet()\">{{strings.licenseKey}}</label>\n" +
     "	\n" +
-    "	<input type=\"text\" ng-model=\"module.options.license.key\" />\n" +
+    "	<input type=\"text\" ng-model=\"module.license.key\" />\n" +
     "	<a class=\"usin-btn usin-add-licence-btn\" ng-click=\"addLicense()\" ng-if=\"!licenseSet()\">{{strings.addLicense}}</a>\n" +
     "	<a class=\"usin-btn usin-deactivate-licence-btn\" ng-click=\"deactivateLicense()\" ng-if=\"licenseSet()\">{{strings.removeLicense}}</a>\n" +
     "	<div class=\"clear\"></div>\n" +
@@ -15,8 +15,8 @@ angular.module('usinModuleApp').run(['$templateCache', function($templateCache) 
     "	<span class=\"usin-text-error\" ng-show=\"errorMsg\"><span class=\"usin-icon-close\"></span>{{strings.error}}: {{errorMsg}}</span>\n" +
     "	<span class=\"usin-text-success\" ng-show=\"successMsg\"> <span class=\"usin-icon-apply\"></span>{{successMsg}}</span>\n" +
     "\n" +
-    "	<div ng-if=\"module.options.license.status_text && licenseSet()\">\n" +
-    "		<span ng-class=\"['usin-license-status', 'usin-license-'+module.options.license.status]\">{{module.options.license.status_text}}</span>\n" +
+    "	<div ng-if=\"module.license.status_text && licenseSet()\">\n" +
+    "		<span ng-class=\"['usin-license-status', 'usin-license-'+module.license.status]\">{{module.license.status_text}}</span>\n" +
     "		| <a class=\"usin-refresh-license\" ng-click=\"refreshLicense()\">{{strings.refresh}}</a>\n" +
     "	</div>\n" +
     "	\n" +
@@ -56,24 +56,24 @@ angular.module('usinModuleApp').run(['$templateCache', function($templateCache) 
 
 
   $templateCache.put('views/modules/module.html',
-    "<div ng-class=\"{'usin-module-active': module.active, 'usin-module-inactive': !module.active, 'usin-module-edit': module.status == 'edit'}\">\n" +
+    "<div ng-class=\"{'usin-module-active': module.active, 'usin-module-inactive': !module.active, 'usin-module-edit': state == 'edit'}\">\n" +
     "	<div class=\"usin-module-head\">\n" +
     "		<div class=\"usin-module-icon\">\n" +
     "			<span class=\"usin-icon-{{module.id}}\"></span>\n" +
     "		</div>\n" +
     "		<h3 class=\"usin-module-title\">{{module.name}}</h3>\n" +
     "		<span class=\"usin-icon-close\" ng-click=\"setStatusDefault()\"></span>\n" +
-    "		<span class=\"usin-module-beta-tag\" ng-if=\"module.in_beta\" ng-hide=\"module.status == 'edit'\">{{strings.beta}}</span>\n" +
+    "		<span class=\"usin-module-beta-tag\" ng-if=\"module.in_beta\" ng-hide=\"state == 'edit'\">{{strings.beta}}</span>\n" +
     "	</div>\n" +
     "\n" +
     "	<div class=\"usin-module-content\">\n" +
     "		<h3 class=\"usin-module-title\">{{module.name}}</h3>\n" +
     "\n" +
-    "		<div ng-switch=\"module.status\">\n" +
+    "		<div ng-switch=\"state\">\n" +
     "\n" +
     "			<div ng-switch-when=\"edit\">\n" +
     "				<div class=\"usin-license\" ng-if=\"module.requires_license\"></div>	\n" +
-    "\n" +
+    "				<div class=\"usin-settings\" ng-if=\"module.settings\"></div>	\n" +
     "			</div>\n" +
     "			\n" +
     "			<p ng-switch-default>{{module.desc}}</p>\n" +
@@ -84,15 +84,16 @@ angular.module('usinModuleApp').run(['$templateCache', function($templateCache) 
     "\n" +
     "	<div class=\"usin-module-footer\">\n" +
     "		<a class=\"usin-btn usin-btn-main\" ng-if=\"!module.active\" ng-click=\"onActivateClick()\"\n" +
-    "			ng-class=\"{'usin-btn-disabled' : module.status == 'edit' && !module.options.license.activated}\">\n" +
+    "			ng-class=\"{'usin-btn-disabled' : state == 'edit' && !module.license.activated}\">\n" +
     "			{{strings.activateModule}}\n" +
     "		</a>\n" +
     "\n" +
-    "		<a class=\"usin-btn usin-btn-main\" ng-if=\"module.active && module.has_options\" ng-click=\"setStatusEdit()\"\n" +
-    "			ng-class=\"{'usin-btn-disabled' : module.status == 'edit'}\">\n" +
-    "			{{strings.settings}}\n" +
+    "		<a class=\"usin-btn usin-btn-main\" ng-if=\"settingsButton\" ng-click=\"onSettingsBtnClick()\"\n" +
+    "			ng-class=\"{'usin-btn-disabled' : settingsButton.disabled}\">\n" +
+    "			{{ settingsButton.text }}\n" +
     "		</a>\n" +
     "\n" +
+    "		\n" +
     "		<a class=\"usin-btn\" ng-if=\"module.active && module.allow_deactivate\" ng-click=\"onDeactivateClick()\">\n" +
     "			{{strings.deactivateModule}}\n" +
     "		</a>\n" +
@@ -103,8 +104,24 @@ angular.module('usinModuleApp').run(['$templateCache', function($templateCache) 
     "		</a>\n" +
     "\n" +
     "		<span class=\"usin-icon-module-loading\" ng-show=\"moduleLoading\"></span>\n" +
+    "		<div class=\"usin-icon-check usin-success-icon\" ng-show=\"moduleSuccess\"></div>\n" +
     "		<div class=\"usin-text-error\" ng-if=\"moduleError\">{{moduleError}}</div>\n" +
     "	</div>\n" +
+    "</div>"
+  );
+
+
+  $templateCache.put('views/modules/settings.html',
+    "<div class=\"usin-module-settings\">\n" +
+    "\n" +
+    "	<div ng-repeat=\"(fieldId, field) in module.settings\">\n" +
+    "		<label>{{field.name}}\n" +
+    "			<usin-info-icon ng-if=\"field.desc\" text=\"field.desc\" />\n" +
+    "		</label>\n" +
+    "		<usin-checkboxes-field ng-if=\"field.type=='checkboxes'\"\n" +
+    "			value=\"field.value\" options=\"field.options\" />\n" +
+    "	</div>\n" +
+    "\n" +
     "</div>"
   );
 

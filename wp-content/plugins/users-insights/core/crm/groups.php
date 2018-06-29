@@ -78,6 +78,13 @@ class USIN_Groups{
 		
 		return self::$all_groups;
 	}
+
+	public static function get_group_name($group_id){
+		$group = get_term( $group_id, self::$slug );
+		if(!is_wp_error($group) && isset($group->name)){
+			return $group->name;
+		}
+	}
 	
 	/**
 	 * Update the groups assigned to a user.

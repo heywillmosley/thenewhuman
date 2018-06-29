@@ -468,7 +468,7 @@ class WWOF_Product_Listing {
                         if ( $attribute->is_taxonomy() ) {
                             $tax                = $attribute->get_taxonomy_object();
                             $attribute_name     = $tax->attribute_label;
-                            $attribute_term     = get_term_by( 'slug', $value, $attr_key );
+                            $attribute_term     = get_term_by( 'slug', $value, 'pa_' . $tax->attribute_name );
                             $attribute_value    = $attribute_term->name;
                         } else {
                             $attribute_name     = $attribute->get_name();
@@ -1041,14 +1041,14 @@ class WWOF_Product_Listing {
             if( !empty( $product_variations ) ){
                 foreach ( $product_variations as $variation ) {
                     $variation_obj = wc_get_product( $variation[ 'variation_id' ] );
-                    $desc_html .= '<span class="variation-desc variation-desc-' . $variation[ 'variation_id' ] .'" style="display:none;">' . do_shortcode( $variation_obj->get_description() ) . '</span>';
+                    $desc_html .= '<span class="variation-desc variation-desc-' . $variation[ 'variation_id' ] .'" style="display:none;">' . do_shortcode( wpautop( $variation_obj->get_description() ) ) . '</span>';
                 }
             }
 
             return $desc_html;
 
         } elseif ( $product_type == 'variation' )
-            return '<span class="variation-desc" style="display:block;">' . $product->get_description() . '</span>';
+            return '<span class="variation-desc" style="display:block;">' . do_shortcode( wpautop( $product->get_description() ) ) . '</span>';
 
     }
 

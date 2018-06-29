@@ -141,24 +141,6 @@ if ( ! class_exists( 'WWOF_Settings' ) ) {
 
             global $WWOF_SETTINGS_SORT_BY, $WWOF_SETTINGS_DEFAULT_PPP;
 
-            // Get all product categories
-            $termArgs = array(
-                'taxonomy' => 'product_cat',
-                'hide_empty' => false
-            );
-            $productTermsObject = get_terms( $termArgs );
-            $productTerms = array();
-
-            if ( !is_wp_error( $productTermsObject ) ) {
-
-                foreach( $productTermsObject as $term )
-                    $productTerms[ $term->slug ] = $term->name;
-
-            }
-
-            // Add "None" category selection for "no default" option
-            $productTerms = array_merge( array ('none' => __( 'No Default' , 'woocommerce-wholesale-order-form' ) ), $productTerms );
-
             return array(
 
                 array(
@@ -294,23 +276,26 @@ if ( ! class_exists( 'WWOF_Settings' ) ) {
                 ),
 
                 array(
-                    'title'     =>  __( 'Default Product Category on Search Filter' , 'woocommerce-wholesale-order-form' ),
-                    'type'      =>  'select',
-                    'desc'      =>  __( 'Select a product category to which product are under will be loaded by default in the order form.' , 'woocommerce-wholesale-order-form' ),
-                    'desc_tip'  =>  true,
-                    'id'        =>  'wwof_general_default_product_category_search_filter',
-                    'class'     =>  'chosen_select',
-                    'options'   =>  $productTerms,
-                    'default'   =>  'none'
-                ),
-
-                array(
                     'title'     =>  __( 'List product variation individually' , 'woocommerce-wholesale-order-form' ),
                     'type'      =>  'checkbox',
                     'desc'      =>  __( 'Enabling this setting will list down each product variation individually and have its own row in the wholesale order form.' , 'woocommerce-wholesale-order-form' ),
                     'id'        =>  'wwof_general_list_product_variation_individually',
                 ),
 
+                array(
+                    'title'     =>  __( 'Show Wholesale Order Requirements Message in Order Form' , 'woocommerce-wholesale-order-form' ),
+                    'type'      =>  'select',
+                    'desc'      =>  __( 'Only works if there are Order Requirements set in WooCommerce Wholesale Prices Premium plugin settings.' , 'woocommerce-wholesale-order-form' ),
+                    'desc_tip'  =>  true,
+                    'id'        =>  'wwof_display_wholesale_price_requirement',
+                    'class'     =>  'chosen_select',
+                    'options'   =>  array (
+                        'yes'   =>  __( 'Yes' , 'woocommerce-wholesale-order-form' ),
+                        'no'    =>  __( 'No' , 'woocommerce-wholesale-order-form' )
+                    ),
+                    'default'   =>  'yes'
+                ),
+                
                 array(
                     'type'      =>  'sectionend',
                     'id'        =>  'wwof_general_sectionend'
@@ -347,6 +332,9 @@ if ( ! class_exists( 'WWOF_Settings' ) ) {
                 $product = wc_get_product( $post->ID );
                 $allProducts[ WWOF_Functions::wwof_get_product_id( $product ) ] = '[ID : ' . WWOF_Functions::wwof_get_product_id( $product ) . '] ' . $post->post_title;
             }
+
+            // Add "None" category selection for "no default" option
+            $productTerms2 = array_merge( array ('none' => __( 'No Default' , 'woocommerce-wholesale-order-form' ) ), $productTerms );
 
             return array(
 
@@ -385,6 +373,17 @@ if ( ! class_exists( 'WWOF_Settings' ) ) {
                                                 'data-placeholder'  =>  __( 'Select Some Products...' , 'woocommerce-wholesale-order-form' )
                                             ),
                     'options'           =>  $allProducts
+                ),
+
+                array(
+                    'title'     =>  __( 'Default Product Category on Search Filter' , 'woocommerce-wholesale-order-form' ),
+                    'type'      =>  'select',
+                    'desc'      =>  __( 'Select a product category to which product are under will be loaded by default in the order form.' , 'woocommerce-wholesale-order-form' ),
+                    'desc_tip'  =>  true,
+                    'id'        =>  'wwof_general_default_product_category_search_filter',
+                    'class'     =>  'chosen_select',
+                    'options'   =>  $productTerms2,
+                    'default'   =>  'none'
                 ),
 
                 array(
@@ -579,8 +578,10 @@ if ( ! class_exists( 'WWOF_Settings' ) ) {
             ?>
             <tr valign="top">
                 <th scope="row" class="titledesc">
-                    <label for="<?php echo esc_attr( $value[ 'id' ] ); ?>"><?php echo esc_html( $value[ 'title' ] ); ?></label>
-                    <?php echo $tip; ?>
+                    <label for="<?php echo esc_attr( $value[ 'id' ] ); ?>">
+                        <?php echo esc_html( $value[ 'title' ] ); ?>
+                        <?php echo $tip; ?>
+                    </label>
                 </th>
                 <td class="forminp forminp-<?php echo sanitize_title( $value[ 'type' ] ); ?>">
                     <input
@@ -649,8 +650,10 @@ if ( ! class_exists( 'WWOF_Settings' ) ) {
 
             <tr valign="top">
                 <th scope="row" class="titledesc">
-                    <label for="<?php echo esc_attr( $value[ 'id' ] ); ?>"><?php echo esc_html( $value[ 'title' ] ); ?></label>
-                    <?php echo $field_description[ 'tooltip_html' ]; ?>
+                    <label for="<?php echo esc_attr( $value[ 'id' ] ); ?>">
+                        <?php echo esc_html( $value[ 'title' ] ); ?>
+                        <?php echo $field_description[ 'tooltip_html' ]; ?>
+                    </label>
                 </th>
                 <td class="forminp forminp-<?php echo sanitize_title( $value[ 'type' ] ); ?>">
                     <?php
@@ -697,7 +700,12 @@ if ( ! class_exists( 'WWOF_Settings' ) ) {
             $height     = isset( $imageSize ) && ! empty( $imageSize[ 'height' ] ) ? $imageSize[ 'height' ] : $value[ 'default' ][ 'height' ]; ?>
 
             <tr valign="top">
-                <th scope="row" class="titledesc"><?php echo esc_html( $value['title'] ) ?> <?php echo $tooltip_html; ?></th>
+                <th scope="row" class="titledesc">
+                    <label for="<?php echo esc_attr( $value['id'] ); ?>">
+                        <?php echo esc_html( $value['title'] ); ?>
+                        <?php echo $tooltip_html; ?>
+                    </label>
+                </th>
                 <td class="forminp image_width_settings">
                     <input name="<?php echo esc_attr( $value['id'] ); ?>[width]" id="<?php echo esc_attr( $value['id'] ); ?>-width" type="text" size="3" value="<?php echo $width; ?>" /> &times; <input name="<?php echo esc_attr( $value['id'] ); ?>[height]" id="<?php echo esc_attr( $value['id'] ); ?>-height" type="text" size="3" value="<?php echo $height; ?>" />px
                 </td>

@@ -3,18 +3,14 @@
 class USIN_User_Detect{
 
 	protected $user_id;
-	protected $session_timeout = 10; //number of minutes after the session number is reset
+	protected $session_timeout = 60; //number of minutes after the session number is reset
 	protected $user_info_updated = false;
-	protected $geoip_url = 'http://usersinsights.com/?usinr_geoip=1';
+	protected $geoip_url = 'https://usersinsights.com/?usinr_geoip=1';
 	protected $user_data;
 	protected $is_new_session = false;
 
-	public static function from_id($user_id){
-		$instance = new self();
-		$instance->init_user_data($user_id);
-
-		return $instance;
-	}
+	const IP_KEY = 'usin_ip';
+	const GEO_KEY = '_usin_should_check_geolocation';
 
 	protected function init_user_data($user_id){
 		$this->user_id = $user_id;
@@ -22,23 +18,69 @@ class USIN_User_Detect{
 	}
 
 	public function init(){
+		add_action('wp_login', array($this, 'do_on_login'), 10, 2);
 		add_action('set_current_user', array($this, 'detect_user'));
 		add_action('wp_ajax_usin_save_user_location', array($this, 'save_location'));
 	}
 
+	protected function setup_user_data(){
+		if(!is_user_logged_in()){
+			return false;
+		}
+		$user_id = get_current_user_id();
+		if(!$this->should_detect_user($user_id)){
+			return false;
+		}
+
+		$this->init_user_data($user_id);
+		return true;
+	}
+
 
 	public function detect_user(){
-		if(is_user_logged_in()){
-			if(empty($this->user_id)){
-				$user_id = get_current_user_id();
-				$this->init_user_data($user_id);
+		if(!$this->setup_user_data()){
+			return;
+		}
+		if($this->is_activity_active()){
+			$this->set_last_seen();
+
+			if($this->is_new_session){
+				$this->do_actions_on_new_session();
 			}
-			$this->save_last_seen();
-			$this->check_to_save_location();
+		}
+		
+		// this should be called on every request as opposed on new session, because 
+		// the first time the user logs in, they might navigate away from the page before 
+		// the location is detected and on the next page load it won't be a new session anymore
+		$this->check_to_save_location();
+	}
+
+
+
+	public function do_on_login($user_login, $user){
+		if(!$this->is_activity_active() && $this->should_detect_user($user->ID)){
+			$this->init_user_data($user->ID);
+			//if the activity module is not active to detect the last seen date,
+			//the login hook is the alternative way to detect a new session
+			$this->do_actions_on_new_session();
 		}
 	}
 
-	protected function save_last_seen(){
+
+	protected function should_detect_user($user_id){
+		$should_detect = false;
+		if($this->is_activity_active() || 
+			$this->is_devices_active() ||
+			$this->is_geolocation_active()){
+			$should_detect = true;
+		}
+
+		return apply_filters('usin_detect_user', $should_detect, $user_id);
+	}
+
+
+
+	protected function set_last_seen(){
 		$today = current_time('mysql');
 		$last_seen = $this->user_data->get('last_seen');
 
@@ -50,22 +92,27 @@ class USIN_User_Detect{
 			$minutes_diff = (USIN_Helper::get_unix_timestamp($today_date) - USIN_Helper::get_unix_timestamp($last_seen_date))/60;
 
 			if($minutes_diff >= $this->session_timeout){
-				$this->update_user_data();
+				$this->is_new_session = true;
 			}
 		}else{
 			//the user has an old session active and doesn't have a last seen record
 			//update the user data
-			$this->update_user_data();
+			$this->is_new_session = true;
 		}
 
 		$this->user_data->save('last_seen', $today);
 	}
 
-	protected function update_user_data(){
+	protected function do_actions_on_new_session(){
 		if(!$this->user_info_updated){
-			$this->increase_sessions_count();
-			if(usin_module_options()->is_module_active('devices')){
+			if($this->is_activity_active()){
+				$this->increase_sessions_count();
+			}
+			if($this->is_devices_active()){
 				$this->set_user_agent();
+			}
+			if($this->is_geolocation_active()){
+				update_user_meta($this->user_id, self::GEO_KEY, true);
 			}
 			$this->user_info_updated = true;
 		}
@@ -83,7 +130,6 @@ class USIN_User_Detect{
 	}
 
 	protected function increase_sessions_count(){
-		$this->is_new_session = true;
 		$sessions = $this->user_data->get('sessions');
 		$sessions_upd = empty($sessions) ? 1 : intval($sessions) + 1;
 
@@ -91,7 +137,6 @@ class USIN_User_Detect{
 	}
 
 	protected function set_user_agent(){
-
 		$data = array();
 		
 		$browser = new USIN_Browser();
@@ -122,10 +167,10 @@ class USIN_User_Detect{
 	}
 
 	protected function should_save_location($ignore_new_session = false){
-		if(!usin_module_options()->is_module_active('geolocation')){
+		if(!$this->is_geolocation_active()){
 			return false;
 		}
-		$last_ip = get_user_meta( $this->user_id, 'usin_ip', true);
+		$last_ip = get_user_meta( $this->user_id, self::IP_KEY, true);
 		if(empty($last_ip)){
 			//no data has been stored yet, check location
 			return true;
@@ -134,7 +179,16 @@ class USIN_User_Detect{
 		if($last_ip == 'fail'){
 			//there was a failure with checking the location the previous time,
 			//now check the location only if it is a new session
-			return $this->is_new_session || $ignore_new_session;
+			if($ignore_new_session){
+				return true;
+			}
+
+			$geo_check = get_user_meta($this->user_id, self::GEO_KEY, true);
+			if(!empty($geo_check)){
+				return true;
+			}
+
+			return false;
 		}
 		
 		$ip = $this->get_user_ip();
@@ -142,6 +196,8 @@ class USIN_User_Detect{
 		if(!empty($ip) && $hashed_ip != $last_ip){
 			return true;
 		}
+
+		$this->reset_geolocation_check();
 		return false;
 	}
 
@@ -171,7 +227,7 @@ class USIN_User_Detect{
 			return;
 		}
 		if($this->should_save_location(true)){
-			$license = usin_module_options()->get_license('geolocation');
+			$license = usin_modules()->get_license('geolocation');
 			if(empty($license)){
 				return;
 			}
@@ -217,8 +273,7 @@ class USIN_User_Detect{
 						//the location has been added successfully, save an IP hash
 						//to check against next time, so it won't retrieve the data 
 						//for the same IP next time
-						$hashed_ip = md5($ip);
-						update_user_meta($this->user_id, 'usin_ip', $hashed_ip);
+						$this->cache_ip($ip);
 					}else{
 						$request_error = true;
 						if(isset($location->error) && isset($location->license_status)){
@@ -236,12 +291,42 @@ class USIN_User_Detect{
 			}
 			
 			$this->user_data->save_array($loc_data);
-			
+			$this->reset_geolocation_check();
 		}
 	}
 
+	protected function cache_ip($ip){
+		$hashed_ip = md5($ip);
+		update_user_meta($this->user_id, self::IP_KEY, $hashed_ip);
+	}
 
 	protected function set_geolocation_fail(){
-		update_user_meta($this->user_id, 'usin_ip', 'fail');
+		update_user_meta($this->user_id, self::IP_KEY, 'fail');
+	}
+
+	protected function reset_geolocation_check(){
+		delete_user_meta($this->user_id, self::GEO_KEY);
+	}
+
+	protected function is_activity_active(){
+		return usin_modules()->is_module_active('activity');
+	}
+
+	protected function is_geolocation_active(){
+		return usin_modules()->is_module_active('geolocation');
+	}
+
+	protected function is_devices_active(){
+		return usin_modules()->is_module_active('devices');
+	}
+
+	/**
+	 * @deprecated 3.6.3
+	 */
+	public static function from_id($user_id){
+		$instance = new self();
+		$instance->init_user_data($user_id);
+
+		return $instance;
 	}
 }

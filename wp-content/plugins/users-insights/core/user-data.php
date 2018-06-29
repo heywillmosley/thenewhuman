@@ -84,6 +84,16 @@ class USIN_User_Data{
 		}
 	}
 
+	public function get_all(){
+		global $wpdb;
+
+		$res = $wpdb->get_row(
+			$wpdb->prepare("SELECT * FROM $this->table_name WHERE user_id = %d", $this->user_id)
+		);
+
+		return $res;
+	}
+
 	protected function is_field_allowed($field_name){
 		return in_array($field_name, $this->allowed_fields);
 	}

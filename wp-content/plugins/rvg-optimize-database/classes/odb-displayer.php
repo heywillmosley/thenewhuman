@@ -22,25 +22,34 @@ class ODB_Displayer {
 
 		// V4.1.9: RUNNING INDICATOR ADDED				
 		echo '
-      <div id="odb-running" style="display:none"></div>		
-      <div id="odb-header" class="odb-padding-left">
-        <div id="odb-options-opening">
-          <div class="odb-title-bar">
-            <h2>'.__('Optimize Database after Deleting Revisions',$odb_class->odb_txt_domain).'</h2>
-          </div>
-          <p class="odb-bold">
-            <em>'.__('A popular \'one-click\' plugin to clean and optimize your WordPress database.', $odb_class->odb_txt_domain).'</em>
-          </p>
-	      <span class="odb-bold">
-		    '.__('Plugin version', $odb_class->odb_txt_domain).': v'.$odb_class->odb_version.' ['.$odb_class->odb_release_date.'] -
-		    <a href="http://cagewebdev.com/optimize-database-after-deleting-revisions-wordpress-plugin/" target="_blank">'.__('Plugin page', $odb_class->odb_txt_domain).'</a> -
-		    <a href="http://wordpress.org/plugins/rvg-optimize-database/" target="_blank">'.__('Download page', $odb_class->odb_txt_domain).'</a> -
-		    <a href="http://rvg.cage.nl/" target="_blank">'.__('Author', $odb_class->odb_txt_domain).'</a> -
-		    <a href="http://cagewebdev.com/" target="_blank">'.__('Company', $odb_class->odb_txt_domain).'</a> -
-		    <a href="http://cagewebdev.com/donations-odb/" target="_blank">'.__('Donation page', $odb_class->odb_txt_domain).'</a>
-	      </span>		
-        </div><!-- odb-options-opening -->
-	  </div><!-- /odb-header -->
+<div id="odb-running" style="display:none"></div>
+<div id="odb-header" class="odb-padding-left">
+  <div id="odb-options-opening">
+    <div class="odb-title-bar">
+      <h2>'.__('Optimize Database after Deleting Revisions',$odb_class->odb_txt_domain).'</h2>
+    </div>
+    <div class="odb-subheader-container">
+      <div class="odb-subheader-left">
+        <p class="odb-bold"> <em>'.__('A popular \'one-click\' plugin to clean and optimize your WordPress database.', $odb_class->odb_txt_domain).'</em> </p>
+        <span class="odb-bold"> '.__('Plugin version', $odb_class->odb_txt_domain).': v'.$odb_class->odb_version.' ['.$odb_class->odb_release_date.']<br><a href="http://cagewebdev.com/optimize-database-after-deleting-revisions-wordpress-plugin/" target="_blank">'.__('Plugin page', $odb_class->odb_txt_domain).'</a> - <a href="http://wordpress.org/plugins/rvg-optimize-database/" target="_blank">'.__('Download page', $odb_class->odb_txt_domain).'</a> - <a href="http://rvg.cage.nl/" target="_blank">'.__('Author', $odb_class->odb_txt_domain).'</a> - <a href="http://cagewebdev.com/" target="_blank">'.__('Company', $odb_class->odb_txt_domain).'</a>
+        </span>
+      </div>
+	  <!--odb-subheader-left-->
+      <div class="odb-subheader-right" title="Click here to make your donation!">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+          <input name="cmd" type="hidden" value="_s-xclick" />
+          <input name="hosted_button_id" type="hidden" value="XEH27FRT569XU" />
+          <input alt="PayPal - The safer, easier way to pay online!" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" type="image" />
+          <img src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" alt="" width="1" height="1" border="0" />
+        </form>
+      </div>
+      <!-- odb-subheader-right --> 
+    </div>
+    <!--odb-subheader-container--> 
+  </div>
+  <!-- odb-options-opening --> 
+</div>
+<!-- /odb-header -->
 		';	
 	} // display_header
 
@@ -183,14 +192,17 @@ class ODB_Displayer {
 			// v4.6
 			if($odb_class->odb_logger_obj->odb_log_count() > 0) {
 				// THERE IS A LOG FILE
+				// v4.6.2
+				$msg = str_replace("'", "\'", __('Clear the log?', $odb_class->odb_txt_domain));
+
 				echo "
 <script>
-function confirm_delete() {
-	if(confirm('" . __('Clear the log?', $odb_class->odb_txt_domain) . "')) {
-		self.location = 'tools.php?page=rvg-optimize-database&action=delete_log'
+function odb_confirm_delete() {
+	if(confirm('" . $msg . "')) {
+		self.location = 'tools.php?page=rvg-optimize-database&action=clear_log'
 		return;
 	}
-} // confirm_delete()
+} // odb_confirm_delete()
 </script>
 				";
 			} // if(file_exists($this->odb_plugin_path.'logs/rvg-optimize-db-log.html'))
@@ -200,10 +212,11 @@ function confirm_delete() {
 				if($odb_class->odb_logger_obj->odb_log_count() > 0) {
 					echo '
 		  &nbsp;
-		  <input class="button odb-normal" type="button" name="view_log" value="'.__('View Log', $odb_class->odb_txt_domain).'" onclick="self.location=\'tools.php?page=rvg-optimize-database&action=show_log\'">
+		  <input class="button odb-normal" type="button" name="view_log" value="'.__('View Log', $odb_class->odb_txt_domain).'" onclick="self.location=\'tools.php?page=rvg-optimize-database&action=view_log\'">
 		  &nbsp;
-		  <input class="button odb-normal" type="button" name="delete_log" value="'.__('Clear Log', $odb_class->odb_txt_domain).'" onclick="return confirm_delete();">				
-					';					
+		  <input class="button odb-normal" type="button" name="clear_log" value="'.__('Clear Log', $odb_class->odb_txt_domain).'" onclick="return odb_confirm_delete();">
+		  &nbsp;		
+					';
 				} // if($odb_class->odb_logger_obj->odb_log_count() > 0)
 				
 				echo '

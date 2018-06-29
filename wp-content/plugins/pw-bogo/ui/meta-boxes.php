@@ -460,12 +460,39 @@ class PW_BOGO_Meta_Boxes {
         woocommerce_wp_text_input( array(
             'id' => 'pw-bogo-discount-limit',
             'name' => 'discount_limit',
-            'label' => __( 'The number of times this deal can be applied, per order. Leave blank or 0 for no limit.<br>', 'pimwick' ),
+            'label' => __( 'Per Order Limit - The number of times this deal can be applied, per order. Leave blank or 0 for no limit.<br>', 'pimwick' ),
             'value' => $discount_limit,
             'type' => 'number',
             'custom_attributes' => array( 'min' => '0' ),
-            'description' => __( '<br>For example: a BOGO deal has a limit of 2 and there are 10 items in the cart. Only the first 4 items participate in the BOGO, resulting in 2 free items.', 'pimwick' )
+            'description' => __( '<br>For example: a BOGO deal has a limit of 2 and there are 10 items in the cart. Only the first 4 items participate in the BOGO, resulting in 2 free items.', 'pimwick' ),
+            'class' => 'pw-bogo-limit-field'
         ) );
+
+        if ( PW_BOGO::wc_min_version( '2.7' ) ) {
+            $redemption_limit = get_post_meta( $post->ID, 'redemption_limit', true );
+            if ( empty( $redemption_limit ) ) { $redemption_limit = ''; }
+            woocommerce_wp_text_input( array(
+                'id' => 'pw-bogo-redemption-limit',
+                'name' => 'redemption_limit',
+                'label' => __( 'Redemption Limit - The number of times this deal can be used for all customers. Leave blank or 0 for no limit.<br>', 'pimwick' ),
+                'value' => $redemption_limit,
+                'type' => 'number',
+                'custom_attributes' => array( 'min' => '0' ),
+                'class' => 'pw-bogo-limit-field'
+            ) );
+
+            $redemption_count = get_post_meta( $post->ID, 'redemption_count', true );
+            if ( empty( $redemption_count ) ) { $redemption_count = ''; }
+            woocommerce_wp_text_input( array(
+                'id' => 'pw-bogo-redemption-count',
+                'name' => 'redemption_count',
+                'label' => __( 'Redemption Counter - The number of times this deal has been used. You can manually reset the counter using this field.<br>', 'pimwick' ),
+                'value' => $redemption_count,
+                'type' => 'number',
+                'custom_attributes' => array( 'min' => '0' ),
+                'class' => 'pw-bogo-limit-field'
+            ) );
+        }
 
         if ( wc_coupons_enabled() ) {
             // Coupon Code Required

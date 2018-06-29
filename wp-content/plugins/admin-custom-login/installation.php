@@ -41,7 +41,7 @@ if(!isset($Version)){
 		'login_bg_effect' => 'pattern-1',
 		'login_bg_image' => WEBLIZAR_NALF_PLUGIN_URL.'/images/3d-background.jpg',
 		'login_form_opacity' => '10',
-		'login_form_width' => '520',
+		'login_form_width' => '358',
 		'login_form_radius' => '10',
 		'login_border_style' => 'solid',
 		'login_border_thikness' => '4',
@@ -49,7 +49,11 @@ if(!isset($Version)){
 		'login_bg_repeat' => 'repeat',
 		'login_bg_position' => 'left top',
 		'login_enable_shadow' => 'yes',
-		'login_shadow_color' => '#C8C8C8'
+		'login_shadow_color' => '#C8C8C8',
+		'log_form_above_msg' => '',
+		'login_msg_fontsize' => '16',
+		'login_msg_font_color' => '#000000',
+		'tagline_msg' => 'This login form is created by <a href="https://wordpress.org/plugins/admin-custom-login/" target="_blank">ACL</a> , developed by <a href="https://www.weblizar.com" target="_blank">weblizar</a>',
 	));
 	add_option("Admin_custome_login_login", $login_page);
 	
@@ -123,5 +127,12 @@ if(!isset($Version)){
 		'Slidshow_image_label_6'=> '' 
 	));
 	add_option("Admin_custome_login_Slidshow", $Slidshow_image);
+
+	$g_page= serialize(array(
+		'site_key'=> '',
+		'secret_key'=>'',
+		'login_enable_gcaptcha'=>'no'
+	));
+	add_option("Admin_custome_login_gcaptcha", $g_page);
 }
 ?>

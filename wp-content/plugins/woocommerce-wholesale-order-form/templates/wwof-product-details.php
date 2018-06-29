@@ -6,7 +6,7 @@
  *
  * @author 		Rymera Web Co
  * @package 	WooCommerceWholeSaleOrderForm/Templates
- * @version     1.7.5
+ * @version     1.8.5
  */
 
 if ( !defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -52,7 +52,7 @@ $productPrice               = $wholesale_prices->wwof_get_product_price( $produc
             <?php echo empty( $productPrice ) ? $product->get_price_html() : ''; ?>
         </div>
         <p class="product-desc"><?php
-            echo do_shortcode( $product_post_data->post_content );
+            echo do_shortcode( wpautop( $product_post_data->post_content ) );
             echo $product_listing->wwof_get_variations_description( $product ); ?>
         </p><?php
 

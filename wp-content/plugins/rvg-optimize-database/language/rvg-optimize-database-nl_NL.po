@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Optimize Database after Deleting Revisions v4.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-08 14:04+0200\n"
-"PO-Revision-Date: 2018-05-08 14:08+0200\n"
+"POT-Creation-Date: 2018-06-05 13:33+0200\n"
+"PO-Revision-Date: 2018-06-05 13:34+0200\n"
 "Last-Translator: Rolf van Gelder <info@cagewebdev.com>\n"
 "Language-Team: CAGE <info@cagewebdev.com>\n"
 "Language: nl_NL\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
@@ -65,7 +65,7 @@ msgid "IP address / title"
 msgstr "IP adres / titel"
 
 #: classes/odb-cleaner.php:144 classes/odb-logger.php:114
-#: classes/odb-logger.php:240
+#: classes/odb-logger.php:242
 msgid "date"
 msgstr "datum"
 
@@ -210,33 +210,33 @@ msgstr "Optimalizatie duurde"
 msgid "seconds"
 msgstr "seconden"
 
-#: classes/odb-cleaner.php:518 classes/odb-displayer.php:189
-#: classes/odb-logger.php:159
+#: classes/odb-cleaner.php:520 classes/odb-displayer.php:187
+#: classes/odb-logger.php:157
 msgid "Clear the log?"
 msgstr "Logs wissen?"
 
-#: classes/odb-cleaner.php:526 classes/odb-displayer.php:203
+#: classes/odb-cleaner.php:530 classes/odb-displayer.php:206
 msgid "View Log"
 msgstr "Bekijk Logs"
 
-#: classes/odb-cleaner.php:528 classes/odb-displayer.php:205
-#: classes/odb-logger.php:168
+#: classes/odb-cleaner.php:532 classes/odb-displayer.php:208
+#: classes/odb-logger.php:170
 msgid "Clear Log"
 msgstr "Wis Logs"
 
-#: classes/odb-cleaner.php:759
+#: classes/odb-cleaner.php:763
 msgid "of"
 msgstr "van"
 
-#: classes/odb-cleaner.php:1259
+#: classes/odb-cleaner.php:1263
 msgid "InnoDB table: skipped..."
 msgstr "InnoDB tabel overgeslagen..."
 
-#: classes/odb-cleaner.php:1264 classes/odb-cleaner.php:1266
+#: classes/odb-cleaner.php:1268 classes/odb-cleaner.php:1270
 msgid "<span class=\"odb-optimized\">TABLE OPTIMIZED</span>"
 msgstr "<span class=\"odb-optimized\">TABEL GEOPTIMALISEERD</span>"
 
-#: classes/odb-cleaner.php:1265
+#: classes/odb-cleaner.php:1269
 msgid "Table is already up to date"
 msgstr "Tabel is al optimaal"
 
@@ -272,8 +272,8 @@ msgid "Company"
 msgstr "Bedrijf"
 
 #: classes/odb-displayer.php:40
-msgid "Donation page"
-msgstr "Donatiepagina"
+msgid "PLEASE DONATE!"
+msgstr "DONEER!"
 
 #: classes/odb-displayer.php:54
 msgid "YES"
@@ -418,11 +418,11 @@ msgstr "minuten"
 msgid "and"
 msgstr "en"
 
-#: classes/odb-displayer.php:180 classes/odb-logger.php:166
+#: classes/odb-displayer.php:180 classes/odb-logger.php:168
 msgid "Change Settings"
 msgstr "Wijzig instellingen"
 
-#: classes/odb-displayer.php:210 classes/odb-logger.php:172
+#: classes/odb-displayer.php:214 classes/odb-logger.php:174
 msgid "Start Optimization"
 msgstr "Start Optimalisatie"
 
@@ -475,56 +475,56 @@ msgstr "database<br>grootte<br>VOOR"
 msgid "database<br>size<br>AFTER"
 msgstr "database<br>grootte<br>NA"
 
-#: classes/odb-logger.php:126 classes/odb-logger.php:251
+#: classes/odb-logger.php:126 classes/odb-logger.php:253
 msgid "SAVINGS"
 msgstr "BESPARINGEN"
 
-#: classes/odb-logger.php:170
+#: classes/odb-logger.php:172
 msgid "Export to CSV"
 msgstr "Exporteer naar CSV"
 
-#: classes/odb-logger.php:239
+#: classes/odb-logger.php:241
 msgid "id"
 msgstr "id"
 
-#: classes/odb-logger.php:241
+#: classes/odb-logger.php:243
 msgid "deleted revisions"
 msgstr "verw. revisies"
 
-#: classes/odb-logger.php:242
+#: classes/odb-logger.php:244
 msgid "deleted trash"
 msgstr "verw. prullenbak items"
 
-#: classes/odb-logger.php:243
+#: classes/odb-logger.php:245
 msgid "deleted spam"
 msgstr "verw. spam items"
 
-#: classes/odb-logger.php:244
+#: classes/odb-logger.php:246
 msgid "deleted tags"
 msgstr "verw. tags"
 
-#: classes/odb-logger.php:245
+#: classes/odb-logger.php:247
 msgid "deleted transients"
 msgstr "Verwijderde transiënts"
 
-#: classes/odb-logger.php:246
+#: classes/odb-logger.php:248
 msgid "deleted pingbacks"
 msgstr "verwijderde pingbacks"
 
-#: classes/odb-logger.php:247
+#: classes/odb-logger.php:249
 msgid "deleted orphans"
 msgstr "verw. wezen"
 
 # @ rvg-optimize-database
-#: classes/odb-logger.php:248
+#: classes/odb-logger.php:250
 msgid "nr of optimized tables"
 msgstr "aantal geoptimaliseerde tabellen"
 
-#: classes/odb-logger.php:249
+#: classes/odb-logger.php:251
 msgid "database size BEFORE"
 msgstr "database grootte VOOR"
 
-#: classes/odb-logger.php:250
+#: classes/odb-logger.php:252
 msgid "database size AFTER"
 msgstr "database grootte NA"
 
@@ -678,9 +678,12 @@ msgstr "Optimaliseer Database"
 msgid "Optimize DB (1 click)"
 msgstr "Optimaliseer DB (1 klik)"
 
-#: rvg-optimize-database.php:618
+#: rvg-optimize-database.php:619
 msgid "Optimize Database after Deleting Revisions LOGS HAVE BEEN CLEARED"
 msgstr "Optimize Database after Deleting Revisions LOGS ZIJN VERWIJDERD"
+
+#~ msgid "Donation page"
+#~ msgstr "Donatiepagina"
 
 #~ msgid "Delete Log File"
 #~ msgstr "Verwijder Logbestand"

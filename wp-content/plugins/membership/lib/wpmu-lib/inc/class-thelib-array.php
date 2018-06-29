@@ -1,11 +1,11 @@
 <?php
 /**
  * The Array component.
- * Access via function `lib3()->array`.
+ * Access via function `mslib3()->array`.
  *
  * @since  1.1.4
  */
-class TheLib_Array extends TheLib {
+class MsTheLib_Array extends MsTheLib {
 
 	/**
 	 * If the specified variable is an array it will be returned. Otherwise
@@ -190,7 +190,7 @@ class TheLib_Array extends TheLib {
 	}
 
 	/**
-	 * Short function for lib3()->equip( $_POST, ... )
+	 * Short function for mslib3()->equip( $_POST, ... )
 	 *
 	 * @since  1.0.14
 	 * @api
@@ -205,7 +205,7 @@ class TheLib_Array extends TheLib {
 	}
 
 	/**
-	 * Short function for lib3()->equip( $_REQUEST, ... )
+	 * Short function for mslib3()->equip( $_REQUEST, ... )
 	 *
 	 * @since  1.0.14
 	 * @api
@@ -220,7 +220,7 @@ class TheLib_Array extends TheLib {
 	}
 
 	/**
-	 * Short function for lib3()->equip( $_GET, ... )
+	 * Short function for mslib3()->equip( $_GET, ... )
 	 *
 	 * @since  1.1.3
 	 * @api

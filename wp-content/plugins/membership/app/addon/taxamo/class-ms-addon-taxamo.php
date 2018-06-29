@@ -123,7 +123,7 @@ class MS_Addon_Taxamo extends MS_Addon {
 			// Add taxes to the price, based on users country.
 			$this->add_filter(
 				'ms_apply_taxes',
-				'apply_taxes'
+				'apply_taxes', 10, 2
 			);
 
 			// Set tax-details on a new invoice.
@@ -134,7 +134,7 @@ class MS_Addon_Taxamo extends MS_Addon {
 
 			$this->add_filter(
 				'ms_invoice_tax_name',
-				'invoice_tax_name'
+				'invoice_tax_name', 10, 2
 			);
 
 			$this->add_filter(
@@ -230,7 +230,7 @@ class MS_Addon_Taxamo extends MS_Addon {
 				array(
 					'type' 	=> MS_Helper_Html::TYPE_HTML_TEXT,
 					'title' => __( 'Settings', 'membership2' ),
-					'desc' 	=> __( 'When this Add-on is enabled you will see a new section in the "Settings" page with additional options.', 'membership2' ),
+					'value' => __( 'When this Add-on is enabled you will see a new section in the "Settings" page with additional options.', 'membership2' ),
 				),
 			),
 		);
@@ -307,7 +307,7 @@ class MS_Addon_Taxamo extends MS_Addon {
 			&& $this->is_admin_user()
 		) {
 			$model = self::model();
-			lib3()->array->strip_slashes( $_POST, 'value' );
+			mslib3()->array->strip_slashes( $_POST, 'value' );
 
 			$model->set( $_POST['field'], $_POST['value'] );
 			$model->save();
@@ -324,7 +324,7 @@ class MS_Addon_Taxamo extends MS_Addon {
 	 * @param  numeric $net_value Net value
 	 * @return numeric Gross value
 	 */
-	public function apply_taxes( $net_value ) {
+	public function apply_taxes( $net_value, $membership ) {
 		$gross_value = 0;
 
 		if ( is_numeric( $net_value ) ) {
@@ -355,7 +355,7 @@ class MS_Addon_Taxamo extends MS_Addon {
 	 * @param  string $name Default name (empty string)
 	 * @return string Tax display-name (e.g. 'EU Standard Tax (20 %)')
 	 */
-	public function invoice_tax_name( $rate ) {
+	public function invoice_tax_name( $rate, $invoice ) {
 		$tax = MS_Addon_Taxamo_Api::tax_info();
 
 		return $tax->rate . '% ' . $tax->name;

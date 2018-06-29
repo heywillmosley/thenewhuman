@@ -9,7 +9,7 @@ class USIN_Reports_Defaults{
 			new USIN_Standard_Report('user_groups', __('User groups', 'usin'))
 		);
 
-		if(usin_module_options()->is_module_active('geolocation')){
+		if(usin_modules()->is_module_active('geolocation')){
 			$defaults[]= new USIN_Standard_Report('user_countries', __('Top user countries', 'usin'), 
 				array('type'=>USIN_Report::BAR));
 			
@@ -20,7 +20,7 @@ class USIN_Reports_Defaults{
 				array('type'=>USIN_Report::BAR));
 		}
 
-		if(usin_module_options()->is_module_active('devices')){
+		if(usin_modules()->is_module_active('devices')){
 			$defaults[]= new USIN_Standard_Report('user_browsers', __('User browsers', 'usin'), 
 				array('info' => __('Detected browsers displayed only', 'usin')));
 

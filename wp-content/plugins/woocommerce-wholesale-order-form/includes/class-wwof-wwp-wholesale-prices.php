@@ -408,6 +408,89 @@ if ( !class_exists( 'WWOF_WWP_Wholesale_Prices' ) ) {
         }
 
         /**
+         * Show or Hide wholesale price requirement printed above the order form.
+         *
+         * @since 1.8.5
+         *
+         * @param bool $value
+         * @return bool
+         */
+        public function wwof_show_hide_wholesale_price_requirement( $value ) {
+
+            return get_option( 'wwof_display_wholesale_price_requirement' , 'yes' ) == 'yes' ? $value : false;
+
+        }
+
+        /**
+         * Update totals to include prduct add-ons.
+         * Source: Product_Addon_Display->totals()
+         *
+         * @since 1.8.5
+         *
+         * @param text          $price_html
+         * @param WC_Product    $product
+         * @return text
+         */
+        public function wwof_show_addon_sub_total( $price_html , $product ) {
+            
+            global $Product_Addon_Display;
+
+            if ( $Product_Addon_Display != null && ( get_class( $Product_Addon_Display ) == 'Product_Addon_Display' || get_class( $Product_Addon_Display ) == 'Product_Addon_Display_Legacy' ) ) {
+                
+                $post_id = WWOF_Functions::wwof_get_product_id( $product );
+
+                ob_start();
+                $Product_Addon_Display->display( $post_id );
+                $product_addons = ob_get_clean();
+
+                if ( trim( $product_addons ) == '' )
+                    return $price_html;
+
+                if ( ! isset( $product ) || $product->get_id() != $post_id ) {
+                    $the_product = wc_get_product( $post_id );
+                } else {
+                    $the_product = $product;
+                }
+
+                if ( is_object( $the_product ) ) {
+                    $tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
+                    $display_price    = 'incl' === $tax_display_mode ? wc_get_price_including_tax( $the_product ) : wc_get_price_excluding_tax( $the_product );
+                } else {
+                    $display_price = '';
+                    $raw_price     = 0;
+                }
+
+                if ( 'no' === get_option( 'woocommerce_prices_include_tax' ) ) {
+                    $tax_mode  = 'excl';
+                    $raw_price = wc_get_price_excluding_tax( $the_product );
+                } else {
+                    $tax_mode  = 'incl';
+                    $raw_price = wc_get_price_including_tax( $the_product );
+                }
+
+
+                if( class_exists( 'WWP_Wholesale_Prices' ) ) {
+
+                    global $wc_wholesale_prices;
+
+                    $wholesale_role = $wc_wholesale_prices->wwp_wholesale_roles->getUserWholesaleRole();
+
+                    $display_price  = WWOF_Functions::wwof_get_wholesale_price( $the_product , $wholesale_role );
+                    $raw_price      = $display_price;
+
+                }
+
+                $display_totals = '<div class="product-addons-total" data-show-sub-total="' . ( apply_filters( 'woocommerce_product_addons_show_grand_total', true, $the_product ) ? 1 : 0 ) . '" data-type="' . esc_attr( $the_product->get_type() ) . '" data-tax-mode="' . esc_attr( $tax_mode ) . '" data-tax-display-mode="' . esc_attr( $tax_display_mode ) . '" data-price="' . esc_attr( $display_price ) . '" data-raw-price="' . esc_attr( $raw_price ) . '" data-product-id="' . esc_attr( $post_id ) . '"></div>';
+
+                return $price_html . $display_totals;
+
+            }
+
+            return $price_html;
+
+        }
+
+        /**
          * Execute model.
          *
          * @since 1.6.6
@@ -417,7 +500,11 @@ if ( !class_exists( 'WWOF_WWP_Wholesale_Prices' ) ) {
 
             // Display wholesale price requirement message at the top of the search box wholesale ordering form.
             add_action( 'wwof_action_before_product_listing_filter' , array( $this , 'wwof_display_wholesale_price_requirement' ) , 10 , 1 );
+
+            // Enable / Disable showing minimum order subtotal on ordering form
+            add_filter( 'wwof_display_wholesale_price_requirement' , array( $this , 'wwof_show_hide_wholesale_price_requirement' ) , 10 , 1 );
             
+            add_filter( 'wwof_filter_product_item_price' , array( $this , 'wwof_show_addon_sub_total' ) , 10 , 2 );
         }
     }
 }

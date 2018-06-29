@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQ
 Tags: woocommerce, coupons, discount
 Requires at least: 4.7
 Requires PHP: 5.3
-Tested up to: 4.9.4
-Stable tag: 2.6.2
+Tested up to: 4.9.6
+Stable tag: 2.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,7 +108,15 @@ Sure! [This](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQ
 
 == Changelog ==
 
+= 2.6.3 =
+*Release Date - 2018-06-04*
+* FIX: WJECF_Controller: Don't use wp_get_current_user() for admin-orders
+* FIX: WJECF_Controller: Don't use WC()->cart->subtotal for admin-orders
+* FIX: Possible division by zero when calculating multiplier value
+* FEATURE: Filter 'wjecf_coupon_multiplier_value' to allow overriding the coupon's multiplier value
+
 = 2.6.2 =
+*Release Date - 2018-04-02*
 * FEATURE: Auto-coupon compatibility with the 'WooCommerce Free Gift Coupons'-plugin
 * FIX: CATEGORIES AND in combination with variable products
 * FIX: Call to undefined function wc_add_notice()

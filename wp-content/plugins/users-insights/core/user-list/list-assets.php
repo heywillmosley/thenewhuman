@@ -25,7 +25,7 @@ class USIN_List_Assets extends USIN_Assets{
 			'usin_drag_drop', 'usin_angular_material', 'usin_select', 'usin_helpers'));
 
 			
-		if(usin_module_options()->is_module_active('geolocation')){
+		if(usin_modules()->is_module_active('geolocation')){
 
 			$this->enqueue_scripts(array('usin_maps', 'usin_marker_clusterer'));
 			$this->enqueue_styles(array('usin_leaflet_css', 'usin_marker_clusterer_css_default'));
@@ -60,7 +60,7 @@ class USIN_List_Assets extends USIN_Assets{
 			'filterOperators' => $usin_options->get_filter_operators(),
 			'optionFieldTypes' => $usin_options->get_field_types_by_type('option'),
 			'textFieldTypes' => $usin_options->get_field_types_by_type('text'),
-			'geolocationActive' => usin_module_options()->is_module_active('geolocation'),
+			'geolocationActive' => usin_modules()->is_module_active('geolocation'),
 			'groups' => USIN_GROUPS::get_all_groups(),
 			'segments' => USIN_Segments::get(),
 			'customTemplates' => array(),

@@ -84,6 +84,15 @@ class MS_Rule extends MS_Model {
 	 */
 	protected $_subscription_id = 0;
 
+
+	/**
+	 * Allow access without protection rule
+	 *
+	 * @since  1.1.3
+	 * @var   bool
+	 */
+	protected $_allow_without_rule = true;
+
 	/**
 	 * Class constructor.
 	 *
@@ -581,6 +590,8 @@ class MS_Rule extends MS_Model {
 			return true;
 		}
 
+		$only_this = $this->_allow_without_rule;
+
 		/*
 		 * $access will be one of these:
 		 *   - TRUE .. Access explicitly granted
@@ -590,12 +601,14 @@ class MS_Rule extends MS_Model {
 		$access = $this->get_rule_value( $id );
 
 		if ( $this->is_base_rule ) {
+
 			/*
 			 * Base rule ..
 			 *   - The meaning of TRUE/FALSE is inverted
-			 *   - NULL is always "allowed"
+			 *   - NULL is always "allowed" for $only_this
 			 */
 			$access = ! $access;
+			
 		} else {
 			// Apply dripped-content rules if neccessary.
 			if ( $access && $this->has_dripped_rules( $id ) ) {
@@ -710,7 +723,7 @@ class MS_Rule extends MS_Model {
 		}
 
 		if ( is_array( $drip_data ) ) {
-			lib3()->array->equip( $drip_data, 'type', 'date', 'delay_unit', 'delay_type' );
+			mslib3()->array->equip( $drip_data, 'type', 'date', 'delay_unit', 'delay_type' );
 
 			switch ( $drip_data['type'] ) {
 				case MS_Model_Rule::DRIPPED_TYPE_SPEC_DATE:
@@ -766,7 +779,7 @@ class MS_Rule extends MS_Model {
 		}
 
 		if ( is_array( $drip_data ) ) {
-			lib3()->array->equip( $drip_data, 'type', 'date', 'delay_unit', 'delay_type' );
+			mslib3()->array->equip( $drip_data, 'type', 'date', 'delay_unit', 'delay_type' );
 
 			switch ( $drip_data['type'] ) {
 				case MS_Model_Rule::DRIPPED_TYPE_SPEC_DATE:
@@ -1399,7 +1412,7 @@ class MS_Rule extends MS_Model {
 		switch ( $property ) {
 			case 'rule_value':
 			case 'dripped':
-				$this->$property = lib3()->array->get( $this->$property );
+				$this->$property = mslib3()->array->get( $this->$property );
 				$value = $this->$property;
 				break;
 

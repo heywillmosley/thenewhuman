@@ -1,11 +1,11 @@
 <?php
 /**
  * HTML Helper functions
- * Access via function `lib3()->html`.
+ * Access via function `mslib3()->html`.
  *
  * @since 1.1.0
  */
-class TheLib_Html extends TheLib  {
+class MsTheLib_Html extends MsTheLib  {
 
 	/* Constants for default HTML input elements. */
 	const INPUT_TYPE_HIDDEN = 'hidden';

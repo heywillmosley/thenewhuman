@@ -3,7 +3,7 @@
  * Plugin Name: WPMU Dev code library
  * Plugin URI:  http://premium.wpmudev.org/
  * Description: Framework to support creating WordPress plugins and themes.
- * Version:     3.0.0
+ * Version:     3.0.5
  * Author:      WPMU DEV
  * Author URI:  http://premium.wpmudev.org/
  * Textdomain:  wpmu-lib
@@ -16,11 +16,11 @@
  * Default: false
  *     define( 'WDEV_UNMINIFIED', true );
  *
- * Activate lib3()->debug->dump() without having to enable WP_DEBUG
+ * Activate mslib3()->debug->dump() without having to enable WP_DEBUG
  * Default: Same as WP_DEBUG
  *     define( 'WDEV_DEBUG', true );
  *
- * Disable lib3()->debug->dump() for Ajax requests
+ * Disable mslib3()->debug->dump() for Ajax requests
  * Default: Same as WDEV_DEBUG
  *     define( 'WDEV_AJAX_DEBUG', false );
  *
@@ -30,9 +30,9 @@
  *     define( 'WDEV_SEND_P3P', 'CP="CAO OUR"' ) // Overwrite default P3P header
  */
 
-$version = '3.0.0';
+$version = '3.0.5';
 
-if ( ! function_exists( 'lib3' ) ) {
+if ( ! function_exists( 'mslib3' ) ) {
 	/**
 	 * This is a shortcut function to access the latest TheLib_Core object.
 	 *
@@ -43,10 +43,10 @@ if ( ! function_exists( 'lib3' ) ) {
 	 * The main version is only increased when backwards compatibility fails!
 	 *
 	 * Usage:
-	 *   lib3()->ui->admin_message();
+	 *   mslib3()->ui->admin_message();
 	 */
-	function lib3() {
-		return TheLib3_Wrap::get_obj();
+	function mslib3() {
+		return MsTheLib3_Wrap::get_obj();
 	}
 }
 
@@ -56,27 +56,27 @@ if ( ! function_exists( 'lib3' ) ) {
 // Define the absolute paths to all class files of this submodule.
 $dirname = dirname( __FILE__ ) . '/inc/';
 $files = array(
-	'TheLib'         => $dirname . 'class-thelib.php',
-	'TheLib_Core'    => $dirname . 'class-thelib-core.php',
-	'TheLib_Array'   => $dirname . 'class-thelib-array.php',
-	'TheLib_Debug'   => $dirname . 'class-thelib-debug.php',
-	'TheLib_Html'    => $dirname . 'class-thelib-html.php',
-	'TheLib_Net'     => $dirname . 'class-thelib-net.php',
-	'TheLib_Session' => $dirname . 'class-thelib-session.php',
-	'TheLib_Updates' => $dirname . 'class-thelib-updates.php',
-	'TheLib_Ui'      => $dirname . 'class-thelib-ui.php',
+	'MsTheLib'         => $dirname . 'class-thelib.php',
+	'MsTheLib_Core'    => $dirname . 'class-thelib-core.php',
+	'MsTheLib_Array'   => $dirname . 'class-thelib-array.php',
+	'MsTheLib_Debug'   => $dirname . 'class-thelib-debug.php',
+	'MsMsTheLib_Html'  => $dirname . 'class-thelib-html.php',
+	'MsTheLib_Net'     => $dirname . 'class-thelib-net.php',
+	'MsTheLib_Session' => $dirname . 'class-thelib-session.php',
+	'MsTheLib_Updates' => $dirname . 'class-thelib-updates.php',
+	'MsTheLib_Ui'      => $dirname . 'class-thelib-ui.php',
 );
 
-if ( ! class_exists( 'TheLib3_Wrap' ) ) {
+if ( ! class_exists( 'MsTheLib3_Wrap' ) ) {
 	/**
 	 * The wrapper class is used to handle situations when some plugins include
 	 * different versions of TheLib.
 	 *
 	 * TheLib3_Wrap will always keep the latest version of TheLib for later usage.
 	 *
-	 * @internal Use function `lib3()` instead!
+	 * @internal Use function `mslib3()` instead!
 	 */
-	class TheLib3_Wrap {
+	class MsTheLib3_Wrap {
 		static protected $version = '0.0.0';
 		static protected $files = array();
 		static protected $object = null;
@@ -85,7 +85,7 @@ if ( ! class_exists( 'TheLib3_Wrap' ) ) {
 		 * Store the module files if they are the highest module-version
 		 */
 		static public function set_version( $version, $files ) {
-			if ( self::$object !== null ) { return; }
+			if ( null !== self::$object ) { return; }
 
 			if ( version_compare( $version, self::$version, '>' ) ) {
 				self::$version = $version;
@@ -97,17 +97,23 @@ if ( ! class_exists( 'TheLib3_Wrap' ) ) {
 		 * Return the module object.
 		 */
 		static public function get_obj() {
-			if ( self::$object === null ) {
+			if ( null === self::$object ) {
 				foreach ( self::$files as $class_name => $class_file ) {
 					if ( ! class_exists( $class_name ) && file_exists( $class_file ) ) {
 						require_once $class_file;
 					}
 				}
-				self::$object = new TheLib_Core();
+				self::$object = new MsTheLib_Core();
 			}
 			return self::$object;
 		}
-	} // End: TheLib3_Wrap
+	} // End: MsTheLib3_Wrap
 }
 // Stores the lib-directory if it contains the highest version files.
-TheLib3_Wrap::set_version( $version, $files );
+MsTheLib3_Wrap::set_version( $version, $files );
+
+add_action( 'wp_enqueue_scripts', 'remove_csb_ui' );
+function remove_csb_ui() {
+	wp_dequeue_script( 'wpmu-wpmu-ui-3-min-js' );
+	wp_deregister_script( 'wpmu-wpmu-ui-3-min-js' );
+}

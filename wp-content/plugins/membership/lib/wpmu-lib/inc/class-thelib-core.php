@@ -1,13 +1,13 @@
 <?php
 /**
  * Main access to the Code-Library.
- * Access via function `lib3()`.
+ * Access via function `mslib3()`.
  *
  * Inspired by Jigsaw plugin by Jared Novack (http://jigsaw.upstatement.com/)
  *
  * @since  1.0.0
  */
-class TheLib_Core extends TheLib {
+class MsTheLib_Core extends MsTheLib {
 
 	/**
 	 * Interface to the array component.
@@ -105,7 +105,7 @@ class TheLib_Core extends TheLib {
 		foreach ( $components as $component ) {
 			if ( ! property_exists( $this, $component ) ) { continue; }
 
-			$class_name = 'TheLib_' . ucfirst( $component );
+			$class_name = 'MsTheLib_' . ucfirst( $component );
 			$this->$component = new $class_name();
 		}
 	}

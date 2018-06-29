@@ -16,7 +16,7 @@ class USIN_bbPress{
 	}
 
 	public function init(){
-		if(usin_module_options()->is_module_active('bbpress')){
+		if(usin_modules()->is_module_active('bbpress')){
 			
 			$bb_query = new USIN_bbPress_Query();
 			$bb_query->init();

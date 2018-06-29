@@ -160,20 +160,19 @@ jQuery(document).ready(function(){
 					<td>
 						<p class="rcsp_p_admin"><?php _e('Enter your social profiles complete url here',WEBLIZAR_ACL)?></p>
 						<ul class="rcp_social_profile_admin">
-							<li><i class="fa fa-facebook"></i><input type="text" class="pro_text" id="facebook-link" name="facebook-link" placeholder="<?php _e('Facebook', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_facebook_link; ?>" /></li>
-							<li><i class="fa fa-twitter"></i><input type="text" class="pro_text" id="twitter-link" name="twitter-link" placeholder="<?php _e('Twitter', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_twitter_link; ?>" /></li>
-							<li><i class="fa fa-linkedin"></i><input type="text" class="pro_text" id="linkedin-link" name="linkedin-link" placeholder="<?php _e('Linkedin', WEBLIZAR_ACL); ?>" size="56" value="<?php echo $social_linkedin_link; ?>" /></li>
-							<li><i class="fa fa-google-plus"></i><input type="text" class="pro_text" id="google-plus-link" name="google-plus-link" placeholder="<?php _e('Google Plus', WEBLIZAR_ACL); ?>" size="56" value="<?php echo $social_google_plus_link; ?>" /></li>
-							<li><i class="fa fa-pinterest-p"></i><input type="text" class="pro_text" id="pinterest-link" name="pinterest-link" placeholder="<?php _e('Pinterest', WEBLIZAR_ACL); ?>" size="56" value="<?php echo $social_pinterest_link; ?>" /></li>
-							<li><i class="fa fa-digg"></i><input type="text" class="pro_text" id="digg-link" name="digg-link" placeholder="<?php _e('Digg', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_digg_link; ?>" /></li>
-							<li><i class="fa fa-youtube"></i><input type="text" class="pro_text" id="youtube-link" name="youtube-link" placeholder="<?php _e('Youtube', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_youtube_link; ?>" /></li>
-							<li><i class="fa fa-flickr"></i><input type="text" class="pro_text" id="flickr-link" name="flickr-link" placeholder="<?php _e('Flickr', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_flickr_link; ?>" /></li>
-							<li><i class="fa fa-tumblr"></i><input type="text" class="pro_text" id="tumblr-link" name="tumblr-link" placeholder="<?php _e('Tumblr', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_tumblr_link; ?>" /></li>
-							<li><i class="fa fa-vk"></i><input type="text" class="pro_text" id="vkontakte-link" name="vkontakte-link" placeholder="<?php _e('VKontakte', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_vkontakte_link; ?>" /></li>
-							<li><i class="fa fa-skype"></i><input type="text" class="pro_text" id="skype-link" name="skype-link" placeholder="<?php _e('Skype', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_skype_link; ?>" /></li> 
-							<li><i class="fa fa-instagram"></i><input type="text" class="pro_text" id="instagram-link" name="instagram-link" placeholder="<?php _e('Instagram', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_instagram_link; ?>" /></li>
-							<li><i class="fa fa-telegram"></i><input type="text" class="pro_text" id="telegram-link" name="telegram-link" placeholder="<?php _e('Telegram', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_telegram_link; ?>" /></li>
-							<li><i class="fa fa-whatsapp"></i><input type="text" class="pro_text" id="whatsapp-link" name="whatsapp-link" placeholder="<?php _e('Whatsapp', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_whatsapp_link; ?>" /></li>
+							<li><i class="fab fa-facebook-f"></i><input type="text" class="pro_text" id="facebook-link" name="facebook-link" placeholder="<?php _e('Facebook', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_facebook_link; ?>" /></li>
+							<li><i class="fab fa-twitter"></i><input type="text" class="pro_text" id="twitter-link" name="twitter-link" placeholder="<?php _e('Twitter', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_twitter_link; ?>" /></li>
+							<li><i class="fab fa-linkedin-in"></i><input type="text" class="pro_text" id="linkedin-link" name="linkedin-link" placeholder="<?php _e('Linkedin', WEBLIZAR_ACL); ?>" size="56" value="<?php echo $social_linkedin_link; ?>" /></li>
+							<li><i class="fab fa-google-plus-g"></i><input type="text" class="pro_text" id="google-plus-link" name="google-plus-link" placeholder="<?php _e('Google Plus', WEBLIZAR_ACL); ?>" size="56" value="<?php echo $social_google_plus_link; ?>" /></li>
+							<li><i class="fab fa-pinterest-p"></i><input type="text" class="pro_text" id="pinterest-link" name="pinterest-link" placeholder="<?php _e('Pinterest', WEBLIZAR_ACL); ?>" size="56" value="<?php echo $social_pinterest_link; ?>" /></li>
+							<li><i class="fab fa-digg"></i><input type="text" class="pro_text" id="digg-link" name="digg-link" placeholder="<?php _e('Digg', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_digg_link; ?>" /></li>
+							<li><i class="fab fa-youtube-square"></i><input type="text" class="pro_text" id="youtube-link" name="youtube-link" placeholder="<?php _e('Youtube', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_youtube_link; ?>" /></li>
+							<li><i class="fab fa-flickr"></i><input type="text" class="pro_text" id="flickr-link" name="flickr-link" placeholder="<?php _e('Flickr', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_flickr_link; ?>" /></li>
+							<li><i class="fab fa-tumblr"></i><input type="text" class="pro_text" id="tumblr-link" name="tumblr-link" placeholder="<?php _e('Tumblr', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_tumblr_link; ?>" /></li>
+							<li><i class="fab fa-skype"></i><input type="text" class="pro_text" id="skype-link" name="skype-link" placeholder="<?php _e('Skype', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_skype_link; ?>" /></li> 
+							<li><i class="fab fa-instagram"></i><input type="text" class="pro_text" id="instagram-link" name="instagram-link" placeholder="<?php _e('Instagram', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_instagram_link; ?>" /></li>
+							<li><i class="fab fa-telegram-plane"></i><input type="text" class="pro_text" id="telegram-link" name="telegram-link" placeholder="<?php _e('Telegram', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_telegram_link; ?>" /></li>
+							<li><i class="fab fa-whatsapp"></i><input type="text" class="pro_text" id="whatsapp-link" name="whatsapp-link" placeholder="<?php _e('Whatsapp', WEBLIZAR_ACL)?>" size="56" value="<?php echo $social_whatsapp_link; ?>" /></li>
 						</ul>
 					</td>
 				</tr>
@@ -279,13 +278,12 @@ function Custom_login_social(Action, id){
 		var social_youtube_link = encodeURIComponent(jQuery("#youtube-link").val());
 		var social_flickr_link = encodeURIComponent(jQuery("#flickr-link").val());
 		var social_tumblr_link = encodeURIComponent(jQuery("#tumblr-link").val());
-		var social_vkontakte_link = encodeURIComponent(jQuery("#vkontakte-link").val());
 		var social_skype_link = encodeURIComponent(jQuery("#skype-link").val());
 		var social_instagram_link = encodeURIComponent(jQuery("#instagram-link").val());
 		var social_telegram_link = encodeURIComponent(jQuery("#telegram-link").val());
 		var social_whatsapp_link = encodeURIComponent(jQuery("#whatsapp-link").val());
 
-		var PostData = "Action=" + Action + "&enable_social_icon=" + enable_social_icon + "&social_icon_size=" + social_icon_size + "&social_icon_layout=" + social_icon_layout + "&social_icon_color=" + social_icon_color + "&social_icon_color_onhover=" + social_icon_color_onhover + "&social_icon_bg=" + social_icon_bg  + "&social_icon_bg_onhover=" + social_icon_bg_onhover + "&social_facebook_link=" + social_facebook_link + "&social_twitter_link=" + social_twitter_link + "&social_linkedin_link=" + social_linkedin_link + "&social_google_plus_link=" + social_google_plus_link + "&social_pinterest_link=" + social_pinterest_link + "&social_digg_link=" + social_digg_link + "&social_youtube_link=" + social_youtube_link + "&social_flickr_link=" + social_flickr_link + "&social_tumblr_link=" + social_tumblr_link + "&social_vkontakte_link=" + social_vkontakte_link + "&social_skype_link=" + social_skype_link + "&social_instagram_link=" + social_instagram_link + "&social_telegram_link=" + social_telegram_link + "&social_whatsapp_link=" + social_whatsapp_link;
+		var PostData = "Action=" + Action + "&enable_social_icon=" + enable_social_icon + "&social_icon_size=" + social_icon_size + "&social_icon_layout=" + social_icon_layout + "&social_icon_color=" + social_icon_color + "&social_icon_color_onhover=" + social_icon_color_onhover + "&social_icon_bg=" + social_icon_bg  + "&social_icon_bg_onhover=" + social_icon_bg_onhover + "&social_facebook_link=" + social_facebook_link + "&social_twitter_link=" + social_twitter_link + "&social_linkedin_link=" + social_linkedin_link + "&social_google_plus_link=" + social_google_plus_link + "&social_pinterest_link=" + social_pinterest_link + "&social_digg_link=" + social_digg_link + "&social_youtube_link=" + social_youtube_link + "&social_flickr_link=" + social_flickr_link + "&social_tumblr_link=" + social_tumblr_link + "&social_skype_link=" + social_skype_link + "&social_instagram_link=" + social_instagram_link + "&social_telegram_link=" + social_telegram_link + "&social_whatsapp_link=" + social_whatsapp_link;
 		jQuery.ajax({
 			dataType : 'html',
 			type: 'POST',
@@ -377,7 +375,6 @@ function Custom_login_social(Action, id){
 				document.getElementById("youtube-link").value ="https://youtube.com/";
 				document.getElementById("flickr-link").value ="https://flickr.com/";
 				document.getElementById("tumblr-link").value ="https://tumblr.com/";
-				document.getElementById("vkontakte-link").value ="https://vkontakte.com/";
 				document.getElementById("skype-link").value ="https://skype.com/";
 				document.getElementById("instagram-link").value ="https://instagram.com/";
 				document.getElementById("telegram-link").value ="https://telegram.org/";
@@ -417,7 +414,6 @@ if(isset($_POST['Action'])) {
 		$social_youtube_link = sanitize_text_field($_POST['social_youtube_link']);
 		$social_flickr_link = sanitize_text_field($_POST['social_flickr_link']);
 		$social_tumblr_link = sanitize_text_field($_POST['social_tumblr_link']);
-		$social_vkontakte_link = sanitize_text_field($_POST['social_vkontakte_link']);
 		$social_skype_link = sanitize_text_field($_POST['social_skype_link']);
 		$social_instagram_link = sanitize_text_field($_POST['social_instagram_link']);
 		$social_telegram_link = sanitize_text_field($_POST['social_telegram_link']);
@@ -440,7 +436,6 @@ if(isset($_POST['Action'])) {
 		'social_youtube_link'=> $social_youtube_link,
 		'social_flickr_link'=> $social_flickr_link,
 		'social_tumblr_link'=> $social_tumblr_link,
-		'social_vkontakte_link'=> $social_vkontakte_link,
 		'social_skype_link'=> $social_skype_link,
 		'social_instagram_link'=> $social_instagram_link,
 		'social_telegram_link'=> $social_telegram_link,
@@ -467,7 +462,6 @@ if(isset($_POST['Action'])) {
 			'social_youtube_link'=> 'https://youtube.com/',
 			'social_flickr_link'=> 'https://flickr.com/',
 			'social_tumblr_link'=> '',
-			'social_vkontakte_link'=> '',
 			'social_skype_link'=> '',
 			'social_instagram_link'=> 'https://instagram.com/',
 			'social_telegram_link'=> 'https://telegram.org/',

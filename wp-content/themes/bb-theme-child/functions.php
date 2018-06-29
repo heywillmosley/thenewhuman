@@ -144,7 +144,11 @@ function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/bionetics/' );
   $whitelist[] = site_url( '/testimonials/' );
   $whitelist[] = site_url( '/iabc/' );
+  $whitelist[] = site_url( '/contact/' );
+  $whitelist[] = site_url( '/about/' );
+  $whitelist[] = site_url( '/botanicals/' );
   $whitelist[] = site_url( '/blog/' );
+  $whitelist[] = site_url( '/training/' );
   return $whitelist;
 }
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);

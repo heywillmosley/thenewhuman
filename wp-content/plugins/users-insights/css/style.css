@@ -1029,6 +1029,18 @@ a.usin-act-more {
   margin-top: 20px;
   display: block;
 }
+.usin-module-settings label {
+  border-bottom: 1px solid #f1f1f1;
+  padding-bottom: 10px;
+  font-weight: 500;
+}
+.usin-module-settings label .usin-icon-info {
+  position: relative;
+  top: 3px;
+}
+.usin-module-privacy .usin-module-edit .usin-module-content {
+  padding-top: 0;
+}
 .usin-try-btn,
 .usin-buy-btn {
   width: 100%;
@@ -1049,14 +1061,18 @@ a.usin-act-more {
   padding: 10px 20px;
   border-top: 1px solid #f1f1f1;
 }
-.usin-module-geolocation .usin-module-head {
-  background: #3788c7;
+.usin-module-footer .usin-success-icon {
+  color: #00aba8;
+  font-size: 25px;
+  line-height: 25px;
+  display: inline-block;
+  vertical-align: middle;
 }
 .usin-module-social .usin-module-head {
   background: #BF538D;
 }
-.usin-module-devices .usin-module-head {
-  background: #ffcc43;
+.usin-module-privacy .usin-module-head {
+  background: #10B7B4;
 }
 .usin-module-woocommerce .usin-module-head,
 .usin-module-wc-subscriptions .usin-module-head,
@@ -1081,7 +1097,7 @@ a.usin-act-more {
   display: none;
 }
 .usin-module-edd .usin-module-head {
-  background: #5c95a8;
+  background: #2794da;
   background-size: 46px 46px;
 }
 .usin-module-pmpro .usin-module-head {
@@ -1247,8 +1263,8 @@ a.usin-act-more {
 /* Icon Fonts */
 @font-face {
   font-family: 'usin';
-  src: url('fonts/usin.eot?z80xql');
-  src: url('fonts/usin.eot?z80xql#iefix') format('embedded-opentype'), url('fonts/usin.ttf?z80xql') format('truetype'), url('fonts/usin.woff?z80xql') format('woff'), url('fonts/usin.svg?z80xql#usin') format('svg');
+  src: url('fonts/usin.eot?7xi8d3');
+  src: url('fonts/usin.eot?7xi8d3#iefix') format('embedded-opentype'), url('fonts/usin.ttf?7xi8d3') format('truetype'), url('fonts/usin.woff?7xi8d3') format('woff'), url('fonts/usin.svg?7xi8d3#usin') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -1406,6 +1422,15 @@ a.usin-act-more {
 /* Paid Membership Pro icon */
 .usin-icon-pmpro:before {
   content: "\e851";
+}
+.usin-icon-privacy:before {
+  content: "\e899";
+}
+.usin-icon-activity:before {
+  content: "\e922";
+}
+.usin-icon-check:before {
+  content: "\e5ca";
 }
 /* loading icons */
 .usin-icon-module-loading:before,
@@ -2137,6 +2162,18 @@ md-checkbox.md-indeterminate .md-icon:after {
   border-color: #aec2c1;
   color: #aec2c1;
 }
+md-tooltip.usin-multiline-tooltip.md-usin-theme {
+  height: auto;
+  max-width: 300px;
+  overflow: visible;
+  font-size: 12px;
+}
+md-tooltip.usin-multiline-tooltip.md-usin-theme .md-content {
+  height: auto;
+  max-width: 300px;
+  white-space: pre-line;
+  padding: 10px;
+}
 /* check box in table heading */
 .usin-heading-checkbox md-checkbox.md-usin-theme.md-checked .md-icon:after {
   border-color: #3b444f;
@@ -2407,10 +2444,12 @@ button[disabled].usin-save-segment {
   background-color: #fff;
   border-radius: 4px 4px 0 0;
 }
-.usin-report-header .usin-icon-info {
+.usin-icon-info {
   color: #e2e2e2;
-  vertical-align: middle;
   font-size: 16px;
+}
+.usin-report-header .usin-icon-info {
+  vertical-align: middle;
   display: inline-block;
   margin-top: -3px;
 }
