@@ -45,7 +45,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	$login_msg_fontsize= $login_page['login_msg_fontsize'];
 	$login_msg_font_color= $login_page['login_msg_font_color'];
 	$tagline_msg= $login_page['tagline_msg'];
-	
+	if(isset($login_page['user_cust_lbl'])){ $user_cust_lbl= $login_page['user_cust_lbl']; } else { $user_cust_lbl = "Type Username or Email"; }
+	if(isset($login_page['pass_cust_lbl'])){ $pass_cust_lbl= $login_page['pass_cust_lbl']; } else { $pass_cust_lbl = "Type Password"; }
+		
 	// Get value of Text and Color page
 	$text_and_color_page = unserialize(get_option('Admin_custome_login_text'));
 	$heading_font_color = $text_and_color_page['heading_font_color'];
@@ -79,7 +81,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	$site_key = $g_page['site_key'];
 	$secret_key = $g_page['secret_key'];
 	$login_enable_gcaptcha = $g_page['login_enable_gcaptcha'];
-		
+	if(isset($g_page['acl_gcaptcha_theme'])){ $acl_gcaptcha_theme = $g_page['acl_gcaptcha_theme']; } else { $acl_gcaptcha_theme="yes" ;}
+
 	// Get value of Slidshow image
 	$Slidshow_image = unserialize(get_option('Admin_custome_login_Slidshow'));
 	$Slidshow_image_1=$Slidshow_image['Slidshow_image_1'];
@@ -113,7 +116,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	$social_youtube_link		=$Social_page['social_youtube_link'];
 	$social_flickr_link			=$Social_page['social_flickr_link'];
 	$social_tumblr_link			=$Social_page['social_tumblr_link'];
-	$social_vkontakte_link		=$Social_page['social_vkontakte_link'];
 	$social_skype_link			=$Social_page['social_skype_link'];
 	$social_instagram_link		=$Social_page['social_instagram_link'];
 	$social_telegram_link		=$Social_page['social_telegram_link'];

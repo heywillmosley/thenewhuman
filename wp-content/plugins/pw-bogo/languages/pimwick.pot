@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the PW WooCommerce BOGO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: PW WooCommerce BOGO 2.70\n"
+"Project-Id-Version: PW WooCommerce BOGO 2.73\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pw-bogo\n"
-"POT-Creation-Date: 2018-06-21 14:57:11+00:00\n"
+"POT-Creation-Date: 2018-08-05 16:40:46+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -191,19 +191,19 @@ msgstr ""
 msgid "% off"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:709
+#: pw-woocommerce-bogo-free.php:711
 msgid "Invalid bogo parameter for get_bogo()."
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:713
+#: pw-woocommerce-bogo-free.php:715
 msgid "%s is not a valid type for get_bogo()."
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:895
+#: pw-woocommerce-bogo-free.php:897
 msgid "PW BOGO: %s"
 msgstr ""
 
-#: pw-woocommerce-bogo-free.php:1229 pw-woocommerce-bogo-free.php:1234
+#: pw-woocommerce-bogo-free.php:1231 pw-woocommerce-bogo-free.php:1236
 msgid "Coupon: %s"
 msgstr ""
 
@@ -352,9 +352,9 @@ msgstr ""
 msgid "PW WooCommerce BOGO"
 msgstr ""
 
-#. #-#-#-#-#  pimwick.pot (PW WooCommerce BOGO 2.70)  #-#-#-#-#
+#. #-#-#-#-#  pimwick.pot (PW WooCommerce BOGO 2.73)  #-#-#-#-#
 #. Plugin URI of the plugin/theme
-#. #-#-#-#-#  pimwick.pot (PW WooCommerce BOGO 2.70)  #-#-#-#-#
+#. #-#-#-#-#  pimwick.pot (PW WooCommerce BOGO 2.73)  #-#-#-#-#
 #. Author URI of the plugin/theme
 msgid "https://pimwick.com/pw-bogo"
 msgstr ""

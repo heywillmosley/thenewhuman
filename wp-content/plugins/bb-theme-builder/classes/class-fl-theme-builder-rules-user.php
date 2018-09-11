@@ -19,9 +19,7 @@ final class FLThemeBuilderRulesUser {
 
 	/**
 	 * Returns an array of posts from a posts array that the current
-	 * user can view. Posts matching role based rules are returned first.
-	 * If none are found, posts matching general rules are returned.
-	 * Finally, if none are found, posts matching "all users" are returned.
+	 * user can view based on the user rules that have been set.
 	 *
 	 * @since 1.0
 	 * @param array $array
@@ -29,6 +27,7 @@ final class FLThemeBuilderRulesUser {
 	 */
 	static public function get_posts_from_array( $array ) {
 		$user  = wp_get_current_user();
+		$found = array();
 		$posts = array(
 			'all'     => array(),
 			'general' => array(),
@@ -60,29 +59,31 @@ final class FLThemeBuilderRulesUser {
 			}
 		}
 
-		foreach ( $posts['role'] as $rule => $rule_posts ) {
-			if ( in_array( $rule, $user->roles ) ) {
-				return $rule_posts;
-			}
-		}
-
-		/**
-		 * If on post type 'fl-theme-layout' return $posts['all']
-		 * @since 1.0.3
-		 */
+		// Bail early and return posts for all users if we're editing a themer layout.
 		if ( 'fl-theme-layout' === get_post_type() ) {
 			return $posts['all'];
 		}
 
-		foreach ( $posts['general'] as $rule => $rule_posts ) {
-			if ( 'logged-in' == $rule && is_user_logged_in() ) {
-				return $rule_posts;
-			} elseif ( 'logged-out' == $rule && ! is_user_logged_in() ) {
-				return $rule_posts;
+		// Find and merge any role based posts.
+		foreach ( $posts['role'] as $rule => $rule_posts ) {
+			if ( in_array( $rule, $user->roles ) ) {
+				$found = array_merge( $found, $rule_posts );
 			}
 		}
 
-		return $posts['all'];
+		// Find and merge any logged in/out posts.
+		foreach ( $posts['general'] as $rule => $rule_posts ) {
+			if ( 'logged-in' == $rule && is_user_logged_in() ) {
+				$found = array_merge( $found, $rule_posts );
+			} elseif ( 'logged-out' == $rule && ! is_user_logged_in() ) {
+				$found = array_merge( $found, $rule_posts );
+			}
+		}
+
+		// Finally, merge any posts for all users.
+		$found = array_merge( $found, $posts['all'] );
+
+		return $found;
 	}
 
 	/**

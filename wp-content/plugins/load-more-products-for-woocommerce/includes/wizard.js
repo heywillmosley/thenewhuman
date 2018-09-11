@@ -209,8 +209,8 @@ var BeRocket_wizard_check = function(category_page_url, input_data,execute_funct
     } while( $input_data.find(checkClass).length != 1 && i < 5 );
     BeRocket_wizard_selectors.products = checkClass;
                                                                                                 $products2.css('border', '3px solid Blue');
-    var pagination = ['.woocommerce-pagination', '.pagination', "[class*='pagination']", "nav[class*='page']", "nav[class*='pagi']", 
-                    "[class*='page']", "[class*='pagi']", 'nav:contains("2")'];
+    var pagination = ['.woocommerce-pagination', '.pagination', 'ul.page-numbers', "[class*='pagination']", "nav[class*='page']", "nav[class*='pagi']", 
+                    'nav:contains("2")', "[class*='pagi']", "[class*='page']"];
     var is_pagination = false;
     var class_item = '';
     pagination.some(function( item, i, arr) {
@@ -330,8 +330,9 @@ var BeRocket_wizard_check = function(category_page_url, input_data,execute_funct
             if( $pagination6.length > 0 ) {
                 $prev = $pagination6.find("[class*='prev']");
                 if( $prev.length == 0 ) {
+                    $second_page = $pagination6
                     do {
-                        $second_page = $pagination6.find(':contains("5")');
+                        $second_page = $second_page.find(':contains("5")').first();
                     } while(! $second_page.is('a') && $second_page.length > 0);
                     if( $second_page.length > 0 ) {
                         var second_href = $second_page.attr('href');

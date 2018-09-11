@@ -84,9 +84,9 @@ if (!class_exists('ESIG_AUTO_REGISTER_Admin')) :
             }
 
             //$api = new WP_E_Api();
-            $esig_misc_content = isset($_POST['esig_misc_content']) ? $_POST['esig_misc_content'] : NULL;
-            $esig_misc_content_textarea = isset($_POST['esig_misc_content_textarea']) ? $_POST['esig_misc_content_textarea'] : NULL;
-            $esig_misc_email_subject = isset($_POST['esig_misc_email_subject']) ? $_POST['esig_misc_email_subject'] : NULL;
+            $esig_misc_content = isset($_POST['esig_misc_content']) ? $_POST['esig_misc_content'] : false;
+            $esig_misc_content_textarea = isset($_POST['esig_misc_content_textarea']) ? $_POST['esig_misc_content_textarea'] : false;
+            $esig_misc_email_subject = isset($_POST['esig_misc_email_subject']) ? $_POST['esig_misc_email_subject'] : false;
             
 
 
@@ -102,7 +102,7 @@ if (!class_exists('ESIG_AUTO_REGISTER_Admin')) :
                 self::save_registration_action_setting($_POST['esig_misc_content_user_action']);
             }
             // saving force login settings 
-            $force_login = isset($_POST['esig_auto_register_force_login']) ? $_POST['esig_auto_register_force_login'] : NULL;
+            $force_login = isset($_POST['esig_auto_register_force_login']) ? $_POST['esig_auto_register_force_login'] : false;
             WP_E_Sig()->setting->set_generic('esig-force-login', $force_login);
              WP_E_Sig()->setting->set_generic('esig_force_password_updates', esigpost('esig_force_password_updates'));
 
@@ -129,7 +129,7 @@ if (!class_exists('ESIG_AUTO_REGISTER_Admin')) :
             if (empty($esig_auto_reg_global))
                 $esig_auto_reg_global = array();
 
-            $esig_auto_reg_email_temp = WP_E_Sig()->setting->get_generic('esig-auto-reg-email-temp');
+            $esig_auto_reg_email_temp = $this->get_global_msg();
 
             if (!$esig_auto_reg_email_temp) {
                 $esig_auto_reg_email_temp = __('Hi there!<br><br>
@@ -248,6 +248,10 @@ if (!class_exists('ESIG_AUTO_REGISTER_Admin')) :
             ob_end_clean();
             return $editor;
         }
+        
+        public function get_global_msg(){
+           return stripslashes(WP_E_Sig()->setting->get_generic('esig-auto-reg-email-temp'));
+        }
 
         public function esig_document_complate($args) {
             if (!function_exists('WP_E_Sig'))
@@ -302,7 +306,7 @@ if (!class_exists('ESIG_AUTO_REGISTER_Admin')) :
                 $owner = WP_E_Sig()->user->getUserByWPID($owner_id);
                 $organizaiton_name = stripslashes(WP_E_Sig()->setting->get("company_logo", $documents->user_id));
 
-                $global_msg = WP_E_Sig()->setting->get_generic('esig-auto-reg-email-temp');
+                $global_msg = $this->get_global_msg();
                 $template_data = array(
                     "sitename" => stripslashes(get_bloginfo('name')),
                     "wp_username" => $recipient->user_email,

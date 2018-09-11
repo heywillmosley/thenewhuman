@@ -14,6 +14,7 @@
 
 class Zendesk_Wordpress_API {
   private $api_url = '';
+  private $base_url = '';
   private $username = false;
   private $password = false;
 
@@ -26,6 +27,7 @@ class Zendesk_Wordpress_API {
    *
    */
   public function __construct( $api_url ) {
+    $this->base_url = $api_url;
     $this->api_url = $api_url . '/api/v2';
 
     if ( ! defined( 'WP_DEBUG' ) || ! WP_DEBUG ) {
@@ -93,7 +95,7 @@ class Zendesk_Wordpress_API {
    * Use SSL
    *
    * Determines whether the given Zendesk account is set to use
-   * SSL. Fires a HEAD request to home.json via HTTPS and watches
+   * SSL. Fires a HEAD request to api/v2/locales.json via HTTPS and watches
    * the response for a 302 redirect. If a redirect occurs, then
    * there's no SSL, otherwise SSL is turned on.
    *
@@ -103,7 +105,7 @@ class Zendesk_Wordpress_API {
    */
   public function is_ssl( $account ) {
     $headers = array( 'Content-Type' => 'application/json' );
-    $result  = wp_remote_head( trailingslashit( 'https://' . $account . '.zendesk.com' ) . 'home.json', array( 'headers' => $headers ) );
+    $result  = wp_remote_head( trailingslashit( 'https://' . $account . '.zendesk.com' ) . 'api/v2/locales.json', array( 'headers' => $headers ) );
 
     // Let's see if there was a redirect
     if ( ! is_wp_error( $result ) && $result['response']['code'] == 302 ) {
@@ -453,6 +455,57 @@ class Zendesk_Wordpress_API {
     return $user;
   }
 
+  /**
+   * Retrieves the embeddable config
+   *
+   * @return array | WP_Error
+   */
+  public function get_embeddable_config()
+  {
+    $target_url = trailingslashit( $this->base_url ) . 'embeddable/config.json';
+    $result     = wp_remote_get(
+      $target_url,
+      array(
+        'headers' => $this->_headers(false),
+        'user-agent' => ZENDESK_USER_AGENT,
+      )
+    );
+    $this->_log_if_error( $result, 'Zendesk API GET Error (' . $target_url . '): ' );
+    if ( is_wp_error( $result ) || $result['response']['code'] >= 400) {
+      return new WP_Error( 'zendesk-api-error', __( 'The requested emebeddable config could not be fetched at this time, please try again later.', 'zendesk' ) );
+    }
+
+    return json_decode( wp_remote_retrieve_body( $result ), true );
+  }
+
+  /**
+   * Posts to the config set that will initiate the creation of embeddable config
+   * If the config is already created, nothing happens.
+   *
+   * @return bool indicating if the request went through
+   */
+  public function create_embeddable_config()
+  {
+    $target_url = trailingslashit( $this->base_url ) . 'embeddable/api/config_sets.json';
+    $data = array(
+      'config_set' => array(
+        'ticket_submission_enabled' => true
+      )
+    );
+    $result = wp_remote_post(
+      $target_url,
+      array(
+        'redirection' => 0,
+        'headers'     => $this->_headers(),
+        'body' => json_encode( $data ),
+        'user-agent' => ZENDESK_USER_AGENT,
+      )
+    );
+    $this->_log_if_error( $result, 'Zendesk API POST Error (' . $target_url . '): ' );
+
+    return ! (is_wp_error( $result ) || $result['response']['code'] >= 400);
+  }
+
   /*
    * API GET
    *
@@ -462,28 +515,16 @@ class Zendesk_Wordpress_API {
    *
    */
   private function _get( $endpoint, $extra_headers = array() ) {
-    $headers    = array(
-      'Authorization' => 'Basic ' . base64_encode( $this->username . ':' . $this->password ),
-      'Content-Type'  => 'application/json',
-    );
+    $headers    = array_merge( $this->_headers(), $extra_headers );
     $target_url = trailingslashit( $this->api_url ) . $endpoint;
     $result     = wp_remote_get(
       $target_url,
       array(
         'headers' => $headers,
-        'sslverify' => false,
         'user-agent' => ZENDESK_USER_AGENT,
       )
     );
-
-    if ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) && is_wp_error( $result ) ) {
-      $error_string = 'Zendesk API GET Error (' . $target_url . '): ' . $result->get_error_message();
-      if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
-        echo $error_string . '<br />';
-      }
-
-      Zendesk_Wordpress_Logger::log( $error_string, true );
-    }
+    $this->_log_if_error($result, 'Zendesk API GET Error (' . $target_url . '): ');
 
     return $result;
   }
@@ -498,11 +539,7 @@ class Zendesk_Wordpress_API {
    */
   private function _post( $endpoint, $post_data = null, $extra_headers = array() ) {
     $post_data  = json_encode( $post_data );
-    $headers    = array(
-      'Authorization' => 'Basic ' . base64_encode( $this->username . ':' . $this->password ),
-      'Content-Type'  => 'application/json'
-    );
-    $headers    = array_merge( $headers, $extra_headers );
+    $headers    = array_merge( $this->_headers(), $extra_headers );
     $target_url = trailingslashit( $this->api_url ) . $endpoint;
     $result     = wp_remote_post(
       $target_url,
@@ -510,21 +547,46 @@ class Zendesk_Wordpress_API {
         'redirection' => 0,
         'headers'     => $headers,
         'body'        => $post_data,
-        'sslverify'   => false,
         'user-agent' => ZENDESK_USER_AGENT,
       )
     );
+    $this->_log_if_error($result, 'Zendesk API POST Error (' . $target_url . '): ');
 
+    return $result;
+  }
+
+  /**
+   * Retrieve common headers
+   *
+   * @param bool $auth to indicate if the authentication headers are included
+   * @return array $headers
+   */
+  private function _headers( $auth = true )
+  {
+    $headers = array( 'Content-Type'  => 'application/json' );
+    if ( $auth ) {
+      $headers['Authorization'] = 'Basic ' . base64_encode( $this->username . ':' . $this->password );
+    }
+
+    return $headers;
+  }
+
+  /**
+   * Logs a request if env variable WP_DEBUG is enabled and
+   * result is an error
+   *
+   * @param $result of a request
+   * @param $message prefix for the log message
+   */
+  private function _log_if_error($result, $message) {
     if ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) && is_wp_error( $result ) ) {
-      $error_string = 'Zendesk API POST Error (' . $target_url . '): ' . $result->get_error_message();
-      if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+      $error_string = $message . $result->get_error_message();
+      if (!defined('DOING_AJAX') || !DOING_AJAX) {
         echo $error_string . '<br />';
       }
 
-      Zendesk_Wordpress_Logger::log( $error_string, true );
+      Zendesk_Wordpress_Logger::log($error_string, true);
     }
-
-    return $result;
   }
 
   /*
@@ -550,7 +612,6 @@ class Zendesk_Wordpress_API {
         'method'    => 'PUT',
         'headers'   => $headers,
         'body'      => $put_data,
-        'sslverify' => false,
         'user-agent' => ZENDESK_USER_AGENT,
       )
     );

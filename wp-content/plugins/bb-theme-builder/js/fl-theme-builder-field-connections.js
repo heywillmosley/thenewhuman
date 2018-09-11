@@ -41,7 +41,7 @@
 			FLBuilder.addHook( 'settings-form-init', this._initSettingsForms );
 
 			$( 'body' ).on( 'click', this._closeMenus );
-			$( 'body' ).delegate( '.fl-field-connections-toggle .fa', 'click', this._menuToggleClicked );
+			$( 'body' ).delegate( '.fl-field-connections-toggle .fas', 'click', this._menuToggleClicked );
 			$( 'body' ).delegate( '.fl-field-connections-property', 'click', this._menuItemClicked );
 			$( 'body' ).delegate( '.fl-field-connections-property-token', 'click', this._menuItemTokenClicked );
 			$( 'body' ).delegate( '.fl-field-connections-search', 'keyup', this._menuSearchKeyup );

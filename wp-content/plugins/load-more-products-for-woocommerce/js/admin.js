@@ -35,6 +35,7 @@
         $(document).on( 'change', '.btn_border_color', function(){
             var $button = $(this).parents('.framework-form-table').first().find( '.lmp_load_more_button .lmp_button' );
             $button.css('border-color', $(this).parents('.framework-form-table').first().find('.btn_border_color').val());
+            $button.trigger('lmp_button_changed');
         });
         
         $(document).on( 'change', '.framework-form-table .lmp_button_settings', function () {
@@ -65,19 +66,25 @@
                     }
                 }
             }
-                   
+            $button.trigger('lmp_button_changed');
         });
         $(document).on( 'change', '.bg_btn_color, .txt_btn_color', function() {
-            $(this).parents('.framework-form-table').first().find( '.lmp_load_more_button .lmp_button' ).css('background-color', $(this).parents('.framework-form-table').first().find('.bg_btn_color').val());
-            $(this).parents('.framework-form-table').first().find( '.lmp_load_more_button .lmp_button' ).css('color', $(this).parents('.framework-form-table').first().find('.txt_btn_color').val());
+            $button = $(this).parents('.framework-form-table').first().find( '.lmp_load_more_button .lmp_button' );
+            $button.css('background-color', $(this).parents('.framework-form-table').first().find('.bg_btn_color').val());
+            $button.css('color', $(this).parents('.framework-form-table').first().find('.txt_btn_color').val());
+            $button.trigger('lmp_button_changed');
         });
         $(document).on( 'mouseenter', '.lmp_load_more_button .lmp_button', function () {
-            $(this).parents('.framework-form-table').first().find( '.lmp_load_more_button .lmp_button' ).css('background-color', $(this).parents('.framework-form-table').first().find('.bg_btn_color_hover').val());
-            $(this).parents('.framework-form-table').first().find( '.lmp_load_more_button .lmp_button' ).css('color', $(this).parents('.framework-form-table').first().find('.txt_btn_color_hover').val());
+            $button = $(this).parents('.framework-form-table').first().find( '.lmp_load_more_button .lmp_button' );
+            $button.css('background-color', $(this).parents('.framework-form-table').first().find('.bg_btn_color_hover').val());
+            $button.css('color', $(this).parents('.framework-form-table').first().find('.txt_btn_color_hover').val());
+            $button.trigger('lmp_button_changed');
         });
         $(document).on( 'mouseleave', '.lmp_load_more_button .lmp_button', function () {
-            $(this).parents('.framework-form-table').first().find( '.lmp_load_more_button .lmp_button' ).css('background-color', $(this).parents('.framework-form-table').first().find('.bg_btn_color').val());
-            $(this).parents('.framework-form-table').first().find( '.lmp_load_more_button .lmp_button' ).css('color', $(this).parents('.framework-form-table').first().find('.txt_btn_color').val());
+            $button = $(this).parents('.framework-form-table').first().find( '.lmp_load_more_button .lmp_button' );
+            $button.css('background-color', $(this).parents('.framework-form-table').first().find('.bg_btn_color').val());
+            $button.css('color', $(this).parents('.framework-form-table').first().find('.txt_btn_color').val());
+            $button.trigger('lmp_button_changed');
         });
         $(window).on('scroll', function () {
             if( $(window).scrollTop() > $('.btn-preview-td').offset().top + $('.btn-preview-td').outerHeight(true) ) {
@@ -97,7 +104,8 @@
                 $(o).val( $(o).data( 'default' ) ).trigger( 'change' );
             });
             $( '.framework-form-table .button-settings' ).trigger( 'change' );
-            $('.br_colorpicker_default').click();            
+            $('.br_colorpicker_default').click();
+            from_block_to_input_loading_position();
         });
     });
 })(jQuery);

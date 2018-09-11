@@ -54,6 +54,7 @@ if (!class_exists('ESIG_ASSIGN_ORDER_Admin')) :
 
             add_action('esig_reciepent_edit', array($this, 'signer_order_activate'), 10, 1);
 
+            //add_action('esig_document_preparing_display', array($this, 'signature_saved'), 999, 1);
             add_action('esig_signature_saved', array($this, 'signature_saved'), 999, 1);
 
             // permanently delete triger action. 
@@ -71,8 +72,9 @@ if (!class_exists('ESIG_ASSIGN_ORDER_Admin')) :
         }
 
         public function esig_delete_document_permanently($args) {
+            
             if (!function_exists('WP_E_Sig'))
-                return;
+                    return;
 
             $api = new WP_E_Api();
 
@@ -92,7 +94,7 @@ if (!class_exists('ESIG_ASSIGN_ORDER_Admin')) :
         public function signature_saved($args) {
 
             if (!function_exists('WP_E_Sig'))
-                return;
+                return false;
 
             $api = WP_E_Sig();
 
@@ -110,15 +112,18 @@ if (!class_exists('ESIG_ASSIGN_ORDER_Admin')) :
                     $signer_position = array_search($user_id, $signer_order);
 
                     if (!array_key_exists($signer_position + 1, $signer_order)) {
-                        return;
+                        return false;
                     }
 
                     $sender_id = $signer_order[$signer_position + 1];
-
+                   
                     if ($sender_id) {
                         if (!$api->signature->userHasSignedDocument($sender_id, $document_id)) {
 
                             $invitation_id = $api->invite->getInviteID_By_userID_documentID($sender_id, $document_id);
+                            if(!$invitation_id){
+                                return false;
+                            }
                             $api->invite->send_invitation($invitation_id, $sender_id, $document_id);
                             
                         }

@@ -3,12 +3,12 @@
  * Plugin Name: PW WooCommerce BOGO
  * Plugin URI: https://pimwick.com/pw-bogo
  * Description: Makes Buy One, Get One promotions so easy!
- * Version: 2.70
+ * Version: 2.73
  * Author: Pimwick, LLC
  * Author URI: https://pimwick.com/pw-bogo
  *
  * WC requires at least: 2.6.13
- * WC tested up to: 3.4.2
+ * WC tested up to: 3.4.3
  *
  * Copyright: © Pimwick, LLC
 */
@@ -519,11 +519,13 @@ final class PW_BOGO {
                     $price = 0;
                     if ( function_exists( 'wc_get_price_excluding_tax' ) && function_exists( 'wc_get_price_including_tax' ) ) {
                         $product = $discounted_cart_item['data'];
-                        if ( 'excl' === $cart->tax_display_cart ) {
-                            $product_price = wc_get_price_excluding_tax( $product );
-                        } else {
+
+                        if ( 'incl' === $cart->tax_display_cart ) {
                             $product_price = wc_get_price_including_tax( $product );
+                        } else {
+                            $product_price = wc_get_price_excluding_tax( $product );
                         }
+
                         $price = apply_filters( 'woocommerce_cart_product_price', $product_price, $product );
                     }
 
@@ -1215,7 +1217,7 @@ final class PW_BOGO {
 
             foreach ( $this->get_active_bogos() as $bogo ) {
                 if ( $this->is_bogo_coupon( $coupon_code, $bogo ) ) {
-                    $msg = $bogo->post_title . ' ' . strtolower( $msg );
+                    $msg = $bogo->post_title . ' ' . mb_strtolower( $msg, 'UTF-8' );
                 }
             }
         }

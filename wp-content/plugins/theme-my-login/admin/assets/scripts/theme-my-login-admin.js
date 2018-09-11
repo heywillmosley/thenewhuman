@@ -1,8 +1,22 @@
 ( function( $ ) {
+
+	$( initAuthCheckForm );
+
+	function initAuthCheckForm() {
+		var authCheckForm = $( '#wp-auth-check-form' );
+
+		if ( authCheckForm.length ) {
+			authCheckForm.attr( 'data-src', tmlAdmin.interimLoginUrl );
+		}
+	}
+} )( jQuery );
+
+( function( $ ) {
+
 	$( initMetaBoxes );
 
 	function initMetaBoxes() {
-		var metaboxes = $( '.postbox' );
+		var metaboxes = $( '#tml-settings .postbox' );
 
 		if ( metaboxes.length ) {
 			// Make metaboxes toggleable
@@ -22,5 +36,20 @@
 				}
 			} );
 		}
+	}
+} )( jQuery );
+
+( function( $ ) {
+	$( initNotices );
+
+	function initNotices() {
+		$( '.tml-notice' ).on( 'click', '.notice-dismiss', function( e ) {
+			var notice = $( e.delegateTarget );
+
+			$.post( ajaxurl, {
+				action: 'tml-dismiss-notice',
+				notice: notice.data( 'notice' )
+			} );
+		} );
 	}
 } )( jQuery );

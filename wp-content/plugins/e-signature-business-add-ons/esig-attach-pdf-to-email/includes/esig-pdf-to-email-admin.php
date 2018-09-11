@@ -42,7 +42,8 @@ if (!class_exists('ESIG_PDF_TO_EMAIL_Admin')) :
 
             add_filter('esig_email_pdf_attachment', array($this, 'document_all_signed'), 10, 1);
             // do action 
-            add_filter('esig_email_sent', array($this, 'document_email_sent'), 10, 1);
+            add_action('esig_email_sent', array($this, 'document_email_sent'), 10, 1);
+            add_action('esig_cc_email_sent', array($this, 'document_email_sent'), 10, 1);
             // permanently delete triger action. 
             add_action('esig_document_after_delete', array($this, "esig_delete_document_permanently"), 10, 1);
             add_filter('esig_admin_more_document_actions', array($this, 'document_email_pdf_action'), 10, 2);
@@ -171,9 +172,10 @@ if (!class_exists('ESIG_PDF_TO_EMAIL_Admin')) :
         public function document_email_sent($args) {
 
             if (self::is_pdf_inactive()) {
-                return;
+                return false;
             }
             $documentId = $args['document']->document_id;
+            
             // email pdf set true send email with attachment 
             if (self::is_enabled($documentId)) {
 
@@ -191,7 +193,7 @@ if (!class_exists('ESIG_PDF_TO_EMAIL_Admin')) :
         public function document_all_signed($args) {
 
             if (self::is_pdf_inactive()) {
-                return;
+                return false;
             }
 
             $doc_id_main = $args['document']->document_id;
@@ -206,12 +208,20 @@ if (!class_exists('ESIG_PDF_TO_EMAIL_Admin')) :
             // email pdf set true send email with attachment 
             if (self::is_enabled($doc_id)) {
                 // gettings pdf file 
-                $pdf_buffer = ESIG_PDF_Admin::instance()->pdf_document($doc_id_main);
+
                 $pdf_name = ESIG_PDF_Admin::instance()->pdf_file_name($doc_id_main) . ".pdf";
+
                 // php attachement 
                 $upload_dir = wp_upload_dir();
                 //get upload path 
                 $upload_path = $upload_dir['path'] . "/" . $pdf_name;
+
+                if (file_exists($upload_path)) {
+                    return $upload_path;
+                }
+
+                $pdf_buffer = ESIG_PDF_Admin::instance()->pdf_document($doc_id_main);
+
                 // saving pdf file to upload direcotry
                 if (!@file_put_contents($upload_path, $pdf_buffer)) {
 
@@ -224,6 +234,7 @@ if (!class_exists('ESIG_PDF_TO_EMAIL_Admin')) :
                 // send Email
                 return $upload_path;
             }
+            return false;
         }
 
         public function mailType($content_type) {
@@ -305,6 +316,10 @@ if (!class_exists('ESIG_PDF_TO_EMAIL_Admin')) :
         }
 
     }
+
+    
+
+    
 
     
 

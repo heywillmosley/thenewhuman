@@ -273,10 +273,10 @@ class ESIG_SAD {
 
 
             if (!esig_verify_nonce(esigpost('esig_nonce'), $doc_id)) {
-                wp_die('You are not allowed to sign this agreement');
+               wp_die('You are not allowed to sign this agreement.Use a latest Browser.');
             }
             if (!esig_verify_not_spam()) {
-                wp_die('You are not allowed to sign this agreement');
+                wp_die('You are not allowed to sign this agreement.');
             }
             // increase execution time 
             @ini_set('max_execution_time', 300);
@@ -326,6 +326,8 @@ class ESIG_SAD {
 
             // save new doc timezone 
             $main_api->meta->add($doc_id, 'esig-timezone-document', $old_doc_timezone);
+            
+            global $invitation,$recipient;
 
             // Create the user
             $recipient = array(
@@ -463,6 +465,9 @@ class ESIG_SAD {
                 $api->document->updateStatus($doc_id, "signed");
                 $event_text = __("The document has been signed by all parties and is now closed.", 'esig');
                 $api->document->recordEvent($doc_id, 'all_signed', $event_text, null);
+                
+                
+                
             } else {
                 $api->document->updateStatus($doc_id, "awaiting");
             }

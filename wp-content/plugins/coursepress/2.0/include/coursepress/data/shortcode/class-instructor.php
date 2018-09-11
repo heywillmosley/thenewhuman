@@ -64,14 +64,14 @@ class CoursePress_Data_Shortcode_Instructor {
 
 		extract( shortcode_atts( array(
 			'course_id' => CoursePress_Helper_Utility::the_course( true ),
-			'label' => __( 'Instructor', 'cp' ),
-			'label_plural' => __( 'Instructors', 'cp' ),
+			'label' => __( 'Instructor', 'coursepress' ),
+			'label_plural' => __( 'Instructors', 'coursepress' ),
 			'label_delimeter' => ':&nbsp;',
 			'label_tag' => '',
 			'count' => false, // Deprecated.
 			'list' => false, // Deprecated.
 			'link' => false,
-			'link_text' => __( 'View Full Profile', 'cp' ),
+			'link_text' => __( 'View Full Profile', 'coursepress' ),
 			'show_label' => 'no', // Yes, no.
 			'summary_length' => 50,
 			'style' => 'block', // List, list-flat, block, count.
@@ -236,9 +236,11 @@ class CoursePress_Data_Shortcode_Instructor {
 
 		switch ( $style ) {
 			case 'block':
-				$content = '<div class="instructor-block ' . $class . '">' . $content . '</div>';
-				if ( $show_divider && ( 0 < count( $instructors ) ) ) {
-					$content .= '<div class="divider"></div>';
+				if ( 0 < count( $instructors ) ) {
+					$content = '<div class="instructor-block ' . $class . '">' . $content . '</div>';
+					if ( $show_divider ) {
+						$content .= '<div class="divider"></div>';
+					}
 				}
 				break;
 

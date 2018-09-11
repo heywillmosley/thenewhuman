@@ -18,6 +18,16 @@
 		_locationObjectCache : {},
 
 		/**
+		 * Store a copy of select2 here in case another plugin loads an
+		 * older version of it breaking ours.
+		 *
+		 * @since 1.1.3
+		 * @access private
+		 * @property {Function} _select2
+		 */
+		_select2 : $.fn.select2,
+
+		/**
 		 * Initializes the theme layout admin edit interface.
 		 *
 		 * @since 1.0
@@ -596,7 +606,8 @@
 		 */
 		_initSelect2: function()
 		{
-			var selects = $( '.fl-theme-builder-saved-rules select:not(.select2-init)' );
+			var selects = $( '.fl-theme-builder-saved-rules select:not(.select2-init)' ),
+				select2 = this._select2;
 
 			selects.each( function() {
 				var select = $( this ),
@@ -604,7 +615,7 @@
 						width: 'style'
 					};
 
-				select.select2( config );
+				select2.call( select, config );
 				select.addClass( 'select2-init' );
 
 				select.on( 'select2:open', function() {

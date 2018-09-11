@@ -1,3 +1,43 @@
+<h4>1.1.2.1 - 07/02/2018</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Updated default template data files to use font awesome 5 icons.</li>
+	<li>New filter <code>fl_theme_builder_get_excerpt</code></li>
+</ul>
+
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed <code>wpbb post:excerpt</code> not working as expected.</li>
+	<li>Fixed post title issue, titles were not properly sanitized when saving locations.</li>
+	<li>Fixed compatibility issue with other plugins that use the Select2 library.</li>
+</ul>
+
+<h4>1.1.2 - 05/21/2018</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+    <li>ACF Flexible Content support added! See <code>https://kb.wpbeaverbuilder.com/article/653-use-acf-flexible-content-field-themer</code> for Flexible Content field docs.</li>
+    <li>ACF Repeater support added! See <code>https://kb.wpbeaverbuilder.com/article/461-use-acf-repeater-fields-themer</code> for repeater field docs.</li>
+    <li>Added post:id and post:slug Themer connections.</li>
+    <li>Added Paypal support to the Event Calendar Tickets Module.</li>
+</ul>
+
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Prevent field connection logic from running in wp-admin, fixes issues like undefined post_type error with Yoast SEO.</li>
+	<li>Fixed issue where parts set to all users would not display for admins in the builder.</li>
+	<li>Fixed post embeds not working when a post has a themer layout.</li>
+	<li>Modified the logic for ACF relationship query so it displays a message when no results found.</li>
+	<li>Fixed undefined index post_type PHP warning in Woocommerce Module.</li>
+	<li>Make sure to pass all query args when creating a new template in wp-admin so other plugins like WPML still work.</li>
+</ul>
+
+<h4>1.1.1.1 - 05/09/2018</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Reworked white labeling to support BB 2.1 branding changes.</li>
+	<li>Use Font Awesome 5 icons in builder UI.</li>
+</ul>
+
 <h4>1.1.1 - 03/20/2018</h4>
 <p><strong>Enhancements</strong></p>
 <ul>

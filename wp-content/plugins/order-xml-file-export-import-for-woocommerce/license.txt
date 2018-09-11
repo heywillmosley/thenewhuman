@@ -1,6 +1,6 @@
 Order XML File Export Import for WooCommerce
 
-Copyright 2015 by the contributors
+Copyright 2018 by the contributors
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ This program incorporates work covered by the following copyright and
 permission notices:
 
  WooCommerce Order XML Import Export
- Copyright: 2015-2017 Hikeforce.
+ Copyright: 2015-2018 Hikeforce.
  License: GNU General Public License v3.0
  License URI: http://www.gnu.org/licenses/gpl-3.0.html
 

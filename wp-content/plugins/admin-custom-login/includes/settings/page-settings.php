@@ -1,4 +1,4 @@
-<!-- Dashboard Settings panel content --->
+<!-- Logo Settings --->
 <?php
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -59,7 +59,7 @@ jQuery(function() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Logo',WEBLIZAR_ACL)?></th>
+					<th scope="row" ><?php _e('Logo Image',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
@@ -95,7 +95,7 @@ jQuery(function() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Logo Width',WEBLIZAR_ACL)?></th>
+					<th scope="row" ><?php _e('Logo Image Width',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -112,7 +112,7 @@ jQuery(function() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Logo Height',WEBLIZAR_ACL)?></th>
+					<th scope="row" ><?php _e('Logo Image Height',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
@@ -129,12 +129,12 @@ jQuery(function() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Logo URL',WEBLIZAR_ACL)?></th>
+					<th scope="row" ><?php _e('Logo Link URL',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
-						<input type="text" class="pro_text" id="log-url" name="log-url" placeholder="<?php _e('Logo URL',WEBLIZAR_ACL)?>" size="56" value="<?php echo $logo_url; ?>"/>
+						<input type="text" class="pro_text" id="log-url" name="log-url" placeholder="<?php _e('Logo Link URL',WEBLIZAR_ACL); ?>" size="56" value="<?php echo $logo_url; ?>"/>
 					</td>
 				</tr>
 			</table>
@@ -144,12 +144,12 @@ jQuery(function() {
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Logo URL Title',WEBLIZAR_ACL)?></th>
+					<th scope="row" ><?php _e('Logo Image Title',WEBLIZAR_ACL)?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
-						<input type="text" class="pro_text" id="log-url-title" name="log-url-title" placeholder="<?php _e('Logo URL Title',WEBLIZAR_ACL)?>" size="56" value="<?php echo $logo_url_title; ?>"/>
+						<input type="text" class="pro_text" id="log-url-title" name="log-url-title" placeholder="<?php _e('Logo Image Title', WEBLIZAR_ACL); ?>" size="56" value="<?php echo $logo_url_title; ?>"/>
 					</td>
 				</tr>
 			</table>
@@ -194,7 +194,6 @@ jQuery(function() {
 		</div>
 	</div>
 </div>
-<!-- /row -->
 <script>
 function Custom_login_logo(Action, id){
 	if(Action == "logoSave") {

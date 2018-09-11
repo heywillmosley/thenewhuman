@@ -1,0 +1,177 @@
+#woocommerce-coupon-data ul.wc-tabs li.custom_tab_fooevents a::before, #woocommerce-product-data ul.wc-tabs li.custom_tab_fooevents a::before, .woocommerce ul.wc-tabs li.custom_tab_fooevents a::before {
+    font-family: "dashicons";
+    content: "\f508";
+}
+
+.woocommerce-events-help h3.woocommerce-events-intro {
+    font-weight: normal; 
+    line-height: 1.4em;
+}
+
+.woocommerce-events-extensions {
+    border-top: solid 1px #ddd;
+    margin-right:20px;
+}
+
+.woocommerce-events-extension { 
+    border: solid 1px #ddd;
+    border-top:0;
+    background:#f6fbfe;
+    padding:15px;
+}
+
+.woocommerce-events-extension.not-installed {
+    background:#fff;
+}
+.woocommerce-events-extension img {
+    width: 80px !important;
+    height: 80px !important;
+    float: left;
+    margin: 0 20px 0 0;
+} 
+
+.woocommerce-events-extension h3  {
+    margin:5px 0 10px;
+    font-size:14px;
+}  
+
+.woocommerce-events-extension h3 a {
+    color:#000;
+    text-decoration: none
+}   
+
+.woocommerce-events-extension h4  {
+    margin: 0;
+}   
+
+.woocommerce-events-extension p  {
+    margin: 0 0 5px;
+}   
+
+.install-status.installed {
+    color:#94c670;
+}
+
+.install-status.notinstalled {
+    color:#d36767;
+}
+
+.woocommerce-events-infobox {
+    width:400px;
+    float: left;
+}
+
+#fooevents-theme-viewer-upload-wrapper { 
+    margin: 0 2em 2em 0; 
+} 
+
+#fooevents-theme-viewer-upload-wrapper .fooevents-theme-viewer-upload-inner {
+    margin-top:2em;
+    padding:2em;
+    background: #f9f9f9;
+    border: solid 1px #ddd;
+}
+
+#fooevents-theme-viewer-upload-wrapper .fooevents-theme-viewer-upload-inner .button { 
+    margin: 1em 0 0 0;
+}
+
+#fooevents-theme-viewer-upload-wrapper .fooevents-theme-viewer-upload-inner h3 { 
+    margin: 0 0 1em 0;
+}
+
+.fooevents-theme-viewer-theme { 
+    margin: 0;
+    float: left; 
+    width: 20%;
+}
+.fooevents-theme-viewer-theme-inner { 
+    background: #f9f9f9;
+    border: solid 1px #ddd;
+    margin:0 2em 2em 0;
+}
+
+.fooevents-theme-viewer-theme img.fooevents-theme-viewer-image {
+    display: block;
+    height: auto;
+    width: 100%;
+}
+
+.fooevents-theme-viewer-theme .fooevents-theme-viewer-name {
+    border-top: solid 1px #ddd;
+    padding:1em;
+}
+
+.fooevents-theme-viewer-theme .fooevents-theme-viewer-name  h3 {
+    margin:0;
+    font-size:1.1em;
+}
+
+
+.fooevents-theme-viewer-theme .fooevents-theme-viewer-name  h3 a {
+    text-decoration: none;
+    color:#23282d;
+}
+
+.fooevents-theme-viewer-image-preview {
+    margin:0;
+    margin-top:1em;
+    width: 100%;
+    height: auto;    
+}
+
+.wp-picker-container > .wp-color-result{
+    display: inline-block;
+    height: 22px;
+    min-width: 32px;
+    border: 1px #ccc solid;
+}
+
+.woocommerce-events-color-field {
+    display: inline !important;
+}
+
+.wp-picker-default {
+    display: inline !important;
+    float: right;
+    margin: 0;
+}
+
+/* Responsive Styles */
+
+    @media screen and (max-width: 90em) { 
+        
+		.fooevents-theme-viewer-theme {  
+			width: 25%;
+		} 
+        
+    }
+
+    @media screen and (max-width: 60em) { 
+        
+		.fooevents-theme-viewer-theme {  
+			width: 33.333%;
+		} 
+    }
+
+    @media screen and (max-width: 45em) { 
+        
+		.fooevents-theme-viewer-theme {  
+			width: 50%;
+		}
+		.fooevents-theme-viewer-theme-inner {  
+			margin:0 1em 1em 0;
+		}
+		#fooevents-theme-viewer-upload-wrapper { 
+		margin: 0 1em 1em 0; 
+	} 
+        
+    }
+
+    @media screen and (max-width: 35em) { 
+        
+		.fooevents-theme-viewer-theme {  
+			width: 100%;
+		} 
+        
+    }

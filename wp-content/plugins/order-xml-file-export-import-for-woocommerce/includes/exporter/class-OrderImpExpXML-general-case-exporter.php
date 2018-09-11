@@ -6,13 +6,13 @@ if (!defined('ABSPATH')) {
 
 class OrderImpExpXML_GeneralCaseExporter {
 
-    public function generate_xml_general_case($order_ids){
+    public function generate_xml_general_case($order_ids,$filename='') {
         include_once( 'class-OrderImpExpXML-order-exp-xml-general.php' );
         $export = new OrderImpExpXML_OrderExpXMLGeneral($order_ids);
         $order_details = $export->get_orders($order_ids);
         $data_array = array('Orders' => array('Order' => $order_details));
         $data_array = OrderImpExpXML_GeneralCaseExporter::wf_order_xml_general_case_export_format($data_array, $order_details);
-        $filename.='wc_xml';
+        $filename .= 'wc_xml';
         $export->do_xml_export($filename, $export->get_order_details_xml($data_array));
     }
 
@@ -63,25 +63,22 @@ class OrderImpExpXML_GeneralCaseExporter {
                 'CustomerNote' => $order['CustomerNote'],
                 'CustomerId' => $order['CustomerId']
             );
-            if (sizeof($order['OrderLineItems']) >= 1)
-            {
+            if (sizeof($order['OrderLineItems']) >= 1) {
                 unset($order['OrderLineItems']['total_weight']);
                 unset($order['OrderLineItems']['total_qty']);
                 unset($order['OrderLineItems']['weight_unit']);
                 foreach ($order['OrderLineItems'] as $lineItems) {
-                    if(count($lineItems)>1){
-                        $order_data['OrderLineItems'][] = $lineItems;                        
+                    if (count($lineItems) > 1) {
+                        $order_data['OrderLineItems'][] = $lineItems;
                     }
                 }
             }
-            
 
-           $order_details[] = $order_data;
+
+            $order_details[] = $order_data;
         }
         $formated_orders = array('Orders' => array('Order' => $order_details));
-        return apply_filters('hf_general_order_export',$formated_orders);
+        return apply_filters('hf_general_order_export', $formated_orders);
     }
-          
+
 }
-
-

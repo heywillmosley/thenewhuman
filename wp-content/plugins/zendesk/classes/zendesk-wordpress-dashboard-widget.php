@@ -148,8 +148,10 @@ class Zendesk_Wordpress_Dashboard_Widget {
         <p class="submit">
           <input name="Submit" type="submit" class="button-primary"
                  value="<?php esc_attr_e( 'Login to Zendesk', 'zendesk' ); ?>"/><br/>
-          <?php _e( "Don't have an account?", 'zendesk' ); ?> <a
-            href="<?php echo trailingslashit( $zendesk_support->zendesk_url ); ?>registration"><?php _e( 'Sign up!', 'zendesk' ); ?></a>
+          <?php _e( "Don't have an account?", 'zendesk' ); ?>
+          <a href="https://www.zendesk.com/register" target="_blank" rel="noopener noreferrer">
+            <?php _e( 'Sign up!', 'zendesk' ); ?>
+          </a>
         </p>
         <br class="clear"/>
       </form>

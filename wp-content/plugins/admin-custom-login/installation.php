@@ -16,7 +16,7 @@ if(!isset($Version)){
 	));
 	add_option("Admin_custome_login_dashboard", $dashboard_page);
 	
-	$top_page= serialize(array(
+	$top_page = serialize(array(
 		'top_bg_type'=>'static-background-image',
 		'top_color' => '#f9fad2',
 		'top_image' =>   WEBLIZAR_NALF_PLUGIN_URL.'/images/3d-background.jpg',
@@ -29,7 +29,7 @@ if(!isset($Version)){
 	));
 	add_option("Admin_custome_login_top", $top_page);
 	
-	$login_page= serialize(array(
+	$login_page = serialize(array(
 		'login_form_position' => 'default',
 		'login_form_float' => 'center',
 		'login_form_left'=>'700',
@@ -53,7 +53,7 @@ if(!isset($Version)){
 		'log_form_above_msg' => '',
 		'login_msg_fontsize' => '16',
 		'login_msg_font_color' => '#000000',
-		'tagline_msg' => 'This login form is created by <a href="https://wordpress.org/plugins/admin-custom-login/" target="_blank">ACL</a> , developed by <a href="https://www.weblizar.com" target="_blank">weblizar</a>',
+		'tagline_msg' => 'Login form is designed using <a href="https://wordpress.org/plugins/admin-custom-login/" target="_blank">ACL</a> plugin by <a href="https://www.weblizar.com" target="_blank">Weblizar</a>.',
 	));
 	add_option("Admin_custome_login_login", $login_page);
 	
@@ -74,7 +74,9 @@ if(!isset($Version)){
 		'button_font_style'=>'Open Sans',
 		'enable_inputbox_icon'=>'yes',
 		'user_input_icon'=>'fa-user',
-		'password_input_icon'=>'fa-key'
+		'password_input_icon'=>'fa-key',
+		'user_cust_lbl'=>'Type Username or Email',
+		'pass_cust_lbl'=>'Type Password',
 	));
 	add_option("Admin_custome_login_text", $text_and_color_page);
 	
@@ -107,8 +109,8 @@ if(!isset($Version)){
 		'social_vkontakte_link'			=> '',
 		'social_skype_link'				=> '',
 		'social_instagram_link'			=> 'https://instagram.com',
-		'social_telegram_link'			=> 'https://telegram.org/',
-		'social_whatsapp_link'			=> 'https://whatsapp.com/',
+		'social_telegram_link'			=> '',
+		'social_whatsapp_link'			=> '',
 	));
 	add_option("Admin_custome_login_Social", $Social_page);
 

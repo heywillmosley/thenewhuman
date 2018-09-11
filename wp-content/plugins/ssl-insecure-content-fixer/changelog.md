@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### 2.7.0, 2018-06-30
+
+* added: fix for responsive images loaded by JavaScript from image data attributes
+* fixed: call to undefined function `hash_equals()` on environments with obsolete PHP versions (i.e. < 5.6)
+* fixed: don't run the fixer when a WooCommerce download request is detected
+
 ### 2.6.0, 2018-05-08
 
 * added: new filter `ssl_insecure_content_pcre_version_permissive` allowing sites that can't update PCRE beyond 7.2 to function

@@ -1,10 +1,10 @@
 === Admin Custom Login ===
 Contributors: weblizar
-Donate link: http://www.weblizar.com/
+Donate link: https://www.weblizar.com/
 Tags: custom login page, custom admin login, custom login, customize wordpress login page, design wordpress login
 Requires at least: 4.0
-Tested up to: 4.9.6
-Stable tag: 2.6.1
+Tested up to: 4.9.8
+Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,12 +34,14 @@ Guys please send us your login screenshots at `lizarweb[at]gmail[dot]com`.
 * Login Form Button Colour
 * Login Form Button Size
 * Login Form Background
+* Google reCaptcha
 * Redirect Users like (All Subscribers, Editors, Authors and Contributors) on Custom URL After Login
 * Add Social Media Icons On Login Form
 * Social Media Icon Colour
 * Social Media Icon Size
 * Interactive Plugin Dashboard
 * Customize Login Form Positions
+* Import & Export All Plugin Settings
 
 ### Background Slide Show:
 This is our most key feature of this plugin. We have provide you our best to add slide show on your custom login background without any hesitation.
@@ -115,12 +117,49 @@ If you have any question contact us at here: [Plugin Support Forum ](http://word
 8. http://www.naturesfolio.com Made by Sheila
 9. Made by Mary Job
 10. http://amirasghari.com Made by Dr. Amir Asghari
-11. Admin Setting Dashboard
+11. https://texontowel.com Made by Inn Design
+12. Admin Setting Dashboard
 
 == Changelog ==
 
 For more information, see [Weblizar](http://www.weblizar.com/)
 
+= 2.7.0 =
+* Update language files
+* Modify css in dashboard
+* Update plcaholder text (for alllow  special character)
+
+= 2.6.9 =
+* Add Offer Image at dashboard
+* Change main menu position
+
+= 2.6.8 =
+* Minor Spelling Corrections.
+
+
+= 2.6.7 =
+* New Settings - Add Username and Password placehoder text
+* Bug-Fixed : Import and export setting undefined variable
+* All language translation file updated
+
+= 2.6.6 =
+* Directory & Filename Mismatch bug fix
+* Add new logo at dashboard page
+
+= 2.6.5 =
+* google fonts library URL update http to https
+* mix contents error fixed
+
+= 2.6.4 =
+* Logo Settings Label Revised
+* Login Form Social Icons Margin Fixed
+
+= 2.6.3 =
+* Add Donate Link tab in dashboard setting 
+* Generate new token of google web-font
+* Version Update + Compatible upto wp 4.9.7
+
+= 2.6.2 - Bug fixed undefined variables in log file + Add Google Captcha Theme Settings
 = 2.6.1 - Bug fixed undefined variables + Social icon color bug fixed.
 = 2.6.0 - Add Google Captcha settings + Update Font Awesome Library + Update code of google font family + Add Offers Page + Add Display note to user above login form setting + Add tagline message below login form setting + Plugin tested with latest WordPress 4.9.6 version update
 = 2.5.9 - Plugin tested with latest WordPress 4.9.5 version update
@@ -142,6 +181,7 @@ For more information, see [Weblizar](http://www.weblizar.com/)
 = 2.4.7.1 - Language file updated (some text string was missing in lang file and updated in 2.4.7.1)
 = 2.4.7 = 
 * update
+
 = 2.4.6 = 
 * Dutch Translation Added
 = Version 2.4.5.4 10/10/2016 =

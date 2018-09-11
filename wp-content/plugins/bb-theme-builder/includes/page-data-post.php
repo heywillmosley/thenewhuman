@@ -12,6 +12,16 @@ FLPageData::add_post_property( 'title', array(
 ) );
 
 /**
+ * Post ID
+ */
+FLPageData::add_post_property( 'id', array(
+	'label'       => __( 'Post ID', 'fl-theme-builder' ),
+	'group'       => 'posts',
+	'type'        => 'string',
+	'getter'      => 'FLPageDataPost::get_id',
+) );
+
+/**
  * Post Excerpt
  */
 FLPageData::add_post_property( 'excerpt', array(
@@ -89,6 +99,16 @@ FLPageData::add_post_property( 'url', array(
 	'group'       => 'posts',
 	'type'        => array( 'url' ),
 	'getter'      => 'get_permalink',
+) );
+
+/**
+ * Post ID
+ */
+FLPageData::add_post_property( 'slug', array(
+	'label'       => __( 'Post Slug', 'fl-theme-builder' ),
+	'group'       => 'posts',
+	'type'        => 'string',
+	'getter'      => 'FLPageDataPost::get_slug',
 ) );
 
 /**

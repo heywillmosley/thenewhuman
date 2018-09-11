@@ -641,7 +641,7 @@ final class FLBuilderModel {
 	 * @return array
 	 */
 	static public function get_upload_dir() {
-		$wp_info  = wp_upload_dir();
+		$wp_info  = wp_upload_dir( null, false );
 		$dir_name = basename( FL_BUILDER_DIR );
 
 		// We use bb-plugin for the lite version as well.
@@ -1119,14 +1119,19 @@ final class FLBuilderModel {
 	static public function get_child_nodes( $parent_id, $status = null ) {
 		$parent           = is_object( $parent_id ) ? $parent_id : self::get_node( $parent_id );
 		$template_post_id = self::is_node_global( $parent );
+		$template_node_id = null;
 		$status           = $template_post_id && ! self::is_post_node_template() ? 'published' : $status;
 		$data             = self::get_layout_data( $status, $template_post_id );
 		$nodes            = array();
 
+		if ( $template_post_id ) {
+			$template_node_id = apply_filters( 'fl_builder_parent_template_node_id', $parent->template_node_id, $parent, $data );
+		}
+
 		if ( is_object( $parent ) ) {
 			foreach ( $data as $node_id => $node ) {
 				if ( ( isset( $node->parent ) && $node->parent == $parent->node )
-					|| ( $template_post_id && $parent->template_node_id == $node->parent ) ) {
+					|| ( $template_node_id && $template_node_id == $node->parent ) ) {
 					$nodes[ $node_id ] = $node;
 				}
 			}
@@ -1898,6 +1903,11 @@ final class FLBuilderModel {
 			$row->settings->ss_photo_data = new StdClass();
 		}
 
+		// This class does not exist in Lite version.
+		if ( ! class_exists( 'FLSlideshowModule' ) ) {
+			return false;
+		}
+
 		// Hijack the slideshow module to get the source.
 		$ss								= new FLSlideshowModule();
 		$ss->settings					= new StdClass();
@@ -2122,7 +2132,7 @@ final class FLBuilderModel {
 			foreach ( $cols as $col_id => $col ) {
 
 				// Set the new size.
-				$data[ $col_id ]->settings->size = round( $new_width, 2 );
+				$data[ $col_id ]->settings->size = round( $new_width, 3 );
 			}
 
 			// Update the layout data.
@@ -2232,7 +2242,7 @@ final class FLBuilderModel {
 		}
 
 		// Save new sibling size.
-		$data[ $sibling->node ]->settings->size = round( 100 - $siblings_width - $new_width, 2 );
+		$data[ $sibling->node ]->settings->size = round( 100 - $siblings_width - $new_width, 3 );
 
 		// Save new column size.
 		$data[ $col->node ]->settings->size = $new_width;
@@ -2285,7 +2295,7 @@ final class FLBuilderModel {
 		$data 			= self::get_layout_data();
 		$post_data		= self::get_post_data();
 		$cols			= self::get_nodes( 'column', $group_id );
-		$width			= round( 100 / count( $cols ), 2 );
+		$width			= round( 100 / count( $cols ), 3 );
 
 		foreach ( $cols as $col_id => $col ) {
 			$data[ $col_id ]->settings->size = $width;
@@ -2367,7 +2377,7 @@ final class FLBuilderModel {
 		} elseif ( 7 === $num_cols ) {
 			$new_width = 14.28;
 		} else {
-			$new_width = round( 100 / $num_cols, 2 );
+			$new_width = round( 100 / $num_cols, 3 );
 		}
 
 		// Get the new column position.
@@ -2618,18 +2628,27 @@ final class FLBuilderModel {
 	 * @return void
 	 */
 	static public function load_modules() {
-		$path			= FL_BUILDER_DIR . 'modules/';
-		$dir			= dir( $path );
-		$module_path	= '';
+		$paths = glob( FL_BUILDER_DIR . 'modules/*' );
+		$module_path = '';
 
-		while ( false !== ( $entry = $dir->read() ) ) { // @codingStandardsIgnoreLine
+		// Make sure we have an array.
+		if ( ! is_array( $paths ) ) {
+			return;
+		}
 
-			if ( ! is_dir( $path . $entry ) || '.' == $entry || '..' == $entry ) {
+		// Load all found modules.
+		foreach ( $paths as $path ) {
+
+			// Make sure we have a directory.
+			if ( ! is_dir( $path ) ) {
 				continue;
 			}
 
+			// Get the module slug.
+			$slug = basename( $path );
+
 			// Paths to check.
-			$module_path	= $entry . '/' . $entry . '.php';
+			$module_path	= $slug . '/' . $slug . '.php';
 			$child_path		= get_stylesheet_directory() . '/fl-builder/modules/' . $module_path;
 			$theme_path		= get_template_directory() . '/fl-builder/modules/' . $module_path;
 			$builder_path	= FL_BUILDER_DIR . 'modules/' . $module_path;
@@ -4871,10 +4890,6 @@ final class FLBuilderModel {
 
 		$is_visible = true;
 
-		if ( self::is_builder_active() && self::get_post_id() == $wp_the_query->post->ID ) {
-			return $is_visible;
-		}
-
 		if ( isset( $node->settings->visibility_display ) && ('' != $node->settings->visibility_display) ) {
 
 			// For logged out users
@@ -4899,6 +4914,16 @@ final class FLBuilderModel {
 		}
 
 		return apply_filters( 'fl_builder_is_node_visible', $is_visible, $node );
+	}
+
+	/**
+	 * Checks if a node has visibility rules or not.
+	 *
+	 * @param object $node
+	 * @return bool
+	 */
+	static public function node_has_visibility_rules( $node ) {
+		return isset( $node->settings->visibility_display ) && ( '' !== $node->settings->visibility_display );
 	}
 
 	/**
@@ -5979,6 +6004,24 @@ final class FLBuilderModel {
 	 */
 	static public function is_codechecking_enabled() {
 		return apply_filters( 'fl_code_checking_enabled', true );
+	}
+
+	/**
+	 * Returns Ace Editor defaults as an array.
+	 *
+	 * @since 2.1
+	 * @return array
+	 */
+	static public function ace_editor_settings() {
+
+		$defaults = array(
+			'enableBasicAutocompletion' => true,
+			'enableLiveAutocompletion'  => true,
+			'enableSnippets'            => false,
+			'showLineNumbers'           => false,
+			'showFoldWidgets'           => false,
+		);
+		return apply_filters( 'fl_ace_editor_settings', $defaults );
 	}
 
 	/**

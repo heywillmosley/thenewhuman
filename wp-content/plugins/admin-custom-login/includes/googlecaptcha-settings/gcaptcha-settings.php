@@ -85,6 +85,21 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 						<div class="acl_gcaptcha_info"><strong>Note : </strong> After enable google captcha display please insert site key & secret key.</div>
 					</td>
 				</tr>
+
+				<tr>
+					<th scope="row" ><?php _e('Captcha Theme',WEBLIZAR_ACL)?></th>
+					<td></td>
+				</tr>
+				<tr class="radio-span" style="border-bottom:none;">
+					<td>
+						<span>
+							<input type="radio" name="acl_gcaptcha_theme" value="yes" id="acl_gcaptcha_theme1" <?php if($acl_gcaptcha_theme=="yes")echo "checked"; ?> />&nbsp;<?php _e('Light', WEBLIZAR_ACL)?><br>
+						</span>
+						<span>
+							<input type="radio" name="acl_gcaptcha_theme" value="no" id="acl_gcaptcha_theme2" <?php if($acl_gcaptcha_theme=="no")echo "checked"; ?> />&nbsp;<?php _e('Dark', WEBLIZAR_ACL)?><br>
+						</span>
+					</td>
+				</tr>
 			</table>
 		</div>
 	</div>
@@ -165,8 +180,14 @@ function Custom_gcaptcha(Action, id){
 		} else {
 			var login_enable_gcaptcha = document.getElementById('login_enable_gcaptcha2').value;
 		}
+
+		if (document.getElementById('acl_gcaptcha_theme1').checked) {
+			var acl_gcaptcha_theme = document.getElementById('acl_gcaptcha_theme1').value;
+		} else {
+			var acl_gcaptcha_theme = document.getElementById('acl_gcaptcha_theme2').value;
+		}
 		
-		var PostData = "Action=" + Action + "&site_key=" + site_key + "&secret_key=" + secret_key + "&login_enable_gcaptcha=" +login_enable_gcaptcha ;
+		var PostData = "Action=" + Action + "&site_key=" + site_key + "&secret_key=" + secret_key + "&login_enable_gcaptcha=" + login_enable_gcaptcha + "&acl_gcaptcha_theme=" + acl_gcaptcha_theme;
 		jQuery.ajax({
 			dataType : 'html',
 			type: 'POST',
@@ -241,6 +262,9 @@ function Custom_gcaptcha(Action, id){
 				jQuery(document).ready( function() {
 					jQuery('input[name=enable_gcaptcha]').val(['yes']);
 				});
+				jQuery(document).ready( function() {
+					jQuery('input[name=acl_gcaptcha_theme]').val(['yes']);
+				});
 
 				// Reset message box open
 				jQuery(".dialog-button109").click();
@@ -261,6 +285,7 @@ if(isset($_POST['Action'])) {
 		$site_key = sanitize_text_field($_POST['site_key']);
 		$secret_key = sanitize_text_field( $_POST['secret_key']);
 		$login_enable_gcaptcha = sanitize_text_field( $_POST['login_enable_gcaptcha']);
+		$acl_gcaptcha_theme = sanitize_text_field( $_POST['acl_gcaptcha_theme']);
 
 	
 		// save values in option table
@@ -268,6 +293,7 @@ if(isset($_POST['Action'])) {
 			'site_key' => $site_key,
 			'secret_key'=> $secret_key,
 			'login_enable_gcaptcha'=> $login_enable_gcaptcha,
+			'acl_gcaptcha_theme'=>$acl_gcaptcha_theme,
 			
 		));
 		update_option('Admin_custome_login_gcaptcha', $g_page);
@@ -280,6 +306,7 @@ if(isset($_POST['Action'])) {
 			'site_key'=>'',
 			'secret_key'=>'',
 			'login_enable_gcaptcha'=>'no',
+			'acl_gcaptcha_theme'=>'yes',
 			
 		));
 		update_option('Admin_custome_login_gcaptcha', $g_page);

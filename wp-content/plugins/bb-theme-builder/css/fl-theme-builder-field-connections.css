@@ -169,7 +169,7 @@ input[type=text].fl-field-connections-search:focus {
     text-align: left;
     top: 0;
 }
-.fl-field-connection-edit.fa {
+.fl-field-connection-edit.fas {
     align-items: center;
     bottom: 0;
     color: #ccc;
@@ -183,10 +183,10 @@ input[type=text].fl-field-connections-search:focus {
     top: 0;
     width: 25px;
 }
-.fl-field-connection[data-form] .fl-field-connection-edit.fa {
+.fl-field-connection[data-form] .fl-field-connection-edit.fas {
 	display: inline-flex;
 }
-.fl-field-connection-remove.fa {
+.fl-field-connection-remove.fas {
     align-items: center;
     bottom: 0;
     color: #ccc;
@@ -200,11 +200,11 @@ input[type=text].fl-field-connections-search:focus {
     top: 0;
     width: 25px;
 }
-.fl-field-connection-edit.fa:hover,
-.fl-field-connection-remove.fa:hover {
+.fl-field-connection-edit.fas:hover,
+.fl-field-connection-remove.fas:hover {
 	color: #999;
 }
-.fl-field:hover .fl-field-connection-edit.fa,
-.fl-field:hover .fl-field-connection-remove.fa {
+.fl-field:hover .fl-field-connection-edit.fas,
+.fl-field:hover .fl-field-connection-remove.fas {
 	opacity: 1;
 }

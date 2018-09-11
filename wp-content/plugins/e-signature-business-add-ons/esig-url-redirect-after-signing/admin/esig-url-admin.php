@@ -177,7 +177,7 @@ if (!class_exists('ESIG_URL_Admin')) :
             }*/
 
             if (!self::is_url_exists($document_id)) {
-                return ; 
+                return false; 
             }
 
             $get_url_redirect =  self::get_url_settings($document_id);

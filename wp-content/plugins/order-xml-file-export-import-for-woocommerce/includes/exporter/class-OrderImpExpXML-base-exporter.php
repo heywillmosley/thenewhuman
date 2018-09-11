@@ -53,41 +53,41 @@ class OrderImpExpXMLBase_Exporter {
 
         $filename = 'order_';
         $xmlns = '';
-        $xmlns = $this->export_formation($export_format, $order_ids);
+        $xmlns = $this->export_formation($export_format, $order_ids,$filename);
         die();
     }
     
-    public function export_formation($export_format,$order_ids){
+    public function export_formation($export_format,$order_ids,$filename){
         switch ($export_format) {
             case 'stamps':
                 if ( ! class_exists( 'OrderImpExpXMLStamps_Exporter' ) )
                     include_once 'class-OrderImpExpXML-stamps-exporter.php' ;
                 $general_exporter_obj = new OrderImpExpXMLStamps_Exporter();
-                $general_exporter_obj->generate_xml_stamps($order_ids);
+                $general_exporter_obj->generate_xml_stamps($order_ids,$filename);
                 break;
             case 'general' :
                 if ( ! class_exists( 'OrderImpExpXML_GeneralCaseExporter' ) )
                     include_once 'class-OrderImpExpXML-general-case-exporter.php' ;
                 $general_exporter_obj = new OrderImpExpXML_GeneralCaseExporter();
-                $general_exporter_obj->generate_xml_general_case($order_ids);
+                $general_exporter_obj->generate_xml_general_case($order_ids,$filename);
                 break;
             case 'fedex' :
                if ( ! class_exists( 'OrderImpExpXML_FedexExporter' ) )
                     include_once 'class-OrderImpExpXML-fedex-exporter.php' ;
                 $fedex_exporter_obj = new OrderImpExpXML_FedexExporter();
-                $fedex_exporter_obj->generate_xml_fedex($order_ids);
+                $fedex_exporter_obj->generate_xml_fedex($order_ids,$filename);
                 break;
             case 'ups' :
                 if ( ! class_exists( 'OrderImpExpXMl_UPSExporter' ) )
                     include_once 'class-OrderImpExpXML-ups-exporter.php' ;
                 $ups_exporter_obj = new OrderImpExpXMl_UPSExporter();
-                $ups_exporter_obj->generate_xml_ups($order_ids);
+                $ups_exporter_obj->generate_xml_ups($order_ids,$filename);
                 break;
             case 'endicia' :
                 if ( ! class_exists( 'OrderImpExpXML_EndiciaExporter' ) )
                     include_once 'class-OrderImpExpXML-endicia-exporter.php' ;
                 $endicia_exporter_obj = new OrderImpExpXML_EndiciaExporter();
-                $endicia_exporter_obj->generate_xml_endicia($order_ids);
+                $endicia_exporter_obj->generate_xml_endicia($order_ids,$filename);
                 break;
         }
    }        

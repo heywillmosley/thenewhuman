@@ -1,7 +1,7 @@
 <div class="fl-theme-builder-preview-select fl-builder-button">
-	
+
 	<div class="fl-theme-builder-preview-select-title">
-		<i class="fa fa-caret-down"></i>
+		<i class="fas fa-caret-down"></i>
 		<div>
 			<?php echo __( 'Preview As', 'fl-theme-builder' ) . ': '; ?>
 			<span><?php echo $label; ?></span>
@@ -16,9 +16,9 @@
 		<?php endforeach; ?>
 		<?php foreach ( $locations['post'] as $post_type => $data ) : ?>
 		<div class="fl-theme-builder-preview-select-item" data-location="post:<?php echo $post_type; ?>" data-children-loaded="<?php echo ( $data['all'] ? 0 : 1 ); ?>">
-			<div class="fl-theme-builder-preview-select-item-title"><?php echo $data['label']; ?><i class="fa fa-caret-down"></i></div>
+			<div class="fl-theme-builder-preview-select-item-title"><?php echo $data['label']; ?><i class="fas fa-caret-down"></i></div>
 			<div class="fl-theme-builder-preview-select-item-children">
-				<?php if ( ! $data['all'] ) : ?> 
+				<?php if ( ! $data['all'] ) : ?>
 					<?php foreach ( $data['posts'] as $child ) : ?>
 					<div class="fl-theme-builder-preview-select-item-child" data-location="post:<?php echo $post_type; ?>:<?php echo $child['id']; ?>"><?php echo $child['title'] ?></div>
 					<?php endforeach; ?>
@@ -28,7 +28,7 @@
 		<?php endforeach; ?>
 		<?php if ( ! empty( $locations['archive'] ) ) : ?>
 		<div class="fl-theme-builder-preview-select-item">
-			<div class="fl-theme-builder-preview-select-item-title"><?php _e( 'Archives', 'fl-theme-builder' ); ?><i class="fa fa-caret-down"></i></div>
+			<div class="fl-theme-builder-preview-select-item-title"><?php _e( 'Archives', 'fl-theme-builder' ); ?><i class="fas fa-caret-down"></i></div>
 			<div class="fl-theme-builder-preview-select-item-children">
 				<?php foreach ( $locations['archive'] as $data ) : ?>
 				<div class="fl-theme-builder-preview-select-item-child" data-location="archive:<?php echo $data['id']; ?>"><?php echo $data['label'] ?></div>
@@ -38,9 +38,9 @@
 		<?php endif; ?>
 		<?php foreach ( $locations['taxonomy'] as $taxonomy => $data ) : ?>
 		<div class="fl-theme-builder-preview-select-item" data-location="taxonomy:<?php echo $taxonomy; ?>" data-children-loaded="<?php echo ( $data['all'] ? 0 : 1 ); ?>">
-			<div class="fl-theme-builder-preview-select-item-title"><?php echo $data['label']; ?><i class="fa fa-caret-down"></i></div>
+			<div class="fl-theme-builder-preview-select-item-title"><?php echo $data['label']; ?><i class="fas fa-caret-down"></i></div>
 			<div class="fl-theme-builder-preview-select-item-children">
-				<?php if ( ! $data['all'] ) : ?> 
+				<?php if ( ! $data['all'] ) : ?>
 					<?php foreach ( $data['terms'] as $child ) : ?>
 					<div class="fl-theme-builder-preview-select-item-child" data-location="taxonomy:<?php echo $taxonomy; ?>:<?php echo $child['id']; ?>"><?php echo $child['title'] ?></div>
 					<?php endforeach; ?>

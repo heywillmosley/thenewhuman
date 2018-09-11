@@ -2,12 +2,15 @@
 
 /*
   Plugin Name: Order XML File Export Import for WooCommerce(BASIC)
-  Plugin URI: http://www.xadapter.com/product/order-xml-file-export-import-plugin-for-woocommerce/
+  Plugin URI: https://wordpress.org/plugins/order-xml-file-export-import-for-woocommerce/
   Description: Import and Export Order detail including line items, From and To your WooCommerce Store as Endicia XML, FedEx XML, UPS WorldShip XML and also WooCommerce XML.
-  Author: XAdapter
-  Author URI: http://www.xadapter.com/
-  Version: 1.0.16
+  Author: WebToffee
+  Author URI: http://www.webtoffee.com/
+  Version: 1.2.0
+  WC tested up to: 3.4.4
   Text Domain: wf_order_import_export_xml
+  License: GPLv3
+  License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
 
 if (!defined('ABSPATH') || !is_admin()) {

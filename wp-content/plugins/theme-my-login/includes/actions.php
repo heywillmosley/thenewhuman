@@ -119,14 +119,15 @@ function tml_unregister_action( $action ) {
  * @return Theme_My_Login_Action|bool The action object if it exists or false otherwise.
  */
 function tml_get_action( $action = '' ) {
+	global $wp;
 
 	if ( $action instanceof Theme_My_Login_Action ) {
 		return $action;
 	}
 
 	if ( empty( $action ) ) {
-		if ( ! $action = get_query_var( 'action' ) ) {
-			$action = tml_get_request_value( 'action' );
+		if ( ! empty( $wp->query_vars['action'] ) ) {
+			$action = $wp->query_vars['action'];
 		}
 	}
 
@@ -206,22 +207,10 @@ function tml_is_action( $action = '' ) {
  * @return string The action title.
  */
 function tml_get_action_title( $action = '' ) {
-
 	if ( ! $action = tml_get_action( $action ) ) {
 		return;
 	}
-
-	$title = $action->get_title();
-
-	/**
-	 * Filter the action title.
-	 *
-	 * @since 7.0
-	 *
-	 * @param string $title The action title.
-	 * @param string $name  The action name.
-	 */
-	return apply_filters( 'tml_get_action_title', $title, $action->get_name() );
+	return $action->get_title();
 }
 
 /**
@@ -233,22 +222,10 @@ function tml_get_action_title( $action = '' ) {
  * @return string The action slug.
  */
 function tml_get_action_slug( $action = '' ) {
-
 	if ( ! $action = tml_get_action( $action ) ) {
 		return;
 	}
-
-	$slug = $action->get_slug();
-
-	/**
-	 * Filter the action slug.
-	 *
-	 * @since 7.0
-	 *
-	 * @param string $slug The action slug.
-	 * @param string $name The action name.
-	 */
-	return apply_filters( 'tml_get_action_slug', $slug, $action->get_name() );
+	return $action->get_slug();
 }
 
 /**
@@ -262,24 +239,10 @@ function tml_get_action_slug( $action = '' ) {
  * @return string The action URL.
  */
 function tml_get_action_url( $action = '', $scheme = 'login', $network = null ) {
-
 	if ( ! $action = tml_get_action( $action ) ) {
 		return;
 	}
-
-	$url = $action->get_url( $scheme, $network );
-
-	/**
-	 * Filter the action URL.
-	 *
-	 * @since 7.0
-	 *
-	 * @param string $url     The action URL.
-	 * @param string $name    The action name.
-	 * @param string $scheme  The URL scheme.
-	 * @param bool   $network Whether to retrieve the URL for the current network or current blog.
-	 */
-	return apply_filters( 'tml_get_action_url', $url, $action->get_name(), $scheme, $network );
+	return $action->get_url( $scheme, $network );
 }
 
 /**
@@ -326,11 +289,25 @@ function tml_action_handler() {
 
 	nocache_headers();
 
+	// Set a test cookie to test if cookies are enabled
+	$secure = ( 'https' === parse_url( wp_login_url(), PHP_URL_SCHEME ) );
+	setcookie( TEST_COOKIE, 'WP Cookie check', 0, COOKIEPATH, COOKIE_DOMAIN, $secure );
+	if ( SITECOOKIEPATH != COOKIEPATH ) {
+		setcookie( TEST_COOKIE, 'WP Cookie check', 0, SITECOOKIEPATH, COOKIE_DOMAIN, $secure );
+	}
+
+	// Add the testcookie field to the login form
+	tml_add_form_field( 'login', 'testcookie', array(
+		'type'     => 'hidden'	,
+		'value'    => 1,
+		'priority' => 30,
+	) );
+
 	/** This action is documented in wp-login.php */
 	do_action( 'login_init' );
 
 	/** This action is documented in wp-login.php */
-	do_action( 'login_form_' . tml_get_action()->get_name() );
+	do_action( 'login_form_' . tml_get_request_value( 'action' ) );
 
 	/**
 	 * Fires when a TML action is being requested.
@@ -380,64 +357,50 @@ function tml_login_handler() {
 
 	$reauth = empty( $_REQUEST['reauth'] ) ? false : true;
 
-	if ( isset( $_POST['log'] ) || isset( $_GET['testcookie'] ) ) {
+	$user = wp_signon( array(), $secure_cookie );
 
-		$user = wp_signon( array(), $secure_cookie );
+	if ( empty( $_COOKIE[ LOGGED_IN_COOKIE ] ) ) {
+		if ( headers_sent() ) {
+			$user = new WP_Error( 'test_cookie', sprintf(
+					__( '<strong>ERROR</strong>: Cookies are blocked due to unexpected output. For help, please see <a href="%1$s">this documentation</a> or try the <a href="%2$s">support forums</a>.' ),
+					__( 'https://codex.wordpress.org/Cookies' ),
+					__( 'https://wordpress.org/support/' )
+				)
+			);
+		} elseif ( isset( $_POST['testcookie'] ) && empty( $_COOKIE[ TEST_COOKIE ] ) ) {
+			// If cookies are disabled we can't log in even with a valid user+pass
+			$user = new WP_Error( 'test_cookie', sprintf(
+					__( '<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href="%s">enable cookies</a> to use WordPress.' ),
+					__( 'https://codex.wordpress.org/Cookies' )
+				)
+			);
+		}
+	}
 
-		$redirect_to = apply_filters( 'login_redirect', $redirect_to, isset( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '', $user );
+	$redirect_to = apply_filters( 'login_redirect', $redirect_to, isset( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '', $user );
 
-		if ( ! is_wp_error( $user ) && empty( $_COOKIE[ LOGGED_IN_COOKIE ] ) ) {
-			$redirect_to = add_query_arg( array(
-				'testcookie'  => 1,
-				'redirect_to' => $redirect_to
-			) );
+	if ( ! is_wp_error( $user ) && ! $reauth ) {
+
+		if ( ( empty( $redirect_to ) || $redirect_to == 'wp-admin/' || $redirect_to == admin_url() ) ) {
+
+			// If the user doesn't belong to a blog, send them to user admin. If the user can't edit posts, send them to their profile.
+			if ( is_multisite() && ! get_active_blog_for_user( $user->ID ) && ! is_super_admin( $user->ID ) ) {
+				$redirect_to = user_admin_url();
+
+			} elseif ( is_multisite() && ! $user->has_cap( 'read' ) ) {
+				$redirect_to = get_dashboard_url( $user->ID );
+
+			} elseif ( ! $user->has_cap( 'edit_posts' ) ) {
+				$redirect_to = $user->has_cap( 'read' ) ? admin_url( 'profile.php' ) : home_url();
+			}
+
 			wp_redirect( $redirect_to );
 			exit;
 		}
 
-		if ( empty( $_COOKIE[ LOGGED_IN_COOKIE ] ) ) {
-			if ( headers_sent() ) {
-				$user = new WP_Error( 'test_cookie', sprintf(
-						__( '<strong>ERROR</strong>: Cookies are blocked due to unexpected output. For help, please see <a href="%1$s">this documentation</a> or try the <a href="%2$s">support forums</a>.' ),
-						__( 'https://codex.wordpress.org/Cookies' ),
-						__( 'https://wordpress.org/support/' )
-					)
-				);
-			} elseif ( isset( $_GET['testcookie'] ) ) {
-				// If cookies are disabled we can't log in even with a valid user+pass
-				$user = new WP_Error( 'test_cookie', sprintf(
-						__( '<strong>ERROR</strong>: Cookies are blocked or not supported by your browser. You must <a href="%s">enable cookies</a> to use WordPress.' ),
-						__( 'https://codex.wordpress.org/Cookies' )
-					)
-				);
-			}
-		} else {
-			$user = wp_get_current_user();
-		}
-
-		if ( ! is_wp_error( $user ) && ! $reauth ) {
-
-			if ( ( empty( $redirect_to ) || $redirect_to == 'wp-admin/' || $redirect_to == admin_url() ) ) {
-
-				// If the user doesn't belong to a blog, send them to user admin. If the user can't edit posts, send them to their profile.
-				if ( is_multisite() && ! get_active_blog_for_user( $user->ID ) && ! is_super_admin( $user->ID ) ) {
-					$redirect_to = user_admin_url();
-
-				} elseif ( is_multisite() && ! $user->has_cap( 'read' ) ) {
-					$redirect_to = get_dashboard_url( $user->ID );
-
-				} elseif ( ! $user->has_cap( 'edit_posts' ) ) {
-					$redirect_to = $user->has_cap( 'read' ) ? admin_url( 'profile.php' ) : home_url();
-				}
-
-				wp_redirect( $redirect_to );
-				exit;
-			}
-
-			wp_safe_redirect( $redirect_to );
-			exit;
-		}
-
+		wp_safe_redirect( $redirect_to );
+		exit;
+	} else {
 		$errors = $user;
 	}
 
@@ -528,13 +491,24 @@ function tml_registration_handler() {
 	if ( tml_is_post_request() ) {
 		$user_login = isset( $_POST['user_login'] ) ? $_POST['user_login'] : '';
 		$user_email = isset( $_POST['user_email'] ) ? $_POST['user_email'] : '';
-		$errors = register_new_user( $user_login, $user_email );
-		if ( ! is_wp_error( $errors ) ) {
+		$user_id = register_new_user( $user_login, $user_email );
+		if ( ! is_wp_error( $user_id ) ) {
 			$redirect_to = ! empty( $_POST['redirect_to'] ) ? $_POST['redirect_to'] : site_url( 'wp-login.php?checkemail=registered' );
+
+			/**
+			 * Filter the registration redirect.
+			 *
+			 * @since 7.0.10
+			 *
+			 * @param string $redirect_to The registration redirect.
+			 * @param WP_User $user       The user object.
+			 */
+			$redirect_to = apply_filters( 'tml_registration_redirect', $redirect_to, get_userdata( $user_id ) );
+
 			wp_safe_redirect( $redirect_to );
 			exit;
 		} else {
-			tml_set_errors( $errors );
+			tml_set_errors( $user_id );
 		}
 	}
 }

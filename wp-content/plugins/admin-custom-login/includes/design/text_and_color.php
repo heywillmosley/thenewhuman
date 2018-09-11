@@ -300,23 +300,27 @@ jQuery(document).ready(function(){
 							</optgroup>
 							<optgroup label="Google Fonts">
 								<?php
-		                            // fetch the Google font list
-		                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAccXEBQEkF2rMcxcanpJKQ6y9n2lz6avM';
-		                           $response_font_api = wp_remote_retrieve_body( wp_remote_get($google_api_url, array('sslverify' => false )));
-		                           if(!is_wp_error( $response_font_api ) ) {
-		                                $fonts_list = json_decode($response_font_api,  true);
-		                                // that's it
-		                                if(is_array($fonts_list)) {
-		                                    $g_fonts = $fonts_list['items'];
-		                                    foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
-		                                        <option value="<?php echo $font_name; ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo $font_name; ?></option><?php 
-		                                    }
-		                                } else {
-		                                    echo "<option disabled>Error to fetch Google fonts.</option>";
-		                                    echo "<option disabled>Google font will not available in offline mode.</option>";
-		                                }
-		                            } 
-		                        ?>
+								    // fetch the Google font list
+								    $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDVBuDznbRvMf7ckomKRcsbgHuJ1Elf0LI';
+								   $response_font_api = wp_remote_retrieve_body( wp_remote_get($google_api_url, array('sslverify' => false )));
+								   if(!is_wp_error( $response_font_api ) ) {
+								        $fonts_list = json_decode($response_font_api,  true);
+								        // that's it
+								        if(is_array($fonts_list)) {
+								        	if(isset($fonts_list['items'])){
+								        		$g_fonts = $fonts_list['items'];
+								            	//print_r($fonts_list);
+								            	foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
+								                	<option value="<?php echo $font_name; ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo $font_name; ?></option><?php 
+								            	}
+								        	}
+								            
+								        } else {
+								            echo "<option disabled>Error to fetch Google fonts.</option>";
+								            echo "<option disabled>Google font will not available in offline mode.</option>";
+								        }
+								    } 
+								?>
 							</optgroup>	
 						</select>
 					</td>
@@ -324,7 +328,7 @@ jQuery(document).ready(function(){
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="panel panel-primary panel-default content-panel">
 		<div class="panel-body">
 			<table class="form-table">
@@ -358,20 +362,22 @@ jQuery(document).ready(function(){
 							<optgroup label="Google Fonts">
 								<?php
 		                            // fetch the Google font list
-		                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAccXEBQEkF2rMcxcanpJKQ6y9n2lz6avM';
+		                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDVBuDznbRvMf7ckomKRcsbgHuJ1Elf0LI';
 		                           $response_font_api = wp_remote_retrieve_body( wp_remote_get($google_api_url, array('sslverify' => false )));
 		                           if(!is_wp_error( $response_font_api ) ) {
 		                                $fonts_list = json_decode($response_font_api,  true);
 		                                // that's it
 		                                if(is_array($fonts_list)) {
-		                                    $g_fonts = $fonts_list['items'];
-		                                    foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
-		                                        <option value="<?php echo $font_name; ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo $font_name; ?></option><?php 
-		                                    }
-		                                } else {
-		                                    echo "<option disabled>Error to fetch Google fonts.</option>";
-		                                    echo "<option disabled>Google font will not available in offline mode.</option>";
-		                                }
+		                                	if(isset($fonts_list['items'])){
+				                                    $g_fonts = $fonts_list['items'];
+				                                    foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
+				                                        <option value="<?php echo $font_name; ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo $font_name; ?></option><?php 
+				                                    }
+			                                	} 
+			                            	} else {
+			                                    echo "<option disabled>Error to fetch Google fonts.</option>";
+			                                    echo "<option disabled>Google font will not available in offline mode.</option>";
+			                                }
 		                            } 
 		                        ?>
 							</optgroup>	
@@ -415,16 +421,18 @@ jQuery(document).ready(function(){
 							<optgroup label="Google Fonts">
 								<?php
 		                            // fetch the Google font list
-		                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAccXEBQEkF2rMcxcanpJKQ6y9n2lz6avM';
+		                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDVBuDznbRvMf7ckomKRcsbgHuJ1Elf0LI';
 		                           $response_font_api = wp_remote_retrieve_body( wp_remote_get($google_api_url, array('sslverify' => false )));
 		                           if(!is_wp_error( $response_font_api ) ) {
 		                                $fonts_list = json_decode($response_font_api,  true);
 		                                // that's it
 		                                if(is_array($fonts_list)) {
-		                                    $g_fonts = $fonts_list['items'];
-		                                    foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
-		                                        <option value="<?php echo $font_name; ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo $font_name; ?></option><?php 
-		                                    }
+		                                	if(isset($fonts_list['items'])){
+			                                    $g_fonts = $fonts_list['items'];
+			                                    foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
+			                                        <option value="<?php echo $font_name; ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo $font_name; ?></option><?php 
+			                                    }
+			                                } 
 		                                } else {
 		                                    echo "<option disabled>Error to fetch Google fonts.</option>";
 		                                    echo "<option disabled>Google font will not available in offline mode.</option>";
@@ -451,7 +459,6 @@ jQuery(document).ready(function(){
 				<tr class="" style="border-bottom:none;">
 					<td>
 						<select id="button_font_style" class="standard-dropdown" name="button_font_style"  >
-							
 							<optgroup label="Default Fonts">
 								<option value="Arial" <?php selected($RPP_Font_Style, 'Arial' ); ?>>Arial</option>
 								<option value="Arial Black" <?php selected($RPP_Font_Style, 'Arial Black' ); ?>>Arial Black</option>
@@ -474,16 +481,18 @@ jQuery(document).ready(function(){
 							<optgroup label="Google Fonts">
 								<?php
 		                            // fetch the Google font list
-		                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAccXEBQEkF2rMcxcanpJKQ6y9n2lz6avM';
+		                            $google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDVBuDznbRvMf7ckomKRcsbgHuJ1Elf0LI';
 		                           $response_font_api = wp_remote_retrieve_body( wp_remote_get($google_api_url, array('sslverify' => false )));
 		                           if(!is_wp_error( $response_font_api ) ) {
 		                                $fonts_list = json_decode($response_font_api,  true);
 		                                // that's it
 		                                if(is_array($fonts_list)) {
-		                                    $g_fonts = $fonts_list['items'];
-		                                    foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
-		                                        <option value="<?php echo $font_name; ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo $font_name; ?></option><?php 
-		                                    }
+		                                	if(isset($fonts_list['items'])){
+			                                    $g_fonts = $fonts_list['items'];
+			                                    foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
+			                                        <option value="<?php echo $font_name; ?>" <?php selected($RPP_Font_Style, $font_name ); ?>><?php echo $font_name; ?></option><?php 
+			                                    }
+			                                } 
 		                                } else {
 		                                    echo "<option disabled>Error to fetch Google fonts.</option>";
 		                                    echo "<option disabled>Google font will not available in offline mode.</option>";

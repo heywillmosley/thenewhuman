@@ -121,14 +121,17 @@ function tml_admin_add_menu_items() {
 *
 * @since 7.0
 */
-function tml_admin_enqueue_scripts() {
-	if ( ! tml_admin_is_plugin_page() ) {
-		return;
-	}
-
+function tml_admin_enqueue_style_and_scripts() {
 	$suffix = SCRIPT_DEBUG ? '' : '.min';
 
+	wp_enqueue_style( 'theme-my-login-admin', THEME_MY_LOGIN_URL . "admin/assets/styles/theme-my-login-admin$suffix.css", array(), THEME_MY_LOGIN_VERSION );
 	wp_enqueue_script( 'theme-my-login-admin', THEME_MY_LOGIN_URL . "admin/assets/scripts/theme-my-login-admin$suffix.js", array( 'jquery', 'postbox' ), THEME_MY_LOGIN_VERSION );
+	wp_localize_script( 'theme-my-login-admin', 'tmlAdmin', array(
+		'interimLoginUrl' => site_url( add_query_arg( array(
+			'interim-login' => 1,
+			'wp_lang'       => get_user_locale(),
+		), 'wp-login.php' ), 'login' ),
+	) );
 }
 
 /**
@@ -138,6 +141,11 @@ function tml_admin_enqueue_scripts() {
  */
 function tml_admin_notices() {
 	global $plugin_page;
+
+	// Bail if the user cannot activate plugins
+	if ( ! current_user_can( 'activate_plugins' ) ) {
+		return;
+	}
 
 	$is_pre_7 = ( $previous_version = tml_get_previous_version() ) && version_compare( $previous_version, '7.0', '<' );
 
@@ -150,6 +158,46 @@ function tml_admin_notices() {
 
 		<?php
 	}
+
+	$response = tml_admin_get_extensions_feed();
+	if ( ! empty( $response ) && ! is_wp_error( $response ) ) {
+		$extension = reset( $response );
+
+		$notice_key = 'new_extension-' . $extension->info->slug;
+
+		if ( ! in_array( $notice_key, get_site_option( '_tml_dismissed_notices', array() ) ) ) : ?>
+
+		<div class="notice notice-info tml-notice is-dismissible" data-notice="<?php echo $notice_key; ?>">
+			<?php echo implode( "\n", array(
+				'<p>' . __( 'A new <strong>Theme My Login</strong> extension is available!', 'theme-my-login' ) . '</p>',
+				'<p>' . sprintf( '<strong>%s</strong>: %s',
+					$extension->info->title,
+					$extension->info->excerpt
+				) . '</p>',
+				'<p>' . sprintf( '<a class="button button-primary" href="%s">%s</a>',
+					$extension->info->link,
+					__( 'Get This Extension', 'theme-my-login' )
+				) . '</p>',
+			) ); ?>
+		</div>
+
+		<?php endif;
+	}
+}
+
+/**
+ * Handle saving of notice dismissals.
+ *
+ * @since 7.0.8
+ */
+function tml_admin_ajax_dismiss_notice() {
+	if ( empty( $_POST['notice'] ) ) {
+		return;
+	}
+	$dismissed_notices = get_site_option( '_tml_dismissed_notices', array() );
+	$dismissed_notices[] = sanitize_key( $_POST['notice'] );
+	update_site_option( '_tml_dismissed_notices', $dismissed_notices );
+	wp_send_json_success();
 }
 
 /**
@@ -276,4 +324,71 @@ function tml_admin_filter_edit_nav_menu_walker( $walker )  {
 		require_once THEME_MY_LOGIN_PATH . 'admin/class-theme-my-login-walker-nav-menu-edit.php';
 	}
 	return $walker;
+}
+
+/**
+ * Ask for feedback when the plugin is deactivated.
+ *
+ * @since 7.0.8
+ */
+function tml_admin_deactivation_survey() {
+	global $pagenow, $wp_version;
+
+	// Bail if we're not on the plugins page
+	if ( 'plugins.php' != $pagenow ) {
+		return;
+	}
+
+	// Bail if we're not deactivating a plugin
+	if ( 'deactivate' != tml_get_request_value( 'action' ) ) {
+		return;
+	}
+
+	// Bail if not deactivating TML
+	if ( 'theme-my-login/theme-my-login.php' != tml_get_request_value( 'plugin' ) ) {
+		return;
+	}
+
+	// Bail if the survery has been submitted/ignored
+	if ( tml_get_request_value( 'skip_survey' ) ) {
+		return;
+	}
+
+	// Handle form submission
+	if ( tml_is_post_request() ) {
+		if ( $comments = tml_get_request_value( 'comments', 'post' ) ) {
+			$words = explode( ' ', trim( $comments ) );
+			if ( count( $words ) > 5 ) {
+				$message  = wp_unslash( $comments ) . "\r\n\r\n";
+				$message .= implode( "\r\n", array(
+					'WP Version: '  . $wp_version,
+					'TML Version: ' . THEME_MY_LOGIN_VERSION,
+					'PHP Version: ' . phpversion(),
+					'Multisite: '   . ( is_multisite() ? 'Yes' : 'No' ),
+				) );
+				@wp_mail( 'deactivations@thememylogin.com', 'Deactivation Survey', $message );
+			}
+		}
+		wp_redirect( add_query_arg( 'skip_survey', 1 ) );
+		exit;
+
+	// Handle form output
+	} else {
+		ob_start(); ?>
+
+		<h2><?php esc_html_e( 'Deactivating Theme My Login', 'theme-my-login' ); ?></h2>
+		<p><?php esc_html_e( 'Before you go, please take a moment to let us know why you are deactivating:', 'theme-my-login' ); ?></p>
+		<form method="post">
+			<p>
+				<textarea name="comments" rows="8" cols="50" style="width: 100%;"></textarea><br />
+				<span style="color: #888; font-size: 13px; font-style: italic;"><?php esc_html_e( 'Submitting this form will also include your WordPress version, TML version, PHP version and whether this is a multisite installation or not.', 'theme-my-login' ); ?></span>
+			</p>
+			<p>
+				<input type="submit" name="submit_survey" value="<?php esc_attr_e( 'Submit & Deactivate', 'theme-my-login' ); ?>" class="button" style="margin-right: 10px;" />
+				<a href="<?php echo add_query_arg( 'skip_survey', 1 ); ?>" style="display: inline-block; font-size: 13px; height: 28px; line-height: 26px;"><?php esc_html_e( 'No thanks, just deactivate', 'theme-my-login' ); ?></a>
+			</p>
+		</form>
+
+		<?php wp_die( ob_get_clean(), __( 'Deactivating Theme My Login', 'theme-my-login' ) );
+	}
 }

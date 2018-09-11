@@ -57,6 +57,27 @@ abstract class Theme_My_Login_Extension {
 	protected $url;
 
 	/**
+	 * The extension homepage URL.
+	 *
+	 * @var string
+	 */
+	protected $homepage_url;
+
+	/**
+	 * The extension documentation URL.
+	 *
+	 * @var string
+	 */
+	protected $documentation_url;
+
+	/**
+	 * The extension support URL.
+	 *
+	 * @var string
+	 */
+	protected $support_url;
+
+	/**
 	 * The extension store URL.
 	 *
 	 * @var string
@@ -226,6 +247,39 @@ abstract class Theme_My_Login_Extension {
 	 */
 	public function get_url() {
 		return $this->url;
+	}
+
+	/**
+	 * Get the extension's homepage URL.
+	 *
+	 * @since 7.0.6
+	 *
+	 * @return string The extension's homepage URL.
+	 */
+	public function get_homepage_url() {
+		return $this->homepage_url;
+	}
+
+	/**
+	 * Get the extension's documentation URL.
+	 *
+	 * @since 7.0.6
+	 *
+	 * @return string The extension's documentation URL.
+	 */
+	public function get_documentation_url() {
+		return $this->documentation_url;
+	}
+
+	/**
+	 * Get the extension's support URL.
+	 *
+	 * @since 7.0.6
+	 *
+	 * @return string The extension's support URL.
+	 */
+	public function get_support_url() {
+		return $this->support_url;
 	}
 
 	/**

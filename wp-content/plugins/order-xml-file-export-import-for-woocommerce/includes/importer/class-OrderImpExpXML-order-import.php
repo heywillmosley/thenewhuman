@@ -45,6 +45,7 @@ class OrderImpExpXML_OrderImport extends WP_Importer {
     }
 	
     public function dispatch() {
+        
         global $woocommerce, $wpdb;
         if (!empty($_POST['delimiter'])) {
             $this->delimiter = stripslashes(trim($_POST['delimiter']));
@@ -65,7 +66,7 @@ class OrderImpExpXML_OrderImport extends WP_Importer {
         }
 
         $step = empty($_GET['step']) ? 0 : (int) $_GET['step'];
-
+        
         switch ($step) {
             case 0 :
                 $this->header();
@@ -366,10 +367,8 @@ class OrderImpExpXML_OrderImport extends WP_Importer {
                 $parsed_data_arr = $this->parsed_data;
                 break;
         }
-
         foreach ($parsed_data_arr as $key => $item) {
             $order = $this->parser->parse_orders($item,$import_type);
-           
             if (!is_wp_error($order))
                 $this->process_orders($order['shop_order'][0],$import_type,$import_decision);
             else
@@ -459,7 +458,7 @@ class OrderImpExpXML_OrderImport extends WP_Importer {
     }
 
     private function process_orders($post,$import_type,$import_decision) {
-
+        
         global $wpdb;
         if($import_type == 'general')
         {

@@ -78,6 +78,8 @@ if (!class_exists('ESIG_AT_Admin')) :
                 add_shortcode('esigtempradio', array($this, 'render_temp_radio'));
                 add_shortcode('esigtempcheckbox', array($this, 'render_temp_checkbox'));
                 add_shortcode('esigtempdropdown', array($this, 'render_temp_dropdown'));
+                add_shortcode('esigtempfile', array($this, 'render_temp_file'));
+                add_shortcode('esigtemptodaydate', array($this, 'render_temp_today'));
             }
         }
 
@@ -150,6 +152,12 @@ if (!class_exists('ESIG_AT_Admin')) :
                         do_shortcode($document_content, '[esigtempdropdown]');
                     } elseif (has_shortcode($document_content, 'esigtempradio')) {
                         do_shortcode($document_content, '[esigtempradio]');
+                    }
+                    elseif (has_shortcode($document_content, 'esigtemptodaydate')) {
+                        do_shortcode($document_content, '[esigtemptodaydate]');
+                    }
+                    elseif (has_shortcode($document_content, 'esigtempfile')) {
+                        do_shortcode($document_content, '[esigtempfile]');
                     }
 
                     $noofsif = count($this->temp_short);
@@ -251,7 +259,58 @@ if (!class_exists('ESIG_AT_Admin')) :
             $this->temp_short[$user_id]['document_id'] = $document_id;
             $this->temp_short[$user_id][] = $label;
         }
+        
+        /**
+         * Temp file Shortcode
+         * Usage: [esigtempfile label="First Name" required=""]
+         */
+        public function render_temp_file($atts) {
+            // Extract the attributes
+            extract(shortcode_atts(array(
+                'name' => 'textfield',
+                'label' => 'Text', //foo is a default value
+                'required' => '',
+                'verifysigner' => '',
+                            ), $atts, 'esigtempfile'));
+            if ($verifysigner != 'undefined') {
+                $pieces = explode("ud", $verifysigner);
+                $user_id = $pieces[0];
+                $document_id = $pieces[1];
+            } else {
+                $user_id = NULL;
+                $document_id = NULL;
+            }
 
+
+            $this->temp_short[$user_id]['user_id'] = $user_id;
+            $this->temp_short[$user_id]['document_id'] = $document_id;
+            $this->temp_short[$user_id][] = $label;
+        }
+
+        /**
+         * Temp today Shortcode
+         * Usage: [esigtemptoday label="First Name" required=""]
+         */
+        public function render_temp_today($atts) {
+            // Extract the attributes
+            extract(shortcode_atts(array(
+                'name' => 'textfield',
+                'verifysigner' => '',
+                            ), $atts, 'esigtemptodaydate'));
+            if ($verifysigner != 'undefined') {
+                $pieces = explode("ud", $verifysigner);
+                $user_id = $pieces[0];
+                $document_id = $pieces[1];
+            } else {
+                $user_id = NULL;
+                $document_id = NULL;
+            }
+
+
+            $this->temp_short[$user_id]['user_id'] = $user_id;
+            $this->temp_short[$user_id]['document_id'] = $document_id;
+            $this->temp_short[$user_id][] = "Signed Date";
+        }
         /**
          * Radio Button Shortcode
          * Usage: [esigtempradio]
@@ -764,7 +823,14 @@ if (!class_exists('ESIG_AT_Admin')) :
                 do_shortcode($document_content, '[esigtempdropdown]');
             } elseif (has_shortcode($document_content, 'esigtempradio')) {
                 do_shortcode($document_content, '[esigtempradio]');
-            } else {
+            } 
+            elseif (has_shortcode($document_content, 'esigtempfile')) {
+                do_shortcode($document_content, '[esigtempfile]');
+            }
+            elseif (has_shortcode($document_content, 'esigtemptodaydate')) {
+                do_shortcode($document_content, '[esigtemptodaydate]');
+            }
+            else {
 
                 // if there is no sif input display default signer info
                 $noofsif = Esig_AT_Settings::getTempSigner($template_id);
@@ -783,7 +849,10 @@ if (!class_exists('ESIG_AT_Admin')) :
             $signer_id = null;
             $document_id = null;
             $html .= '<div id="template_signer_container">';
-            $signer_count =1;
+            $signer_count = 1;
+
+            ksort($this->temp_short);
+
             foreach ($this->temp_short as $temp => $value) {
 
                 //if(empty($signer_id))
@@ -806,8 +875,8 @@ if (!class_exists('ESIG_AT_Admin')) :
 							 ';
 
                 $html .= '<div id="signer_main_temp" class="row"><div class="col-sm-12 text-center">';
-                
-                $html .='Signer '. $signer_count .' required fields:';
+
+                $html .= 'Signer ' . $signer_count . ' required fields:';
                 $signer_count++;
                 // $label= esigget('check' . $signer_id,$value);
                 //$html .='{' . $label . '},';
@@ -817,14 +886,13 @@ if (!class_exists('ESIG_AT_Admin')) :
 
                         if ($val != $signer_id) {
                             if ($val != $document_id) {
-                                $html .=  '{' . $val . '},';
+                                $html .= '{' . $val . '},';
                             }
                         }
                     }
                 }
-                
-              $html .= '</div></div></div>';  
-              
+
+                $html .= '</div></div></div>';
             }
 
             $html .= '</div>';
@@ -1019,28 +1087,7 @@ if (!class_exists('ESIG_AT_Admin')) :
                 $documents = $api->document->getDocument($doc_id);
                 $document_content = $api->signature->decrypt(ENCRYPTION_KEY, $documents->document_content);
 
-                if (has_shortcode($document_content, 'esigtextfield')) {
-
-                    $document_content = str_replace("esigtextfield", "esigtemptextfield", $document_content);
-                }
-                if (has_shortcode($document_content, 'esigtextarea')) {
-
-                    $document_content = str_replace("esigtextarea", "esigtemptextarea", $document_content);
-                }
-                if (has_shortcode($document_content, 'esigdatepicker')) {
-
-                    $document_content = str_replace("esigdatepicker", "esigtempdatepicker", $document_content);
-                }
-                if (has_shortcode($document_content, 'esigradio')) {
-                    $document_content = str_replace("esigradio", "esigtempradio", $document_content);
-                }
-                if (has_shortcode($document_content, 'esigcheckbox')) {
-                    $document_content = str_replace("esigcheckbox", "esigtempcheckbox", $document_content);
-                }
-
-                if (has_shortcode($document_content, 'esigdropdown')) {
-                    $document_content = str_replace("esigdropdown", "esigtempdropdown", $document_content);
-                }
+                $document_content = Esig_AT_Settings::replace_shortcode_content($document_content);
 
                 $document_content = $api->signature->encrypt(ENCRYPTION_KEY, $document_content);
 
@@ -1068,28 +1115,7 @@ if (!class_exists('ESIG_AT_Admin')) :
 
                 $document_content = $api->signature->decrypt(ENCRYPTION_KEY, $documents->document_content);
 
-                if (has_shortcode($document_content, 'esigtextfield')) {
-
-                    $document_content = str_replace("esigtextfield", "esigtemptextfield", $document_content);
-                }
-                if (has_shortcode($document_content, 'esigtextarea')) {
-
-                    $document_content = str_replace("esigtextarea", "esigtemptextarea", $document_content);
-                }
-                if (has_shortcode($document_content, 'esigdatepicker')) {
-
-                    $document_content = str_replace("esigdatepicker", "esigtempdatepicker", $document_content);
-                }
-                if (has_shortcode($document_content, 'esigradio')) {
-                    $document_content = str_replace("esigradio", "esigtempradio", $document_content);
-                }
-                if (has_shortcode($document_content, 'esigcheckbox')) {
-                    $document_content = str_replace("esigcheckbox", "esigtempcheckbox", $document_content);
-                }
-
-                if (has_shortcode($document_content, 'esigdropdown')) {
-                    $document_content = str_replace("esigdropdown", "esigtempdropdown", $document_content);
-                }
+                $document_content = Esig_AT_Settings::replace_shortcode_content($document_content);
 
                 $document_content = $api->signature->encrypt(ENCRYPTION_KEY, $document_content);
 
@@ -1216,6 +1242,8 @@ if (!class_exists('ESIG_AT_Admin')) :
         }
 
     }
+
+    
 
     
 

@@ -133,22 +133,42 @@ function wpo_wcpdf_sort_by_name($a, $b) {
  * @return array An array of URLs. Must be absolute.
  */
 function my_forcelogin_whitelist( $whitelist ) {
-  $whitelist[] = site_url( '/' );
-  $whitelist[] = site_url( '/terms/' );
-  $whitelist[] = site_url( '/my-account/' );
-  $whitelist[] = site_url( '/my-account/lost-password/' );
+  $whitelist[] = site_url( '/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/terms/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/my-account/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/my-account/lost-password/' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/my-account/lost-password/?' . $_SERVER['QUERY_STRING'] );
-  $whitelist[] = site_url( '/my-account/customer-logout/' );
+  $whitelist[] = site_url( '/my-account/customer-logout/' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/my-account/customer-logout/?' . $_SERVER['QUERY_STRING'] );
-  $whitelist[] = site_url( '/sv2-insight/' );
-  $whitelist[] = site_url( '/bionetics/' );
-  $whitelist[] = site_url( '/testimonials/' );
-  $whitelist[] = site_url( '/iabc/' );
-  $whitelist[] = site_url( '/contact/' );
-  $whitelist[] = site_url( '/about/' );
-  $whitelist[] = site_url( '/botanicals/' );
-  $whitelist[] = site_url( '/blog/' );
-  $whitelist[] = site_url( '/training/' );
+  $whitelist[] = site_url( '/sv2-insight/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/bionetics/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/testimonials/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/iabc/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/contact/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/about/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/botanicals/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/blog/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/training/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/sv2-webinar/?' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/sv2-offer/?' . $_SERVER['QUERY_STRING'] );
   return $whitelist;
 }
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
+
+/**
+ * Bypass Force Login to allow for exceptions.
+ *
+ * @return bool Whether to disable Force Login. Default false.
+ */
+function my_forcelogin_bypass( $bypass ) {
+  if ( in_category('articles') 
+    || is_home() 
+    || is_front_page() 
+    || is_page(153258) // SV2 Webinar
+    || is_page(153145) // SV2 Offer
+    ) {
+    $bypass = true;
+  }
+  return $bypass;
+}
+add_filter('v_forcelogin_bypass', 'my_forcelogin_bypass', 10, 1);

@@ -20,11 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</div>
 		</div>
 	</div>
+	
+	
+
 	<div class="panel panel-primary panel-default content-panel">
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Admin Custom Login Status', WEBLIZAR_ACL)?></th>
+					<th scope="row" ><?php _e('Admin Custom Login Status', WEBLIZAR_ACL); ?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
@@ -40,23 +43,79 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</table>
 		</div>
 	</div>
+	
 	<div class="panel panel-primary panel-default content-panel">
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('View Login Page', WEBLIZAR_ACL)?></th>
+					<th scope="row" ><?php _e('View Login Page', WEBLIZAR_ACL); ?></th>
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
 					<td>
 						<h4><?php _e('Copy below link and open in another browser where you are not logged in', WEBLIZAR_ACL)?></h4>
 						<br>
-						<span style="color:#ef4238">  <?php echo wp_login_url(); ?> </span>
+						<pre><span style="color:#ef4238"><?php echo wp_login_url(); ?></span></pre>
 					</td>
 				</tr>
 			</table>
 		</div>
-	</div>		
+	</div>	
+
+	<div class="panel panel-primary panel-default content-panel" style="background-image">
+		<div class="panel-body">
+			<table class="form-table">
+				<tr>
+					<th scope="row" >Admin Custom Login Pro Features</th>
+					<td></td>
+				</tr>
+			</table>
+			<div class="pro-features-list"></div>		
+			<div class="col-md-6">
+				<ul>
+					<li><i class="fa fa-check"></i> Max Login Retry</li>
+					<li><i class="fa fa-check"></i> Login With Access Token</li>
+					<li><i class="fa fa-check"></i> Freeze Login Form On Brute Force Attack & Unfreeze By Admin Secret Key</li>
+					<li><i class="fa fa-check"></i> Social Media Login with Facebook, Twitter, Google+</li>
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<ul>
+					<li><i class="fa fa-check"></i> Login Restriction By User Roles</li>
+					<li><i class="fa fa-check"></i> Restrict Unauthorized IP Login Access</li>
+					<li><i class="fa fa-check"></i> Ban User(s) Login Access</li>
+					<li><i class="fa fa-check"></i> Max User Access Management</li>
+				</ul>
+			</div>				
+			<div class="col-md-12">
+				<p>First 100 Users Get 50% OFF on Admin Custom Login Pro Plugin Use Coupon Code: <strong>APL50</strong></p> 
+				<a class="button-primary button-hero" href="http://demo.weblizar.com/admin-custom-login-pro/wp-admin/" target="_blank">Pro Live Demo</a>
+				<a class="button-primary button-hero" href="https://weblizar.com/plugins/admin-custom-login-pro/" target="_blank">Buy Now $25</a>
+			</div>
+		</div>
+	</div>
+	
+	<!--<div class="panel panel-primary panel-default content-panel">
+		<div class="panel-body">
+			<table class="form-table">
+				<tr>
+					<th scope="row" >Enjoying Using Fre Plugin, Please Donate Us</th>
+					<td></td>
+				</tr>
+				<tr class="radio-span" style="border-bottom:none;">
+					<td class="colcent">
+						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+							<input type="hidden" name="cmd" value="_s-xclick">
+							<input type="hidden" name="hosted_button_id" value="9MXDU3NKPCR5Y">
+							<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
+							<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>-->
+
 	<button data-dialog="somedialog" class="dialog-button" style="display:none">Open Dialog</button>
 	<div id="somedialog" class="dialog" style="position: fixed; z-index: 9999;">
 		<div class="dialog__overlay"></div>
@@ -71,6 +130,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</div>
 		</div>
 	</div>
+	
 	<button data-dialog7="somedialog7" class="dialog-button7" style="display:none">Open Dialog</button>
 	<div id="somedialog7" class="dialog" style="position: fixed; z-index: 9999;">
 		<div class="dialog__overlay"></div>
@@ -97,6 +157,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</div>
 </div>
 <!-- /row -->
+<style type="text/css">
+	.colcent{
+		width:100% !important;
+		text-align: center !important;
+	}
+</style>
 <script>
 function Custom_login_dashboard(Action, id) {
 	if(Action == "dashboardSave") {
@@ -154,20 +220,20 @@ function Custom_login_dashboard(Action, id) {
 	
 	// Save Message box Close On Mouse Hover
 	document.getElementById('dialog-close-button').disabled = false;
-	 jQuery('#dialog-close-button').hover(function () {
-		   jQuery("#dialog-close-button").click();
-		   document.getElementById('dialog-close-button').disabled = true; 
-		 }
+		jQuery('#dialog-close-button').hover(function () {
+			jQuery("#dialog-close-button").click();
+			document.getElementById('dialog-close-button').disabled = true; 
+		}
 	 );
 	 
 	// Reset Message box Close On Mouse Hover
    document.getElementById('dialog-close-button7').disabled = false;
-	 jQuery('#dialog-close-button7').hover(function () {
-		   jQuery("#dialog-close-button7").click();
-		   document.getElementById('dialog-close-button7').disabled = true; 
-		 }
+		jQuery('#dialog-close-button7').hover(function () {
+			jQuery("#dialog-close-button7").click();
+			document.getElementById('dialog-close-button7').disabled = true; 
+		}
 	);
-				
+
 	if(Action == "dashboardReset") {
 		(function() {
 			var dlgtrigger = document.querySelector( '[data-dialog7]' ),

@@ -4,29 +4,27 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6569350c290f3ede4f21d455ef891fb8
+class ComposerStaticInit57cc78f2f1c527f7b3892d3c7f254998
 {
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
             'PHPCompatibility\\' => 17,
         ),
+        'D' => 
+        array (
+            'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'PHPCompatibility\\' => 
         array (
-            0 => __DIR__ . '/..' . '/wimg/php-compatibility/PHPCompatibility',
+            0 => __DIR__ . '/..' . '/phpcompatibility/php-compatibility/PHPCompatibility',
         ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'S' => 
+        'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
         array (
-            'SimplyAdmire\\ComposerPlugins' => 
-            array (
-                0 => __DIR__ . '/..' . '/simplyadmire/composer-plugins',
-            ),
+            0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
         ),
     );
 
@@ -288,10 +286,9 @@ class ComposerStaticInit6569350c290f3ede4f21d455ef891fb8
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6569350c290f3ede4f21d455ef891fb8::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6569350c290f3ede4f21d455ef891fb8::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6569350c290f3ede4f21d455ef891fb8::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6569350c290f3ede4f21d455ef891fb8::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit57cc78f2f1c527f7b3892d3c7f254998::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit57cc78f2f1c527f7b3892d3c7f254998::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit57cc78f2f1c527f7b3892d3c7f254998::$classMap;
 
         }, null, ClassLoader::class);
     }

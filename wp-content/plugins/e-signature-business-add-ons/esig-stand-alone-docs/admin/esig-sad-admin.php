@@ -374,7 +374,7 @@ class ESIG_SAD_Admin {
         foreach ($pages as $page) :
             $selected = '';
             if (!empty($sad) && $sad->page_id && ($page->ID == $sad->page_id)) {
-                $selected = __('SELECTED', 'esig');
+                $selected = __("SELECTED", "esig");
             }
             $data_attr = '';
             if (isset($stand_alone_pages[$page->ID])) {
@@ -813,7 +813,8 @@ class ESIG_SAD_Admin {
             $more_actions .= '| <a title="Edit this document" href="admin.php?post_type=esign&page=esign-edit-document&document_id=' . $doc->document_id . '">' . __('Edit', 'esig') . '</a>';
         }
         if ($page_id) {
-            $url = get_permalink($page_id);
+            
+            $url = _get_page_link($page_id);
 
             if ($doc->document_status == "trash") {
                 return $more_actions;

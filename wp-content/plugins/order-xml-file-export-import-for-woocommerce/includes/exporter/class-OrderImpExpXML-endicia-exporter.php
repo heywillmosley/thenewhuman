@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 class OrderImpExpXML_EndiciaExporter {
 
-    public function generate_xml_endicia($order_ids){
+    public function generate_xml_endicia($order_ids,$filename=''){
         
         include_once( 'class-OrderImpExpXML-order-exp-xml-general.php' );
         $export = new OrderImpExpXML_OrderExpXMLGeneral($order_ids);

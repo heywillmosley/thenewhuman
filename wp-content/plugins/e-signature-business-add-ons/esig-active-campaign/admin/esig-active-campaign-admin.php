@@ -330,7 +330,7 @@ if (!class_exists('ESIG_ACTIVE_CAMPAIGN_Admin')) :
             if (!self::is_capaign_api_set()) {
                 $file_name = plugins_url('assets\images/ac_logo.png', __FILE__);
                  $content = '<div>';
-                $content .= sprintf(__('<p align="center"><img src="%s"></p><p>You need to add your ActiveCampaign API credentials to use this feature. You can do this under the <a href="admin.php?page=esign-misc-general">Misc settings</a> tab. <br><br>Send newsletters and automate your email marketing with ActiveCampaign.</p> <p align="center" ><a href="http://www.activecampaign.com/?_r=U7521972" target="_blank" class="esig-red-btn"><span>Get a free account</span></a></p>', 'esig'), $file_name);
+                $content .= sprintf(__('<p align="left"><img src="%s" style="max-width:250px;"></p><p>You need to add your ActiveCampaign API credentials to use this feature. You can do this under the <a href="admin.php?page=esign-misc-general">Misc settings</a> tab. <br><br>Send newsletters and automate your email marketing with ActiveCampaign.</p> <p align="center" ><a href="http://www.activecampaign.com/?_r=U7521972" target="_blank" class="esig-red-btn"><span>Get a free account</span></a></p>', 'esig'), $file_name);
                 
             } else {
 

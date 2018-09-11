@@ -54,19 +54,67 @@ if (!class_exists('Esig_AT_Settings')):
             if (has_shortcode($document_content, 'esigtempdropdown')) {
                 $document_content = str_replace("esigtempdropdown", "esigdropdown", $document_content);
             }
+             if (has_shortcode($document_content, 'esigtempfile')) {
+                $document_content = str_replace("esigtempfile", "esigfile", $document_content);
+            }
+             if (has_shortcode($document_content, 'esigtemptodaydate')) {
+                $document_content = str_replace("esigtemptodaydate", "esigtodaydate", $document_content);
+            }
             return WP_E_Sig()->signature->encrypt(ENCRYPTION_KEY, $document_content);
         }
-        
-        public static function getTempSigner($docId){
+
+        public static function replace_shortcode_content($document_content) {
+
+            if (has_shortcode($document_content, 'esigtextfield')) {
+
+                $document_content = str_replace("esigtextfield", "esigtemptextfield", $document_content);
+            }
+            if (has_shortcode($document_content, 'esigtextarea')) {
+
+                $document_content = str_replace("esigtextarea", "esigtemptextarea", $document_content);
+            }
+            if (has_shortcode($document_content, 'esigdatepicker')) {
+
+                $document_content = str_replace("esigdatepicker", "esigtempdatepicker", $document_content);
+            }
+            if (has_shortcode($document_content, 'esigradio')) {
+                $document_content = str_replace("esigradio", "esigtempradio", $document_content);
+            }
+            if (has_shortcode($document_content, 'esigcheckbox')) {
+                $document_content = str_replace("esigcheckbox", "esigtempcheckbox", $document_content);
+            }
+
+            if (has_shortcode($document_content, 'esigdropdown')) {
+                $document_content = str_replace("esigdropdown", "esigtempdropdown", $document_content);
+            }
+
+            if (has_shortcode($document_content, 'esigtodaydate')) {
+                $document_content = str_replace("esigtodaydate", "esigtemptodaydate", $document_content);
+            }
             
-            $noOfSigner= WP_E_Sig()->meta->get($docId,'esig-temp-signer-');
-            if($noOfSigner){
+            if (has_shortcode($document_content, 'esigfile')) {
+                $document_content = str_replace("esigfile", "esigtempfile", $document_content);
+            }
+            
+            return $document_content;
+        }
+
+        public static function getTempSigner($docId) {
+
+            $noOfSigner = WP_E_Sig()->meta->get($docId, 'esig-temp-signer-');
+            if ($noOfSigner) {
                 return $noOfSigner;
             }
-            return WP_E_Sig()->setting->get_generic('esig-temp-signer-'.$docId);
+            return WP_E_Sig()->setting->get_generic('esig-temp-signer-' . $docId);
         }
 
     }
+
+    
+
+    
+
+    
 
     
 

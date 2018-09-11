@@ -4,8 +4,8 @@ License: Apache 2.0
 Donate link: http://www.zendesk.com/
 Tags: zendesk, support, customer support, help desk, helpdesk, IT, customer, admin, bug, ticket, widget, comments
 Requires at least: 2.9.2
-Tested up to: 4.4
-Stable tag: 1.7.0
+Tested up to: 4.9.7
+Stable tag: 1.7.2
 
 Bring the helpdesk into your blog
 

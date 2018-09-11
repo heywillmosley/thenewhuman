@@ -481,8 +481,9 @@ final class FLThemeBuilderFieldConnections {
 	 * @param string $content
 	 * @return string
 	 */
-	static public function parse_shortcodes( $content ) {
-		$pattern = get_shortcode_regex( array( 'wpbb' ) );
+	static public function parse_shortcodes( $content, $tags = null ) {
+		$tags = $tags ? $tags : array( 'wpbb' );
+		$pattern = get_shortcode_regex( $tags );
 		$content = preg_replace_callback( "/$pattern/", 'do_shortcode_tag', $content );
 		return $content;
 	}
@@ -585,7 +586,7 @@ final class FLThemeBuilderFieldConnections {
 			}
 		}
 
-		return true;
+		return ! is_admin();
 	}
 }
 

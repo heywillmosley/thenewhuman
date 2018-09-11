@@ -19,15 +19,21 @@ $social_skype_link=$Social_page['social_skype_link'];
 $social_instagram_link=$Social_page['social_instagram_link'];
 
 $login_page = unserialize(get_option('Admin_custome_login_login'));
+if(isset($login_page['login_form_float'])){
+	$login_form_float = $login_page['login_form_float'];
+}else{
+	$login_form_float = "center";
+}
+
 if($social_icon_size=="large") { ?>
 	<style>
 		.divsocial{
-			text-align: <?php echo $login_page['login_form_float']; ?>;
+			text-align: <?php echo $login_form_float; ?>;
 			padding:20px;
-			<?php if($login_page['login_form_float'] == "left") {?>
+			<?php if($login_form_float == "left") {?>
 					padding-left : 0px;
 			<?php }?>
-			<?php if($login_page['login_form_float'] == "right") {?>
+			<?php if($login_form_float == "right") {?>
 				padding-right: 0px;
 				padding-top:42px;
 			<?php }?>
@@ -100,12 +106,12 @@ if($social_icon_size=="large") { ?>
 <?php } else if($social_icon_size=="mediam")  { ?>
 	<style>
 		.divsocial{
-			text-align: <?php echo $login_page['login_form_float']; ?>;
+			text-align: <?php echo $login_form_float; ?>;
 			padding:20px;
-			<?php if($login_page['login_form_float'] == "left") {?>
+			<?php if($login_form_float == "left") {?>
 					padding-left : 0px;
 			<?php }?>
-			<?php if($login_page['login_form_float'] == "right") {?>
+			<?php if($login_form_float == "right") {?>
 				padding-right: 0px;
 				padding-top:42px;
 			<?php }?>
@@ -179,12 +185,12 @@ if($social_icon_size=="large") { ?>
 <?php } else  { ?>
 	<style>
 		.divsocial{
-			text-align: <?php echo $login_page['login_form_float']; ?>;
+			text-align: <?php echo $login_form_float; ?>;
 			padding:20px;
-			<?php if($login_page['login_form_float'] == "left") {?>
+			<?php if($login_form_float == "left") {?>
 					padding-left : 0px;
 			<?php }?>
-			<?php if($login_page['login_form_float'] == "right") {?>
+			<?php if($login_form_float == "right") {?>
 				padding-right: 0px;
 				padding-top:42px;
 			<?php }?>

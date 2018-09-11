@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <title>Documentation - FooEvents for WooCommerce</title>
+
+    <!-- Styles -->
+    <link href="assets/css/theDocs.all.min.css" rel="stylesheet">
+    <link href="assets/css/theDocs.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:100,300,400,500%7CLato:300,400' rel='stylesheet' type='text/css'>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="assets/img/favicon.png">
+  </head>
+
+  <body>
+
+    <header class="site-header sticky">
+
+      <!-- Top navbar & branding -->
+      <nav class="navbar navbar-default">
+        <div class="container">
+
+          <!-- Toggle buttons and brand -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="true" aria-controls="navbar">
+              <span class="glyphicon glyphicon-option-vertical"></span>
+            </button>
+
+            <button type="button" class="navbar-toggle for-sidebar" data-toggle="offcanvas">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#"><img src="assets/img/logo.png" alt="logo"></a>
+          </div>
+          <!-- END Toggle buttons and brand -->
+
+          <!-- Top navbar -->
+          <div id="navbar" class="navbar-collapse collapse" aria-expanded="true" role="banner">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="#">Documentation</a></li>
+              <li><a href="https://www.fooevents.com/pricing/" target="_blank">Plugins</a></li>
+              <li><a href="https://www.fooevents.com/frequently-asked-questions/" target="_blank">FAQ</a></li>
+              <li><a href="https://www.fooevents.com/support/" target="_blank">Support</a></li> 
+            </ul>
+          </div>
+          <!-- END Top navbar -->
+
+        </div>
+      </nav>
+      <!-- END Top navbar & branding -->
+      
+    </header>
+
+
+    <main class="container">
+      <div class="row">
+
+        <!-- Sidebar -->
+        <aside class="col-md-4 col-sm-4 sidebar">
+
+          <ul class="sidenav dropable sticky"> 
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#installing-wordpress">Installing WordPress</a></li>
+            <li><a href="#installing-woocommerce">Installing WooCommerce</a></li>
+            <li><a href="#installing-fooevents">Installing FooEvents</a></li>
+            <li><a href="#setup-an-event-product">Setup an Event Product</a></li>
+            <li><a href="#global-settings">Global settings</a></li> 
+            <li><a href="#barcode-and-theme-directories">Barcode and theme directories</a></li>
+            <li><a href="#managing-tickets">Modifying theme templates</a></li>
+            <li><a href="#add-theme">Adding a purchased FooEvents HTML ticket theme</a></li>
+            <li><a href="#sending-ticket-preview">Sending an HTML ticket preview</a></li>
+            <li><a href="#modify-theme-template">Modifying a ticket theme template</a></li>
+            <li><a href="#manually-create-tickets">Manually create tickets</a></li>
+             <li><a href="#barcodes">Barcodes</a></li>
+            <li><a href="#using-the-event-check-ins-pro-auto-check-in">Using the Event Check-ins Pro Auto check-in</a></li>
+            <li><a href="#customizing-the-event-check-ins-pro-apps-branding">Customizing the Event Check-ins Pro app’s branding</a></li>
+            <li><a href="#using-the-fooevents-check-ins-app">Using the FooEvents Check-ins app</a></li>
+            <li><a href="#download-csv-attendees-list">Download CSV attendees list</a></li>
+            <li><a href="#modifying-the-ticket-template">Modifying the ticket template</a></li> 
+            <li><a href="#how-fooevents-stores-data">How FooEvents stores data</a></li>  
+            <li><a href="#how-to-remove-data">How to remove data</a></li>  
+            <li><a href="#user-roles-capabilities-and-permissions">User roles, capabilities and permissions</a></li>  
+
+          </ul> 
+        </aside>
+        <!-- END Sidebar -->
+
+
+        <!-- Main content -->
+        <article class="col-md-8 col-sm-8 main-content" role="main"> 
+
+          <header> 
+            <h2 id="introduction">FooEvents for WooCommerce</h2>
+            <p><i>Updated 30 May 2018</i></p>  
+            <p>FooEvents adds seamless event and ticketing functionality to WooCommerce. The plugin adds additional event specific fields and options to the existing WooCommerce products which allows you to create branded event tickets that can be sold on your own web-site.</p> 
+          </header>
+
+          <section>
+            <h2 id="installing-wordpress">Installing WordPress</h2>
+            
+              <h3>What is WordPress?</h3>
+              <p>WordPress is open source software you can use to create a beautiful website, blog, or app. WordPress is a well trusted solution and powers 28% of the worlds websites, from hobby blogs to the biggest news sites online. Extend WordPress with over 45,000 plugins to help your website meet your needs. Add an online store, galleries, mailing lists, forums, analytics, and <a href="https://wordpress.org/plugins/">much more</a>.</p>
+              <h3>Do I need to use WordPress?</h3>
+              <p>Yes! FooEvents is a WordPress extension and adds event and ticketing functionality to WordPress.</p>
+              <h3>WordPress Installation Instructions</h3>
+              <p>If you do not already have a working WordPress installation you will first need to install WordPress on your web server: <a href="https://codex.wordpress.org/Installing_WordPress" target="">https://codex.wordpress.org/Installing_WordPress</a></p>
+              <h3>What else do I need?</h3>
+              <p>You will also need to <a href="https://www.fooevents.com/documentation/installing-woocommerce/">install WooCommerce</a> which is an ecommerce system designed for WordPress. You can find out more about it <a href="https://www.fooevents.com/documentation/installing-woocommerce/">here</a>.</p>
+
+          </section>
+
+          <section>
+            <h2 id="installing-woocommerce">Installing Woocommerce</h2>
+            
+            <h3>What is WooCommerce?</h3>
+            WooCommerce is a <a href="https://www.fooevents.com/documentation/installing-wordpress/">WordPress</a> plugin. FooEvents is an extension plugin that adds additional event and ticketing functionality to WooCommerce.
+            <h3>Why do I need to install WooCommerce?</h3>
+            <span style="font-weight: 400;">FooEvents extends the ecommerce functionality provided by WooCommerce and adds ticketing and event capabilities. Before installing FooEvents you must FIRST install</span><a href="http://www.woothemes.com/woocommerce/"> <span style="font-weight: 400;">WooCommerce</span></a>
+            <h3>WooCommerce Installation Instructions</h3>
+            <span style="font-weight: 400;">If you are new to WooCommerce it is recommended that you go through the WooCommerce documentation: </span><a href="http://docs.woothemes.com/documentation/plugins/woocommerce/getting-started/">http://docs.woothemes.com/documentation/plugins/woocommerce/getting-started/</a>
+
+          </section>
+
+          <section>
+            <h2 id="installing-fooevents">Installing FooEvents</h2>
+            
+<h3>Requirements</h3>
+<ol>
+  <li><a href="https://www.fooevents.com/documentation/installing-wordpress/">WordPress Website</a></li>
+  <li><a href="https://www.fooevents.com/documentation/installing-woocommerce/">WooCommerce plugin installed</a></li>
+  <li>Valid FooEvents license</li>
+  <li><a href="https://www.fooevents.com/my-account/downloads/">FooEvents Plugin files</a></li>
+</ol>
+<h3>Installation Steps</h3>
+<ol>
+  <li>Ensure that WordPress and WooCommerce are installed (see above requirements)</li>
+  <li>Download the FooEvents for WooCommerce plugin (From <a href="https://www.fooevents.com/my-account/downloads/">FooEvents.com</a> or <a href="https://codecanyon.net/downloads">CodeCanyon</a>)</li>
+  <li>Login to your WordPress Admin Area</li>
+  <li>Upload the FooEvents plugin. There are two ways you could upload the plugin files:
+<ol>
+  <li>Go to Plugins &gt; Add New in the main menu. Upload the FooEvents plugin zip file</li>
+  <li>Using an FTP client, upload the plugin zip file to the following location on your web server: /wp-content/plugins/</li>
+</ol>
+</li>
+  <li>Click on ‘Plugins’ in the main menu</li>
+  <li>Find the FooEvents for WooCommerce plugin and activate it</li>
+  <li>Congratulations! The plugin is now installed and ready to be configured for your event</li>
+</ol>
+
+          </section>
+
+          <section>
+            <h2 id="setup-an-event-product">Setup an Event Product</h2>
+            
+<h3>Overview</h3>
+FooEvents essentially extends WooCommerce products and add event and ticketing functionality. FooEvents adds an event tab to the WooCommerce product settings. The event tab provides various fields that can be used to configure your event and ticket.
+<h3>Instructions</h3>
+<ol>
+  <li>To create and event, go to Products &gt; Add Product in the main menu</li>
+  <li>Complete the title, body, description, tags, categories, featured image and gallery as needed</li>
+  <li>Go to the Product Data tab set and select ‘Events’</li>
+  <li>To activate event functionality set the ‘Is this product an event?’ dropdown to ‘yes’. Doing so will reveal additional fields that can be used to create your event</li>
+  <li>Complete the event tab fields by entering your events information</li>
+</ol>
+<h3>Event settings</h3>
+<table class="doctable" width="100%">
+<tbody>
+<tr>
+<td><strong>Date</strong></td>
+<td>The date that the event is scheduled to take place</td>
+</tr>
+<tr>
+<td><strong>Start time</strong></td>
+<td>The time that the event is scheduled to start</td>
+</tr>
+<tr>
+<td><strong>End time</strong></td>
+<td>The time that the event is scheduled to end</td>
+</tr>
+<tr>
+<td><strong>Venue</strong></td>
+<td>The venue where the event will be held</td>
+</tr>
+<tr>
+<td><strong>GPS Coordinates</strong></td>
+<td>The venue’s GPS coordinates</td>
+</tr>
+<tr>
+<td><strong>Google Maps Coordinates</strong></td>
+<td>The GPS coordinates used to determine the pin position on the Google map that is displayed on the event page. NB: Please ensure you use the following GPS format:
+<ul>
+  <li>Example: -26.137600, 28.008141</li>
+  <li>If necessary you can convert to this format using the following tool: <a href="http://www.gps-coordinates.net/gps-coordinates-converter">http://www.gps-coordinates.net/gps-coordinates-converter</a></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><strong>Directions</strong></td>
+<td>Text directions explaining how to find the venue</td>
+</tr>
+<tr>
+<td><strong>Phone</strong></td>
+<td>Event organizer’s landline or mobile phone number</td>
+</tr>
+<tr>
+<td><strong>Email</strong></td>
+<td>Event organizer’s email address</td>
+</tr>
+<tr>
+<td><strong>Ticket logo</strong></td>
+<td>The logo which will be displayed on the ticket in JPG or PNG format
+<ul>
+  <li>Minimum width - 200px</li>
+  <li>Minimum height - N/A</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td><strong>Ticket border color</strong></td>
+<td>The color of the ticket border</td>
+</tr>
+<tr>
+<td><strong>Ticket buttons colour</strong></td>
+<td>The color of the ticket button</td>
+</tr>
+<tr>
+<td><strong>Ticket button text colour</strong></td>
+<td>The color of the ticket button’s text</td>
+</tr>
+<tr>
+<td><strong>Include purchaser / attendee details on ticket?</strong></td>
+<td>Selecting this will display the purchaser or attendee details on the ticket</td>
+</tr>
+<tr>
+<td><strong>Display 'Add to calendar' on ticket?</strong></td>
+<td>Selecting this will display an 'Add to calendar' button on the ticket. Clicking this will generate a .ics file.</td>
+</tr>
+<tr>
+<td><strong>Display date and time on ticket?</strong></td>
+<td>Selecting this will display the time and date of the event on the ticket</td>
+</tr>
+<tr>
+<td><strong>Display barcode on ticket?</strong></td>
+<td>Selecting this will display the barcode on the ticket</td>
+</tr>
+<tr>
+<td><strong>Display price on ticket?</strong></td>
+<td>Selecting this will display the ticket price on the ticket</td>
+</tr>
+<tr>
+<td><strong>Capture individual attendee details?</strong></td>
+<td>Selecting this will add attendee capture fields on the checkout screen</td>
+</tr>
+<tr>
+<td><strong>Capture attendee telephone?</strong></td>
+<td>Selecting this will add a telephone number field to the attendee capture fields on the checkout screen</td>
+</tr>
+<tr>
+<td><strong>Capture attendee company?</strong></td>
+<td>Selecting this will add a company field to the attendee capture fields on the checkout screen</td>
+</tr>
+<tr>
+<td><strong>Capture attendee designation?</strong></td>
+<td>Selecting this will add a designation field to the attendee capture fields on the checkout screen</td>
+</tr>
+<tr>
+<td><strong>Email tickets?</strong></td>
+<td>Selecting this will email the tickets to the attendee once the order has been completed
+NB: Once you have completed these fields please make sure that you save your post before proceeding!</td>
+</tr>
+</tbody>
+</table>
+<h3></h3>
+<h3>Ticket types and variations</h3>
+You can create various ticket types using WooCommerce's attributes and variations functionality. To do this please follow these instructions:
+<ol>
+  <li>Go to the ‘Attributes’ tab in the Product Data panel</li>
+  <li>Create a new attribute called ‘Ticket Type’. It’s very important that the attribute is called this as this is the name that is used to reflect the ticket type on the actual ticket</li>
+  <li>Add the name of each ticket type under values and separate them with the pipe symbol ‘|’ e.g. VIP | General | Early Bird</li>
+  <li>Make sure that you select ‘Visible on the product page’ and ‘Used for variations’</li>
+  <li>Save the attributes</li>
+  <li>Click on the ‘Attributes’ tab in the Product Data panel</li>
+  <li>Add a variation for each ticket type and specify the relevant ticket criteria (price, in stock etc.)</li>
+  <li>Make sure that you select ‘Enabled’</li>
+  <li>We recommend that you select ‘Virtual’ if you do not want the shipping information to be displayed on the checkout screen</li>
+  <li>Save/update the post once all variations have been added</li>
+  <li>The ticket type variations will now display as ticket options when purchasing a ticket</li>
+</ol>
+Once your product is published it will appear in your WooCommerce store and users will be able to purchase tickets for your event
+
+          </section>
+
+          <section>
+            <h2 id="glocal-settings">Global settings</h2>
+            
+FooEvents provides various global settings that can effect the behavior of your events and tickets. You can also customize the appearance of the FooEvents Pro <a href="https://www.fooevents.com/apps/">app</a> via these settings.
+<ol>
+  <li>Go to WooCommerce -&gt; Settings</li>
+  <li>Click on the 'Events' tab</li>
+  <li>Change the default event settings as required</li>
+  <li>Save changes</li>
+</ol>
+<h3>Event Settings</h3>
+<table width="100%" class="doctable">
+<tbody>
+<tr>
+<td><strong>Global ticket border</strong></td>
+<td>Sets the color of the border around the ticket</td>
+</tr>
+<tr>
+<td><strong>Global ticket button</strong></td>
+<td>Sets the color of the button on the ticket</td>
+</tr>
+<tr>
+<td><strong>Global ticket button text</strong></td>
+<td>Sets the color of the button text on the ticket</td>
+</tr>
+<tr>
+<td><strong>Global ticket logo</strong></td>
+<td>URL to ticket logo file</td>
+</tr>
+<tr>
+<td><strong>Change add to cart text</strong></td>
+<td>Changes "Add to cart" to "Book ticket" for event products</td>
+</tr>
+<tr>
+<td><strong>Hide event details tab</strong></td>
+<td>Hides the event details tab on the product page</td>
+</tr>
+<tr>
+<td><strong>Hide unpaid tickets in app</strong></td>
+<td>Hides the unpaid tickets in the iOS and Android apps</td>
+</tr>
+<tr>
+<td><strong>Email tickets to attendees</strong></td>
+<td>Sends tickets to attendees rather than the purchaser. Make sure "Capture individual attendee details?" is enabled in your products</td>
+</tr>
+<tr>
+<td><strong>Hide unpaid tickets</strong></td>
+<td>Hides unpaid tickets in ticket admin</td>
+</tr>
+<tr>
+<td><strong>Google Maps API key</strong></td>
+<td>Enable Google Maps on product page.</td>
+</tr>
+</tbody>
+</table>
+<h3></h3>
+<h3>Event Settings</h3>
+The following settings can be used to customize the appearance of the FooEvents Check-ins Pro app once you have logged in. You will find more information on the pro app and a download link here: <a href="http://www.fooevents.com/apps/pro">http://www.fooevents.com/apps/pro</a>
+<table width="100%" class="doctable">
+<tbody>
+<tr>
+<td><strong>App logo</strong></td>
+<td>URL to the image that will display on the app's sign-in screen. A PNG image with transparency and a width of around 940px is recommended</td>
+</tr>
+<tr>
+<td><strong>Color</strong></td>
+<td>Used for the app's top navigation bar and sign-in button</td>
+</tr>
+<tr>
+<td><strong>Text color</strong></td>
+<td>Used for the text in the app's top navigation bar and sign-in button</td>
+</tr>
+<tr>
+<td><strong>Background color</strong></td>
+<td>Used for the sign-in screen's background</td>
+</tr>
+<tr>
+<td><strong>Sign-in screen text color</strong></td>
+<td>Used for the text beneath the logo on the app's sign-in screen</td>
+</tr>
+</tbody>
+</table>
+
+          </section>
+
+          <section>
+
+            <h2 id="barcode-and-theme-directories">Barcode and ticket theme directories</h2>
+            FooEvents stores barcodes and ticket theme  within the /wp-content/uploads/fooevents directory. 
+
+          </section>
+
+
+
+          <section>
+            <h2 id="modifying-theme-templates">Modifying ticket theme templates</h2>
+            
+            <ol>
+              <li>In your WordPress theme create the following directory structure: fooevents/templates</li>
+              <li>Copy the template files that you would like to modify from the wp-content/plugins/fooevents/templates directory to the directory that you created in Step 1</li>
+              <li>Modify the template files as required</li>
+            </ol>
+
+          </section>          
+
+          <section>
+
+            <h2 id="add-theme">Adding a purchased FooEvents HTML ticket theme</h2>
+            <ol>
+              <li>Navigate to Tickets > Tickets Themes in your WordPress Admin Area</li>
+              <li>Click the 'Browse' button and navigate to the .zip theme folder that you downloaded from the FooEvents website</li>
+              <li>Click the 'Upload Ticket Theme' button</li>
+              <li>The themes you purchased will now be available for use in your event products</li>
+            </ol>
+
+
+          </section>
+
+          <section>
+
+            <h2 id="sending-ticket-preview">Sending an HTML ticket preview</h2>
+            <ol>
+              <li>Navigate to Tickets > Tickets Themes in your WordPress Admin Area</li>
+              <li>Click the theme that you wish to preview. The default FooEvents ticket theme is named “Default”</li>
+              <li>In the text input box, enter the email address where you would like to send the preview and click the “Send Ticket Preview” button</li>
+              <li>The ticket will then be sent to the email address you specified</li>
+              <li>Please Note: The ticket data is pre-populated test data and it is not from one of your valid events. Tickets sent via the preview option will not scan using the 'FooEvents Check-ins' app, nor will they match any of your generated tickets</li>
+            </ol>
+
+          </section>
+
+          <section>
+
+            <h2 id="modify-theme-template">Modifying a ticket theme template</h2>
+<ol>
+<li>Copy the theme you wish to overwrite in wp-content/uploads/fooevents/themes/[FOOEVENTS-THEME-NAME] TO wp-content/themes/[WORDPRESS-THEME]/[FOOEVENTS-THEME-NAME]</li>
+<li>Make changes as required to the theme that you copied across</li>
+</ol>
+
+          </section>  
+
+ 
+
+
+
+
+          <section>
+            <h2 id="managing-tickets">Managing tickets</h2>
+            
+<span style="font-weight: 400;">Every ticket that is attached to a completed WooCommerce order will appear in the ‘Tickets’ admin menu.</span>
+<h3><span style="font-weight: 400;">To resend a ticket</span></h3>
+<ol>
+  <li style="font-weight: 400;"><span style="font-weight: 400;">Open the ticket and specify the email address that the ticket should be resent to in the resend option box</span></li>
+  <li style="font-weight: 400;"><span style="font-weight: 400;">Click the resend button</span></li>
+</ol>
+<h3><span style="font-weight: 400;">Tickets statuses</span></h3>
+Tickets will have one of the following ticket statuses:
+<ul>
+  <li style="font-weight: 400;">“Not checked in”</li>
+  <li style="font-weight: 400;"><span style="font-weight: 400;">“Checked in”</span></li>
+  <li style="font-weight: 400;"><span style="font-weight: 400;">“Canceled”</span></li>
+</ul>
+You can check someone in by changing their status in the Ticket Status box to “Checked in”. The “Canceled” status can also be used to mark tickets that are no longer valid.
+
+          </section>
+
+          <section>
+            <h2 id="manually-create-tickets">Manually creating tickets</h2>
+            
+There are two ways to manually create tickets:
+
+<h3>1. From the WordPress Admin Area</h3>
+<ol>
+  <li>Click on the “Add new” button which you will find under "Tickets"</li>
+  <li>Select the event name for the specified event</li>
+  <li>Fill out the ticket form and click the “Publish” button to create the ticket</li>
+  <li>Please Note: Tickets are NOT automatically sent out after creating the ticket. If you would like to email the ticket to the attendee, click on the 'Resend'”' button on the ticket information screen.</li>
+</ol>
+
+<h3>2. From your website</h3>
+<ol>
+  <li>Complete the purchase process on the front-end of your website</li>
+  <li>Once you reach the payment screen, DO NOT make payment, instead go to the WooCommerce orders screen and mark the order as completed</li>
+  <li>Tickets will be sent out using this method depending on your events settings</li>
+</ol>
+
+          </section>
+
+          <section>
+            <h2 id="barcodes">Barcodes</h2>
+            
+<h3>What is a barcode?</h3>
+A barcode is a machine-readable code in the form of numbers and a pattern of parallel lines of varying widths, printed on a commodity and used especially for stock control.
+<h3>How does FooEvents use barcodes?</h3>
+Every ticket that is generated contains a unique barcode that is rendered using the barcode code 128 standard. If you own a scanner that can read ordinary 1D barcodes then you have the option of scanning tickets to find them quickly. We created the <a href="https://www.fooevents.com/fooevents-express-check-in/">FooEvents Attendee Check-ins plugin</a> to provide a better experience when using a 1D barcode scanner. The 'FooEvents Check-ins' <a href="https://www.fooevents.com/apps/">apps</a> can also be used to check-in people at events on your tablet or smartphone device.
+
+          </section>
+
+          <section>
+            <h2 id="using-the-event-check-ins-pro-auto-check-in">Using the Event Check-ins Pro Auto check-in</h2>
+            
+If you’ve purchased the unbranded pro version of the FooEvents Check-ins app, you can make use of the auto check-in functionality by enabling it in the app’s settings panel. Auto check-in significantly speeds up the check-in process by checking in attendees automatically when their ticket is scanned instead of first opening the ticket and requiring you to tap on the ‘Confirm’ button to check in that attendee. If the ticket is unpaid, canceled or already checked in, you will be notified as you scan the ticket. You can still tap to open the ticket if you need to see its details.<i> </i>
+
+          </section>
+
+          <section>
+            <h2 id="customizing-the-event-check-ins-pro-apps-branding">Customizing the Event Check-ins Pro app’s branding</h2>
+            
+If you’ve purchased the unbranded pro version of the FooEvents Check-ins app, you can customize the look of it to suit your brand. By changing the settings of your FooEvents for WooCommerce plugin, you are able to specify various colors and provide a URL to a logo that should display in the app.
+
+You can upload your logo in the WordPress Media library and then insert the generated URL to the image file in the settings panel input for your logo. A PNG image with transparency and a width of around 940px is recommended.
+
+You are able to change the colors of the following:
+<ul>
+  <li>the top navigation bar and sign-in button</li>
+  <li>the text that appears in the top navigation bar and sign-in button</li>
+  <li>the sign-in screen’s background</li>
+  <li>the text that appears on the sign-in screen</li>
+</ul>
+When opening the pro app for the first time, it will display the default coloring and logo, but once you sign-in successfully, the interface will update with all the specified color values and uploaded logo. These values are stored on the device and will show instead of the default coloring and logo each time you open the app. The values are updated upon each successful sign-in, so if you need to make a change to any of the colors or the logo, you can just save the new settings in the FooEvents for WooCommerce plugin, sign out of the app and sign back in to get the updated values stored on the device.
+
+          </section>
+
+          <section>
+            <h2 id="using-the-fooevents-check-ins-app">Using the FooEvents Check-ins app</h2>
+            
+<ol>
+  <li style="font-weight: 400;"><span style="font-weight: 400;">Download the 'FooEvents Check-ins' app from either the Play Store (Android) or iTunes (iOS) </span><a href="http://www.fooevents.com/apps/"><span style="font-weight: 400;">http://www.fooevents.com/apps/</span></a></li>
+  <li style="font-weight: 400;"><span style="font-weight: 400;">Enter the following details on the login screen: </span>
+<ol>
+  <li style="font-weight: 400;"><span style="font-weight: 400;">URL - Your website URL (e.g. www.YOURWEBSITE.com)</span></li>
+  <li style="font-weight: 400;"><span style="font-weight: 400;">Username &amp; Password</span><span style="font-weight: 400;"> - The access details of one of your WordPress users (e.g. 'admin')</span></li>
+</ol>
+</li>
+</ol>
+<b>Please Note: Access to the app is restricted to the following user roles: 'administrator', 'editor', 'author', 'contributor' and 'shop_manager'.</b>
+
+          </section>
+
+          <section>
+            <h2 id="download-csv-attendees-list">Download CSV attendees list</h2>
+            
+            Click on the button labelled "Download CSV of Attendee" which will appear when you edit your product in the “Event” settings tab in your WordPress/WooCommerce Admin Area. This will generate a list of attendees who have been allocated tickets for that particular event.
+
+          </section>
+
+          <section>
+            <h2 id="modifying-the-ticket-template">Modifying the ticket template</h2>
+            
+<ol>
+  <li>In your WordPress theme create the following directory structure: fooevents/templates/email</li>
+  <li>Copy the template files in the wp-content/plugins/fooevents/templates/email directory to the directory that you created in Step 1</li>
+  <li>Modify the template files as required</li>
+</ol>
+
+          </section> 
+          
+        <section>
+            <h2 id="how-fooevents-stores-data">How FooEvents stores data</h2>
+            
+            <h3>Database</h3>
+            FooEvents stores basic plugin configurations within the WordPress database using standard WordPress methods. All settings and configurations are stored within the wp_options table. 
+            FooEvents extends WooCommerce product functionality to create event products. This is done by adding certain meta to products using standard WordPress and WooCommerce methods. All event meta is stored within the wp_postmeta table where the post_id matches the product ID.
+            <br /><br />
+            On checkout, attendee, ticket and customer data is stored as meta within the WooCommerce order custom post type in the wp_postmeta table. This data is stored where the meta_key = "WooCommerceEventsOrderTickets" and where the post_id matches the custom post type order ID.
+            <br /><br />
+            FooEvents uses a custom post type to create event tickets. This custom post type is named "event_magic_tickets" and is stored in the wp_posts table. Meta is added to the ticket custom post type which contains ticket details and is stored within the wp_postmeta table where the post_id matches the "event_magic_ticket" ID.
+            
+            <h3>ICS files</h3>
+            When the "Display 'Add to calendar' on ticket?" option is enabled in product event settings, this adds functionality that end users can download .ics files to add events to their calendars. This file is generated as soon as the end user clicks the "Add to calendar" button on their ticket and is not automatically updated remotely. The .ics files contain basic event information such as event name, date and time.
+            
+            <h3>CSV export files</h3>
+            FooEvents contains functionality that allows the event organizer to export all event attendees and their details. This export feature is intended to be used as a backup in case the website administrator doesn't have access to attendee check-in functionality, as found in the <a href="https://www.fooevents.com/fooevents-express-check-in/">FooEvents Express Check-in</a> plugin and <a href="https://www.fooevents.com/apps/">FooEvents Check-ins app</a> for example. Information that is stored in this CSV export includes attendee and purchaser details, completed custom fields and selected variations and billing information (e.g. address, ticket check-in statuses). 
+            <br/>
+            <b>NB: The CSV export file is portable and printable and therefore appropriate care should be taken to keep this file safe by the site administrator and event staff.</b>
+            
+            <h3>Mobile Apps</h3>
+            The <a href="https://www.fooevents.com/apps/">FooEvents Check-ins app</a> uses the built-in WordPress XML-RPC to communicate with FooEvents plugins in order to retrieve event and attendee data as well as process ticket check-ins. Data that is transferred between the plugins and app includes: Attendee and purchaser data, event data, ticket check-in status. 
+            <br /><br />
+            The app has offline features and therefore caches retrieved data on the device. The cached file is stored using standard iOS and Android development practices. 
+            
+            <h3>Barcodes</h3>
+            FooEvents generates barcodes based on the unique ticket ID generated by the FooEvents plugin. Barcodes are used for ticket check-ins. The barcodes are stored in the 'wp-content/uploads/fooevents/barcodes' directory. The barcode filename is generated using the following formats: 
+            <ul>
+                <li>[unique-ticket-hash]-[unique-ticket-ID].jpg</li>
+                <li>[unique-ticket-hash]-[unique-ticket-ID].png </li>
+            </ul>
+            Each ticket is assigned a unique ticket hash, ticket ID and ticket generation time. Barcodes are accessible via HTTP. 
+            
+            <h3>PDF Tickets</h3>
+            When the FooEvents PDF Tickets plugin is active and enabled, PDF copies of tickets are generated and stored in the 'wp-content/uploads/fooevents/pdftickets' directory. 
+            <br /><br />
+            Single PDF tickets are named using the following format: 
+            <ul>
+                <li>[unique-ticket-hash]-[unique-ticket-ID].pdf</li>
+            </ul>
+            Multiple PDF tickets are named using the following format: 
+            <ul>
+                <li>[first-ticket-unique-ticket-hash]-[first-ticket-unique-ticket-ID]-[last-ticket-unique-ticket-hash]-[last-ticket-unique-ticket-ID].pdf</li>
+            </ul>
+            PDF tickets contain purchaser and attendee data, event data and end user selected variations. PDF tickets are accessible via HTTP. 
+            
+            <h3>Emails</h3>
+            When the product event ticket option "Email tickets?" is enabled, the tickets are sent to either the attendee or purchaser depending on whether the "Email attendee rather than purchaser?" option is enabled or disabled. Tickets contain purchaser and attendee data, event data and end user selected variations. Once a ticket has been sent out, it will be stored indefinitely on the website administrators email server depending on the email address/es that were completed at checkout. 
+            
+        </section>     
+          
+        <section>
+            <h2 id="how-to-remove-data">How to remove data</h2>
+            
+            <h3>Removing tickets and orders</h3>
+            To remove tickets:
+            <ol>
+                <li>Navigate to the "Ticket" admin section in your WordPress Admin Area </li>
+                <li>Highlight the ticket/s that should be deleted </li>
+                <li>Select "Move to bin" in bulk actions and click "Apply"</li>
+                <li>Navigate to the ticket "Bin"</li>
+                <li>Highlight the ticket/s that should be deleted</li>
+                <li>Select "Delete permanently" in bulk actions and click "Apply"</li>
+            </ol>
+            
+            To remove orders:
+            <ol>
+                <li>Navigate to 'WooCommerce' -> 'Orders'</li>
+                <li>Highlight the ticket/s that should be deleted</li>
+                <li>Select "Move to bin" in bulk actions and click "Apply"</li>
+                <li>Navigate to the order "Bin"</li>
+                <li>Highlight the ticket/s that should be deleted</li>
+                <li>Select "Delete permanently" in bulk actions and click "Apply"</li>
+            </ol>
+            
+            <h3>Removing plugin options and settings</h3>
+            To remove all FooEvents options and settings, simply disable and uninstall the plugins. The plugins will automatically remove all options and settings from the database during the uninstallation process.
+            
+            <h3>Removing FooEvents files</h3>
+            To remove the FooEvents files:
+            <ol>
+                <li>Disable and uninstall the plugins as per instructions (Removing Plugin Options and Settings)</li>
+                <li>Connect to your web server via an FTP client and navigate to 'wp-content/plugins' in the WordPress directory. Ensure that all FooEvents plugin directories have been deleted.</li>
+                <li>Connect to your web server via an FTP client and navigate to 'wp-content/uploads' in the WordPress directory and delete the entire 'fooevents' folder</li>
+            </ol>
+            
+        </section>
+
+        <section>
+            <h2 id="user-roles-capabilities-and-permissions">User roles, capabilities and permissions</h2>
+            FooEvents makes extensive use of the built-in WordPress user role and capability functionality to ensure better privacy. By default, only users with the role of "Administrator" will have access to all the FooEvents features. If you require an additional role to have access to specific FooEvents features, you will need to assign capabilities to this role using a third-party WordPress plugin.
+            <br /><br />
+            Here are the steps required in order to do this:
+            <ol>
+                <li>Login to your WordPress Admin Area and install and activate the <b>User Role Editor</b> plugin: <a href="https://wordpress.org/plugins/user-role-editor/">https://wordpress.org/plugins/user-role-editor/</a> </li>
+                <li>Navigate to 'Users' -> 'User Role Editor'</li>
+                <li>Select the user role that needs access to specific FooEvents features under the "Select Role and change its capabilities" option</li>
+                <li>Enter the term "event_magic_ticket" in the quick filter text box</li>
+                <li>Check each of the items that have been highlighted (this is basically all the options with the "event_magic_ticket" and "event_magic_tickets" suffix)</li>
+                <li>Click the "Update" button on the right</li>
+            </ol>
+        </section>
+        </article>
+        <!-- END Main content -->
+      </div>
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <a id="scroll-up" href="#"><i class="fa fa-angle-up"></i></a>
+
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <p>Copyright &copy; 2018 FooEvents. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 col-sm-6"> 
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- END Footer -->
+
+    <!-- Scripts -->
+    <script src="assets/js/theDocs.all.min.js"></script>
+    <script src="assets/js/theDocs.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+  </body>
+</html>

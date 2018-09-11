@@ -13,36 +13,39 @@ final class FLPageDataPost {
 	 * @return string
 	 */
 	static public function get_excerpt( $settings ) {
-		add_filter( 'excerpt_length', __CLASS__ . '::excerpt_length_filter' );
-		add_filter( 'excerpt_more', __CLASS__ . '::excerpt_more_filter' );
 
-		$excerpt = apply_filters( 'the_excerpt', get_the_excerpt() );
+		$args = apply_filters( 'fl_theme_builder_get_excerpt', array(
+			'content' => get_the_excerpt(),
+			'length'  => is_numeric( $settings->length ) ? $settings->length : 55,
+			'more'    => ! empty( $settings->more ) ? $settings->more : '...',
+		), $settings );
 
-		remove_filter( 'excerpt_length', __CLASS__ . '::excerpt_length_filter' );
-		remove_filter( 'excerpt_more', __CLASS__ . '::excerpt_more_filter' );
+		$excerpt = wp_trim_words( $args['content'], $args['length'], $args['more'] );
 
 		return $excerpt;
 	}
 
 	/**
 	 * @since 1.0
+	 * @deprecated 1.1.3
 	 * @param string $length
 	 * @return string
 	 */
 	static public function excerpt_length_filter( $length ) {
+		_deprecated_function( __METHOD__, '1.1.3' );
 		$settings = FLPageData::get_current_settings();
-
 		return $settings && is_numeric( $settings->length ) ? $settings->length : 55;
 	}
 
 	/**
 	 * @since 1.0
+	 * @deprecated 1.1.3
 	 * @param string $more
 	 * @return string
 	 */
 	static public function excerpt_more_filter( $more ) {
+		_deprecated_function( __METHOD__, '1.1.3' );
 		$settings = FLPageData::get_current_settings();
-
 		return $settings && ! empty( $settings->more ) ? $settings->more : '...';
 	}
 
@@ -458,5 +461,21 @@ final class FLPageDataPost {
 			return ( $settings->value == $meta ) ? $meta : '';
 		}
 		return $meta;
+	}
+
+	/**
+	* @return string
+	*/
+	static public function get_id() {
+		global $post;
+		return (string) $post->ID;
+	}
+
+	/**
+	* @return string
+	*/
+	static public function get_slug() {
+		global $post;
+		return $post->post_name;
 	}
 }

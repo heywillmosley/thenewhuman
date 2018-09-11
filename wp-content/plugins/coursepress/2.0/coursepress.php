@@ -15,7 +15,7 @@ class CoursePress {
 	 *
 	 * @var string
 	 */
-	public static $version = '2.1.2';
+	public static $version = '2.2.0';
 
 	/**
 	 * Plugin name, this reflects the Pro/Standard version.
@@ -61,7 +61,7 @@ class CoursePress {
 		/**
 		 * Translate plugin name
 		 */
-		self::$name = _x( 'CoursePress', 'plugin name', 'cp' ); // Translated by grunt.
+		self::$name = _x( 'CoursePress', 'plugin name', 'coursepress' ); // Translated by grunt.
 		// Initialise the autoloader.
 		spl_autoload_register( array( __CLASS__, 'class_loader' ) );
 
@@ -81,6 +81,14 @@ class CoursePress {
 
 		if ( file_exists( self::$path . '/campus/init.php' ) ) {
 			include_once self::$path . '/campus/init.php';
+		}
+
+		/**
+		 * update plugin if needed
+		 */
+		$db_version = get_site_option( 'coursepress_version', '0.0.0' );
+		if ( 0 > version_compare( $db_version, self::$version ) ) {
+			update_site_option( 'coursepress_version', self::$version );
 		}
 
 		/**

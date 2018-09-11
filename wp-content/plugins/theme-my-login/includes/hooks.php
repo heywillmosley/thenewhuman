@@ -22,6 +22,10 @@ add_action( 'init', 'tml_add_rewrite_rules' );
 // Widgets
 add_action( 'widgets_init', 'Theme_My_Login_Widget::register' );
 
+
+// Request
+add_action( 'parse_request', 'tml_parse_request' );
+
 // Query
 add_action( 'parse_query', 'tml_parse_query' );
 
@@ -34,8 +38,15 @@ add_action( 'wp_enqueue_scripts', 'tml_enqueue_styles',  10 );
 add_action( 'wp_enqueue_scripts', 'tml_enqueue_scripts', 10 );
 
 // Registration
+add_action( 'pre_user_login',    'tml_set_user_login'        );
 add_action( 'register_new_user', 'tml_set_new_user_password' );
-add_action( 'register_new_user', 'tml_handle_auto_login' );
+add_action( 'register_new_user', 'tml_handle_auto_login'     );
+
+add_action( 'register_new_user',      'tml_send_new_user_notifications', 10, 1 );
+add_action( 'edit_user_created_user', 'tml_send_new_user_notifications', 10, 2 );
+
+remove_action( 'register_new_user',      'wp_send_new_user_notifications' );
+remove_action( 'edit_user_created_user', 'wp_send_new_user_notifications' );
 
 // Passwords
 add_action( 'retrieved_password_key', 'tml_retrieve_password_notification', 10, 2 );
@@ -55,6 +66,7 @@ add_filter( 'the_posts',          'tml_the_posts',                 10, 2 );
 add_filter( 'page_template',      'tml_page_template',             10, 3 );
 add_filter( 'body_class',         'tml_body_class',                10, 2 );
 add_filter( 'get_edit_post_link', 'tml_filter_get_edit_post_link', 10, 2 );
+add_filter( 'comments_array',     'tml_filter_comments_array',     10, 1 );
 
 // URLs
 add_filter( 'site_url',         'tml_filter_site_url',   10, 3 );
@@ -70,9 +82,8 @@ if ( tml_is_username_login_type() ) {
 }
 
 // Registration
-add_filter( 'registration_errors',   'tml_validate_new_user_password' );
-add_action( 'pre_user_login',        'tml_set_user_login'             );
-add_filter( 'registration_redirect', 'tml_registration_redirect'      );
+add_filter( 'registration_errors',       'tml_validate_new_user_password', 10, 1 );
+add_filter( 'tml_registration_redirect', 'tml_registration_redirect',      10, 2 );
 
 // Notifications
 add_filter( 'wp_new_user_notification_email', 'tml_add_password_notice_to_new_user_notification_email' );

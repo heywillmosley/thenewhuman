@@ -78,20 +78,23 @@ final class FLThemeBuilderACF {
 			foreach ( $object as $obj ) {
 				$object_ids[] = is_array( $obj ) ? $obj['ID'] : $obj->ID;
 			}
-		}
 
-		// Remove the unnecessary query args.
-		unset( $args['tax_query'] );
-		unset( $args['post__not_in'] );
-		unset( $args['author__not_in'] );
+			// Remove the unnecessary query args.
+			unset( $args['tax_query'] );
+			unset( $args['post__not_in'] );
+			unset( $args['author__not_in'] );
 
-		$args['post_type'] = 'any';
+			$args['post_type'] = 'any';
 
-		if ( 'relationship' == $settings->data_source_acf_relational_type ) {
-			$args['post__in'] = $object_ids;
+			if ( 'relationship' == $settings->data_source_acf_relational_type ) {
+				$args['post__in'] = $object_ids;
 
-		} elseif ( 'user' == $settings->data_source_acf_relational_type ) {
-			$args['author__in'] = $object_ids;
+			} elseif ( 'user' == $settings->data_source_acf_relational_type ) {
+				$args['author__in'] = $object_ids;
+			}
+		} else {
+			// Reset query args so it doesn't display `post` post_type by default.
+			$args = array();
 		}
 
 		return $args;

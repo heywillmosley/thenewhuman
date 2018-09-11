@@ -37,6 +37,9 @@ function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/about/' );
   $whitelist[] = site_url( '/help/' );
   $whitelist[] = site_url( '/ux/' );
+  $whitelist[] = site_url( '/my-account/' );
+  $whitelist[] = site_url( '/my-account/lost-password/' );
+  $whitelist[] = site_url( '/my-account/lost-password/?' . $_SERVER['QUERY_STRING'] );
   return $whitelist;
 }
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);

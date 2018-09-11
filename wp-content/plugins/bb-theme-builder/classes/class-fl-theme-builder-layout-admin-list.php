@@ -106,7 +106,7 @@ final class FLThemeBuilderLayoutAdminList {
 			$saved_locations = FLThemeBuilderRulesLocation::get_ordered_saved( $post_id );
 
 			foreach ( $saved_locations as $label => $saved_location ) {
-				echo $label . '<br />';
+				echo esc_html( $label ) . '<br />';
 			}
 		}
 

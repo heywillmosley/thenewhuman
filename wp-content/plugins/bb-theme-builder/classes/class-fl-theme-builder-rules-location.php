@@ -1007,7 +1007,7 @@ final class FLThemeBuilderRulesLocation {
 		}
 
 		foreach ( $posts as $post ) {
-			$title = ( '' != $post->post_title ) ? esc_attr( $post->post_title ) : $post_type . '-' . $post->ID;
+			$title = ( '' != $post->post_title ) ? strip_tags( filter_var( $post->post_title, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES ) ) : $post_type . '-' . $post->ID;
 			$data['objects'][] = array(
 				'id'    => $post->ID,
 				'name'  => $title,

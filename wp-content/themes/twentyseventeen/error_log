@@ -2,3 +2,35 @@
 Stack trace:
 #0 {main}
   thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php on line 13
+[18-Aug-2018 20:14:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php on line 13
+[18-Aug-2018 22:30:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php on line 13
+[19-Aug-2018 00:11:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_template_part() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/footer.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/footer.php on line 22
+[21-Aug-2018 21:55:54 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php on line 13
+[29-Aug-2018 05:26:51 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_template_directory() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/functions.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/functions.php on line 16
+[29-Aug-2018 06:45:47 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_template_directory() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/functions.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/functions.php on line 16
+[29-Aug-2018 08:59:40 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_template_directory() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/functions.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/functions.php on line 16
+[29-Aug-2018 15:11:54 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_template_part() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/footer.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/footer.php on line 22

@@ -4,8 +4,8 @@ Contributors: berocket, dholovnia
 Donate link: http://berocket.com/product/woocommerce-load-more-products
 Tags: load more, load more products, ajax products loading, woocommerce load more products, more products, woocommerce load products, infinite scroll, infinite scrolling, pagination, scrolling, scroll, endless, ajax pagination, infinite pagination, infinite, lazy load, lazy loading, endless scroll, ajax load posts, ajax load more, ajax load more products, woocommerce ajax load more, simple load more, infinite scroll button, load more button, get more products, berocket, berocket load more products for woocommerce
 Requires at least: 4.0
-Tested up to: 4.9.5
-Stable tag: 1.1.0
+Tested up to: 4.9.6
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,20 +15,25 @@ Load products from next page via AJAX with infinite scrolling or load more produ
 
 Load products from next page via AJAX with infinite scrolling or load more products button
 
+= &#128226; BeRocket Promotions - Summer Sale &#127774; : =
+*11/07 - 20/07*
+&#128181; [Premium WooCommerce Load More Products – Save $20](https://berocket.com/product/woocommerce-load-more-products)
+
+
 = Features: =
-* Infinite Scroll for WooCommerce Products
-* Load More Products Button or AJAX pagination
-* Custom button text
-* JavaScript hooks for custom code
+&#9989; Infinite Scroll for WooCommerce Products
+&#9989; Load More Products Button or AJAX pagination
+&#9989; Custom button text
+&#9989; JavaScript hooks for custom code
 
 = Additional Features in Paid Plugin: =
-* Lazy Load for images
-* 40 Animations for Lazy Load
-* Customization for Load More Button
-* Customizable Loading Image
-* Different Products Load Type for Mobile Devices and Other
-* JavaScript Before and After AJAX Update
-* 'Loading...', 'No more products', etc messages customization
+&#9989; Lazy Load for images
+&#9989; 40 Animations for Lazy Load
+&#9989; Customization for Load More Button
+&#9989; Customizable Loading Image
+&#9989; Different Products Load Type for Mobile Devices and Other
+&#9989; JavaScript Before and After AJAX Update
+&#9989; 'Loading...', 'No more products', etc messages customization
 
 
 = Plugin Links: =
@@ -36,6 +41,29 @@ Load products from next page via AJAX with infinite scrolling or load more produ
 [Demo 1](http://woocommerce-load-more.berocket.com/shop/)
 [Demo 2](http://woocommerce-infinite-scroll.berocket.com/)
 [Demo Description](http://woocommerce-load-more.berocket.com/)
+
+
+= &#127852; Wanna try admin side? =
+[Admin Demo](http://berocket.com/product/woocommerce-advanced-product-labels#try-admin) - Get access to this plugin's admin and try it from inside. Change things and watch how they work.
+
+
+= Premium plugin video =
+[youtube https://youtu.be/Z5cIGNU0XNU]
+[youtube https://youtu.be/vH2wVvh20IA]
+*we don't have video with free plugin right now but we are working on it*
+
+
+= Compatibility with WooCommerce plugins =
+Load More Products for WooCommerce has been tested and compatibility is certain with the following WooCommerce plugins that you can add to your site:
+
+&#128312; [**Advanced AJAX Product Filters**](https://wordpress.org/plugins/woocommerce-ajax-filters/)
+&#128312; [**Advanced Product Labels for WooCommerce**](https://wordpress.org/plugins/advanced-product-labels-for-woocommerce/)
+&#128312; [**Grid/List View for WooCommerce**](https://wordpress.org/plugins/gridlist-view-for-woocommerce/)
+&#128312; [**Pagination Styler for WooCommerce**](https://wordpress.org/plugins/pagination-styler-for-woocommerce/)
+&#128312; [**Product Preview for WooCommerce**](https://wordpress.org/plugins/product-preview-for-woocommerce/)
+&#128312; [**Wishlist and Waitlist for WooCommerce**](https://wordpress.org/plugins/wish-wait-list-for-woocommerce/)
+
+Nevertheless, it could be compatible with many other WooCommerce plugins that have not been tested yet. If you want to inform us about compatibility with other plugins, please, [email to us](http://berocket.com/contact).
 
 
 ---
@@ -48,6 +76,12 @@ Load products from next page via AJAX with infinite scrolling or load more produ
 ---
 
 == Changelog ==
+
+= 1.1.1 =
+* Upgrade - better plugin menu items location
+* Upgrade - Load More button style customization
+* Upgrade - Better compatibility with AJAX Products Filter
+* Fix - HTML5 URL change
 
 = 1.1.0 =
 * Upgrade - Previous page button

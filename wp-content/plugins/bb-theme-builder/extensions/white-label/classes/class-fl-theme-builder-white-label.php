@@ -17,6 +17,25 @@ final class FLThemeBuilderWhiteLabel {
 	}
 
 	/**
+	 * Checks if Themer is white labeled.
+	 *
+	 * @since 1.1.2
+	 * @return bool
+	 */
+	static public function is_white_labeled() {
+		if ( method_exists( 'FLBuilderModel', 'is_white_labeled' ) ) {
+			return FLBuilderModel::is_white_labeled();
+		}
+
+		$defaults = array(
+			__( 'Beaver Builder', 'fl-builder' ),
+			__( 'Page Builder', 'fl-builder' ),
+		);
+
+		return ! in_array( FLBuilderModel::get_branding(), $defaults );
+	}
+
+	/**
 	 * White labels the plugin update lightbox.
 	 *
 	 * @since 1.10.3.1
@@ -24,9 +43,8 @@ final class FLThemeBuilderWhiteLabel {
 	 */
 	static public function fl_plugin_info( $info, $response ) {
 		if ( false !== strpos( $info->name, 'Beaver Themer' ) ) {
-			$brand = FLBuilderModel::get_branding();
-			if ( __( 'Page Builder', 'fl-theme-builder' ) !== $brand ) {
-				$info->name = $brand . ' - Themer Add-On';
+			if ( self::is_white_labeled() ) {
+				$info->name = FLBuilderModel::get_branding() . ' - Themer Add-On';
 			}
 		}
 		return $info;
@@ -42,10 +60,8 @@ final class FLThemeBuilderWhiteLabel {
 	static public function plugin_gettext( $text ) {
 		global $pagenow;
 		if ( is_admin() && in_array( $pagenow, array( 'plugins.php', 'update-core.php' ) ) && 'Beaver Themer' == $text ) {
-			$brand    = FLBuilderModel::get_branding();
-			$default  = __( 'Page Builder', 'fl-theme-builder' );
-			if ( $default != $brand ) {
-				$text = $brand . ' - Themer Add-On';
+			if ( self::is_white_labeled() ) {
+				$text = FLBuilderModel::get_branding() . ' - Themer Add-On';
 			}
 		}
 		return $text;
@@ -59,11 +75,10 @@ final class FLThemeBuilderWhiteLabel {
 	 * @return array
 	 */
 	static public function plugins_page( $plugins ) {
-		$default  = __( 'Page Builder', 'fl-theme-builder' );
 		$branding = FLBuilderModel::get_branding();
 		$key	  = plugin_basename( FL_THEME_BUILDER_DIR . 'bb-theme-builder.php' );
 
-		if ( isset( $plugins[ $key ] ) && $branding != $default ) {
+		if ( isset( $plugins[ $key ] ) && self::is_white_labeled() ) {
 			$plugins[ $key ]['Name']	   = $branding . ' - Themer Add-On';
 			$plugins[ $key ]['Title']	   = $branding . ' - Themer Add-On';
 			$plugins[ $key ]['Author']	   = '';

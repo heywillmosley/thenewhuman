@@ -110,7 +110,7 @@
         </div>
 
         <?php
-        $display = ($count > 0) ? 'block;' : 'none';
+        $display = ($count > 1) ? 'block;' : 'none';
         ?>
         <div class="row">
             <div class="col-sm-12">

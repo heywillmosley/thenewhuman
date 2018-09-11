@@ -25,11 +25,18 @@ final class FLPageDataACF {
 	 */
 	static public function string_field( $settings, $property ) {
 		$content = '';
-		$object  = get_field_object( trim( $settings->name ), self::get_object_id( $property ) );
+		$name = trim( $settings->name );
+
+		if ( function_exists( 'acf_get_loop' ) && acf_get_loop( 'active' ) ) {
+			$object = get_sub_field_object( $name );
+		} else {
+			$object = get_field_object( $name, self::get_object_id( $property ) );
+		}
 
 		if ( empty( $object ) || ! isset( $object['type'] ) ) {
 			return $content;
 		}
+
 		switch ( $object['type'] ) {
 			case 'text':
 				$content = self::general_compare( $settings, $object );
@@ -292,6 +299,57 @@ final class FLPageDataACF {
 			}
 		} elseif ( strstr( $property['key'], 'acf_option' ) ) {
 			$id = 'option';
+		}
+
+		return $id;
+	}
+
+	/**
+	 * Returns a field object ID by type instead of using
+	 * the property array.
+	 *
+	 * @since 1.1.2
+	 * @param string $type
+	 * @return string
+	 */
+	static public function get_object_id_by_type( $type ) {
+		$id = false;
+
+		switch ( $type ) {
+			case 'archive':
+				$id = self::get_object_id( array(
+					'object' => 'archive',
+					'key' => 'acf',
+				) );
+			break;
+
+			case 'post':
+				$id = self::get_object_id( array(
+					'object' => 'post',
+					'key' => 'acf',
+				) );
+			break;
+
+			case 'author':
+				$id = self::get_object_id( array(
+					'object' => 'post',
+					'key' => 'acf_author',
+				) );
+			break;
+
+			case 'user':
+				$id = self::get_object_id( array(
+					'object' => 'site',
+					'key' => 'acf_user',
+				) );
+			break;
+
+			case 'option':
+				$id = self::get_object_id( array(
+					'object' => 'site',
+					'key' => 'acf_option',
+				) );
+			break;
 		}
 
 		return $id;

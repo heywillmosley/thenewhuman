@@ -337,12 +337,12 @@ if (!class_exists('ESIG_DS_Admin')) :
         public function dropbox_pdf_document($args) {
 
             if (!$this->dropbox_access()) {
-                return;
+                return false;
             }
 
 
             if (!class_exists('ESIG_PDF_Admin')) {
-                return;
+                return false;
             }
 
 
@@ -365,13 +365,13 @@ if (!class_exists('ESIG_DS_Admin')) :
             }
 
             if (!self::is_dropbox_enabled($doc_id))
-                return;
+                return false;
 
 
             $doc_status = $this->document->getSignatureStatus($doc_id_main);
 
             if (is_array($doc_status['signatures_needed']) && (count($doc_status['signatures_needed']) > 0))
-                return;
+                return false;
 
 
 

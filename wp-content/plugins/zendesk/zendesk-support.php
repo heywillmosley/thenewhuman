@@ -4,7 +4,7 @@
  * Plugin URI: http://zendesk.com
  * Description: Zendesk Support for WordPress
  * Author: Zendesk
- * Version: 1.7.0
+ * Version: 1.7.2
  * Author URI: http://www.zendesk.com
  *
  */
@@ -406,6 +406,9 @@ EOJS;
 
         $auth = $this->api->authenticate( $username, $password );
         if ( ! is_wp_error( $auth ) ) {
+          // Enable widget by initiating the embeddable config set
+          $this->api->create_embeddable_config();
+
           // Get the user views
           $views = $this->api->get_views();
 

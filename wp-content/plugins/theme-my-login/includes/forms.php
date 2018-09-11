@@ -47,7 +47,7 @@ function tml_register_login_form() {
 		'label'    => __( 'Password' ),
 		'value'    => '',
 		'id'       => 'user_pass',
-		'priority' => 15
+		'priority' => 15,
 	) );
 
 	tml_add_form_field( 'login', 'login_form', array(
@@ -59,18 +59,13 @@ function tml_register_login_form() {
 		'type'     => 'checkbox',
 		'label'    => __( 'Remember Me' ),
 		'value'    => 'forever',
+		'id'       => 'rememberme',
 		'priority' => 25,
 	) );
 
 	tml_add_form_field( 'login', 'submit', array(
 		'type'     => 'submit',
 		'value'    => __( 'Log In' ),
-		'priority' => 30,
-	) );
-
-	tml_add_form_field( 'login', 'testcookie', array(
-		'type'     => 'hidden'	,
-		'value'    => 1,
 		'priority' => 30,
 	) );
 
@@ -135,7 +130,7 @@ function tml_register_registration_form() {
 
 		tml_add_form_field( 'register', 'user_pass2', array(
 			'type'       => 'password',
-			'label'      => __( 'Confirm Password' ),
+			'label'      => __( 'Confirm Password', 'theme-my-login' ),
 			'id'         => 'pass2',
 			'attributes' => array(
 				'autocomplete' => 'off',
@@ -372,6 +367,7 @@ function tml_form_exists( $form ) {
  * @param array {
  *     Optional. An array of arguments for registering a form field.
  * }
+ * @return Theme_My_Login_Form_Field The field object.
  */
 function tml_add_form_field( $form, $field, $args = array() ) {
 
@@ -383,7 +379,7 @@ function tml_add_form_field( $form, $field, $args = array() ) {
 		$field = new Theme_My_Login_Form_Field( $form, $field, $args );
 	}
 
-	$form->add_field( $field );
+	return $form->add_field( $field );
 }
 
 /**

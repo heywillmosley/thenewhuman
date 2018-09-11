@@ -2,8 +2,8 @@
 Contributors: thememylogin, jfarthing84
 Tags: login, register, password, branding, customize, widget, wp-login, wp-login.php
 Requires at least: 4.6
-Tested up to: 4.9.6
-Stable tag: 7.0.5
+Tested up to: 4.9.8
+Stable tag: 7.0.10
 
 The ultimate login branding solution! Theme My Login offers matchless customization of your WordPress user experience!
 
@@ -46,7 +46,7 @@ Boost your user experience even more with add-on plugins from our [extensions ca
 
 = Where can I find documentation? =
 
-Documentation can be found on our [documentation site](http://docs.thememylogin.com).
+Documentation can be found on our [documentation site](https://docs.thememylogin.com).
 
 = Where can I find support? =
 
@@ -58,6 +58,48 @@ Report bugs, suggest ideas and participate in development at [GitHub](https://gi
 
 
 == Changelog ==
+
+= 7.0.10 =
+* Fix admin notices displaying for non-privileged users
+* Reinstate default testcookie method
+* Don't allow TML actions to stomp on other content
+* Don't allow TML actions to stomp on other TML actions
+* Allow non-TML actions to be handled
+* Include labels for custom fields if present
+* Hide comments on TML pages
+* Fix generation of non-pretty action links
+* Apply `login_redirect` filter to auto-login registration redirect
+* Fix new user notification being sent when unchecked upon creating a user
+
+= 7.0.9 =
+* Fix fatal error on PHP versions less than 5.5
+* Apply `tml_get_action_tile` filter at the object level
+* Apply `tml_get_action_slug` filter at the object level
+* Apply `tml_get_action_url` filter at the object level
+
+= 7.0.8 =
+* Fix slow-loading extensions page
+* Add dismissible notice of latest available extension
+* Fix "stuck" license status by verifying when visiting the licenses page
+* Ensure a form field object is returned when adding a form field
+* Fix testcookie step causing a 403 error
+* Fix links not being changed in emails sent from the Dashboard
+
+= 7.0.7 =
+* Fix sorting of form fields
+* Fix "Remember Me" not being clickable
+* Add "checked" property to form fields to allow for easy checking of checkboxes
+* Add plugin textdomain to strings not found in front-end core translations
+* Add `tml_send_new_user_notification` filter
+* Add `tml_send_new_user_admin_notification` filter
+* Add `tml_retrieve_password_email` filter
+
+= 7.0.6 =
+* Fix a fatal error when removing form fields
+* Fix a 408/502 error when hosted with Namecheap
+* Fix notices in widget when upgrading from 6.4.x
+* Add default contextual help for extensions
+* Move `after` argument for forms to after the container
 
 = 7.0.5 =
 * Allow custom actions to have custom slugs

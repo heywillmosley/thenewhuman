@@ -37,6 +37,55 @@ body.login div#login h1 a,#login_error{
 }
 
 /* social icon gap */
+.divsocial {
+	margin-top: 10px;
+}
+
 .divsocial a {
 	margin: 2px;
 }
+.panel.panel-primary.panel-default.content-panel .panel-body ul li {
+	width: 50%;
+	float: left;
+}
+
+.panel.panel-primary.panel-default.content-panel .panel-body {
+	padding: 30px;
+}
+
+
+.panel.panel-primary.panel-default.content-panel span {
+	background-color: #ececec;
+	padding: 10px;
+	border-radius: 4px;
+	line-height:26px;
+}
+.panel.panel-primary.panel-default.content-panel a {
+	margin-left: 86px;
+	display: inline-block;
+}
+.fro-title { 
+	font-weight: normal;
+	font-size: 1.5em;
+	width: 30%;
+	color: #555;
+	padding: 10px 15px 15px 0;
+	font-family: sans-serif;
+	border:1px doted #000;
+}
+
+@media screen and (max-width:992px) {
+.panel.panel-primary.panel-default.content-panel .panel-body ul li {
+	width: 100%;
+	float: none;
+	}
+	.panel.panel-primary.panel-default.content-panel span {
+		line-height: 45px;
+		margin-bottom:10px;	
+	}
+	
+	.buy_btn {
+	 margin-left: 1px; 
+	}
+}
+.pro-features-list{	margin-bottom:30px !important;	}	

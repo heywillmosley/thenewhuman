@@ -19,6 +19,49 @@ function theme_my_login() {
 }
 
 /**
+ * Parse the request.
+ *
+ * @since 7.0.10
+ *
+ * @param $wp WP The WordPress object.
+ */
+function tml_parse_request( $wp ) {
+
+	if ( ! isset( $wp->query_vars['action'] ) ) {
+		return;
+	}
+
+	$action = $wp->query_vars['action'];
+
+	// Fix some alias actions
+	if ( 'retrievepassword' == $action ) {
+		$action = 'lostpassword';
+	} elseif ( 'rp' == $action ) {
+		$action = 'resetpass';
+	}
+
+	// Ensure that the permalink action is passed
+	if ( ! empty( $wp->did_permalink ) && false === strpos( $wp->matched_query, "action=$action" ) ) {
+
+		// Get the action from the matched query
+		preg_match( '/action=([^&]+)/', $wp->matched_query, $matches );
+		if ( ! empty( $matches ) ) {
+			$action = $matches[1];
+		}
+	}
+
+	// Default the action to login if an action is set and it's not a TML action
+	if ( ! empty( $action ) && ! tml_action_exists( $action ) ) {
+		$action = 'login';
+	}
+
+	// Set the proper action
+	if ( $action != $wp->query_vars['action'] ) {
+		$wp->set_query_var( 'action', $action );
+	}
+}
+
+/**
  * Parse the query.
  *
  * @since 7.0
@@ -32,16 +75,22 @@ function tml_parse_query( $wp_query ) {
 		return;
 	}
 
+	// Bail if not home
+	if ( ! $wp_query->is_home || $wp_query->is_posts_page ) {
+		return;
+	}
+
 	// Bail if not handling a TML action
 	if ( ! tml_is_action() ) {
 		return;
 	}
 
 	// Tell WordPress that this is a page
-	$wp_query->is_page     = true;
-	$wp_query->is_singular = true;
-	$wp_query->is_single   = false;
-	$wp_query->is_home     = false;
+	$wp_query->is_tml_action = true;
+	$wp_query->is_page       = true;
+	$wp_query->is_singular   = true;
+	$wp_query->is_single     = false;
+	$wp_query->is_home       = false;
 
 	// No need to calculate found rows
 	$wp_query->set( 'no_found_rows', true );
@@ -66,8 +115,8 @@ function tml_the_posts( $posts, $wp_query ) {
 		return $posts;
 	}
 
-	// Bail if not handling a TML action
-	if ( ! tml_is_action() ) {
+	// Bail if not a TML action
+	if ( ! $wp_query->is_tml_action ) {
 		return $posts;
 	}
 
@@ -219,9 +268,6 @@ function tml_enqueue_scripts() {
  * @since 7.0
  */
 function tml_add_rewrite_tags() {
-	if ( ! tml_use_permalinks() ) {
-		return;
-	}
 	add_rewrite_tag( '%action%', '([^/]+)' );
 }
 
@@ -270,11 +316,6 @@ function tml_filter_site_url( $url, $path, $scheme ) {
 		return $url;
 	}
 
-	// Bail if currently in /wp-admin
-	if ( is_admin() && did_action( 'admin_init' ) ) {
-		return $url;
-	}
-
 	// Bail if currently customizing
 	if ( is_customize_preview() ) {
 		return $url;
@@ -293,6 +334,15 @@ function tml_filter_site_url( $url, $path, $scheme ) {
 	$query = array();
 	if ( ! empty( $parsed_url['query'] ) ) {
 		parse_str( htmlspecialchars_decode( $parsed_url['query'] ), $query );
+	}
+
+	/**
+	 * Bail if the URL is an interim-login URL
+	 *
+	 * @see https://core.trac.wordpress.org/ticket/31821
+	 */
+	if ( isset( $query['interim-login'] ) ) {
+		return $url;
 	}
 
 	// Determine the action
@@ -387,6 +437,21 @@ function tml_filter_get_edit_post_link( $link, $post_id ) {
 		$link = '';
 	}
 	return $link;
+}
+
+/**
+ * Filter the comments.
+ *
+ * @since 7.0.10
+ *
+ * @param array $comments The comments.
+ * @return array The comments.
+ */
+function tml_filter_comments_array( $comments ) {
+	if ( tml_is_action() ) {
+		return array();
+	}
+	return $comments;
 }
 
 /**
@@ -532,13 +597,13 @@ function tml_validate_new_user_password( $errors = null ) {
 	}
 	if ( tml_allow_user_passwords() ) {
 		if ( empty( $_POST['user_pass1'] ) || empty( $_POST['user_pass2'] ) ) {
-			$errors->add( 'empty_password', __( '<strong>ERROR</strong>: Please enter a password.' ) );
+			$errors->add( 'empty_password', __( '<strong>ERROR</strong>: Please enter a password.', 'theme-my-login' ) );
 
 		} elseif ( false !== strpos( stripslashes( $_POST['user_pass1'] ), "\\" ) ) {
-			$errors->add( 'password_backslash', __( '<strong>ERROR</strong>: Passwords may not contain the character "\\".' ) );
+			$errors->add( 'password_backslash', __( '<strong>ERROR</strong>: Passwords may not contain the character "\\".', 'theme-my-login' ) );
 
 		} elseif ( $_POST['user_pass1'] !== $_POST['user_pass2'] ) {
-			$errors->add( 'password_mismatch', __( '<strong>ERROR</strong>: Please enter the same password in both password fields.' ) );
+			$errors->add( 'password_mismatch', __( '<strong>ERROR</strong>: Please enter the same password in both password fields.', 'theme-my-login' ) );
 		}
 	}
 	return $errors;
@@ -581,12 +646,13 @@ function tml_set_user_login( $sanitized_user_login ) {
  *
  * @since 7.0.1
  *
- * @param string $url The registration redirect URL.
+ * @param string  $url  The registration redirect URL.
+ * @param WP_User $user The user object.
  * @return string The registration redirect URL.
  */
-function tml_registration_redirect( $url ) {
+function tml_registration_redirect( $url, $user ) {
 	if ( tml_allow_auto_login() ) {
-		$url = home_url();
+		$url = apply_filters( 'login_redirect', home_url(), tml_get_request_value( 'redirect_to' ), $user );
 	}
 	return $url;
 }
@@ -696,6 +762,61 @@ function tml_handle_auto_login( $user_id ) {
 	}
 
 	wp_set_auth_cookie( $user_id );
+}
+
+/**
+ * Send the new user notifications.
+ *
+ * @since 7.0.7
+ */
+function tml_send_new_user_notifications( $user_id, $notify = 'both' ) {
+
+	/**
+	 * Filters whether to send the new user notification or not.
+	 *
+	 * @since 7.0.7
+	 *
+	 * @param bool $send_user_notification Whether to send the new user notification or not.
+	 */
+	$send_user_notification = (bool) apply_filters( 'tml_send_new_user_notification', true );
+
+	/**
+	 * Filters whether to send the new user admin notification or not.
+	 *
+	 * @since 7.0.7
+	 *
+	 * @param bool $send_admin_notification Whether to send the new user admin notification or not.
+	 */
+	$send_admin_notification = (bool) apply_filters( 'tml_send_new_user_admin_notification', true );
+
+	// Bail if both are disabled
+	if ( ! ( $send_user_notification || $send_admin_notification ) ) {
+		return;
+	}
+
+	// Set to both if empty
+	if ( empty( $notify ) ) {
+		$notify = 'admin';
+
+	// Set to admin if set to both and user is disabled
+	} elseif ( 'both' == $notify ) {
+		if ( ! $send_user_notification ) {
+			$notify = 'admin';
+		} elseif ( ! $send_admin_notification ) {
+			$notify = 'user';
+		}
+	}
+
+	// Bail if type is admin and it is disabled
+	if ( 'admin' == $notify && ! $send_admin_notification ) {
+		return;
+
+	// Bail if type is user and it is disabled
+	} elseif ( 'user' == $notify && ! $send_user_notification ) {
+		return;
+	}
+
+	wp_new_user_notification( $user_id, null, $notify );
 }
 
 /**

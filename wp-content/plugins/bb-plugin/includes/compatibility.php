@@ -412,8 +412,7 @@ function fl_render_ninja_forms_js( $response ) {
 
 /**
  * Reorder font awesome css.
- * If font-awesome-4 and font-awesome-5 are both in the styles queue font-awesome-5
- * must load first.
+ * @since 2.1
  */
 function fl_builder_fa_fix() {
 
@@ -424,11 +423,42 @@ function fl_builder_fa_fix() {
 	$fa4 = array_search( 'font-awesome',   $queue );
 	$fa5 = array_search( 'font-awesome-5', $queue );
 
-	if ( $fa4 && $fa5 && $fa4 < $fa5 ) {
-		wp_dequeue_style( 'font-awesome' );
-		wp_dequeue_style( 'font-awesome-5' );
-		wp_deregister_style( 'font-awesome' );
-		wp_enqueue_style( 'font-awesome', FLBuilder::$fa4_url, array( 'font-awesome-5' ) );
+	// if fa4 is disabled and both are detected, load fa4 FIRST.
+	if ( false !== $fa4 && false !== $fa5 && $fa4 > $fa5 && ! in_array( 'font-awesome', FLBuilderModel::get_enabled_icons() ) ) {
+		unset( $wp_styles->queue[ $fa4 ] );
+		array_unshift( $wp_styles->queue, 'font-awesome' );
+	}
+	// If fa4 is detected, add a compatibility layer in the footer.
+	// This fixes various theme/themer issues.
+	if ( false !== $fa4 ) {
+			add_action( 'wp_footer', 'fl_builder_fa_fix_callback' );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'fl_builder_fa_fix', 11 );
+add_action( 'wp_enqueue_scripts', 'fl_builder_fa_fix', 99999 );
+
+function fl_builder_fa_fix_callback() {
+	echo '<style>[class*="fa fa-"]{font-family: FontAwesome !important;}</style>';
+}
+
+
+/**
+ * Turn off Hummingbird minification
+ * @since 2.1
+ */
+add_action( 'template_redirect', 'fl_fix_hummingbird' );
+function fl_fix_hummingbird() {
+	if ( FLBuilderModel::is_builder_active() ) {
+		add_filter( 'wp_hummingbird_is_active_module_minify', '__return_false', 500 );
+	}
+}
+
+/**
+ * Fix Enjoy Instagram feed on website with WordPress Widget and Shortcode issues with the builder.
+ * @since 2.0.6
+ */
+add_action( 'template_redirect', 'fl_fix_enjoy_instagram' );
+function fl_fix_enjoy_instagram() {
+	if ( FLBuilderModel::is_builder_active() ) {
+		remove_action( 'wp_head', 'funzioni_in_head' );
+	}
+}

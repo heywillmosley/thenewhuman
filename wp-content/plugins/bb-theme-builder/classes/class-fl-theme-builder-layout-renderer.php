@@ -390,7 +390,7 @@ final class FLThemeBuilderLayoutRenderer {
 	static public function override_template_include( $template ) {
 		$ids = FLThemeBuilderLayoutData::get_current_page_content_ids();
 
-		if ( empty( $ids ) ) {
+		if ( empty( $ids ) || is_embed() ) {
 			return $template;
 		} elseif ( is_singular() ) {
 

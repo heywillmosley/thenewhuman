@@ -1,0 +1,342 @@
+/* CSS Document */
+.wooreport_container { width:99%; padding-top:10px; background-color:#ffffff;}
+.wooreport_container .wooreport_content {width:100%;}
+.wooreport_container .wooreport_content .wooreport_row {
+	width:100%;
+	padding-bottom:20px;
+}
+.wooreport_container .wooreport_content .wooreport_row .wooreport_columns{
+	width:100%;
+}
+.wooreport_container .wooreport_content .wooreport_row .wooreport_columns .wooreport_welcome { 
+	margin:5px;
+	height:80px;
+}
+/*Table CSS*/
+.wooreport_default_table  {
+  text-align: left;
+  
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #00897b;
+  border-radius: 0.100rem;
+  width:100%;
+}
+
+.wooreport_default_table  thead tr:first-child {
+ background: linear-gradient(to bottom, #00aa8d, #008975);
+  color: #fff;
+  border: none;
+}
+
+.wooreport_default_table  th:first-child,
+.wooreport_default_table  td:first-child {
+  padding: 5px 5px 5px 5px;
+
+}
+
+.wooreport_default_table  thead tr:last-child th {
+  border-top: 5px solid #00897b;
+}
+.wooreport_default_table  thead tr:last-child th {
+  border-bottom: 3px solid #ddd;
+}
+
+.wooreport_default_table  tbody tr:hover {
+  /*background-color: rgba(237, 28, 64, .1);*/
+  background-color:#eee8aa;
+  cursor: default;
+}
+
+.wooreport_default_table  tbody tr:last-child td {
+  border: none;
+}
+
+.wooreport_default_table  tbody td {
+  border-bottom: 2px solid #00aa8d;
+    font-size:12px;
+}
+
+.wooreport_default_table  td:last-child {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.wooreport_default_table  tbody tr:last-child td {
+ /* border-bottom: 5px solid #00897b;*/
+}
+
+.wooreport_default_table{
+  border-bottom: 5px solid #00897b;
+  font-size:14px;
+}
+
+.wooreport_default_table tr:nth-child(odd) {
+    background: #f5f5dc;
+}
+
+
+
+/*End Table CSS*/
+.wooreport_effect1{ box-shadow: 0 10px 6px -6px #777;
+}
+.wooreport_effect12{ box-shadow: 0 10px 6px -6px #ffc166;}
+.wooreport_effect2{ box-shadow: 0 10px 6px -6px #ffc166;}
+.wooreport_effect3{ box-shadow: 0 10px 6px -6px #ffc166;}
+.wooreport_effect4{ box-shadow: 0 10px 6px -6px #ffc166;}
+.wooreport_effect5{ box-shadow: 0 10px 6px -6px #ffc166;}
+.wooreport_effect6{ box-shadow: 0 10px 6px -6px #ffc166;}
+.wooreport_effect7{ box-shadow: 0 10px 6px -6px #ffc166;}
+
+.wooreport_box_color1 { background: linear-gradient(to bottom, #ffc166, #cc7a00); box-shadow: 0 10px 6px -6px #ffc166;}
+.wooreport_box_color2 { background: linear-gradient(to bottom, #f44336, #891008); box-shadow: 0 10px 6px -6px #f44336;}
+.wooreport_box_color3 { background: linear-gradient(to bottom, #bc37d3, #771e86); box-shadow: 0 10px 6px -6px #bc37d3;}
+.wooreport_box_color4 { background: linear-gradient(to bottom, #03a9f4, #02638f); box-shadow: 0 10px 6px -6px #03a9f4;}
+.wooreport_box_color5 { background: linear-gradient(to bottom, #ff4081, #d81b60); box-shadow: 0 10px 6px -6px #ff4081;}
+.wooreport_box_color6 { background: linear-gradient(to bottom, #A1887F, #5D4037); box-shadow: 0 10px 6px -6px #A1887F;}
+.wooreport_box_color7 { background: linear-gradient(to bottom, #67d78f, #1da155); box-shadow: 0 10px 6px -6px #67d78f;}
+.wooreport_box_color8 { background: linear-gradient(to bottom, #607e89, #405964); box-shadow: 0 10px 6px -6px #607e89;}
+
+
+.wooreport_box_border_color1 {border-top:8px solid #cc7a00;}
+.wooreport_box_border_color2 {border-top:8px solid #891008;}
+.wooreport_box_border_color3 {border-top:8px solid #771e86;}
+.wooreport_box_border_color4 {border-top:8px solid #02638f;}
+.wooreport_box_border_color5 {border-top:8px solid #d81b60;}
+.wooreport_box_border_color6 {border-top:8px solid #5D4037;}
+.wooreport_box_border_color7 {border-top:8px solid #3d8b40;}
+.wooreport_box_border_color8 {border-top:8px solid #405964;}
+
+
+/*Search form*/
+.wooreport_search_form {  
+	border:1px solid #00897b; 
+	border-bottom:4px solid #00897b; 
+	border-top:4px solid #00897b;
+	margin:5px;
+	width:80%;
+}
+.wooreport_search_title {
+	background: linear-gradient(to bottom, #00aa8d, #008975);
+	line-height: 40px;
+	padding-left:10px;
+	color:#FFF;
+	font-size:16px;
+	text-transform:uppercase;
+	margin-bottom:10px;
+}
+.wooreport_search_row { padding:5px; } 
+.wooreport_field_wrapper {
+	float:left;
+	width:50%;
+	margin: 0; 
+	padding: 0; 
+	
+}
+.wooreport_field_wrapper label { 
+	display: inline-block; 
+	width: 140px; 
+	
+}
+.wooreport_field_wrapper input { 
+width:60%; 
+border: 1px solid  #CCC;
+	/*width:60%; 
+    padding: 8px 16px;
+    margin: 4px 0;
+    box-sizing: border-box;
+	border: 2px solid #ddd;*/
+}
+.wooreport_field_wrapper input[type=text]:focus , .wooreport_field_wrapper select:focus  { 
+	 border: 1px solid #A1887F;
+}
+.wooreport_field_wrapper select { 
+	width:60%; 
+    margin: 8px 0;
+    box-sizing: border-box;
+	border: 1px solid #CCC;
+}
+.wooreport_button {
+  background: linear-gradient(to bottom, #00aa8d, #008975);
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+	float:right;
+	cursor:pointer
+	
+}
+.wooreport_welcome_bottom{display: flex; width:100%; font-size:24px; height:auto; position:absolute; bottom:15px; }
+.wooreport_welcome_bottom_content{ width:100%; text-align:center}
+
+.wooreport_welcome_bottom_content.center{width:34%;}
+
+.wooreport_text_align_right{ text-align:right}
+
+/*End Search Form*/
+
+/*===============Setting Page Sort List ========================*/
+ ._wooreport_sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
+  ._wooreport_sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em;  width:100%; }
+  html>body ._wooreport_sortable li { height: 1.5em; line-height: 1.2em; }
+  .ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+  
+/*=============== End Setting Page Sort List ========================*/  
+
+/*=============== Dashbord Summary CSS ========================*/  
+table.wooreport_summary_box{width:100%;/* border:1px solid #00897b;*/ border-top:none;}
+
+table.wooreport_summary_box{border-left:1px solid #00897b;border-right:1px solid #00897b;}
+
+table.wooreport_summary_box td{ width:25%; text-align:center;}
+tr.wooreport_label_row td, tr.wooreport_value_row td{ padding:5px;}
+
+tr.wooreport_label_row td{border-bottom:1px solid #00897b; font-size:14px; text-transform:uppercase; font-weight:bold; color:#00897b}
+tr.wooreport_first_row td{ background-color:#00897b; height:5px; }
+
+
+tr.wooreport_value_row td{border-bottom:1px solid #00897b; font-size:18px; font-weight:bold;}
+
+tr.wooreport_first_row td:nth-child(1){background-color:#eb7077;border:1px solid #eb7077;}
+tr.wooreport_first_row td:nth-child(2){background-color:#f6a2ad;border:1px solid #f6a2ad;}
+tr.wooreport_first_row td:nth-child(3){background-color:#eb7077;border:1px solid #eb7077;}
+tr.wooreport_first_row td:nth-child(4){background-color:#f6a2ad;border:1px solid #f6a2ad;}
+
+
+tr.wooreport_value_row td:nth-child(1){border-bottom:1px solid #eb7077;}
+tr.wooreport_value_row td:nth-child(2){border-bottom:1px solid #f6a2ad;}
+tr.wooreport_value_row td:nth-child(3){border-bottom:1px solid #eb7077;}
+tr.wooreport_value_row td:nth-child(4){border-bottom:1px solid #f6a2ad;}
+
+h3.summary_heading{ font-size:20px;background: linear-gradient(to bottom, #0288D1, #00897b);
+color: #fff; padding:5px; margin:0;border-top: 5px solid #00897b; text-transform:uppercase; font-size:14px }
+.wooreport_table_heading_color_light {color:#f6a2ad}
+.wooreport_table_heading_color_dark {color:#eb7077}
+
+/*=============== End Dashbord Summary CSS ========================*/  
+
+/*=============== Paper Effect ========================*/  
+.wooreport_paper {
+  background: #fff;
+  box-shadow:
+	/* The top layer shadow */
+	0 -1px 1px rgba(0,0,0,0.15),
+	/* The second layer */
+	0 -10px 0 -5px #f6a2ad,
+	/* The second layer shadow */
+	0 -10px 1px -4px rgba(0,0,0,0.15),
+	 /* The third layer */
+	0 -20px 0 -10px #eb7077,
+	/* The third layer shadow */
+	0 -20px 1px -9px rgba(0,0,0,0.15);
+	/* Padding for demo purposes */
+	padding: 30px;
+	
+	border:1px solid #eb7077;
+	border-top:none;
+	
+	text-align:center; font-size:16px; font-weight:bold;
+}
+/*=============== End Paper Effect ========================*/  
+
+/*=============== Setting Table ========================*/  
+.wooreport-setting-table  th{
+	text-align:left;
+	padding:10px;
+	color:#eb7077;
+	text-transform:uppercase;
+}
+ .wooreport-setting-table  td{
+	text-align:left;
+
+	color:#eb7077;
+}
+ .wooreport-setting-table  td li{
+	text-align:left;
+
+	color:#eb7077;
+	border:1px solid #f6a2ad;
+}
+/*=============== End Setting Table ========================*/  		
+
+/*=============== Message Color ========================*/  
+.isa_info, .isa_success, .isa_warning, .isa_error {
+margin: 10px 0px;
+padding:10px;
+ 
+}
+.isa_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+.isa_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.isa_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+.isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+    margin:10px 22px;
+    font-size:2em;
+    vertical-align:middle;
+}	
+/*=============== End Message Color ========================*/  	
+
+/*Start Box Color*/
+.wooreport_parent_box { border:0px solid #eb7077;}
+.wooreportcogpro-float-left {
+	float:left;
+	width:22%;
+	/*border:1px solid red;*/
+	margin:10px;
+	height:120px;
+	/*border-top:12px solid red;*/
+
+}
+.wooreportcogpro-float-left .wooreport_box_heading {
+	text-align:left;padding:10px;  
+	text-transform:uppercase;
+	font-size:14px; 
+ border-bottom:2px solid #FFF;}
+.wooreportcogpro-float-left .wooreport_box_content { text-align:right; margin-top:40px;padding-right:10px; font-size:16px;}
+.wooreport_parent_box .box-color1{background:linear-gradient(to bottom, #ff7b7a, #e74e50); color:#FFF;
+border-top:6px solid #e74e50;
+}
+.wooreport_parent_box .box-color2{background:linear-gradient(to bottom, #A1887F, #8D6E63); color:#FFF;
+border-top:6px solid #8D6E63;
+}
+.wooreport_parent_box .box-color3{background:linear-gradient(to bottom, #78909C, #607D8B); color:#FFF;
+border-top:6px solid #607D8B;}
+.wooreport_parent_box .box-color4{background:linear-gradient(to bottom, #0288D1, #00897b); color:#FFF;
+border-top:6px solid #00897b;}
+.wooreport_parent_box .box-color5{background:linear-gradient(to bottom, #F4511E, #E64A19); color:#FFF;
+border-top:6px solid #E64A19;}
+.wooreport_parent_box .box-color6{background:linear-gradient(to bottom, #BA68C8, #AB47BC); color:#FFF;
+border-top:6px solid #AB47BC;}
+.wooreport_parent_box .box-color7{background:linear-gradient(to bottom, #EC407A, #E91E63); color:#FFF;
+border-top:6px solid #E91E63;}
+.wooreport_parent_box .box-color8{background:linear-gradient(to bottom, #EF5350, #F44336); color:#FFF;
+border-top:6px solid #F44336;}
+.wooreport_parent_box .box-color9{background:linear-gradient(to bottom, #009688, #00897B); color:#FFF;
+border-top:6px solid #00897B;}
+.wooreport_parent_box .box-color10{background:linear-gradient(to bottom, #0097A7, #00838F); color:#FFF;
+border-top:6px solid #00838F;}
+.wooreport_parent_box .box-color11{background:linear-gradient(to bottom, #FFB300, #FFA000); color:#FFF;
+border-top:6px solid #FFA000;}
+.wooreport_parent_box .box-color12{background:linear-gradient(to bottom, #43A047, #388E3C); color:#FFF;
+border-top:6px solid #388E3C;}
+.wooreport_parent_box .box-color13{background:linear-gradient(to bottom, #7e39f8, #673ab7); color:#FFF;
+border-top:6px solid #673ab7;}
+.wooreport_parent_box .box-color14{background:linear-gradient(to bottom, #ffd0b0, #ff9e80); color:#FFF;
+border-top:6px solid #ff9e80;}
+/*End Box Color*/
+			

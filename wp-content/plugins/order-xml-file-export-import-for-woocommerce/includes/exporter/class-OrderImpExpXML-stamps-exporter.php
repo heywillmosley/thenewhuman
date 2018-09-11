@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 class OrderImpExpXMLStamps_Exporter {
 
-    public function generate_xml_stamps($order_ids){
+    public function generate_xml_stamps($order_ids,$filename=''){
         
         include_once( 'class-OrderImpExpXML-order-exp-xml-general.php' );
         $export = new OrderImpExpXML_OrderExpXMLGeneral($order_ids);

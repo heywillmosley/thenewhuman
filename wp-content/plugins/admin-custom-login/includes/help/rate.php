@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					<div class="post-social post-social-xs" id="post-social-5">
 						<div class="text-center padding-all text-center">
 							<div class="textbox text-white   margin-bottom settings-title">
-								<?php _e('Rate Us', WEBLIZAR_ACL)?>
+								<?php _e('Rate & Donate  Us', WEBLIZAR_ACL)?>
 							</div>
 						</div>
 					</div>
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					<td></td>
 				</tr>
 				<tr class="radio-span" style="border-bottom:none;">
-					<td>
+					<td class="colcent">
 						
 						<a class="acl-rate-us" style="text-align:center; text-decoration: none;font:normal 30px/l;" href="http://wordpress.org/support/view/plugin-reviews/admin-custom-login" target="_blank">
 							<span class="dashicons dashicons-star-filled"></span>
@@ -54,5 +54,33 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</table>
 		</div>
 	</div>	
+
+	<div class="panel panel-primary panel-default content-panel">
+		<div class="panel-body">
+			<table class="form-table">
+				<tr>
+					<th scope="row" ><?php _e('Donate Us', WEBLIZAR_ACL)?></th>
+					<td></td>
+				</tr>
+				<tr class="radio-span" style="border-bottom:none;">
+					<td class="colcent">
+						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+							<input type="hidden" name="cmd" value="_s-xclick">
+							<input type="hidden" name="hosted_button_id" value="9MXDU3NKPCR5Y">
+							<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
+							<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+						</form>
+					</td>
+					
+				</tr>
+			</table>
+		</div>
+	</div>
 </div>
 <!-- /row -->
+<style type="text/css">
+	.colcent{
+		width:100% !important;
+		text-align: center !important;
+	}
+</style>

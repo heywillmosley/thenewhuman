@@ -43,13 +43,6 @@ class Theme_My_Login_Form {
 	protected $fields = array();
 
 	/**
-	 * The form field priorities.
-	 *
-	 * @var array
-	 */
-	protected $priorities = array();
-
-	/**
 	 * The form attributes.
 	 *
 	 * @var array
@@ -266,15 +259,10 @@ class Theme_My_Login_Form {
 	 * @param TML_Form_Field $field The field object.
 	 */
 	public function add_field( Theme_My_Login_Form_Field $field ) {
-		$name = $field->get_name();
 
-		$this->fields[ $name ] = $field;
+		$this->fields[ $field->get_name() ] = $field;
 
-		$priority = $field->get_priority();
-		if ( ! isset( $this->priorities[ $priority ] ) ) {
-			$this->priorities[ $priority ] = array();
-		}
-		$this->priorities[ $priority ][] = $name;
+		return $field;
 	}
 
 	/**
@@ -315,14 +303,27 @@ class Theme_My_Login_Form {
 	 * @return array The form fields.
 	 */
 	public function get_fields() {
-		ksort( $this->priorities );
-
+		$priorities    = array();
 		$sorted_fields = array();
-		foreach ( $this->priorities as $priority => $fields ) {
+
+		// Prioritize the fields
+		foreach( $this->fields as $field ) {
+			$priority = $field->get_priority();
+			if ( ! isset( $priorities[ $priority ] ) ) {
+				$priorities[ $priority ] = array();
+			}
+			$priorities[ $priority ][] = $field;
+		}
+
+		ksort( $priorities );
+
+		// Sort the fields
+		foreach ( $priorities as $priority => $fields ) {
 			foreach ( $fields as $field ) {
-				$sorted_fields[] = $this->get_field( $field );
+				$sorted_fields[] = $field;
 			}
 		}
+		unset( $priorities );
 
 		return $sorted_fields;
 	}
@@ -571,8 +572,6 @@ class Theme_My_Login_Form {
 
 		$output .= "</form>\n";
 
-		$output .= $args['after'];
-
 		if ( $args['show_links'] ) {
 			$output .= $this->render_links();
 		}
@@ -580,6 +579,8 @@ class Theme_My_Login_Form {
 		if ( ! empty( $args['container'] ) ) {
 			$output .= '</' . $args['container'] . ">\n";
 		}
+
+		$output .= $args['after'];
 
 		return $output;
 	}

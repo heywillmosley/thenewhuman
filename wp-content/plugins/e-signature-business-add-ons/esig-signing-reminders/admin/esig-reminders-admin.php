@@ -120,69 +120,79 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
 
             $api = WP_E_Sig();
 
-
+            $documents_total = $api->document->getDocumentsTotal('awaiting');
+            
             // get document list by status awaiting 
-            $docs = $api->document->fetchAllOnStatus('awaiting', true);
+            $increement = 0;
+            $pagenum=1;
+            
+            while ($documents_total > $increement) {
+                
+                $docs = $api->document->fetchAllOnStatus('awaiting', true,$pagenum, 100);
+                $pagenum++;
 
 
-            // loops starts 
-            foreach ($docs as $doc) {
+                // loops starts 
+                foreach ($docs as $doc) {
 
-                $document_id = $doc->document_id;
+                    $document_id = $doc->document_id;
 
-                if (self::is_reminder_enabled($document_id)) {
+                    if (self::is_reminder_enabled($document_id)) {
 
-                    // get all invitation list 
-                    $allinvitation = $api->invite->getInvitations($document_id);
+                        // get all invitation list 
+                        $allinvitation = $api->invite->getInvitations($document_id);
 
-                    foreach ($allinvitation as $invite) {
-                        $send_filter = apply_filters('esig_email_sending_invitation', 'yes', array('user_id' => $invite->user_id, 'document_id' => $document_id));
-                        if ($send_filter == "no") {
-                            $send = 0;
-                        } else {
-                            $send = 1;
-                        }
+                        foreach ($allinvitation as $invite) {
+                            $send_filter = apply_filters('esig_email_sending_invitation', 'yes', array('user_id' => $invite->user_id, 'document_id' => $document_id));
+                            if ($send_filter == "no") {
+                                $send = 0;
+                            } else {
+                                $send = 1;
+                            }
 
-                        if ($send) {
-                            // check if already this user has been signed 
+                            if ($send) {
+                                // check if already this user has been signed 
+                                
+                                if (!$api->signature->userHasSignedDocument($invite->user_id, $document_id)) {
+                                    // getting reminder settings 
+                                    $reminder_settings = $this->get_reminder_settings($document_id);
 
-                            if (!$api->signature->userHasSignedDocument($invite->user_id, $document_id)) {
-                                // getting reminder settings 
-                                $reminder_settings = $this->get_reminder_settings($document_id);
+                                    $first_reminder = $second_reminder = $expire_reminder = '';
+                                    if (isset($reminder_settings)) {
+                                        $first_reminder = absint($reminder_settings->esig_reminder_for);
+                                        $second_reminder = absint($reminder_settings->esig_reminder_repeat);
+                                        $expire_reminder = absint($reminder_settings->esig_reminder_expire);
+                                    }
 
-                                $first_reminder = $second_reminder = $expire_reminder = '';
-                                if (isset($reminder_settings)) {
-                                    $first_reminder = absint($reminder_settings->esig_reminder_for);
-                                    $second_reminder = absint($reminder_settings->esig_reminder_repeat);
-                                    $expire_reminder = absint($reminder_settings->esig_reminder_expire);
-                                }
-
-                                // get document create date 
-                                $document_create_date = $invite->invite_sent_date;
+                                    // get document create date 
+                                    $document_create_date = $invite->invite_sent_date;
 
 
 
-                                $current_date = date('Y-m-d H:i:s');
-                                // calculate create and current date 
-                                $date_difference = $this->esig_reminder_dateDiff($document_create_date, $current_date);
+                                    $current_date = date('Y-m-d H:i:s');
+                                    // calculate create and current date 
+                                    $date_difference = $this->esig_reminder_dateDiff($document_create_date, $current_date);
 
-                                // checking if match with first reminder 
-                                if ($date_difference >= $first_reminder && $date_difference < $second_reminder) {
-                                    $this->send_reminder($document_id, $invite->user_id);
-                                }
-                                // check with second reminder 
-                                elseif ($date_difference >= $second_reminder && $date_difference < $expire_reminder) {
-                                    $this->send_reminder($document_id, $invite->user_id);
-                                }
-                                // check if reminder has been expired 
-                                elseif ($date_difference >= $expire_reminder) {
-                                    $this->send_reminder($document_id, $invite->user_id);
-                                    self::expire_reminder($document_id);
+                                    // checking if match with first reminder 
+                                    if ($date_difference >= $first_reminder && $date_difference < $second_reminder) {
+                                        $this->send_reminder($document_id, $invite->user_id);
+                                    }
+                                    // check with second reminder 
+                                    elseif ($date_difference >= $second_reminder && $date_difference < $expire_reminder) {
+                                        $this->send_reminder($document_id, $invite->user_id);
+                                    }
+                                    // check if reminder has been expired 
+                                    elseif ($date_difference >= $expire_reminder) {
+                                        $this->send_reminder($document_id, $invite->user_id);
+                                        self::expire_reminder($document_id);
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                
+                $increement = $increement+100;
             }
 
 
@@ -524,9 +534,9 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
          */
         public function document_after_save($args) {
 
-           /* if (!isset($_POST['esig_reminders'])) {
-                return;
-            }*/
+            /* if (!isset($_POST['esig_reminders'])) {
+              return;
+              } */
             // settings an array reminder settings 
             $esig_reminders_settings = array(
                 "esig_reminder_for" => absint(esigpost('esig_reminder_for')),
@@ -733,6 +743,8 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
         }
 
     }
+
+    
 
     
 

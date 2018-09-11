@@ -22,23 +22,34 @@ function tml_admin_get_extensions_feed( $args = array() ) {
 		'number' => 12,
 	) );
 
-	$url = add_query_arg( $args, THEME_MY_LOGIN_EXTENSIONS_API_URL );
+	$transient_key = 'tml_extensions_feed-' . md5( http_build_query( $args ) );
 
-	$response = wp_remote_get( $url );
-	if ( is_wp_error( $response ) ) {
-		return $response;
+	$feed = get_site_transient( $transient_key );
+	if ( false === $feed ) {
+		$url = add_query_arg( $args, THEME_MY_LOGIN_EXTENSIONS_API_URL );
+
+		$response = wp_remote_get( $url, array(
+			'timeout' => 30,
+		) );
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$code    = wp_remote_retrieve_response_code( $response );
+		$message = wp_remote_retrieve_response_message( $response );
+
+		if ( '200' != $code ) {
+			return new WP_Error( 'http_error_' . $code, $message );
+		}
+
+		$response = json_decode( wp_remote_retrieve_body( $response ) );
+
+		$feed = $response->products;
+
+		set_site_transient( $transient_key, $feed, DAY_IN_SECONDS / 2 );
 	}
 
-	$code    = wp_remote_retrieve_response_code( $response );
-	$message = wp_remote_retrieve_response_message( $response );
-
-	if ( '200' != $code ) {
-		return new WP_Error( 'http_error_' . $code, $message );
-	}
-
-	$response = json_decode( wp_remote_retrieve_body( $response ) );
-
-	return $response->products;
+	return $feed;
 }
 
 /**
@@ -100,104 +111,6 @@ function tml_admin_extensions_page() {
 }
 
 /**
- * Render the extensions styles.
- *
- * @since 7.0
- */
-function tml_admin_extensions_styles() {
-	global $plugin_page;
-
-	if ( 'theme-my-login-extensions' != $plugin_page ) {
-		return;
-	}
-	?>
-
-	<style type="text/css">
-		.tml-extensions-wrap {
-			margin: 0 -15px;
-		}
-
-		.tml-extensions-wrap:after {
-			content: "";
-			clear: both;
-			display: table;
-		}
-
-		.tml-extensions-wrap * {
-			box-sizing: border-box;
-		}
-
-		.tml-extension {
-			background-color: #fff;
-			border: 1px solid #ccc;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-			float: left;
-			margin: 15px;
-		}
-
-		.tml-extension-image {
-			height: auto;
-			max-width: 100%;
-		}
-
-		.tml-extension-body {
-			padding: 15px;
-		}
-
-		.tml-extension-title {
-			margin: 0 0 15px;
-			padding: 0;
-		}
-
-		.tml-extension-button {
-			background-color: #8d50c3;
-			color: #fff;
-			display: block;
-			font-size: 1.1em;
-			padding: 10px;
-			text-align: center;
-			text-decoration: none;
-		}
-
-		.tml-extension-button:hover {
-			color: #fff;
-			background-color: #7a3cb0;
-		}
-
-		.tml-extension-button:active,
-		.tml-extension-button:focus {
-			box-shadow: 0 0 0 0.2em rgba(141, 80, 195, 0.5);
-			color: #fff;
-		}
-
-		.tml-view-all-extensions-wrap {
-			padding: 15px 0;
-			text-align: center;
-		}
-
-		.tml-view-all-extensions-link {
-			display: inline-block;
-			font-size: 1.5em;
-			text-decoration: none;
-		}
-
-		@media (min-width: 576px) {
-			.tml-extension {
-				width: 40%;
-			}
-		}
-
-		@media (min-width: 783px) {
-			.tml-extension {
-				width: 30%;
-			}
-		}
-	</style>
-
-	<?php
-}
-
-/**
  * Handle extension license activation and deactivation.
  *
  * @since 7.0
@@ -238,6 +151,36 @@ function tml_admin_handle_extension_licenses() {
 					$extension->set_license_status();
 				}
 			}
+		}
+	}
+}
+
+/**
+ * Check that all of the licenses are valid.
+ *
+ * @since 7.0.8
+ */
+function tml_admin_check_extension_licenses() {
+	global $plugin_page;
+
+	if ( tml_is_post_request() ) {
+		return;
+	}
+
+	if ( 'theme-my-login-licenses' != $plugin_page ) {
+		return;
+	}
+
+	foreach ( tml_get_extensions() as $extension ) {
+		if ( ! $extension->get_license_key() ) {
+			continue;
+		}
+		if ( 'valid' != $extension->get_license_status() ) {
+			continue;
+		}
+		$status = tml_check_extension_license( $extension );
+		if ( ! is_wp_error( $status ) ) {
+			$extension->set_license_status( $status );
 		}
 	}
 }

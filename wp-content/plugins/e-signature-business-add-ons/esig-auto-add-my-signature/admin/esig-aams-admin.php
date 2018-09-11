@@ -136,6 +136,7 @@ if (!class_exists('ESIG_AAMS_Admin')) :
                     $owner_id = $old_owner_id;  
                 }*/
 
+
                 if (!$owner_id) {
                     return FALSE;
                 }
@@ -147,7 +148,6 @@ if (!class_exists('ESIG_AAMS_Admin')) :
                 } else {
                     $auto_add_signature_change = ESIG_POST('auto_add_signature_change');
                 }
-
 
 
                 if ($api->signature->userHasSignedDocument($owner_id, $document_id) && !$auto_add_signature_change) {

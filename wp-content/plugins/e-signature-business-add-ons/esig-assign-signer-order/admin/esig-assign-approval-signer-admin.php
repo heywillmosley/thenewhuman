@@ -34,6 +34,7 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
             add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
 
             add_action('esig_document_pre_close', array($this, 'signature_saved'),998, 1);
+           
 
             add_filter('esig_admin_advanced_document_contents', array($this, 'assign_approval_signer'), 10, 1);
 
@@ -140,8 +141,8 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
 
                 $document_type = $api->document->getDocumenttype($document_id);
 
-                if (empty($document_type) || $document_type == 'normal') {
-
+                if (empty($document_type) || $document_type == 'normal' || $document_type=="esig_template") {
+                    
                     return false;
                 } else {
 
@@ -218,12 +219,12 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
             }
 
             if ($api->meta->get($old_doc_id, 'approval_invitation_' . $args['invitation']->invitation_id)) {
-                return;
+                return false;
             }
 
             $assign_approval = $api->meta->get($old_doc_id, 'esig_assign_approval_signer');
             if (!$assign_approval) {
-                return;
+                return false;
             }
             // sending invitation and saveing 
            
@@ -241,6 +242,10 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
                 // trigger a hook before redirecting to normal view page.
                 do_action('esig_approval_signer_added', array('document_id' => $document_id,'sad_doc_id' => $old_doc_id));
                 
+                if(WP_E_Sig()->document->getFormIntegration($document_id)){
+                   return false;
+                }
+                
                 wp_redirect($siteURL);
                 exit;
            // }
@@ -254,7 +259,7 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
             $signer_order = $api->meta->get($old_doc_id, 'esig_signer_order_sad');
 
             $signers = json_decode($api->meta->get($old_doc_id, 'esig_assign_approval_signer_save'), true);
-
+           
             $assign_signer_order = array();
 
             // if document type is normal set signer id first 
@@ -282,7 +287,7 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
                 $signer_id = $api->user->insert($recipient);
 
                 $assign_signer_order[] = $signer_id;
-
+               
                 $doc = $api->document->getDocument($document_id);
 
                 $owner_id = $doc->user_id;
@@ -308,23 +313,25 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
                 );
                
                 if ($signer_order == "active") {
-
+                    
                     if ($i == 1 && $first_signer_id === false) {
                        
                         $invitationsController->saveThenSend($invitation, $doc);
                     } else {
-                        
+                       
                         $invitationsController->save($invitation);
                     }
                 } else {
                     
                     $invitationsController->saveThenSend($invitation, $doc);
+                    
                 }
 
                 $invite_id = WP_E_Sig()->invite->getInviteID_By_userID_documentID($signer_id, $document_id);
                 WP_E_Sig()->meta->add($document_id, "approval_invitation_" . $invite_id, $old_doc_id);
+                WP_E_Sig()->meta->add($document_id, "approval_signer_created", $old_doc_id);
+               
             }
-
 
             // saving signer order 
             if ($signer_order == "active") {

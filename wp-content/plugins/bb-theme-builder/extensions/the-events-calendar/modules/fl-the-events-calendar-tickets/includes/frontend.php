@@ -15,6 +15,11 @@ if ( class_exists( 'Tribe__Tickets__Main' ) ) {
 		$rsvp->front_end_tickets_form( '' );
 		$rsvp->show_tickets_unavailable_message();
 
+		if ( class_exists( 'Tribe__Tickets__Commerce__PayPal__Main' ) ) {
+			$pp = Tribe__Tickets__Commerce__PayPal__Main::get_instance();
+			$pp->front_end_tickets_form( '' );
+		}
+
 		if ( class_exists( 'WooCommerce' ) && class_exists( 'Tribe__Tickets_Plus__Commerce__WooCommerce__Main' ) ) {
 			$woo = Tribe__Tickets_Plus__Commerce__WooCommerce__Main::get_instance();
 			$woo->front_end_tickets_form( '' );

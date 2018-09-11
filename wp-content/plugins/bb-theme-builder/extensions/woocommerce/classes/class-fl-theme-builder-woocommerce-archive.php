@@ -70,7 +70,7 @@ final class FLThemeBuilderWooCommerceArchive {
 	 * @return void
 	 */
 	static public function posts_module_after_pagination( $settings, $query = null ) {
-		if ( is_object( $query ) && 'product' == $query->query_vars['post_type'] ) {
+		if ( is_object( $query ) && isset( $query->query_vars['post_type'] ) && 'product' == $query->query_vars['post_type'] ) {
 			remove_action( 'woocommerce_after_shop_loop', 'woocommerce_pagination' );
 			do_action( 'woocommerce_after_shop_loop' );
 		}

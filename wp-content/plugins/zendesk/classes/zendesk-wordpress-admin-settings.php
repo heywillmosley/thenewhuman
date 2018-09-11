@@ -52,7 +52,7 @@ class Zendesk_Wordpress_Admin_Settings {
       <span class="description">Even if you have host mapping, please use your subdomain here.<br/>
         We will automatically detect if you use SSL or not.</span>
     <?php else: ?>
-      http://<input type="text" style="width: 120px; display: none;" class="regular-text" id="zendesk_account"
+      https://<input type="text" style="width: 120px; display: none;" class="regular-text" id="zendesk_account"
                     name="zendesk-settings[account]" value="<?php echo $zendesk_support->settings["account"]; ?>"/>
       <strong id="zendesk_account_string"><?php echo $zendesk_support->settings['account']; ?></strong>.zendesk.com<br/>
       <span class="description">
@@ -328,11 +328,17 @@ class Zendesk_Wordpress_Admin_Settings {
     _e( 'The Zendesk Web Widget makes it easy for your customers to get the help they need, wherever they are on your website, with one click or tap.', 'zendesk' );
     ?>
     <br/>
-    <?php printf( __( 'Activate your widget and access settings on the %s in your Zendesk.', 'zendesk' ), sprintf( '<a target="_blank" href="' . trailingslashit( $zendesk_support->zendesk_url ) . 'agent/admin/widget">%s</a>', __( 'Widget Configuration page', 'zendesk' ) ) ); ?>
+    <?php printf(__('Activate your widget and access settings on the %s in your Zendesk.', 'zendesk'), sprintf('<a target="_blank" href="' . trailingslashit($zendesk_support->zendesk_url) . 'agent/admin/widget">%s</a>', __('Widget Configuration page', 'zendesk'))); ?>
     <br/>
-    <strong> <?php _e( 'Note:', 'zendesk' ); ?> </strong>
     <?php
-    _e( 'You\'ll need to visit this page initially to set up your widget.' );
+    $config = $zendesk_support->api->get_embeddable_config();
+    if ( ! is_wp_error($config) && ! isset( $config['embeds']['ticketSubmissionForm'] ) ) { ?>
+      <strong> <?php _e('Note:', 'zendesk'); ?> </strong>
+      <?php
+      printf(
+        __('To enable the widget, you\'ll need to either visit this page or login a Zendesk account on the %s.'),
+        sprintf('<a target="_blank" href="/wp-admin/index.php#zendesk-dashboard-widget">%s</a>', __('dashboard')));
+    }
   }
 
   /*

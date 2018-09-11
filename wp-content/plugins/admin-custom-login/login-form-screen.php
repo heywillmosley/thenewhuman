@@ -10,6 +10,22 @@ function acl_er_login_logo() {
 	$text_and_color_page = unserialize(get_option('Admin_custome_login_text'));
 	$logo_page = unserialize(get_option('Admin_custome_login_logo'));
 	$Social_page = unserialize(get_option('Admin_custome_login_Social'));
+
+	if(isset($login_page['login_custom_css'])){
+		$login_custom_css = $login_page['login_custom_css'];
+	}else{
+		$login_custom_css = "";
+	}
+	if(isset($login_page['login_form_float'])){
+		$login_form_float = $login_page['login_form_float'];
+	}else{
+		$login_form_float = "center";
+	}
+	if(isset($login_page['login_form_position'])){
+		$login_form_position = $login_page['login_form_position'];
+	}else{
+		$login_form_position = "default";
+	}
 	
 	if ($top_page['top_bg_type'] == "slider-background"){
 		if($top_page['top_bg_slider_animation'] == "slider-style1") {
@@ -62,31 +78,31 @@ function acl_er_login_logo() {
 	//require social icon css
 	require_once('css/socialcss.php');
 ?>
-<script src="//ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
-<script type="text/javascript">
-      WebFont.load({
-        google: {
-          families: ['<?php echo $text_and_color_page["heading_font_style"]; ?>'] // saved value
-        }
-      });
-	  WebFont.load({
-        google: {
-          families: ["<?php echo $text_and_color_page['input_font_style']; ?>"] // saved value
-        }
-      });
-	  WebFont.load({
-        google: {
-          families: ["<?php echo $text_and_color_page['link_font_style']; ?>"] // saved value
-        }
-      });
-	  WebFont.load({
-        google: {
-          families: ["<?php echo $text_and_color_page['button_font_style']; ?>"] // saved value
-        }
-      });
+	<script src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
+	<script type="text/javascript">
+		WebFont.load({
+			google: {
+				families: ['<?php echo $text_and_color_page["heading_font_style"]; ?>'] // saved value
+			}
+		});
+		WebFont.load({
+			google: {
+				families: ["<?php echo $text_and_color_page['input_font_style']; ?>"] // saved value
+			}
+		});
+		WebFont.load({
+			google: {
+				families: ["<?php echo $text_and_color_page['link_font_style']; ?>"] // saved value
+			}
+		});
+		WebFont.load({
+			google: {
+				families: ["<?php echo $text_and_color_page['button_font_style']; ?>"] // saved value
+			}
+		});
     </script>
     <style type="text/css">	
-		<?php echo $login_page['login_custom_css']; ?>
+		<?php echo $login_custom_css; ?>
 	
 		/* Styles loading for Admin Custome Login */
 		html {
@@ -120,13 +136,13 @@ function acl_er_login_logo() {
 		  body.login div#login h1 a {
             background-image: url(<?php echo $logo_page['logo_image']; ?>) !important;
             padding-bottom: 30px;
-			<?php if($login_page['login_form_float'] == "center") {?>
+			<?php if($login_form_float == "center") {?>
 				margin: 0 auto;
 			<?php }?>
-			<?php if($login_page['login_form_float'] == "left") {?>
+			<?php if($login_form_float == "left") {?>
 				margin-left:30px;
 			<?php }?>
-			<?php if($login_page['login_form_float'] == "right") {?>
+			<?php if($login_form_float == "right") {?>
 				margin-right:25px;
 			<?php }?>
 			background-size: <?php echo $logo_page['logo_width'] ?>px <?php echo $logo_page['logo_height'] ?>px;
@@ -150,20 +166,20 @@ function acl_er_login_logo() {
 		add_filter( 'login_headertitle', 'my_login_logo_url_title' );		
 		?>
 		
-		<?php if($login_page['login_form_position'] == 'lf_float_style') { ?>
+		<?php if($login_form_position == 'lf_float_style') { ?>
 		#login {
-			float:<?php echo $login_page['login_form_float']; ?> !important;
+			float:<?php echo $login_form_float; ?> !important;
 			position: relative !important;
-			<?php if($login_page['login_form_float'] == "left") { ?>
+			<?php if($login_form_float == "left") { ?>
 			padding-left: 25px !important;
 			<?php }?>
-			<?php if($login_page['login_form_float'] == "right") { ?>
+			<?php if($login_form_float == "right") { ?>
 			padding-right: 25px !important;
 			<?php } ?>
 		}
 		<?php } ?>	
 			
-		<?php if($login_page['login_form_position'] == 'lf_customize_style') { ?>
+		<?php if($login_form_position == 'lf_customize_style') { ?>
 		#login{
 			position:relative !important;
 			<?php if($login_page['login_form_left'] !== "") { ?>
@@ -239,7 +255,7 @@ function acl_er_login_logo() {
 			text-shadow: <?php echo $link_shadow_color ?>;
 		}
 		
-		<?php if($login_page['login_form_float'] == "right") { ?>
+		<?php if($login_form_float == "right") { ?>
 		.login #nav {
 			margin: 29px 0 60px;
 		}
@@ -281,8 +297,7 @@ function acl_er_login_logo() {
 		$login_page = unserialize(get_option('Admin_custome_login_login'));
 		if(isset($login_page['log_form_above_msg'])){
 			$log_form_above_msg = $login_page['log_form_above_msg'];
-			if($log_form_above_msg !=""){
-			?> 
+			if($log_form_above_msg !=""){ ?> 
 				<p class='login-msg-above'><?php echo $log_form_above_msg; ?></p>
 			<?php
 			}
