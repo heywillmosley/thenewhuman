@@ -16,23 +16,6 @@ require_once 'classes/class-fl-child-theme.php';
 // Actions
 add_action( 'wp_enqueue_scripts', 'FLChildTheme::enqueue_scripts', 1000 );
 
-/**
-*  Hide shipping rates when free shipping is available*
-*
-*  @param array $rates Array of rates found for the package
-*  @param array $package The package array/object being shipped
-*  @return array of modified rates
-*
-*/
-function nh_hide_shipping_when_free_available($rates, $package) {
-  if (isset($rates['free_shipping'])) {
-    unset($rates['flat_rate']);
-  }
-  return $rates;
-}
-add_filter('woocommerce_package_rates', 'nh_hide_shipping_when_free_available', 10, 2);
-
-
 
 // Allow exe or dmg for digital downloads
 add_filter('upload_mimes', function($mimetypes, $user)
@@ -93,26 +76,6 @@ function wp_maintenance_mode(){
 //add_action('get_header', 'wp_maintenance_mode');
 
 
-/**
- * Hide shipping rates when free shipping is available.
- * Updated to support WooCommerce 2.6 Shipping Zones.
- *
- * @param array $rates Array of rates found for the package.
- * @return array
- */
-function my_hide_shipping_when_free_is_available( $rates ) {
-	$free = array();
-	foreach ( $rates as $rate_id => $rate ) {
-		if ( 'free_shipping' === $rate->method_id ) {
-			$free[ $rate_id ] = $rate;
-			break;
-		}
-	}
-	return ! empty( $free ) ? $free : $rates;
-}
-add_filter( 'woocommerce_package_rates', 'my_hide_shipping_when_free_is_available', 100 );
-
-
 /** Sort A - Z Packing Slips **/
 add_filter( 'wpo_wcpdf_order_items_data', 'wpo_wcpdf_sort_items_by_name', 10, 2 );
 function wpo_wcpdf_sort_items_by_name ( $items, $order ) {
@@ -166,6 +129,7 @@ function my_forcelogin_bypass( $bypass ) {
     || is_front_page() 
     || is_page(153258) // SV2 Webinar
     || is_page(153145) // SV2 Offer
+    || is_page(6740) // Training
     ) {
     $bypass = true;
   }

@@ -1,21 +1,4 @@
 <?php
-/**
-*  Hide shipping rates when free shipping is available*
-*
-*  @param array $rates Array of rates found for the package
-*  @param array $package The package array/object being shipped
-*  @return array of modified rates
-*
-*/
-function nh_hide_shipping_when_free_available($rates, $package) {
-  if (isset($rates['free_shipping'])) {
-    unset($rates['flat_rate']);
-  }
-  return $rates;
-}
-add_filter('woocommerce_package_rates', 'nh_hide_shipping_when_free_available', 10, 2);
-
-
 
 // Allow exe or dmg for digital downloads
 add_filter('upload_mimes', function($mimetypes, $user)
