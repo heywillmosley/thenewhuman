@@ -18,6 +18,13 @@ class USIN_Woocommerce_Query{
 		add_filter('usin_custom_select', array($this, 'filter_query_select'), 10, 2);
 		add_filter('usin_query_fields_without', array($this, 'filter_fields_without'));
 		add_filter('usin_users_raw_data', array($this, 'filter_raw_db_data'));
+		add_filter('usin_user_db_data', array($this, 'replace_country_code_with_name'));
+
+		$billing_keys = array('billing_country', 'billing_state', 'billing_city');
+		foreach ($billing_keys as $key ) {
+			$meta_query = new USIN_Meta_Query($key, 'text', 'wc_');
+			$meta_query->init();
+		}
 	}
 
 	public function filter_db_map($db_map){
@@ -235,6 +242,15 @@ class USIN_Woocommerce_Query{
 		}
 
 		return $custom_query_data;
+	}
+
+
+	public function replace_country_code_with_name($user_data){
+		if(!empty($user_data->wc_billing_country)){
+			$user_data->wc_billing_country = USIN_Woocommerce::get_wc_country_name_by_code($user_data->wc_billing_country);
+		}
+
+		return $user_data;
 	}
 	
 	

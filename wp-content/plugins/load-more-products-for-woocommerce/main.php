@@ -26,6 +26,7 @@ class BeRocket_LMP extends BeRocket_Framework {
     function __construct () {
         $this->info = array(
             'id'          => 3,
+            'lic_id'      => 5,
             'version'     => BeRocket_Load_More_Products_version,
             'plugin'      => '',
             'slug'        => '',
@@ -184,7 +185,13 @@ class BeRocket_LMP extends BeRocket_Framework {
         );
         
         // List of the features missed in free version of the plugin
-        $this->feature_list = array();
+        $this->feature_list = array(
+            'Different Products Load Type for Mobile Devices and Other',
+            'Custom Loading Image',
+            'Using images instead buttons',
+            'Lazy Load for products image',
+            '40 Animation for Lazy Load images'
+        );
 
         parent::__construct( $this );
         
@@ -1099,11 +1106,11 @@ class BeRocket_LMP extends BeRocket_Framework {
         $html = "<th>" . $item['label'] . "</th>".
             "<td>".
                 "<input class='lmp_button_settings' data-style='custom_css' name='" . $this->values['settings_name'] . "[br_lmp_button_settings][" . $item['name'] . "]' value='" . $options['br_lmp_button_settings']['custom_class'] . "' type='text'>".
-            "</td>".
-            "<td class='btn-preview-td'>".
+            "</td></tr><tr>".
+            "<td colspan='2'><div class='btn-preview-td'>".
                 "<h1 style='text-align: center;'>Preview</h1>".
                 "<div class='btn-preview-block'>" . $this->get_load_more_button() . "</div>".
-            "</td>";
+            "</div></td>";
         return $html;
     }
 
@@ -1122,8 +1129,8 @@ class BeRocket_LMP extends BeRocket_Framework {
         $html = "<th>" . $item['label'] . "</th>".
             "<td>".
                 "<input class='lmp_button_settings' data-style='custom_css' name='" . $this->values['settings_name'] . "[br_lmp_prev_settings][" . $item['name'] . "]' value='" . $options['br_lmp_prev_settings']['custom_class'] . "' type='text'>".
-            "</td>".
-            "<td class='btn-prev-preview-td'>".
+            "</td></tr><tr>".
+            "<td colspan='2'><div class='btn-prev-preview-td'>".
                 "<h1 style='text-align: center;'>Preview</h1>".
                 "<div class='btn-preview-block'>" . $this->get_load_more_button('br_lmp_prev_settings') . "</div>".
             "</td>";
@@ -1145,13 +1152,21 @@ class BeRocket_LMP extends BeRocket_Framework {
     public function section_autoselector_set ( $item, $options )
     {
         do_action('BeRocket_wizard_javascript');
-        $html  = '</tr><tr><td colspan="2" class="lmp_button_selectors lmp_button_selectorsfalse" style=" font-size: 32px; font-weight: 600; text-align: center; padding-top: 40px;">' . __('OR', 'BeRocket_LMP_domain') . '</td></tr><tr>'.
-                            '<th class="row">' . __('Get Selectors automatically (BETA)', 'BeRocket_LMP_domain') . '</th>'.
-                            '<td>' . BeRocket_wizard_generate_autoselectors(array('products' => '.lmp_button_selector_products', 'product' => '.lmp_button_selector_item', 'pagination' => '.lmp_button_selector_pagination', 'next_page' => '.lmp_button_selector_next_page', 'prev_page' => '.lmp_button_selector_prev_page')) . '</td>'.
-                  '</tr><tr>'.
-                            '<th class="row"></th>
-                            <td>' . __('Please do not use it on live sites. If something went wrong write us.', 'BeRocket_LMP_domain') . '</td>'.
-                  '</tr><tr>';
+        
+        $html = '</tr>
+            <tr><td colspan="2" class="lmp_button_selectors lmp_button_selectorsfalse" style=" font-size: 32px; font-weight: 600; text-align: center; padding-top: 40px;">' . __('OR', 'BeRocket_LMP_domain') . '</td></tr><tr>
+            <tr>
+            <th scope="row">' . __('Get selectors automatically', 'BeRocket_AJAX_domain') . '</th>
+            <td>
+                <h4>' . __('How it work:', 'BeRocket_AJAX_domain') . '</h4>
+                <ol>
+                    <li>' . __('Run Auto-selector', 'BeRocket_AJAX_domain') . '</li>
+                    <li>' . __('Wait until end <strong style="color:red;">do not close this page</strong>', 'BeRocket_AJAX_domain') . '</li>
+                    <li>' . __('Save settings with new selectors', 'BeRocket_AJAX_domain') . '</li>
+                </ol>
+                ' . BeRocket_wizard_generate_autoselectors(array('products' => '.lmp_button_selector_products', 'product' => '.lmp_button_selector_item', 'pagination' => '.lmp_button_selector_pagination', 'next_page' => '.lmp_button_selector_next_page', 'prev_page' => '.lmp_button_selector_prev_page')) . '
+            </td>
+        </tr><tr>';
         return $html;
     }
     /*

@@ -1262,13 +1262,25 @@ function odb_confirm_delete() {
 					// SKIP InnoDB tables
 					$msg = __('InnoDB table: skipped...', 'rvg-optimize-database');
 				} else {
-					$query  = "OPTIMIZE TABLE ".$odb_class->odb_tables[$i][0];
-					$result = $wpdb->get_results($query);
-					$msg    = $result[0]->Msg_text;
-					$msg    = str_replace('OK', __('<span class="odb-optimized">TABLE OPTIMIZED</span>', 'rvg-optimize-database'), $msg);
-					$msg    = str_replace('Table is already up to date', __('Table is already up to date', 'rvg-optimize-database'), $msg);
-					$msg    = str_replace('Table does not support optimize, doing recreate + analyze instead', __('<span class="odb-optimized">TABLE OPTIMIZED</span>', 'rvg-optimize-database'), $msg);
-				}
+					// v4.6.3
+					if (strtolower($table_info[0]->engine) == 'myisam') {
+						$result = $this->odb_optimize_myisam($odb_class->odb_tables[$i][0]);
+						$msg    = $result[0]->Msg_text;
+						if ($msg == 'OK') {
+							$msg = __('<span class="odb-optimized">TABLE OPTIMIZED</span>', 'rvg-optimize-database');
+						} else if ($msg == 'Table is already up to date') {
+							$msg = __('Table is already up to date', 'rvg-optimize-database');
+						}
+					} else {
+						$result = $this->odb_optimize_innodb($odb_class->odb_tables[$i][0]);
+						$msg    = $result[0]->Msg_text;
+						if ($msg == 'Table is already up to date') {
+							$msg = __('Table is already up to date', 'rvg-optimize-database');
+						} else {
+							$msg = __('<span class="odb-optimized">TABLE OPTIMIZED</span>', 'rvg-optimize-database');
+						}
+					} // if (strtolower($table_info[0]->engine) == 'myisam')
+				} // if($odb_class->odb_rvg_options["optimize_innodb"] == 'N' && strtolower($table_info[0]->engine) == 'innodb')
 				
 				if (!$scheduler)
 				{	// NOT FROM THE SCEDULER
@@ -1287,7 +1299,46 @@ function odb_confirm_delete() {
 		} // for ($i=0; $i<count($tables); $i++)
 		return $cnt;
 		
-	} // odb_optimize_tables()	
+	} // odb_optimize_tables()
+
+
+	/********************************************************************************************
+	 *	OPTIMIZE A MyISAM TABLE
+	 ********************************************************************************************/	
+	function odb_optimize_myisam($table_name) {
+		global $wpdb;
+		$query  = "OPTIMIZE TABLE " . $table_name;
+		return $wpdb->get_results($query);
+	} // odb_optimize_myisam()
+
+
+	/********************************************************************************************
+	 *	OPTIMIZE AN InnoDB TABLE
+	 ********************************************************************************************/		
+	function odb_optimize_innodb($table_name) {
+		global $wpdb;
+
+		$query  = "OPTIMIZE TABLE " . $table_name;
+		return $wpdb->get_results($query);
+		
+/*		// https://www.percona.com/blog/2010/12/09/mysql-optimize-tables-innodb-stop/
+		$query = "SHOW KEYS FROM " . $table_name . " WHERE Key_name <> 'PRIMARY'";
+		$result = $wpdb->get_results($query);
+		if (count($result) > 0) {
+			for ($i = 0; $i < count($result); $i++) {
+				$key_name = $result[$i]->Key_name;
+				
+				$query = "ALTER TABLE " . $table_name . " DROP KEY " . $key_name;
+				$result = $wpdb->get_results($query);
+		
+				$query = "ALTER TABLE " . $table_name . " add key(" . $key_name . ")";
+				$result = $wpdb->get_results($query);
+			} // for ($i = 0; $i < count($result); $i++)
+			return __('<span class="odb-optimized">TABLE OPTIMIZED</span>', 'rvg-optimize-database');
+		} else {
+			return __('Table is already up to date', 'rvg-optimize-database');
+		} // if (count($result) > 0*/
+	} // odb_optimize_innodb()
 	
 } // ODB_Cleaner
 ?>

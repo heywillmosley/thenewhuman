@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: admin-custome-login\n"
-"POT-Creation-Date: 2018-08-06 14:16+0530\n"
-"PO-Revision-Date: 2018-08-06 14:16+0530\n"
+"POT-Creation-Date: 2018-08-08 20:06+0530\n"
+"PO-Revision-Date: 2018-08-08 20:06+0530\n"
 "Last-Translator: Weblizar <lizarweb@gmail.com>\n"
 "Language-Team: \n"
 "Language: hi_IN\n"
@@ -16,7 +16,19 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/WL_ACL_FREE_Menu.php:6 includes/content.php:28
+#: admin/inc/admin_menu.php:11
+msgid "Plugin Configuration Click Here"
+msgstr "प्लगइन कॉन्फ़िगरेशन यहां क्लिक करें"
+
+#: admin/inc/admin_menu.php:12
+msgid "Buy Pro"
+msgstr "खरीदारी के समर्थक"
+
+#: admin/inc/admin_menu.php:13
+msgid "Admin Demo"
+msgstr "व्यवस्थापक डेमो"
+
+#: includes/content.php:28 init.php:59
 msgid "Admin Custom Login"
 msgstr "व्यवस्थापक कस्टम लॉगिन"
 
@@ -24,8 +36,8 @@ msgstr "व्यवस्थापक कस्टम लॉगिन"
 msgid "Show Us Some Love (Rate Us)"
 msgstr "आपका सहयोग दे(रैट दे)"
 
-#: includes/content.php:80 includes/dashboard/dashboard.php:169
-#: includes/dashboard/dashboard.php:183
+#: includes/content.php:80 includes/dashboard/dashboard.php:129
+#: includes/dashboard/dashboard.php:144
 msgid "Dashboard"
 msgstr "डैशबोर्ड"
 
@@ -126,71 +138,71 @@ msgstr "अगर आप हमें पसंद करते हैं"
 msgid "Admin Custom Login Dashboard"
 msgstr "व्यवस्थापक कस्टम लॉगिन डैशबोर्ड"
 
-#: includes/dashboard/dashboard.php:104
+#: includes/dashboard/dashboard.php:30
 msgid "Admin Custom Login Status"
 msgstr "व्यवस्थापक कस्टम लॉगिन स्टेटस"
 
-#: includes/dashboard/dashboard.php:110
+#: includes/dashboard/dashboard.php:36
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:83
 msgid "Disable"
 msgstr "असक्षम"
 
-#: includes/dashboard/dashboard.php:113
+#: includes/dashboard/dashboard.php:39
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:80
 msgid "Enable"
 msgstr "सक्षम"
 
-#: includes/dashboard/dashboard.php:124
+#: includes/dashboard/dashboard.php:51
 msgid "View Login Page"
 msgstr "देखें लॉगिन पृष्ठ"
 
-#: includes/dashboard/dashboard.php:129
+#: includes/dashboard/dashboard.php:56
 msgid "Copy below link and open in another browser where you are not logged in"
 msgstr "नीचे दिये हुए लिंक को कॉपी करे और पेस्ट करे दुसरे ब्राउज़र में जहाँ आप लॉग इन ना हो"
 
-#: includes/dashboard/dashboard.php:169 includes/design/background.php:368
+#: includes/dashboard/dashboard.php:129 includes/design/background.php:368
 #: includes/design/text_and_color.php:583
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:117
-#: includes/login-form-setting/login-form-background.php:716
+#: includes/login-form-setting/login-form-background.php:767
 #: includes/settings/page-settings.php:168 includes/social/social.php:192
 msgid "Setting Save Successfully"
 msgstr "सफलतापूर्वक सहेजें स्थापना"
 
-#: includes/dashboard/dashboard.php:169 includes/dashboard/dashboard.php:183
+#: includes/dashboard/dashboard.php:129 includes/dashboard/dashboard.php:144
 #: includes/design/background.php:180 includes/design/background.php:368
 #: includes/design/background.php:383 includes/design/text_and_color.php:583
 #: includes/design/text_and_color.php:598
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:117
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:131
 #: includes/login-form-setting/login-form-background.php:361
-#: includes/login-form-setting/login-form-background.php:716
-#: includes/login-form-setting/login-form-background.php:730
+#: includes/login-form-setting/login-form-background.php:767
+#: includes/login-form-setting/login-form-background.php:781
 #: includes/settings/page-settings.php:84 includes/settings/page-settings.php:168
 #: includes/settings/page-settings.php:182 includes/social/social.php:192
 #: includes/social/social.php:206
 msgid "Close"
 msgstr "बंद"
 
-#: includes/dashboard/dashboard.php:183 includes/design/background.php:383
+#: includes/dashboard/dashboard.php:144 includes/design/background.php:383
 #: includes/design/text_and_color.php:598
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:131
-#: includes/login-form-setting/login-form-background.php:730
+#: includes/login-form-setting/login-form-background.php:781
 #: includes/settings/page-settings.php:182 includes/social/social.php:206
 msgid "Setting Reset Successfully"
 msgstr "सफलतापूर्वक सहेजें स्थापना"
 
-#: includes/dashboard/dashboard.php:190 includes/design/background.php:391
+#: includes/dashboard/dashboard.php:151 includes/design/background.php:391
 #: includes/design/text_and_color.php:606
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:138
-#: includes/login-form-setting/login-form-background.php:737
+#: includes/login-form-setting/login-form-background.php:788
 #: includes/settings/page-settings.php:189 includes/social/social.php:213
 msgid "Save Changes"
 msgstr "परिवर्तनों को सुरक्षित करें"
 
-#: includes/dashboard/dashboard.php:193 includes/design/background.php:394
+#: includes/dashboard/dashboard.php:154 includes/design/background.php:394
 #: includes/design/text_and_color.php:609
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:141
-#: includes/login-form-setting/login-form-background.php:740
+#: includes/login-form-setting/login-form-background.php:791
 #: includes/settings/page-settings.php:192 includes/social/social.php:216
 msgid "Reset Default"
 msgstr "पुनः तैयार करना"
@@ -647,6 +659,14 @@ msgstr "दाया"
 msgid "Floating With Customization Settings"
 msgstr "कस्टोमाईज़ेसन  के साथ घूमता हुआ"
 
+#: includes/login-form-setting/login-form-background.php:250
+msgid "Left Margin"
+msgstr "बायां मार्जिन"
+
+#: includes/login-form-setting/login-form-background.php:258
+msgid "Top Margin"
+msgstr "ऊपरी किनारा"
+
 #: includes/login-form-setting/login-form-background.php:266
 msgid "Note: This form position setting will be not responsive."
 msgstr "नोट: इस फॉर्म की पोजीशन रेसपोनसिव नही होगी."
@@ -732,81 +752,105 @@ msgstr "सीमा की मोटाई"
 msgid "Enable Form Shadow?"
 msgstr "फार्म छाया सक्षम करें?"
 
-#: includes/login-form-setting/login-form-background.php:552
+#: includes/login-form-setting/login-form-background.php:553
 msgid "Form Shadow Color"
 msgstr "छाया रंग रूप"
 
-#: includes/login-form-setting/login-form-background.php:569
-msgid "Username / Email Field Placeholder Text"
+#: includes/login-form-setting/login-form-background.php:570
+msgid "Username or Email Field Label Text"
 msgstr "उपयोगकर्ता नाम / ईमेल फ़ील्ड प्लेसहोल्डर टेक्स्ट"
 
-#: includes/login-form-setting/login-form-background.php:574
-msgid "Type Username or Email"
-msgstr "उपयोगकर्ता नाम या ईमेल टाइप करें"
+#: includes/login-form-setting/login-form-background.php:575
+msgid "Type username or email field label text"
+msgstr "उपयोगकर्ता नाम या ईमेल फ़ील्ड लेबल टेक्स्ट टाइप करें"
 
 #: includes/login-form-setting/login-form-background.php:587
+msgid "Username or Email Field Placeholder Text"
+msgstr "उपयोगकर्ता नाम या ईमेल फ़ील्ड प्लेसहोल्डर टेक्स्ट"
+
+#: includes/login-form-setting/login-form-background.php:592
+msgid "Type username or email placeholder text"
+msgstr "उपयोगकर्ता नाम या ईमेल प्लेसहोल्डर पाठ टाइप करें"
+
+#: includes/login-form-setting/login-form-background.php:604
+msgid "Password Field Label Text"
+msgstr "पासवर्ड फ़ील्ड लेबल टेक्स्ट"
+
+#: includes/login-form-setting/login-form-background.php:609
+msgid "Type password field label text"
+msgstr "पासवर्ड फ़ील्ड लेबल टेक्स्ट टाइप करें"
+
+#: includes/login-form-setting/login-form-background.php:621
 msgid "Password Field Placeholder Text"
 msgstr "पासवर्ड फ़ील्ड प्लेसहोल्डर टेक्स्ट"
 
-#: includes/login-form-setting/login-form-background.php:592
-msgid "Type Password"
-msgstr "पासवर्ड लिखें"
+#: includes/login-form-setting/login-form-background.php:626
+msgid "Type password field placeholder text"
+msgstr "पासवर्ड फ़ील्ड प्लेसहोल्डर टेक्स्ट टाइप करें"
 
-#: includes/login-form-setting/login-form-background.php:604
+#: includes/login-form-setting/login-form-background.php:638
+msgid "Log In Button Text"
+msgstr "लॉग इन बटन टेक्स्ट"
+
+#: includes/login-form-setting/login-form-background.php:643
+msgid "Type log in button text"
+msgstr "लॉग इन बटन टेक्स्ट टाइप करें"
+
+#: includes/login-form-setting/login-form-background.php:655
 msgid "Redirect Users After Login (Not Work For Admin)"
 msgstr "व्यवस्थापक के अलावा अन्य उपयोगकर्ताओं को पुन: डायरेक्ट करें"
 
-#: includes/login-form-setting/login-form-background.php:609
+#: includes/login-form-setting/login-form-background.php:660
 msgid "Redirect URL"
 msgstr "रीडायरेक्ट यूआरएल"
 
-#: includes/login-form-setting/login-form-background.php:610
+#: includes/login-form-setting/login-form-background.php:661
 msgid ""
 "Enter the URL to redirect users after login, Setting will not work for an administrator."
 msgstr ""
 "लॉगिन करने के बाद उपयोगकर्ताओं को रीडायरेक्ट करने के लिए URL दर्ज करें, व्यवस्थापक किसी व्यवस्थापक के लिए "
 "काम नहीं करेगा."
 
-#: includes/login-form-setting/login-form-background.php:622
+#: includes/login-form-setting/login-form-background.php:673
 msgid "Display Note To User Above Login Form"
 msgstr "लॉग इन फॉर्म के ऊपर उपयोगकर्ता को नोट नोट"
 
-#: includes/login-form-setting/login-form-background.php:627
-#: includes/login-form-setting/login-form-background.php:679
+#: includes/login-form-setting/login-form-background.php:678
+#: includes/login-form-setting/login-form-background.php:730
 msgid "Type Message"
 msgstr "संदेश टाइप करें"
 
-#: includes/login-form-setting/login-form-background.php:639
+#: includes/login-form-setting/login-form-background.php:690
 msgid "Message Font Size"
 msgstr "संदेश फ़ॉन्ट का आकार"
 
-#: includes/login-form-setting/login-form-background.php:657
+#: includes/login-form-setting/login-form-background.php:708
 msgid "Message Font Color"
 msgstr "शीर्षक फ़ॉन्ट रंग"
 
-#: includes/login-form-setting/login-form-background.php:674
+#: includes/login-form-setting/login-form-background.php:725
 msgid "Tagline Message Display Below Login Form"
 msgstr "लॉगिन फॉर्म के नीचे टैगलाइन संदेश प्रदर्शन"
 
-#: includes/login-form-setting/login-form-background.php:691
-#: includes/login-form-setting/login-form-background.php:696
+#: includes/login-form-setting/login-form-background.php:742
+#: includes/login-form-setting/login-form-background.php:747
 msgid "Custom CSS"
 msgstr "कस्टम सी एस  एस"
 
-#: includes/login-form-setting/login-form-background.php:698
+#: includes/login-form-setting/login-form-background.php:749
 msgid "Enter any custom css you want to apply on login panel."
 msgstr "कोई भी  कस्टम सी एस  एस डाले जो आप लॉग इन पैनल पर लगाना चाहते है."
 
-#: includes/login-form-setting/login-form-background.php:699
+#: includes/login-form-setting/login-form-background.php:750
 msgid "Note: Please Do Not Use"
 msgstr "नोट: किरपिया प्रयोग न करे"
 
-#: includes/login-form-setting/login-form-background.php:699
+#: includes/login-form-setting/login-form-background.php:750
 msgid "Tag With Custom CSS"
 msgstr "कस्टम सी एस  एस के साथ स्टाइल टैग परयोग न करे"
 
-#: includes/login-form-setting/login-form-background.php:716
-#: includes/login-form-setting/login-form-background.php:730
+#: includes/login-form-setting/login-form-background.php:767
+#: includes/login-form-setting/login-form-background.php:781
 msgid "Login"
 msgstr "लॉगिन"
 
@@ -968,34 +1012,46 @@ msgstr "क्या हुआ"
 msgid "Social"
 msgstr "सामाजिक"
 
-#: init.php:62
+#: init.php:59
+msgid "AC Login"
+msgstr "कस्टम लॉगिन"
+
+#: init.php:65
 msgid "Settings"
 msgstr "सेटिंग्स"
 
-#: init.php:154
-msgid "Username or Email"
-msgstr "उपयोगकर्ता का नाम या ईमेल"
+#: init.php:68
+msgid "Get Pro"
+msgstr "प्रीमियम प्राप्त करना"
 
-#: init.php:155
-msgid "Password"
-msgstr "पासवर्ड"
-
-#: init.php:178
+#: init.php:211
 msgid "Find Us On Social Media"
 msgstr "हमें सामाजिक मीडिया पर खोजें"
 
-#: init.php:465
+#: init.php:504
 msgid "Please upload a valid .json file"
 msgstr "कृपया केवल जैसन फ़ाइल अपलोड करें"
 
-#: init.php:471
+#: init.php:510
 msgid "Please upload a file to import"
 msgstr "कृपया इम्पोर्ट के लिए फाइल अपलोड करे"
 
+#~ msgid "Type Username or Email"
+#~ msgstr "उपयोगकर्ता नाम या ईमेल टाइप करें"
+
+#~ msgid "Type Password"
+#~ msgstr "पासवर्ड लिखें"
+
 #, fuzzy
-#~| msgid "Admin Email"
-#~ msgid "Admin Demo"
-#~ msgstr "व्यवस्थापक ईमेल"
+#~| msgid "Admin Custom Login"
+#~ msgid "Custom Login"
+#~ msgstr "व्यवस्थापक कस्टम लॉगिन"
+
+#~ msgid "Username or Email"
+#~ msgstr "उपयोगकर्ता का नाम या ईमेल"
+
+#~ msgid "Password"
+#~ msgstr "पासवर्ड"
 
 #, fuzzy
 #~| msgid "Admin Custom Login Status"
@@ -1669,9 +1725,6 @@ msgstr "कृपया इम्पोर्ट के लिए फाइल �
 
 #~ msgid "Select Start Day"
 #~ msgstr "प्रारम्भ दिन चुनें"
-
-#~ msgid "Booking Button Text"
-#~ msgstr "आरक्षण का बटन पाठ"
 
 #~ msgid "Booking Time Slot"
 #~ msgstr "कैलेंडर के स्लॉट का समय"

@@ -14,6 +14,7 @@ class USIN_Ultimate_Member extends USIN_Plugin_Module{
 	protected $fields;
 	protected $serialized_fields = array();
 	protected $um_query;
+	protected static $account_statuses = null;
 	const PREFIX = 'um_';
 
 
@@ -65,6 +66,21 @@ class USIN_Ultimate_Member extends USIN_Plugin_Module{
 		if(self::is_um_older_than_v2()){
 			$fields[]=$this->get_role_field_options();
 		}
+
+		//account status
+		$fields[]= array(
+			'name' => __('Account status', 'usin'),
+			'id' => 'um_account_status',
+			'order' => false,
+			'show' => false,
+			'fieldType' => 'general',
+			'filter' => array(
+				'type' => 'select',
+				'options' => $this->assoc_array_to_options(self::get_account_statuses()),
+				'disallow_null' => true
+			),
+			'module' => $this->module_name
+		);
 		
 		//Ultimate Member form fields
 		$form_fields = $this->get_form_fields();
@@ -192,6 +208,19 @@ class USIN_Ultimate_Member extends USIN_Plugin_Module{
 			$options[]= array('key'=>$k, 'val'=>$value);
 		}
 		return $options;
+	}
+
+	public static function get_account_statuses(){
+		if(self::$account_statuses === null){
+			self::$account_statuses = array(
+				'approved' => __( 'Approved', 'usin' ),
+				'awaiting_admin_review' => __( 'Pending review', 'usin' ),
+				'awaiting_email_confirmation' => __( 'Waiting e-mail confirmation', 'usin' ),
+				'inactive' => __( 'Inactive', 'usin' ),
+				'rejected' => __( 'Rejected', 'usin' )
+			);
+		}
+		return self::$account_statuses;
 	}
 	
 	

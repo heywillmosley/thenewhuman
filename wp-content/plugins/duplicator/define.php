@@ -2,8 +2,8 @@
 //Prevent directly browsing to the file
 if (function_exists('plugin_dir_url')) 
 {		
-    define('DUPLICATOR_VERSION',        '1.2.40');
-    define('DUPLICATOR_HOMEPAGE',       'http://lifeinthegrid.com/labs/duplicator');
+    define('DUPLICATOR_VERSION',        '1.2.48');
+    define('DUPLICATOR_HOMEPAGE',       'https://snapcreek.com/duplicator/duplicator-free/');
     define('DUPLICATOR_PLUGIN_URL',     plugin_dir_url(__FILE__));
 	define('DUPLICATOR_SITE_URL',		get_site_url());
 	
@@ -26,10 +26,6 @@ if (function_exists('plugin_dir_url'))
 	define('DUPLICATOR_SSDIR_URL',      DUPLICATOR_SITE_URL . "/" . DUPLICATOR_SSDIR_NAME);
     define('DUPLICATOR_INSTALL_PHP',    'installer.php');
 	define('DUPLICATOR_INSTALL_BAK',    'installer-backup.php');
-    define('DUPLICATOR_INSTALL_SQL',    'installer-data.sql');
-    define('DUPLICATOR_INSTALL_LOG',    'installer-log.txt');
-	define('DUPLICATOR_INSTALL_DB',     'database.sql');
-	
 	
 	//GENERAL CONSTRAINTS
     define('DUPLICATOR_PHP_MAX_MEMORY',  '2048M');

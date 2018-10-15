@@ -4,6 +4,43 @@
 define( 'FL_CHILD_THEME_DIR', get_stylesheet_directory() );
 define( 'FL_CHILD_THEME_URL', get_stylesheet_directory_uri() );
 
+
+// Subscribe to MC List upon new user registration
+add_action( 'user_register', 'registration_to_mc', 10, 1 );
+
+function registration_to_mc( $user_id ) {
+    
+    $user_info = get_userdata( $user_id );
+    
+    $email = $user_info->user_email;;
+    $list_id = 'a981a755fb';
+    $api_key = '07d44c5c8c9ed311e2b60f9c9a1fb23e-us5';
+     
+    $data_center = substr($api_key,strpos($api_key,'-')+1);
+     
+    $url = 'https://'. $data_center .'.api.mailchimp.com/3.0/lists/'. $list_id .'/members';
+     
+    $json = json_encode([
+        'email_address' => $email,
+        'status'        => 'subscribed', //pass 'subscribed' or 'pending'
+    ]);
+     
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_USERPWD, 'user:' . $api_key);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+    $result = curl_exec($ch);
+    $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    echo $status_code;
+
+}
+
+
 /* Load custom login page styles */
 function my_custom_login() {
 echo '<link rel="stylesheet" type="text/css" href="' . get_bloginfo('stylesheet_directory') . '/login/custom-login-styles.css" />';

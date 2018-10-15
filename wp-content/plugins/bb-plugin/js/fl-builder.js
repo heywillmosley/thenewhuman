@@ -1366,9 +1366,16 @@
 		{
 			var href = window.location.href;
 
+			try {
+				var flbuilder = typeof window.opener.FLBuilder != 'undefined'
+			}
+			catch(err) {
+				var flbuilder = false
+			}
+
 			if ( FLBuilderConfig.isUserTemplate && typeof window.opener != 'undefined' && window.opener ) {
 
-				if ( typeof window.opener.FLBuilder != 'undefined' ) {
+				if ( flbuilder ) {
 					if ( 'undefined' === typeof FLBuilderGlobalNodeId ) {
 						window.opener.FLBuilder._updateLayout();
 					} else {
@@ -1402,9 +1409,16 @@
 		_exitWithoutRefresh: function() {
 			var href = window.location.href;
 
-			if ( FLBuilderConfig.isUserTemplate && typeof window.opener != 'undefined' && window.opener ) {
+			try {
+				var flbuilder = typeof window.opener.FLBuilder != 'undefined'
+			}
+			catch(err) {
+				var flbuilder = false
+			}
 
-				if ( typeof window.opener.FLBuilder != 'undefined' ) {
+			if ( FLBuilderConfig.isUserTemplate && flbuilder && window.opener ) {
+
+				if ( flbuilder ) {
 					if ( 'undefined' === typeof FLBuilderGlobalNodeId ) {
 						window.opener.FLBuilder._updateLayout();
 					} else {
@@ -5084,7 +5098,8 @@
 		{
 			var module   = $( this ).closest( '.fl-module' ),
 				nodeId   = module.attr( 'data-node' ),
-				position = module.index() + 1,
+				parent   = module.parent(),
+				position = parent.find( ' > .fl-col-group, > .fl-module' ).index( module ) + 1,
 				clone    = module.clone(),
 				form	 = $( '.fl-builder-module-settings[data-node=' + nodeId + ']' ),
 				settings = null;
@@ -5103,7 +5118,7 @@
 			}, 500 );
 
 			FLBuilder._showNodeLoading( nodeId + '-clone' );
-			FLBuilder._newModuleParent 	 = module.parent();
+			FLBuilder._newModuleParent 	 = parent;
 			FLBuilder._newModulePosition = position;
 
 			FLBuilder.ajax({
@@ -7406,7 +7421,7 @@
 				// Check the selected value without the protocol so we get a match if
 				// a site has switched to HTTPS since selecting this photo (#641).
 				if ( selectedSize ) {
-					selectedSize = selectedSize.replace( /https?/, '' );
+					selectedSize = selectedSize.split(/[\\/]/).pop();
 				}
 
 				for(size in photo.sizes) {
@@ -7425,7 +7440,7 @@
 
 					if ( ! selectedSize ) {
 						selected = size == 'full' ? ' selected="selected"' : '';
-					} else if( selectedSize === photo.sizes[ size ].url.replace( /https?/, '' ) ) {
+					} else if( selectedSize === photo.sizes[ size ].url.split(/[\\/]/).pop() ) {
 						selected = ' selected="selected"';
 					}
 
@@ -8086,19 +8101,7 @@
 		_getFontWeights: function( currentFont ){
 			var selectWeight = currentFont.next( '.fl-font-field-weight' ),
 				font         = currentFont.val(),
-				weightMap    = {
-					'default' : 'Default',
-					'regular' : 'Regular',
-					'100': 'Thin 100',
-					'200': 'Extra-Light 200',
-					'300': 'Light 300',
-					'400': 'Normal 400',
-					'500': 'Medium 500',
-					'600': 'Semi-Bold 600',
-					'700': 'Bold 700',
-					'800': 'Extra-Bold 800',
-					'900': 'Ultra-Bold 900'
-				},
+				weightMap    = FLBuilderConfig.FontWeights,
 				weights      = {};
 
 				selectWeight.html('');

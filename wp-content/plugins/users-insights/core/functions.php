@@ -24,11 +24,13 @@ function usin_is_a_users_insights_page(){
 	}
 	
 	$manager = usin_manager();
-	$page_slugs = array($manager->list_page->slug, $manager->module_page->slug, $manager->cf_page->slug);
+	$ui_pages = array('list_page', 'module_page', 'cf_page');
 
-	foreach($page_slugs as $slug){
-		if(strpos( $current_screen->base, $slug ) !== false){
-			return true;
+	foreach($ui_pages as $page){
+		if(!empty($manager->$page) && !empty($manager->$page->slug)){
+			if(strpos( $current_screen->base, $manager->$page->slug ) !== false){
+				return true;
+			}
 		}
 	}
 	return false;

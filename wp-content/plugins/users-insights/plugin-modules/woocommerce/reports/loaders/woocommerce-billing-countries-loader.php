@@ -9,28 +9,10 @@ class USIN_Woocommerce_Billing_Countries_Loader extends USIN_Standard_Report_Loa
 		$data = $this->load_post_meta_data('_billing_country', true);
 
 		foreach($data as &$row){
-			$row->label = $this->get_country_name($row->label);
+			$row->label = USIN_Woocommerce::get_wc_country_name_by_code($row->label);
 		}
 
 		return $data;
-	}
-
-	protected function get_country_name($code){
-		if($this->countries === null){
-			$this->countries = array();
-			if(function_exists('WC')){
-				$wc = WC();
-				if(property_exists($wc, 'countries') && method_exists($wc->countries, 'get_countries')){
-					$this->countries = $wc->countries->countries;
-				}
-			}
-		}
-
-		if(isset($this->countries[$code])){
-			return html_entity_decode($this->countries[$code]);
-		}
-
-		return $code;
 	}
 
 }

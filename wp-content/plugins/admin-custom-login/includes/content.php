@@ -61,7 +61,7 @@ Fonts
 						</span>
 											
 						<h5 style="color:#fff" class="acl-rate"><?php _e('Show Us Some Love (Rate Us)', WEBLIZAR_ACL); ?></h5>
-						<a class="acl-rate-us" style="text-align:center; text-decoration: none;font:normal 30px/l;" href="https://wordpress.org/plugins/admin-custom-login/" target="_blank">
+						<a class="acl-rate-us" style="text-align:center; text-decoration: none;font:normal 30px/l;" href="https://wordpress.org/plugins/admin-custom-login/#reviews" target="_blank">
 							<span class="dashicons dashicons-star-filled"></span>
 							<span class="dashicons dashicons-star-filled"></span>
 							<span class="dashicons dashicons-star-filled"></span>

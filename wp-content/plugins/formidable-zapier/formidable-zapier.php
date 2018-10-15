@@ -2,7 +2,7 @@
 /*
 Plugin Name: Formidable Zapier
 Description: Integrate with everything through Zapier
-Version: 1.04
+Version: 1.05
 Plugin URI: https://formidablepro.com/knowledgebase/formidable-zapier/
 Author URI: http://strategy11.com
 Author: Strategy11

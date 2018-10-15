@@ -4,7 +4,7 @@ Donate link: https://www.weblizar.com/
 Tags: custom login page, custom admin login, custom login, customize wordpress login page, design wordpress login
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 2.7.0
+Stable tag: 2.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Customize Your WordPress Login Screen Amazingly - Add Own Logo, Add Social Profi
 
 == Description ==
 
-Admin custom login plugin give ability to customize your WordPress admin login page according to you.
+Admin custom login plugin give ability to customize your WordPress admin login page according to you. Create unique login design or admin login design with admin custom login plugin, Almost every element on login page is customize-able with admin custom login plugin. Design beautiful and eye catching login page styles in few Minutes . 
 
 Pugin allows to change background color, background image, background slide show, login form color, login form font size, login form position, add social media icon on form and many more features.
 
@@ -20,7 +20,7 @@ Pugin allows to change background color, background image, background slide show
 
 Guys please send us your login screenshots at `lizarweb[at]gmail[dot]com`.
 
-### Standard Features
+### Admin Custom Login Standard Features
 
 * Add Your Own Custom Logo On Login Form
 * Background Colour
@@ -49,7 +49,7 @@ This is our most key feature of this plugin. We have provide you our best to add
 ### Social Link Connectivity:
 In this plugin you will able to add social icon to link your social profile with your login form. Social profiles names are
 
-* Twitter
+* Twitter 
 * Facebook
 * Linkedin
 * Google+
@@ -76,11 +76,45 @@ Plugin is integrated with 500+ google fonts. So add beautiful font styles fro yo
 ### Unlimited Colour Scheme:
 Theere you able update plugin design with unlimited colours. Colour option is available for both login form panel and background  
 
-#### Admin Demo
+#### Admin Custom Login Demo
 
-* [Admin Demo](http://demo.weblizar.com/admin-custom-login-admin-demo/wp-admin)
+* [Admin Custom Login Demo](http://demo.weblizar.com/admin-custom-login-admin-demo/wp-admin)
 * **Username:** userdemo
 * **Password:** userdemo
+
+### Admin Custom Login Pro Features
+
+* **Best Admin Page Customizer** - With multi functional and multi features A best WordPress login page costuming plugin.
+* **Max Login Retry** - Set the limit of maximum login retry attempt by user on login form.
+* **Login With Access Token** - Assign a temporary admin access to any user.
+* **Freeze Login Form On Brute Force Attack** - When plugin detect max number of invalid login attempt then freeze the login form for a while.
+* **Unfreeze Login Form By Admin** - After freezing login form by brute force attack only admin has rights to unfreeze the login form secretly with a key.
+* **Social Media Login** - User can sing in with social media accounts like Facebook, Google, Twitter with few clicks.
+* **Login Restriction By User Roles** - Admin can restrict user login by WordPress users's role like editor, author, contributor, subscriber and custom roles available on website.
+* **Ban User(s) Login Access** - Admin can ban login access for single or multiple users from existing users list.
+* **Max User Access Management** - Admin can define how many user can concurrently access admin dashboard at a time, It's reduce the load on server and save bandwidth of your server.
+* **Restrict Unauthorized IP** - You can define a single authorized IP address to access admin dashboard so no other IPs get access to login page.
+* **Import Export Settings** - If you have multiple site and you don't want to configure new installed plugin again & again then import and export setting will save the time for you.
+* **Login Form Logo** - You can add your own logo of company and brand.
+* **Login Form Background** - Add colors, slide show, image on background of login form page.
+* **Social Media Profile** - Show 10+ social media icon with profile link at the inner or outer part of login form with square and circle share.
+* **Login Form Design Customization** - You can change your login form design with position, height & width, colors, background colors, icons, placeholder text, label text and buttons. 
+* **Google Fonts** - Use 700+ Google and General Fonts to apply on login form label and link text.
+* **Redirect Users After Login** - Admin can redirect it's existing user after login to a particular page or promotional page.
+* **Google reCpatcha** - reCaptcha setting will secure your login form to spam and bots.
+* **Interactive Plugin Dashboard** - Plugin setting dashboard is intuitive and simple in design with tool tips for complex settings.
+* **Fast Help & Support** - Our support is super fast and quick you can check free plugin review for this.
+* **Major Browser Compatible** – Google Chrome, Mozilla Firefox, Internet Explorer, Safari, Opera.
+* **Fully Responsive And Optimized**
+* **Multilingual Translation Ready**
+
+= Live Admin Custom Login Pro Demos = 
+
+* [Admin Custom Login Pro Demo](http://demo.weblizar.com/admin-custom-login-pro/wp-admin/)
+* [Admin Custom Login Pro Admin Demo](http://demo.weblizar.com/admin-custom-login-pro-admin-demo/wp-admin/)
+* **Username:** userdemo
+* **Password:** userdemo
+
 
 ### Translations By Our Plugin Users:
 
@@ -123,6 +157,27 @@ If you have any question contact us at here: [Plugin Support Forum ](http://word
 == Changelog ==
 
 For more information, see [Weblizar](http://www.weblizar.com/)
+
+= 2.7.4 =
+* Add Banner at dashboard
+* Readme file text change
+
+= 2.7.3 =
+* Add New feature Display Note With URL.
+* Minor css changes for dashboard color.
+
+= 2.7.2 =
+* Add: Persian Language in Language Folder
+* Add: Setting link and Try Pro link in plugins list dashboard
+* Updated review link
+
+= 2.7.1 =
+* Update: Shorting Plugin Menu Name In Admin Menu (Admin Custom Login to AC Login)
+* Update: Plugin Menu Icon Updated
+* New: Login Fields Label setting
+* New: Login Form Button Label setting
+* Some settings labels text updated
+* Language files updated
 
 = 2.7.0 =
 * Update language files

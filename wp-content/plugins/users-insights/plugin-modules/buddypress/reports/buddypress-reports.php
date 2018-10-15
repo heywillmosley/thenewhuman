@@ -19,7 +19,13 @@ class USIN_BuddyPress_Reports extends USIN_Module_Reports{
 
 	public function get_reports(){
 
-		$reports = array();
+		$reports = array(
+			new USIN_Period_Report('buddypress_active_users', __('Active users', 'usin'), 
+				array(
+					'group'=>$this->group
+				)
+			),
+		);
 
 		if(USIN_BuddyPress::is_bp_feature_active('groups')){
 			$reports[]= new USIN_Standard_Report(
@@ -68,6 +74,7 @@ class USIN_BuddyPress_Reports extends USIN_Module_Reports{
 					);
 				break;
 				case 'multioption_text':
+				case 'serialized_multioption':
 					$reports[]= new USIN_Standard_Report(
 						$field['id'], 
 						$field['name'], 

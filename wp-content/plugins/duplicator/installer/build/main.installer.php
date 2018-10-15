@@ -81,13 +81,14 @@ if (!isset($_SERVER['REQUEST_URI']))  {
 }
 
 //COMPARE VALUES
-$GLOBALS['DUPX_DEBUG']		= false;
-$GLOBALS['FW_CREATED']		= '%fwrite_created%';
-$GLOBALS['FW_VERSION_DUP']	= '%fwrite_version_dup%';
-$GLOBALS['FW_VERSION_WP']	= '%fwrite_version_wp%';
-$GLOBALS['FW_VERSION_DB']	= '%fwrite_version_db%';
-$GLOBALS['FW_VERSION_PHP']	= '%fwrite_version_php%';
-$GLOBALS['FW_VERSION_OS']	= '%fwrite_version_os%';
+$GLOBALS['DUPX_DEBUG']			= false;
+$GLOBALS['DUPX_DBPASS_CHECK']	= true;
+$GLOBALS['FW_CREATED']			= '%fwrite_created%';
+$GLOBALS['FW_VERSION_DUP']		= '%fwrite_version_dup%';
+$GLOBALS['FW_VERSION_WP']		= '%fwrite_version_wp%';
+$GLOBALS['FW_VERSION_DB']		= '%fwrite_version_db%';
+$GLOBALS['FW_VERSION_PHP']		= '%fwrite_version_php%';
+$GLOBALS['FW_VERSION_OS']		= '%fwrite_version_os%';
 //GENERAL
 $GLOBALS['FW_TABLEPREFIX']		= '%fwrite_wp_tableprefix%';
 $GLOBALS['FW_URL_OLD']			= '%fwrite_url_old%';
@@ -102,12 +103,15 @@ $GLOBALS['FW_DBPORT']			= empty($GLOBALS['FW_DBPORT']) ? 3306 : $GLOBALS['FW_DBP
 $GLOBALS['FW_DBNAME']			= '%fwrite_dbname%';
 $GLOBALS['FW_DBUSER']			= '%fwrite_dbuser%';
 $GLOBALS['FW_DBPASS']			= '%fwrite_dbpass%';
+$GLOBALS['FW_SECUREON']			= '%fwrite_secureon%';
+$GLOBALS['FW_SECUREPASS']		= '%fwrite_securepass%';
 $GLOBALS['FW_BLOGNAME']			= '%fwrite_blogname%';
 $GLOBALS['FW_WPROOT']			= '%fwrite_wproot%';
 $GLOBALS['FW_WPLOGIN_URL']		= '%fwrite_wplogin_url%';
 $GLOBALS['FW_OPTS_DELETE']		= json_decode("%fwrite_opts_delete%", true);
 $GLOBALS['FW_DUPLICATOR_VERSION'] = '%fwrite_duplicator_version%';
 $GLOBALS['FW_ARCHIVE_ONLYDB']	= '%fwrite_archive_onlydb%';
+$GLOBALS['PACKAGE_HASH']		= '%package_hash%';
 
 //DATABASE SETUP: all time in seconds	
 $GLOBALS['DB_MAX_TIME']		= 5000;
@@ -141,7 +145,16 @@ define("DUPLICATOR_INIT", 1);
 define("DUPLICATOR_SSDIR_NAME", 'wp-snapshots');  //This should match DUPLICATOR_SSDIR_NAME in duplicator.php
 
 //SHARED POST PARMS
-$_POST['action_step'] = isset($_POST['action_step']) ? $_POST['action_step'] : "1";
+$_POST['action_step'] = isset($_POST['action_step']) ? $_POST['action_step'] : "0";
+$_POST['secure-pass'] = isset($_POST['secure-pass']) ? $_POST['secure-pass'] : '';
+
+if ($GLOBALS['FW_SECUREON']) {
+	$pass_hasher = new DUPX_PasswordHash(8, FALSE);
+	$pass_check  = $pass_hasher->CheckPassword(base64_encode($_POST['secure-pass']), $GLOBALS['FW_SECUREPASS']);
+	if (! $pass_check) {
+		$_POST['action_step'] = 0;
+	}
+}
 
 /** Host has several combinations :
 localhost | localhost:55 | localhost: | http://localhost | http://localhost:55 */
@@ -154,8 +167,9 @@ $_POST['dbcharset'] = isset($_POST['dbcharset'])  ? trim($_POST['dbcharset']) : 
 $_POST['dbcollate'] = isset($_POST['dbcollate'])  ? trim($_POST['dbcollate']) : $GLOBALS['DBCOLLATE_DEFAULT'];
 
 //GLOBALS
-$GLOBALS['SQL_FILE_NAME']       = "installer-data.sql";
-$GLOBALS['LOG_FILE_NAME']       = "installer-log.txt";
+// Constants which are dependent on the $GLOBALS['DUPX_AC']
+$GLOBALS['SQL_FILE_NAME'] = "dup-installer-data__{$GLOBALS['PACKAGE_HASH']}.sql";
+$GLOBALS['LOG_FILE_NAME']       = "dup-installer-log__{$GLOBALS['PACKAGE_HASH']}.txt";
 $GLOBALS['LOGGING']             = isset($_POST['logging']) ? $_POST['logging'] : 1;
 $GLOBALS['CURRENT_ROOT_PATH']   = dirname(__FILE__);
 $GLOBALS['CHOWN_ROOT_PATH']     = @chmod("{$GLOBALS['CURRENT_ROOT_PATH']}", 0755);
@@ -181,8 +195,18 @@ if ($_POST['action_step'] == 1 && ! isset($_GET['help'])) {
 @@CLASS.ENGINE.PHP@@
 @@CLASS.CONF.WP.PHP@@
 @@CLASS.CONF.SRV.PHP@@
+@@CLASS.HTTP.PHP@@
+@@CLASS.PASSWORD.PHP@@
 <?php
 if (isset($_POST['action_ajax'])) :
+
+	if ($GLOBALS['FW_SECUREON']) {
+		$pass_hasher = new DUPX_PasswordHash(8, FALSE);
+		$pass_check  = $pass_hasher->CheckPassword(base64_encode($_POST['secure-pass']), $GLOBALS['FW_SECUREPASS']);
+		if (! $pass_check) {
+			die("Unauthorized Access:  Please provide a password!");
+		}
+	}
 
 	//Alternative control switch structer will not work in this case
 	//see: http://php.net/manual/en/control-structures.alternative-syntax.php
@@ -203,7 +227,6 @@ if (isset($_POST['action_ajax'])) :
 
 endif;
 ?>
-	
 	
 <!DOCTYPE html>
 <html>
@@ -232,18 +255,24 @@ HEADER TEMPLATE: Common header on all steps -->
             </div>
         </td>
         <td class="dupx-header-version">
-            version: <?php echo $GLOBALS['FW_DUPLICATOR_VERSION'] ?><br/>
-			&raquo; <a href="javascript:void(0)" onclick="DUPX.showServerInfo()">info</a>
-			&raquo; <a href="?help=1" target="_blank">help</a>
+            <a href="javascript:void(0)" onclick="DUPX.showServerInfo()">version: <?php echo $GLOBALS['FW_DUPLICATOR_VERSION'] ?></a><br/>
+			<a href="?help=1" target="_blank">help</a>
+			<?php
+				echo ' &raquo; <a href="?help=1#secure" target="_blank">';
+				echo ($GLOBALS['FW_SECUREON']) ? 'locked</a>' : '<i class="secure-unlocked">unlocked</i></a>';
+			?>
         </td>
     </tr>
 </table>
 
-<?php if ($GLOBALS['FW_ARCHIVE_ONLYDB']) :?>
-	<div style="position: relative">
-		<div class="archive-onlydb">Database Only Mode</div>
+<div style="position: relative">
+	<div class="installer-mode">
+		<?php
+			echo 'Mode: ';
+			echo ($GLOBALS['FW_ARCHIVE_ONLYDB']) ? 'Database Only' : 'Standard';
+		?>
 	</div>
-<?php endif; ?>
+</div>
 
 <!-- =========================================
 FORM DATA: Data Steps -->
@@ -252,6 +281,9 @@ FORM DATA: Data Steps -->
 
 if (! isset($_GET['help'])) {
 switch ($_POST['action_step']) {
+	case "0" :
+	?> @@VIEW.INIT1.PHP@@ <?php
+	break;
 	case "1" :
 	?> @@VIEW.STEP1.PHP@@ <?php
 	break;

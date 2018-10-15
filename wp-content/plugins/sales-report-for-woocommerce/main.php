@@ -12,6 +12,7 @@ class BeRocket_sales_report extends BeRocket_Framework {
     function __construct () {
         $this->info = array(
             'id'          => 17,
+            'lic_id'      => 33,
             'version'     => BeRocket_sales_report_version,
             'plugin'      => '',
             'slug'        => '',
@@ -45,9 +46,16 @@ class BeRocket_sales_report extends BeRocket_Framework {
             'premium_slug'  => 'woocommerce-sales-report-email',
             'free_slug'     => 'sales-report-for-woocommerce',
         );
-        $this->feature_list = array();
+        $this->feature_list = array(
+            '"Table by days" block to use in report text',
+            'Custom Emails for each report',
+            'Custom Subject for each report',
+            'Day offset for start time',
+            'Day offset for end time'
+        );
         parent::__construct( $this );
 
+        add_filter ( 'BeRocket_updater_menu_order_custom_post', array($this, 'menu_order_custom_post') );
         if ( $this->init_validation() ) {
             add_shortcode( 'br_sales_report_part', array( $this, 'shortcode' ) );
         }
@@ -510,6 +518,10 @@ class BeRocket_sales_report extends BeRocket_Framework {
                 )
             );
         }
+    }
+    public function menu_order_custom_post($compatibility) {
+        $compatibility['br_sale_report'] = 'br-sales_report';
+        return $compatibility;
     }
 }
 

@@ -47,6 +47,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	$tagline_msg= $login_page['tagline_msg'];
 	if(isset($login_page['user_cust_lbl'])){ $user_cust_lbl= $login_page['user_cust_lbl']; } else { $user_cust_lbl = "Type Username or Email"; }
 	if(isset($login_page['pass_cust_lbl'])){ $pass_cust_lbl= $login_page['pass_cust_lbl']; } else { $pass_cust_lbl = "Type Password"; }
+	
+	if(isset($login_page['label_username'])){ $label_username= $login_page['label_username']; } else { $label_username = "Username or Email"; }	
+	if(isset($login_page['label_password'])){ $label_password= $login_page['label_password']; } else { $label_password = "Password"; }	
+	if(isset($login_page['label_loginButton'])){ $label_loginButton= $login_page['label_loginButton']; } else { $label_loginButton = "Log In"; }
 		
 	// Get value of Text and Color page
 	$text_and_color_page = unserialize(get_option('Admin_custome_login_text'));

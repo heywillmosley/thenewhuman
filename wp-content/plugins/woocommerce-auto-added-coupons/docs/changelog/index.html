@@ -110,7 +110,49 @@
           <div role="main">
             <div class="section">
               
-                <pre><code>
+                <pre><code>= 3.0.0-beta.1 =
+* IMPORTANT: Requires WooCommerce 3.0+ WordPress 4.8+ and PHP 5.3+
+* FIX/PERFORMANCE: Rewritten handling of auto-coupons. Performance improvement
+* (PRO) ENHANCEMENT: Free products: Better handling and performance of cart ajax events
+* (PRO) FIX: Duplicate notices when enqueuing a coupon
+* INTERNAL: Removed code for backwards compatibility with WC versions prior to 3.0
+* INTERNAL: Rewritten boot-process. Class auto-loading. Code cleanup.
+
+
+= 2.6.3 =
+*Release Date - 2018-06-04*
+* FIX: WJECF_Controller: Don't use wp_get_current_user() for admin-orders
+* FIX: WJECF_Controller: Don't use WC()-&gt;cart-&gt;subtotal for admin-orders
+* FIX: Possible division by zero when calculating multiplier value
+* FEATURE: Filter 'wjecf_coupon_multiplier_value' to allow overriding the coupon's multiplier value
+
+= 2.6.2 =
+*Release Date - 2018-04-02*
+* FEATURE: Auto-coupon compatibility with the 'WooCommerce Free Gift Coupons'-plugin
+* FIX: CATEGORIES AND in combination with variable products
+* FIX: Call to undefined function wc_add_notice()
+* FIX: (PRO) First order purchase: Ignore cancelled/waiting for payment order statuses
+* FIX: (PRO) Auto updater plugins_api return $def instead of false
+
+= 2.6.1.1 =
+*Release Date - 2017-12-24*
+* FIX: (PRO) Possible crash on null reference in filter woocommerce_coupon_get_discount_amount
+
+= 2.6.1 =
+*Release Date - 2017-12-22*
+* German translation (Thanks to, Guido Hloch)
+* FIX: Use WC_Coupon::get_description (for translation plugins)
+* FIX: (PRO) ADMIN - Auto update: Allow multiple license activation
+* FIX: (PRO) ADMIN - Auto update: Removed invalid warning 'Invalid response block'
+
+= 2.6.0.2 =
+*Release Date - 2017-12-04*
+* FIX: Typo 'impode' (Thanks to Constantine for reporting)
+
+= 2.6.0.1 =
+*Release Date - 2017-12-02*
+* ADMIN: Fix: Changelog of plugin update screen
+
 = 2.6.0 =
 *Release Date - 2017-12-02*
 * ADMIN: Compatibility with coupons added on the Order page from wp-admin (requires WC3.3+)

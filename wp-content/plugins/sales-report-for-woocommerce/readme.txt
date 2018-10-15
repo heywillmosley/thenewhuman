@@ -4,8 +4,8 @@ Contributors: berocket, dholovnia
 Donate link: http://berocket.com/product/woocommerce-sales-report-email
 Tags: woocommerce reports, sales report, products sold, woocommerce statistics, email report for woocommerce, sales stats, email stats, product sales report, woocommerce product sales report, advanced reporting, woocommerce reporting, woocommerce reporting spreadsheet, woocommerce grow, woo commerce grow, administration, woocommerce analysis, woocommerce charts, history email, orders email, products bought email, analytics email, woocommerce analytics email, woocommerce tracking, wc reporting, wc advance reporting, product summary, top products, top customer, top category, top billing country, top billing state, recent orders, top payment gateway, purchase analysis email, berocket, berocket sales report for woocommerce
 Requires at least: 4.0
-Tested up to: 4.9.6
-Stable tag: 1.1.2
+Tested up to: 4.9.8
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,11 +14,6 @@ Sales Report for WooCommerce generates daily, weekly and monthly sales report
 == Description ==
 
 Sales Report for WooCommerce generates daily, weekly and monthly sales report. Plugin will generates E-Mail message with total sales, amount of orders and sold products and sends to selected E-Mail.
-
-= &#128226; BeRocket Promotions - Summer Sale &#127774; : =
-*11/07 - 20/07*
-&#128181; [Premium WooCommerce Load More Products – Save $20](https://berocket.com/product/woocommerce-load-more-products)
-
 
 = Features: =
 &#9989; Sends report to selected E-Mails
@@ -94,6 +89,17 @@ You can try this plugin's admin side [here](http://berocket.com/product/woocomme
 ---
 
 == Changelog ==
+
+= 1.1.5 =
+* Enhancement - Feature request box
+* Enhancement - Feedback box
+
+= 1.1.4 =
+* Fix - Support link
+* Fix - Restore some information, that was removed in previous version
+
+= 1.1.3 =
+* Fix - Updater compatibility
 
 = 1.1.2 =
 * Fix - Previous send time was incorrect

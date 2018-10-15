@@ -5,8 +5,8 @@ class USIN_Templates{
 	
 	public static function progress_tag($percentage){
 		return sprintf('<span class="usin-tag usin-progress-tag">
-			<span class="usin-progress usin-progress-%d"></span><span class="usin-progress-percentage">%d%%</span></span>', 
-		self::round_percentage($percentage), $percentage);
+			<span class="usin-progress usin-progress-%d usin-progress-score-%d"></span><span class="usin-progress-percentage">%d%%</span></span>', 
+		self::round_percentage($percentage), floor($percentage), $percentage);
 	}
 	
 	

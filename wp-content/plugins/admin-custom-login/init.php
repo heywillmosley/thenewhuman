@@ -48,7 +48,6 @@ function ACL_GetReadyTranslation() {
 	load_plugin_textdomain(WEBLIZAR_ACL, FALSE, dirname( plugin_basename(__FILE__)).'/languages/' );
 }
 
-
 /**
  * Admin Custom Login menu
  */
@@ -56,7 +55,7 @@ require_once("login-form-screen.php");
 add_action('admin_menu','acl_weblizar_admin_custom_login_menu', 2);
 function acl_weblizar_admin_custom_login_menu() {
 	if(current_user_can('administrator')){
-		$wl_admin_menu = add_menu_page( __( 'Admin Custom Login', WEBLIZAR_ACL ), __( 'Admin Custom Login', WEBLIZAR_ACL ), 'manage_options', 'admin_custom_login', 'acl_admin_custom_login_content', 'dashicons-calendar', 10 );
+		$wl_admin_menu = add_menu_page( __( 'Admin Custom Login', WEBLIZAR_ACL ), __( 'AC Login', WEBLIZAR_ACL ), 'manage_options', 'admin_custom_login', 'acl_admin_custom_login_content', 'dashicons-art', 10 );
 		add_action( 'admin_print_styles-' . $wl_admin_menu, 'acl_admin_custom_login_css' );
 		
 		//plugin menu page under the settings page
@@ -131,6 +130,33 @@ function acl_advanced_login_form_plugin() {
 }
 add_action('login_enqueue_scripts', 'acl_advanced_login_form_plugin');
 
+/*To change the Login Button Text starts*/
+add_action( 'login_form', 'WACL_login_button_text' );
+function WACL_login_button_text()
+{
+    add_filter( 'gettext', 'WACL_loginbutton_gettext', 10, 2 );
+}
+function WACL_loginbutton_gettext( $translation, $text ) {
+	
+	if(get_option('Admin_custome_login_login')){
+		$label_login_button = unserialize(get_option('Admin_custome_login_login'));
+		if(isset($label_login_button['label_loginButton'])) {
+			$label_text = $label_login_button['label_loginButton'];
+		} else {
+			$label_text = "Log In";
+		}
+	} else {
+		$label_text = "Log In";
+	}
+	
+    if ( 'Log In' == $text ) {
+        return $label_text;
+    }
+    return $translation;
+}
+
+/*To change the Login Button Text ends*/
+
 function acl_footer_func() {
 	$text_and_color_page = unserialize(get_option('Admin_custome_login_text'));
 	$user_input_icon = $text_and_color_page['user_input_icon'];
@@ -146,6 +172,8 @@ function acl_footer_func() {
 	if(isset($login_page['user_cust_lbl'])){ $user_cust_lbl= $login_page['user_cust_lbl']; } else { $user_cust_lbl = "Type Username or Email"; }
 	if(isset($login_page['pass_cust_lbl'])){ $pass_cust_lbl= $login_page['pass_cust_lbl']; } else { $pass_cust_lbl = "Type Password"; }
 	
+	if(isset($login_page['label_username'])){ $label_username= $login_page['label_username']; } else { $label_username = "Username / Email"; }	
+	if(isset($login_page['label_password'])){ $label_password= $login_page['label_password']; } else { $label_password = "Password"; }	
 	?>
 	<script>
 	jQuery(document).ready(function(){
@@ -155,8 +183,8 @@ function acl_footer_func() {
 
 		<?php if($enable_inputbox_icon=='yes'){ ?>
 		if (jQuery('#log_input_lable').length) {
-			document.getElementById("log_input_lable").innerHTML="<?php _e('Username or Email', WEBLIZAR_ACL); ?><div class='input-container'> <div class='icon-ph'><i class='fa <?php echo $user_input_icon; ?>'></i></div> <input id='user_login' name='log' class='input' type='text' placeholder='<?php echo $user_cust_lbl; ?>'></div>";
-			document.getElementById("pwd_input_lable").innerHTML="<?php _e('Password', WEBLIZAR_ACL); ?><div class='input-container'> <div class='icon-ph'><i class='fa <?php echo $password_input_icon; ?>'></i></div> <input id='user_pass' name='pwd' class='input' type='password' placeholder='<?php echo $pass_cust_lbl; ?>'></div>";
+			document.getElementById("log_input_lable").innerHTML="<?php echo $label_username; ?><div class='input-container'> <div class='icon-ph'><i class='fa <?php echo $user_input_icon; ?>'></i></div> <input id='user_login' name='log' class='input' type='text' placeholder='<?php echo $user_cust_lbl; ?>'></div>";
+			document.getElementById("pwd_input_lable").innerHTML="<?php echo $label_password; ?><div class='input-container'> <div class='icon-ph'><i class='fa <?php echo $password_input_icon; ?>'></i></div> <input id='user_pass' name='pwd' class='input' type='password' placeholder='<?php echo $pass_cust_lbl; ?>'></div>";
 			jQuery('body.login div#login form .input, .login input[type="text"]').css('padding','5px 5px 5px 45px');
 		}
 		<?php } else { ?>
@@ -262,6 +290,9 @@ function acl_export_settings() {
 	$tagline_msg = $login_page['tagline_msg'];
 	$user_cust_lbl = $login_page['user_cust_lbl'];
 	$pass_cust_lbl = $login_page['pass_cust_lbl'];
+	$label_username= $login_page['label_username'];
+	$label_password= $login_page['label_password'];
+	$label_loginButton= $login_page['label_loginButton'];
 
 
 	// Get value of Text and Color page
@@ -371,6 +402,9 @@ function acl_export_settings() {
 		'tagline_msg' 				=> $tagline_msg,
 		'user_cust_lbl'				=> $user_cust_lbl,
 		'pass_cust_lbl' 			=> $pass_cust_lbl,
+		'$label_username'			=> $label_username,
+		'label_password'			=> $label_password,
+		'label_loginButton'			=> $label_loginButton,
 
 		'heading_font_color'		=> $heading_font_color,
 		'input_font_color'			=> $input_font_color,
@@ -514,6 +548,9 @@ function acl_import_settings() {
 	$tagline_msg 			= $ACL_Settings['tagline_msg'];
 	$user_cust_lbl 			= $ACL_Settings['user_cust_lbl'];
 	$pass_cust_lbl 			= $ACL_Settings['pass_cust_lbl'];
+	$label_username			= $ACL_Settings['label_username'];
+	$label_password			= $ACL_Settings['label_password'];
+	$label_loginButton		= $ACL_Settings['label_loginButton'];
 	
 	$heading_font_color 	= $ACL_Settings['heading_font_color'];
 	$input_font_color 		= $ACL_Settings['input_font_color'];
@@ -713,7 +750,10 @@ function acl_import_settings() {
 		'login_msg_font_color' 		=> $login_msg_font_color,
 		'tagline_msg' 				=> $tagline_msg,
 		'user_cust_lbl'				=> $user_cust_lbl,
-		'pass_cust_lbl'				=> $pass_cust_lbl
+		'pass_cust_lbl'				=> $pass_cust_lbl,
+		'label_username'			=> $label_username,
+		'label_password'			=> $label_password,
+		'label_loginButton'			=> $label_loginButton,
 	));
 	update_option('Admin_custome_login_login', $login_page);
 	

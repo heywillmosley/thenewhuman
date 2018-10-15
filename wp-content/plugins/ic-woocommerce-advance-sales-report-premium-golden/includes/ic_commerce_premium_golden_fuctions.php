@@ -627,17 +627,25 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 				
 				$paper_size 			= $this->get_request('paper_size',"letter");
 				
-				$this->unset_class_variables();
+				$plugin_dir 			= isset($this->constants['plugin_dir']) ? $this->constants['plugin_dir'] : '';
 				
-				$GLOBALS 				= NULL;
-				//unset($GLOBALS);
-				//unset($this);
+				if ( function_exists( 'gc_enable' ) ) {
+					gc_enable();
+				}
+				if ( function_exists( 'apache_setenv' ) ) {
+					@apache_setenv( 'no-gzip', 1 ); // @codingStandardsIgnoreLine
+				}
+				@ini_set( 'zlib.output_compression', 'Off' ); // @codingStandardsIgnoreLine
+				@ini_set( 'output_buffering', 'Off' ); // @codingStandardsIgnoreLine
+				@ini_set( 'output_handler', '' ); // @codingStandardsIgnoreLine
+				ignore_user_abort( true );
+				wc_set_time_limit( 0 );
+				wc_nocache_headers();
 				
-				
-				//require_once("ic_commerce_premium_golden_dompdf_config.inc.php");
-				//$dompdf = new DOMPDF();	
-				
-				include_once("dompdf/dompdfinit.php");
+				define("DOMPDF_UNICODE_ENABLED", true);
+				$plugin_dir = $this->constants['plugin_dir'];
+				$pdf_path 	= $plugin_dir.'/dompdf-master/dompdfinit.php';				
+				include_once($pdf_path);
 				
 				$dompdf->set_paper($paper_size,$orientation_pdf);
 				$dompdf->load_html($output,"utf-8");
@@ -2103,7 +2111,105 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 			
 		}
 		
-		function get_export_pdf_content($rows=array(),$columns=array(),$summary=array()){
+		function get_pdf_special_font($amount__columns = array()){
+			$sp_columns = array(					
+						"billing_first_name"
+						,"billing_last_name"
+						,"billing_company"
+						,"billing_address_1"
+						,"billing_address_2"
+						,"billing_city"
+						,"billing_postcode"
+						,"billing_country"
+						,"billing_state"
+						,"billing_phone"				
+						,"shipping_first_name"
+						,"shipping_last_name"
+						,"shipping_company"
+						,"shipping_address_1"
+						,"shipping_address_2"
+						,"shipping_city"
+						,"shipping_postcode"
+						,"shipping_country"
+						,"shipping_state"
+						,"billing_name"
+						,"order_date"
+						,"order_status"
+						,"tax_name"
+						,"shipping_method_title"
+						,"payment_method_title"
+						,"order_currency"
+						,"order_coupon_codes"						
+						,"product_sku"
+						,"product_name"
+						,"country_name"
+						,"payment_method"
+						,"status_name"
+						,"item_name"
+						,"variation_sku"
+			);
+			
+			$sp_columns_currency = array(					
+						"product_rate",'item_amount','item_amount','item_discount','total_price','order_total',
+						'part_order_refund_amount','total_tax','order_tax','order_shipping_tax','order_shipping',
+						'total_discount','gross_amount'
+			);
+			
+			$sp_columns_currency = array_merge($sp_columns_currency, $amount__columns);
+			
+			$font_type_1 	= $this->get_setting('font_type_1',$this->constants['plugin_options'], "no");
+			$font_type_2 	= $this->get_setting('font_type_2',$this->constants['plugin_options'], "no");
+			$font_dejaVu 	= $this->get_setting('font_dejaVu',$this->constants['plugin_options'], "no");
+			$style 		  = "";
+			
+			if($font_dejaVu == 'yes'){
+				$style .= '*{font-family: "DejaVu Sans" !important;}';
+			}
+			
+			if($font_type_1 == 'yes'){
+				
+				$font_url 	= $this->get_setting('font_url',$this->constants['plugin_options'], "http://eclecticgeek.com/dompdf/fonts/cjk/Cybercjk.ttf");
+				if(!empty($font_url)){
+					$style .= '@font-face {
+							font-family: CyberCJK;
+							font-style: normal;
+							font-weight: normal;
+							src: url("'.$font_url.'") format("truetype");
+					 }';
+					 
+					
+					 
+					$style .= "body td.".implode(", body td.",$sp_columns).'{font-family:CyberCJK !important}';
+					$style .= "body th.{font-family:CyberCJK !important}";
+					$style .= "body p.billing_address, body p.shipping_address{font-family:CyberCJK !important}";
+					$style .= 'td.label{font-family:CyberCJK !important}';
+					$style .= 'th.label{font-family:CyberCJK !important}';
+					$style .= 'body.invoice *{font-family:CyberCJK !important}';
+				}
+			}
+			
+			
+			
+			
+			if($font_type_2 == 'yes'){
+				$style .= "body td.".implode(", body td.",$sp_columns_currency).'{font-family: "DejaVu Sans" !important;}';
+				$style .= 'body td.amount{font-family: "DejaVu Sans" !important;}';
+			}
+			
+			if($font_type_2 == 'yes' || $font_dejaVu == 'yes'){
+				$style .= 'label, div.print_summary_bottom, div.print_summary_bottom2{font-family: "Source Sans Pro", sans-serif;}';
+			}
+			
+			if(empty($style)){
+				$style .= '*{font-family: "Source Sans Pro", sans-serif;}';
+			}
+			
+			//echo $style;die;
+			
+			return $style;
+		}
+		
+		function get_export_pdf_content($rows=array(),$columns=array(),$summary=array(),$price_columns = array(),$total_columns = array()){
 			$csv_terminated = "\n";
 			$csv_separator = ",";
 			$csv_enclosed = '"';
@@ -2120,40 +2226,51 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 			$tr_open = '<tr>';
 			$tr_close = '</tr>';
 			
-			
-			
-			foreach($columns as $key => $value):
-				//$l = $th_open . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $value) . $th_close;
-				$l = str_replace("#class#",$key,$th_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $value) . $th_close;
-				$schema_insert .= $l;				
-			endforeach;// end for
-			
-			//New Change ID 20140918
-			$company_name	= $this->get_request('company_name','');
-			$report_title	= $this->get_request('report_title','');
-			$display_logo	= $this->get_request('display_logo','');
-			$display_date	= $this->get_request('display_date','');
-			$display_center	= $this->get_request('display_center','');
-			
-			$keywords		= $this->get_request('pdf_keywords','');
-			$description	= $this->get_request('pdf_description','');
-			
+			$company_name	   = $this->get_request('company_name','');
+			$report_title	   = $this->get_request('report_title','');
+			$display_logo	   = $this->get_request('display_logo','');
+			$display_date	   = $this->get_request('display_date','');
+			$display_center  	 = $this->get_request('display_center','');
+			$report_name	 	= $this->get_request('report_name',"no");
+			$zero			   = $this->price(0);			
+			$keywords		   = $this->get_request('pdf_keywords','');
+			$description	 	= $this->get_request('pdf_description','');
+			$detail_view	 	= $this->get_request('detail_view',"no");
+			$date_format 	    = get_option('date_format');
 			$column_align_style = $this->get_pdf_style_align($columns,'right');
-			$date_format 	= get_option( 'date_format' );
+			$amount_column 	  = array();
+			$admin_page		 = $this->constants['admin_page'];
 			
+			if($report_name == "product_bill_country_crosstab" || $report_name == "product_bill_state_crosstab"){
+			
+				foreach($columns as $key => $value):
+					$l = str_replace("#class#",$key,$th_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $value) . $th_close;
+					$schema_insert .= $l;				
+				endforeach;// end for
+				
+				$schema_insert = str_replace("-","_",$schema_insert);
+			}else{
+				foreach($columns as $key => $value):
+					$l = str_replace("#class#",$value,$th_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $value) . $th_close;
+					$schema_insert .= $l;				
+				endforeach;// end for
+				
+			}
+			$amount__columns = array_merge($price_columns, $total_columns);
+			$pdf_special_font = $this->get_pdf_special_font($amount__columns);
 			//New Change ID 20140918
 			$out ='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
 					<title>'.$report_title.'</title>
 						<meta name="description" content="'.$description.'" />
 						<meta name="keywords" content="'.$keywords.'" />
 						<meta name="author" content="'.$company_name.'" /><style type="text/css"><!-- 
+						'.$pdf_special_font.'	
 						.header {position: fixed; top: -40px; text-align:center;}
 						.footer { position: fixed; bottom: 0px; text-align:center;}
-						.pagenum:before { content: counter(page); }
-						body{font-family: "Source Sans Pro", sans-serif; font-size:10px;}
+						.pagenum:before { content: counter(page); }						
 						span{font-weight:bold;}
 						.Clear{clear:both; margin-bottom:10px;}
-						label{width:100px; float:left; }
+						label{float:left; }
 						.sTable3{border:1px solid #DFDFDF; width:100%;}
 						.sTable3 th{padding:10px 10px 7px 10px;background:#eee url(../images/thead.png) repeat-x top left;text-align:left;}
 						.Form{padding:1% 1% 11% 1%; margin:5px 5px 5px 5px;}
@@ -2162,7 +2279,32 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 						.sTable3 tbody tr td{padding:8px 10px; background:#fff; border-top:1px solid #DFDFDF; border-right:1px solid #DFDFDF;}
 						.sTable3 tbody tr.AltRow td{background:#FBFBFB;}
 						.print_header_logo.center_header, .header.center_header{margin:auto;  text-align:center;}
-						'.$column_align_style.'--></style>
+						'.$column_align_style;
+						
+						if($admin_page == 'icwoocommerceultimatereport_cross_tab_page'){
+							$crosstab 		= new IC_Commerce_Ultimate_Woocommerce_Report_Cross_Tab($this->constants);
+							$amount_column   = $crosstab->get_crosstab_coulums();
+													
+							if($report_name == "product_bill_country_crosstab" || $report_name == "product_bill_state_crosstab"){
+								$c = array();
+								foreach($amount_column as $key => $value):
+									if(strlen($key)>0)
+									$c[] = $key;
+								endforeach;
+								
+								$css = "td." . implode(", td.",$c)."{text-align:right;}";
+								$css .= ".sTable3 th." . implode(", .sTable3 th.",$c)."{text-align:right;}";
+								
+								$out .= str_replace("-","_",$css);
+							}else{
+								if(count($amount_column) > 0){
+									$out .= "td." . implode(", td.",$amount_column)."{text-align:right;}";
+									$out .= "th." . implode(", th.",$amount_column)."{text-align:right;}";
+								}
+							}
+						}
+					$out .='-->
+							</style>
 					</head>
 					<body>';
 			$logo_html		=	"";
@@ -3278,7 +3420,15 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 			
 			$post_meta_key_string = implode("', '",$post_meta_keys);
 			
-			$sql = " SELECT * FROM {$wpdb->postmeta} AS postmeta";
+			$sql = " SELECT ";
+				
+			$sql .= " postmeta.meta_value, ";
+			
+			$sql .= " postmeta.meta_key, ";
+			
+			$sql .= " postmeta.post_id ";
+			
+			$sql .= " FROM {$wpdb->postmeta} AS postmeta";
 			
 			$sql .= " WHERE 1*1";
 			
@@ -3295,15 +3445,15 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 			}
 			
 			$sql .= " ORDER BY postmeta.post_id ASC, postmeta.meta_key ASC";
-			
 			//echo $sql;return '';
 			
-			$order_meta_data = $wpdb->get_results($sql);			
+			$order_meta_data = $wpdb->get_results($sql);
+			
+			$order_meta_new = array();
 			
 			if($wpdb->last_error){
 				echo $wpdb->last_error;
 			}else{
-				$order_meta_new = array();	
 					
 				foreach($order_meta_data as $key => $order_meta){
 					
@@ -3318,7 +3468,132 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 					$order_meta_new[$post_id][$meta_key] = $meta_value;
 					
 				}
+			}//$this->print_array($order_meta_new);
+			
+			return $order_meta_new;
+			
+		}
+		
+		public static function get_shop_order_postmeta($order_ids = '0', $columns = array(), $extra_meta_keys = array(), $type = 'all'){
+			
+			global $wpdb;
+			
+			$post_meta_keys = array();
+			
+			if(count($columns)>0)
+			foreach($columns as $key => $label){
+				$post_meta_keys[] = $key;
 			}
+			
+			foreach($extra_meta_keys as $key => $label){
+				$post_meta_keys[] = $label;
+			}
+			
+			foreach($post_meta_keys as $key => $label){
+				$post_meta_keys[] = "_".$label;
+			}
+			
+			$post_meta_key_string = implode("', '",$post_meta_keys);
+			
+			if(strlen($order_ids) >1000){
+				$sql = " SELECT ";
+				
+				$sql .= " postmeta.meta_value, ";
+				
+				$sql .= " postmeta.meta_key, ";
+				
+				$sql .= " postmeta.post_id ";
+				
+				$sql .= " FROM {$wpdb->posts} AS shop_order";
+				
+				$sql .= " LEFT JOIN {$wpdb->postmeta} AS postmeta ON postmeta.post_id = shop_order.ID";
+				
+				$sql .= " WHERE 1*1";
+				
+				$sql .= " AND shop_order.post_type IN ('shop_order')";
+				
+				//if(strlen($order_ids) >0){
+					//$sql .= " AND postmeta.post_id IN ($order_ids)";
+				//}
+				
+				//echo 'test';
+				
+				$order_date_field_key  = isset($_REQUEST['order_date_field_key']) ? $_REQUEST['order_date_field_key'] : 'post_date';
+				$start_date  = isset($_REQUEST['start_date']) ? $_REQUEST['start_date'] : '';
+				$end_date  = isset($_REQUEST['end_date']) ? $_REQUEST['end_date'] : '';
+				
+				if($order_date_field_key == "post_date" || $order_date_field_key == "post_modified"){
+					if ($start_date != NULL &&  $end_date !=NULL){
+						$sql .= " AND DATE(shop_order.{$order_date_field_key}) BETWEEN '".$start_date."' AND '". $end_date ."'";
+					}
+				}
+				
+				if(strlen($post_meta_key_string) >0){
+					$sql .= " AND postmeta.meta_key IN ('{$post_meta_key_string}')";
+				}
+				
+				if($type == 'total'){
+					$sql .= " AND (LENGTH(postmeta.meta_value) > 0 AND postmeta.meta_value > 0)";
+				}
+				
+				$sql .= " GROUP BY postmeta.post_id, postmeta.meta_key";
+				
+				$sql .= " ORDER BY postmeta.post_id ASC, postmeta.meta_key ASC";
+				
+				
+				
+			}else{
+				$sql = " SELECT ";
+				
+				$sql .= " postmeta.meta_value, ";
+				
+				$sql .= " postmeta.meta_key, ";
+				
+				$sql .= " postmeta.post_id ";
+				
+				$sql .= " FROM {$wpdb->postmeta} AS postmeta";
+				
+				$sql .= " WHERE 1*1";
+				
+				if(strlen($order_ids) >0){
+					$sql .= " AND postmeta.post_id IN ($order_ids)";
+				}
+				
+				if(strlen($post_meta_key_string) >0){
+					$sql .= " AND postmeta.meta_key IN ('{$post_meta_key_string}')";
+				}
+				
+				if($type == 'total'){
+					$sql .= " AND (LENGTH(postmeta.meta_value) > 0 AND postmeta.meta_value > 0)";
+				}
+				
+				$sql .= " ORDER BY postmeta.post_id ASC, postmeta.meta_key ASC";
+			}
+			//echo $sql;return '';
+			
+			$order_meta_data = $wpdb->get_results($sql);
+			
+			$order_meta_new = array();
+			
+			if($wpdb->last_error){
+				echo $wpdb->last_error;
+			}else{
+					
+					
+				foreach($order_meta_data as $key => $order_meta){
+					
+					$meta_value	= $order_meta->meta_value;
+					
+					$meta_key	= $order_meta->meta_key;
+					
+					$post_id	= $order_meta->post_id;
+					
+					$meta_key 	= ltrim($meta_key, "_");
+					
+					$order_meta_new[$post_id][$meta_key] = $meta_value;
+					
+				}
+			}//$this->print_array($order_meta_new);
 			
 			return $order_meta_new;
 			
@@ -3688,28 +3963,39 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 			$tr_close = "\n</tr>";			
 			
 			
-			foreach($columns as $key => $value):
-				$l = str_replace("#class#",$key,$th_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $value) . $th_close;
-				$schema_insert .= $l;				
-			endforeach;// end for
+			$company_name	   = $this->get_request('company_name','');
+			$report_title	   = $this->get_request('report_title','');
+			$display_logo	   = $this->get_request('display_logo','');
+			$display_date	   = $this->get_request('display_date','');
+			$display_center  	 = $this->get_request('display_center','');
+			$report_name	 	= $this->get_request('report_name',"no");
+			$zero			   = $this->price(0);			
+			$keywords		   = $this->get_request('pdf_keywords','');
+			$description	 	= $this->get_request('pdf_description','');
+			$detail_view	 	= $this->get_request('detail_view',"no");
+			$date_format 	    = get_option('date_format');
+			$column_align_style = $this->get_pdf_style_align($columns,'right');
+			$amount_column 	  = array();
+			$admin_page		 = $this->constants['admin_page'];
 			
-			//New Change ID 20140918
-			$company_name	= $this->get_request('company_name','');
-			$report_title	= $this->get_request('report_title','');
-			$display_logo	= $this->get_request('display_logo','');
-			$display_date	= $this->get_request('display_date','');
-			$display_center	= $this->get_request('display_center','');
-			$report_name	= $this->get_request('report_name',"details_view");
-			$zero			= $this->price(0);
+			if($report_name == "product_bill_country_crosstab" || $report_name == "product_bill_state_crosstab"){
 			
-			$keywords		= $this->get_request('pdf_keywords','keywords');
-			$description	= $this->get_request('pdf_description','description');
-			$detail_view 	= $this->get_request('detail_view',"no");
+				foreach($columns as $key => $value):
+					$l = str_replace("#class#",$key,$th_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $value) . $th_close;
+					$schema_insert .= $l;				
+				endforeach;// end for
+				
+				$schema_insert = str_replace("-","_",$schema_insert);
+			}else{
+				foreach($columns as $key => $value):
+					$l = str_replace("#class#",$value,$th_open) . str_replace($csv_enclosed, $csv_escaped . $csv_enclosed, $value) . $th_close;
+					$schema_insert .= $l;				
+				endforeach;// end for
+				
+			}
 			
-			$all_columns			= array_merge($columns,$total_columns);
-			
-			$column_align_style = $this->get_pdf_style_align($all_columns,'right','','', $report_name);
-			$date_format 		= get_option( 'date_format' );
+			$amount__columns = array_merge($price_columns, $total_columns);
+			$pdf_special_font = $this->get_pdf_special_font($amount__columns);
 			
 			//New Change ID 20140918
 			$out ='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -3718,14 +4004,12 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 						<meta name="keywords" content="'.$keywords.'" />
 						<meta name="author" content="'.$company_name.'" />
 						<style type="text/css"><!--
-					.header {position: fixed; top: -40px; text-align:center;}
+						'.$pdf_special_font.'	
+						.header {position: fixed; top: -40px; text-align:center;}
 						  .footer { position: fixed; bottom: 0px; text-align:center;}
-						  .pagenum:before { content: counter(page); }
-					/*.Container{width:750px; margin:0 auto; border:1px solid black;}*/
-					body{font-family: "Source Sans Pro", sans-serif; font-size:10px;}
+						  .pagenum:before { content: counter(page); }					
 					span{font-weight:bold;}
 					.Clear{clear:both; margin-bottom:10px;}
-					/*label{width:100px; float:left; }*/
 					table.grid_table{width:100%}
 					table {border-collapse: collapse;}
 					.sTable3{border:1px solid #DFDFDF; }
@@ -3742,7 +4026,32 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Fuctions' ) ) {
 					.sTable3 tbody tr.AltRow td{background:#FBFBFB;}
 					.header.center_header{margin:auto;  text-align:center;}
 					.header_logo.center_header{text-align:center;}
-					'.$column_align_style.'--></style>
+					'.$column_align_style;
+						
+						if($admin_page == 'icwoocommerceultimatereport_cross_tab_page'){
+							$crosstab 		= new IC_Commerce_Ultimate_Woocommerce_Report_Cross_Tab($this->constants);
+							$amount_column   = $crosstab->get_crosstab_coulums();
+													
+							if($report_name == "product_bill_country_crosstab" || $report_name == "product_bill_state_crosstab"){
+								$c = array();
+								foreach($amount_column as $key => $value):
+									if(strlen($key)>0)
+									$c[] = $key;
+								endforeach;
+								
+								$css = "td." . implode(", td.",$c)."{text-align:right;}";
+								$css .= ".sTable3 th." . implode(", .sTable3 th.",$c)."{text-align:right;}";
+								
+								$out .= str_replace("-","_",$css);
+							}else{
+								if(count($amount_column) > 0){
+									$out .= "td." . implode(", td.",$amount_column)."{text-align:right;}";
+									$out .= "th." . implode(", th.",$amount_column)."{text-align:right;}";
+								}
+							}
+						}
+					$out .='-->
+							</style>
 					</head>
 					<body>';
 			

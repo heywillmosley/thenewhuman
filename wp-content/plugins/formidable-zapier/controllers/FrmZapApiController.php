@@ -34,8 +34,6 @@ class FrmZapApiController{
     }
     
     private static function send_entry($entry_id, $form_id, $hook) {
-        global $wpdb;
-        
         $zaps = get_posts( array(
             'meta_key'      => 'frm_form_id',
         	'meta_value'    => $form_id,
@@ -93,10 +91,70 @@ class FrmZapApiController{
                 continue;
             }
             
-            $resp = wp_remote_post($zap->post_excerpt, $arg_array);
+			$response = wp_remote_post( $zap->post_excerpt, $arg_array );
+			$processed = self::process_response( $response );
+
+			$log_args = array(
+				'url'       => $zap->post_excerpt,
+				'request'   => $arg_array,
+				'processed' => $processed,
+				'entry'     => $body['id'],
+				'post'      => $zap,
+				'response'  => $response,
+			);
+			self::log_results( $log_args );
+
             unset($zap);
         }
     }
+
+	private static function process_response( $response ) {
+		$body = wp_remote_retrieve_body( $response );
+		$processed = array( 'message' => '', 'code' => 'FAIL' );
+		if ( is_wp_error( $response ) ) {
+			$processed['message'] = $response->get_error_message();
+		} elseif ( $body == 'error' || is_wp_error( $body ) ) {
+			$processed['message'] = __( 'You had an HTTP connection error', 'formidable-api' );
+		} elseif ( isset( $response['response'] ) && isset( $response['response']['code'] ) ) {
+			$processed['code'] = $response['response']['code'];
+			$processed['message'] = $response['body'];
+		}
+
+		return $processed;
+	}
+
+	private static function log_results( $atts ) {
+		if ( ! class_exists( 'FrmLog' ) ) {
+			return;
+		}
+
+		$content = $atts['processed'];
+		$message = isset( $content['message'] ) ? $content['message'] : '';
+
+		$headers = '';
+		self::array_to_list( $atts['request']['headers'], $headers );
+
+		$log = new FrmLog();
+		$log->add( array(
+			'title'   => 'Zapier: ' . $atts['post']->post_title,
+			'content' => (array) $atts['response'],
+			'fields'  => array(
+				'entry'   => $atts['entry'],
+				'action'  => $atts['post']->ID,
+				'code'    => isset( $content['code'] ) ? $content['code'] : '',
+				'message' => $message,
+				'url'     => $atts['url'],
+				'request' => $atts['request']['body'],
+				'headers' => $headers,
+			),
+		) );
+	}
+
+	private static function array_to_list( $array, &$list ) {
+		foreach ( $array as $k => $v ) {
+			$list .= "\r\n" . $k . ': ' . $v;
+		}
+	}
 
     private static function get_entry_array( $entry_id ) {
         if ( !method_exists('FrmEntriesController', 'show_entry_shortcode') ) {
@@ -148,7 +206,7 @@ class FrmZapApiController{
 			unset( $k, $m );
 		}
 
-        return $entry_array;
+        return apply_filters( 'frmzap_entry_array', $entry_array );
     }
 
 	/**
@@ -208,7 +266,7 @@ class FrmZapApiController{
             $response = array('error' => 'There is no endpoint for '. $request);
         }
 
-        echo json_encode($response);
+		echo json_encode( $response, 999 );
         die();
     }
 

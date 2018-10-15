@@ -6,9 +6,9 @@
 	<?php
 
 	FLPostGridModule::schema_meta();
-
+	do_action( 'fl_builder_post_grid_before_content', $settings, $module );
 	echo do_shortcode( FLThemeBuilderFieldConnections::parse_shortcodes( $settings->custom_post_layout->html ) );
-
+	do_action( 'fl_builder_post_grid_after_content', $settings, $module );
 	?>
 </div>
 

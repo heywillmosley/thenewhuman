@@ -28,7 +28,6 @@ class USIN_Pmpro extends USIN_Plugin_Module{
 			'name' => 'Paid Memberships Pro',
 			'desc' => __('Detects the Paid Memberships Pro user data and makes it available in the user table, filters and reports.', 'usin'),
 			'allow_deactivate' => true,
-			'in_beta' => true,
 			'buttons' => array(
 				array('text'=> __('Learn More', 'usin'), 'link'=>'https://usersinsights.com/paid-memberships-pro-search-filters', 'target'=>'_blank')
 			),

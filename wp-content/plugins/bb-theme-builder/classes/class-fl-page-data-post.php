@@ -15,14 +15,12 @@ final class FLPageDataPost {
 	static public function get_excerpt( $settings ) {
 
 		$args = apply_filters( 'fl_theme_builder_get_excerpt', array(
-			'content' => get_the_excerpt(),
+			'content' => apply_filters( 'the_excerpt', get_the_excerpt() ),
 			'length'  => is_numeric( $settings->length ) ? $settings->length : 55,
 			'more'    => ! empty( $settings->more ) ? $settings->more : '...',
 		), $settings );
 
-		$excerpt = wp_trim_words( $args['content'], $args['length'], $args['more'] );
-
-		return $excerpt;
+		return sprintf( '<p>%s</p>', wp_trim_words( $args['content'], $args['length'], $args['more'] ) );
 	}
 
 	/**

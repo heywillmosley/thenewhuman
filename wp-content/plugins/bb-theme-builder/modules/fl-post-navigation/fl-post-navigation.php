@@ -30,14 +30,37 @@ FLBuilder::register_module( 'FLPostNavigationModule', array(
 				'general'       => array(
 					'title'         => '',
 					'fields'        => array(
+						'prev_text' => array(
+							'type'          => 'text',
+							'label'         => __( 'Previous Text', 'fl-theme-builder' ),
+							'default'       => '&larr; %title',
+						),
+						'next_text' => array(
+							'type'          => 'text',
+							'label'         => __( 'Next Text', 'fl-theme-builder' ),
+							'default'       => '%title &rarr;',
+						),
 						'in_same_term' => array(
 							'type'          => 'select',
-							'label'         => __( 'Navigate in same category', 'fl-theme-builder' ),
+							'label'         => __( 'Navigate in same taxonomy', 'fl-theme-builder' ),
 							'default'       => '0',
+							'help' 			=> __( 'Whether to navigate in the same taxonomy as the current post or not.', 'fl-theme-builder' ),
+							'toggle'		=> array(
+								'1'		=> array(
+									'fields'		=> array( 'tax_select' ),
+								),
+							),
 							'options'       => array(
 								'1'             => __( 'Enable', 'fl-theme-builder' ),
 								'0'             => __( 'Disable', 'fl-theme-builder' ),
 							),
+						),
+						'tax_select' => array(
+							'type' => 'text',
+							'size' => 16,
+							'label' => __( 'Taxonomy', 'fl-theme-builder' ),
+							'default' => 'category',
+							'help' => __( 'The default taxonomy is category.', 'fl-theme-builder' ),
 						),
 					),
 				),

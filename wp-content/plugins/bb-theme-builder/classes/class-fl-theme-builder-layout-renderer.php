@@ -143,7 +143,7 @@ final class FLThemeBuilderLayoutRenderer {
 			foreach ( $layout_group as $layout ) {
 
 				if ( 'header' == $layout_type ) {
-					wp_enqueue_script( 'jquery-imagesloaded' );
+					wp_enqueue_script( 'imagesloaded' );
 					wp_enqueue_script( 'jquery-throttle', FL_THEME_BUILDER_URL . 'js/jquery.throttle.min.js', array( 'jquery' ), FL_THEME_BUILDER_VERSION, true );
 				}
 			}

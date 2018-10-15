@@ -3,7 +3,7 @@
 - Plugin Name: Users Insights
 - Plugin URI: https://usersinsights.com/
 - Description: Everything about your WordPress users in one place
-- Version: 3.6.5
+- Version: 3.6.6
 - Author: Pexeto
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,6 +34,15 @@ Users Insights is distributed in the hope that it will be useful, but WITHOUT AN
 
 
 == Changelog ==
+
+3.6.6
+- New: WooCommerce module - added Billing country, Billing state and Billing city fields and filters
+- New: BuddyPress module - added an Active Users report, displaying the number of users who have any kind of BuddyPress activity recorded, supporting daily, weekly, monthly and yearly periods
+- New: Ultimate Member module - added an Account status field and filter
+- Improved: BuddyPress module - performance optimisation of the way the xProfile fields are loaded in the user profile page
+- Learndash module: added a CSS class to the score progress bar, setting the exact score, so that the styles of the separate values can be customized if needed
+- Fixed: BuddyPress module - checkboxes and multi-select boxes fields reports not displayed, due to a code change from a previous update
+- General code improvements and minor bug fixes
 
 3.6.5
 - Easy Digital Downloads reports: Support the Software Licensing 3.6 database structure changes

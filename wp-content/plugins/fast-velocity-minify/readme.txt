@@ -2,8 +2,8 @@
 Contributors: Alignak
 Tags: PHP Minify, YUI Compressor, GTmetrix, Pingdom, Pagespeed, CSS Merging, JS Merging, CSS Minification, JS Minification, Speed Optimization, HTML Minification, Performance
 Requires at least: 4.5
-Stable tag: 2.3.4
-Tested up to: 4.9.6
+Stable tag: 2.3.5
+Tested up to: 4.9.8
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -43,7 +43,7 @@ I can offer you aditional `custom made` optimization on top of this plugin. If y
 *	Support for multisite installations
 *	Support for gzip_static on Nginx
 *	Support for the CDN Enabler plugin
-*	Auto purging of cache files on W3 Total Cache, WP Supercache, WP Rocket, Wp Fastest Cache, Cachify, Comet Cache, Zen Cache, LiteSpeed Cache, Nginx Cache (by Till Krüss ), SG Optimizer, Godaddy Managed WordPress Hosting and WP Engine (read the FAQs)
+*	Auto purging of cache files on W3 Total Cache, WP Supercache, WP Rocket, Wp Fastest Cache, Cachify, Comet Cache, Zen Cache, LiteSpeed Cache, Nginx Cache (by Till Krüss ), SG Optimizer, HyperCache, Godaddy Managed WordPress Hosting and WP Engine (read the FAQs)
 *	WP CLI support
 *	Support for preconnect and preload headers
 *	and some more...
@@ -74,8 +74,9 @@ I can offer you aditional `custom made` optimization on top of this plugin. If y
 
 == Screenshots ==
 
-1. You can view the logs and purge the cache files.
+1. The status and logs page.
 2. The settings page.
+3. The Advanced settings.
 
 
 == Frequently Asked Questions ==
@@ -263,6 +264,15 @@ If you would like to donate any amount to the plugin author (thank you in advanc
 ...
 
 == Changelog ==
+
+= 2.3.5 [2018.08.27] =
+* added thinkwithgoogle support for the defer for insights option
+* added HyperCache support, thanks to @erich_k4wp
+* added suport for wp_add_inline_script, thanks to @yuriipavlov
+* fixed a bug where some inlined css was missing if not attached to a parent css file
+* the ignore list now also supports CSS handle names (no JS yet)
+* updated PHP Minify from master on github
+* improved performance for gtmetrix tests
 
 = 2.3.4 [2018.06.30] =
 * bug fix

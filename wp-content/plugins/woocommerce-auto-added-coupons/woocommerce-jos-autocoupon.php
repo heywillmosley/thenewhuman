@@ -1,122 +1,104 @@
 <?php
 /**
- * Plugin Name: WooCommerce Extended Coupon Features
+ * Plugin Name: WooCommerce Extended Coupon Features FREE
  * Plugin URI: http://www.soft79.nl
- * Description: Additional functionality for WooCommerce Coupons: Apply certain coupons automatically, allow applying coupons via an url, etc...
- * Version: 2.6.3
+ * Description: Additional functionality for WooCommerce Coupons.
+ * Version: 3.0.2
  * Author: Soft79
  * License: GPL2
- * WC requires at least: 2.6.0
- * WC tested up to: 3.4.1
+ * WC requires at least: 3.0.0
+ * WC tested up to: 3.4.5
  */
- 
-if ( ! defined('WJECF_VERSION') ) define ('WJECF_VERSION', '2.6.3');
 
-// Changelog: see readme.txt
-
-/*
- TODO:
- - Apply filter for autocoupon individual_use_filter
- - (PRO) Eval
-*/
-
-
-if ( ! defined('ABSPATH') ) die();
-if ( ! function_exists( 'wjecf_load_plugin_textdomain' ) ) {   
-
-    //Translations
-    add_action( 'plugins_loaded', 'wjecf_load_plugin_textdomain' );
-    function wjecf_load_plugin_textdomain() {
-        $locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce' );
-
-        load_textdomain( 'woocommerce-jos-autocoupon', WP_LANG_DIR . '/woocommerce-jos-autocoupon/woocommerce-jos-autocoupon-' . $locale . '.mo' );        
-        load_plugin_textdomain('woocommerce-jos-autocoupon', false, basename(dirname(__FILE__)) . '/languages/' );
-    }
-
-    /**
-     * Get the instance of WJECF
-     * @return WJECF_Controller|WJECF_Pro_Controller The instance of WJECF
-     */
-    function WJECF() {
-        if ( class_exists( 'WJECF_Pro_Controller' ) ) { 
-            return WJECF_Pro_Controller::instance();
-        } else {
-            return WJECF_Controller::instance();
-        }
-    }
-
-    /**
-     * Get the instance of WJECF_Admin
-     * @return WJECF_Admin The instance of WJECF_Admin
-     */
-    function WJECF_ADMIN() {
-        return WJECF()->get_plugin('WJECF_Admin');
-    }
-
-    /**
-     * Get the instance of WJECF_WC
-     * @return WJECF_WC The instance of WJECF_WC
-     */
-    function WJECF_WC() {
-        return WJECF_WC::instance();
-    }
-
-    /**
-     * Get the instance if the WooCommerce Extended Coupon Features API
-     * @return WJECF_Pro_API The API object
-     */
-    function WJECF_API() {
-        return WJECF_Pro_API::instance();
-    }       
-
-    /**
-     * Wraps a product or coupon in a decorator
-     * @param mixed $object The WC_Coupon or WC_Product instance, or the post id
-     * @return WJECF_Wrap
-     */
-    function WJECF_Wrap( $object ) {
-        return WJECF_WC::instance()->wrap( $object );
-    }
-
-    require_once( 'includes/WJECF_Bootstrap.php' );
-    
-    WJECF_Bootstrap::execute();
-
-    //DEPRECATED. We keep $wjecf_extended_coupon_features for backwards compatibility; use WJECF_API()
-    $wjecf_extended_coupon_features = WJECF();
-
-
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
 }
 
+if ( ! defined( 'WJECF_VERSION' ) ) {
+	define( 'WJECF_VERSION', '3.0.2' );
+}
 
-// =========================================================================================================
-// Some snippets that might be useful
-// =========================================================================================================
+// NOTE: This file must be compatible with old PHP versions. All other files can be PHP 5.4+ .
+if ( ! function_exists( 'wjecf_load_plugin_textdomain' ) ) {
+	// We must define wjecf_load_plugin_textdomain() so that versions prior to 3.0 detect this plugin instance.
+	function wjecf_load_plugin_textdomain() {
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce' );
+		load_textdomain(
+			'woocommerce-jos-autocoupon',
+			WP_LANG_DIR . '/woocommerce-jos-autocoupon/woocommerce-jos-autocoupon-' . $locale . '.mo'
+		);
+		load_plugin_textdomain( 'woocommerce-jos-autocoupon', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+	}
 
-/* // HINT: Use this snippet in your theme if you use coupons with restricted emails and AJAX enabled one-page-checkout.
+	// The plugins_loaded action hook fires early,
+	// it precedes the setup_theme, after_setup_theme, init and wp_loaded action hooks.
+	add_action( 'plugins_loaded', 'wjecf_action_plugins_loaded' );
+	function wjecf_action_plugins_loaded() {
+		wjecf_load_plugin_textdomain();
 
-//Update the cart preview when the billing email is changed by the customer
-add_filter( 'woocommerce_checkout_fields', function( $checkout_fields ) {
-    $checkout_fields['billing']['billing_email']['class'][] = 'update_totals_on_change';
-    return $checkout_fields;    
-} );
- 
-// */ 
- 
+		try {
+			$requirements = array(
+				array(
+					'program'          => 'PHP',
+					'required_version' => '5.4',
+					'current_version'  => phpversion(),
+				),
+				array(
+					'program'          => 'WooCommerce',
+					'required_version' => '3.0',
+					'current_version'  => is_callable( 'wc' ) && isset( wc()->version ) ? wc()->version : null,
+				),
+				array(
+					'program'          => 'WordPress',
+					'required_version' => '4.8',
+					'current_version'  => $GLOBALS['wp_version'],
+				),
+			);
 
-/* // HINT: Use this snippet in your theme if you want to update cart preview after changing payment method.
-//Even better: In your theme add class "update_totals_on_change" to the container that contains the payment method radio buttons.
-//Do this by overriding woocommerce/templates/checkout/payment.php
+			foreach ( $requirements as $req ) {
+				if ( ! $req['current_version'] ) {
+					/* translators: 1: program 2: version */
+					$message = __( 'This plugin requires %1$s, please install it.', 'woocommerce-jos-autocoupon' );
+					throw new Exception( sprintf( $message, $req['program'], $req['required_version'] ) );
+				}
+				if ( version_compare( $req['current_version'], $req['required_version'], '<' ) ) {
+					/* translators: 1: program 2: version 3: version of WooCommerce Extended Coupon Features */
+					$message = __(
+						'This plugin requires %1$s version %2$s or higher. You are running version %3$s. Please update %1$s or install a version of WooCommerce Extended Coupon Features prior to %4$s.',
+						'woocommerce-jos-autocoupon'
+					);
+					throw new Exception(
+						sprintf( $message, $req['program'], $req['required_version'], $req['current_version'], '3.0' )
+					);
+				}
+			}
 
-//Update the cart preview when payment method is changed by the customer
-add_action( 'woocommerce_review_order_after_submit' , function () {
-    ?><script type="text/javascript">
-        jQuery(document).ready(function($){
-            $(document.body).on('change', 'input[name="payment_method"]', function() {
-                $('body').trigger('update_checkout');
-                //$.ajax( $fragment_refresh );
-            });
-        });
-    </script><?php 
-} );
-// */
+			// Here we load WooCommerce Extended Coupon Features.
+			require_once 'includes/class-wjecf-bootstrap.php';
+			WJECF_Bootstrap::execute();
+		} catch ( Exception $ex ) {
+			$GLOBALS['wjecf_admin_notice'] = $ex->getMessage();
+			add_action( 'admin_notices', 'wjecf_admin_notices' );
+		}
+	}
+} else {
+	$GLOBALS['wjecf_admin_notice'] = __(
+		'Multiple instances of the plugin are detected. Please disable one of them.',
+		'woocommerce-jos-autocoupon'
+	);
+	add_action( 'admin_notices', 'wjecf_admin_notices' );
+}
+
+if ( ! function_exists( 'wjecf_admin_notices' ) ) {
+	function wjecf_admin_notices() {
+		if ( ! isset( $GLOBALS['wjecf_admin_notice'] ) ) {
+			return;
+		}
+		error_log( 'WJECF: ' . $GLOBALS['wjecf_admin_notice'] );
+
+		echo '<div class="notice error">';
+		echo '<p><strong>WooCommerce Extended Coupon Features</strong> &#8211; ';
+		echo $GLOBALS['wjecf_admin_notice'];
+		echo '</div>';
+	}
+}

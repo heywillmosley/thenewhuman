@@ -559,7 +559,7 @@ angular.module('usinApp').run(['$templateCache', function($templateCache) {
     "							<a ng-href=\"{{listItem.link}}\" target=\"_blank\" ng-bind-html=\"listItem.title\"></a>\n" +
     "							<div ng-if=\"listItem.details.length\" ng-repeat=\"details in listItem.details\" ng-bind-html=\"details\" class=\"usin-activity-details\"></div>\n" +
     "						</li>\n" +
-    "						<li ng-if=\"item.list.length < item.count && listItem.link\" class=\"usin-list-more\">[...]</li>\n" +
+    "						<li ng-if=\"item.list.length < item.count && item.link\" class=\"usin-list-more\">[...]</li>\n" +
     "					</ul>\n" +
     "					<a class=\"usin-act-more\" ng-href=\"{{item.link}}\" ng-if=\"item.link\" target=\"_blank\">{{strings.view}}</a>\n" +
     "				</li>\n" +

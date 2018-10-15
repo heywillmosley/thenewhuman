@@ -209,6 +209,11 @@ final class FLPageDataWooCommerce {
 	static public function get_catalog_ordering() {
 		return self::get_template_html( 'woocommerce_catalog_ordering' );
 	}
+
+	static public function get_product_attached_images() {
+		global $product;
+		return null !== $product ? $product->get_gallery_image_ids() : false;
+	}
 }
 
 FLPageDataWooCommerce::init();

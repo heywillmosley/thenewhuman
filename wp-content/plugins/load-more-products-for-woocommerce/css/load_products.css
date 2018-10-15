@@ -4,10 +4,10 @@
     clear: both;
 }
 .lmp_products_loading .fa {
-    width: 2em;
-    height: 2em;
-    font-size: 2em;
-    line-height: 2em;
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+    line-height: 56px;
 }
 .lmp_products_loading .fa img {
     max-width: 100%;
@@ -35,6 +35,7 @@
     font-size: 22px;
     text-decoration: none;
     line-height: 1em;
+    box-sizing: border-box;
 }
 .lmp_load_more_button .lmp_button img {
     max-width: 100%;
@@ -50,6 +51,12 @@
 .berocket_lmp_ajax_loading .lmp_load_more_button .lmp_button .br_lmp_button_image {display: none;}
 .berocket_lmp_ajax_loading .lmp_load_more_button .lmp_button .br_lmp_hover_image {display: none;}
 .berocket_lmp_ajax_loading .lmp_load_more_button .lmp_button .br_lmp_loading_image {display: initial;}
+.lmp_load_more_button .lmp_button .br_lmp_button_image {display: initial;}
 .lmp_load_more_button .lmp_button .br_loading_inside_image_lmp {
     position: absolute;
+}
+.berocket_load_more_preload {
+    position: fixed;
+    opacity: 1;
+    top:150%;
 }

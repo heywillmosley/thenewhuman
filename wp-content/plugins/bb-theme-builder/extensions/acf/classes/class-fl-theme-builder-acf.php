@@ -51,7 +51,7 @@ final class FLThemeBuilderACF {
 	 * @return array
 	 */
 	static public function loop_query_args( $args ) {
-		$settings = $args['settings'];
+		$settings = isset( $args['settings'] ) ? $args['settings'] : new stdClass();
 		$object_ids = array();
 
 		if ( ! isset( $settings->data_source ) || 'acf_relationship' != $settings->data_source ) {
@@ -88,6 +88,7 @@ final class FLThemeBuilderACF {
 
 			if ( 'relationship' == $settings->data_source_acf_relational_type ) {
 				$args['post__in'] = $object_ids;
+				$args['orderby'] = 'post__in';
 
 			} elseif ( 'user' == $settings->data_source_acf_relational_type ) {
 				$args['author__in'] = $object_ids;

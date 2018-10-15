@@ -10,6 +10,7 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 	protected $plugin_path = 'woocommerce/woocommerce.php';
 	protected $yith_wishlist_active = false;
 	protected $wc_wishlist_active = false;
+	protected static $wc_countries = null;
 
 	const ORDER_POST_TYPE = 'shop_order';
 	const PRODUCT_POST_TYPE = 'product';
@@ -112,7 +113,7 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 				'module' => $this->module_name
 			),
 			array(
-				'name' => __('Lifetime Value', 'usin'),
+				'name' => __('Lifetime value', 'usin'),
 				'id' => 'lifetime_value',
 				'order' => 'DESC',
 				'show' => true,
@@ -120,6 +121,40 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 				'filter' => array(
 					'type' => 'number',
 					'disallow_null' => true
+				),
+				'module' => $this->module_name
+			),
+			array(
+				'name' => __('Billing country', 'usin'),
+				'id' => 'wc_billing_country',
+				'order' => false,
+				'show' => false,
+				'fieldType' => 'general',
+				'filter' => array(
+					'type' => 'select',
+					'options' => $this->get_wc_country_options()
+				),
+				'module' => $this->module_name
+			),
+			array(
+				'name' => __('Billing state', 'usin'),
+				'id' => 'wc_billing_state',
+				'order' => 'ASC',
+				'show' => false,
+				'fieldType' => 'general',
+				'filter' => array(
+					'type' => 'text'
+				),
+				'module' => $this->module_name
+			),
+			array(
+				'name' => __('Billing city', 'usin'),
+				'id' => 'wc_billing_city',
+				'order' => 'ASC',
+				'show' => false,
+				'fieldType' => 'general',
+				'filter' => array(
+					'type' => 'text'
 				),
 				'module' => $this->module_name
 			),
@@ -287,6 +322,39 @@ class USIN_Woocommerce extends USIN_Plugin_Module{
 		echo sprintf('<p class="usin-wc-profile-link"><a href="%s" target="_blank">%s</a></p>', $link,
 			__('Users Insights Profile', 'usin').' →');
 
+	}
+
+	protected function get_wc_country_options(){
+		$countries = self::get_wc_countries();
+		$options = array();
+		foreach ($countries as $key => $value) {
+			$options[]= array('key' => $key, 'val' => $value);
+		}
+		return $options;
+	}
+
+	public static function get_wc_countries(){
+		if(self::$wc_countries !== null){
+			return self::$wc_countries;
+		}
+
+		self::$wc_countries = array();
+		if(function_exists('WC')){
+			$wc = WC();
+			if(property_exists($wc, 'countries') && method_exists($wc->countries, 'get_countries')){
+				self::$wc_countries = $wc->countries->countries;
+			}
+		}
+		return self::$wc_countries;
+	}
+
+	public static function get_wc_country_name_by_code($code){
+		$countries = self::get_wc_countries();
+		if(isset($countries[$code])){
+			return html_entity_decode($countries[$code]);
+		}
+
+		return $code;
 	}
 	
 }

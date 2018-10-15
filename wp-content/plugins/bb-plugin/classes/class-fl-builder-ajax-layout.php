@@ -459,7 +459,12 @@ final class FLBuilderAJAXLayout {
 		// Get the rendered HTML.
 		$html = ob_get_clean();
 
-		// Render shortcodes.
+		/**
+		 * Use this filter to prevent the builder from rendering shortcodes.
+		 * It is useful if you don’t want shortcodes rendering while the builder UI is active.
+		 * @see fl_builder_render_shortcodes
+		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+		 */
 		if ( apply_filters( 'fl_builder_render_shortcodes', true ) ) {
 			$html = apply_filters( 'fl_builder_before_render_shortcodes', $html );
 			ob_start();
@@ -484,6 +489,7 @@ final class FLBuilderAJAXLayout {
 		$partial_refresh_data 	= self::get_partial_refresh_data();
 		$asset_info 		  	= FLBuilderModel::get_asset_info();
 		$asset_ver  			= FLBuilderModel::get_asset_version();
+		$enqueuemethod			= FLBuilderModel::get_asset_enqueue_method();
 		$assets					= array(
 			'js' => '',
 			'css' => '',
@@ -524,14 +530,20 @@ final class FLBuilderAJAXLayout {
 			if ( $min ) {
 				$assets['js'] = $min;
 			}
+		} elseif ( 'inline' === $enqueuemethod ) {
+			$assets['js'] = FLBuilder::render_js();
 		} else {
 			FLBuilder::render_js();
 			$assets['js'] = $asset_info['js_url'] . '?ver=' . $asset_ver;
 		}
 
 		// Render the CSS.
-		FLBuilder::render_css();
-		$assets['css'] = $asset_info['css_url'] . '?ver=' . $asset_ver;
+		if ( 'inline' === $enqueuemethod ) {
+			$assets['css'] = FLBuilder::render_css();
+		} else {
+			FLBuilder::render_css();
+			$assets['css'] = $asset_info['css_url'] . '?ver=' . $asset_ver;
+		}
 
 		// Return the assets.
 		return $assets;

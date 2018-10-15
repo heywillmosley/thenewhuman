@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: admin-custom-login\n"
-"POT-Creation-Date: 2018-08-06 14:15+0530\n"
-"PO-Revision-Date: 2018-08-06 14:15+0530\n"
+"POT-Creation-Date: 2018-08-08 20:07+0530\n"
+"PO-Revision-Date: 2018-08-08 20:07+0530\n"
 "Last-Translator: Weblizar <lizarweb@gmail.com>\n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -16,7 +16,19 @@ msgstr ""
 "X-Poedit-KeywordsList: _e;__;_\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/WL_ACL_FREE_Menu.php:6 includes/content.php:28
+#: admin/inc/admin_menu.php:11
+msgid "Plugin Configuration Click Here"
+msgstr "Konfiguracja wtyczki Kliknij tutaj"
+
+#: admin/inc/admin_menu.php:12
+msgid "Buy Pro"
+msgstr "Kup Pro"
+
+#: admin/inc/admin_menu.php:13
+msgid "Admin Demo"
+msgstr "Demo administratora"
+
+#: includes/content.php:28 init.php:59
 msgid "Admin Custom Login"
 msgstr "Admin Custom Login"
 
@@ -24,8 +36,8 @@ msgstr "Admin Custom Login"
 msgid "Show Us Some Love (Rate Us)"
 msgstr "Doceń nas (Oceń)"
 
-#: includes/content.php:80 includes/dashboard/dashboard.php:169
-#: includes/dashboard/dashboard.php:183
+#: includes/content.php:80 includes/dashboard/dashboard.php:129
+#: includes/dashboard/dashboard.php:144
 msgid "Dashboard"
 msgstr "Kokpit"
 
@@ -147,47 +159,47 @@ msgstr "Jeśli nas lubisz"
 msgid "Admin Custom Login Dashboard"
 msgstr "Admin Custom Login Kokpit"
 
-#: includes/dashboard/dashboard.php:104
+#: includes/dashboard/dashboard.php:30
 msgid "Admin Custom Login Status"
 msgstr "Admin Custom Login Status"
 
-#: includes/dashboard/dashboard.php:110
+#: includes/dashboard/dashboard.php:36
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:83
 msgid "Disable"
 msgstr "Wyłącz"
 
-#: includes/dashboard/dashboard.php:113
+#: includes/dashboard/dashboard.php:39
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:80
 msgid "Enable"
 msgstr "Włącz"
 
-#: includes/dashboard/dashboard.php:124
+#: includes/dashboard/dashboard.php:51
 msgid "View Login Page"
 msgstr "Widok Strony Logowania"
 
-#: includes/dashboard/dashboard.php:129
+#: includes/dashboard/dashboard.php:56
 msgid "Copy below link and open in another browser where you are not logged in"
 msgstr ""
 "Skopiuj poniższy link i otwórz go w przeglądarce w której nie jesteś "
 "zalogowany"
 
-#: includes/dashboard/dashboard.php:169 includes/design/background.php:368
+#: includes/dashboard/dashboard.php:129 includes/design/background.php:368
 #: includes/design/text_and_color.php:583
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:117
-#: includes/login-form-setting/login-form-background.php:716
+#: includes/login-form-setting/login-form-background.php:767
 #: includes/settings/page-settings.php:168 includes/social/social.php:192
 msgid "Setting Save Successfully"
 msgstr "Ustawienia zostały zapisane poprawnie ! :)"
 
-#: includes/dashboard/dashboard.php:169 includes/dashboard/dashboard.php:183
+#: includes/dashboard/dashboard.php:129 includes/dashboard/dashboard.php:144
 #: includes/design/background.php:180 includes/design/background.php:368
 #: includes/design/background.php:383 includes/design/text_and_color.php:583
 #: includes/design/text_and_color.php:598
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:117
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:131
 #: includes/login-form-setting/login-form-background.php:361
-#: includes/login-form-setting/login-form-background.php:716
-#: includes/login-form-setting/login-form-background.php:730
+#: includes/login-form-setting/login-form-background.php:767
+#: includes/login-form-setting/login-form-background.php:781
 #: includes/settings/page-settings.php:84
 #: includes/settings/page-settings.php:168
 #: includes/settings/page-settings.php:182 includes/social/social.php:192
@@ -195,26 +207,26 @@ msgstr "Ustawienia zostały zapisane poprawnie ! :)"
 msgid "Close"
 msgstr "Zamknij"
 
-#: includes/dashboard/dashboard.php:183 includes/design/background.php:383
+#: includes/dashboard/dashboard.php:144 includes/design/background.php:383
 #: includes/design/text_and_color.php:598
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:131
-#: includes/login-form-setting/login-form-background.php:730
+#: includes/login-form-setting/login-form-background.php:781
 #: includes/settings/page-settings.php:182 includes/social/social.php:206
 msgid "Setting Reset Successfully"
 msgstr "Ustawienia zostały poprawnie zresetowane ! :)"
 
-#: includes/dashboard/dashboard.php:190 includes/design/background.php:391
+#: includes/dashboard/dashboard.php:151 includes/design/background.php:391
 #: includes/design/text_and_color.php:606
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:138
-#: includes/login-form-setting/login-form-background.php:737
+#: includes/login-form-setting/login-form-background.php:788
 #: includes/settings/page-settings.php:189 includes/social/social.php:213
 msgid "Save Changes"
 msgstr "Zapisz zmiany"
 
-#: includes/dashboard/dashboard.php:193 includes/design/background.php:394
+#: includes/dashboard/dashboard.php:154 includes/design/background.php:394
 #: includes/design/text_and_color.php:609
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:141
-#: includes/login-form-setting/login-form-background.php:740
+#: includes/login-form-setting/login-form-background.php:791
 #: includes/settings/page-settings.php:192 includes/social/social.php:216
 msgid "Reset Default"
 msgstr "Resetuj do ustawień domyślnych"
@@ -688,6 +700,14 @@ msgstr "Prawa"
 msgid "Floating With Customization Settings"
 msgstr "Pływający + dostosuj"
 
+#: includes/login-form-setting/login-form-background.php:250
+msgid "Left Margin"
+msgstr "Lewy margines"
+
+#: includes/login-form-setting/login-form-background.php:258
+msgid "Top Margin"
+msgstr "Górny margines"
+
 #: includes/login-form-setting/login-form-background.php:266
 msgid "Note: This form position setting will be not responsive."
 msgstr "Uwaga: To ustawienie pozycji formatki nie będzie responsywne."
@@ -773,40 +793,74 @@ msgstr "Grubość ramki"
 msgid "Enable Form Shadow?"
 msgstr "Włączyc cień?"
 
-#: includes/login-form-setting/login-form-background.php:552
+#: includes/login-form-setting/login-form-background.php:553
 msgid "Form Shadow Color"
 msgstr "Kolor cieniowania"
 
-#: includes/login-form-setting/login-form-background.php:569
+#: includes/login-form-setting/login-form-background.php:570
 #, fuzzy
 #| msgid "Username or Email Address"
-msgid "Username / Email Field Placeholder Text"
+msgid "Username or Email Field Label Text"
 msgstr "Nazwa użytkownika lub adres e-mail"
 
-#: includes/login-form-setting/login-form-background.php:574
-msgid "Type Username or Email"
-msgstr "Wpisz nazwę użytkownika lub e-mail"
+#: includes/login-form-setting/login-form-background.php:575
+#, fuzzy
+#| msgid "Username or Email Address"
+msgid "Type username or email field label text"
+msgstr "Nazwa użytkownika lub adres e-mail"
 
 #: includes/login-form-setting/login-form-background.php:587
-msgid "Password Field Placeholder Text"
-msgstr ""
+#, fuzzy
+#| msgid "Username or Email Address"
+msgid "Username or Email Field Placeholder Text"
+msgstr "Nazwa użytkownika lub adres e-mail"
 
 #: includes/login-form-setting/login-form-background.php:592
 #, fuzzy
-#| msgid "Password"
-msgid "Type Password"
-msgstr "Hasło"
+#| msgid "Username or Email Address"
+msgid "Type username or email placeholder text"
+msgstr "Nazwa użytkownika lub adres e-mail"
 
 #: includes/login-form-setting/login-form-background.php:604
+#, fuzzy
+#| msgid "Password Field Placeholder Text"
+msgid "Password Field Label Text"
+msgstr "Hasło Tekst zastępczy pola"
+
+#: includes/login-form-setting/login-form-background.php:609
+#, fuzzy
+#| msgid "Password Field Placeholder Text"
+msgid "Type password field label text"
+msgstr "Hasło Tekst zastępczy pola"
+
+#: includes/login-form-setting/login-form-background.php:621
+msgid "Password Field Placeholder Text"
+msgstr "Hasło Tekst zastępczy pola"
+
+#: includes/login-form-setting/login-form-background.php:626
+#, fuzzy
+#| msgid "Password Field Placeholder Text"
+msgid "Type password field placeholder text"
+msgstr "Hasło Tekst zastępczy pola"
+
+#: includes/login-form-setting/login-form-background.php:638
+msgid "Log In Button Text"
+msgstr ""
+
+#: includes/login-form-setting/login-form-background.php:643
+msgid "Type log in button text"
+msgstr ""
+
+#: includes/login-form-setting/login-form-background.php:655
 msgid "Redirect Users After Login (Not Work For Admin)"
 msgstr ""
 "Przekierowuj użytkowników po zalogowaniu (nie działają dla administratora)"
 
-#: includes/login-form-setting/login-form-background.php:609
+#: includes/login-form-setting/login-form-background.php:660
 msgid "Redirect URL"
 msgstr "Przekierowanie URL"
 
-#: includes/login-form-setting/login-form-background.php:610
+#: includes/login-form-setting/login-form-background.php:661
 msgid ""
 "Enter the URL to redirect users after login, Setting will not work for an "
 "administrator."
@@ -814,52 +868,52 @@ msgstr ""
 "Wprowadź adres URL przekierowania użytkowników po zalogowaniu, ustawienie "
 "nie będzie działać dla administratora."
 
-#: includes/login-form-setting/login-form-background.php:622
+#: includes/login-form-setting/login-form-background.php:673
 msgid "Display Note To User Above Login Form"
 msgstr "Wyświetl notatkę dla użytkownika powyżej formularza logowania"
 
-#: includes/login-form-setting/login-form-background.php:627
-#: includes/login-form-setting/login-form-background.php:679
+#: includes/login-form-setting/login-form-background.php:678
+#: includes/login-form-setting/login-form-background.php:730
 msgid "Type Message"
-msgstr ""
+msgstr "Wpisz wiadomość"
 
-#: includes/login-form-setting/login-form-background.php:639
+#: includes/login-form-setting/login-form-background.php:690
 #, fuzzy
 #| msgid "Headline Font size"
 msgid "Message Font Size"
 msgstr "Rozmiar czcionki nagłówka"
 
-#: includes/login-form-setting/login-form-background.php:657
+#: includes/login-form-setting/login-form-background.php:708
 #, fuzzy
 #| msgid "Headline Font Color"
 msgid "Message Font Color"
 msgstr "Kolor czcionki nagłówka"
 
-#: includes/login-form-setting/login-form-background.php:674
+#: includes/login-form-setting/login-form-background.php:725
 msgid "Tagline Message Display Below Login Form"
 msgstr "Tagline Message Display Poniżej formularza logowania"
 
-#: includes/login-form-setting/login-form-background.php:691
-#: includes/login-form-setting/login-form-background.php:696
+#: includes/login-form-setting/login-form-background.php:742
+#: includes/login-form-setting/login-form-background.php:747
 msgid "Custom CSS"
 msgstr "Własny CSS"
 
-#: includes/login-form-setting/login-form-background.php:698
+#: includes/login-form-setting/login-form-background.php:749
 msgid "Enter any custom css you want to apply on login panel."
 msgstr ""
 "Wpisz dowolny preferowany przez ciebie styl css aby zastosować go dla panelu "
 "logowania."
 
-#: includes/login-form-setting/login-form-background.php:699
+#: includes/login-form-setting/login-form-background.php:750
 msgid "Note: Please Do Not Use"
 msgstr "Notatka : Proszę nie używać"
 
-#: includes/login-form-setting/login-form-background.php:699
+#: includes/login-form-setting/login-form-background.php:750
 msgid "Tag With Custom CSS"
 msgstr "Tag z niestandardowym CSS"
 
-#: includes/login-form-setting/login-form-background.php:716
-#: includes/login-form-setting/login-form-background.php:730
+#: includes/login-form-setting/login-form-background.php:767
+#: includes/login-form-setting/login-form-background.php:781
 msgid "Login"
 msgstr "Nazwa użytkownika (login)"
 
@@ -1034,33 +1088,54 @@ msgstr "Whatsapp"
 msgid "Social"
 msgstr "Social"
 
-#: init.php:62
+#: init.php:59
+#, fuzzy
+#| msgid "Login"
+msgid "AC Login"
+msgstr "Nazwa użytkownika (login)"
+
+#: init.php:65
 #, fuzzy
 #| msgid "Logo Settings"
 msgid "Settings"
 msgstr "Ustawienia Logo"
 
-#: init.php:154
-#, fuzzy
-#| msgid "Type Username or Email"
-msgid "Username or Email"
-msgstr "Wpisz nazwę użytkownika lub e-mail"
+#: init.php:68
+msgid "Get Pro"
+msgstr "Zostać zawodowcem"
 
-#: init.php:155
-msgid "Password"
-msgstr "Hasło"
-
-#: init.php:178
+#: init.php:211
 msgid "Find Us On Social Media"
 msgstr "Znajdź nas w mediach społecznościowych"
 
-#: init.php:465
+#: init.php:504
 msgid "Please upload a valid .json file"
 msgstr "Proszę załadować poprawny plik .json"
 
-#: init.php:471
+#: init.php:510
 msgid "Please upload a file to import"
 msgstr "Prosze załadować plik do importu"
+
+#~ msgid "Type Username or Email"
+#~ msgstr "Wpisz nazwę użytkownika lub e-mail"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "Type Password"
+#~ msgstr "Hasło"
+
+#, fuzzy
+#~| msgid "Admin Custom Login"
+#~ msgid "Custom Login"
+#~ msgstr "Admin Custom Login"
+
+#, fuzzy
+#~| msgid "Type Username or Email"
+#~ msgid "Username or Email"
+#~ msgstr "Wpisz nazwę użytkownika lub e-mail"
+
+#~ msgid "Password"
+#~ msgstr "Hasło"
 
 #~ msgid "Powered By"
 #~ msgstr "Powered By"

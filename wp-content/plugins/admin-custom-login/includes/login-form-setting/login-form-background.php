@@ -247,7 +247,7 @@ function loginbgchange() {
 			</tr>
 				<tr  style="border-bottom:none;">
 					<td>
-						<h4>Left Margin</h4>
+						<h4><?php _e('Left Margin',WEBLIZAR_ACL); ?></h4>
 						<div id="button_left" class="size-slider" style="width: 30%;display:inline-block"></div>
 						<input type="text" class="slider-text" id="login_form_left" name="login_form_left"  readonly="readonly">
 						<span class="slider-text-span">Px</span>
@@ -255,7 +255,7 @@ function loginbgchange() {
 				</tr>
 				<tr>
 					<td>
-						<h4>Top Margin</h4>
+						<h4><?php _e('Top Margin',WEBLIZAR_ACL); ?></h4>
 						<div id="button_top" class="size-slider" style="width: 30%;display:inline-block"></div>
 						<input type="text" class="slider-text" id="login_form_top" name="login_form_top"  readonly="readonly">
 						<span class="slider-text-span">Px</span>
@@ -545,6 +545,7 @@ function loginbgchange() {
 			</table>
 		</div>
 	</div>
+	
 	<div class="panel panel-primary panel-default content-panel">
 		<div class="panel-body">
 			<table class="form-table">
@@ -561,25 +562,58 @@ function loginbgchange() {
 		</div>
 	</div>
 
-	<!--Username and Password Placeholder Text-->
+	<!-- Login Form Username / Email Label Text -->
 	<div class="panel panel-primary panel-default content-panel">
 		<div class="panel-body">
 			<table class="form-table">
 				<tr>
-					<th scope="row" ><?php _e('Username / Email Field Placeholder Text', WEBLIZAR_ACL); ?></th>
+					<th scope="row" ><?php _e('Username or Email Field Label Text', WEBLIZAR_ACL); ?></th>
 					<td></td>
 				</tr>
 				<tr  style="border-bottom:none;">
 					<td>
-						<input type="text" placeholder="<?php _e('Type Username or Email', WEBLIZAR_ACL); ?>" id="user_cust_lbl" name="user_cust_lbl" value="<?php echo stripslashes(html_entity_decode($user_cust_lbl,ENT_QUOTES)); ?>" style="width: 70%;">
+						<input type="text"  placeholder="<?php _e('Type username or email field label text', WEBLIZAR_ACL); ?>" id="label_username" name="label_username" value="<?php echo stripslashes($label_username); ?>" style="width: 70%;">
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<!--Username Placeholder Text-->
+	<div class="panel panel-primary panel-default content-panel">
+		<div class="panel-body">
+			<table class="form-table">
+				<tr>
+					<th scope="row" ><?php _e('Username or Email Field Placeholder Text', WEBLIZAR_ACL); ?></th>
+					<td></td>
+				</tr>
+				<tr  style="border-bottom:none;">
+					<td>
+						<input type="text" placeholder="<?php _e('Type username or email placeholder text', WEBLIZAR_ACL); ?>" id="user_cust_lbl" name="user_cust_lbl" value="<?php echo stripslashes(html_entity_decode($user_cust_lbl,ENT_QUOTES)); ?>" style="width: 70%;">
 					</td>
 				</tr>
 			</table>
 		</div>
 	</div>	
-	<!--Username and Password Placeholder Text end-->
+	
+	<!-- Login Form Password Field Label Text -->
+	<div class="panel panel-primary panel-default content-panel">
+		<div class="panel-body">
+			<table class="form-table">
+				<tr>
+					<th scope="row" ><?php _e('Password Field Label Text', WEBLIZAR_ACL); ?></th>
+					<td></td>
+				</tr>
+				<tr  style="border-bottom:none;">
+					<td>
+						<input type="text"  placeholder="<?php _e('Type password field label text', WEBLIZAR_ACL); ?>" id="label_password" name="label_password" value="<?php echo stripslashes($label_password); ?>" style="width: 70%;">
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 
-	<!-- Password Label and Placeholder start-->
+	<!-- Password Placeholder Text -->
 	<div class="panel panel-primary panel-default content-panel">
 		<div class="panel-body">
 			<table class="form-table">
@@ -589,13 +623,30 @@ function loginbgchange() {
 				</tr>
 				<tr  style="border-bottom:none;">
 					<td>
-						<input type="text"  placeholder="<?php _e('Type Password', WEBLIZAR_ACL); ?>" id="pass_cust_lbl" name="pass_cust_lbl" value="<?php echo stripslashes(html_entity_decode($pass_cust_lbl,ENT_QUOTES)); ?>" style="width: 70%;">
+						<input type="text"  placeholder="<?php _e('Type password field placeholder text', WEBLIZAR_ACL); ?>" id="pass_cust_lbl" name="pass_cust_lbl" value="<?php echo stripslashes(html_entity_decode($pass_cust_lbl,ENT_QUOTES)); ?>" style="width: 70%;">
 					</td>
 				</tr>
 			</table>
 		</div>
 	</div>	
-	<!-- Password Label and Placeholder end-->
+	
+	
+	<div class="panel panel-primary panel-default content-panel">
+		<div class="panel-body">
+			<table class="form-table">
+				<tr>
+					<th scope="row" ><?php _e('Log In Button Text', WEBLIZAR_ACL); ?></th>
+					<td></td>
+				</tr>
+				<tr  style="border-bottom:none;">
+					<td>
+						<input type="text"  placeholder="<?php _e('Type log in button text', WEBLIZAR_ACL); ?>" id="label_loginButton" name="label_loginButton" value="<?php echo stripslashes($label_loginButton); ?>" style="width: 70%;">
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!-- change the text of labels and log in button -->
 
 	<div class="panel panel-primary panel-default content-panel">
 		<div class="panel-body">
@@ -800,6 +851,9 @@ function Custom_login_login(Action, id){
 		var tagline_msg = jQuery( "#tagline_msg").val();
 		var user_cust_lbl = jQuery( "#user_cust_lbl").val();
 		var pass_cust_lbl = jQuery( "#pass_cust_lbl").val();
+		var label_username = jQuery( "#label_username").val();
+		var label_password = jQuery( "#label_password").val();
+		var label_loginButton = jQuery( "#label_loginButton").val();
 		//alert(tagline_msg);
 		
 		if (document.getElementById('login_enable_shadow1').checked) {
@@ -809,7 +863,7 @@ function Custom_login_login(Action, id){
 		}
 		var login_shadow_color = jQuery("#login_shadow_color").val();		
 
-		var PostData = "Action=" + Action + "&login_form_position=" + login_form_position + "&Login_bg_value=" + Login_bg_value + "&login_background_color=" + login_background_color + "&login_bg_color_overlay=" + login_bg_color_overlay + "&login_bg_image=" + login_bg_image + "&login_form_opacity=" + login_form_opacity  + "&login_form_width=" + login_form_width + "&login_form_radius=" + login_form_radius + "&login_border_style=" + login_border_style + "&login_border_thikness=" + login_border_thikness + "&login_border_color=" + login_border_color + "&login_bg_repeat=" + login_bg_repeat + "&login_bg_position=" + login_bg_position + "&login_enable_shadow=" + login_enable_shadow + "&login_shadow_color=" + login_shadow_color + "&login_custom_css=" + login_custom_css + "&login_redirect_user=" + login_redirect_user +"&login_form_left=" + login_form_left + "&log_form_above_msg=" + log_form_above_msg + "&login_msg_font_color=" + login_msg_font_color + "&login_msg_fontsize=" + login_msg_fontsize  +  "&login_form_top=" + login_form_top + "&login_form_float=" + login_form_float + "&tagline_msg=" + tagline_msg + "&user_cust_lbl=" + user_cust_lbl + "&pass_cust_lbl=" + pass_cust_lbl;
+		var PostData = "Action=" + Action + "&login_form_position=" + login_form_position + "&Login_bg_value=" + Login_bg_value + "&login_background_color=" + login_background_color + "&login_bg_color_overlay=" + login_bg_color_overlay + "&login_bg_image=" + login_bg_image + "&login_form_opacity=" + login_form_opacity  + "&login_form_width=" + login_form_width + "&login_form_radius=" + login_form_radius + "&login_border_style=" + login_border_style + "&login_border_thikness=" + login_border_thikness + "&login_border_color=" + login_border_color + "&login_bg_repeat=" + login_bg_repeat + "&login_bg_position=" + login_bg_position + "&login_enable_shadow=" + login_enable_shadow + "&login_shadow_color=" + login_shadow_color + "&login_custom_css=" + login_custom_css + "&login_redirect_user=" + login_redirect_user +"&login_form_left=" + login_form_left + "&log_form_above_msg=" + log_form_above_msg + "&login_msg_font_color=" + login_msg_font_color + "&login_msg_fontsize=" + login_msg_fontsize  +  "&login_form_top=" + login_form_top + "&login_form_float=" + login_form_float + "&tagline_msg=" + tagline_msg + "&user_cust_lbl=" + user_cust_lbl + "&pass_cust_lbl=" + pass_cust_lbl + '&label_username=' + label_username + '&label_password=' + label_password + '&label_loginButton=' + label_loginButton;
 		jQuery.ajax({
 			dataType : 'html',
 			type: 'POST',
@@ -982,6 +1036,9 @@ if(isset($_POST['Action'])){
 		$login_msg_font_color 	= sanitize_option('login_msg_font_color', $_POST['login_msg_font_color']);
 		$user_cust_lbl 	= sanitize_option('user_cust_lbl', $_POST['user_cust_lbl']);
 		$pass_cust_lbl 	= sanitize_option('pass_cust_lbl', $_POST['pass_cust_lbl']);
+		$label_username 	= sanitize_option('label_username', $_POST['label_username']);
+		$label_password 	= sanitize_option('label_password', $_POST['label_password']);
+		$label_loginButton 	= sanitize_option('label_loginButton', $_POST['label_loginButton']);
 		
 		
 		// Save Values in Option Table
@@ -1012,8 +1069,9 @@ if(isset($_POST['Action'])){
 			'login_msg_font_color' => $login_msg_font_color,
 			'user_cust_lbl' => $user_cust_lbl,
 			'pass_cust_lbl' => $pass_cust_lbl,
-			
-			
+			'label_username' => $label_username,
+			'label_password' => $label_password,
+			'label_loginButton' => $label_loginButton,
 		));
 		update_option('Admin_custome_login_login', $login_page);
 	}
@@ -1046,7 +1104,9 @@ if(isset($_POST['Action'])){
 			'login_msg_font_color' => '#000000',	
 			'user_cust_lbl' => 'Type Username or Email',	
 			'pass_cust_lbl' => 'Type Password',	
-		
+			'label_username' => 'Username / Email',
+			'label_password' => 'Password',
+			'label_loginButton' => 'Log In',		
 		));
 		update_option('Admin_custome_login_login', $login_page);
 	}

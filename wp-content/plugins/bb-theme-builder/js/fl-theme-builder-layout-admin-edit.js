@@ -163,6 +163,7 @@
 				locationWrap   = null,
 				locationSelect = null,
 				location       = null,
+				locationType   = null,
 				objectSelect   = null,
 				data           = null,
 				id             = null,
@@ -202,9 +203,10 @@
 							data     = config[ parts[0] ][ parts[1] ];
 							id       = 3 === parts.length ? parts[2] : undefined;
 						} else {
-							location = parts[0] + ':' + parts[1] + ':' + parts[2] + ':' + parts[3];
-							data     = config[ parts[2] ][ parts[3] ];
-							id       = 5 === parts.length ? parts[4] : undefined;
+							location 	 = parts[0] + ':' + parts[1] + ':' + parts[2] + ':' + parts[3];
+							locationType = 'post' === parts[0] && 'ancestor' === parts[2] ? 'post' : parts[2];
+							data     	 = config[ locationType ][ parts[3] ];
+							id       	 = 5 === parts.length ? parts[4] : undefined;
 						}
 					}
 					else {
@@ -284,7 +286,7 @@
 					option   = null,
 					location = select.attr( 'data-location' );
 
-				if ( /post:[a-zA-Z0-9_-]+:post:[a-zA-Z0-9_-]+$/.test( location ) ) {
+				if ( /post:[a-zA-Z0-9_-]+:(post|ancestor):[a-zA-Z0-9_-]+$/.test( location ) ) {
 					option = select.find( 'option' ).eq( 0 );
 
 					if ( '' === option.attr( 'value' ) ) {
@@ -383,11 +385,10 @@
 				options        = '<option value="" data-location="' + locationString + '">' + allLabel + '</option>',
 				selected       = null,
 				i              = 0;
-
 			for ( ; i < data.objects.length; i++ ) {
 				objectLocation = ' data-location="' + locationString + ':' + data.objects[ i ].id + '"';
 				selected = 'undefined' != typeof id && id == data.objects[ i ].id ? ' selected' : '';
-				options += '<option value=\'' + JSON.stringify( data.objects[ i ] ) + '\'' + selected + objectLocation + '>' + data.objects[ i ].name + '</option>';
+				options += '<option value=\'' + JSON.stringify( data.objects[ i ] ).replace(/&quot;/g, '\\&quot;') + '\'' + selected + objectLocation + '>' + data.objects[ i ].name + '</option>';
 			}
 
 			objectSelect.html( options );

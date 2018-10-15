@@ -394,7 +394,7 @@ if (stripos($hurl, $wp_domain) !== false) {
 	if (file_exists($f)) { 
 		if($type == 'js') { $code = fastvelocity_min_get_js($hurl, file_get_contents($f), $disable_minification); } 
 		else { $code = fastvelocity_min_get_css($hurl, file_get_contents($f).$inline, $disable_minification); }
-		set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
+
 		$log = "$printurl --- Debug: $printhandle File was opened from $f ---\n";
 		return array('log'=>$log, 'code'=>$code);
 	}
@@ -406,7 +406,6 @@ if (stripos($hurl, $wp_domain) !== false) {
 	if (file_exists($f)) { 
 		if($type == 'js') { $code = fastvelocity_min_get_js($hurl, file_get_contents($f), $disable_minification); } 
 		else { $code = fastvelocity_min_get_css($hurl, file_get_contents($f).$inline, $disable_minification); }
-		set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
 		$log = "$printurl --- Debug: $printhandle File was opened from $f ---\n";
 		return array('log'=>$log, 'code'=>$code);
 	}
@@ -420,7 +419,7 @@ $code = fastvelocity_download($hurl, $tkey, $ttl);
 if($code !== false) { 
 	if($type == 'js') { $code = fastvelocity_min_get_js($hurl, $code, $disable_minification); } 
 	else { $code = fastvelocity_min_get_css($hurl, $code.$inline, $disable_minification); }
-	set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
+	fvm_set_transient($tkey, $code, 604800);
 	$log = "$printurl --- Debug: $printhandle Fetched url at $hurl \n";
 	return array('log'=>$log, 'code'=>$code);
 }
@@ -433,7 +432,6 @@ if(stripos($hurl, $wp_domain) !== false && home_url() != site_url()) {
 	if($code !== false) { 
 		if($type == 'js') { $code = fastvelocity_min_get_js($hurl, $code, $disable_minification); } 
 		else { $code = fastvelocity_min_get_css($hurl, $code.$inline, $disable_minification); }
-		set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
 		$log = "$printurl --- Debug: $printhandle Fetched url at $hurl \n";
 		return array('log'=>$log, 'code'=>$code);
 	}
@@ -448,7 +446,6 @@ if (stripos($hurl, $wp_domain) !== false) {
 	if (file_exists($f)) { 
 		if($type == 'js') { $code = fastvelocity_min_get_js($hurl, file_get_contents($f), $disable_minification); } 
 		else { $code = fastvelocity_min_get_css($hurl, file_get_contents($f).$inline, $disable_minification); }
-		set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
 		$log = "$printurl --- Debug: $printhandle File was opened from $f ---\n";
 		return array('log'=>$log, 'code'=>$code);
 	}
@@ -460,7 +457,6 @@ if (stripos($hurl, $wp_domain) !== false) {
 	if (file_exists($f)) { 
 		if($type == 'js') { $code = fastvelocity_min_get_js($hurl, file_get_contents($f), $disable_minification); } 
 		else { $code = fastvelocity_min_get_css($hurl, file_get_contents($f).$inline, $disable_minification); }
-		set_transient($tkey, $code, 7 * DAY_IN_SECONDS );
 		$log = "$printurl --- Debug: $printhandle File was opened from $f ---\n";
 		return array('log'=>$log, 'code'=>$code);
 	}
@@ -951,6 +947,12 @@ sg_cachepress_purge_cache();
 return __('<div class="notice notice-info is-dismissible"><p>All caches from <strong>SG Optimizer</strong> have also been purged.</p></div>');
 }
 
+# Purge Hyper Cache
+if (class_exists( 'HyperCache' )) {
+do_action( 'autoptimize_action_cachepurged' );
+return __( '<div class="notice notice-info is-dismissible"><p>All caches from <strong>HyperCache</strong> have also been purged.</p></div>');
+}
+
 # Purge Godaddy Managed WordPress Hosting (Varnish + APC)
 if (class_exists('WPaaS\Plugin')) {
 fastvelocity_godaddy_request('BAN');
@@ -964,7 +966,5 @@ if (method_exists('WpeCommon', 'clear_maxcdn_cache')) { WpeCommon::clear_maxcdn_
 if (method_exists('WpeCommon', 'purge_varnish_cache')) { WpeCommon::purge_varnish_cache(); }
 }
 
+
 }
-
-
-

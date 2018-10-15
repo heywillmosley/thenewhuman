@@ -30,3 +30,30 @@
     font-size: 16px;
     text-align: center;
 }
+.br_framework_submit_form .berocket_wizard_autoselectors .berocket_autoselector.button,
+.br_framework_submit_form .berocket_wizard_autoselectors .berocket_autoselector_stop.button {
+    margin-top:0;
+    margin-bottom:0;
+}
+.br_framework_submit_form .berocket_wizard_autoselectors .berocket_autoselector_stop.button {
+    background-color: #ff5555;
+}
+.br_framework_submit_form .berocket_wizard_autoselectors .berocket_autoselector_stop.button:hover {
+    background-color: #ee0000;
+}
+.br_framework_submit_form .berocket_wizard_autoselectors .berocket_autoselect_spin,
+.br_framework_submit_form .berocket_wizard_autoselectors .berocket_autoselect_ready,
+.br_framework_submit_form .berocket_wizard_autoselectors .berocket_autoselect_error {
+    line-height: 42px;
+}
+.br_framework_submit_form .berocket_wizard_autoselectors .berocket_autoselect_spin .fa,
+.br_framework_submit_form .berocket_wizard_autoselectors .berocket_autoselect_ready .fa,
+.br_framework_submit_form .berocket_wizard_autoselectors .berocket_autoselect_error .fa {
+    vertical-align: middle;
+}
+.berocket_wizard_autoselectors ol li .fa-check {
+    color: #33bb33;
+}
+.berocket_wizard_autoselectors ol li .fa-times {
+    color: #bb3333;
+}

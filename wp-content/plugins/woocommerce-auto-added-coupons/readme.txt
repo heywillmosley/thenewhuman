@@ -1,11 +1,10 @@
-=== WooCommerce Extended Coupon Features ===
+=== WooCommerce Extended Coupon Features FREE ===
 Contributors: josk79
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQBCS2QHRY&lc=NL&item_name=Jos%20Koenis&item_number=wordpress%2dplugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: woocommerce, coupons, discount
-Requires at least: 4.7
-Requires PHP: 5.3
-Tested up to: 4.9.6
-Stable tag: 2.6.3
+Requires at least: 4.8
+Requires PHP: 5.4
+Tested up to: 4.9.8
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +15,12 @@ Additional functionality for WooCommerce Coupons: Allow discounts to be automati
 "WooCommerce Extended Coupon Features" adds functionality to the WooCommerce coupons and allows for automatic discount rules. 
 Very easy to use, the functionality is conveniently integrated to the WooCommerce Edit Coupon panel.
 
-Compatible with WooCommerce 3.3.4. Backwards compatible with older WooCommerce versions (2.6.0 confirmed).
+Requires:
+* WooCommerce 3.0 or newer (3.4+ recommended)
+* PHP 5.4 or newer (7.0+ Recommended)
+* WordPress 4.8 or newer
+
+For compatibility with older versions of WooCommerce, please use "WooCommerce Extended Coupon Features" version 2.6.3.
 
 Full documentation is available at [www.soft79.nl](http://www.soft79.nl/documentation/wjecf).
 
@@ -81,23 +85,12 @@ An empty cart can not have any coupons. The PRO version of this plugin has a wor
 
 = The cart is not updated after changing the payment method =
 
-In your theme add class "update_totals_on_change" to the container (div / p / whatever) that holds the payment method radio buttons.
-You can do this by overriding woocommerce/templates/checkout/payment.php (place it in your_template/woocommerce/checkout/).
+On the settings page (Settings > WooCommerce Extended Coupon Features) check the box *Update order review on payment method change*.
 
 = The cart is not updated after changing the billing email address =
 
-Paste this snippet in your theme's functions.php:
-`
-//Update the cart preview when the billing email is changed by the customer
-add_filter( 'woocommerce_checkout_fields', function( $checkout_fields ) {
-	$checkout_fields['billing']['billing_email']['class'][] = 'update_totals_on_change';
-	return $checkout_fields;	
-} );
-`
+On the settings page (Settings > WooCommerce Extended Coupon Features) check the box *Update order review on billing email change*.
 
-= Can I make a donation? =
-
-Sure! [This](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQBCS2QHRY&lc=NL&item_name=Jos%20Koenis&item_number=wordpress%2dplugin&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted) is the link. Greatly appreciated!
 
 == Screenshots ==
 
@@ -107,6 +100,36 @@ Sure! [This](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=5T9XQ
 4. Additional restrictions based on shipping or payment method or the customer
 
 == Changelog ==
+
+= 3.0.2 =
+*Release Date - 2018-09-03*
+* FIX: Email restrictions compatibility with WooCommerce versions prior to 3.4
+* FIX: Individual use conflict
+* FIX: (FREE) Missing debug template
+
+= 3.0.1 =
+*Release Date - 2018-09-02*
+* FIX: Fatal error in FREE version of the plugin
+* FIX: Require PHP5.4
+
+= 3.0.0 =
+*Release Date - 2018-09-02*
+* IMPORTANT: Requires WooCommerce 3.0+ WordPress 4.8+ and PHP 5.3+
+* FEATURE: Filter 'wjecf_apply_with_other_coupons' to disallow certain coupon combinations
+* FEATURE: Update order review on payment/billing email change on checkout page (see settings page)
+* FIX: Auto-coupon check usase limits per user and respect email restriction wildcards
+* FIX: Auto-coupon in combination with individual_use respects exception filters
+* FIX: Coupon queueing: Case sensitive coupon code compare issue
+* FIX/PERFORMANCE: Rewritten handling of auto-coupons. Performance improvement
+* (PRO) ENHANCEMENT: Free products: Better handling and performance of cart ajax events
+* (PRO) FIX: Duplicate notices when enqueuing a coupon
+* INTERNAL: Removed code for backwards compatibility with WC versions prior to 3.0
+* INTERNAL: Rewritten boot-process. Class auto-loading. Code cleanup.
+
+= 2.6.4 =
+*Release Date - 2018-08-16*
+* FIX: Download JSON compatiblilty issue with WC 2.6.x
+* FIX: WPML Translate coupon title
 
 = 2.6.3 =
 *Release Date - 2018-06-04*

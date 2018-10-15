@@ -48,8 +48,7 @@ class USIN_Reports_Page{
 	 * Adds the page as a menu item.
 	 */
 	public function add_menu_page(){
-		$beta_markup = '<span class="usin-menu-beta">beta</span>';
-		add_submenu_page( $this->parent_slug, $this->title, "$this->title $beta_markup",
+		add_submenu_page( $this->parent_slug, $this->title, $this->title,
 			$this->capability, $this->slug, array($this, 'print_page_markup') );
 	}
 

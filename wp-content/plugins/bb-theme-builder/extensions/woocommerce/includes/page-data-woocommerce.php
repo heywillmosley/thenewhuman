@@ -171,3 +171,13 @@ FLPageData::add_archive_property( 'woocommerce_catalog_ordering', array(
 	'type'    => 'html',
 	'getter'  => 'FLPageDataWooCommerce::get_catalog_ordering',
 ) );
+
+/**
+ * Product Attached Images
+ */
+FLPageData::add_post_property( 'product_attached_images', array(
+	'label'       => __( 'Product Gallery Images', 'fl-theme-builder' ),
+	'group'       => 'woocommerce',
+	'type'        => 'multiple-photos',
+	'getter'      => 'FLPageDataWooCommerce::get_product_attached_images',
+) );

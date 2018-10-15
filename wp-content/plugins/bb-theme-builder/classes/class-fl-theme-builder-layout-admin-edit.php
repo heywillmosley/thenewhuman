@@ -86,6 +86,7 @@ final class FLThemeBuilderLayoutAdminEdit {
 				'exclusions' => FLThemeBuilderRulesLocation::get_exclusions_admin_edit_config(),
 				'nonce' => wp_create_nonce( 'fl-theme-builder' ),
 				'postType' => $screen->post_type,
+				'layoutType' => get_post_meta( $post->ID, '_fl_theme_layout_type', true ),
 				'userRules' => FLThemeBuilderRulesUser::get_saved( $post->ID ),
 				'strings' => array(
 					'allObjects' => _x( 'All %s', '%s is the post or taxonomy name.', 'fl-theme-builder' ),

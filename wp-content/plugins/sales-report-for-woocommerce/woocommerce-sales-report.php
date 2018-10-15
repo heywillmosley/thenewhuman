@@ -3,15 +3,15 @@
  * Plugin Name: Sales Report for WooCommerce
  * Plugin URI: https://wordpress.org/plugins/sales-report-for-woocommerce/
  * Description: Generates daily, weekly and monthly sales report
- * Version: 1.1.2
+ * Version: 1.1.5
  * Author: BeRocket
  * Requires at least: 4.0
  * Author URI: http://berocket.com
  * Text Domain: BeRocket_sales_report_domain
  * Domain Path: /languages/
- * WC tested up to: 3.4.3
+ * WC tested up to: 3.4.5
  */
-define( "BeRocket_sales_report_version", '1.1.2' );
+define( "BeRocket_sales_report_version", '1.1.5' );
 define( "BeRocket_sales_report_file", __FILE__ );
 include_once('main.php');
 

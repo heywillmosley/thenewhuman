@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Optimize Database after Deleting Revisions
- * @version 4.6.2
+ * @version 4.6.3
  */
 /*
 Plugin Name: Optimize Database after Deleting Revisions
@@ -10,7 +10,7 @@ Description: Optimizes the Wordpress Database after Cleaning it out
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Author URI: http://cagewebdev.com
 Network: True
-Version: 4.6.2
+Version: 4.6.3
 */
 
 /********************************************************************************************
@@ -24,8 +24,8 @@ $odb_class = new OptimizeDatabase();
 
 class OptimizeDatabase {
 	// VERSION
-	var $odb_version           = '4.6.2';
-	var $odb_release_date      = '06/05/2018';
+	var $odb_version           = '4.6.3';
+	var $odb_release_date      = '08/23/2018';
 
 	// PLUGIN OPTIONS
 	var $odb_rvg_options       = array();
@@ -98,6 +98,7 @@ class OptimizeDatabase {
 		// CREATE LOG TABLE (IF NOT EXISTS) - v4.6
 		$this->odb_logtable_name = $wpdb->base_prefix . 'odb_logs';
 		
+		// v4.6.3: MyISAM engine deleted
 		$sql = '
 		CREATE TABLE IF NOT EXISTS `' . $this->odb_logtable_name . '` (
 		  `odb_id`			int(11) NOT NULL AUTO_INCREMENT,
@@ -115,8 +116,9 @@ class OptimizeDatabase {
 		  `odb_after`		varchar(20) NOT NULL,
 		  `odb_savings`		varchar(20) NOT NULL,
 		  PRIMARY KEY (`odb_id`)
-		) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;		
+		) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;		
 		';
+
 		// CREATE TABLE
 		$wpdb->get_results($sql);
 

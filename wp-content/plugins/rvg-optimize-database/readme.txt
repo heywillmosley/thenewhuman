@@ -7,9 +7,9 @@ Tags: database, delete, revisions, optimize, post, posts, page, pages, clean, cl
 Author URI: http://cagewebdev.com
 Author: CAGE Web Design | Rolf van Gelder, Eindhoven, The Netherlands
 Requires at least: 2.8
-Tested up to: 4.9.6
-Stable tag: 4.6.2
-Version: 4.6.2
+Tested up to: 4.9.8
+Stable tag: 4.6.3
+Version: 4.6.3
 License: GPLv2 or later
 
 == Description ==
@@ -104,6 +104,9 @@ http://cagewebdev.com/wordpress-plugins/
 * If you run the plugin from any of the sites, it will cleanup ALL the sites in the network!
 
 == Changelog ==
+= 4.6.3 [08/23/2018] =
+* CHANGE: Removed the MyISAM engine for the log table (now it uses the default-storage-engine of the database)
+
 = 4.6.2 [06/05/2018] =
 * BUG FIX: Fixed a javascript bug for the 'Clear Log' confirmation
 * NEW: PayPal donation button
@@ -476,6 +479,7 @@ http://cagewebdev.com/wordpress-plugins/
 = Why do I see 'InnoDB table: skipped...'? =
 * That's because optimizing InnoDB tables is not really efficient, so change the table type to MyISAM to have them being optimized.
 * Update: if you want to optimize your InnoDB tables too, just check the 'Optimize InnoDB tables too' option on the settings page
+* IMPORTANT: optimizing InnoDB tables, might increase the size of the database! However, it will speed up the performance of the database
 
 = After I ran the plugin, I got "Total savings since the first run: -64 KB" =
 * Sometimes that happens when you optimize InnoDB tables (instead of MyISAM tables).

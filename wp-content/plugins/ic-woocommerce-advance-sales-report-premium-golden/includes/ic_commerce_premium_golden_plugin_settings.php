@@ -339,44 +339,8 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Settings' ) ) {
 				add_option( $option );
 			}
 			
-			//Save Option on save
-			/*if(isset($_POST[$option]) and (isset($_POST['option_page']) and $_POST['option_page'] == $option) and  isset($_POST['option_page'])){
-				$o = get_option($option,false);
-				if($o){
-					update_option($option,$_POST[$option]);
-				}else{delete_option($option);
-					add_option($option,$_POST[$option]);
-				}
-			}
-			*/
-			//delete_option($option);
-			
 			$default_rows_per_page 	= $this->constants['per_page_default'];
-			/*
-			$blog_title 			= get_bloginfo('name');
-			$cross_tab_start_date 	= date('Y-01-01',strtotime('this month'));
-			$cross_tab_end_date 	= date('Y-12-31',strtotime('this month'));
-			$cross_tab_start_date 	= trim($cross_tab_start_date);
-			$cross_tab_end_date 	= trim($cross_tab_end_date);
 			
-			
-			
-			$email_send_to		= get_option( 'admin_email' );
-			$email_from_name	= get_bloginfo('name');
-			$email_from_email	= get_option( 'admin_email' );
-			
-			*/
-			
-			//echo $email_from_email	= get_bloginfo( 'site_name' );
-			
-			/*$domain = get_option('siteurl'); //or home
-			$domain = str_replace('http://', '', $domain);
-			$domain = str_replace('www', '', $domain); //add the . after the www if you don't want it
-			$domain = str_replace('.com/', '', $domain);
-			//$domain = strstr($domain, '/', true); //PHP5 only, this is in case WP is not root
-			//echo $domain;*/
-			
-			//New Change ID 20140918
 			$new_shop_order_status = array();
 			$new_shop_order_status["all"] = "All Status";
 				
@@ -426,6 +390,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Settings' ) ) {
 			
 			//$this->print_array(get_option( $option ) );
 			
+			do_action('ic_commerce_premium_golden_settting_field_top',$this, $option);
 			
 			// Section.
 			add_settings_section('dashboard_sections',			__(	'Dashboard Sections:', 'icwoocommerce_textdomains'),		array( &$this, 'section_options_callback' ),$option);
@@ -457,6 +422,9 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Settings' ) ) {
 			add_settings_field('show_top_coupons',			__( 'Show Top Coupons:', 'icwoocommerce_textdomains'),			array( &$this,'checkbox_element_callback' ),$option, 'dashboard_sections', array('menu'=> $option,	'value'=>'1',	'label_for'=>'show_top_coupons','id'=> 'show_top_coupons','default'=>0));
 			
 			add_settings_field('show_top_payments',			__( 'Show Top Payments:', 'icwoocommerce_textdomains'),			array( &$this,'checkbox_element_callback' ),$option, 'dashboard_sections', array('menu'=> $option,	'value'=>'1',	'label_for'=>'show_top_payments','id'=> 'show_top_payments','default'=>0));
+			
+			
+			do_action('ic_commerce_premium_golden_settting_field_after_dashboard_sections',$this, $option);
 			
 			// Section.
 			add_settings_section('dashboard_top_per_page',		__(	'Dashboard Setting:', 'icwoocommerce_textdomains'),			array( &$this, 'section_options_callback' ),$option);
@@ -500,6 +468,8 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Settings' ) ) {
 			add_settings_field('per_row_customer_page',			__( 'Customer Page Report:', 'icwoocommerce_textdomains'),		array( &$this, 'text_element_callback' ), 		$option, 'per_page_setting', array('menu'=> $option,	'size'=>15,	'class'=>'numberonly', 'maxlength'=>'5',	'label_for'=>'per_row_customer_page',			'id'=> 'per_row_customer_page',				'default'=>$default_rows_per_page));
 			//add_settings_field('per_row_cross_tab_page',		__( 'Detail Cross Tab Report:', 'icwoocommerce_textdomains'),	array( &$this, 'text_element_callback' ), 		$option, 'per_page_setting', array('menu'=> $option,	'size'=>15,	'class'=>'numberonly', 'maxlength'=>'5',	'label_for'=>'per_row_cross_tab_page',			'id'=> 'per_row_cross_tab_page',			'default'=>$default_rows_per_page));
 			
+			
+			do_action('ic_commerce_premium_golden_settting_field_before_status',$this, $option);
 			//New Change ID 20140918
 			add_settings_section('dashboard_setting',			__('Default Settings:', 'icwoocommerce_textdomains'),			array( &$this, 'section_options_callback' ),$option);
 			add_settings_field($order_status_field,				__( 'Shop Order Status:', 'icwoocommerce_textdomains'),			array( &$this, 'select_element_callback' ), 	$option, 'dashboard_setting', array('menu'=> $option,	'size'=>8,	'class'=>'numberonly', 'maxlength'=>'5',	'label_for'=>$order_status_field,				'id'=> $order_status_field,					'default'=>$detault_stauts_id,  'multiple'=>'multiple',	'options'=> $new_shop_order_status, 'description' => __("Ctrl + click to multiselect. <br /> Selected status will be used for calculating salse amount.",'icwoocommerce_textdomains')));
@@ -524,6 +494,12 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Settings' ) ) {
 			
 			add_settings_field('logo_image', 			__( 'Logo Image:', 'icwoocommerce_textdomains'),			array( &$this, 'choose_image_callback' ), 		$option, 'upload_setting', array('menu'=> $option,	'size'=>40,	'class'=>'normaltextbox', 'maxlength'=>'500', 	'label_for'=>'logo_image', 						'id'=> 'logo_image',						'default'=>'', 		'choose_id'=>'upload_logo_image_button'));//, 'description' => "Upload logo of your company, which will display on PDF if uploaded, make sure logo is not too big. Upload logo 200px width and 100px height."
 			
+			
+			add_settings_field('font_type_1',	__( 'Enable Font:', 'icwoocommerce_textdomains'),			array( &$this,'checkbox_element_callback' ),$option, 'upload_setting', array('menu'=> $option,'size'=>25,'label_for'=>'font_type_1','id'=>'font_type_1' ,'value' => 'yes'));			
+			add_settings_field('font_url',	   __( 'Font URL:', 'icwoocommerce_textdomains'),					array( &$this, 'text_element_callback' ), 		$option, 'upload_setting', array('menu'=> $option,	'size'=>60,	'label_for'=>'font_url','id'=> 'font_url','default'=>'http://eclecticgeek.com/dompdf/fonts/cjk/Cybercjk.ttf'));
+			
+			add_settings_field('font_type_2',	__( 'Other Currency:', 'icwoocommerce_textdomains'),			array( &$this,'checkbox_element_callback' ),$option, 'upload_setting', array('menu'=> $option,'size'=>25,'label_for'=>'font_type_2','id'=>'font_type_2','value' => 'yes'));
+			add_settings_field('font_dejaVu',	__( 'Enable DejaVu Sans:', 'icwoocommerce_textdomains'),			array( &$this,'checkbox_element_callback' ),$option, 'upload_setting', array('menu'=> $option,'size'=>25,'label_for'=>'font_dejaVu','id'=>'font_dejaVu','value' => 'yes'));
 			
 			
 			add_settings_section('email_reports',			__(	'Email Reports:','icwoocommerce_textdomains'),					array( &$this, 'section_options_callback' )		,$option);
@@ -624,6 +600,8 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Settings' ) ) {
 			add_settings_field('pdf_invoice_show_invoice_creatin_date',__( 'Show Invoice Creation Date:', 'icwoocommerce_textdomains'),	array( &$this,'checkbox_element_callback' ), 		$option, 'pdf_invoice_setting', array('menu'=> $option,	'label_for'=>'pdf_invoice_show_invoice_creatin_date',		'id'=> 'pdf_invoice_show_invoice_creatin_date','default'=>0));
 			//add_settings_field('pdf_invoice_footer_note',			__( 'Footer Note:', 'icwoocommerce_textdomains'),	array( &$this, 'text_element_callback' ), 		$option, 'pdf_invoice_setting', array('menu'=> $option,	'size'=>50, 'maxlength'=>'500',	'label_for'=>'pdf_invoice_footer_note',		'id'=> 'pdf_invoice_footer_note',				'default'=>''));
 			
+			
+			do_action('ic_commerce_premium_golden_settting_field_bottom',$this, $option);
 			
 			// Register settings.
 			register_setting( $option, $option, array( &$this, 'options_validate' ) );

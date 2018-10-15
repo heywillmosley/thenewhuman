@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: PW WooCommerce BOGO
- * Plugin URI: https://pimwick.com/pw-bogo
+ * Plugin Name: PW WooCommerce BOGO Pro
+ * Plugin URI: https://www.pimwick.com/pw-bogo/
  * Description: Makes Buy One, Get One promotions so easy!
- * Version: 2.73
+ * Version: 2.76
  * Author: Pimwick, LLC
- * Author URI: https://pimwick.com/pw-bogo
+ * Author URI: https://www.pimwick.com
  *
  * WC requires at least: 2.6.13
- * WC tested up to: 3.4.3
+ * WC tested up to: 3.4.5
  *
  * Copyright: © Pimwick, LLC
 */
@@ -45,6 +45,7 @@ final class PW_BOGO {
         defined( 'PW_BOGO_LICENSE_PRODUCT_NAME' ) or define( 'PW_BOGO_LICENSE_PRODUCT_NAME', 'PW BOGO' );
         defined( 'PW_BOGO_LICENSE_OPTION_NAME' ) or define( 'PW_BOGO_LICENSE_OPTION_NAME', 'pw-bogo-license' );
         defined( 'PW_BOGO_REQUIRES_PRIVILEGE' ) or define( 'PW_BOGO_REQUIRES_PRIVILEGE', 'manage_woocommerce' );
+        defined( 'PW_BOGO_DISCOUNT_PRICE_INCLUDES_TAX' ) or define( 'PW_BOGO_DISCOUNT_PRICE_INCLUDES_TAX', false );
 
         $this->use_coupons = boolval( get_option( 'pw_bogo_use_coupons', true ) );
 
@@ -520,10 +521,15 @@ final class PW_BOGO {
                     if ( function_exists( 'wc_get_price_excluding_tax' ) && function_exists( 'wc_get_price_including_tax' ) ) {
                         $product = $discounted_cart_item['data'];
 
-                        if ( 'incl' === $cart->tax_display_cart ) {
-                            $product_price = wc_get_price_including_tax( $product );
-                        } else {
+                        if ( PW_BOGO_DISCOUNT_PRICE_INCLUDES_TAX === true ) {
                             $product_price = wc_get_price_excluding_tax( $product );
+
+                        } else {
+                            if ( 'incl' === $cart->tax_display_cart ) {
+                                $product_price = wc_get_price_including_tax( $product );
+                            } else {
+                                $product_price = wc_get_price_excluding_tax( $product );
+                            }
                         }
 
                         $price = apply_filters( 'woocommerce_cart_product_price', $product_price, $product );
@@ -1087,22 +1093,24 @@ final class PW_BOGO {
             }
 
             if ( count( $auto_add_product_ids ) > 0 ) {
-                $product_id = $auto_add_product_ids[0];
-                $variation_id = 0;
-                $variation_attributes = array();
+                for ( $x = 0; $x < $quantity_to_add; $x++ ) {
+                    $product_id = $auto_add_product_ids[ $x ];
+                    $variation_id = 0;
+                    $variation_attributes = array();
 
-                if ( 'product_variation' === get_post_type( $product_id ) ) {
-                    $variation_id = $product_id;
-                    $product_id   = wp_get_post_parent_id( $variation_id );
+                    if ( 'product_variation' === get_post_type( $product_id ) ) {
+                        $variation_id = $product_id;
+                        $product_id   = wp_get_post_parent_id( $variation_id );
 
-                    $product = wc_get_product( $variation_id );
-                    $variation_attributes = $product->get_variation_attributes();
+                        $product = wc_get_product( $variation_id );
+                        $variation_attributes = $product->get_variation_attributes();
 
-                } else {
-                    $product = wc_get_product( $product_id );
+                    } else {
+                        $product = wc_get_product( $product_id );
+                    }
+
+                    $cart->add_to_cart( $product_id, 1, $variation_id, $variation_attributes );
                 }
-
-                $cart->add_to_cart( $product_id, $quantity_to_add, $variation_id, $variation_attributes );
             }
         } else {
 

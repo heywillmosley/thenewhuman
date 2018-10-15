@@ -3,8 +3,8 @@ Contributors: webtoffee
 Donate link: https://www.webtoffee.com/plugins/
 Tags: import, export,WorldShip, endicia, woocommerce,
 Requires at least: 3.0.1
-Tested up to: 4.9.7
-Stable tag: 1.2.0
+Tested up to: 4.9.8
+Stable tag: 1.2.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -23,7 +23,7 @@ The exported XML can be easily imported to the Service Providers tools. After ge
  &#128312; Import/Update order shipment details exported from Shipping Carriers to WooCommerce via XML.
  &#128312; After import, Create Shipping Labels through Shipping Carriers Site/Tools.
  &#128312; Import the order data like Tracking Number back to Your WooCommerce Site.
- &#128312; Tested OK with WooCommerce 3.4.4.
+ &#128312; Tested OK with WooCommerce 3.4.5.
 
 Into the exported XML of Stamps.com, we are used "http://stamps.com/xml/namespace/2009/8/Client/BatchProcessingV1" this as xmlns attribute to define the namespace of the XML. 
 Similarly, in FedEx and UPS we are used, "http://www.w3.org/2001/XMLSchema-instance".
@@ -64,9 +64,14 @@ Yes. You can import or export order line item details.
 
 
 == Changelog ==
+
+= 1.2.1 =
+* WC3.4.5 Tested OK.
+* Review link added on footer.
+
 = 1.2.0 =
 * BugFix : Line Items details are not imported correctly and not linked.
-* WC3.4.4 Tested OK.
+* WC3.4.4 WP 4.9.8 Tested OK.
 = 1.0.16 =
 * BugFix : Woocommerce compatibility issues.
 * Tested OK with WC3.4.3
@@ -105,7 +110,7 @@ Yes. You can import or export order line item details.
 * Supports Stamps.com, FedEx, UPS WorldShip and Endicia.
 
 == Upgrade Notice ==
-= 1.2.0 =
-* BugFix : Line Items details are not imported correctly and not linked.
-* WC3.4.4 Tested OK.
+= 1.2.1 =
+* WC3.4.5 Tested OK.
+* Review link added on footer.
  

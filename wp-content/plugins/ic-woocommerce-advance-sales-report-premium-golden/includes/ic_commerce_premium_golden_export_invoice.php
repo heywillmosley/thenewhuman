@@ -1,5 +1,4 @@
 <?php
-
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 	require_once('ic_commerce_premium_golden_fuctions.php');
@@ -74,12 +73,17 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 					}
 					
 					$this->get_woocommerce_currency_symbol_pdf();
-				
+					
+					$pdf_special_font = $this->get_pdf_special_font();
+					
 					$out .='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
-						<title>Invoice #'.$invoice_id.' | '.$company_name.'</title>
+						<title>'.__('Invoice #','icwoocommerce_textdomains').$invoice_id.' | '.$company_name.'</title>
 						<meta name="description" content="Invoice created by WooCommerce Sales Invoice Pro" />
 						<meta name="keywords" content="Order Detail #'.$invoice_id.'" />
-						<meta name="author" content="WooCommerce Sales Invoice Pro" /><style type="text/css"><!-- 
+						<meta name="author" content="WooCommerce Sales Invoice Pro" />
+						<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+						<style type="text/css"><!--
+						'.$pdf_special_font.'
 						.header {position: fixed; top: -40px; text-align:center;}
 						.footer { position: fixed; bottom: 0px; text-align:center;}
 						.pagenum:before{ content: counter(page); }
@@ -141,7 +145,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 						$out .='-->
 						</style>
 						</head>
-						<body>';
+						<body class="invoice">';
 				
 						$invoice_id 			= $this->get_request('invoice_id','0');
 						$baseurl 				= $this->get_request('baseurl');
@@ -149,7 +153,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 						
 						$order = new WC_Order ($invoice_id);
 						
-						$out .="<div class='footer'>Page: <span class='pagenum'></span></div>";
+						$out .="<div class='footer'>".__('Page:','icwoocommerce_textdomains')." <span class='pagenum'></span></div>";
 						
 						$out .= "<div class='Container1'>";
 						$out .= "<div class='Form1'>";
@@ -177,12 +181,12 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 										}
 									$out .= '</td>';
 									$out .= '<td valign="top">';
-										$out .= '<p><span class="strong">Invoice: </span>'.$order->get_order_number().'</p>';
+										$out .= '<p><span class="strong">'.__('Invoice:','icwoocommerce_textdomains').' </span>'.$order->get_order_number().'</p>';
 										
 										$pdf_invoice_show_invoice_creatin_date		= $this->get_setting('pdf_invoice_show_invoice_creatin_date',$this->constants['plugin_options'], 0);
 										
 										if($pdf_invoice_show_invoice_creatin_date == 1){
-											$out .= '<p><span class="strong">Date: </span>'. date_i18n( get_option( 'date_format' ));
+											$out .= '<p><span class="strong">'.__('Date:','icwoocommerce_textdomains').' </span>'. date_i18n( get_option( 'date_format' ));
 										}
 										
 										
@@ -220,16 +224,16 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 								if($billing_address || $shipping_address){
 									$out .= '<tr>';								
 										$out .= '<td valign="top">';
-											$out .= '<h3>Billing address</h3>';
-											$out .= '<p>'.$billing_address.'</p>';
+											$out .= '<h3>'.__('Billing address','icwoocommerce_textdomains').'</h3>';
+											$out .= '<p class="billing_address">'.$billing_address.'</p>';
 										$out .= '</td>';
 										
 										$out .= 	'<td> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </td>';
 										
 										$out .= '<td valign="top">';
 											if(strlen($shipping_address)>0){
-												$out .= '<h3>Shipping address</h3>';
-												$out .= '<p>'.$shipping_address.'</p>';
+												$out .= '<h3>'.__('Shipping address','icwoocommerce_textdomains').'</h3>';
+												$out .= '<p class="shipping_address">'.$shipping_address.'</p>';
 											}
 										$out .= '</td>';
 									$out .= '</tr>';
@@ -269,10 +273,10 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 						$out .= "<table class='sTable3' cellpadding='0' cellspacing='0' width='100%'>\n";
 						$out .= "<tbody>\n";
 						$out .= '	<tr>'."\n";
-						$out .= '		<th>Product</th>'."\n";
-						$out .= '		<th style="width:50px; text-align:right;">Quantity</th>'."\n";
-						$out .= '		<th style="width:50px; text-align:right;">Rate ('.$woocommerce_currency_code.')</th>'."\n";
-						$out .= '		<th style="width:100px; text-align:right;">Amount<br /> ('.$woocommerce_currency_code.')</th>'."\n";
+						$out .= '		<th class="label">'.__('Product','icwoocommerce_textdomains').'</th>'."\n";
+						$out .= '		<th style="width:50px; text-align:right;" class="label">'.__('Quantity','icwoocommerce_textdomains').'</th>'."\n";
+						$out .= '		<th style="width:50px; text-align:right;" class="amount">'.__('Rate','icwoocommerce_textdomains').' ('.$woocommerce_currency_code.')</th>'."\n";
+						$out .= '		<th style="width:100px; text-align:right;" class="amount">'.__('Amount','icwoocommerce_textdomains').'<br /> ('.$woocommerce_currency_code.')</th>'."\n";
 						$out .= '	</tr>'."\n";
 						
 						$email_order_items_table = $this->email_order_items_table( $order->is_download_permitted(), true, ( $order_status =='wc-processing' ) ? true : false, $order);
@@ -295,10 +299,11 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 								foreach ( $totals as $total ) {
 									$i++;
 									$out .= '<tr>';
-									$out .= '	<td style="width:87px;">';
-									$out .= 		'<strong>'.$total['label'].'</strong>';
+									$out .= '	<td style="width:87px;" class="label">';
+									//$out .= 		'<strong>'.$total['label'].'</strong>';
+									$out .= 		$total['label'];
 									$out .= '	</td>';
-									$out .= '	<td>';
+									$out .= '	<td class="amount">';
 									$out .= 		$total['value'];
 									$out .= '	</td>';									
 									$out .= '</tr>';
@@ -312,7 +317,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 							$out .= "<tbody>";
 								$out .= '<tr>';
 								$out .= '	<td colspan="2">';
-								$out .= 	"<h3 style=\"font-size:13px;\"> Amount in Words: ". $woocommerce_currency_name ." ".$this->convertCurrencyToWords($order_total)."</h3>";
+								$out .= 	"<p style=\"font-size:13px;\" class=\"label\">".__('Amount in Words:','icwoocommerce_textdomains')." ". $woocommerce_currency_name ." ".$this->convertCurrencyToWords($order_total)."</p>";
 								$out .= '	</td>';
 								$out .= '</tr>';
 								
@@ -340,7 +345,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 													$pdf_invoice_signature		= "<div class='align_".$pdf_invoice_signature_align."'><img src='".$pdf_invoice_signature."' alt='' /></div>";
 													
 													//$out .= "<div class='clear'></div>";
-													$out .= "<div class='clear'>";
+													$out .= "<div class='clear label'>";
 													$out .= $pdf_invoice_signature;
 													$out .= "</div>";
 												}
@@ -398,8 +403,14 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 				//die;
 				
 				
-				require_once("ic_commerce_premium_golden_dompdf_config.inc.php");
-				$dompdf = new DOMPDF();	
+				//require_once("ic_commerce_ultimate_report_dompdf_config.inc.php");
+				//$dompdf = new DOMPDF();	
+				
+				define("DOMPDF_UNICODE_ENABLED", true);
+				$plugin_dir = $this->constants['plugin_dir'];
+				$pdf_path 	= $plugin_dir.'/dompdf-master/dompdfinit.php';				
+				include_once($pdf_path);
+
 				$dompdf->set_paper($paper_size,$orientation_pdf);
 				$dompdf->load_html($output);
 				$dompdf->render();
@@ -536,7 +547,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 						}
 						
 						$header_output		.= "<td valign='middle'>";
-						$header_output		.= "<h3 style=\"font-size:30px; font-weight:bold\">INVOICE</h3>";
+						$header_output		.= "<h3 style=\"font-size:30px; font-weight:bold\">".__('INVOICE','icwoocommerce_textdomains')."</h3>";
 						$header_output		.= "</td>";
 						
 						$header_output		.= "</tr>";
@@ -580,7 +591,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 							$header_output		.= "</td>";
 							
 							$header_output		.= "<td valign='middle'>";
-							$header_output		.= "<h3 style=\"font-size:30px; font-weight:bold\">INVOICE</h3>";
+							$header_output		.= "<h3 style=\"font-size:30px; font-weight:bold\">".__('INVOICE','icwoocommerce_textdomains')."</h3>";
 							$header_output		.= "</td>";
 							
 							
@@ -593,7 +604,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 						
 						
 						$header_output		.= "<td valign='middle'>";
-						$header_output		.= "<h3 style=\"font-size:30px; font-weight:bold\">INVOICE</h3>";
+						$header_output		.= "<h3 style=\"font-size:30px; font-weight:bold\">".__('INVOICE','icwoocommerce_textdomains')."</h3>";
 						$header_output		.= "</td>";
 						
 						$header_output		.= "</tr>";
@@ -620,7 +631,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 				$item_meta    = new WC_Order_Item_Product( $item['item_meta'], $_product );
 				?> 
 				<tr>
-					<td style="text-align:left; vertical-align:middle; border: 1px solid #eee; word-wrap:break-word;"><?php
+					<td style="text-align:left; vertical-align:middle; border: 1px solid #eee; word-wrap:break-word;" class="label"><?php
 			
 						// Show title/image etc
 						if ( $show_image ) {
@@ -667,33 +678,57 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 							}
 						}
 					?></td>
-					<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;"><?php echo $item['qty'] ;?></td>
-					<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;"><?php echo $item['line_total'] ;?></td>
-					<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;"><?php echo $order->get_formatted_line_subtotal( $item ); ?></td>
+					<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;" class="label"><?php echo $item['qty'] ;?></td>
+					<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;" class="amount"><?php echo $item['line_total'] ;?></td>
+					<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;" class="amount"><?php echo $order->get_formatted_line_subtotal( $item ); ?></td>
 				</tr>
 			
-				<?php if ( $show_purchase_note && is_object( $_product ) && $purchase_note = get_post_meta( $_product->id, '_purchase_note', true ) ) : ?>
+				<?php if ( $show_purchase_note && is_object( $_product ) && $purchase_note = get_post_meta( $_product->get_id(), '_purchase_note', true ) ) : ?>
 					<tr>
 						<td colspan="3" style="text-align:left; vertical-align:middle; border: 1px solid #eee;"><?php echo apply_filters( 'the_content', $purchase_note ); ?></td>
 					</tr>
 				<?php endif; ?>
 			 
-			<?php endforeach;
+			<?php endforeach; 
 			$message = ob_get_clean();
 			return $message;
 		}
 		
 		function convertIntegerToWords($x){ 
 			
-		$x = $x + 0;
-	
-		$nwords = array( 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 
-						 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 
-						 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 
-						 'nineteen', 'twenty', 30 => 'thirty', 40 => 'forty', 
-						 50 => 'fifty', 60 => 'sixty', 70 => 'seventy', 80 => 'eighty', 
-						 90 => 'ninety' );
-	
+			$x = $x + 0;
+		
+			$nwords = array( 
+				__('zero','icwoocommerce_textdomains'), 
+				__('one','icwoocommerce_textdomains'), 
+				__('two','icwoocommerce_textdomains'),
+				__('three','icwoocommerce_textdomains'),
+				__('four','icwoocommerce_textdomains'), 
+				__('five','icwoocommerce_textdomains'), 
+				__('six','icwoocommerce_textdomains'),
+				__('seven','icwoocommerce_textdomains'), 
+				__('eight','icwoocommerce_textdomains'), 
+				__('nine','icwoocommerce_textdomains'), 
+				__('ten','icwoocommerce_textdomains'), 
+				__('eleven','icwoocommerce_textdomains'), 
+				__('twelve','icwoocommerce_textdomains'), 
+				__('thirteen','icwoocommerce_textdomains'), 
+				__('fourteen','icwoocommerce_textdomains'), 
+				__('fifteen','icwoocommerce_textdomains'), 
+				__('sixteen','icwoocommerce_textdomains'), 
+				__('seventeen','icwoocommerce_textdomains'), 
+				__('eighteen','icwoocommerce_textdomains'), 
+				__('nineteen','icwoocommerce_textdomains'), 
+				__('twenty','icwoocommerce_textdomains'), 
+				30 => __('thirty','icwoocommerce_textdomains'), 
+				40 => __('forty','icwoocommerce_textdomains'), 
+				50 => __('fifty','icwoocommerce_textdomains'), 
+				60 => __('sixty','icwoocommerce_textdomains'), 
+				70 => __('seventy','icwoocommerce_textdomains'), 
+				80 => __('eighty','icwoocommerce_textdomains'),
+				90 => __('ninety','icwoocommerce_textdomains') 
+			 );
+			 
 			 if(!is_numeric($x)) 
 			 { 
 				 $w = '#'; 
@@ -721,34 +756,34 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 					 } 
 				 } else if($x < 1000) 
 				 { 
-					 $w .= $nwords[floor($x/100)] .' hundred'; 
+					 $w .= $nwords[floor($x/100)] .' '.__('hundred','icwoocommerce_textdomains'); 
 					 $r = fmod($x, 100); 
 					 if($r > 0) 
 					 { 
-						 $w .= ' and '. $this->convertIntegerToWords($r); 
+						 $w .= ' ' .__('and','icwoocommerce_textdomains').' '. $this->convertIntegerToWords($r); 
 					 } 
 				 } else if($x < 1000000) 
 				 { 
-					 $w .= $this->convertIntegerToWords(floor($x/1000)) .' thousand'; 
+					 $w .= $this->convertIntegerToWords(floor($x/1000)) .' '.__('thousand','icwoocommerce_textdomains'); 
 					 $r = fmod($x, 1000); 
 					 if($r > 0) 
 					 { 
 						 $w .= ' '; 
 						 if($r < 100) 
 						 { 
-							 $w .= ' and '; 
+							 $w .= ' ' .__('and','icwoocommerce_textdomains').' '; 
 						 } 
 						 $w .= $this->convertIntegerToWords($r); 
 					 } 
 				 } else { 
-					 $w .= $this->convertIntegerToWords(floor($x/1000000)) .' million'; 
+					 $w .= $this->convertIntegerToWords(floor($x/1000000)) .' '.__('million','icwoocommerce_textdomains'); 
 					 $r = fmod($x, 1000000); 
 					 if($r > 0) 
 					 { 
 						 $w .= ' '; 
 						 if($r < 100) 
 						 { 
-							 $word .= ' and '; 
+							 $word .= ' ' .__('and','icwoocommerce_textdomains').' '; 
 						 } 
 						 $w .= $this->convertIntegerToWords($r); 
 					 } 
@@ -759,7 +794,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 		
 		function convertCurrencyToWords($number)
 		{
-			$currencylabelsarray = array('dollars' => 'dollars', 'cents' => 'cents');
+			$currencylabelsarray = array('dollars' => __('dollars','icwoocommerce_textdomains'), 'cents' => __('cents','icwoocommerce_textdomains'));
 			if(!is_numeric($number)) return false;
 			$nums = explode('.', $number);
 			
@@ -767,7 +802,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Export_Invoice' ) ) {
 			$out = $this->convertIntegerToWords($nums[0]);
 			
 			if(isset($nums[1])) {
-			$out .= ' and ' . $this->convertIntegerToWords($nums[1]) .' cents';
+			$out .= ' ' .__('and','icwoocommerce_textdomains').' '. $this->convertIntegerToWords($nums[1]) .' '.__('cents','icwoocommerce_textdomains');
 			}
 			return $out;
 		}

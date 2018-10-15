@@ -2,45 +2,45 @@
 # This file is distributed under the same license as the Theme My Login package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Theme My Login 7.0.10\n"
+"Project-Id-Version: Theme My Login 7.0.11\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/theme-my-login\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2018-08-02T18:14:45-04:00\n"
-"PO-Revision-Date: 2018-08-02T18:14:45-04:00\n"
+"POT-Creation-Date: 2018-09-19T14:31:25-04:00\n"
+"PO-Revision-Date: 2018-09-19T14:31:25-04:00\n"
 "X-Domain: theme-my-login\n"
 
-#: includes/functions.php:467
-#: admin/functions.php:271
+#: includes/functions.php:494
+#: admin/functions.php:278
 msgid "Theme My Login Actions"
 msgstr ""
 
-#: includes/functions.php:468
+#: includes/functions.php:495
 msgid "Theme My Login Action"
 msgstr ""
 
-#: includes/functions.php:496
 #: includes/functions.php:523
-#: includes/functions.php:538
+#: includes/functions.php:550
+#: includes/functions.php:565
 msgid "TML Action"
 msgstr ""
 
-#: includes/functions.php:600
+#: includes/functions.php:627
 msgid "<strong>ERROR</strong>: Please enter a password."
 msgstr ""
 
-#: includes/functions.php:603
+#: includes/functions.php:630
 msgid "<strong>ERROR</strong>: Passwords may not contain the character \"\\\"."
 msgstr ""
 
-#: includes/functions.php:606
+#: includes/functions.php:633
 msgid "<strong>ERROR</strong>: Please enter the same password in both password fields."
 msgstr ""
 
-#: includes/functions.php:622
+#: includes/functions.php:649
 msgid "If you have already set your own password, you may disregard this email and use the password you have already set."
 msgstr ""
 
@@ -48,7 +48,7 @@ msgstr ""
 msgid "Your Data Request"
 msgstr ""
 
-#: includes/actions.php:427
+#: includes/actions.php:444
 msgid "Registration complete. You may now log in."
 msgstr ""
 
@@ -119,37 +119,37 @@ msgstr ""
 msgid "Extensions"
 msgstr ""
 
-#: admin/functions.php:156
+#: admin/functions.php:163
 msgid "As a token of our gratitude, we would like to offer your an incentive for upgrading Theme My Login to version 7.0. For a limited time, we are offering a <strong>20% discount</strong> when you use the code <strong>SAVINGFACE</strong> at checkout. Act now - this offer won't last!"
 msgstr ""
 
-#: admin/functions.php:172
+#: admin/functions.php:179
 msgid "A new <strong>Theme My Login</strong> extension is available!"
 msgstr ""
 
-#: admin/functions.php:179
+#: admin/functions.php:186
 #: admin/extensions.php:95
 msgid "Get This Extension"
 msgstr ""
 
-#: admin/functions.php:379
-#: admin/functions.php:392
+#: admin/functions.php:386
+#: admin/functions.php:399
 msgid "Deactivating Theme My Login"
 msgstr ""
 
-#: admin/functions.php:380
+#: admin/functions.php:387
 msgid "Before you go, please take a moment to let us know why you are deactivating:"
 msgstr ""
 
-#: admin/functions.php:384
+#: admin/functions.php:391
 msgid "Submitting this form will also include your WordPress version, TML version, PHP version and whether this is a multisite installation or not."
 msgstr ""
 
-#: admin/functions.php:387
+#: admin/functions.php:394
 msgid "Submit & Deactivate"
 msgstr ""
 
-#: admin/functions.php:388
+#: admin/functions.php:395
 msgid "No thanks, just deactivate"
 msgstr ""
 

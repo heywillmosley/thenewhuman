@@ -287,6 +287,23 @@ function tml_action_handler() {
 		}
 	}
 
+	// Redirect other actions from the login action
+	if ( $action = tml_get_request_value( 'action' ) ) {
+		if ( tml_is_action( 'login' ) && 'login' != $action ) {
+			// Fix some alias actions
+			if ( 'retrievepassword' == $action ) {
+				$action = 'lostpassword';
+			} elseif ( 'rp' == $action ) {
+				$action = 'resetpass';
+			}
+
+			if ( $url = tml_get_action_url( $action ) ) {
+				wp_redirect( $url );
+				exit;
+			}
+		}
+	}
+
 	nocache_headers();
 
 	// Set a test cookie to test if cookies are enabled

@@ -1,13 +1,13 @@
 === Ni WooCommerce Sales Report ===
 Contributors: anzia
-Tags:sales,report, product, print, export, sales report, order report, product report, woocommerce
+Tags:sales,report, product, print, export, sales report, order report, product report, woocommerce, search
 Requires at least: 4.4
-Tested up to: 4.9.7
-Stable tag: 3.2.2
+Tested up to:4.9.8
+Stable tag: 3.2.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
 WC requires at least: 3.0.0
-WC tested up to:3.4.4
+WC tested up to:3.4.5
 
 
 Enhance WooCommerce sales report beautifully and provide complete solutions for WooCommerce reporting.
@@ -137,10 +137,17 @@ Yes, as per requirement we can customize this plugin.
 3. Order status reports on dashboard.
 4. Payment method reports on dashboard
 5. Sales order list with days filter option 
-5. Today Sales analysis on dashboard (Order Count, Sales, Product Sold, Discount, Tax).
+6. Today Sales analysis on dashboard (Order Count, Sales, Product Sold, Discount, Tax).
+7. Category sales report.
+8. Top Product report (Today Top Product, Yesterday Top Product, Last 7 Days Top Product).
 
 
 == Changelog ==
+
+= version 3.2.3 -08-September-2018 =
+* Tested: Compatible With WooCommerce 3.4.5
+* Tested: Compatible With WordPress 4.9.8
+* Tested: Added New Top product report
 
 = version 3.2.2 -26-July-2018 =
 * Tested: Compatible With WooCommerce 3.4.3

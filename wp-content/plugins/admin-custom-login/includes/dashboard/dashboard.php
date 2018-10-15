@@ -5,6 +5,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 ?>
 <div class="row">
+	<?php include(WEBLIZAR_ACL_PLUGIN_DIR_PATH_FREE."includes/banner.php"); ?>
 	<div class="post-social-wrapper clearfix">
 		<div class="col-md-12 post-social-item">
 			<div class="panel panel-default">
@@ -62,39 +63,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 	</div>	
 
-	<div class="panel panel-primary panel-default content-panel" style="background-image">
-		<div class="panel-body">
-			<table class="form-table">
-				<tr>
-					<th scope="row" >Admin Custom Login Pro Features</th>
-					<td></td>
-				</tr>
-			</table>
-			<div class="pro-features-list"></div>		
-			<div class="col-md-6">
-				<ul>
-					<li><i class="fa fa-check"></i> Max Login Retry</li>
-					<li><i class="fa fa-check"></i> Login With Access Token</li>
-					<li><i class="fa fa-check"></i> Freeze Login Form On Brute Force Attack & Unfreeze By Admin Secret Key</li>
-					<li><i class="fa fa-check"></i> Social Media Login with Facebook, Twitter, Google+</li>
-				</ul>
-			</div>
-			<div class="col-md-6">
-				<ul>
-					<li><i class="fa fa-check"></i> Login Restriction By User Roles</li>
-					<li><i class="fa fa-check"></i> Restrict Unauthorized IP Login Access</li>
-					<li><i class="fa fa-check"></i> Ban User(s) Login Access</li>
-					<li><i class="fa fa-check"></i> Max User Access Management</li>
-				</ul>
-			</div>				
-			<div class="col-md-12">
-				<p>First 100 Users Get 50% OFF on Admin Custom Login Pro Plugin Use Coupon Code: <strong>APL50</strong></p> 
-				<a class="button-primary button-hero" href="http://demo.weblizar.com/admin-custom-login-pro/wp-admin/" target="_blank">Pro Live Demo</a>
-				<a class="button-primary button-hero" href="https://weblizar.com/plugins/admin-custom-login-pro/" target="_blank">Buy Now $25</a>
-			</div>
-		</div>
-	</div>
-	
 	<!--<div class="panel panel-primary panel-default content-panel">
 		<div class="panel-body">
 			<table class="form-table">
@@ -157,12 +125,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 	</div>
 </div>
 <!-- /row -->
-<style type="text/css">
-	.colcent{
-		width:100% !important;
-		text-align: center !important;
-	}
-</style>
 <script>
 function Custom_login_dashboard(Action, id) {
 	if(Action == "dashboardSave") {
@@ -306,3 +268,26 @@ if(isset($_POST['Action'])) {
 	}
 }
 ?>
+<style type="text/css">
+	.colcent{
+		width:100% !important;
+		text-align: center !important;
+	}
+	.img_banner{
+		width:100%;
+	}
+	@font-face {
+font-family: 'Montserrat Alternates', sans-serif;
+font-family: 'Nunito Sans', sans-serif;
+font-family: 'Abel', sans-serif;
+font-family: 'Nanum Gothic', sans-serif;
+font-family: 'Lora', serif;
+    src: url(https://fonts.googleapis.com/css?family=Abel|Lora|Montserrat+Alternates|Nanum+Gothic|Nunito+Sans);
+}
+
+body{
+font-family: 'Nanum Gothic', sans-serif;
+	
+}
+/*--close-media-responsive csss--*/
+</style>

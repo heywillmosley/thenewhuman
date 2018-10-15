@@ -3,6 +3,7 @@ class BeRocket_sales_report_custom_post extends BeRocket_custom_post_class {
     public $hook_name = 'berocket_sales_report_custom_post';
     public $conditions;
     function __construct() {
+        $this->version = '1.0';
         $this->post_name = 'br_sale_report';
         $this->post_settings = array(
             'label' => __( 'Report Variant', 'BeRocket_sales_report_domain' ),
@@ -33,12 +34,7 @@ class BeRocket_sales_report_custom_post extends BeRocket_custom_post_class {
         );
         $this->default_settings = array(
             'send_empty'        => '0',
-            'status'            => array(
-                0   => 'pending',
-                1   => 'processing',
-                2   => 'on-hold',
-                3   => 'completed',
-            ),
+            'status'            => array(),
             'emails'            => '',
             'periodicity_type'  => 'day',
             'periodicity'       => '1',
@@ -66,6 +62,21 @@ class BeRocket_sales_report_custom_post extends BeRocket_custom_post_class {
         add_action( 'sales_report_framework_construct', array($this, 'plugin_construct'), 10, 1 );
         add_filter( 'berocket_sales_report_start_data_date', array($this, 'report_start_end_data_date'), 10, 3 );
         add_filter( 'berocket_sales_report_end_data_date', array($this, 'report_start_end_data_date'), 10, 3 );
+        add_action( 'plugins_loaded', array($this, 'plugins_loaded') );
+    }
+    public function plugins_loaded() {
+        $order_status = wc_get_order_statuses();
+        $statuses = array();
+        $i = 0;
+        foreach($order_status as $status_slug => $status_name) {
+            $statuses[$i] = $status_slug;
+            $i++;
+        }
+        $this->default_settings['status'] = $statuses;
+        $version = get_option( $this->post_name.'_version');
+        if( empty($version) || version_compare($version, $this->version, '<') ) {
+            $this->update_version($version);
+        }
     }
     public function plugin_construct($BeRocket_sales_report) {
         if( $BeRocket_sales_report->init_validation() and defined( 'DOING_CRON' ) and DOING_CRON ) {
@@ -143,6 +154,19 @@ class BeRocket_sales_report_custom_post extends BeRocket_custom_post_class {
         </script>";
         $options = $this->get_option( $post->ID );
         $BeRocket_sales_report = BeRocket_sales_report::getInstance();
+        $order_status = wc_get_order_statuses();
+        $statuses = array();
+        $i = 0;
+        foreach($order_status as $status_slug => $status_name) {
+            $statuses[$status_slug] = array(
+                "type"     => "checkbox",
+                "label"    => "",
+                "label_for"=> $status_name,
+                "name"     => array("status", $i),
+                "value"    => $status_slug,
+            );
+            $i++;
+        }
         echo '<div class="br_framework_settings br_alabel_settings">';
         $BeRocket_sales_report->display_admin_settings(
             array(
@@ -163,57 +187,7 @@ class BeRocket_sales_report_custom_post extends BeRocket_custom_post_class {
                 'General' => array(
                     'status' => array(
                         'label' => __('Status', 'BeRocket_sales_report_domain'),
-                        'items' => array(
-                            'pending' => array(
-                                "type"     => "checkbox",
-                                "label"    => "",
-                                "label_for"=> __('pending', 'BeRocket_sales_report_domain'),
-                                "name"     => array("status", "0"),
-                                "value"    => 'pending',
-                            ),
-                            'processing' => array(
-                                "type"     => "checkbox",
-                                "label"    => "",
-                                "label_for"=> __('processing', 'BeRocket_sales_report_domain'),
-                                "name"     => array("status", "1"),
-                                "value"    => 'processing',
-                            ),
-                            'on-hold' => array(
-                                "type"     => "checkbox",
-                                "label"    => "",
-                                "label_for"=> __('on-hold', 'BeRocket_sales_report_domain'),
-                                "name"     => array("status", "2"),
-                                "value"    => 'on-hold',
-                            ),
-                            'completed' => array(
-                                "type"     => "checkbox",
-                                "label"    => "",
-                                "label_for"=> __('completed', 'BeRocket_sales_report_domain'),
-                                "name"     => array("status", "3"),
-                                "value"    => 'completed',
-                            ),
-                            'cancelled' => array(
-                                "type"     => "checkbox",
-                                "label"    => "",
-                                "label_for"=> __('cancelled', 'BeRocket_sales_report_domain'),
-                                "name"     => array("status", "4"),
-                                "value"    => 'cancelled',
-                            ),
-                            'refunded' => array(
-                                "type"     => "checkbox",
-                                "label"    => "",
-                                "label_for"=> __('refunded', 'BeRocket_sales_report_domain'),
-                                "name"     => array("status", "5"),
-                                "value"    => 'refunded',
-                            ),
-                            'failed' => array(
-                                "type"     => "checkbox",
-                                "label"    => "",
-                                "label_for"=> __('failed', 'BeRocket_sales_report_domain'),
-                                "name"     => array("status", "6"),
-                                "value"    => 'failed',
-                            ),
-                        ),
+                        'items' => $statuses,
                     ),
                 ),
                 'Send Time' => array(
@@ -463,10 +437,7 @@ class BeRocket_sales_report_custom_post extends BeRocket_custom_post_class {
         }
         $status = array();
         if( ! empty($options['status']) && is_array($options['status']) ) {
-            foreach($options['status'] as $status_in) {
-                $status[] = $status_in;
-                $status[] = 'wc-'.$status_in;
-            }
+            $status = $options['status'];
         }
         global $br_current_notice_post;
         $br_current_notice_post = array(
@@ -649,6 +620,24 @@ class BeRocket_sales_report_custom_post extends BeRocket_custom_post_class {
                 }
                 break;
         }
+    }
+    public function update_version($version) {
+        if( empty($version) ) {
+            $posts = $this->get_custom_posts();
+            $def_status = $this->default_settings['status'];
+            foreach($posts as $post_id) {
+                $options = $this->get_option($post_id);
+                $old_status = $options['status'];
+                $options['status'] = array();
+                foreach($old_status as $status) {
+                    if( in_array('wc-'.$status, $def_status) ) {
+                        $options['status'][array_search('wc-'.$status, $def_status)] = 'wc-'.$status;
+                    }
+                }
+                update_post_meta( $post_id, $this->post_name, $options );
+            }
+        }
+        update_option( $this->post_name.'_version', $this->version);
     }
 }
 new BeRocket_sales_report_custom_post();

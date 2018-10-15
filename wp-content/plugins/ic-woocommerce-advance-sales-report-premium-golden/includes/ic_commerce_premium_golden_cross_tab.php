@@ -3540,7 +3540,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Cross_Tab' ) ) {
 			$this->export_to_pdf($export_rows,$output);
 		}
 		
-		function GetDataGrid($rows=array(),$columns=array(),$summary=array()){
+		function GetDataGrid($rows=array(),$columns=array(),$summary=array(),$price_columns=array(),$total_columns = array()){
 			global $wpdb;
 			$csv_terminated = "\n";
 			$csv_separator = ",";
@@ -3583,34 +3583,38 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Cross_Tab' ) ) {
 			$display_logo	= $this->get_request('display_logo','');
 			$display_date	= $this->get_request('display_date','');
 			$display_center	= $this->get_request('display_center','');
+			$keywords		   = $this->get_request('pdf_keywords','');
+			$description	 	= $this->get_request('pdf_description','');
 			
+			$amount__columns = array_merge($price_columns, $total_columns);
+			$pdf_special_font = $this->get_pdf_special_font($amount__columns);
 			//New Change ID 20140918
-			$out ='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html><head>
-					<title>'.$report_title.'</title><style type="text/css"><!-- 
-					.header {position: fixed; top: -40px; text-align:center;}
-						  .footer { position: fixed; bottom: 0px; text-align:center;}
-						  .pagenum:before { content: counter(page); }
-					/*.Container{width:750px; margin:0 auto; border:1px solid black;}*/
-					body{font-family: "Source Sans Pro", sans-serif; font-size:10px;}
-					span{font-weight:bold;}
-					.Clear{clear:both; margin-bottom:10px;}
-					label{width:100px; float:left; }
-					.sTable3{border:1px solid #DFDFDF;}
-					.sTable3 th{
-						padding:10px 10px 7px 10px;
-						background:#eee url(../images/thead.png) repeat-x top left;
-						/*border-bottom:1px solid #DFDFDF;*/
-						
+			$out ='<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+					<title>'.$report_title.'</title>
+						<meta name="description" content="'.$description.'" />
+						<meta name="keywords" content="'.$keywords.'" />
+						<meta name="author" content="'.$company_name.'" />
+						<style type="text/css"><!--
+						'.$pdf_special_font.'
+						.header {position: fixed; top: -40px; text-align:center;}
+						.footer { position: fixed; bottom: 0px; text-align:center;}
+						.pagenum:before { content: counter(page); }
+						span{font-weight:bold;}
+						.Clear{clear:both; margin-bottom:10px;}						
+						.sTable3{border:1px solid #DFDFDF;}
+						.sTable3 th{
+							padding:10px 10px 7px 10px;
+							background:#eee url(../images/thead.png) repeat-x top left;
 						}
-					.Form{padding:1% 1% 11% 1%; margin:5px 5px 5px 5px;}
-					.myclass{border:1px solid black;}
+						.Form{padding:1% 1% 11% 1%; margin:5px 5px 5px 5px;}
+						.myclass{border:1px solid black;}
 						
-					.sTable3 tbody tr td{padding:8px 10px; background:#fff; border-top:1px solid #DFDFDF; border-right:1px solid #DFDFDF;}
-					.sTable3 tbody tr.AltRow td{background:#FBFBFB;}
-					.print_header_logo.center_header, .header.center_header{margin:auto;  text-align:center;}
-					
-					.td_pdf_amount span{ text-align:right; display:block}
-					th.product_total, th.Total, th.product_total, .td_pdf_amount{ text-align:right;}';
+						.sTable3 tbody tr td{padding:8px 10px; background:#fff; border-top:1px solid #DFDFDF; border-right:1px solid #DFDFDF;}
+						.sTable3 tbody tr.AltRow td{background:#FBFBFB;}
+						.print_header_logo.center_header, .header.center_header{margin:auto;  text-align:center;}
+						
+						.td_pdf_amount span{ text-align:right; display:block}
+						th.product_total, th.Total, th.product_total, .td_pdf_amount{ text-align:right;}';
 					
 					
 					if($report_name == "product_bill_country_crosstab" || $report_name == "product_bill_state_crosstab"){

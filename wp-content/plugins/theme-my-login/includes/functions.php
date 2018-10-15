@@ -50,9 +50,9 @@ function tml_parse_request( $wp ) {
 		}
 	}
 
-	// Default the action to login if an action is set and it's not a TML action
-	if ( ! empty( $action ) && ! tml_action_exists( $action ) ) {
-		$action = 'login';
+	// Bail if not a TML action
+	if ( ! tml_action_exists( $action ) ) {
+		return;
 	}
 
 	// Set the proper action
@@ -247,7 +247,12 @@ function tml_enqueue_styles() {
 function tml_enqueue_scripts() {
 	$suffix = SCRIPT_DEBUG ? '' : '.min';
 
-	wp_enqueue_script( 'theme-my-login', THEME_MY_LOGIN_URL . "assets/scripts/theme-my-login$suffix.js", array( 'jquery', 'password-strength-meter' ), THEME_MY_LOGIN_VERSION );
+	$dependencies = array( 'jquery' );
+	if ( tml_is_action( 'resetpass' ) || ( tml_is_action( 'register' ) && tml_allow_user_passwords() ) ) {
+		$dependencies[] = 'password-strength-meter';
+	}
+
+	wp_enqueue_script( 'theme-my-login', THEME_MY_LOGIN_URL . "assets/scripts/theme-my-login$suffix.js", $dependencies, THEME_MY_LOGIN_VERSION );
 	wp_localize_script( 'theme-my-login', 'themeMyLogin', array(
 		'action' => tml_is_action() ? tml_get_action()->get_name() : '',
 		'errors' => tml_get_errors()->get_error_codes(),
@@ -399,11 +404,6 @@ function tml_filter_site_url( $url, $path, $scheme ) {
  */
 function tml_filter_logout_url( $url, $redirect ) {
 
-	// Bail if not using permalinks
-	if ( ! tml_use_permalinks() ) {
-		return $url;
-	}
-
 	// Bail if logout action doesn't exist for some reason
 	if ( ! tml_action_exists( 'logout' ) ) {
 		return $url;
@@ -419,6 +419,33 @@ function tml_filter_logout_url( $url, $redirect ) {
 
 	// Add the nonce
 	$url = wp_nonce_url( $url, 'log-out' );
+
+	return $url;
+}
+
+/**
+ * Filter the result of wp_lostpassword_url().
+ *
+ * @since 7.0.11
+ *
+ * @param string $url      The URL.
+ * @param string $redirect The redirect.
+ * @return string The lostpassword URL.
+ */
+function tml_filter_lostpassword_url( $url, $redirect ) {
+
+	// Bail if logout action doesn't exist for some reason
+	if ( ! tml_action_exists( 'lostpassword' ) ) {
+		return $url;
+	}
+
+	// Get the lostpassword URL
+	$url = tml_get_action_url( 'lostpassword' );
+
+	// Add the redirect query argument if needed
+	if ( ! empty( $redirect ) ) {
+		$url = add_query_arg( 'redirect_to', urlencode( $redirect ), $url );
+	}
 
 	return $url;
 }

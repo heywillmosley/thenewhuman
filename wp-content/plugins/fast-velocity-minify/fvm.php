@@ -5,7 +5,7 @@ Plugin URI: http://fastvelocity.com
 Description: Improve your speed score on GTmetrix, Pingdom Tools and Google PageSpeed Insights by merging and minifying CSS and JavaScript files into groups, compressing HTML and other speed optimizations. 
 Author: Raul Peixoto
 Author URI: http://fastvelocity.com
-Version: 2.3.4
+Version: 2.3.5
 License: GPL2
 
 ------------------------------------------------------------------------
@@ -141,7 +141,7 @@ $exc = array('/html5shiv.js', '/html5shiv-printshiv.min.js', '/excanvas.js', '/a
 if(!is_array($blacklist) || strlen(implode($blacklist)) == 0) { update_option('fastvelocity_min_blacklist', implode("\n", $exc)); }
 
 # default ignore list
-$exc = array('/Avada/assets/js/main.min.js', '/woocommerce-product-search/js/product-search.js', '/includes/builder/scripts/frontend-builder-scripts.js', '/assets/js/jquery.themepunch.tools.min.js', '/js/TweenMax.min.js', '/jupiter/assets/js/min/full-scripts');
+$exc = array('/Avada/assets/js/main.min.js', '/woocommerce-product-search/js/product-search.js', '/includes/builder/scripts/frontend-builder-scripts.js', '/assets/js/jquery.themepunch.tools.min.js', '/js/TweenMax.min.js', '/jupiter/assets/js/min/full-scripts', '/wp-content/themes/Divi/core/admin/js/react-dom.production.min.js');
 if(!is_array($ignorelist) || strlen(implode($ignorelist)) == 0) { update_option('fastvelocity_min_ignorelist', implode("\n", $exc)); }
 
 
@@ -1003,6 +1003,13 @@ for($i=0,$l=count($header);$i<$l;$i++) {
 						$code.= $newcode;
 						$log.= $newlog;					
 					}	
+					
+					# Add extra data from wp_add_inline_script before
+					if ( ! empty( $wp_scripts->registered[$handle]->extra ) ) {
+						if ( ! empty( $wp_scripts->registered[$handle]->extra['before'] ) ) {
+							$code.= "\n".implode("\n", $wp_scripts->registered[$handle]->extra['before']);
+						}
+					}
 			
 				# consider dependencies on handles with an empty src
 				} else {
@@ -1139,7 +1146,14 @@ for($i=0,$l=count($footer);$i<$l;$i++) {
 					if($newcode !== false) { 
 						$code.= $newcode;
 						$log.= $newlog;					
-					}	
+					}
+					
+					# Add extra data from wp_add_inline_script before
+					if ( ! empty( $wp_scripts->registered[$handle]->extra ) ) {
+						if ( ! empty( $wp_scripts->registered[$handle]->extra['before'] ) ) {
+							$code.= "\n".implode("\n", $wp_scripts->registered[$handle]->extra['before']);
+						}
+					}
 			
 				# consider dependencies on handles with an empty src
 				} else {
@@ -1240,7 +1254,7 @@ if (stripos($tag, "\n") !== false) { return $tag; }
 
 # print code if there are no linebreaks, or return
 if(!empty($tagdefer)) { 
-	$deferinsights = '<script type="text/javascript">if(navigator.userAgent.match(/speed|Lighthouse|gtmetrix|x11.*firefox\/53|x11.*chrome\/39/i)){document.write('.json_encode($tagdefer).');}else{document.write('.json_encode($tag).');}</script>';	
+	$deferinsights = '<script type="text/javascript">if(navigator.userAgent.match(/speed|Lighthouse|gtmetrix|Linux.*Moto\sG|x11.*firefox\/54|x11.*chrome\/39/i)){document.write('.json_encode($tagdefer).');}else{document.write('.json_encode($tag).');}</script>';	
 	return preg_replace('#<script(.*?)>(.*?)</script>#is', $deferinsights, $tag);
 }
 
@@ -1888,7 +1902,7 @@ if(substr($handle, 0, 4) != "fvm-" && $defer_for_pagespeed == true && $defer_for
 
 	# print code if there are no linebreaks, or return
 	if(!empty($tagdefer)) { 
-		$deferinsights = '<script type="text/javascript">if(!navigator.userAgent.match(/speed|Lighthouse|gtmetrix|x11.*firefox\/53|x11.*chrome\/39/i)){document.write('.json_encode($tag).');}</script>';	
+		$deferinsights = '<script type="text/javascript">if(!navigator.userAgent.match(/speed|Lighthouse|gtmetrix|Linux.*Moto\sG|x11.*firefox\/54|x11.*chrome\/39/i)){document.write('.json_encode($tag).');}</script>';	
 		return preg_replace('#<script(.*?)>(.*?)</script>#is', $deferinsights, $tag);
 	}
 

@@ -16,6 +16,8 @@ class USIN_BuddyPress_Query{
 		add_filter('usin_query_join_table', array($this, 'filter_query_joins'), 10, 2);
 		add_filter('usin_custom_select', array($this, 'filter_query_select'), 10, 2);
 		add_filter('usin_db_aggregate_columns', array($this, 'filter_aggregate_columns'));
+		add_filter('usin_single_user_query_fields', array($this, 'remove_xprofile_fields_from_single_user_query'));
+		add_filter('usin_single_user_db_data', array($this, 'add_xprofile_fields_to_single_user_data'));
 	}
 
 	public static function get_prefix(){
@@ -81,7 +83,7 @@ class USIN_BuddyPress_Query{
 		if(strpos($table, $this->xp_table_prefix) === 0){
 			//xprofile field
 			$field_id = (int)str_replace($this->xp_table_prefix, '', $table);
-			$query_joins .= " LEFT JOIN ".$this->prefix."bp_xprofile_data AS $table ON".
+			$query_joins .= " LEFT JOIN ".self::get_xprofile_table_name()." AS $table ON".
 				" $wpdb->users.ID = $table.user_id AND $table.field_id = $field_id";
 		}else{
 			switch ($table) {
@@ -110,10 +112,54 @@ class USIN_BuddyPress_Query{
 	public static function get_field_counts($field_id, $total_col, $label_col){
 		global $wpdb;
 		
-		$query = $wpdb->prepare("SELECT `value` AS $label_col, COUNT(*) AS $total_col FROM ".self::get_prefix()."bp_xprofile_data".
+		$query = $wpdb->prepare("SELECT `value` AS $label_col, COUNT(*) AS $total_col FROM ".self::get_xprofile_table_name().
 			" WHERE field_id = %d GROUP BY $label_col", $field_id);
 
 		return $wpdb->get_results($query);
+	}
+
+	public static function get_xprofile_table_name(){
+		return self::get_prefix().'bp_xprofile_data';
+	}
+
+	/**
+	 * Remove the xProfile fields from the single user query. In this way we'll
+	 * avoid having too many table joins in the case of a large number of profile
+	 * fields. We'll use another method to load these in a single query instead.
+	 */
+	public function remove_xprofile_fields_from_single_user_query($fields){
+
+		foreach ($fields as $key => $field) {
+			if(strpos($field, USIN_BuddyPress_XProfile::$field_prefix) === 0){
+				unset($fields[$key]);
+			}
+		}
+		$fields = array_values($fields);
+
+		return $fields;
+	}
+
+	/**
+	 * Loads all the xProfile fields within a single database query and applies
+	 * the values to the user data object.
+	 */
+	public function add_xprofile_fields_to_single_user_data($user_data){
+		global $wpdb;
+
+		$xprofile_table = self::get_xprofile_table_name();
+		$query = $wpdb->prepare("SELECT * FROM $xprofile_table WHERE user_id = %d", $user_data->ID);
+		$bp_rows = $wpdb->get_results($query);
+
+		$general_fields = usin_options()->get_field_ids_by_field_type(USIN_BuddyPress_XProfile::$field_type);
+		
+		foreach ($bp_rows as $row) {
+			$ref = USIN_BuddyPress_XProfile::$field_prefix.$row->field_id;
+			if(in_array($ref, $general_fields)){
+				$user_data->$ref = $row->value;
+			}
+		}
+
+		return $user_data;
 	}
 
 }

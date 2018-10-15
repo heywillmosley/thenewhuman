@@ -23,8 +23,11 @@ if ( ! class_exists( 'IC_Commerce_API' ) ) {
 		
 		public function activate ( $key, $product_id ) {
 			$response = false;
+			$home_url = str_replace("https://","",$home_url);
+			$home_url = str_replace("http://","",$home_url);
 	
-			$request = $this->request( 'activation', array( 'licence_key' => $key, 'product_id' => $product_id, 'home_url' => esc_url( home_url())));
+			$request = $this->request( 'activation', array( 'licence_key' => $key, 'product_id' => $product_id, 'home_url' => $home_url));
+			//$request = $this->request( 'activation', array( 'licence_key' => $key, 'product_id' => $product_id, 'home_url' => esc_url( home_url())));
 			
 			
 			if ( empty( $request ) || !$request )
@@ -39,8 +42,14 @@ if ( ! class_exists( 'IC_Commerce_API' ) ) {
 	
 			if ( !$product_id )
 				$product_id = 'x';
-				
-			$request = $this->request( 'deactivation', array( 'licence_key' => $key, 'product_id' => $product_id, 'home_url' => esc_url( home_url( '/' ) ) ) );
+			
+			$home_url = esc_url( home_url( '/' ));
+			
+			$home_url = str_replace("https://","",$home_url);
+			$home_url = str_replace("http://","",$home_url);
+			
+			$request = $this->request( 'deactivation', array( 'licence_key' => $key, 'product_id' => $product_id, 'home_url' => $home_url ) );	
+			//$request = $this->request( 'deactivation', array( 'licence_key' => $key, 'product_id' => $product_id, 'home_url' => esc_url( home_url( '/' ) ) ) );
 			
 			return ! isset( $request->error );
 		} // End deactivate()

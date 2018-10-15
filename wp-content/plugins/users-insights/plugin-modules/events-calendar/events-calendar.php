@@ -71,7 +71,6 @@ class USIN_Events_Calendar extends USIN_Plugin_Module{
 			'name' => 'Events Calendar',
 			'desc' => __('Detects the user data from the Events Calendar Events Tickets, Events Tickets Plus and Community Events extensions.', 'usin'),
 			'allow_deactivate' => true,
-			'in_beta' => true,
 			'buttons' => array(
 				array('text'=> __('Learn More', 'usin'), 'link'=>'https://usersinsights.com/events-calendar-tickets-search-filter', 'target'=>'_blank')
 			),

@@ -87,15 +87,21 @@
             $button.trigger('lmp_button_changed');
         });
         $(window).on('scroll', function () {
-            if( $(window).scrollTop() > $('.btn-preview-td').offset().top + $('.btn-preview-td').outerHeight(true) ) {
-                $('.btn-preview-td .btn-preview-block').addClass('btn-fixed-position');
+            if( $(window).height() > 600 && $(window).width() > 900 && $(window).scrollTop() > $('.btn-preview-td').offset().top + 10 ) {
+                if( ! $('.btn-preview-td .btn-preview-block').is('.btn-fixed-position') ) {
+                    var width = $('.btn-preview-td .btn-preview-block').outerWidth(true);
+                    $('.btn-preview-td .btn-preview-block').width(width).addClass('btn-fixed-position');
+                }
             } else {
-                $('.btn-preview-td .btn-preview-block').removeClass('btn-fixed-position');
+                $('.btn-preview-td .btn-preview-block').css('width', '').removeClass('btn-fixed-position');
             }
-            if( $(window).scrollTop() > $('.btn-prev-preview-td').offset().top + $('.btn-prev-preview-td').outerHeight(true) ) {
-                $('.btn-prev-preview-td .btn-preview-block').addClass('btn-fixed-position');
+            if( $(window).height() > 600 && $(window).width() > 900 && $(window).scrollTop() > $('.btn-prev-preview-td').offset().top + 10 ) {
+                if( ! $('.btn-prev-preview-td .btn-preview-block').is('.btn-fixed-position') ) {
+                    var width = $('.btn-prev-preview-td .btn-preview-block').outerWidth(true);
+                    $('.btn-prev-preview-td .btn-preview-block').width(width).addClass('btn-fixed-position');
+                }
             } else {
-                $('.btn-prev-preview-td .btn-preview-block').removeClass('btn-fixed-position');
+                $('.btn-prev-preview-td .btn-preview-block').css('width', '').removeClass('btn-fixed-position');
             }
         });
         $(document).on( 'click', '.all_theme_default_lmp', function ( event ) {

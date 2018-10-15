@@ -5,7 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 $login_Version = unserialize(get_option('Admin_custome_login_Version'));
 $Version = $login_Version['Version'];
 if(!isset($Version)){
-	
 	$login_Version= serialize(array(
 		'Version' => '1.0'
 	));
@@ -54,9 +53,13 @@ if(!isset($Version)){
 		'login_msg_fontsize' => '16',
 		'login_msg_font_color' => '#000000',
 		'tagline_msg' => 'Login form is designed using <a href="https://wordpress.org/plugins/admin-custom-login/" target="_blank">ACL</a> plugin by <a href="https://www.weblizar.com" target="_blank">Weblizar</a>.',
+		'user_cust_lbl' => 'Type Username or Email',
+		'pass_cust_lbl' => 'Type Password',
+		'label_username' => 'Username / Email',
+		'label_password' => 'Password',
+		'label_loginButton' => 'Log In'
 	));
-	add_option("Admin_custome_login_login", $login_page);
-	
+	add_option("Admin_custome_login_login", $login_page);	
 	$text_and_color_page= serialize(array(
 		'heading_font_color'=>'#ffffff',
 		'input_font_color'=>'#000000',
@@ -74,9 +77,7 @@ if(!isset($Version)){
 		'button_font_style'=>'Open Sans',
 		'enable_inputbox_icon'=>'yes',
 		'user_input_icon'=>'fa-user',
-		'password_input_icon'=>'fa-key',
-		'user_cust_lbl'=>'Type Username or Email',
-		'pass_cust_lbl'=>'Type Password',
+		'password_input_icon'=>'fa-key',		
 	));
 	add_option("Admin_custome_login_text", $text_and_color_page);
 	

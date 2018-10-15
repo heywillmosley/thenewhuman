@@ -1,15 +1,56 @@
-<h4>1.1.2.1 - 07/02/2018</h4>
-<p><strong>Enhancements</strong></p>
+<h4>1.2.0.3 - 09/10/2018</h4>
+<p><strong>Bug Fix</strong></p>
 <ul>
-	<li>Updated default template data files to use font awesome 5 icons.</li>
-	<li>New filter <code>fl_theme_builder_get_excerpt</code></li>
+  <li>Use WP Core ImagesLoaded.</li>
 </ul>
 
+<h4>1.2.0.2 - 09/10/2018</h4>
+<p><strong>Bug Fix</strong></p>
+<ul>
+  <li>Fixed location rules disappearing under certain conditions.</li>
+  <li>Fixed locations not saving when they contain apostrophes or quotes.</li>
+</ul>
+
+<h4>1.2.0.1 - 08/29/2018</h4>
+<p><strong>Bug Fix</strong></p>
+<ul>
+  <li>Fix fatal PHP error in bb-logic extension.</li>
+</ul>
+
+<h4>1.2 - 08/28/2018</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+    <li>Added an all new conditional logic system with rules and rule groups.</li>
+    <li>Added conditional logic system to the Themer layout admin screen. Removed old user rules.</li>
+    <li>Added a new conditional logic visibility setting for rows, columns, and modules.</li>
+    <li>Added rules for posts, archives, authors, users, and custom fields in the Advanced Custom Fields (ACF) plugin.</li>
+	<li>Added location option for choosing post type ancestors such as the grandparent for a page.</li>
+	<li>Added field connection for pulling WooCommerce gallery images into the Photos field in Gallery modules.</li>
+	<li>Added before/after content actions to the custom layout for the posts module.</li>
+	<li>Added options for next and previous link text in the post navigation module.</li>
+	<li>Added option to select a specific taxonomy to navigate in the post navigation module.</li>
+</ul>
 <p><strong>Bug Fixes</strong></p>
 <ul>
-	<li>Fixed <code>wpbb post:excerpt</code> not working as expected.</li>
-	<li>Fixed post title issue, titles were not properly sanitized when saving locations.</li>
-	<li>Fixed compatibility issue with other plugins that use the Select2 library.</li>
+	<li>Fixed ancestor, parent or taxonomy rules not overriding the all rule for a post type.</li>
+	<li>Fixed a fatal error caused by third parties accessing the old LESS CSS processor class that no longer existed.</li>
+	<li>Fixed missing paragraph tag for post excerpts.</li>
+	<li>Fixed PHP error on single product layouts when attaching gallery images to Slideshow module.</li>
+	<li>Fixed PHP warning caused by the ACF Themer class.</li>
+	<li>Fixed ACF relationship ordering so it preserves the selection order.</li>
+</ul>
+
+<h4>1.1.2.1 - 07/02/2018</h4>
+<strong>Enhancements</strong>
+<ul>
+ 	<li>Updated default template data files to use font awesome 5 icons.</li>
+ 	<li>New filter <code>fl_theme_builder_get_excerpt</code></li>
+</ul>
+<strong>Bug Fixes</strong>
+<ul>
+ 	<li>Fixed <code>wpbb post:excerpt</code> not working as expected.</li>
+ 	<li>Fixed post title issue, titles were not properly sanitized when saving locations.</li>
+ 	<li>Fixed compatibility issue with other plugins that use the Select2 library.</li>
 </ul>
 
 <h4>1.1.2 - 05/21/2018</h4>
@@ -20,7 +61,6 @@
     <li>Added post:id and post:slug Themer connections.</li>
     <li>Added Paypal support to the Event Calendar Tickets Module.</li>
 </ul>
-
 <p><strong>Bug Fixes</strong></p>
 <ul>
 	<li>Prevent field connection logic from running in wp-admin, fixes issues like undefined post_type error with Yoast SEO.</li>

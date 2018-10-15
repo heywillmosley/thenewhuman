@@ -132,10 +132,10 @@ final class FLThemeBuilderPostModules {
 	 * @return string
 	 */
 	static public function post_grid_css( $css, $nodes ) {
+
 		if ( ! class_exists( 'lessc' ) ) {
 			require_once FL_THEME_BUILDER_DIR . 'classes/class-lessc.php';
 		}
-
 		foreach ( $nodes['modules'] as $module ) {
 
 			if ( ! is_object( $module ) ) {
@@ -152,12 +152,11 @@ final class FLThemeBuilderPostModules {
 				$custom .= $module->settings->custom_post_layout->css;
 				$custom .= ' }';
 				$css    .= @$less->compile( $custom ); // @codingStandardsIgnoreLine
-			} catch ( Exception $e ) {
+				} catch ( Exception $e ) {
 				$css .= $module->settings->custom_post_layout->css;
 			}
 		}
-
-		return $css;
+			return $css;
 	}
 
 	/**

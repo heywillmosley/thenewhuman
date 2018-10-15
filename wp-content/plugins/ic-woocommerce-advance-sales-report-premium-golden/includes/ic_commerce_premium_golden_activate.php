@@ -348,14 +348,16 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Activate' ) ) {
 			
 			if( empty( $checked_data->checked ) )	return $checked_data;
 			
-			//$this->print_array($checked_data);
+			$home_url = esc_url( home_url( '/' ));			
+			$home_url = str_replace("https://","",$home_url);
+			$home_url = str_replace("http://","",$home_url);
 			
 			//New Change ID 20140918
 			$args = array(
 					'request' 			=> 'update_check',
 					'version' 			=> $checked_data->checked[$this->constants['plugin_slug']],
 					'licence_hash' 		=> $this->licence_hash,
-					'home_url' 			=> trailingslashit(esc_url(home_url())),
+					'home_url' 			=> trailingslashit($home_url),
 					'parent_plugin_version' => isset($this->constants['parent_plugin_version']) ? $this->constants['parent_plugin_version'] : '',
 					'parent_plugin_db_version' 	=> isset($this->constants['parent_plugin_db_version']) ? $this->constants['parent_plugin_db_version'] : '',					
 					'http_user_agent' 	=> isset($this->constants['http_user_agent']) ? $this->constants['http_user_agent'] : '',

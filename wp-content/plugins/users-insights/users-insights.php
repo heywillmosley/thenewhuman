@@ -3,7 +3,7 @@
  * Plugin Name: Users Insights
  * Plugin URI: https://usersinsights.com/
  * Description: Everything about your WordPress users in one place
- * Version: 3.6.5
+ * Version: 3.6.6
  * Author: Pexeto
  * Text Domain: usin
  * Domain Path: /lang

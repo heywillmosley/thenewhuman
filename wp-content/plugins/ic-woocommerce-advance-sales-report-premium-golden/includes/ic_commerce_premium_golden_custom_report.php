@@ -58,6 +58,64 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Detail_report' ) ) {
 					$this->print_array($items);
 					return ;
 				}
+				/*
+				$limit = 3;
+				
+				$sql = "SELECT";
+				$sql .= " shop_order.ID AS order_id";
+				$sql .= ", shop_order.post_date AS order_date";
+				$sql .= ", shop_order.post_status AS order_status";
+				$sql .= " FROM {$wpdb->posts} AS shop_order";
+				$sql .= " WHERE 1*1";
+				$sql .= " AND shop_order.post_type IN ('shop_order')";
+				
+				$sql .= " ORDER BY shop_order.post_date DESC";
+				$sql .= " LIMIT {$limit}";
+				
+				$items = $wpdb->get_results($sql);
+				$new_list = array();
+				foreach($items as $key => $item){
+					$item->site_id = 1;
+					$new_list[$item->order_date.":".$item->site_id] = $item;
+				}
+				
+				$sql = "SELECT";
+				$sql .= " shop_order.ID AS order_id";
+				$sql .= ", shop_order.post_date AS order_date";
+				$sql .= ", shop_order.post_status AS order_status";
+				$sql .= " FROM wp_2_posts AS shop_order";
+				$sql .= " WHERE 1*1";
+				$sql .= " AND shop_order.post_type IN ('shop_order')";
+				
+				$sql .= " ORDER BY shop_order.post_date DESC";
+				$sql .= " LIMIT {$limit}";
+				
+				$items = $wpdb->get_results($sql);
+				foreach($items as $key => $item){
+					$item->site_id = 2;
+					$new_list[$item->order_date.":".$item->site_id] = $item;
+				}
+				
+				$sql = "SELECT";
+				$sql .= " shop_order.ID AS order_id";
+				$sql .= ", shop_order.post_date AS order_date";
+				$sql .= ", shop_order.post_status AS order_status";
+				$sql .= " FROM wp_3_posts AS shop_order";
+				$sql .= " WHERE 1*1";
+				$sql .= " AND shop_order.post_type IN ('shop_order')";
+				
+				$sql .= " ORDER BY shop_order.post_date DESC";
+				$sql .= " LIMIT {$limit}";
+				
+				$items = $wpdb->get_results($sql);
+				foreach($items as $key => $item){
+					$item->site_id = 3;
+					$new_list[$item->order_date.":".$item->site_id] = $item;
+				}
+				
+				krsort($new_list);
+				$this->print_array($new_list);
+				*/
 				
 				$order_date_field_key	= $this->get_setting('order_date_field_key',$this->constants['plugin_options'], 'post_date');
 				$shop_order_status		= $this->get_set_status_ids();	
@@ -1381,7 +1439,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Detail_report' ) ) {
                     <?php echo $this->create_hidden_fields($request);?>
                     <input type="hidden" name="export_file_name" value="<?php echo $admin_page;?>" />
                     <input type="hidden" name="export_file_format" value="csv" />
-                    
+                    <?php do_action('ic_commerce_export_buttons',$admin_page,$position,$request);?>                    
                     <input type="button" name="<?php echo $admin_page ;?>_export" class="onformprocess open_popup csvicon" value="<?php _e("Export to CSV",'icwoocommerce_textdomains');?>" data-format="csv" data-popupid="export_csv_popup" data-hiddenbox="popup_csv_hidden_fields" data-popupbutton="<?php _e("Export to CSV",'icwoocommerce_textdomains');?>" data-title="<?php _e("Export to CSV - Additional Information",'icwoocommerce_textdomains');?>" />
                     <input type="button" name="<?php echo $admin_page ;?>_export" class="onformprocess open_popup excelicon" value="<?php _e("Export to Excel",'icwoocommerce_textdomains');?>" data-format="xls" data-popupid="export_csv_popup" data-hiddenbox="popup_csv_hidden_fields" data-popupbutton="<?php _e("Export to Excel",'icwoocommerce_textdomains');?>" data-title="<?php _e("Export to Excel - Additional Information",'icwoocommerce_textdomains');?>" />
                     <input type="button" name="<?php echo $admin_page ;?>_export_pdf" class="onformprocess open_popup pdficon" value="<?php _e("Export to PDF",'icwoocommerce_textdomains');?>" data-format="pdf" data-popupid="export_pdf_popup" data-hiddenbox="popup_pdf_hidden_fields" data-popupbutton="<?php _e("Export to PDF",'icwoocommerce_textdomains');?>" data-title="<?php _e("Export to PDF",'icwoocommerce_textdomains');?>" />
@@ -1734,7 +1792,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Detail_report' ) ) {
 							if(count($order_items)>0){
 								$extra_meta_keys 	= apply_filters('ic_commerce_normal_view_extra_meta_keys', array('order_total','order_shipping','cart_discount','order_discount','order_tax','order_shipping_tax'),$request, $type, $page, 'normal_view', $columns);
 								$post_ids 			= $this->get_items_id_list($order_items,'order_id');
-								$postmeta_datas 	= $this->get_postmeta($post_ids, $total_columns,$extra_meta_keys,'total');
+								$postmeta_datas 	= $this->get_shop_order_postmeta($post_ids, $total_columns,$extra_meta_keys,'total');
 								//$this->print_array($postmeta_datas);die;
 								foreach ( $order_items as $key => $order_item ) {
 										$order_id								= $order_item->order_id;
@@ -1802,7 +1860,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Detail_report' ) ) {
 					if(count($order_items)>0){
 						$extra_meta_keys 	= apply_filters('ic_commerce_normal_view_extra_meta_keys', array('order_total','order_shipping','cart_discount','order_discount','total_discount','order_tax','order_shipping_tax','total_tax','billing_first_name','billing_last_name','order_currency'),$request, $type, $page, 'normal_view', $columns);
 						$post_ids 			= $this->get_items_id_list($order_items,'order_id');
-						$postmeta_datas 	= $this->get_postmeta($post_ids, $columns,$extra_meta_keys);
+						$postmeta_datas 	= $this->get_shop_order_postmeta($post_ids, $columns,$extra_meta_keys);
 						//$this->print_array($postmeta_datas);die;
 						foreach ( $order_items as $key => $order_item ) {
 								$order_id								= $order_item->order_id;
@@ -2279,7 +2337,7 @@ if ( ! class_exists( 'IC_Commerce_Premium_Golden_Detail_report' ) ) {
 					if(count($order_items)>0){
 						$extra_meta_keys 	= apply_filters('ic_commerce_details_view_extra_meta_keys', array('billing_first_name','billing_last_name','order_currency'),$request, $type, $page, 'details_view', $columns);
 						$post_ids 			= $this->get_items_id_list($order_items,'order_id');
-						$postmeta_datas 	= $this->get_postmeta($post_ids, $columns,$extra_meta_keys);
+						$postmeta_datas 	= $this->get_shop_order_postmeta($post_ids, $columns,$extra_meta_keys);
 						//$this->print_array($postmeta_datas);
 						foreach ( $order_items as $key => $order_item ) {
 								$order_id								= $order_item->order_id;

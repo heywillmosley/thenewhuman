@@ -24,6 +24,7 @@ class USIN_Ultimate_Member_Query{
 	public function init(){
 		if(is_admin()){
 			$this->init_meta_query();
+			add_filter('usin_user_db_data', array($this, 'replace_account_status_code_with_name'));
 		}
 	}
 	
@@ -35,11 +36,25 @@ class USIN_Ultimate_Member_Query{
 			$meta_query = new USIN_Meta_Query($field['meta_key'], $field['filter']['type'], $this->prefix);
 			$meta_query->init();
 		}
+
+		$status_query = new USIN_Meta_Query('account_status', 'text', 'um_');
+		$status_query->init();
 		
 		//community role field
 		if(USIN_Ultimate_Member::is_um_older_than_v2()){
 			$role_query = new USIN_Meta_Query('role', 'select', $this->prefix);
 			$role_query->init();
 		}
+	}
+
+	public function replace_account_status_code_with_name($user_data){
+		if(!empty($user_data->um_account_status)){
+			$statuses = USIN_Ultimate_Member::get_account_statuses();
+			if(isset($statuses[$user_data->um_account_status])){
+				$user_data->um_account_status = $statuses[$user_data->um_account_status];
+			}
+		}
+
+		return $user_data;
 	}
 }

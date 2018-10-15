@@ -101,6 +101,32 @@ function acl_er_login_logo() {
 			}
 		});
     </script>
+	<?php
+		/* Logo URL */
+		function my_login_logo_url() {
+			if(get_option('Admin_custome_login_logo')) {
+			   $logo_page = unserialize(get_option('Admin_custome_login_logo'));
+			   return $logo_page['logo_url'];
+			   // make get option varibles and use 
+			} else {
+			   return home_url();
+			   /*create default variables and use*/
+			}			
+		}
+		add_filter( 'login_headerurl', 'my_login_logo_url' );		
+		/* Logo URL Title*/
+		function my_login_logo_url_title() {
+			if(get_option('Admin_custome_login_logo')) {
+				$logo_page = unserialize(get_option('Admin_custome_login_logo'));
+				return  $logo_page['logo_url_title'];
+			   // make get option varibles and use 
+			} else {
+			   return "Your Site Name and Info";
+			   // create default variables and use
+			}			
+		}
+		add_filter( 'login_headertitle', 'my_login_logo_url_title' );		
+	?>
     <style type="text/css">	
 		<?php echo $login_custom_css; ?>
 	
@@ -149,23 +175,6 @@ function acl_er_login_logo() {
 			width: <?php echo $logo_page['logo_width'] ?>px;
 			height: <?php echo $logo_page['logo_height'] ?>px;
 		}
-
-		<?php 
-		// Logo URL
-		function my_login_logo_url() {
-			$logo_page = unserialize(get_option('Admin_custome_login_logo'));
-			return $logo_page['logo_url'];
-		}
-		add_filter( 'login_headerurl', 'my_login_logo_url' );
-		
-		// Logo URL Title
-		function my_login_logo_url_title() {
-			$logo_page = unserialize(get_option('Admin_custome_login_logo'));
-			return  $logo_page['logo_url_title'];
-		}
-		add_filter( 'login_headertitle', 'my_login_logo_url_title' );		
-		?>
-		
 		<?php if($login_form_position == 'lf_float_style') { ?>
 		#login {
 			float:<?php echo $login_form_float; ?> !important;
@@ -290,7 +299,7 @@ function acl_er_login_logo() {
 		    color: <?php if(isset($login_page['login_msg_font_color'])) { echo $login_page['login_msg_font_color']; } else { echo "#000"; } ?> !important;
 	   }
 	 </style>
-	<?php
+	<?php	
 	// Message Above Login Form
 	add_filter('login_message','message_above_login_form');
 	function message_above_login_form(){
@@ -298,7 +307,7 @@ function acl_er_login_logo() {
 		if(isset($login_page['log_form_above_msg'])){
 			$log_form_above_msg = $login_page['log_form_above_msg'];
 			if($log_form_above_msg !=""){ ?> 
-				<p class='login-msg-above'><?php echo $log_form_above_msg; ?></p>
+				<p class='login-msg-above'><?php echo html_entity_decode(stripslashes($log_form_above_msg)); ?></p>
 			<?php
 			}
 		}	

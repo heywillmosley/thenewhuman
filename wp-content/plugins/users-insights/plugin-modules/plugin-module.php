@@ -74,5 +74,19 @@ abstract class USIN_Plugin_Module{
 	protected function is_module_active(){
 		return usin_modules()->is_module_active($this->module_name);
 	}
+
+	protected function assoc_array_to_options($arr){
+		$options = array();
+
+		if(!is_array($arr) || empty($arr)){
+			return $options;
+		}
+
+		foreach ($arr as $key => $value) {
+			$options[]= array('key' => $key, 'val' => $value);
+		}
+
+		return $options;
+	}
 	
 }

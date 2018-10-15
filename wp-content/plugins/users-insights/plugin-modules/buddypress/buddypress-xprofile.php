@@ -7,6 +7,7 @@ class USIN_BuddyPress_XProfile{
 	protected $fields = null;
 	public $multi_option_fields = array();
 	public static $field_prefix = 'bxp_';
+	public static $field_type = 'general';
 	
 	public function __construct(){
 		global $wpdb;
@@ -45,7 +46,7 @@ class USIN_BuddyPress_XProfile{
 				'bpx_id'=>$db_data->id,
 				'order' => 'ASC',
 				'show' => false,
-				'fieldType' => 'general',
+				'fieldType' => self::$field_type,
 				'filter' => array(
 					'type' => $type,
 				),

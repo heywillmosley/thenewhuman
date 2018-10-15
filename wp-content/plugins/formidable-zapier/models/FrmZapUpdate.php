@@ -5,7 +5,7 @@ class FrmZapUpdate extends FrmAddon {
 	public $plugin_file;
 	public $plugin_name = 'Zapier';
 	public $download_id = 170645;
-	public $version = '1.04';
+	public $version = '1.05';
 
 	public function __construct() {
 		$this->plugin_file = dirname( dirname( __FILE__ ) ) . '/formidable-zapier.php';

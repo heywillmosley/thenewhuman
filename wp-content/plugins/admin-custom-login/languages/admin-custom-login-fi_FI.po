@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: admin-custom-login\n"
-"POT-Creation-Date: 2018-08-06 14:16+0530\n"
-"PO-Revision-Date: 2018-08-06 14:16+0530\n"
+"POT-Creation-Date: 2018-08-08 20:03+0530\n"
+"PO-Revision-Date: 2018-08-08 20:03+0530\n"
 "Last-Translator: Weblizar <lizarweb@gmail.com>\n"
 "Language-Team: Eerik Anttila // ekiphet@gmail.com\n"
 "Language: fi_FI\n"
@@ -16,7 +16,19 @@ msgstr ""
 "X-Poedit-KeywordsList: _e;__;_\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/WL_ACL_FREE_Menu.php:6 includes/content.php:28
+#: admin/inc/admin_menu.php:11
+msgid "Plugin Configuration Click Here"
+msgstr "Plugin Configuration Klikkaa tästä"
+
+#: admin/inc/admin_menu.php:12
+msgid "Buy Pro"
+msgstr "Osta Pro"
+
+#: admin/inc/admin_menu.php:13
+msgid "Admin Demo"
+msgstr "Admin-esittely"
+
+#: includes/content.php:28 init.php:59
 msgid "Admin Custom Login"
 msgstr "Mukautettu kirjautumissivu ylläpitäjille"
 
@@ -24,8 +36,8 @@ msgstr "Mukautettu kirjautumissivu ylläpitäjille"
 msgid "Show Us Some Love (Rate Us)"
 msgstr "Näytä meille tukesi (Anna meille arvostelu)"
 
-#: includes/content.php:80 includes/dashboard/dashboard.php:169
-#: includes/dashboard/dashboard.php:183
+#: includes/content.php:80 includes/dashboard/dashboard.php:129
+#: includes/dashboard/dashboard.php:144
 msgid "Dashboard"
 msgstr "Päävalikko"
 
@@ -147,47 +159,47 @@ msgstr "Jos tykkäät meistä"
 msgid "Admin Custom Login Dashboard"
 msgstr "Admin Custom Login -paneeli"
 
-#: includes/dashboard/dashboard.php:104
+#: includes/dashboard/dashboard.php:30
 msgid "Admin Custom Login Status"
 msgstr "Admin Custom Loginin status"
 
-#: includes/dashboard/dashboard.php:110
+#: includes/dashboard/dashboard.php:36
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:83
 msgid "Disable"
 msgstr "Ota pois käytöstä"
 
-#: includes/dashboard/dashboard.php:113
+#: includes/dashboard/dashboard.php:39
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:80
 msgid "Enable"
 msgstr "Aktivoi"
 
-#: includes/dashboard/dashboard.php:124
+#: includes/dashboard/dashboard.php:51
 msgid "View Login Page"
 msgstr "Tarkastele kirjautumissivua"
 
-#: includes/dashboard/dashboard.php:129
+#: includes/dashboard/dashboard.php:56
 msgid "Copy below link and open in another browser where you are not logged in"
 msgstr ""
 "Kopioi alhaalla oleva linkki ja avaa Incognito-tilassa tai toisessa "
 "selaimessa, jossa et ole kirjautunut sisään"
 
-#: includes/dashboard/dashboard.php:169 includes/design/background.php:368
+#: includes/dashboard/dashboard.php:129 includes/design/background.php:368
 #: includes/design/text_and_color.php:583
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:117
-#: includes/login-form-setting/login-form-background.php:716
+#: includes/login-form-setting/login-form-background.php:767
 #: includes/settings/page-settings.php:168 includes/social/social.php:192
 msgid "Setting Save Successfully"
 msgstr "Asetus tallennettu onnistuneesti"
 
-#: includes/dashboard/dashboard.php:169 includes/dashboard/dashboard.php:183
+#: includes/dashboard/dashboard.php:129 includes/dashboard/dashboard.php:144
 #: includes/design/background.php:180 includes/design/background.php:368
 #: includes/design/background.php:383 includes/design/text_and_color.php:583
 #: includes/design/text_and_color.php:598
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:117
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:131
 #: includes/login-form-setting/login-form-background.php:361
-#: includes/login-form-setting/login-form-background.php:716
-#: includes/login-form-setting/login-form-background.php:730
+#: includes/login-form-setting/login-form-background.php:767
+#: includes/login-form-setting/login-form-background.php:781
 #: includes/settings/page-settings.php:84
 #: includes/settings/page-settings.php:168
 #: includes/settings/page-settings.php:182 includes/social/social.php:192
@@ -195,26 +207,26 @@ msgstr "Asetus tallennettu onnistuneesti"
 msgid "Close"
 msgstr "Sulje"
 
-#: includes/dashboard/dashboard.php:183 includes/design/background.php:383
+#: includes/dashboard/dashboard.php:144 includes/design/background.php:383
 #: includes/design/text_and_color.php:598
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:131
-#: includes/login-form-setting/login-form-background.php:730
+#: includes/login-form-setting/login-form-background.php:781
 #: includes/settings/page-settings.php:182 includes/social/social.php:206
 msgid "Setting Reset Successfully"
 msgstr "Asetus palautettu oletusarvoon onnistuneesti"
 
-#: includes/dashboard/dashboard.php:190 includes/design/background.php:391
+#: includes/dashboard/dashboard.php:151 includes/design/background.php:391
 #: includes/design/text_and_color.php:606
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:138
-#: includes/login-form-setting/login-form-background.php:737
+#: includes/login-form-setting/login-form-background.php:788
 #: includes/settings/page-settings.php:189 includes/social/social.php:213
 msgid "Save Changes"
 msgstr "Tallenna muutokset"
 
-#: includes/dashboard/dashboard.php:193 includes/design/background.php:394
+#: includes/dashboard/dashboard.php:154 includes/design/background.php:394
 #: includes/design/text_and_color.php:609
 #: includes/googlecaptcha-settings/gcaptcha-settings.php:141
-#: includes/login-form-setting/login-form-background.php:740
+#: includes/login-form-setting/login-form-background.php:791
 #: includes/settings/page-settings.php:192 includes/social/social.php:216
 msgid "Reset Default"
 msgstr "Palauta oletusarvoon"
@@ -687,6 +699,14 @@ msgstr "Oikealla"
 msgid "Floating With Customization Settings"
 msgstr "Kelluva muokkausvaihtoehdoilla"
 
+#: includes/login-form-setting/login-form-background.php:250
+msgid "Left Margin"
+msgstr "Vasen marginaali"
+
+#: includes/login-form-setting/login-form-background.php:258
+msgid "Top Margin"
+msgstr "Ylin marginaali"
+
 #: includes/login-form-setting/login-form-background.php:266
 msgid "Note: This form position setting will be not responsive."
 msgstr "Huomaathan, että tämän lomakkeen sijaintiasetus ei ole responsiivinen."
@@ -772,39 +792,73 @@ msgstr "Reunuksen tiheys"
 msgid "Enable Form Shadow?"
 msgstr "Aktivoi lomakkeen varjo?"
 
-#: includes/login-form-setting/login-form-background.php:552
+#: includes/login-form-setting/login-form-background.php:553
 msgid "Form Shadow Color"
 msgstr "Lomakkeen varjon väri"
 
-#: includes/login-form-setting/login-form-background.php:569
+#: includes/login-form-setting/login-form-background.php:570
 #, fuzzy
 #| msgid "Username or Email Address"
-msgid "Username / Email Field Placeholder Text"
+msgid "Username or Email Field Label Text"
 msgstr "Käyttäjänimi tai Sähköpostiosoite"
 
-#: includes/login-form-setting/login-form-background.php:574
-msgid "Type Username or Email"
-msgstr "Kirjoita käyttäjätunnus tai sähköposti"
+#: includes/login-form-setting/login-form-background.php:575
+#, fuzzy
+#| msgid "Username or Email Address"
+msgid "Type username or email field label text"
+msgstr "Käyttäjänimi tai Sähköpostiosoite"
 
 #: includes/login-form-setting/login-form-background.php:587
-msgid "Password Field Placeholder Text"
-msgstr ""
+#, fuzzy
+#| msgid "Username or Email Address"
+msgid "Username or Email Field Placeholder Text"
+msgstr "Käyttäjänimi tai Sähköpostiosoite"
 
 #: includes/login-form-setting/login-form-background.php:592
 #, fuzzy
-#| msgid "Password"
-msgid "Type Password"
-msgstr "Salasana"
+#| msgid "Username or Email Address"
+msgid "Type username or email placeholder text"
+msgstr "Käyttäjänimi tai Sähköpostiosoite"
 
 #: includes/login-form-setting/login-form-background.php:604
+#, fuzzy
+#| msgid "Password Field Placeholder Text"
+msgid "Password Field Label Text"
+msgstr "Salasanakenttä Paikkamerkkiteksti"
+
+#: includes/login-form-setting/login-form-background.php:609
+#, fuzzy
+#| msgid "Password Field Placeholder Text"
+msgid "Type password field label text"
+msgstr "Salasanakenttä Paikkamerkkiteksti"
+
+#: includes/login-form-setting/login-form-background.php:621
+msgid "Password Field Placeholder Text"
+msgstr "Salasanakenttä Paikkamerkkiteksti"
+
+#: includes/login-form-setting/login-form-background.php:626
+#, fuzzy
+#| msgid "Password Field Placeholder Text"
+msgid "Type password field placeholder text"
+msgstr "Salasanakenttä Paikkamerkkiteksti"
+
+#: includes/login-form-setting/login-form-background.php:638
+msgid "Log In Button Text"
+msgstr ""
+
+#: includes/login-form-setting/login-form-background.php:643
+msgid "Type log in button text"
+msgstr ""
+
+#: includes/login-form-setting/login-form-background.php:655
 msgid "Redirect Users After Login (Not Work For Admin)"
 msgstr "Uudelleenohjaa muut kuin ylläpitäjät"
 
-#: includes/login-form-setting/login-form-background.php:609
+#: includes/login-form-setting/login-form-background.php:660
 msgid "Redirect URL"
 msgstr "Uudelleenohjaus-URL"
 
-#: includes/login-form-setting/login-form-background.php:610
+#: includes/login-form-setting/login-form-background.php:661
 msgid ""
 "Enter the URL to redirect users after login, Setting will not work for an "
 "administrator."
@@ -812,50 +866,50 @@ msgstr ""
 "Kirjoita URL-osoite, joka ohjaa käyttäjiä kirjautumisen jälkeen. Asetus ei "
 "toimi järjestelmänvalvojana."
 
-#: includes/login-form-setting/login-form-background.php:622
+#: includes/login-form-setting/login-form-background.php:673
 msgid "Display Note To User Above Login Form"
 msgstr "Näytä Huomautus käyttäjän yllä kirjautumislomakkeelle"
 
-#: includes/login-form-setting/login-form-background.php:627
-#: includes/login-form-setting/login-form-background.php:679
+#: includes/login-form-setting/login-form-background.php:678
+#: includes/login-form-setting/login-form-background.php:730
 msgid "Type Message"
-msgstr ""
+msgstr "Kirjoita viesti"
 
-#: includes/login-form-setting/login-form-background.php:639
+#: includes/login-form-setting/login-form-background.php:690
 #, fuzzy
 #| msgid "Headline Font size"
 msgid "Message Font Size"
 msgstr "Otsikon fonttikoko"
 
-#: includes/login-form-setting/login-form-background.php:657
+#: includes/login-form-setting/login-form-background.php:708
 #, fuzzy
 #| msgid "Headline Font Color"
 msgid "Message Font Color"
 msgstr "Otsikon fontin väri"
 
-#: includes/login-form-setting/login-form-background.php:674
+#: includes/login-form-setting/login-form-background.php:725
 msgid "Tagline Message Display Below Login Form"
 msgstr "Tagline-viestinäyttö alla kirjautumissivun alla"
 
-#: includes/login-form-setting/login-form-background.php:691
-#: includes/login-form-setting/login-form-background.php:696
+#: includes/login-form-setting/login-form-background.php:742
+#: includes/login-form-setting/login-form-background.php:747
 msgid "Custom CSS"
 msgstr "Mukautettu CSS"
 
-#: includes/login-form-setting/login-form-background.php:698
+#: includes/login-form-setting/login-form-background.php:749
 msgid "Enter any custom css you want to apply on login panel."
 msgstr "Kirjoita CSS, jonka haluat asettaa kirjautumispaneeliin."
 
-#: includes/login-form-setting/login-form-background.php:699
+#: includes/login-form-setting/login-form-background.php:750
 msgid "Note: Please Do Not Use"
 msgstr "Huom! Ethän käytä tätä"
 
-#: includes/login-form-setting/login-form-background.php:699
+#: includes/login-form-setting/login-form-background.php:750
 msgid "Tag With Custom CSS"
 msgstr "Merkitse mukautetulla CSS:llä"
 
-#: includes/login-form-setting/login-form-background.php:716
-#: includes/login-form-setting/login-form-background.php:730
+#: includes/login-form-setting/login-form-background.php:767
+#: includes/login-form-setting/login-form-background.php:781
 msgid "Login"
 msgstr "Kirjaudu sisään"
 
@@ -1030,33 +1084,54 @@ msgstr "Whatsapp"
 msgid "Social"
 msgstr "Social"
 
-#: init.php:62
+#: init.php:59
+#, fuzzy
+#| msgid "Login"
+msgid "AC Login"
+msgstr "Kirjaudu sisään"
+
+#: init.php:65
 #, fuzzy
 #| msgid "Logo Settings"
 msgid "Settings"
 msgstr "Logon asetukset"
 
-#: init.php:154
-#, fuzzy
-#| msgid "Type Username or Email"
-msgid "Username or Email"
-msgstr "Kirjoita käyttäjätunnus tai sähköposti"
+#: init.php:68
+msgid "Get Pro"
+msgstr "Hanki Pro"
 
-#: init.php:155
-msgid "Password"
-msgstr "Salasana"
-
-#: init.php:178
+#: init.php:211
 msgid "Find Us On Social Media"
 msgstr "Löydä meidät sosiaalisesta mediasta"
 
-#: init.php:465
+#: init.php:504
 msgid "Please upload a valid .json file"
 msgstr "Tiedosto ei kelpaa (.json)"
 
-#: init.php:471
+#: init.php:510
 msgid "Please upload a file to import"
 msgstr "Lataa tiedosto tuotavaksi"
+
+#~ msgid "Type Username or Email"
+#~ msgstr "Kirjoita käyttäjätunnus tai sähköposti"
+
+#, fuzzy
+#~| msgid "Password"
+#~ msgid "Type Password"
+#~ msgstr "Salasana"
+
+#, fuzzy
+#~| msgid "Admin Custom Login"
+#~ msgid "Custom Login"
+#~ msgstr "Mukautettu kirjautumissivu ylläpitäjille"
+
+#, fuzzy
+#~| msgid "Type Username or Email"
+#~ msgid "Username or Email"
+#~ msgstr "Kirjoita käyttäjätunnus tai sähköposti"
+
+#~ msgid "Password"
+#~ msgstr "Salasana"
 
 #~ msgid "Powered By"
 #~ msgstr "Tämän mahdollistaa"

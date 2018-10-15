@@ -1,8 +1,14 @@
 var lmp_update_state, load_next_page, lmp_ajax_instance = false, lmp_update_lazyload;
 (function ($){
-    $('body').append( $( the_lmp_js_data.load_image ) );
+    $('body').append( $( '<div class="berocket_load_more_preload">'
+    + the_lmp_js_data.load_image
+    + the_lmp_js_data.br_lmp_button_settings_load_image 
+    + the_lmp_js_data.br_lmp_button_settings_use_image 
+    + the_lmp_js_data.br_lmp_prev_settings_load_image 
+    + the_lmp_js_data.br_lmp_prev_settings_use_image 
+    + '</div>' ) );
     $(document).ready( function () {
-        $( the_lmp_js_data.load_img_class ).remove();
+        $( '.berocket_load_more_preload' ).remove();
         $( the_lmp_js_data.products ).find( the_lmp_js_data.item ).first().addClass('berocket_lmp_first_on_page').attr('data-url', location.href);
         var lmp_is_loading = false,
             lmp_loading_style;
