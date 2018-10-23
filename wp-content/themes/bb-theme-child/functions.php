@@ -4,6 +4,26 @@
 define( 'FL_CHILD_THEME_DIR', get_stylesheet_directory() );
 define( 'FL_CHILD_THEME_URL', get_stylesheet_directory_uri() );
 
+// Redirect to custom homepage upon login
+add_action('wp', 'add_login_check');
+function add_login_check()
+{
+    if ( is_user_logged_in() && is_page( [ 90, // login
+                                          //93, // lostpassword
+                                          //94, // resetpass
+                                          3987000 // home
+                                          ] ) ) {
+        wp_redirect('/hub');
+        exit;
+    }
+    
+    if ( !is_user_logged_in() && is_page( [30688888 // Random Disable
+                                          ] ) ) {
+        wp_redirect('/login');
+        exit;
+    }
+}
+
 
 // Subscribe to MC List upon new user registration
 add_action( 'user_register', 'registration_to_mc', 10, 1 );
@@ -134,6 +154,7 @@ function wpo_wcpdf_sort_by_name($a, $b) {
  */
 function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/login' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/terms/' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/my-account/' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/my-account/lost-password/' . $_SERVER['QUERY_STRING'] );
@@ -167,6 +188,7 @@ function my_forcelogin_bypass( $bypass ) {
     || is_page(153258) // SV2 Webinar
     || is_page(153145) // SV2 Offer
     || is_page(6740) // Training
+    || is_page(90) // Login
     ) {
     $bypass = true;
   }
