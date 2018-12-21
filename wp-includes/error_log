@@ -29,3 +29,16 @@ Stack trace:
 #0 {main}
   thrown in /home/thenewhu/public_html/wp-includes/locale.php on line 10
 [11-Sep-2018 16:25:08 UTC] PHP Fatal error:  Class 'Walker' not found in /home/thenewhu/public_html/wp-includes/class-walker-nav-menu.php on line 17
+[19-Nov-2018 19:25:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function is_robots() in /home/thenewhu/public_html/wp-includes/template-loader.php:28
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-includes/template-loader.php on line 28
+[20-Nov-2018 01:37:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function is_robots() in /home/thenewhu/public_html/wp-includes/template-loader.php:28
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-includes/template-loader.php on line 28
+[20-Nov-2018 06:12:00 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function is_robots() in /home/thenewhu/public_html/wp-includes/template-loader.php:28
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-includes/template-loader.php on line 28
+[14-Dec-2018 12:26:24 UTC] PHP Fatal error:  Class 'Walker' not found in /home/thenewhu/public_html/wp-includes/class-walker-nav-menu.php on line 17

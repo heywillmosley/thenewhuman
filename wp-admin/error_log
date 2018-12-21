@@ -1,2 +1,6 @@
 [29-Dec-2017 19:13:31 UTC] PHP Warning:  require(/home/thenewhu/public_html/wp-includes/load.php): failed to open stream: No such file or directory in /home/thenewhu/public_html/wp-settings.php on line 19
 [29-Dec-2017 19:13:31 UTC] PHP Fatal error:  require(): Failed opening required '/home/thenewhu/public_html/wp-includes/load.php' (include_path='.:/opt/cpanel/ea-php70/root/usr/share/pear') in /home/thenewhu/public_html/wp-settings.php on line 19
+[14-Dec-2018 12:26:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function _deprecated_file() in /home/thenewhu/public_html/wp-admin/admin-functions.php:12
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-admin/admin-functions.php on line 12

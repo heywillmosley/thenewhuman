@@ -161,6 +161,11 @@ function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/my-account/lost-password/?' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/my-account/customer-logout/' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/my-account/customer-logout/?' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/account/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/account/lost-password/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/account/lost-password/?' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/account/customer-logout/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/account/customer-logout/?' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/sv2-insight/' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/bionetics/' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/testimonials/' . $_SERVER['QUERY_STRING'] );
@@ -172,6 +177,7 @@ function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/training/' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/sv2-webinar/?' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/sv2-offer/?' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/new-user/?' . $_SERVER['QUERY_STRING'] );
   return $whitelist;
 }
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
@@ -189,6 +195,7 @@ function my_forcelogin_bypass( $bypass ) {
     || is_page(153145) // SV2 Offer
     || is_page(6740) // Training
     || is_page(90) // Login
+    || is_page(160607) // New User
     ) {
     $bypass = true;
   }

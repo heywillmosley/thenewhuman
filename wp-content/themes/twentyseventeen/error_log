@@ -62,3 +62,51 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php on line 13
+[24-Oct-2018 10:26:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function language_attributes() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/header.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/header.php on line 16
+[24-Oct-2018 10:47:16 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_template_part() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/footer.php:22
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/footer.php on line 22
+[24-Oct-2018 11:31:27 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_template_directory() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/functions.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/functions.php on line 16
+[24-Oct-2018 11:44:45 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/404.php on line 13
+[24-Oct-2018 11:55:12 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/front-page.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/front-page.php on line 15
+[24-Oct-2018 12:34:15 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function esc_attr() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/searchform.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/searchform.php on line 13
+[24-Oct-2018 12:36:02 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/archive.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/archive.php on line 13
+[29-Oct-2018 02:50:21 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/page.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/page.php on line 18
+[31-Oct-2018 20:23:02 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function is_active_sidebar() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/sidebar.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/sidebar.php on line 13
+[01-Nov-2018 20:10:37 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/search.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/search.php on line 13
+[02-Nov-2018 19:42:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function post_password_required() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/comments.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/comments.php on line 21
+[16-Nov-2018 07:17:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/page.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/thenewhu/public_html/wp-content/themes/twentyseventeen/page.php on line 18
