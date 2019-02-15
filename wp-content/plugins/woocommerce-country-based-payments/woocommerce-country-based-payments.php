@@ -1,23 +1,23 @@
 <?php
-/*
-Plugin Name: WooCommerce - Country Based Payments
-Plugin URI:  https://wordpress.org/plugins/woocommerce-country-based-payments/
-Description: Choose in which country certain payment gateway will be available
-Version:     1.1.8
-Author:      Ivan Paulin
-Author URI:  http://ivanpaulin.com
-License:     GPL2
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Domain Path: /languages
-Text Domain: wccbp
+/**
+ * Plugin Name: WooCommerce - Country Based Payments
+ * Plugin URI:  https://wordpress.org/plugins/woocommerce-country-based-payments/
+ * Description: Choose in which country certain payment gateway will be available
+ * Version:     1.2.2
+ * Author:      Ivan Paulin
+ * Author URI:  http://ivanpaulin.com
+ * License:     GPL2
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Domain Path: /languages
+ * Text Domain: wccbp
+ * WC requires at least: 3.4.0
+ * WC tested up to: 3.5.2
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// define text domain
-define('WCCBP_TEXT_DOMAIN', 'wccbp');
 
 
 class WoocommerceCountryBasedPayment {
@@ -30,9 +30,11 @@ class WoocommerceCountryBasedPayment {
     {
         $this->id = 'wccbp';
 
-        add_action('woocommerce_loaded', array($this, 'loadSettings'));
+        add_filter('woocommerce_get_settings_pages', array($this, 'loadSettings'), 16);
 
-        add_action('woocommerce_checkout_update_order_review', array($this, 'setSelectedCountry'), 10);
+		add_action('woocommerce_checkout_update_order_review', array($this, 'setSelectedCountry'), 10);
+		
+		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ) );
 
         // check if ajax request
         if(!is_admin() && (isset($_REQUEST['wc-ajax']) && 'update_order_review' == $_REQUEST['wc-ajax'])) {
@@ -43,7 +45,14 @@ class WoocommerceCountryBasedPayment {
         if( !is_admin() && isset( $_GET['pay_for_order'] ) &&  true == $_GET['pay_for_order'] ) {
             add_filter( 'woocommerce_available_payment_gateways', array( $this, 'available_payment_gateways_after_cancelation'), 10, 1 );
         }
-    }
+	}
+	
+	/**
+	 * Load textdomain
+	 */
+	public function load_plugin_textdomain() {
+		load_plugin_textdomain( 'wccbp', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+	}
 
 
     /**
@@ -51,7 +60,8 @@ class WoocommerceCountryBasedPayment {
      */
     public function loadSettings()
     {
-        new WCCBPSettings();
+        require 'includes/admin/WCCBPSettings.php';
+        return new WCCBPSettings();
     }
 
 
@@ -111,14 +121,59 @@ class WoocommerceCountryBasedPayment {
 /**
  * Check if WooCommerce is active
  **/
- if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
- 	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
- }
+if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+}
 
- if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
- 	// Plugin is activated
+if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+	// Plugin is activated
 
- 	require 'includes/admin/WCCBPSettings.php';
+	new WoocommerceCountryBasedPayment();
+}
 
- 	new WoocommerceCountryBasedPayment();
- }
+// Load Freemius SDK
+// Create a helper function for easy SDK access.
+function wcbp_fs() {
+    global $wcbp_fs;
+
+    if ( ! isset( $wcbp_fs ) ) {
+        // Include Freemius SDK.
+        require_once dirname(__FILE__) . '/includes/freemius/start.php';
+
+        $wcbp_fs = fs_dynamic_init( array(
+            'id'                  => '2788',
+            'slug'                => 'woocommerce-country-based-payments',
+            'type'                => 'plugin',
+            'public_key'          => 'pk_cbdb518bd47595e667e3992ea2e2f',
+            'is_premium'          => false,
+            'has_addons'          => false,
+            'has_paid_plans'      => false,
+            'menu'                => array(
+                'slug'           => 'wc-settings',
+                'override_exact' => true,
+                'account'        => false,
+                'contact'        => false,
+                'support'        => false,
+                'parent'         => array(
+                    'slug' => 'woocommerce',
+                ),
+            ),
+        ) );
+    }
+
+    return $wcbp_fs;
+}
+
+// Init Freemius.
+wcbp_fs();
+// Signal that SDK was initiated.
+do_action( 'wcbp_fs_loaded' );
+
+function wcbp_fs_settings_url() {
+    return admin_url( 'admin.php?page=wc-settings&tab=wccbp' );
+}
+
+wcbp_fs()->add_filter( 'connect_url', 'wcbp_fs_settings_url' );
+wcbp_fs()->add_filter( 'after_skip_url', 'wcbp_fs_settings_url' );
+wcbp_fs()->add_filter( 'after_connect_url', 'wcbp_fs_settings_url' );
+wcbp_fs()->add_filter( 'after_pending_connect_url', 'wcbp_fs_settings_url' );

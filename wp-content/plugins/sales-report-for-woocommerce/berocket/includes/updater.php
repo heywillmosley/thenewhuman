@@ -423,7 +423,6 @@ if ( ! class_exists( 'BeRocket_updater' ) ) {
             <style>
                 .toplevel_page_berocket_account .dashicons-before img {
                     max-width: 16px;
-                    max-height: 16px;
                 }
             </style>
             <?php

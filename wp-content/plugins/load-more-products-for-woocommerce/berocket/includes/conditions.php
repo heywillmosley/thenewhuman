@@ -97,6 +97,7 @@ if( ! class_exists('BeRocket_conditions') ) {
                 'condition_product_featured' => array('func' => 'check_condition_product_featured', 'type' => 'featured', 'name' => __('Featured', 'BeRocket_domain')),
                 'condition_product_shippingclass' => array('func' => 'check_condition_product_shippingclass', 'type' => 'shippingclass', 'name' => __('Shipping Class', 'BeRocket_domain')),
                 'condition_product_type' => array('func' => 'check_condition_product_type', 'type' => 'product_type', 'name' => __('Product Type', 'BeRocket_domain')),
+                'condition_product_rating' => array('func' => 'check_condition_product_rating', 'type' => 'product_rating', 'name' => __('Product Rating', 'BeRocket_domain')),
                 //PAGES
                 'condition_page_id' => array('func' => 'check_condition_page_id', 'type' => 'page_id', 'name' => __('Page ID', 'BeRocket_domain')),
                 'condition_page_woo_attribute' => array('func' => 'check_condition_page_woo_attribute', 'type' => 'woo_attribute', 'name' => __('Product Attribute', 'BeRocket_domain')),
@@ -214,6 +215,16 @@ if( ! class_exists('BeRocket_conditions') ) {
             foreach($product_types as $term_id => $term_name) {
                 $html .= '<option value="' . $term_id . '"' . ($options['product_type'] == $term_id ? ' selected' : '') . '>' . $term_name . '</option>';
             }
+            $html .= '</select>';
+            return $html;
+        }
+        public static function condition_product_rating($html, $name, $options) {
+            $def_options = array('has_rating' => '');
+            $options = array_merge($def_options, $options);
+            $html .= __('Has Rating:', 'BeRocket_domain');
+            $html .= '<select name="' . $name . '[has_rating]">';
+            $html .= '<option value=""' . ($options['has_rating'] == '' ? ' selected' : '') . '>' . __('Yes', 'BeRocket_domain') . '</option>';
+            $html .= '<option value="no"' . ($options['has_rating'] == 'no' ? ' selected' : '') . '>' . __('No', 'BeRocket_domain') . '</option>';
             $html .= '</select>';
             return $html;
         }
@@ -483,6 +494,13 @@ if( ! class_exists('BeRocket_conditions') ) {
             }
             return $show;
         }
+        public static function check_condition_product_rating($show, $condition, $additional) {
+            $show = ($additional['product']->get_average_rating() > 0);
+            if( $condition['has_rating'] == 'no' ) {
+                $show = ! $show;
+            }
+            return $show;
+        }
 
         public static function check_condition_product_price($show, $condition, $additional) {
             $product_price = br_wc_get_product_attr($additional['product'], 'price');
@@ -521,10 +539,10 @@ if( ! class_exists('BeRocket_conditions') ) {
                     if( in_array($term->term_id, $condition['category']) ) {
                         $show = true;
                     }
-                    if( ! empty($condition['subcats']) ) {
+                    if( ! empty($condition['subcats']) && ! $show ) {
                         foreach($condition['category'] as $category) {
                             $show = term_is_ancestor_of($category, $term->term_id, 'product_cat');
-                            if( $show_filters ) {
+                            if( $show ) {
                                 break;
                             }
                         }

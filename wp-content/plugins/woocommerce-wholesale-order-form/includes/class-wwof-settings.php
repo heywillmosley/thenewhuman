@@ -516,6 +516,13 @@ if ( ! class_exists( 'WWOF_Settings' ) ) {
                 ),
 
                 array(
+                    'name'      => __( 'Clean up plugin options on un-installation' , 'woocommerce-wholesale-prices-premium' ),
+                    'type'      => 'checkbox',
+                    'desc'      => __( 'If checked, removes all plugin options when this plugin is uninstalled. <b>Warning:</b> This process is irreversible.' , 'woocommerce-wholesale-prices-premium' ),
+                    'id'        => 'wwof_settings_help_clean_plugin_options_on_uninstall'
+                ),
+                
+                array(
                     'type'      =>  'sectionend',
                     'id'        =>  'wwof_help_sectionend'
                 )

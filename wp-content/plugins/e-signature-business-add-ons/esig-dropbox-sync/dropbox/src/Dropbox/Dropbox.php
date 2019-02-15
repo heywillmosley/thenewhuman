@@ -102,7 +102,8 @@ class Dropbox
         $config = array_merge([
             'http_client_handler' => null,
             'random_string_generator' => null,
-            'persistent_data_store' => null
+            'persistent_data_store' => null,
+            'random_string_generator'=> 'openssl'
         ], $config);
 
         //Set the app

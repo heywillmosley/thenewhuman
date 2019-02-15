@@ -377,6 +377,21 @@ jQuery( document ).ready( function( $ ) {
 
             product_stock_quantity_col.html( availability_html );
 
+            // Set product image variation ( product listings and modal view )
+            var img_placeholder = Options.product_image_placeholder,
+                img_src         = img_placeholder,
+                img_srcset      = img_placeholder;
+
+            if( new_variation.image[ 'srcset' ] != null && new_variation.image[ 'src' ] != null ) {
+                img_src     = new_variation.image[ 'src' ];
+                img_srcset  = new_variation.image[ 'srcset' ];
+            }
+            
+            $this.closest( 'tr' ).find( '.product_title_col .product_link > img' ).attr( 'src' , img_srcset );
+            $this.closest( 'tr' ).find( '.product_title_col .product_link > img' ).attr( 'srcset' , img_srcset );
+            $this.parents( '.wwof-popup-product-summary' ).siblings( '.wwof-popup-product-images' ).find( 'img' ).first().attr( 'src' , img_src );
+            $this.parents( '.wwof-popup-product-summary' ).siblings( '.wwof-popup-product-images' ).find( 'img' ).first().attr( 'srcset' , img_srcset );
+
             // Set min qty on qty input
             qty_field.prop( 'min', min_value );
             qty_field.val( input_value );

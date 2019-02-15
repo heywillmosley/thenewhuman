@@ -4,15 +4,7 @@
     var __                = wp.i18n.__; // The __() function for internationalization.
     var createElement     = wp.element.createElement; // The wp.element.createElement() function to create elements.
     var registerBlockType = wp.blocks.registerBlockType; // The registerBlockType() function to register blocks.
-	var InspectorControls = wp.editor.InspectorControls;
-	var Button = wp.components.Button;
-	var RichText = wp.editor.RichText;
-	var Editable = wp.blocks.Editable; // Editable component of React.
-	var MediaUpload = wp.editor.MediaUpload;
-	var btn = wp.components.Button;
-	var TextControl = wp.components.TextControl;
-	var SelectControl = wp.components.SelectControl;
-	var RadioControl = wp.components.RadioControl;
+	
 	
     var make_title_from_url = function(url) {
         var re = RegExp('/([^/]+?)(\\.pdf(\\?[^/]*)?)?$', 'i');
@@ -63,7 +55,17 @@
             edit: function( props ) {
 				
 				var {attributes , setAttributes, focus, className} = props;
-                			
+                	
+				var InspectorControls = wp.editor.InspectorControls;
+				var Button = wp.components.Button;
+				var RichText = wp.editor.RichText;
+				var Editable = wp.blocks.Editable; // Editable component of React.
+				var MediaUpload = wp.editor.MediaUpload;
+				var btn = wp.components.Button;
+				var TextControl = wp.components.TextControl;
+				var SelectControl = wp.components.SelectControl;
+				var RadioControl = wp.components.RadioControl;
+					
 				var onSelectPDF = function(media) {
                     return props.setAttributes({
                         url: media.url,

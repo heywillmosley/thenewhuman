@@ -171,3 +171,7 @@
 	border-color: #<?php echo FLBuilderColor::adjust_brightness( $settings->notice_bg_color, 25, 'darken' ); ?>;
 }
 <?php endif; ?>
+<?php $icons = ( ! apply_filters( 'fl_enable_fa5_pro', false ) ) ? 'Free' : 'Pro'; ?>
+.fl-node-<?php echo $id; ?> .tribe-bar-views-list a span:before {
+	font-family: "Font Awesome 5 <?php echo $icons; ?>";
+}

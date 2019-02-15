@@ -119,7 +119,7 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
                 return;
 
             $api = WP_E_Sig();
-
+           
             $documents_total = $api->document->getDocumentsTotal('awaiting');
             
             // get document list by status awaiting 
@@ -209,7 +209,7 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
             // setting invite templates 
             $invite_template = dirname(__FILE__) . "/view/invite.php";
 
-            $pageID = $api->setting->get_generic('default_display_page');
+            $pageID = WP_E_Sig()->setting->get_default_page();
 
             $invitation_id = $api->invite->getInviteID_By_userID_documentID($signer_id, $document_id);
             $invite_hash = $api->invite->getInviteHash($invitation_id);
@@ -339,7 +339,7 @@ if (!class_exists('ESIG_REMINDERS_Admin')) :
 
 
                 // getting page id 
-                $pageID = $api->setting->get_generic('default_display_page');
+                $pageID = WP_E_Sig()->setting->get_default_page();
 
                 $users = $api->user->getUserBy('user_email', $signer_email);
                 //echo $pageID;

@@ -2,14 +2,14 @@
 /**
  * @package   	      WP E-Signature Add Custom Message to Signature invite
  * @contributors	  Kevin Michael Gray (Approve Me), Abu Shoaib (Approve Me)
- *
  * @wordpress-plugin
  * Name:       WP E-Signature - Add Custom Message to Email
  * Plugin URI:        https://approveme.com/wp-digital-e-signature
  * Description:       Add Custom Message to Signature invitation email .
  * mini-description:  add custom message to your email
- * Version:           1.5.3.8
+ * Version:           1.5.4.0
  * Author:            Approve Me
+ * Documentation:     https://www.approveme.com/wp-digital-signature-plugin-docs/article/add-custom-message-email-feature/
  * Author URI:        https://approveme.com/
  */
 
@@ -22,7 +22,7 @@ if ( ! defined( 'WPINC' ) ) {
 if(class_exists( 'WP_E_Addon' ))
 {
 	$esign_addons= new WP_E_Addon();
-	$esign_addons->esign_update_check('7878','1.5.3.8');
+	$esign_addons->esign_update_check('7878','1.5.4.0');
 }
 
 require_once( dirname( __FILE__ ) . '/admin/esig-add-custom-message.php' );

@@ -108,7 +108,7 @@ final class BB_Logic_Editor_Beaver_Builder {
 			return $form;
 		}
 
-		$fields['visibility_display']['options']['logic'] = __( 'Conditional Logic', 'bb-logic' );
+		$fields['visibility_display']['options']['logic'] = __( 'Conditional Logic', 'fl-theme-builder' );
 
 		$fields['visibility_display']['toggle']['logic'] = array(
 			'fields' => array(
@@ -118,7 +118,7 @@ final class BB_Logic_Editor_Beaver_Builder {
 
 		$fields['visibility_logic'] = array(
 			'type'  => 'logic',
-			'label' => __( 'Conditional Logic Settings', 'bb-logic' ),
+			'label' => __( 'Conditional Logic Settings', 'fl-theme-builder' ),
 			'default' => array(),
 		);
 

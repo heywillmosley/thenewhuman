@@ -1,31 +1,31 @@
 <?php
 
-class FrmSigHooksController{
+class FrmSigHooksController {
 
 	public static function load_hooks() {
-		add_action( 'plugins_loaded', 'FrmSigAppController::load_lang' );
+		if ( ! FrmSigAppHelper::is_formidable_compatible() ) {
+			self::load_basic_admin_hooks();
+
+			return;
+		}
+
+		FrmSigAppController::load_lang();
 
 		add_filter( 'frm_pre_display_form', 'FrmSigAppController::register_scripts' );
-		add_action( 'wp_footer', 'FrmSigAppController::footer_js', 20 );
 
+		add_filter( 'frm_get_field_type_class', 'FrmSigAppController::get_signature_object_class', 10, 2 );
 		add_filter( 'frm_setup_new_fields_vars', 'FrmSigAppController::check_signature_fields', 20, 2 );
 		add_filter( 'frm_setup_edit_fields_vars', 'FrmSigAppController::check_signature_fields', 20, 3 );
-		add_action( 'frm_form_fields', 'FrmSigAppController::front_field', 10, 2 );
 
-		add_filter( 'frm_validate_field_entry', 'FrmSigAppController::validate', 9, 3 );
-		add_action( 'frm_after_create_entry', 'FrmSigAppController::maybe_create_signature_files', 10, 2 );
-
-		// Value in default-message
-		add_filter( 'frm_email_value', 'FrmSigAppController::email_value', 8, 2 );
+		// Value in frm-show-entry shortcode and entries tab
+		add_filter( 'frm_display_value_atts', 'FrmSigAppController::signature_display_atts', 10, 2 );
 
 		// Field ID shortcode
 		add_filter( 'frm_get_signature_display_value', 'FrmSigAppController::display_signature', 10, 3 );
 		add_filter( 'frmpro_fields_replace_shortcodes', 'FrmSigAppController::custom_display_signature', 10, 4 );
 
-		// Value in entries tab
-		add_filter( 'frm_display_value', 'FrmSigAppController::display_signature', 10, 3 );
-
 		add_filter( 'frm_csv_value', 'FrmSigAppController::csv_value', 10, 2 );
+		add_filter( 'frm_xml_field_export_value', 'FrmSigAppController::xml_value', 10, 2 );
 		add_filter( 'frm_graph_value', 'FrmSigAppController::graph_value', 10, 2 );
 
 		add_action( 'frm_before_destroy_entry', 'FrmSigAppController::delete_images' );
@@ -38,16 +38,21 @@ class FrmSigHooksController{
 			return;
 		}
 
-		add_action( 'admin_init', 'FrmSigAppController::include_updater', 1 );
-
-		add_action( 'admin_footer', 'FrmSigAppController::footer_js', 20 );
+		add_action( 'admin_init', 'FrmSigAppController::initialize', 0 );
 
 		add_filter( 'frm_available_fields', 'FrmSigAppController::maybe_add_field' );
-		add_filter( 'frm_before_field_created', 'FrmSigAppController::set_defaults' );
-
-		add_action( 'frm_display_added_fields', 'FrmSigAppController::admin_field' );
-		add_action( 'frm_field_options_form', 'FrmSigAppController::options_form', 10, 1 );
-		add_filter( 'frm_update_field_options', 'FrmSigAppController::update', 10, 3 );
 	}
 
+	/**
+	 * Load the basic admin hooks to allow updating and display notices
+	 *
+	 * @since 2.0
+	 */
+	private static function load_basic_admin_hooks() {
+		if ( is_admin() ) {
+			add_action( 'admin_init', 'FrmSigAppController::include_updater', 1 );
+			add_action( 'admin_notices', 'FrmSigAppController::display_admin_notices' );
+			add_action( 'after_plugin_row_formidable-signature/formidable-signature.php', 'FrmSigAppController::min_version_notice' );
+		}
+	}
 }

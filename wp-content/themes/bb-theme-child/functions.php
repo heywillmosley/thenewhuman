@@ -4,6 +4,27 @@
 define( 'FL_CHILD_THEME_DIR', get_stylesheet_directory() );
 define( 'FL_CHILD_THEME_URL', get_stylesheet_directory_uri() );
 
+#Store Apps create an extremely spammy popup on all order pages. Hotfix please. WM
+add_action('admin_head', 'storeapps_hotfix');
+
+function storeapps_hotfix() {
+  echo '<style>
+    .post-type-shop_order #TB_window, 
+    .post-type-shop_order #TB_overlay, 
+    .post-type-shop_order .ig_content, 
+    .post-type-product #TB_window, 
+    .post-type-product #TB_overlay, 
+    .post-type-product .ig_content {
+        display: none !important;
+        position: relative !important;
+    }
+    body.modal-open.post-type-shop_order,
+    body.modal-open.post-type-product {
+        overflow: visible !important;
+    }
+  </style>';
+}
+
 // Redirect to custom homepage upon login
 add_action('wp', 'add_login_check');
 function add_login_check()
@@ -178,6 +199,11 @@ function my_forcelogin_whitelist( $whitelist ) {
   $whitelist[] = site_url( '/sv2-webinar/?' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/sv2-offer/?' . $_SERVER['QUERY_STRING'] );
   $whitelist[] = site_url( '/new-user/?' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/p/' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/wp-activate.php' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/h' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/expensify.txt' . $_SERVER['QUERY_STRING'] );
+  $whitelist[] = site_url( '/sv2-webinar-2019' . $_SERVER['QUERY_STRING'] );
   return $whitelist;
 }
 add_filter('v_forcelogin_whitelist', 'my_forcelogin_whitelist', 10, 1);
@@ -196,6 +222,8 @@ function my_forcelogin_bypass( $bypass ) {
     || is_page(6740) // Training
     || is_page(90) // Login
     || is_page(160607) // New User
+    || is_page(167135) // Partner Home/Apply
+    || is_page(167822) // New Home Dev
     ) {
     $bypass = true;
   }

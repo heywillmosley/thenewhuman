@@ -68,8 +68,14 @@ final class FLThemeBuilderSupportBBTheme {
 				'hooks' => array(
 					'fl_before_post'         => __( 'Before Post', 'fl-theme-builder' ),
 					'fl_before_post_content' => __( 'Before Post Content', 'fl-theme-builder' ),
+					'fl_post_top_meta_open' => __( 'Post Top Meta Open', 'fl-theme-builder' ),
+					'fl_post_top_meta_close' => __( 'Post Top Meta Close', 'fl-theme-builder' ),
 					'fl_after_post_content'  => __( 'After Post Content', 'fl-theme-builder' ),
+					'fl_post_bottom_meta_open' => __( 'Post Bottom Meta Open', 'fl-theme-builder' ),
+					'fl_post_bottom_meta_close' => __( 'Post Bottom Meta Close', 'fl-theme-builder' ),
 					'fl_after_post'          => __( 'After Post', 'fl-theme-builder' ),
+					'fl_comments_open'          => __( 'Comments Open', 'fl-theme-builder' ),
+					'fl_comments_close'          => __( 'Comments Close', 'fl-theme-builder' ),
 				),
 			),
 		);

@@ -1,5 +1,24 @@
 # Redux Framework Changelog
 
+## 3.6.15
+* Fixed:    Redux API setSections would hang up when several sections with no ID share the same title.
+
+## 3.6.14
+* Fixed:    #3583:  Import failing when max_input_vars exceeded.  Function moved to ajax_save to avoid this issue.
+
+## 3.6.13
+* Skipping.  I'm superstitious! - kp
+
+## 3.6.12.2
+* Fixed:    #3586:  Database not saving properly in 'network' mode.  Thanks @Tofandel.
+* Fixed:    #3584:  Improved fox for #3580.  Thanks @Enchiridion.
+
+## 3.6.12.1
+* Fixed:    #3580 - 'tax_query' array in args for WordPress data arg throwing a string conversation error.
+
+## 3.6.12
+* Fixed:    #3577 - Added isset to REMOTE_ADDR check to prevent error.
+
 ## 3.6.11
 * Fixed:    #3561, #3562 - Not all selectors in async typography were properly formed, causing them not to render properly on screen.
 

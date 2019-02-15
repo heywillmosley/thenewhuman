@@ -219,7 +219,9 @@ if( !class_exists( 'ni_sales_report_addons' ) ) {
     <li><a href="https://wordpress.org/plugins/ni-woocommerce-invoice/"  class="ni_other_plugin_link" target="_blank">Ni WooCommerce Invoice</a>  </li>
     <li><a href="https://wordpress.org/plugins/ni-crm-lead/"  class="ni_other_plugin_link" target="_blank">Ni CRM Lead</a>  </li>
     <li><a href="https://wordpress.org/plugins/ni-woocommerce-order-delivery/"  class="ni_other_plugin_link" target="_blank">Ni WooCommerce Order Delivery</a>  </li>
-    <li><a href="https://wordpress.org/plugins/ni-woocommerce-stock/"  class="ni_other_plugin_link" target="_blank">Ni WooCommerce Stock</a>  </li>
+    <li><a href="https://wordpress.org/plugins/ni-woocommerce-stock/"  class="ni_other_plugin_link" target="_blank">Ni WooCommerce Stock</a>  </li>   
+    <li><a href="https://wordpress.org/plugins/ni-woocommerce-product-editor/"  class="ni_other_plugin_link" target="_blank">Ni WooCommerce Product Editor</a>  </li>
+    
 </ul>
                 </div>	    	    
         </div>	

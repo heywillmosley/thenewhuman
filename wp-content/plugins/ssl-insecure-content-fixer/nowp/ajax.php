@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable Generic.PHP.NoSilencedErrors.Discouraged
 
 // compute the path to the plugin's root folder
 $sslfix_plugin_root = dirname(dirname(__FILE__)) . '/';
@@ -266,6 +267,7 @@ function sslfix_send_error($msg) {
 function ssl_fix_hash_equals($a, $b) {
 	// check for native function and use it preferentially
 	if (function_exists('hash_equals')) {
+		// phpcs:ignore PHPCompatibility.FunctionUse.NewFunctions.hash_equalsFound
 		return hash_equals($a, $b);
 	}
 

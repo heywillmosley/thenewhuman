@@ -104,6 +104,11 @@ final class FLThemeBuilderWooCommerceArchive {
 			return;
 		}
 
+		// if custom layout then dont do these.
+		if ( 'custom' == $settings->post_layout ) {
+			return false;
+		}
+
 		// Open wrapper
 		if ( 'show' == $settings->woo_rating || 'show' == $settings->woo_price ) {
 			echo '<div class="woocommerce fl-post-module-woo-meta fl-post-grid-woo-meta">';
@@ -138,6 +143,11 @@ final class FLThemeBuilderWooCommerceArchive {
 		// Bail if no product
 		if ( ! $product ) {
 			return;
+		}
+
+		// if custom layout then dont do these.
+		if ( 'custom' == $settings->post_layout ) {
+			return false;
 		}
 
 		// Add to Cart Button

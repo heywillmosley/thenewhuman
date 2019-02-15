@@ -51,17 +51,17 @@ $productPrice               = $wholesale_prices->wwof_get_product_price( $produc
         <div class="product-price">
             <?php echo empty( $productPrice ) ? $product->get_price_html() : ''; ?>
         </div>
-        <p class="product-desc"><?php
+        <div class="product-desc"><?php
             echo do_shortcode( wpautop( $product_post_data->post_content ) );
             echo $product_listing->wwof_get_variations_description( $product ); ?>
-        </p><?php
+        </div><?php
 
         WWOF_Functions::wwof_get_product_category_list( $product ); ?>
 
         <table class="dummy-table" >
             <tr>
                 <td>
-                    <div class="product_meta_col" style="display: none !important;" data-product_variations="">
+                    <div class="product_meta_col" style="display: none !important;" data-product_variations="" >
                         <?php echo $product_listing->wwof_get_product_meta( $product ); ?>
                     </div>
                     <div class="product_title_col">

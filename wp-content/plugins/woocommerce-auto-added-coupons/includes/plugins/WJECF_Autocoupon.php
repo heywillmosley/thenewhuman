@@ -30,7 +30,7 @@ if ( defined( 'ABSPATH' ) && ! class_exists( 'WJECF_Autocoupon' ) ) {
 
 			//Update of auto-coupons is required after those actions:
 			add_action( 'woocommerce_checkout_update_order_review', array( $this, 'force_update_after_calculate' ) );
-			//add_action( 'woocommerce_check_cart_items',  array( $this, 'check_cart_coupons' ) , 0, 0 ); //Remove coupon before WC does it and shows a message.
+			add_action( 'woocommerce_check_cart_items', array( $this, 'action_woocommerce_check_cart_items' ), 0, 0 ); //Remove coupon before WC does it and shows a message.
 
 			//update auto-coupons before WC_Cart_Session::set_session() which has priority 10
 			add_action( 'woocommerce_after_calculate_totals', array( $this, 'maybe_update_matched_autocoupons' ), 5 );
@@ -100,14 +100,14 @@ if ( defined( 'ABSPATH' ) && ! class_exists( 'WJECF_Autocoupon' ) ) {
 		public function wjecf_admin_before_settings() {
 			$page = WJECF_Admin_Settings::SETTINGS_PAGE;
 
-			if ( WJECF()->is_pro() ) {
-				add_settings_section(
-					WJECF_Admin_Settings::DOM_PREFIX . 'section_autocoupon',
-					__( 'Auto coupons', 'woocommerce-jos-autocoupon' ),
-					array( $this, 'render_section' ),
-					$page
-				);
+			add_settings_section(
+				WJECF_Admin_Settings::DOM_PREFIX . 'section_autocoupon',
+				__( 'Auto coupons', 'woocommerce-jos-autocoupon' ),
+				array( $this, 'render_section' ),
+				$page
+			);
 
+			if ( WJECF()->is_pro() ) {
 				add_settings_field(
 					WJECF_Admin_Settings::DOM_PREFIX . 'autocoupon_allow_remove',
 					__( 'Allow remove \'Auto Coupons\'', 'woocommerce-jos-autocoupon' ),
@@ -692,9 +692,12 @@ if ( defined( 'ABSPATH' ) && ! class_exists( 'WJECF_Autocoupon' ) ) {
 		}
 
 		function force_update_after_calculate() {
-			//Invalidate the hash. On the cart/checkout page we want always want to update the auto coupons
-			//due to shipping / email / payment / other changes...
-			$this->known_situation_hash = 'FORCE!';
+			//Invalidate the hash
+			$this->known_situation_hash = '';
+		}
+
+		function action_woocommerce_check_cart_items() {
+			$this->remove_unmatched_autocoupons();
 		}
 
 		/**
@@ -790,10 +793,14 @@ if ( defined( 'ABSPATH' ) && ! class_exists( 'WJECF_Autocoupon' ) ) {
 		/**
 		 * Remove unmatched auto-coupons from the cart.
 		 *
-		 * @param array $valid_coupon_codes string[] The valid coupon codes.
+		 * @param array $valid_coupon_codes string[] Coupon codes that we know that are valid and don't need to be removed.
 		 * @return bool True if one or more coupons have been removed
 		 */
-		private function remove_unmatched_autocoupons( $valid_coupon_codes ) {
+		private function remove_unmatched_autocoupons( $valid_coupon_codes = null ) {
+			if ( is_null( $valid_coupon_codes ) ) {
+				$valid_coupon_codes = $this->get_valid_auto_coupon_codes();
+			}
+
 			//Remove invalids
 			$calc_needed = false;
 			foreach ( WC()->cart->get_applied_coupons() as $coupon_code ) {
@@ -857,6 +864,22 @@ if ( defined( 'ABSPATH' ) && ! class_exists( 'WJECF_Autocoupon' ) ) {
 			}
 
 			return WJECF()->coupon_combination_filter( $valid_auto_coupons );
+		}
+
+		/**
+		 * Get all auto-coupons that are valid for the current cart.
+		 *
+		 * @return string[]
+		 */
+		private function get_valid_auto_coupon_codes() {
+			//Get the coupons that should be in the cart
+			$valid_coupons = $this->get_valid_auto_coupons();
+
+			$valid_coupon_codes = array();
+			foreach ( $valid_coupons as $coupon ) {
+				$valid_coupon_codes[] = $coupon->get_code();
+			}
+			return $valid_coupon_codes;
 		}
 
 		/**

@@ -269,8 +269,24 @@ final class FLThemeBuilderLayoutData {
 			}
 
 			foreach ( $layouts as $layout_type => $layout_array ) {
-				$layouts[ $layout_type ] = FLThemeBuilderRulesLocation::get_posts_from_array( $layout_array, $layout_type );
-				$layouts[ $layout_type ] = FLThemeBuilderRulesUser::get_posts_from_array( $layouts[ $layout_type ] );
+				$layout_location_data = FLThemeBuilderRulesLocation::get_posts_from_array( $layout_array, $layout_type );
+
+				if ( empty( $layout_location_data ) ) {
+					unset( $layouts[ $layout_type ] );
+					continue;
+				}
+
+				$layouts[ $layout_type ] = $layout_location_data;
+
+				$layout_user_data = FLThemeBuilderRulesUser::get_posts_from_array( $layouts[ $layout_type ] );
+
+				if ( empty( $layout_user_data ) ) {
+					unset( $layouts[ $layout_type ] );
+					continue;
+				}
+
+				$layouts[ $layout_type ] = $layout_user_data;
+
 				uasort( $layouts[ $layout_type ], array( 'FLThemeBuilderLayoutData', 'order_layouts' ) );
 			}
 

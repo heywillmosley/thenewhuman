@@ -28,6 +28,11 @@ class Affiliate_WP_WPForms extends Affiliate_WP_Base {
 	 */
 	public function add_settings( $instance ) {
 
+		$options = array();
+		foreach( affiliate_wp()->referrals->types_registry->get_types() as $type_id => $type ) {
+			$options[ $type_id ] =  $type['label'];
+		}
+
 		//  Enable affiliate referral creation for this form
 		wpforms_panel_field(
 			'checkbox',
@@ -37,6 +42,16 @@ class Affiliate_WP_WPForms extends Affiliate_WP_Base {
 			__( 'Allow referrals', 'wpforms' )
 		);
 
+		wpforms_panel_field(
+			'select',
+			'settings',
+			'affwp_referral_type',
+			$instance->form_data,
+			__( 'Referral type', 'wpforms' ),
+			array(
+				'options' => $options
+			)
+		);
 	}
 
 	/**
@@ -62,26 +77,30 @@ class Affiliate_WP_WPForms extends Affiliate_WP_Base {
 			return;
 		}
 
-		$customer_email = '';
-
 		// get the customer email
 		foreach ( $fields as $field ) {
 			if ( $field['type'] === 'email' ) {
-				$customer_email = $field['value'];
+				$this->email = $field['value'];
 				break;
 			}
 		}
 
 		// Customers cannot refer themselves
-		if ( $this->is_affiliate_email( $customer_email, $affiliate_id ) ) {
+		if ( $this->is_affiliate_email( $this->email, $affiliate_id ) ) {
 
 			$this->log( 'Referral not created because affiliate\'s own account was used.' );
 
 			return;
 		}
 
+		$this->referral_type = isset( $form_data['settings']['affwp_referral_type'] ) ? $form_data['settings']['affwp_referral_type'] : 'sale';
+
 		// get referral total
-		$total          = wpforms_get_total_payment( $fields );
+		$total = 0;
+		if( function_exists( 'wpforms_get_total_payment' ) ) {
+			$total = wpforms_get_total_payment( $fields );
+		}
+
 		$referral_total = $this->calculate_referral_amount( $total, $entry_id );
 
 		// use form title as description
@@ -160,6 +179,6 @@ class Affiliate_WP_WPForms extends Affiliate_WP_Base {
 
 }
 
-if ( class_exists( 'WPForms' ) ) {
+if ( function_exists( 'wpforms' ) ) {
 	new Affiliate_WP_WPForms;
 }

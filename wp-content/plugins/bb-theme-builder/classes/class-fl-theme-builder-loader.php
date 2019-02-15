@@ -81,7 +81,7 @@ final class FLThemeBuilderLoader {
 	 * @return void
 	 */
 	static private function define_constants() {
-		define( 'FL_THEME_BUILDER_VERSION', '1.2.0.3' );
+		define( 'FL_THEME_BUILDER_VERSION', '1.2.1.1' );
 		define( 'FL_THEME_BUILDER_FILE', trailingslashit( dirname( dirname( __FILE__ ) ) ) . 'bb-theme-builder.php' );
 		define( 'FL_THEME_BUILDER_DIR', plugin_dir_path( FL_THEME_BUILDER_FILE ) );
 		define( 'FL_THEME_BUILDER_URL',plugins_url( '/', FL_THEME_BUILDER_FILE ) );

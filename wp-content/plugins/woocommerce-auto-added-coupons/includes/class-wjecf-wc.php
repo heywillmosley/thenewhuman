@@ -47,11 +47,20 @@ class WJECF_WC {
 	 */
 	public function cart_item_to_discount_item( $cart_item, $key = null ) {
 		$item           = new stdClass();
-		$item->key      = is_null( $key ) && isset( $cart_item['key'] ) ? $cart_item['key'] : $key; //Note: might yield null
 		$item->object   = $cart_item;
 		$item->product  = $cart_item['data'];
 		$item->quantity = $cart_item['quantity'];
 		$item->price    = $this->wc_add_number_precision_deep( $item->product->get_price() ) * $item->quantity;
+
+		if ( isset( $key ) ) {
+			$item->key = $key;
+		} else if ( isset( $cart_item['key'] ) ) {
+			$item->key = $cart_item['key'];
+		} else {
+			//For WC prior to 3.2.0: lookup the cart item key because $cart_item['key'] is not set
+			$item->key = array_search( $cart_item, WC()->cart->get_cart() );
+		}
+
 		return $item;
 	}
 

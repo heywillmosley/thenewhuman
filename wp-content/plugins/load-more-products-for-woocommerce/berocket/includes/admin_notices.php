@@ -752,10 +752,11 @@ if( ! class_exists( 'berocket_admin_notices' ) ) {
                     $plugins = array_unique($plugins);
                     $plugins = implode(',', $plugins);
                     update_option('berocket_email_subscribed', true);
-                    curl_setopt($ch, CURLOPT_URL,"http://berocket.com/main/subscribe");
+                    curl_setopt($ch, CURLOPT_URL,"https://berocket.com/main/subscribe");
                     curl_setopt($ch, CURLOPT_POST, 1);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, "email=" . sanitize_email($_POST['email']) . "&plugins=" . $plugins);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, "subs_email=" . sanitize_email($_POST['email']) . "&plugins=" . $plugins);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
                     echo curl_exec ($ch);
                     curl_close ($ch);
                 }

@@ -3,11 +3,11 @@
  * Plugin Name: WooCommerce Extended Coupon Features FREE
  * Plugin URI: http://www.soft79.nl
  * Description: Additional functionality for WooCommerce Coupons.
- * Version: 3.0.2
+ * Version: 3.0.5
  * Author: Soft79
  * License: GPL2
  * WC requires at least: 3.0.0
- * WC tested up to: 3.4.5
+ * WC tested up to: 3.5.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WJECF_VERSION' ) ) {
-	define( 'WJECF_VERSION', '3.0.2' );
+	define( 'WJECF_VERSION', '3.0.5' );
 }
 
 // NOTE: This file must be compatible with old PHP versions. All other files can be PHP 5.4+ .

@@ -71,6 +71,7 @@ if ( ! class_exists( 'BB_Logic_Plugin_Loader' ) ) {
 			self::load_file( 'core/classes/class-bb-logic-asset-loader.php' );
 			self::load_file( 'core/classes/class-bb-logic-rules.php' );
 			self::load_file( 'core/classes/class-bb-logic-shortcodes.php' );
+			self::load_file( 'core/classes/class-bb-logic-i18n.php' );
 
 			// REST
 			self::load_file( 'rest/classes/class-bb-logic-rest.php' );
@@ -190,7 +191,7 @@ if ( ! class_exists( 'BB_Logic_Plugin_Loader' ) ) {
 
 			if ( version_compare( phpversion(), '5.4', '<' ) ) {
 				$url   = 'http://www.wpupdatephp.com/contact-host/';
-				$error = sprintf( __( 'Beaver Logic requires PHP 5.4 or above. Please <a href="%s">update your PHP version</a> before continuing.', 'bb-logic' ), $url );
+				$error = sprintf( __( 'Beaver Logic requires PHP 5.4 or above. Please <a href="%s">update your PHP version</a> before continuing.', 'fl-theme-builder' ), $url );
 			}
 
 			return $error;

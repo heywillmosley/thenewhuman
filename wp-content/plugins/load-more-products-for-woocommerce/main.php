@@ -171,6 +171,8 @@ class BeRocket_LMP extends BeRocket_Framework {
                 'plugin_key'                => '',
             ),
             'custom_css' => '',
+            'fontawesome_frontend_disable'    => '',
+            'fontawesome_frontend_version'    => '',
             'script'     => array(
                 'js_page_load'      => '',
             ),
@@ -193,6 +195,7 @@ class BeRocket_LMP extends BeRocket_Framework {
             '40 Animation for Lazy Load images'
         );
 
+        $this->framework_data['fontawesome_frontend'] = true;
         parent::__construct( $this );
         
         $options = $this->get_option();
@@ -492,8 +495,6 @@ class BeRocket_LMP extends BeRocket_Framework {
         wp_enqueue_script( 'berocket_lmp_js', plugins_url( 'js/load_products.js', __FILE__ ), array( 'jquery' ), $this->info['version'] );
         wp_register_style( 'berocket_lmp_style', plugins_url( 'css/load_products.css', __FILE__ ), "", $this->info['version'] );
         wp_enqueue_style( 'berocket_lmp_style' );
-        wp_register_style( 'font-awesome', plugins_url( 'css/font-awesome.min.css', __FILE__ ) );
-        wp_enqueue_style( 'font-awesome' );
         $this->add_javascript_data();
     }
     
@@ -1085,6 +1086,24 @@ class BeRocket_LMP extends BeRocket_Framework {
                 ),
             ),
             'CSS'     => array(
+                'global_font_awesome_disable' => array(
+                    "label"     => __( 'Disable Font Awesome', "BeRocket_AJAX_domain" ),
+                    "type"      => "checkbox",
+                    "name"      => "fontawesome_frontend_disable",
+                    "value"     => '1',
+                    'label_for' => __('Don\'t loading css file for Font Awesome on site front end. Use it only if you doesn\'t uses Font Awesome icons in widgets or you have Font Awesome in your theme.', 'BeRocket_AJAX_domain'),
+                ),
+                'global_fontawesome_version' => array(
+                    "label"    => __( 'Font Awesome Version', "BeRocket_AJAX_domain" ),
+                    "name"     => "fontawesome_frontend_version",
+                    "type"     => "selectbox",
+                    "options"  => array(
+                        array('value' => '', 'text' => __('Font Awesome 4', 'BeRocket_AJAX_domain')),
+                        array('value' => 'fontawesome5', 'text' => __('Font Awesome 5', 'BeRocket_AJAX_domain')),
+                    ),
+                    "value"    => '',
+                    "label_for" => __('Version of Font Awesome that will be used on front end. Please select version that you have in your theme', 'BeRocket_AJAX_domain'),
+                ),
                 array(
                     "type"  => "textarea",
                     "label" => __( "Custom CSS", "BeRocket_LMP_domain" ),

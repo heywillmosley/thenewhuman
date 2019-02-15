@@ -70,13 +70,13 @@ class WC_Gateway_Stripe_Sepa extends WC_Stripe_Payment_Gateway {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->retry_interval       = 1;
-		$this->id                   = 'stripe_sepa';
-		$this->method_title         = __( 'Stripe SEPA Direct Debit', 'woocommerce-gateway-stripe' );
+		$this->retry_interval = 1;
+		$this->id             = 'stripe_sepa';
+		$this->method_title   = __( 'Stripe SEPA Direct Debit', 'woocommerce-gateway-stripe' );
 		/* translators: link */
-		$this->method_description   = sprintf( __( 'All other general Stripe settings can be adjusted <a href="%s">here</a>.', 'woocommerce-gateway-stripe' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stripe' ) );
-		$this->has_fields           = true;
-		$this->supports             = array(
+		$this->method_description = sprintf( __( 'All other general Stripe settings can be adjusted <a href="%s">here</a>.', 'woocommerce-gateway-stripe' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=stripe' ) );
+		$this->has_fields         = true;
+		$this->supports           = array(
 			'products',
 			'refunds',
 			'tokenization',
@@ -133,9 +133,12 @@ class WC_Gateway_Stripe_Sepa extends WC_Stripe_Payment_Gateway {
 	 * @return array
 	 */
 	public function get_supported_currency() {
-		return apply_filters( 'wc_stripe_sepa_supported_currencies', array(
-			'EUR',
-		) );
+		return apply_filters(
+			'wc_stripe_sepa_supported_currencies',
+			array(
+				'EUR',
+			)
+		);
 	}
 
 	/**
@@ -169,7 +172,7 @@ class WC_Gateway_Stripe_Sepa extends WC_Stripe_Payment_Gateway {
 
 		$icons_str = '';
 
-		$icons_str .= $icons['sepa'];
+		$icons_str .= isset( $icons['sepa'] ) ? $icons['sepa'] : '';
 
 		return apply_filters( 'woocommerce_gateway_icon', $icons_str, $this->id );
 	}
@@ -244,7 +247,8 @@ class WC_Gateway_Stripe_Sepa extends WC_Stripe_Payment_Gateway {
 	public function payment_fields() {
 		$total                = WC()->cart->total;
 		$display_tokenization = $this->supports( 'tokenization' ) && is_checkout() && $this->saved_cards;
-		$description          = ! empty( $this->get_description() ) ? $this->get_description() : '';
+		$description          = $this->get_description();
+		$description          = ! empty( $description ) ? $description : '';
 
 		// If paying from order, we need to get total from order not cart.
 		if ( isset( $_GET['pay_for_order'] ) && ! empty( $_GET['key'] ) ) {
@@ -280,6 +284,8 @@ class WC_Gateway_Stripe_Sepa extends WC_Stripe_Payment_Gateway {
 			$this->save_payment_method_checkbox();
 		}
 
+		do_action( 'wc_stripe_sepa_payment_fields', $this->id );
+
 		echo '</div>';
 	}
 
@@ -306,7 +312,7 @@ class WC_Gateway_Stripe_Sepa extends WC_Stripe_Payment_Gateway {
 			$create_account = ! empty( $_POST['createaccount'] ) ? true : false;
 
 			if ( $create_account ) {
-				$new_customer_id     = WC_Stripe_Helper::is_pre_30() ? $order->customer_user : $order->get_customer_id();
+				$new_customer_id     = WC_Stripe_Helper::is_wc_lt( '3.0' ) ? $order->customer_user : $order->get_customer_id();
 				$new_stripe_customer = new WC_Stripe_Customer( $new_customer_id );
 				$new_stripe_customer->create_customer();
 			}
@@ -330,7 +336,7 @@ class WC_Gateway_Stripe_Sepa extends WC_Stripe_Payment_Gateway {
 				if ( ! empty( $response->error ) ) {
 					// Customer param wrong? The user may have been deleted on stripe's end. Remove customer_id. Can be retried without.
 					if ( $this->is_no_such_customer_error( $response->error ) ) {
-						if ( WC_Stripe_Helper::is_pre_30() ) {
+						if ( WC_Stripe_Helper::is_wc_lt( '3.0' ) ) {
 							delete_user_meta( $order->customer_user, '_stripe_customer_id' );
 							delete_post_meta( $order_id, '_stripe_customer_id' );
 						} else {

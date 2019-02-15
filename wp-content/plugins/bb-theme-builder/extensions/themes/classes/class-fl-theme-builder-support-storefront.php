@@ -18,12 +18,14 @@ final class FLThemeBuilderSupportStorefront {
 		add_theme_support( 'fl-theme-builder-footers' );
 		add_theme_support( 'fl-theme-builder-parts' );
 
-		add_filter( 'fl_theme_builder_part_hooks', 		__CLASS__ . '::register_part_hooks' );
-		add_filter( 'theme_fl-theme-layout_templates',  __CLASS__ . '::register_php_templates' );
-		add_filter( 'body_class',                 		__CLASS__ . '::body_class' );
+		add_filter( 'fl_theme_builder_part_hooks',          __CLASS__ . '::register_part_hooks' );
+		add_filter( 'theme_fl-theme-layout_templates',      __CLASS__ . '::register_php_templates' );
+		add_filter( 'body_class',                           __CLASS__ . '::body_class' );
 
-		add_action( 'wp', 								__CLASS__ . '::setup_headers_and_footers' );
-		add_action( 'wp_enqueue_scripts',				__CLASS__ . '::enqueue_scripts' );
+		add_action( 'wp',                                   __CLASS__ . '::setup_headers_and_footers' );
+		add_action( 'wp_enqueue_scripts',                   __CLASS__ . '::enqueue_scripts' );
+		add_action( 'fl_builder_posts_module_before_posts', __CLASS__ . '::posts_module_before_posts', 8, 2 );
+		add_action( 'fl_builder_posts_module_after_posts',  __CLASS__ . '::posts_module_after_posts', 8, 2 );
 	}
 
 	/**
@@ -199,6 +201,31 @@ final class FLThemeBuilderSupportStorefront {
 
 		return $classes;
 	}
+
+	/**
+	 * Hook before the posts module.
+	 *
+	 * @since 1.2.1
+	 * @param array $settings
+	 * @return void
+	 */
+	static public function posts_module_before_posts( $settings, $query = null ) {
+		remove_action( 'woocommerce_before_shop_loop', 'storefront_woocommerce_pagination', 30 );
+	}
+
+	/**
+	 * Hook after the posts module.
+	 *
+	 * @since 1.2.1
+	 * @param array $settings
+	 * @return void
+	 */
+	static public function posts_module_after_posts( $settings, $query = null ) {
+		if ( is_object( $query ) && isset( $query->query_vars['post_type'] ) && 'product' == $query->query_vars['post_type'] ) {
+			remove_action( 'woocommerce_after_shop_loop', 'woocommerce_pagination', 30 );
+		}
+	}
+
 }
 
 FLThemeBuilderSupportStorefront::init();

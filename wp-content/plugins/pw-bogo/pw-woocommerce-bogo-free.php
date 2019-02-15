@@ -3,12 +3,13 @@
  * Plugin Name: PW WooCommerce BOGO Pro
  * Plugin URI: https://www.pimwick.com/pw-bogo/
  * Description: Makes Buy One, Get One promotions so easy!
- * Version: 2.76
+ * Version: 2.88
  * Author: Pimwick, LLC
  * Author URI: https://www.pimwick.com
+ * Text Domain: pw-woocommerce-bogo-free
  *
  * WC requires at least: 2.6.13
- * WC tested up to: 3.4.5
+ * WC tested up to: 3.5.2
  *
  * Copyright: © Pimwick, LLC
 */
@@ -37,7 +38,7 @@ final class PW_BOGO {
     }
 
     function plugins_loaded() {
-        load_plugin_textdomain( 'pimwick', false, basename( dirname( __FILE__ ) ) . '/languages' );
+        load_plugin_textdomain( 'pw-woocommerce-bogo-free', false, basename( dirname( __FILE__ ) ) . '/languages' );
     }
 
     function woocommerce_init() {
@@ -46,6 +47,8 @@ final class PW_BOGO {
         defined( 'PW_BOGO_LICENSE_OPTION_NAME' ) or define( 'PW_BOGO_LICENSE_OPTION_NAME', 'pw-bogo-license' );
         defined( 'PW_BOGO_REQUIRES_PRIVILEGE' ) or define( 'PW_BOGO_REQUIRES_PRIVILEGE', 'manage_woocommerce' );
         defined( 'PW_BOGO_DISCOUNT_PRICE_INCLUDES_TAX' ) or define( 'PW_BOGO_DISCOUNT_PRICE_INCLUDES_TAX', false );
+        defined( 'PW_BOGO_ALLOW_HIGHER_PRICED_DISCOUNTED_PRODUCTS' ) or define( 'PW_BOGO_ALLOW_HIGHER_PRICED_DISCOUNTED_PRODUCTS', true );
+        defined( 'PW_BOGO_ADJUST_PERCENTAGE_COUPONS' ) or define( 'PW_BOGO_ADJUST_PERCENTAGE_COUPONS', false );
 
         $this->use_coupons = boolval( get_option( 'pw_bogo_use_coupons', true ) );
 
@@ -84,6 +87,11 @@ final class PW_BOGO {
             add_filter( 'woocommerce_coupon_is_valid', array( $this, 'woocommerce_coupon_is_valid' ), 99, 2 );
             add_filter( 'woocommerce_cart_totals_coupon_label', array( $this, 'woocommerce_cart_totals_coupon_label' ), 10, 2 );
             add_action( 'woocommerce_applied_coupon', array( $this, 'woocommerce_applied_coupon' ), 99, 1 );
+            add_filter( 'woocommerce_apply_with_individual_use_coupon', array( $this, 'woocommerce_apply_with_individual_use_coupon' ), 10, 4 );
+
+            if ( PW_BOGO_ADJUST_PERCENTAGE_COUPONS ) {
+                add_filter( 'woocommerce_coupon_get_discount_amount', array( $this, 'woocommerce_coupon_get_discount_amount' ), 99, 5 );
+            }
 
             if ( $this->wc_min_version( '3.0' ) ) {
                 add_action( 'woocommerce_new_order_item', array( $this, 'woocommerce_new_order_item' ), 10, 3 );
@@ -102,36 +110,36 @@ final class PW_BOGO {
         }
 
         $labels = array(
-            'name'                  => _x( 'PW BOGO', 'Post Type General Name', 'pimwick' ),
-            'singular_name'         => _x( 'PW BOGO', 'Post Type Singular Name', 'pimwick' ),
-            'menu_name'             => __( 'PW BOGO', 'pimwick' ),
-            'name_admin_bar'        => __( 'PW BOGO', 'pimwick' ),
-            'archives'              => __( 'PW BOGO Archives', 'pimwick' ),
-            'parent_item_colon'     => __( 'Parent PW BOGO:', 'pimwick' ),
-            'all_items'             => __( 'PW BOGO', 'pimwick' ),
-            'add_new_item'          => __( 'Add New PW BOGO', 'pimwick' ),
-            'add_new'               => __( 'Create New PW BOGO', 'pimwick' ),
-            'new_item'              => __( 'New PW BOGO', 'pimwick' ),
-            'edit_item'             => __( 'Edit PW BOGO', 'pimwick' ),
-            'update_item'           => __( 'Update PW BOGO', 'pimwick' ),
-            'view_item'             => __( 'View PW BOGO', 'pimwick' ),
-            'search_items'          => __( 'Search PW BOGO', 'pimwick' ),
-            'not_found'             => __( 'Not found', 'pimwick' ),
-            'not_found_in_trash'    => __( 'Not found in Trash', 'pimwick' ),
-            'featured_image'        => __( 'PW BOGO Logo', 'pimwick' ),
-            'set_featured_image'    => __( 'Set PW BOGO Logo', 'pimwick' ),
-            'remove_featured_image' => __( 'Remove PW BOGO Logo', 'pimwick' ),
-            'use_featured_image'    => __( 'Use as PW BOGO Logo', 'pimwick' ),
-            'insert_into_item'      => __( 'Insert into item', 'pimwick' ),
-            'uploaded_to_this_item' => __( 'Uploaded to this item', 'pimwick' ),
-            'items_list'            => __( 'PW BOGO list', 'pimwick' ),
-            'items_list_navigation' => __( 'PW BOGO list navigation', 'pimwick' ),
-            'filter_items_list'     => __( 'Filter PW BOGO list', 'pimwick' ),
+            'name'                  => _x( 'PW BOGO', 'Post Type General Name', 'pw-woocommerce-bogo-free' ),
+            'singular_name'         => _x( 'PW BOGO', 'Post Type Singular Name', 'pw-woocommerce-bogo-free' ),
+            'menu_name'             => __( 'PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'name_admin_bar'        => __( 'PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'archives'              => __( 'PW BOGO Archives', 'pw-woocommerce-bogo-free' ),
+            'parent_item_colon'     => __( 'Parent PW BOGO:', 'pw-woocommerce-bogo-free' ),
+            'all_items'             => __( 'PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'add_new_item'          => __( 'Add New PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'add_new'               => __( 'Create New PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'new_item'              => __( 'New PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'edit_item'             => __( 'Edit PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'update_item'           => __( 'Update PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'view_item'             => __( 'View PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'search_items'          => __( 'Search PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'not_found'             => __( 'Not found', 'pw-woocommerce-bogo-free' ),
+            'not_found_in_trash'    => __( 'Not found in Trash', 'pw-woocommerce-bogo-free' ),
+            'featured_image'        => __( 'PW BOGO Logo', 'pw-woocommerce-bogo-free' ),
+            'set_featured_image'    => __( 'Set PW BOGO Logo', 'pw-woocommerce-bogo-free' ),
+            'remove_featured_image' => __( 'Remove PW BOGO Logo', 'pw-woocommerce-bogo-free' ),
+            'use_featured_image'    => __( 'Use as PW BOGO Logo', 'pw-woocommerce-bogo-free' ),
+            'insert_into_item'      => __( 'Insert into item', 'pw-woocommerce-bogo-free' ),
+            'uploaded_to_this_item' => __( 'Uploaded to this item', 'pw-woocommerce-bogo-free' ),
+            'items_list'            => __( 'PW BOGO list', 'pw-woocommerce-bogo-free' ),
+            'items_list_navigation' => __( 'PW BOGO list navigation', 'pw-woocommerce-bogo-free' ),
+            'filter_items_list'     => __( 'Filter PW BOGO list', 'pw-woocommerce-bogo-free' ),
         );
 
         $args = array(
-            'label'                 => __( 'PW BOGO', 'pimwick' ),
-            'description'           => __( 'PW BOGO', 'pimwick' ),
+            'label'                 => __( 'PW BOGO', 'pw-woocommerce-bogo-free' ),
+            'description'           => __( 'PW BOGO', 'pw-woocommerce-bogo-free' ),
             'labels'                => $labels,
             'supports'              => array( 'title' ),
             'show_ui'               => true,
@@ -156,16 +164,16 @@ final class PW_BOGO {
 
         require( 'ui/meta-boxes.php' );
 
-        add_meta_box( 'pw-bogo-about', __( 'About', 'pimwick' ), 'PW_BOGO_Meta_Boxes::about', 'pw_bogo', 'side', 'default' );
+        add_meta_box( 'pw-bogo-about', __( 'About', 'pw-woocommerce-bogo-free' ), 'PW_BOGO_Meta_Boxes::about', 'pw_bogo', 'side', 'default' );
 
         if ( $pimwick_license->premium() ) {
-            add_meta_box( 'pw-bogo-discount', __( 'Discount', 'pimwick' ), 'PW_BOGO_Meta_Boxes::discount', 'pw_bogo', 'normal', 'default' );
-            add_meta_box( 'pw-bogo-products', __( 'Eligible Products', 'pimwick' ), 'PW_BOGO_Meta_Boxes::products', 'pw_bogo', 'normal', 'default' );
-            add_meta_box( 'pw-bogo-discounted-products', __( 'Discounted Products', 'pimwick' ), 'PW_BOGO_Meta_Boxes::discounted_products', 'pw_bogo', 'normal', 'default' );
-            add_meta_box( 'pw-bogo-dates', __( 'Dates', 'pimwick' ), 'PW_BOGO_Meta_Boxes::dates', 'pw_bogo', 'normal', 'default' );
-            add_meta_box( 'pw-bogo-restrictions', __( 'Restrictions', 'pimwick' ), 'PW_BOGO_Meta_Boxes::restrictions', 'pw_bogo', 'normal', 'default' );
+            add_meta_box( 'pw-bogo-discount', __( 'Discount', 'pw-woocommerce-bogo-free' ), 'PW_BOGO_Meta_Boxes::discount', 'pw_bogo', 'normal', 'default' );
+            add_meta_box( 'pw-bogo-products', __( 'Eligible Products', 'pw-woocommerce-bogo-free' ), 'PW_BOGO_Meta_Boxes::products', 'pw_bogo', 'normal', 'default' );
+            add_meta_box( 'pw-bogo-discounted-products', __( 'Discounted Products', 'pw-woocommerce-bogo-free' ), 'PW_BOGO_Meta_Boxes::discounted_products', 'pw_bogo', 'normal', 'default' );
+            add_meta_box( 'pw-bogo-dates', __( 'Dates', 'pw-woocommerce-bogo-free' ), 'PW_BOGO_Meta_Boxes::dates', 'pw_bogo', 'normal', 'default' );
+            add_meta_box( 'pw-bogo-restrictions', __( 'Restrictions', 'pw-woocommerce-bogo-free' ), 'PW_BOGO_Meta_Boxes::restrictions', 'pw_bogo', 'normal', 'default' );
         } else {
-            add_meta_box( 'pw-bogo-activation', __( 'Activation Required', 'pimwick' ), 'PW_BOGO_Meta_Boxes::activation', 'pw_bogo', 'normal', 'default' );
+            add_meta_box( 'pw-bogo-activation', __( 'Activation Required', 'pw-woocommerce-bogo-free' ), 'PW_BOGO_Meta_Boxes::activation', 'pw_bogo', 'normal', 'default' );
 
         }
     }
@@ -173,8 +181,8 @@ final class PW_BOGO {
     function admin_menu() {
         if ( empty ( $GLOBALS['admin_page_hooks']['pimwick'] ) ) {
             add_menu_page(
-                __( 'PW BOGO', 'pimwick' ),
-                __( 'Pimwick Plugins', 'pimwick' ),
+                __( 'PW BOGO', 'pw-woocommerce-bogo-free' ),
+                __( 'Pimwick Plugins', 'pw-woocommerce-bogo-free' ),
                 PW_BOGO_REQUIRES_PRIVILEGE,
                 'pimwick',
                 '',
@@ -184,21 +192,21 @@ final class PW_BOGO {
 
             add_submenu_page(
                 'pimwick',
-                __( 'PW BOGO', 'pimwick' ),
-                __( 'Pimwick Plugins', 'pimwick' ),
+                __( 'PW BOGO', 'pw-woocommerce-bogo-free' ),
+                __( 'Pimwick Plugins', 'pw-woocommerce-bogo-free' ),
                 PW_BOGO_REQUIRES_PRIVILEGE,
                 'pimwick',
                 ''
             );
 
-            remove_submenu_page('pimwick','pimwick');
+            remove_submenu_page( 'pimwick', 'pimwick' );
         }
 
-        remove_submenu_page( 'pimwick','pimwick-plugins' );
+        remove_submenu_page( 'pimwick', 'pimwick-plugins' );
         add_submenu_page(
             'pimwick',
-            __( 'Pimwick Plugins', 'pimwick' ),
-            __( 'Our Plugins', 'pimwick' ),
+            __( 'Pimwick Plugins', 'pw-woocommerce-bogo-free' ),
+            __( 'Our Plugins', 'pw-woocommerce-bogo-free' ),
             PW_BOGO_REQUIRES_PRIVILEGE,
             'pimwick-plugins',
             array( $this, 'other_plugins_page' )
@@ -243,10 +251,10 @@ final class PW_BOGO {
     function edit_pw_bogo_columns( $gallery_columns ) {
         $new_columns['cb'] = '<input type="checkbox" />';
 
-        $new_columns['title'] = _x( 'Name', 'pimwick' );
-        $new_columns['type'] = __( 'Buy One, Get One', 'pimwick' );
-        $new_columns['begin_date'] = __( 'Begin Date', 'pimwick' );
-        $new_columns['end_date'] = __( 'End Date', 'pimwick' );
+        $new_columns['title'] = _x( 'Name', 'pw-woocommerce-bogo-free' );
+        $new_columns['type'] = __( 'Buy One, Get One', 'pw-woocommerce-bogo-free' );
+        $new_columns['begin_date'] = __( 'Begin Date', 'pw-woocommerce-bogo-free' );
+        $new_columns['end_date'] = __( 'End Date', 'pw-woocommerce-bogo-free' );
 
         return $new_columns;
     }
@@ -258,10 +266,10 @@ final class PW_BOGO {
             case 'type':
                 $type = $post->type;
                 if ( 'free' === $type || empty( $type )) {
-                    echo __( 'Free', 'pimwick' );
+                    echo __( 'Free', 'pw-woocommerce-bogo-free' );
                 } else {
                     $percentage = $post->percentage;
-                    echo $percentage . __( '% off', 'pimwick' );
+                    echo $percentage . __( '% off', 'pw-woocommerce-bogo-free' );
                 }
             break;
 
@@ -344,6 +352,7 @@ final class PW_BOGO {
         $coupon_code                            = isset( $_POST['coupon_code'] ) ? wc_clean( trim( $_POST['coupon_code'] ) ) : '';
         $free_shipping                          = isset( $_POST['free_shipping'] ) ? 'yes' : 'no';
         $individual_use                         = isset( $_POST['individual_use'] ) ? 'yes' : 'no';
+        $apply_with_individual_use_coupons      = isset( $_POST['apply_with_individual_use_coupons'] ) ? 'yes' : 'no';
         $exclude_sale_items                     = isset( $_POST['exclude_sale_items'] ) ? 'yes' : 'no';
 
         update_post_meta( $post_id, 'type', $type );
@@ -376,6 +385,7 @@ final class PW_BOGO {
         update_post_meta( $post_id, 'coupon_code', $coupon_code );
         update_post_meta( $post_id, 'free_shipping', $free_shipping );
         update_post_meta( $post_id, 'individual_use', $individual_use );
+        update_post_meta( $post_id, 'apply_with_individual_use_coupons', $apply_with_individual_use_coupons );
         update_post_meta( $post_id, 'exclude_sale_items', $exclude_sale_items );
     }
 
@@ -412,7 +422,7 @@ final class PW_BOGO {
         $already_applied_cart_items = array();
 
         foreach ( $this->get_active_bogos() as $bogo ) {
-            $considered_for_bogo = $already_applied_cart_items;
+            $considered_for_bogo = apply_filters( 'pw_bogo_already_applied_cart_items', $already_applied_cart_items );
             $bogo_percentage = !empty( $bogo->percentage ) ? $bogo->percentage : 100;
             $percentage = $bogo_percentage / 100;
             $discount_limit = absint( $bogo->discount_limit );
@@ -453,6 +463,20 @@ final class PW_BOGO {
             foreach ( $cart_items_asc as $ci ) {
                 if ( $this->is_cart_item_valid_for_bogo( $ci['cart_item'], $bogo, true ) ) {
                     $discounted_items[ $ci['key'] ] = $ci['cart_item'];
+                }
+            }
+
+            if ( false === PW_BOGO_ALLOW_HIGHER_PRICED_DISCOUNTED_PRODUCTS ) {
+                $highest_price = 0;
+                foreach ( $eligible_items as $ci ) {
+                    $highest_price = max( $highest_price, $this->get_product_price( $ci['data'] ) );
+                }
+
+                foreach ( $discounted_items as $discounted_item_key => $discounted_item ) {
+                    $price = $this->get_product_price( $discounted_item['data'] );
+                    if ( $price > $highest_price ) {
+                        unset( $discounted_items[ $discounted_item_key ] );
+                    }
                 }
             }
 
@@ -517,28 +541,7 @@ final class PW_BOGO {
                         break;
                     }
 
-                    $price = 0;
-                    if ( function_exists( 'wc_get_price_excluding_tax' ) && function_exists( 'wc_get_price_including_tax' ) ) {
-                        $product = $discounted_cart_item['data'];
-
-                        if ( PW_BOGO_DISCOUNT_PRICE_INCLUDES_TAX === true ) {
-                            $product_price = wc_get_price_excluding_tax( $product );
-
-                        } else {
-                            if ( 'incl' === $cart->tax_display_cart ) {
-                                $product_price = wc_get_price_including_tax( $product );
-                            } else {
-                                $product_price = wc_get_price_excluding_tax( $product );
-                            }
-                        }
-
-                        $price = apply_filters( 'woocommerce_cart_product_price', $product_price, $product );
-                    }
-
-                    // Old way of getting price.
-                    if ( empty( $price ) ) {
-                        $price = $discounted_cart_item['data']->get_price();
-                    }
+                    $price = $this->get_product_price( $discounted_cart_item['data'] );
 
                     if ( !empty( $bogo->type ) && $bogo->type != 'free' ) {
                         $discount += $price * $percentage;
@@ -563,6 +566,31 @@ final class PW_BOGO {
         }
 
         return $discounts;
+    }
+
+    function get_product_price( $product ) {
+        $price = 0;
+
+        if ( function_exists( 'wc_get_price_excluding_tax' ) && function_exists( 'wc_get_price_including_tax' ) ) {
+            if ( PW_BOGO_DISCOUNT_PRICE_INCLUDES_TAX === true ) {
+                $product_price = wc_get_price_excluding_tax( $product );
+            } else {
+                if ( 'incl' === WC()->cart->tax_display_cart ) {
+                    $product_price = wc_get_price_including_tax( $product );
+                } else {
+                    $product_price = wc_get_price_excluding_tax( $product );
+                }
+            }
+
+            $price = apply_filters( 'woocommerce_cart_product_price', $product_price, $product );
+        }
+
+        // Old way of getting price.
+        if ( empty( $price ) ) {
+            $price = $product->get_price();
+        }
+
+        return $price;
     }
 
     function woocommerce_cart_contents_total( $cart_contents_total ) {
@@ -612,6 +640,36 @@ final class PW_BOGO {
         add_action( 'woocommerce_applied_coupon', array( $this, 'woocommerce_applied_coupon' ), 99, 1 );
     }
 
+    function woocommerce_apply_with_individual_use_coupon( $apply, $the_coupon, $coupon, $applied_coupons ) {
+        if ( false === $apply && $this->wc_min_version( '3.0' ) ) {
+            $active_bogos = $this->get_active_bogos( true );
+            foreach ( $active_bogos as $bogo ) {
+                if ( $this->is_bogo_coupon( $the_coupon->get_code(), $bogo ) ) {
+                    if ( 'yes' === $bogo->apply_with_individual_use_coupons ) {
+                        $apply = true;
+                    }
+                    break;
+                }
+            }
+        }
+
+        return $apply;
+    }
+
+    function woocommerce_coupon_get_discount_amount( $discount_amount, $discounting_amount, $cart_item, $single, $coupon ) {
+        if ( $coupon->is_type( array( 'percent' ) ) ) {
+            foreach ( WC()->cart->get_applied_coupons() as $applied_coupon ) {
+                if ( $this->is_bogo_coupon( $applied_coupon ) ) {
+                    $discounting_amount -= WC()->cart->get_coupon_discount_amount( $applied_coupon, WC()->cart->display_cart_ex_tax );
+                }
+            }
+
+            return (float) $coupon->get_amount() * ( $discounting_amount / 100 );
+        }
+
+        return $discount_amount;
+    }
+
     function woocommerce_coupon_is_valid( $valid_for_cart, $coupon ) {
         // Fix for interfering plugins such as WooCommerce Coupon Schedule.
         if ( !$valid_for_cart ) {
@@ -643,6 +701,11 @@ final class PW_BOGO {
         $prefix = '';
         if ( true === $discounted && 'yes' !== $bogo->ignore_discounted_products ) {
             $prefix = 'discounted_';
+        }
+
+        // WPC Product Bundles for WooCommerce - This later may become configuration option.
+        if ( isset( $cart_item['woosb_parent_id'] ) && !empty( $cart_item['woosb_parent_id'] ) ) {
+            return false;
         }
 
         // Exclude any on-sale items, if we need to.
@@ -714,11 +777,11 @@ final class PW_BOGO {
         if ( is_numeric( $bogo ) ) {
             $bogo = get_post( absint( $bogo ) );
             if ( !$bogo || $bogo->post_type != 'pw_bogo' ) {
-                wp_die( __( 'Invalid bogo parameter for get_bogo().', 'pimwick' ) );
+                wp_die( __( 'Invalid bogo parameter for get_bogo().', 'pw-woocommerce-bogo-free' ) );
             }
 
         } elseif ( !$bogo instanceof WP_Post ) {
-            wp_die( sprintf( __( '%s is not a valid type for get_bogo().', 'pimwick' ), gettype( $bogo ) ) );
+            wp_die( sprintf( __( '%s is not a valid type for get_bogo().', 'pw-woocommerce-bogo-free' ), gettype( $bogo ) ) );
         }
 
         return $bogo;
@@ -730,6 +793,7 @@ final class PW_BOGO {
 
             $all_bogos = get_posts( array(
                 'posts_per_page' => -1,
+                'nopaging' => true,
                 'post_type' => 'pw_bogo',
                 'post_status' => 'publish'
             ) );
@@ -900,7 +964,7 @@ final class PW_BOGO {
             if ( is_a( $order_item, 'WC_Order_Item_Coupon' ) && isset( $order_item['item_meta']['pw_bogo_id'] ) ) {
                 $bogo_id = is_array( $order_item['item_meta']['pw_bogo_id'] ) ? $order_item['item_meta']['pw_bogo_id'][0] : $order_item['item_meta']['pw_bogo_id'];
                 $bogo = get_post( absint( $bogo_id ) );
-                $order_item['name'] = sprintf( __( 'PW BOGO: %s', 'pimwick' ), $bogo->post_title );
+                $order_item['name'] = sprintf( __( 'PW BOGO: %s', 'pw-woocommerce-bogo-free' ), $bogo->post_title );
             }
         }
         return $items;
@@ -932,6 +996,7 @@ final class PW_BOGO {
                 }
 
                 if ( $subtotal < $buy_limit ) {
+                    $this->maybe_add_discounted_item( $cart, $bogo, 0, 0 );
                     continue;
                 }
             }
@@ -974,6 +1039,8 @@ final class PW_BOGO {
         $buy_limit = !empty( $bogo->buy_limit ) ? $bogo->buy_limit : 1;
         $get_limit = !empty( $bogo->get_limit ) ? $bogo->get_limit : 1;
         $discount_limit = absint( $bogo->discount_limit );
+        $identical_products_only = ( 'yes' === $bogo->identical_products_only );
+        $identical_variations_only = ( 'yes' === $bogo->identical_variations_only );
 
         // Expand the list of cart items, one element per quantity.
         $cart_items = $this->flatten_cart( $cart, $identical_product_id, $identical_variation_id );
@@ -985,8 +1052,15 @@ final class PW_BOGO {
         usort( $cart_items_asc, function( $a, $b ) { return ( floatval( $a['price'] ) < floatval( $b['price'] ) ) ? -1 : 1; } );
 
         $eligible_items = array();
+        // For calculation purposes, add the Eligible-only items first.
         foreach ( $cart_items_desc as $ci ) {
-            if ( $this->is_cart_item_valid_for_bogo( $ci['cart_item'], $bogo ) ) {
+            if ( $this->is_cart_item_valid_for_bogo( $ci['cart_item'], $bogo ) && ! $this->is_cart_item_valid_for_bogo( $ci['cart_item'], $bogo, true ) ) {
+                $eligible_items[ $ci['key'] ] = $ci['cart_item'];
+            }
+        }
+        // Now add the Discounted + Eligible items.
+        foreach ( $cart_items_desc as $ci ) {
+            if ( $this->is_cart_item_valid_for_bogo( $ci['cart_item'], $bogo ) && $this->is_cart_item_valid_for_bogo( $ci['cart_item'], $bogo, true ) ) {
                 $eligible_items[ $ci['key'] ] = $ci['cart_item'];
             }
         }
@@ -998,7 +1072,7 @@ final class PW_BOGO {
             }
         }
 
-        $quantity_to_add = 0;
+        $products_to_add = array();
         $discount_iterations = 0;
         $processed_eligible_item_keys = array();
 
@@ -1072,15 +1146,19 @@ final class PW_BOGO {
                         }
 
                     } else {
-                        $quantity_to_add++;
+                        $products_to_add[] = $eligible_item;
                     }
                 }
             }
         }
 
-        if ( $quantity_to_add > 0 ) {
+        if ( count( $products_to_add ) > 0 ) {
+            if ( 'yes' === $bogo->ignore_discounted_products ) {
+                $auto_add_product_ids = array_filter( array_map( 'absint', explode( ',', $bogo->product_ids ) ) );
+            } else {
+                $auto_add_product_ids = array_filter( array_map( 'absint', explode( ',', $bogo->discounted_product_ids ) ) );
+            }
 
-            $auto_add_product_ids = array_filter( array_map( 'absint', explode( ',', $bogo->discounted_product_ids ) ) );
             if ( empty( $auto_add_product_ids ) ) {
 
                 foreach ( $cart_items_asc as $ci ) {
@@ -1093,8 +1171,16 @@ final class PW_BOGO {
             }
 
             if ( count( $auto_add_product_ids ) > 0 ) {
-                for ( $x = 0; $x < $quantity_to_add; $x++ ) {
+                foreach ( $products_to_add as $x => $eligible_item ) {
+                    if ( ! isset( $auto_add_product_ids[ $x ] ) ) {
+                        continue;
+                    }
+
                     $product_id = $auto_add_product_ids[ $x ];
+                    if ( $identical_products_only && $this->is_cart_item_valid_for_bogo( $eligible_item, $bogo, true ) ) {
+                        $product_id = $eligible_item['product_id'];
+                    }
+
                     $variation_id = 0;
                     $variation_attributes = array();
 
@@ -1287,13 +1373,12 @@ final class PW_BOGO {
                 continue;
             }
 
-            for ( $i = 0; $i < $cart_item['quantity']; $i++ ) {
+            if ( empty( $cart_item['data'] ) || !is_a( $cart_item['data'], 'WC_Product' ) ) {
+                continue;
+            }
 
-                if ( !empty( $cart_item['data'] ) ) {
-                    $price = $cart_item['data']->get_price();
-                } else {
-                    $price = 0;
-                }
+            for ( $i = 0; $i < $cart_item['quantity']; $i++ ) {
+                $price = $cart_item['data']->get_price();
 
                 $cart_items[] = array(
                     'key'       => $cart_item_index . '_' . $i,
@@ -1307,7 +1392,8 @@ final class PW_BOGO {
     }
 }
 
-new PW_BOGO();
+global $pw_bogo;
+$pw_bogo = new PW_BOGO();
 
 endif;
 

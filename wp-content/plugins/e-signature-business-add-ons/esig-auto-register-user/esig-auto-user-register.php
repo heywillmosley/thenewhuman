@@ -3,13 +3,12 @@
 /**
  * @package   	      Wordpress User Registration after Signing Add-On
  * @contributors      Kevin Michael Gray (Approve Me), Abu Shoaib (Approve Me), Arafat Rahman (Approve Me)
- *
  * @wordpress-plugin
  * Name:       Wordpress User Registration after Signing Add-On
  * URI:        https://approveme.com/wp-digital-e-signature
  * Description:       Automatically creates a WP user account when a document is signed, based on the signer's email address.
  * mini-description  register a signer as a WordPress user after they sign your document
- * Version:           1.5.3.8
+ * Version:           1.5.4.0
  * Author:            Approve Me
  * Author URI:        https://approveme.com/
  * Documentation:     http://aprv.me/1YnDjVe
@@ -24,7 +23,7 @@ if (!defined('WPINC')) {
 
 if (class_exists('WP_E_Addon')) {
     $esign_addons = new WP_E_Addon();
-    $esign_addons->esign_update_check('23715', '1.5.3.8');
+    $esign_addons->esign_update_check('23715', '1.5.4.0');
 }
 
 

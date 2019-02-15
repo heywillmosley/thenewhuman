@@ -7,7 +7,8 @@ class ReportFunction{
 		}
 		function get_request($request, $default = NULL)
 		{
-			$v = $_REQUEST[$request];
+			//$v = $_REQUEST[$request];
+			$v = isset($_REQUEST[$request]) ? $_REQUEST[$request] : $default;
 			$r = isset($v) ? $v : $default;
 		 return $r;
 		}
@@ -177,6 +178,10 @@ class ReportFunction{
 			return $row;
 			
 		}
+		
+		
+		
+		
 		/*End Dashbaord function*/
 	}
 }

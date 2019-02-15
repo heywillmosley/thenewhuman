@@ -274,4 +274,21 @@ final class FLPageDataSite {
 
 		return $user;
 	}
+
+	/**
+	 * @since 1.2.1
+	 */
+	static public function is_user_logged_in( $settings ) {
+
+		if ( '' == $settings->role ) {
+			return is_user_logged_in();
+		}
+
+		$roles      = array_map( 'trim', explode( ',', $settings->role ) );
+		$user       = wp_get_current_user();
+		$user_roles = (array) $user->roles;
+		$result     = array_intersect( $roles, $user_roles );
+
+		return ( ! empty( $result ) ) ? true : false;
+	}
 }

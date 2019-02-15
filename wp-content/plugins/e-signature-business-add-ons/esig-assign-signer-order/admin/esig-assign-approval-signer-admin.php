@@ -235,7 +235,7 @@ if (!class_exists('ESIG_ASSIGN_APPROVAL_SIGNER_Admin')) :
 
             //$Hash = $api->invite->getInviteHash($document_id);
             // getting e-siganture default page . 
-            $pageID = $api->setting->get_generic('default_display_page');
+            $pageID = WP_E_Sig()->setting->get_default_page();
             // preparing redirect link 
             $siteURL = add_query_arg(array('invite' => $args['invitation']->invite_hash, 'csum' => $api->document->document_checksum_by_id($document_id)), get_permalink($pageID));
             //if (!ESIG_URL_Admin::is_url_exists($old_doc_id)) {

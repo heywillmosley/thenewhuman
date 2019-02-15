@@ -35,6 +35,12 @@ final class FLThemeBuildeEDDArchive {
 	 * @return void
 	 */
 	static public function post_grid_before_content( $settings ) {
+
+		// if custom layout then dont do these.
+		if ( 'custom' == $settings->post_layout ) {
+			return false;
+		}
+
 		if ( 'show' == $settings->edd_price ) {
 			echo '<div class="edd fl-post-module-edd-meta fl-post-grid-edd-meta">';
 			echo FLPageData::get_value( 'post', 'edd_product_price' );
@@ -51,6 +57,12 @@ final class FLThemeBuildeEDDArchive {
 	 * @return void
 	 */
 	static public function post_grid_after_content( $settings ) {
+
+		// if custom layout then dont do these.
+		if ( 'custom' == $settings->post_layout ) {
+			return false;
+		}
+
 		if ( 'show' == $settings->edd_button ) {
 			echo '<div class="edd fl-post-module-edd-button fl-post-grid-edd-button">';
 

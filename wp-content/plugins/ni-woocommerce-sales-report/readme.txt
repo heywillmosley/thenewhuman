@@ -2,19 +2,19 @@
 Contributors: anzia
 Tags:sales,report, product, print, export, sales report, order report, product report, woocommerce, search
 Requires at least: 4.4
-Tested up to:4.9.8
-Stable tag: 3.2.3
+Tested up to:5.0.1
+Stable tag: 3.2.7
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
 WC requires at least: 3.0.0
-WC tested up to:3.4.5
+WC tested up to:3.5.2
 
 
 Enhance WooCommerce sales report beautifully and provide complete solutions for WooCommerce reporting.
 
 == Description ==
 <p>
-Ni WooCommerce sales report provide sales key indicators, order product sales report, category report and many WooCommerce sales report add-ons.
+WooCommerce sales report provide sales key indicators, order product sales report, category report and many WooCommerce sales report add-ons.
 </p>
 <p>
 Order product sales report provide order details, customer product details and order details. Order product details include product name, product quantity product total, product discount, product price and many more product information. Customer product details showing customer first name, billing email address and billing country. Order information include order number, order status, order total, order product tax, order line total and etc.
@@ -59,6 +59,14 @@ Order product sales report provide order details, customer product details and o
 	<li>Order Status Report in tabular or Pie Chart</li>
 	<li>Payemnt gateway report in tabular or Pie Chart</li>
 </ul>
+</p>
+<p>
+<strong>Top product summary report</strong>
+<ul>
+	<li>Today Top Product</li>
+	<li>Yesterday Top Product</li>
+	<li>Last 7 Days Top Product</li>
+</ul>	
 </p>
 
 
@@ -118,7 +126,7 @@ Order product sales report provide order details, customer product details and o
 
 1. Use the WordPress plugin installer or upload files to WordPress plugin directory.
 2. Activate "Ni WooCommerce Sales Report" plugin from admin panel.
-3. Admin Menu Name "Sales Report". 
+3. Admin Menu Name "Ni Sales Report". 
 
 == Frequently Asked Questions ==
 
@@ -143,6 +151,19 @@ Yes, as per requirement we can customize this plugin.
 
 
 == Changelog ==
+
+= version 3.2.7 -17-December-2018 =
+* Tested: Compatible With WooCommerce 3.5.2
+* Tested: Compatible With WordPress 5.0.1
+
+= version 3.2.6 -11-November-2018 =
+* Tested: Compatible With WooCommerce 3.5.1
+
+= version 3.2.5 -12-October-2018 =
+* Tested: Compatible With WooCommerce 3.4.6
+
+= version 3.2.4 -07-October-2018 =
+* Tested: Updated hook
 
 = version 3.2.3 -08-September-2018 =
 * Tested: Compatible With WooCommerce 3.4.5

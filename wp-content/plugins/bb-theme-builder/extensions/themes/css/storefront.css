@@ -42,28 +42,32 @@ body.single-product.fl-theme-builder-singular .fl-module-fl-woo-product-price p.
 }
 
 /* Column Layouts */
-.fl-module-woocommerce .woocommerce[class*="columns-"] ul.products li.product {
-	margin-right: 3.8%;
+@media (min-width: 768px) {
+
+	.fl-module-woocommerce .woocommerce[class*="columns-"] ul.products li.product {
+		margin-right: 3.8%;
+		margin-left: 0px;
 }
 .fl-module-woocommerce .woocommerce.columns-1 li.product {
-	width: 100% !important;
+	width: 100%;
 	margin-right: 0 !important;
 }
 .fl-module-woocommerce .woocommerce.columns-2 li.product {
-	width: 48% !important;
+	width: 48%;
 }
 .fl-module-woocommerce .woocommerce.columns-3 li.product {
-	width: 30.75% !important;
+	width: 30.75%;
 }
 .fl-module-woocommerce .woocommerce.columns-4 li.product {
-	width: 22.05% !important;
+	width: 22.05%;
 }
 .fl-module-woocommerce .woocommerce.columns-5 li.product {
-	width: 16.95% !important;
+	width: 16.95%;
 }
 .fl-module-woocommerce .woocommerce.columns-6 li.product {
-	width: 13.5% !important;
+	width: 13.5%;
 }
 .fl-module-woocommerce .woocommerce.columns-4 li.product.last {
 	clear: right;
+	}
 }

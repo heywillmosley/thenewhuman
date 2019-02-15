@@ -99,7 +99,7 @@ final class FLThemeBuilderWPML {
 				}
 
 				// Unset this post if it's language isn't the current language.
-				if ( $current_lang !== $wpml_post_lang ) {
+				if ( $current_lang !== $wpml_post_lang && ! is_null( $wpml_post_lang ) ) {
 					unset( $layouts[ $type ][ $key ] );
 				}
 			}

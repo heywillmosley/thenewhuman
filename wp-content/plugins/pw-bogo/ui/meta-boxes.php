@@ -77,7 +77,7 @@ class PW_BOGO_Meta_Boxes {
         if ( PW_BOGO::wc_min_version( '2.7' ) ) {
             // Product ids
             ?>
-            <p class="form-field"><label><?php _e( 'Products (leave blank if BOGO is available for all products)', 'pimwick' ); ?></label><br>
+            <p class="form-field"><label><?php _e( 'Products (leave blank if BOGO is available for all products)', 'pw-woocommerce-bogo-free' ); ?></label><br>
             <select class="wc-product-search" multiple="multiple" style="width: 50%;" name="product_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations">
                 <?php
                     $product_ids = array_filter( array_map( 'absint', explode( ',', get_post_meta( $post->ID, 'product_ids', true ) ) ) );
@@ -94,7 +94,7 @@ class PW_BOGO_Meta_Boxes {
 
             // Exclude Product ids
             ?>
-            <p class="form-field"><label><?php _e( 'Exclude products', 'pimwick' ); ?></label><br>
+            <p class="form-field"><label><?php _e( 'Exclude products', 'pw-woocommerce-bogo-free' ); ?></label><br>
             <select class="wc-product-search" multiple="multiple" style="width: 50%;" name="exclude_product_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations">
                 <?php
                     $product_ids = array_filter( array_map( 'absint', explode( ',', get_post_meta( $post->ID, 'exclude_product_ids', true ) ) ) );
@@ -111,7 +111,7 @@ class PW_BOGO_Meta_Boxes {
         } else {
             // Product ids
             ?>
-            <p class="form-field"><label><?php _e( 'Specific Products (leave blank if BOGO is available for all products)', 'pimwick' ); ?></label>
+            <p class="form-field"><label><?php _e( 'Specific Products (leave blank if BOGO is available for all products)', 'pw-woocommerce-bogo-free' ); ?></label>
             <input type="hidden" class="wc-product-search" data-multiple="true" style="width: 50%;" name="product_ids" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations" data-selected="<?php
                 $product_ids = array_filter( array_map( 'absint', explode( ',', get_post_meta( $post->ID, 'product_ids', true ) ) ) );
                 $json_ids    = array();
@@ -129,7 +129,7 @@ class PW_BOGO_Meta_Boxes {
 
             // Exclude Product ids
             ?>
-            <p class="form-field"><label><?php _e( 'Exclude products', 'pimwick' ); ?></label>
+            <p class="form-field"><label><?php _e( 'Exclude products', 'pw-woocommerce-bogo-free' ); ?></label>
             <input type="hidden" class="wc-product-search" data-multiple="true" style="width: 50%;" name="exclude_product_ids" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations" data-selected="<?php
                 $product_ids = array_filter( array_map( 'absint', explode( ',', get_post_meta( $post->ID, 'exclude_product_ids', true ) ) ) );
                 $json_ids    = array();
@@ -191,7 +191,7 @@ class PW_BOGO_Meta_Boxes {
             'id' => 'pw-bogo-ignore-discounted-products',
             'name' => 'ignore_discounted_products',
             'value' => $ignore_discounted_products,
-            'label' => __( 'Same as Eligible Products ', 'pimwick' )
+            'label' => __( 'Same as Eligible Products ', 'pw-woocommerce-bogo-free' )
         ) );
 
         $hidden = ( 'yes' === $ignore_discounted_products ) ? 'style="display: none;"' : '';
@@ -200,8 +200,8 @@ class PW_BOGO_Meta_Boxes {
         if ( PW_BOGO::wc_min_version( '2.7' ) ) {
             // Product ids
             ?>
-            <p class="form-field"><label><?php _e( 'Specific Products (leave blank if discount can apply to any product)', 'pimwick' ); ?></label><br>
-            <select class="wc-product-search" multiple="multiple" style="width: 50%;" name="discounted_product_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'pimwick' ); ?>" data-action="woocommerce_json_search_products_and_variations">
+            <p class="form-field"><label><?php _e( 'Specific Products (leave blank if discount can apply to any product)', 'pw-woocommerce-bogo-free' ); ?></label><br>
+            <select class="wc-product-search" multiple="multiple" style="width: 50%;" name="discounted_product_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'pw-woocommerce-bogo-free' ); ?>" data-action="woocommerce_json_search_products_and_variations">
                 <?php
                     $product_ids = array_filter( array_map( 'absint', explode( ',', get_post_meta( $post->ID, 'discounted_product_ids', true ) ) ) );
 
@@ -217,7 +217,7 @@ class PW_BOGO_Meta_Boxes {
 
             // Exclude Product ids
             ?>
-            <p class="form-field"><label><?php _e( 'Exclude products', 'pimwick' ); ?></label><br>
+            <p class="form-field"><label><?php _e( 'Exclude products', 'pw-woocommerce-bogo-free' ); ?></label><br>
             <select class="wc-product-search" multiple="multiple" style="width: 50%;" name="discounted_exclude_product_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations">
                 <?php
                     $product_ids = array_filter( array_map( 'absint', explode( ',', get_post_meta( $post->ID, 'discounted_exclude_product_ids', true ) ) ) );
@@ -234,7 +234,7 @@ class PW_BOGO_Meta_Boxes {
         } else {
             // Product ids
             ?>
-            <p class="form-field"><label><?php _e( 'Products (leave blank if BOGO is available for all products)', 'pimwick' ); ?></label>
+            <p class="form-field"><label><?php _e( 'Products (leave blank if BOGO is available for all products)', 'pw-woocommerce-bogo-free' ); ?></label>
             <input type="hidden" class="wc-product-search" data-multiple="true" style="width: 50%;" name="discounted_product_ids" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations" data-selected="<?php
                 $product_ids = array_filter( array_map( 'absint', explode( ',', get_post_meta( $post->ID, 'discounted_product_ids', true ) ) ) );
                 $json_ids    = array();
@@ -252,7 +252,7 @@ class PW_BOGO_Meta_Boxes {
 
             // Exclude Product ids
             ?>
-            <p class="form-field"><label><?php _e( 'Exclude products', 'pimwick' ); ?></label>
+            <p class="form-field"><label><?php _e( 'Exclude products', 'pw-woocommerce-bogo-free' ); ?></label>
             <input type="hidden" class="wc-product-search" data-multiple="true" style="width: 50%;" name="discounted_exclude_product_ids" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations" data-selected="<?php
                 $product_ids = array_filter( array_map( 'absint', explode( ',', get_post_meta( $post->ID, 'discounted_exclude_product_ids', true ) ) ) );
                 $json_ids    = array();
@@ -311,8 +311,8 @@ class PW_BOGO_Meta_Boxes {
             'id' => 'pw-bogo-auto-add-discounted-products',
             'name' => 'auto_add_discounted_products',
             'value' => $auto_add_discounted_products,
-            'label' => __( 'Automatically add discounted product(s) to the cart ', 'pimwick' ),
-            'description' => __( '<br>Check this box if you would like the Discounted Products to be automatically added to the cart when the criteria is met.', 'pimwick' )
+            'label' => __( 'Automatically add discounted product(s) to the cart ', 'pw-woocommerce-bogo-free' ),
+            'description' => __( '<br>Check this box if you would like the Discounted Products to be automatically added to the cart when the criteria is met.', 'pw-woocommerce-bogo-free' )
         ) );
 
         // Restrict discounted quantity
@@ -323,8 +323,8 @@ class PW_BOGO_Meta_Boxes {
             'id' => 'pw-bogo-restrict-discount-quantity',
             'name' => 'restrict_discount_quantity',
             'value' => $restrict_discount_quantity,
-            'label' => __( 'Restrict discounted product quantity ', 'pimwick' ),
-            'description' => __( '<br>Forces the quantity of the discounted products to match the deal. Will not allow the customer to purchase the discounted products at regular price.', 'pimwick' )
+            'label' => __( 'Restrict discounted product quantity ', 'pw-woocommerce-bogo-free' ),
+            'description' => __( '<br>Forces the quantity of the discounted products to match the deal. Will not allow the customer to purchase the discounted products at regular price.', 'pw-woocommerce-bogo-free' )
         ) );
         echo '</div>';
 
@@ -333,7 +333,7 @@ class PW_BOGO_Meta_Boxes {
             'id' => 'pw-bogo-identical-products-only',
             'name' => 'identical_products_only',
             'value' => $identical_products_only,
-            'label' => __( 'Only discount identical products ', 'pimwick' ),
+            'label' => __( 'Only discount identical products ', 'pw-woocommerce-bogo-free' ),
             'description' => '<a href="#" id="pw-bogo-identical-products-help-link">What\'s this?</a>'
         ) );
 
@@ -344,7 +344,7 @@ class PW_BOGO_Meta_Boxes {
             'id' => 'pw-bogo-identical-variations-only',
             'name' => 'identical_variations_only',
             'value' => $identical_variations_only,
-            'label' => __( 'Only discount identical variations ', 'pimwick' )
+            'label' => __( 'Only discount identical variations ', 'pw-woocommerce-bogo-free' )
         ) );
         echo '</div>';
 
@@ -432,7 +432,7 @@ class PW_BOGO_Meta_Boxes {
             'id' => 'pw-bogo-begin-date',
             'name' => 'begin_date',
             'value' => $begin_date,
-            'label' => __( 'Begin date<br>', 'pimwick' ) . ' ',
+            'label' => __( 'Begin date<br>', 'pw-woocommerce-bogo-free' ) . ' ',
             'placeholder' => _x( 'YYYY-MM-DD', 'placeholder', 'woocommerce' ),
             'description' => '',
             'class' => 'date-picker',
@@ -444,7 +444,7 @@ class PW_BOGO_Meta_Boxes {
             'id' => 'pw-bogo-end-date',
             'name' => 'end_date',
             'value' => $end_date,
-            'label' => __( 'End date<br>', 'pimwick' ) . ' ',
+            'label' => __( 'End date<br>', 'pw-woocommerce-bogo-free' ) . ' ',
             'placeholder' => _x( 'YYYY-MM-DD', 'placeholder', 'woocommerce' ),
             'description' => '',
             'class' => 'date-picker',
@@ -460,11 +460,11 @@ class PW_BOGO_Meta_Boxes {
         woocommerce_wp_text_input( array(
             'id' => 'pw-bogo-discount-limit',
             'name' => 'discount_limit',
-            'label' => __( 'Per Order Limit - The number of times this deal can be applied, per order. Leave blank or 0 for no limit.<br>', 'pimwick' ),
+            'label' => __( 'Per Order Limit - The number of times this deal can be applied, per order. Leave blank or 0 for no limit.<br>', 'pw-woocommerce-bogo-free' ),
             'value' => $discount_limit,
             'type' => 'number',
             'custom_attributes' => array( 'min' => '0' ),
-            'description' => __( '<br>For example: a BOGO deal has a limit of 2 and there are 10 items in the cart. Only the first 4 items participate in the BOGO, resulting in 2 free items.', 'pimwick' ),
+            'description' => __( '<br>For example: a BOGO deal has a limit of 2 and there are 10 items in the cart. Only the first 4 items participate in the BOGO, resulting in 2 free items.', 'pw-woocommerce-bogo-free' ),
             'class' => 'pw-bogo-limit-field'
         ) );
 
@@ -474,7 +474,7 @@ class PW_BOGO_Meta_Boxes {
             woocommerce_wp_text_input( array(
                 'id' => 'pw-bogo-redemption-limit',
                 'name' => 'redemption_limit',
-                'label' => __( 'Redemption Limit - The number of times this deal can be used for all customers. Leave blank or 0 for no limit.<br>', 'pimwick' ),
+                'label' => __( 'Redemption Limit - The number of times this deal can be used for all customers. Leave blank or 0 for no limit.<br>', 'pw-woocommerce-bogo-free' ),
                 'value' => $redemption_limit,
                 'type' => 'number',
                 'custom_attributes' => array( 'min' => '0' ),
@@ -486,7 +486,7 @@ class PW_BOGO_Meta_Boxes {
             woocommerce_wp_text_input( array(
                 'id' => 'pw-bogo-redemption-count',
                 'name' => 'redemption_count',
-                'label' => __( 'Redemption Counter - The number of times this deal has been used. You can manually reset the counter using this field.<br>', 'pimwick' ),
+                'label' => __( 'Redemption Counter - The number of times this deal has been used. You can manually reset the counter using this field.<br>', 'pw-woocommerce-bogo-free' ),
                 'value' => $redemption_count,
                 'type' => 'number',
                 'custom_attributes' => array( 'min' => '0' ),
@@ -501,7 +501,7 @@ class PW_BOGO_Meta_Boxes {
                 'id' => 'pw-bogo-coupon-code',
                 'name' => 'coupon_code',
                 'value' => $coupon_code,
-                'label' => __( 'Coupon Code<br>', 'pimwick' ) . ' ',
+                'label' => __( 'Coupon Code<br>', 'pw-woocommerce-bogo-free' ) . ' ',
                 'description' => '<br>If a coupon code is required to activate the BOGO, enter it here. The coupon does not have to exist already.'
             ) );
 
@@ -512,7 +512,7 @@ class PW_BOGO_Meta_Boxes {
                 'name' => 'free_shipping',
                 'value' => $free_shipping,
                 'label' => __( 'Allow free shipping ', 'woocommerce' ),
-                'description' => sprintf( __( '<br>Check this box if the BOGO deal grants free shipping. A <a href="%s" target="_blank">free shipping method</a> must be enabled in your shipping zone and be set to require "a valid free shipping coupon" (see the "Free Shipping Requires" setting).', 'pimwick' ), 'https://docs.woocommerce.com/document/free-shipping/' )
+                'description' => sprintf( __( '<br>Check this box if the BOGO deal grants free shipping. A <a href="%s" target="_blank">free shipping method</a> must be enabled in your shipping zone and be set to require "a valid free shipping coupon" (see the "Free Shipping Requires" setting).', 'pw-woocommerce-bogo-free' ), 'https://docs.woocommerce.com/document/free-shipping/' )
             ) );
 
             // Individual use
@@ -522,7 +522,17 @@ class PW_BOGO_Meta_Boxes {
                 'name' => 'individual_use',
                 'value' => $individual_use,
                 'label' => __( 'No other coupons allowed ', 'woocommerce' ),
-                'description' => __( '<br>Check this box if other coupons are not allowed for BOGO items.', 'pimwick' )
+                'description' => __( '<br>Check this box if other coupons are not allowed for BOGO items.', 'pw-woocommerce-bogo-free' )
+            ) );
+
+            // Apply with Individual Use coupons.
+            $apply_with_individual_use_coupons = get_post_meta( $post->ID, 'apply_with_individual_use_coupons', true );
+            woocommerce_wp_checkbox( array(
+                'id' => 'pw-bogo-apply-with-individual-use-coupons',
+                'name' => 'apply_with_individual_use_coupons',
+                'value' => $apply_with_individual_use_coupons,
+                'label' => __( 'Allow with other Individual Use coupons ', 'woocommerce' ),
+                'description' => __( '<br>Check this box if this BOGO can be used in conjunction with other coupons that are marked "Individual Use".', 'pw-woocommerce-bogo-free' )
             ) );
         }
 
@@ -533,7 +543,7 @@ class PW_BOGO_Meta_Boxes {
             'name' => 'exclude_sale_items',
             'value' => $exclude_sale_items,
             'label' => __( 'Exclude sale items ', 'woocommerce' ),
-            'description' => __( '<br>Check this box if the BOGO deal should not apply to items on sale.', 'pimwick' ) )
+            'description' => __( '<br>Check this box if the BOGO deal should not apply to items on sale.', 'pw-woocommerce-bogo-free' ) )
         );
 
         echo '</div>';
@@ -545,18 +555,6 @@ class PW_BOGO_Meta_Boxes {
         <span class="pw-bogo-version">v<?php echo PW_BOGO::version(); ?></span>
 
         <div>by <a href="https://www.pimwick.com" target="_blank" class="pw-bogo-link">Pimwick, LLC</a></div>
-
-        <div style="margin-top: 15px;">
-            Spread the word!
-            <div>
-                <i data-site="facebook" class="fa fa-facebook-square fa-fw fa-2x pw-bogo-link pw-bogo-social-link" title="Share on Facebook"></i>
-                <i data-site="twitter" class="fa fa-twitter-square fa-fw fa-2x pw-bogo-link pw-bogo-social-link" title="Share on Twitter"></i>
-                <i data-site="google-plus" class="fa fa-google-plus-square fa-fw fa-2x pw-bogo-link pw-bogo-social-link" title="Share on Google+"></i>
-                <i data-site="reddit" class="fa fa-reddit-square fa-fw fa-2x pw-bogo-link pw-bogo-social-link" title="Share on Reddit"></i>
-                <i data-site="tumblr" class="fa fa-tumblr-square fa-fw fa-2x pw-bogo-link pw-bogo-social-link" title="Share on Tumblr"></i>
-                <i data-site="pinterest" class="fa fa-pinterest-square fa-fw fa-2x pw-bogo-link pw-bogo-social-link" title="Share on Pinterest"></i>
-            </div>
-        </div>
         <?php
     }
 

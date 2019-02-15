@@ -30,6 +30,13 @@ if( ! class_exists( 'BeRocket_Framework' ) ) {
         private $cc;
         protected static $instance;
         protected $plugin_version_capability = 0;
+        protected $framework_data = array(
+            'fontawesome_frontend' => false,
+        );
+        protected $global_settings = array(
+            'fontawesome_frontend_disable',
+            'fontawesome_frontend_version',
+        );
         public static function getInstance()
         {
             if (null === static::$instance)
@@ -74,8 +81,15 @@ if( ! class_exists( 'BeRocket_Framework' ) ) {
                 add_action( 'plugins_loaded', array( $this->cc, 'plugins_loaded' ) );
                 add_action( 'sanitize_comment_cookies', array( $this->cc, 'sanitize_comment_cookies' ) );
                 add_action ( 'install_plugins_pre_plugin-information', array( $this->cc, 'install_plugins_pre_plugin_information' ), 1 );
+                if( empty($this->plugin_version_capability) || $this->plugin_version_capability < 10 ) {
+                    add_filter('berocket_admin_notices_subscribe_plugins', array($this, 'admin_notices_subscribe_plugins'));
+                }
             }
             do_action($this->info[ 'plugin_name' ].'_framework_construct', $this->cc);
+        }
+        public function admin_notices_subscribe_plugins($plugins) {
+            $plugins[] = $this->info['id'];
+            return $plugins;
         }
         public function install_plugins_pre_plugin_information() {
             wp_print_styles('font-awesome');
@@ -224,9 +238,16 @@ if( ! class_exists( 'BeRocket_Framework' ) ) {
          * Initialize
          */
         public function init() {
+            $global_option = $this->get_global_option();
             wp_enqueue_script( "jquery" );
             wp_register_style( 'font-awesome', plugins_url( 'berocket/css/font-awesome.min.css', $this->cc->info[ 'plugin_file' ] ) );
-            wp_enqueue_style( 'font-awesome' );
+            wp_register_style( 'font-awesome-5', plugins_url( 'berocket/css/fontawesome5.min.css', $this->cc->info[ 'plugin_file' ] ) );
+            wp_register_style( 'font-awesome-5-compat', plugins_url( 'berocket/css/fontawesome4-compat.min.css', $this->cc->info[ 'plugin_file' ] ) );
+            if( is_admin() ) {
+                wp_enqueue_style( 'font-awesome' );
+            } elseif( ! empty($this->framework_data['fontawesome_frontend']) ) {
+                $this->enqueue_fontawesome();
+            }
 
             wp_add_inline_script(
                 $this->cc->info['plugin_name'] . "_execute_func",
@@ -249,6 +270,26 @@ if( ! class_exists( 'BeRocket_Framework' ) ) {
                     }
                 }"
             );
+        }
+
+        public function enqueue_fontawesome($force = false) {
+            if( ! wp_style_is('font-awesome-5-compat', 'registered') ) {
+                wp_register_style( 'font-awesome', plugins_url( 'berocket/css/font-awesome.min.css', $this->cc->info[ 'plugin_file' ] ) );
+                wp_register_style( 'font-awesome-5', plugins_url( 'berocket/css/fontawesome5.min.css', $this->cc->info[ 'plugin_file' ] ) );
+                wp_register_style( 'font-awesome-5-compat', plugins_url( 'berocket/css/fontawesome4-compat.min.css', $this->cc->info[ 'plugin_file' ] ) );
+            }
+            $global_option = $this->get_global_option();
+            if( empty($global_option['fontawesome_frontend_disable']) ) {
+                if( br_get_value_from_array($global_option, 'fontawesome_frontend_version') == 'fontawesome5' ) {
+                    wp_enqueue_style( 'font-awesome-5' );
+                } else {
+                    wp_enqueue_style( 'font-awesome' );
+                }
+            } else {
+                if( br_get_value_from_array($global_option, 'fontawesome_frontend_version') == 'fontawesome5' ) {
+                    wp_enqueue_style( 'font-awesome-5-compat' );
+                }
+            }
         }
 
         /**
@@ -741,6 +782,15 @@ if( ! class_exists( 'BeRocket_Framework' ) ) {
         public function save_settings_callback($settings) {
             if ( isset( $settings ) ) {
                 $settings = self::sanitize_option( $settings );
+                if( count($this->global_settings) ) {
+                    $global_options = $this->get_global_option();
+                    foreach($this->global_settings as $global_setting) {
+                        if( isset($settings[$global_setting]) ) {
+                            $global_options[$global_setting] = $settings[$global_setting];
+                        }
+                    }
+                    $this->save_global_option($global_options);
+                }
             }
             return $settings;
         }
@@ -835,10 +885,29 @@ if( ! class_exists( 'BeRocket_Framework' ) ) {
                 $options = apply_filters('brfr_get_option_cache_' . $this->cc->info[ 'plugin_name' ], $options, $this->cc->defaults);
                 wp_cache_set( $this->cc->values[ 'settings_name' ], $options, 'berocket_framework_option', 600 );
             }
+            $global_options = $this->get_global_option();
+            if( count($this->global_settings) ) {
+                foreach($this->global_settings as $global_setting) {
+                    if( isset($global_options[$global_setting]) ) {
+                        $options[$global_setting] = $global_options[$global_setting];
+                    }
+                }
+            }
 
             $options = apply_filters('brfr_get_option_' . $this->cc->info[ 'plugin_name' ], $options, $this->cc->defaults);
 
             return $options;
+        }
+        public function get_global_option() {
+            $option = get_option('berocket_framework_option_global');
+            if( ! is_array($option) ) {
+                $option = array();
+            }
+            return $option;
+        }
+        public function save_global_option($option) {
+            $option = update_option('berocket_framework_option_global', $option);
+            return $option;
         }
         public function is_settings_page($settings_page) {
             if( ! empty($_GET['page']) && $_GET['page'] == $this->cc->values[ 'option_page' ] ) {

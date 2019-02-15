@@ -3,17 +3,17 @@
 Plugin Name: Ni WooCommerce Sales Report
 Description: Enhance WooCommerce sales report beautifully and provide complete solutions for WooCommerce reporting.
 Author: 	 anzia
-Version: 	 3.2.3
+Version: 	 3.2.7
 Author URI:  http://naziinfotech.com/
 Plugin URI:  https://wordpress.org/plugins/ni-woocommerce-sales-report/
 License:	 GPLv3 or later
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
 Text Domain: nisalesreport
 Domain Path: /languages/
-Tested up to:  4.9.8
+Tested up to:  5.0.1
 WC requires at least: 3.0.0
-WC tested up to:3.4.5
-Last Updated Date: 08-September-2018
+WC tested up to:3.5.5
+Last Updated Date: 17-December-2018
 */
 if ( !class_exists( 'Ni_WooCommerce_Sales_Report' ) ) {
 	class Ni_WooCommerce_Sales_Report {

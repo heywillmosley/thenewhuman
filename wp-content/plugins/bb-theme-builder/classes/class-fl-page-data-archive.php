@@ -36,8 +36,12 @@ final class FLPageDataArchive {
 		else {
 			$title = get_the_archive_title();
 		}
-
-		return $title;
+		/**
+		 * Filter the archive page title.
+		 * @since 1.2.1
+		 * @see fl_theme_builder_page_archive_get_title
+		 */
+		return apply_filters( 'fl_theme_builder_page_archive_get_title', $title );
 	}
 
 	/**

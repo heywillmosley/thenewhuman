@@ -718,16 +718,16 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
                     AND posts.ID IN (
 
                         SELECT p.post_parent
-                    	FROM $wpdb->posts p
+                        FROM $wpdb->posts p
 
                         INNER JOIN $wpdb->postmeta pm
-                        	ON p.post_parent = pm.post_id
-                        	AND pm.meta_key = '_stock_status'
-                        	AND pm.meta_value != 'instock'
+                            ON p.post_parent = pm.post_id
+                            AND pm.meta_key = '_stock_status'
+                            AND pm.meta_value != 'instock'
 
-                    	WHERE p.post_parent > 0
-                    		AND p.post_status = 'publish'
-                    		AND p.post_type = 'product_variation'
+                        WHERE p.post_parent > 0
+                            AND p.post_status = 'publish'
+                            AND p.post_type = 'product_variation'
                     )";
 
                 $results = $wpdb->get_results( $query , ARRAY_A );
@@ -1008,21 +1008,21 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
         public static function wwof_get_out_of_stock_variations() {
 
             $args = array(
-        		'post_type'		  => 'product_variation',
-        		'status'		  => 'publish',
-        		'posts_per_page'  => -1,
-        		'fields'		  => 'ids',
-        		'meta_query'	  => array(
-        			array(
-        				'key'     => '_stock_status',
-        				'value'   => 'outofstock',
-        				'compare' => '=',
-        				'type'    => 'string'
-        			)
-        		)
-        	);
+                'post_type'       => 'product_variation',
+                'status'          => 'publish',
+                'posts_per_page'  => -1,
+                'fields'          => 'ids',
+                'meta_query'      => array(
+                    array(
+                        'key'     => '_stock_status',
+                        'value'   => 'outofstock',
+                        'compare' => '=',
+                        'type'    => 'string'
+                    )
+                )
+            );
 
-        	$query = new WP_Query( $args );
+            $query = new WP_Query( $args );
 
             return $query->posts;
         }
@@ -1072,7 +1072,7 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
                     // Get the values from the Min Max Quantities plugin settings
                     $step_value     = get_post_meta( $variation_id , 'variation_group_of_quantity' , true );
                     $input_value    = get_post_meta( $variation_id , 'variation_minimum_allowed_quantity' , true );
-                    $min_value	    = get_post_meta( $variation_id , 'variation_minimum_allowed_quantity' , true );
+                    $min_value      = get_post_meta( $variation_id , 'variation_minimum_allowed_quantity' , true );
                     $max_value      = get_post_meta( $variation_id , 'variation_maximum_allowed_quantity' , true );
 
                     // If the variation or the parent product are managing stock and the stock quantity is less than
@@ -1085,10 +1085,10 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
                     }
 
                     $input_args = array(
-                        'step'		    => $step_value,
-                        'input_value'	=> $input_value,
-                        'min_value'	    => $min_value,
-                        'max_value'	    => $max_value
+                        'step'          => $step_value,
+                        'input_value'   => $input_value,
+                        'min_value'     => $min_value,
+                        'max_value'     => $max_value
                     );
 
                 } else {
@@ -1123,7 +1123,7 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
                                     $max_value = '';
                                     $stock_quantity = $product->get_stock_quantity();
 
-            						if ( $stock_quantity > 0 )
+                                    if ( $stock_quantity > 0 )
                                         $max_value = $stock_quantity;
 
                             }
@@ -1138,15 +1138,15 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
 
                     // apply variable level input arguments.
                     $input_args = apply_filters( 'woocommerce_quantity_input_args', array(
-                        'step'	        => $step_value,
-                        'input_value'	=> $input_value,
+                        'step'          => $step_value,
+                        'input_value'   => $input_value,
                         'min_value'     => 1,
                         'max_value'     => $max_value
                     ) , $parent_product );
                 }
 
             } else
-                $input_args = apply_filters( 'woocommerce_quantity_input_args', array( 'input_value'	=> '1' ) , $product );
+                $input_args = apply_filters( 'woocommerce_quantity_input_args', array( 'input_value'    => '1' ) , $product );
 
             // apply min and step value set on WWPP (priority)
             return apply_filters( 'wwof_variation_quantity_input_args' , $input_args , $product );
@@ -1318,6 +1318,54 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
             return $available_variations;
 
         }
+        
+        /**
+         * Return product variations that contains the cat term slug filter.
+         * 
+         * @since 1.10
+         * @access public
+         * 
+         * @param array $cat_term_slugs Product Category Term Slug.
+         * @param array $atts_products  Product attribute set in the wwof_product_listing shortcode.
+         * @return array
+         */
+        public static function wwof_filter_variations_via_category_search( $cat_term_slugs , $atts_products ) {
+
+            global $wpdb;
+
+            $product_variable   = array();
+            $product_variations = array();
+            $term_object        = get_term_by( 'slug' , $cat_term_slugs[ 0 ] , 'product_cat' );
+            $term_id            = $term_object->term_id;
+
+            $variable = $wpdb->get_results( "SELECT DISTINCT p.post_parent FROM $wpdb->posts p
+                                            LEFT JOIN $wpdb->term_relationships tr ON (p.post_parent = tr.object_id)
+                                            WHERE p.post_status = 'publish'
+                                                AND p.post_type = 'product_variation'
+                                                AND tr.term_taxonomy_id = $term_id
+                                                AND p.ID IN ( " . implode( ',' , $atts_products ) . " )" , ARRAY_A );
+
+            if( $variable ) {
+                
+                foreach ( $variable as $v )
+                    $product_variable[] = $v[ 'post_parent' ];
+
+                $variations = $wpdb->get_results( "SELECT DISTINCT p.ID FROM $wpdb->posts p
+                                                WHERE p.post_status = 'publish'
+                                                    AND p.post_type = 'product_variation'
+                                                    AND p.post_parent IN ( " . implode( ',' , $product_variable ) . " )
+                                                    AND p.ID IN ( " . implode( ',' , $atts_products ) . " )" , ARRAY_A );
+                                                    
+                if( $variations ) {
+                    foreach ( $variations as $v )
+                        $product_variations[] = $v[ 'ID' ];
+                }
+
+            }
+
+            return $product_variations;
+
+        }
 
         /*
          |------------------------------------------------------------------------------------------------------------------
@@ -1340,6 +1388,7 @@ if ( !class_exists( 'WWOF_Product_Listing_Helper' ) ) {
             wc_get_template( $template , $options , '' , $default_template_path );
 
         }
+        
 
     }
 

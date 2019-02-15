@@ -274,6 +274,14 @@ if (!class_exists('ESIG_AUTO_REGISTER_Admin')) :
                 $wp_password = wp_generate_password(12, false); // generate random password
 
                 $recipient = $args['recipient'];
+                
+                $first_name ='';
+                $last_name =''; 
+		if (strpos($recipient->first_name, ' ') === false) {
+			echo $name;
+		} else {
+			list($first_name,$last_name) = explode(" ",$recipient->first_name,2);	
+		}
 
                 // creating user data array 
                 $user_data = array(
@@ -283,8 +291,8 @@ if (!class_exists('ESIG_AUTO_REGISTER_Admin')) :
                     'user_url' => home_url(),
                     'display_name' => $recipient->user_email,
                     'user_email' => $recipient->user_email,
-                    'first_name' => $recipient->first_name,
-                    'last_name' => $recipient->last_name,
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
                     'role' => $esig_auto_register_role // Use default role or another role, e.g. 'editor'
                 );
                 

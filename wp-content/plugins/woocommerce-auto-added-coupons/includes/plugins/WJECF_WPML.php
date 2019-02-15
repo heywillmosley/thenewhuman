@@ -24,6 +24,8 @@ if ( defined( 'ABSPATH' ) && ! class_exists( 'WJECF_WPML' ) ) {
 				//WJECF_Controller hooks
 				add_filter( 'wjecf_get_product_id', array( $this, 'filter_get_product_id' ), 10 );
 				add_filter( 'wjecf_get_product_ids', array( $this, 'filter_get_product_ids' ), 10 );
+				add_filter( 'wjecf_get_product_cat_id', array( $this, 'filter_get_product_cat_id' ), 10 );
+				add_filter( 'wjecf_get_product_cat_ids', array( $this, 'filter_get_product_cat_ids' ), 10 );
 				add_filter( 'woocommerce_coupon_get_description', array( $this, 'filter_get_coupon_description' ), 10, 2 );
 			}
 		}
@@ -66,7 +68,7 @@ if ( defined( 'ABSPATH' ) && ! class_exists( 'WJECF_WPML' ) ) {
 
 			$translated_object_ids = array();
 			foreach ( $object_ids as $object_id ) {
-				$translated_object_ids[] = apply_filters( 'wpml_object_id', $object_id, $object_type );
+				$translated_object_ids[] = apply_filters( 'wpml_object_id', $object_id, $object_type, true ); //true: return original if missing.
 			}
 			$this->log( 'debug', 'Translated ' . $object_type . ': ' . implode( ',', $object_ids ) . ' to: ' . implode( ',', $translated_object_ids ) );
 			return $translated_object_ids;

@@ -1,5 +1,5 @@
 /* 
-WJECF columns system v2.6.0
+WJECF columns system v3.0.3
 */
 
 ul.wjecf-cols { 
@@ -17,6 +17,7 @@ ul.wjecf-cols > li {
     padding-right:15px;
     position:relative;
     margin: 0 0 30px 0;
+    box-sizing: border-box;
 } 
 
 ul.wjecf-cols.cols-1 > li { width:100%; } 

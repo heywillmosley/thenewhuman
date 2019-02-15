@@ -1,9 +1,9 @@
 ﻿=== PDF Embedder ===
 Contributors: levertechadmin, danlester
 Tags: doc, pdf, pdf viewer, office, google, document, embed, intranet
-Requires at least: 3.5
-Tested up to: 4.9
-Stable tag: 3.2
+Requires at least: 4.0
+Tested up to: 5.0
+Stable tag: 4.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -203,9 +203,9 @@ the Plugins section of your Wordpress admin
 
 == Changelog ==
 
-= 3.2 =
+= 5.0 =
 
-Added compatibility with Gutenberg Editor
+Added compatibility for WordPress 5.0 
 
 = 3.1.8 =
 

@@ -30,7 +30,7 @@ class WooCommerce_WholeSale_Order_Form {
     private $_wwof_wws_license_settings;
     private $_wwof_wwp_wholesale_prices;
 
-    const VERSION = '1.8.7';
+    const VERSION = '1.10';
 
 
 

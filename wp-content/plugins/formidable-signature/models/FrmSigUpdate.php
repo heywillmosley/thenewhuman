@@ -5,7 +5,7 @@ class FrmSigUpdate extends FrmAddon {
 	public $plugin_file;
 	public $plugin_name = 'Signature';
 	public $download_id = 163248;
-	public $version = '1.11';
+	public $version = '2.01';
 
 	public function __construct() {
 		$this->plugin_file = FrmSigAppHelper::plugin_path() . '/signature.php';

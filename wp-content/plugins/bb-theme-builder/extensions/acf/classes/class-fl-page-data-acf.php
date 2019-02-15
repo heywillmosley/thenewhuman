@@ -51,11 +51,13 @@ final class FLPageDataACF {
 			case 'url':
 				$content = self::general_compare( $settings, $object );
 				break;
+			case 'radio':
+				$content = self::general_compare( $settings, $object );
+				break;
 			case 'password':
 			case 'wysiwyg':
 			case 'oembed':
 			case 'select':
-			case 'radio':
 			case 'page_link':
 			case 'date_time_picker':
 			case 'time_picker':
@@ -269,6 +271,106 @@ final class FLPageDataACF {
 			return $content;
 		} else {
 			$content = str_replace( '#', '', $object['value'] );
+		}
+
+		return $content;
+	}
+
+	/**
+	 * @since 1.2.1
+	 * @param array $property
+	 * @return string
+	 */
+	static public function relational_field( $settings, $property ) {
+		$content = '';
+		$object  = get_field_object( trim( $settings->name ), self::get_object_id( $property ) );
+
+		if ( empty( $object ) || ! isset( $object['type'] ) || ! in_array( $object['type'], array( 'user', 'post_object' ) ) ) {
+			return $content;
+		} elseif ( ! empty( $object['value'] ) ) {
+			$values = 1 == $object['multiple'] ? $object['value'] : array( $object['value'] );
+
+			if ( 'user' == $object['type'] ) {
+				$users = array();
+				$name = '';
+
+				foreach ( $values as $user_data ) {
+					switch ( $settings->display_type ) {
+						case 'display':
+							$name = $user_data['display_name'];
+						break;
+
+						case 'first':
+							$name = $user_data['user_firstname'];
+						break;
+
+						case 'last':
+							$name = $user_data['user_lastname'];
+						break;
+
+						case 'firstlast':
+							$first = $user_data['user_firstname'];
+							$last  = $user_data['user_lastname'];
+							$name  = $first . ' ' . $last;
+						break;
+
+						case 'lastfirst':
+							$first = $user_data['user_firstname'];
+							$last  = $user_data['user_lastname'];
+							$name  = $last . ', ' . $first;
+						break;
+
+						case 'nickname':
+							$name = $user_data['nickname'];
+						break;
+
+						case 'username':
+							$name = $user_data['user_nicename'];
+						break;
+					}
+
+					if ( $name && 'yes' == $settings->link ) {
+						$url = '';
+
+						if ( 'archive' == $settings->link_type ) {
+							$url = get_author_posts_url( $user_data['ID'] );
+						} elseif ( 'website' == $settings->link_type ) {
+							$url  = $user_data['user_url'];
+						}
+
+						if ( ! empty( $url ) ) {
+							$name = '<a href="' . $url . '">' . $name . '</a>';
+						}
+					}
+
+					$users[] = $name;
+				}
+
+				if ( count( $users ) > 0 ) {
+					if ( count( $users ) < 3 ) {
+						$content = implode( ' and ', $users );
+					} else {
+						$last_user = array_pop( $users );
+						$content = implode( ', ', $users ) . ' and ' . $last_user;
+					}
+				}
+			} elseif ( 'post_object' == $object['type'] ) {
+				$content = '<ul>';
+				foreach ( $values as $post ) {
+					$post_id = is_object( $post ) ? $post->ID : $post;
+
+					$href  = get_permalink( $post_id );
+					$title = the_title_attribute( array(
+						'echo' => false,
+						'post' => $post_id,
+					) );
+
+					$text  = get_the_title( $post_id );
+
+					$content .= "<li class='post-{$post_id}'><a href='{$href}' title='{$title}'>{$text}</a></li>";
+				}
+				$content .= '</ul>';
+			}
 		}
 
 		return $content;

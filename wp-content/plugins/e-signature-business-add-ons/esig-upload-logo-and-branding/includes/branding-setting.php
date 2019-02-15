@@ -108,6 +108,14 @@ class esigBrandingSetting {
         }
         return WP_E_Sig()->setting->get_generic('esig_document_head_img_alignment' . $this->wpUserId($wpUserId));
     }
+    
+    public function docTitleAlignment($wpUserId = false) {
+        $headImageAlignment = WP_E_Sig()->setting->get('esig_document_title_alignment', $this->wpUserId($wpUserId));
+        if ($headImageAlignment) {
+            return $headImageAlignment;
+        }
+        return WP_E_Sig()->setting->get_generic('esig_document_title_alignment' . $this->wpUserId($wpUserId));
+    }
 
     public function invitationSender($wpUserId = false) {
         $invitationSender = WP_E_Sig()->setting->get('esig_email_invitation_sender_checked', $this->wpUserId($wpUserId));
@@ -252,6 +260,14 @@ class esigBrandingSetting {
              WP_E_Sig()->setting->delete_generic('esig_document_head_img_alignment' . $wpUserId);
          }
          WP_E_Sig()->setting->set('esig_document_head_img_alignment', $value);
+    }
+    
+    public function save_esig_document_title_alignment($wpUserId,$value){
+         $oldData = WP_E_Sig()->setting->get_generic('esig_document_title_alignment' . $wpUserId);
+         if($oldData){
+             WP_E_Sig()->setting->delete_generic('esig_document_title_alignment' . $wpUserId);
+         }
+         WP_E_Sig()->setting->set('esig_document_title_alignment', $value);
     }
     
      public function save_esig_email_invitation_sender_checked($wpUserId,$value){

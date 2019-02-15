@@ -62,87 +62,73 @@
   color: #fff;
 }
 
-.sig {
-  display: none;
+ul.sigNav {
+	display: none;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	position: absolute;
+	z-index: 100;
+	right: 0;
+	background-color: var(--bg-color);
 }
 
-ul.sigNav {
-  display: none;
-  height: 2.25em;
-  margin: 15px 0 0;
-  padding: 0;
-  position: relative;
+#frm_builder_page ul.sigNav {
+	display: block;
+}
 
-  list-style-type: none;
+#frm_builder_page .sigPad input{
+	display:none;
 }
 
 .sigPad ul.sigNav li {
-  display: inline;
-  float: left;
-  margin: 0;
-  padding: 0;
-  background:none;
-  line-height:normal;
-  font-size: 1em;
+	display: block;
+	margin: 3px 3px 0;
+	margin-top: var(--button-margin);
+	margin-left: var(--button-side-margin);
+	margin-right: var(--button-margin);
+	padding: 0;
+	background:none;
+	line-height:normal;
 }
 
 .sigNav a {
-  display: block;
-  margin: 0;
-  padding: 0 0.6em;
+	display: block;
+	margin: 0;
+	padding: 8px;
+	padding: var(--button-padding);
+	border: 0;
+	text-decoration: none;
+	font-size: 16px;
+	font-size: var(--button-size);
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	outline: none;
+	background-color: var(--inactive);
+	color: var(--inactive-text);
+}
 
-  border: 0;
-
-  line-height: 2.25em;
-  text-decoration: underline;
+.sigNav a,
+.sigNav a:active,
+.sigNav a:focus,
+.sigNav a:hover{
+	box-shadow: none;
 }
 
 .sigNav a.current {
-  background-color: #666;
-  -moz-border-radius-topleft: 8px;
-  -moz-border-radius-topright: 8px;
-  -webkit-border-top-left-radius: 8px;
-  -webkit-border-top-right-radius: 8px;
-  border-radius: 8px 8px 0 0;
-
-  color: #fff;
-  text-decoration: none;
-}
-
-.sigNav .typeIt a.current,
-.sigNav a.current {
-  background-color: #eee;
-  text-decoration: none;
-  color: #555;
-}
-
-.sigPad .sigNav .clearButton {
-  float:right;
-  font-size: 0.75em;
-  padding-top:4px;
-}
-
-ul.sigNav.sigHideTabs{
-  height:auto;
-  margin-top:0;
-}
-
-.sigPad .sigHideTabs li.typeIt, .sigPad .sigHideTabs li.drawIt{
-  display:none;
-}
-
-.sigPad .sigHideTabs li.clearButton{
-	padding:0;
-}
-
-.sigNav.sigHideTabs a {
-	line-height:inherit;
+	background-color: #eee;
+	background-color: var(--active);
+	color: var(--active-text);
 }
 
 .sigWrapper {
 	clear: both;
-	border: 1px solid #eee;
+	border: 2px solid #eee;
+	background-color: #fff;
 	box-sizing:content-box;
+	position: relative;
+	background-color: var(--bg-color);
 }
 
 /*.sigWrapper.current {
@@ -155,10 +141,13 @@ ul.sigNav.sigHideTabs{
 
 .pad {
 	position: relative;
+	width: 100%;
+	height: 100%;
 }
 
 .current .pad {
-  cursor: url("../images/pen.png") 8 8, crosshair;
+	cursor: crosshair;
+	z-index: 1;
 }
 
 .typed {
@@ -168,45 +157,41 @@ ul.sigNav.sigHideTabs{
   color: #145394;
   font: normal 3em/50px "Journal",Georgia,Times,serif;
   padding: 0;
+  margin: 0;
+  height: 100%;
 }
-.typed, .typed input[type="text"], .with_frm_style .typed input[type="text"], #content .with_frm_style .typed input[type="text"]{
-margin: 0;
-font: normal 2em "Journal",Georgia,Times,serif !important;
-text-indent: 9px;
-height: auto;
-}
+
 .typed input[type="text"],
 .typed input[type="text"]:focus,
+#content .with_frm_style .typed input[type="text"],
 .with_frm_style .typed input[type="text"],
 .with_frm_style .typed input[type="text"]:focus{
+	font: normal 2em "Journal",Georgia,Times,serif !important;
+	text-indent: 6%;
     border:none !important;
     padding: 0 !important;
+	margin: 0;
     -moz-box-shadow:none !important;
     -webkit-box-shadow:none !important;
     box-shadow:none !important;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=0, Direction=0, Color='')";
-    filter:progid:DXImageTransform.Microsoft.Shadow(Strength=0, Direction=0, Color='');
+	height: 100%;
+	width: 100%;
+	vertical-align: middle;
+	background-color: transparent !important;
 }
 .typed input[type="text"]:focus{
-background:inherit;
+	background:inherit;
 }
 
-.typeItDesc,
-.drawItDesc {
-  display: none;
-  margin: 0.75em 0 0.515em;
-  padding: 0.515em 0 0;
-  color: #000;
-  font: italic normal 1em/1.375 Georgia,Times,serif;
+.sigPad .clearButton {
+	position: absolute;
+	font-size: 13px;
+	margin: -25px 5% 0;
+	z-index: 2;
+	display:inline;
+	line-height: 1em;
 }
 
-p.error {
-  display: block;
-  margin: 0.5em 0;
-  padding: 0.4em;
-
-  background-color: #f33;
-
-  color: #fff;
-  font-weight: bold;
+.sigPad .clearButton a {
+	color: var(--active);
 }

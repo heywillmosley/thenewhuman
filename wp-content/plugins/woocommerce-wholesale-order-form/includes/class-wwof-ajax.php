@@ -243,7 +243,6 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
                 if( !isset( $sort_order ) || $sort_order === false || strcasecmp( trim( $sort_order ) , '' ) == 0 )
                     $sort_order = $WWOF_SETTINGS_DEFAULT_SORT_ORDER;
 
-
                 // =========================================================================================================
                 // Begin Construct Main Query Args
                 // =========================================================================================================
@@ -415,8 +414,8 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
                 // Main Product query --------------------------------------------------------------------------------------
 
                 // this will hold the resulted variation ids
-                $product_query_ids           = array();
-                $variable_products_to_remove = array();
+                $product_query_ids                          = array();
+                $variable_products_to_remove                = array();
 
                 $product_args = array(
                     'post_type'             => 'product',
@@ -425,14 +424,14 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
                     'ignore_sticky_posts'   => 1,
                     'meta_query'            => apply_filters( 'wwof_product_listing_price_filter_meta_query' , $meta_query ),
                     'tax_query'             => apply_filters( 'wwof_product_listing_price_filter_tax_query' , $tax_query ),
-                    'fields'                => 'ids'
+                    'fields'                => 'ids',
+                    'post__in'              => ( !empty( $atts_products ) && !in_array( '0' , $atts_products ) ) ? $atts_products : array()
                 );
 
                 $product_query     = new WP_Query( $product_args );
                 $product_query_ids = $product_query->posts;
 
                 // List Product Variations Individually --------------------------------------------------------------------
-
                 if ( get_option( 'wwof_general_list_product_variation_individually' , 'no' ) === 'yes' ) {
 
                     // change the post type argument to include variations
@@ -473,7 +472,15 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
 
                     }
 
+                    // WWOF-346 Fix issue when filtering via category while list product variation individually is enabled, the variations does not show up
+                    if( !empty( $cat_term_slugs ) && !in_array( 0 , $atts_products ) )
+                        $product_query_ids = array_merge( WWOF_Product_Listing_Helper::wwof_filter_variations_via_category_search( $cat_term_slugs , $atts_products ) , $product_query_ids );
+
                 }
+
+                // WWOF-346 Fix issue regarding filter via category will show all products inside the shortcode attribute products
+                if( empty( $product_query_ids ) )
+                    $product_query_ids = array( 0 );
 
                 // Products attribute and the excluded products list on the settings must not go together
                 // It's either only one of em.
@@ -489,8 +496,9 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
                 // Product Search
                 $search_products = array();
                 if ( !is_null( $search ) ) {
-                    $search_the_sku = ( $search_sku == 'yes' ) ? true : false;
-                    $search_products = WWOF_Product_Listing_Helper::get_search_products( $search , $search_the_sku );
+                    $search_the_sku             = ( $search_sku == 'yes' ) ? true : false;
+                    $search_products            = WWOF_Product_Listing_Helper::get_search_products( $search , $search_the_sku );
+                    $args[ 'searched_keyword' ] = $search;
                 }
 
                 // Post in
@@ -498,11 +506,16 @@ if ( !class_exists( 'WWOF_AJAX' ) ) {
 
                     $post_in = $atts_products;
 
+                    if( !empty( $product_query_ids ) )
+                        $post_in = array_merge( $post_in , $product_query_ids );
+
                     foreach ( $post_in as $key => $value ) {
 
+                        // If search is triggered
                         if( !empty( $search_products ) && !in_array( $value , $search_products ) )
                             unset( $post_in[ $key ] );
 
+                        // If category search is triggered
                         if( !empty( $product_query_ids ) && !in_array( $value , $product_query_ids ) && !empty( $cat_term_slugs ) )
                             unset( $post_in[ $key ] );
 

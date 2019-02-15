@@ -442,6 +442,7 @@ final class FLThemeBuilderRulesLocation {
 		$saved = get_post_meta( $post_id, '_fl_theme_builder_locations', true );
 		$saved = ! $saved ? array() : $saved;
 		$saved = ! $sorted ? $saved : self::sort_saved( $saved );
+		$saved = self::clean_saved_locations( $saved );
 
 		return $saved;
 	}
@@ -593,8 +594,50 @@ final class FLThemeBuilderRulesLocation {
 		$saved = get_post_meta( $post_id, '_fl_theme_builder_exclusions', true );
 		$saved = ! $saved ? array() : $saved;
 		$saved = ! $sorted ? $saved : self::sort_saved( $saved );
+		$saved = self::clean_saved_locations( $saved );
 
 		return $saved;
+	}
+
+	/**
+	 * Clean the location data and remove if no longer exists from database.
+	 *
+	 * @since 1.2.1
+	 * @param array $locations
+	 * @return array
+	 */
+	static public function clean_saved_locations( $locations ) {
+		$cleaned_locations = array();
+
+		foreach ( $locations as $data ) {
+			$location = explode( ':', $data );
+
+			// Check for specific location by post ID or term ID.
+			if ( 0 === (int) end( $location ) ) {
+				$cleaned_locations[] = $data;
+				continue;
+			}
+
+			if ( count( $location ) >= 4 ) {
+				$location[0] = $location[2];
+				$location[1] = $location[3];
+				$location[2] = (int) $location[4];
+			}
+
+			if ( 'taxonomy' == $location[0] ) {
+				$id = is_numeric( $location[2] ) ? intval( $location[2] ) : $location[2];
+				$term_exists = term_exists( $id, $location[1] );
+				if ( 0 === $term_exists || null === $term_exists ) {
+					continue;
+				}
+			} elseif ( isset( $location[2] ) && 'trash' == get_post_status( $location[2] ) ) {
+				continue;
+			}
+
+			$cleaned_locations[] = $data;
+		}
+
+		return $cleaned_locations;
 	}
 
 	/**
@@ -1143,6 +1186,14 @@ final class FLThemeBuilderRulesLocation {
 						);
 					}
 
+					if ( 'author' == $parts[1] ) {
+						$preview['general']['author'] = array(
+							'id'      => 'author',
+							'label'   => __( 'Author Archives', 'fl-theme-builder' ),
+							'type'    => 'general',
+						);
+					}
+
 					foreach ( $all['by_template_type']['archive'] as $post_type => $post_location ) {
 						$preview['archive'][ $post_type ] = $post_location;
 					}
@@ -1342,6 +1393,10 @@ final class FLThemeBuilderRulesLocation {
 		} elseif ( 'general' == $preview[0] && 'search' == $preview[1] ) {
 			self::$preview_args = array(
 				's' => '',
+			);
+		} elseif ( 'general' == $preview[0] && 'author' == $preview[1] ) {
+			self::$preview_args = array(
+				'author' => 1,
 			);
 		}
 

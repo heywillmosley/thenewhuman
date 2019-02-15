@@ -86,7 +86,7 @@ Neue',Arial,Helvetica,sans-serif;font-size:12px;line-height:1.4em;border-collaps
                     <td style="padding:0px 0px 0px
                       0px;vertical-align:top;font-family:'Helvetica
 Neue',Arial,Helvetica,sans-serif;font-size:12px;line-height:1.4em;border-collapse:collapse;color:#555"
-                      align="left"> <a href="https://approveme.com" target="_blank"><img
+                      align="center"> <a href="https://approveme.com" target="_blank"><img
 src="<?php echo ESIGN_ASSETS_DIR_URI; ?>/images/verified-email.jpg"
                               alt="WP E-Signature" border="0" style="width: 175px;margin-top: -8px;" class="emailClass"
                               height="49" width="154"></a><br>

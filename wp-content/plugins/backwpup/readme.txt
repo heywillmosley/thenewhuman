@@ -1,21 +1,18 @@
 === BackWPup - WordPress Backup Plugin ===
 Contributors: inpsyde, cocreation, danielhuesken, Bueltge, nullbyte
-Tags: backup, restore, back up, Amazon, Amazon S3, chinese, cloud, cloud files, database, db backup, dropbox, dump, file, french, ftp, ftps, german, migrate, multisite, russian, schedule, sftp, storage, S3, time, upload, xml
+Tags: backup, database backup, cloud backup, restore, wordpress backup
 Requires at least: 3.9
-Tested up to: 4.9.6
+Tested up to: 5.0.2
 Requires PHP: 5.3
-Stable tag: 3.6.0
+Stable tag: 3.6.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Schedule complete automatic backups of your WordPress installation. Decide which content will be stored (Dropbox, S3…). This is the free version
 
-== Description ==
-
-SALE NOW - GET 20% OFF - ONLY VALID UNTIL JUNE 22. CELEBRATE WITH US THE BRAND NEW ENCRYPTION FEATURE! [GO PRO](https://backwpup.com)
+== Description 
 
 The **backup plugin** **[BackWPup](https://backwpup.com/)** can be used to save your complete installation including /wp-content/ and push them to an external Backup Service, like **Dropbox**, **S3**, **FTP** and many more, see list below. With a single backup .zip file you are able to easily restore an installation. Please understand: this free version will not be supported as good as the [BackWPup Pro version](https://backwpup.com). With our premium version you get first class support and more features.
-
 
 * Database Backup  *(needs mysqli)*
 * WordPress XML Export
@@ -23,7 +20,7 @@ The **backup plugin** **[BackWPup](https://backwpup.com/)** can be used to save 
 * Optimize Database
 * Check and repair Database
 * File backup
-* Backups in zip, tar, tar.gz, tar.bz2 format *(needs gz, bz2, ZipArchive)*
+* Backups in zip, tar, tar.gz format *(needs gz, ZipArchive)*
 * Store backup to directory
 * Store backup to FTP server *(needs ftp)*
 * Store backup to Dropbox *(needs curl)*
@@ -96,7 +93,7 @@ Not really a solution, but a way to identify the real problem: see remarks on WP
 
 BackWPup performs a simple HTTP request to the server itself every time you click `run now` or whenever a backup job starts automatically. The HTTP response test message could mean:
 * Your host does not allow *loop back connections*. (If you know what `WP_ALTERNATE_CRON` is, try it.)
-* Your WordPress root directory or backup directory requires authetification. Set username and password in Settings->Network.
+* Your WordPress root directory or backup directory requires authentication. Set username and password in Settings->Network.
 * The Server can’t resolve its own hostname.
 * A plugin or theme is blocking the request.
 * Other issues related to your individual server and/or WordPress configuration.
@@ -107,8 +104,7 @@ Please set CHMOD 775 on the /wp-content/ directory and refresh the BackWPup dash
 
 
 = How do I restore a backup? =
-Up to now, there is no feature in BackWPup to restore a backup. But we are eagerly working on a restore functionality, which is in beta right now. If you like to participate to test the restore feature, please [write an email](mailto:betatest@backwpup.com). Meanwhile you can follow [these instructions from the BackWPup documentation](http://docs.backwpup.com/article/127-how-to-restore-a-wordpress-backup) or [this tutorial (from WordPress Codex)](http://codex.wordpress.org/WordPress_Backups) for more detailed information on cPanel, Plesk, vDeck and others.
-
+A restore feature has been added to the Pro version of the plugin. For more information check this [post](https://backwpup.com/docs/how-do-i-use-the-backwpup-restore-feature/).The Pro version also provides a [Restore Standalone App](https://backwpup.com/docs/why-backwpup-restore-stand-alone-app/). To have these and even more features get [BackWPup Pro](https://backwpup.com) Version.
 
 = When I edit a job the Files tab loads forever. =
 Go to Settings->General and disable “Display folder sizes on files tab if job edited”. Calculating folder sizes can take a while on sites with many folders.
@@ -161,9 +157,64 @@ Yes. You need to have writing access to the wp-config.php file (usually residing
 
 == Installation ==
 
-[You can find a detailed tutorial in the BackWPup documentation.](http://docs.backwpup.com/article/118-install-backwpup)
+[You can find a detailed tutorial in the BackWPup documentation.](https://backwpup.com/docs/install-backwpup-pro-activate-licence/)
 
 == Changelog ==
+= Version 3.6.6 =
+Release Date: Nov 28, 2018
+
+* Fixed: Files could be excluded from the backup because of incorrect string comparison
+
+= Version 3.6.5 =
+Release Date: Nov 23, 2018
+
+* Fixed: Admin notice won’t update correctly
+
+= Version 3.6.4 =
+Release Date: Nov 22, 2018
+
+* Fixed: Encrypted backup must force users to download the encryption keys
+* Fixed: Warning mime type when a backup is going to be downloaded
+* Fixed: Admin Notice in free version is sometimes empty
+* Fixed: Random restore error about SQL syntax when restoring a database
+* Fixed: Exclude restore directories to be copied during a restore phase
+* Fixed: Standalone App has no encryption support
+* Fixed: Open basedir, backup dir is not within the allowed path
+* Fixed: Unable to download backup file because of mime_content_type function missing in some environment
+* Tweak: Encryption Settings UI
+* Tweak: Minor translations issues
+* Tweak: Remove languages files from the free version, the plugin will use translation.wordpress.org
+
+= Version 3.6.3 =
+Release Date: Nov 5, 2018
+
+* Fixed: "Failed to restore file": file restore progress stop working and jump directly to database restore step
+* Fixed: Restore progress stuck on "restoring database" with archive backup contains files only
+* Fixed: All config.php files are not in backup archive
+
+= Version 3.6.2 =
+Release Date: Oct 17, 2018
+
+* Fixed: Not recognized file extensions get an additional underscore in the file name in zip file
+* Fixed: Backup archive file have dot folder contains all web root files
+* Fixed: Ftp destination downloader repetitively open a new handler for the source file causing corrupted backup
+
+= Version 3.6.1 =
+Release Date: Sep 25, 2018
+
+* Fixed: Backup doesn't handle special characters correctly
+* Fixed: Use of function that doesn't exists prior to 4.9
+* Fixed: Class bryter/helpers/csrf/CSRF.php was not loaded
+* Fixed: Backup don't override old database file in web root
+* Fixed: Restore Folder backup won't download the backup file
+* Fixed: Function `owns_backup_archive` not exists, the one is `is_backup_archive`
+* Fixed: Some settings page and license api manager strings are missing translation
+* Fixed: Incompatibility with php 5.3 in destination folder downloader
+* Fixed: fatal error on Amazon Glacier because of an undefined function
+* Fixed: Ensure extra files are not overwritten
+* Fixed: Cannot delete woocommerce_downloadable_product_permissions table
+* Fixed: Incompatibility with php 5.3 in the restore process
+
 = Version 3.6.0 =
 Release Date: June 14, 2018
 
@@ -627,3 +678,4 @@ Release Date: May 16, 2018
 * Use your own API keys for Dropbox and SugarSync
 * Premium Support
 * Automatic updates
+

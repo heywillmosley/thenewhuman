@@ -5,7 +5,7 @@
  * Description: Instantly pay your affiliates via PayPal
  * Author: Pippin Williamson and Andrew Munro
  * Author URI: http://affiliatewp.com
- * Version: 1.1.10
+ * Version: 1.1.11
  * Text Domain: affwp-paypal-payouts
  * Domain Path: languages
  *
@@ -24,7 +24,7 @@
  * @package AffiliateWP PayPal Payouts
  * @category Core
  * @author Pippin Williamson
- * @version 1.1.10
+ * @version 1.1.11
  */
 
 // Exit if accessed directly
@@ -61,7 +61,7 @@ final class AffiliateWP_PayPal_Payouts {
 
 			self::$plugin_dir = plugin_dir_path( __FILE__ );
 			self::$plugin_url = plugin_dir_url( __FILE__ );
-			self::$version    = '1.1.10';
+			self::$version    = '1.1.11';
 
 			self::$instance->load_textdomain();
 			self::$instance->includes();

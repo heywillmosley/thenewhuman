@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-25 20:41+0000\n"
+"POT-Creation-Date: 2019-01-14 19:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,63 +14,77 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/"
 
-#: controllers/FrmSigAppController.php:50 
-#: controllers/FrmSigAppController.php:56
+#: controllers/FrmSigAppController.php:53
+msgid ""
+"You are running an outdated version of Formidable. This plugin will not work "
+"correctly if you do not update Formidable."
+msgstr ""
+
+#: controllers/FrmSigAppController.php:125
 msgid "Signature"
 msgstr ""
 
-#: controllers/FrmSigAppController.php:68
-msgid "Draw It"
-msgstr ""
-
-#: controllers/FrmSigAppController.php:69
-msgid "Type It"
-msgstr ""
-
-#: controllers/FrmSigAppController.php:70
-msgid "Clear"
-msgstr ""
-
-#: controllers/FrmSigAppController.php:512
+#: controllers/FrmSigAppController.php:412
 msgid "Drawn signatures"
 msgstr ""
 
-#: views/admin_field.php:2
-msgid ""
-"This is a placeholder for your signature field. <br/>View your form to see "
-"it in action."
+#: controllers/FrmSigAppController.php:574 models/FrmSigField.php:33
+msgid "Draw It"
 msgstr ""
 
-#: views/options_form.php:1
-msgid "Field Size"
+#: controllers/FrmSigAppController.php:575 models/FrmSigField.php:34
+msgid "Type It"
+msgstr ""
+
+#: controllers/FrmSigAppController.php:576 models/FrmSigField.php:35
+msgid "Clear"
+msgstr ""
+
+#. %1$s: html line break
+#: views/admin_field.php:5
+#, php-format
+msgid ""
+"This is a placeholder for your signature field. %1$sView your form to see it "
+"in action."
 msgstr ""
 
 #: views/options_form.php:3
+msgid "Field Size"
+msgstr ""
+
+#: views/options_form.php:7
 msgid "pixels wide"
 msgstr ""
 
-#: views/options_form.php:5
+#: views/options_form.php:10
 msgid "pixels high"
 msgstr ""
 
-#: views/options_form.php:9
+#: views/options_form.php:16
 msgid "Signature Options"
 msgstr ""
 
-#: views/options_form.php:12
+#: views/options_form.php:21
 msgid "Draw It Label"
 msgstr ""
 
-#: views/options_form.php:17
+#: views/options_form.php:28
 msgid "Type It Label"
 msgstr ""
 
-#: views/options_form.php:22
+#: views/options_form.php:35
 msgid "Clear Label"
 msgstr ""
 
-#: views/options_form.php:26
+#: views/options_form.php:44
 msgid "Hide Draw It and Type It tabs"
+msgstr ""
+
+#: views/update_formidable.php:4
+msgid ""
+"Formidable Signature requires that Formidable Pro version 3.0 or greater be "
+"installed. Until then, keep Formidable Signature activated only to continue "
+"enjoying this insightful message."
 msgstr ""
 
 #. Name of the plugin

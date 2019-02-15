@@ -13,11 +13,11 @@ final class FLThemeBuilderWooCommerceSingular {
 	 */
 	static public function init() {
 		// Filters
-		add_filter( 'fl_builder_render_css',                  __CLASS__ . '::render_css', 10, 4 );
-		add_filter( 'body_class',                             __CLASS__ . '::body_class' );
+		add_filter( 'fl_builder_render_css', __CLASS__ . '::render_css', 10, 4 );
+		add_filter( 'body_class', __CLASS__ . '::body_class' );
 		add_filter( 'fl_theme_builder_before_render_content', __CLASS__ . '::before_render_content' );
-		add_filter( 'fl_builder_content_classes',             __CLASS__ . '::content_class' );
-		add_filter( 'fl_theme_builder_after_render_content',  __CLASS__ . '::after_render_content' );
+		add_filter( 'fl_builder_content_classes', __CLASS__ . '::content_class' );
+		add_filter( 'fl_theme_builder_after_render_content', __CLASS__ . '::after_render_content' );
 	}
 
 	/**
@@ -106,8 +106,9 @@ final class FLThemeBuilderWooCommerceSingular {
 					echo '</div>';
 				}
 			}
-
-			do_action( 'woocommerce_before_single_product' );
+			if ( function_exists( 'is_product' ) && is_product() ) {
+				do_action( 'woocommerce_before_single_product' );
+			}
 		}
 	}
 

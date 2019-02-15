@@ -200,6 +200,11 @@ final class FLThemeBuilderTheEventsCalendarArchive {
 	 */
 	static public function post_grid_before_content( $settings ) {
 
+		// if custom layout then dont do these.
+		if ( 'custom' == $settings->post_layout ) {
+			return false;
+		}
+
 		do_action( 'tribe_events_before_the_grid' );
 
 		// Opening wrapper

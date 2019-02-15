@@ -432,6 +432,8 @@ class WWOF_Product_Listing {
 
         if ( WWOF_Functions::wwof_get_product_type( $product ) == 'variable' ) {
 
+            $prod_filter                    = get_option( 'wwof_filters_exclude_product_filter' );
+            $prod_filter                    = is_array( $prod_filter ) ? $prod_filter : array();
             $product_variations             = $product->get_available_variations();
             $product_attributes             = $product->get_attributes();
             $variation_arr                  = array();
@@ -502,10 +504,10 @@ class WWOF_Product_Listing {
                     $variation_arr[] = array(
                         'value'         => $variation[ 'variation_id' ],
                         'text'          => $friendly_variation_text,
-                        'disabled'      => false,
+                        'disabled'      => in_array( $variation[ 'variation_id' ] , $prod_filter ) ? true : false,
                         'visible'       => true,
                         'attributes'    => $variation_attributes,
-                        'instock'       => $variation[ 'is_in_stock' ], // true = instock, false = out of stock,
+                        'instock'       => in_array( $variation[ 'variation_id' ] , $prod_filter ) ? false : $variation[ 'is_in_stock' ], // true = instock, false = out of stock,
                         'sku'           => $variation_obj->get_sku(),
                         'selected'      => false
                     );

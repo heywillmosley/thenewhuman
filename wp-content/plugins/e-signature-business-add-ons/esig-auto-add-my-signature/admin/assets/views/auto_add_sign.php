@@ -30,7 +30,12 @@ $WPuser = $user->getUserByWPID($wp_user_id);
             <div align="center" class="row auto-signature-pad" style="max-width: 700px;">
                                 <div class="col-sm-12">
                                     <?php
+                                    
                                     $signatureId = $settings->get('esig-admin-signature-id-'.$wp_user_id);
+                                    if(!$signatureId){
+                                       $signatureId = $settings->get('esig-admin-signature-id-'.$WPuser->user_id); 
+                                    }
+                                    
                                     $sig_data = $signature->signatureData($signatureId);
 
                                     $signature_type = esigget("signature_type",$sig_data); 
@@ -39,14 +44,14 @@ $WPuser = $user->getUserByWPID($wp_user_id);
 
                                     if ($signature_type == 'typed') {
                                         $font_choice = $settings->get('esig-signature-type-font' . $WPuser->user_id);
-                                        $signature_type = $signature->getUserSignature_by_type($WPuser->user_id, 'typed');
+                                        $signature_type = $signature->getSignature_by_type_sigid($signatureId, 'typed');
 
                                         $font_size = 64 - (strlen($signature_type) * 1.5 );
 
                                         $signature_full = '<span class="esig-signature-type-font' . $font_choice . '"><font size="' . $font_size . '">' . $signature_type . '</font></span>';
                                     } else {
 
-                                        $image = $signature->display_signature($WPuser->user_id, false, false, $WPuser->user_id);
+                                        $image = $signature->display_owner_signature($signatureId);
 
                                         $signature_full = '<img src="' . $image . '">';
                                     }

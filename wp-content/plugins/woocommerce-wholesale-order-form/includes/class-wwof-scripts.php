@@ -186,7 +186,8 @@ if ( !class_exists( 'WWOF_Scripts' ) ) {
 										'invalid_quantity'          => __( 'Please enter a valid value. The two nearest valid values are {low} and {high}' , 'woocommerce-wholesale-order-form' ),
 										'invalid_quantity_min_max'  => __( 'Please enter a valid value. The entered value is either lower than the allowed minimum ({min}) or higher than the allowed maximum ({max}).' , 'woocommerce-wholesale-order-form' ),
 										'view_cart'                 => __( 'View Cart' , 'woocommerce-wholesale-order-form' ),
-										'cart_url'                  => wc_get_cart_url()
+										'cart_url'                  => wc_get_cart_url(),
+                                        'product_image_placeholder' => wc_placeholder_img_src()
                                     )
                                 );
     

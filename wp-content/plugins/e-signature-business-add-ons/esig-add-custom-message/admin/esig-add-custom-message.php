@@ -148,7 +148,10 @@ if (!class_exists('ESIG_CUSTOM_MESSAGE')) :
 
             $docId = WP_E_Sig()->document->document_id_by_csum($document_checksum);
             if ($this->isEnabled($docId)) {
-                $html = stripcslashes('<br>' . $this->getCustomMessageText($docId) . '<br><hr><br>');
+                
+                $customMessage= do_shortcode($this->getCustomMessageText($docId));
+                
+                $html = stripcslashes('<br>' . $customMessage . '<br><hr><br>');
                 return $html;
             }
         }
@@ -157,7 +160,8 @@ if (!class_exists('ESIG_CUSTOM_MESSAGE')) :
 
             $docId = WP_E_Sig()->document->document_id_by_csum($document_checksum);
             if ($this->isConfirmationEnabled($docId)) {
-                $html = stripcslashes('<br>' . $this->getComfirmMessageText($docId) . '<br><hr><br>');
+                $customMessage = do_shortcode($this->getComfirmMessageText($docId));
+                $html = stripcslashes('<br>' . $customMessage . '<br><hr><br>');
                 return $html;
             }
             return $html;

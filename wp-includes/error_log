@@ -42,3 +42,5 @@ Stack trace:
 #0 {main}
   thrown in /home/thenewhu/public_html/wp-includes/template-loader.php on line 28
 [14-Dec-2018 12:26:24 UTC] PHP Fatal error:  Class 'Walker' not found in /home/thenewhu/public_html/wp-includes/class-walker-nav-menu.php on line 17
+[01-Feb-2019 02:20:54 UTC] PHP Fatal error:  Class 'Walker' not found in /home/thenewhu/public_html/wp-includes/class-walker-nav-menu.php on line 17
+[01-Feb-2019 09:02:17 UTC] PHP Fatal error:  Class 'Walker' not found in /home/thenewhu/public_html/wp-includes/class-walker-nav-menu.php on line 17

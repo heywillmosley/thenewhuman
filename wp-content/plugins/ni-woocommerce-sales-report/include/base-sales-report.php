@@ -1,17 +1,18 @@
 <?php 
 if ( ! defined( 'ABSPATH' ) ) { exit;}
-include_once('report-function.php'); 
+
 if( !class_exists( 'BaseSalesReport' ) ) {
+include_once('report-function.php'); 
 class BaseSalesReport extends ReportFunction{
  	 public function __construct(){
 	 
 	 //$this->print_data( $_REQUEST["page"] );
 	 	add_action( 'admin_menu',  array(&$this,'admin_menu' ));
+		$page = isset($_REQUEST["page"]) ? $_REQUEST["page"] : '';
 		
-		if (isset($_REQUEST["page"])){
-			 $page =  	$this->get_request("page");
-			if ($page =="ni-order-product" || $page =="ni-sales-report" ||  $page =="ni-category-report"|| $page  =="ni-top-product-report")
-		
+		$admin_pages = $this->get_admin_pages();
+		if (in_array($page,$admin_pages)){
+			
 			add_action( 'admin_enqueue_scripts',  array(&$this,'admin_enqueue_scripts' ));
 		}
 		add_action( 'wp_ajax_sales_order',  array(&$this,'ajax_sales_order' )); /*used in form field name="action" value="my_action"*/
@@ -20,6 +21,19 @@ class BaseSalesReport extends ReportFunction{
 		add_filter( 'admin_footer_text',  array(&$this,'admin_footer_text' ),101);
 		//add_filter( 'gettext', array($this, 'get_text'),20,3);
 	}
+	
+	function get_admin_pages(){
+		$page = isset($_REQUEST["page"]) ? $_REQUEST["page"] : '';
+		$admin_pages = array();
+		$admin_pages[] = 'ni-sales-report';
+		$admin_pages[] = 'ni-order-product';
+		$admin_pages[] = 'ni-sales-report-addons';
+		$admin_pages[] = 'ni-category-report';
+		$admin_pages[] = 'ni-top-product-report';
+		$admin_pages = apply_filters('ni_sales_report_admin_enqueue_script_pages',$admin_pages, $page);
+		return $admin_pages;
+	}
+	
 	function get_text($translated_text, $text, $domain){
 		if($domain == 'nisalesreport'){
 			return '['.$translated_text.']';
@@ -28,9 +42,10 @@ class BaseSalesReport extends ReportFunction{
 	}
 	function admin_footer_text($text){
 		
-		 if (isset($_REQUEST["page"])){
-			 $page = $_REQUEST["page"]; 
-			 	if ($page == "sales-report" || $page  =="order-product" || $page =="ni-sales-report-addons"){
+		$page = isset($_REQUEST["page"]) ? $_REQUEST["page"] : '';
+		$admin_pages = $this->get_admin_pages();
+		if (in_array($page,$admin_pages)){
+			 	if ($page == "ni-sales-report" || $page  =="ni-order-product" || $page =="ni-sales-report-addons" || $page == "ni-top-product-report"){
 			 	$text = sprintf( __( 'Thank you for using our plugins <a href="%s" target="_blank">naziinfotech</a>' ,'nisalesreport'), 
 				__( 'http://naziinfotech.com/'  ,'nisalesreport') );
 				$text = "<span id=\"footer-thankyou\">". $text ."</span>"	 ;
@@ -53,9 +68,9 @@ class BaseSalesReport extends ReportFunction{
 	}
 	function admin_enqueue_scripts($hook) {
    		 if (isset($_REQUEST["page"])){
-			 $page = $_REQUEST["page"];
-			if ($page == "ni-sales-report" || $page  =="ni-order-product" || $page =="ni-sales-report-addons" ||  
-			$page =="ni-category-report" || $page  =="ni-top-product-report"){
+			$page = isset($_REQUEST["page"]) ? $_REQUEST["page"] : '';
+			$admin_pages = $this->get_admin_pages();
+			if (in_array($page,$admin_pages)){
 		 	
 				wp_enqueue_script( 'ni-sales-report-ajax-script', plugins_url( '../assets/js/script.js', __FILE__ ), array('jquery') );
 		 		wp_enqueue_script( 'jquery-ui', plugins_url( '../assets/js/jquery-ui.js', __FILE__ ), array('jquery') );
@@ -95,14 +110,21 @@ class BaseSalesReport extends ReportFunction{
 		 			wp_enqueue_style( 'sales-report-style' );
 				}
 		 		wp_localize_script( 'ni-sales-report-ajax-script','ni_sales_report_ajax_object',array('ni_sales_report_ajaxurl'=>admin_url('admin-ajax.php')));
+				
+				do_action('ni_sales_report_admin_enqueue_scripts',$page);	
 			}
 		 }
 		
     }
+	
 	/*Ajax Call*/
 	function ajax_sales_order()
 	{
+		
 		$page= $this->get_request("page");
+		
+		do_action('ni_sales_report_ajax_action',$page);		
+		
 		if($page=="ni-order-product")
 		{	include_once('order-item.php');
 			$obj = new OrderItem();  
@@ -148,6 +170,9 @@ class BaseSalesReport extends ReportFunction{
 		, array(&$this,'AddMenuPage'));
 		
 		
+		
+		
+		
 		do_action('ni_sales_report_menu','ni-sales-report');
 		
 		add_submenu_page('ni-sales-report'
@@ -163,6 +188,9 @@ class BaseSalesReport extends ReportFunction{
 	function AddMenuPage()
 	{
 		$page= $this->get_request("page");
+		
+		do_action('ni_sales_report_admin_page',$page);
+		
 		/*Order Item*/
 		if($page=="ni-order-product")
 		{	include_once('order-item.php');
@@ -187,20 +215,27 @@ class BaseSalesReport extends ReportFunction{
 			$initialize = new Ni_Category_Report(); 
 			$initialize->page_init(); 
 		}
+		
 		if ($page=="ni-top-product-report"){
 			include_once('ni-top-product-report.php');
 			$initialize = new Ni_Top_Product_Report(); 
 			$initialize->page_init(); 
 		}
+		
+		
 	}
 	function admin_init()
 	{
+		
+		do_action('ni_sales_report_admin_init');
 		if(isset($_REQUEST['btn_print'])){
 			include_once('order-item.php');
 			$obj = new OrderItem();
 			$obj->get_print_content();
 			die;
-		}	
+		}
+		
+		
 	}
 	public function activation() {
       // To override

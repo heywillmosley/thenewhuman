@@ -16,12 +16,13 @@
 }
 .tribe-bar-views-list a span:before {
 	display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
-    font-size: inherit;
-    margin-right: 5px;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin-right: 5px;
+	display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+	font-weight: 900;
 }
 .tribe-bar-views-list a span.tribe-icon-list:before {
 	content: "\f0ca";

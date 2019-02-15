@@ -3,8 +3,8 @@ Contributors: josk79
 Tags: woocommerce, coupons, discount
 Requires at least: 4.8
 Requires PHP: 5.4
-Tested up to: 4.9.8
-Stable tag: 3.0.2
+Tested up to: 4.9.9
+Stable tag: 3.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ Requires:
 * PHP 5.4 or newer (7.0+ Recommended)
 * WordPress 4.8 or newer
 
-For compatibility with older versions of WooCommerce, please use "WooCommerce Extended Coupon Features" version 2.6.3.
+For compatibility with older versions of WooCommerce, please use "WooCommerce Extended Coupon Features" version 2.6.4.
 
 Full documentation is available at [www.soft79.nl](http://www.soft79.nl/documentation/wjecf).
 
@@ -100,6 +100,18 @@ On the settings page (Settings > WooCommerce Extended Coupon Features) check the
 4. Additional restrictions based on shipping or payment method or the customer
 
 == Changelog ==
+
+= 3.0.5 =
+*Release Date - 2018-11-10*
+* (FREE) FIX: 'Auto coupons'-settings not visible in FREE version
+* (PRO) FIX: Limit discount to: in combination with WC < 3.2
+* (PRO) FIX: Added quantity to 'woocommerce_add_cart_item_data'-filter (Fixes crash WooCommerce Product Addons)
+
+= 3.0.4 =
+*Release Date - 2018-10-12*
+* FIX: Auto coupons: silently remove invalid coupons
+* FIX: WPML compatibility issue with "CATEGORIES AND"
+* (PRO) FIX: CSS of the column system (box-sizing: border-box)
 
 = 3.0.2 =
 *Release Date - 2018-09-03*

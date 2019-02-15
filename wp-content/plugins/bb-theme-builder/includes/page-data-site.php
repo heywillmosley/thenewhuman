@@ -210,7 +210,15 @@ FLPageData::add_site_property( 'logged_in', array(
 	'label'       => __( 'User Logged In', 'fl-theme-builder' ),
 	'group'       => 'user',
 	'type'        => 'string',
-	'getter'      => 'is_user_logged_in',
+	'getter'      => 'FLPageDataSite::is_user_logged_in',
+) );
+
+FLPageDataSite::add_user_settings_fields( 'logged_in', array(
+	'role' => array(
+		'type'  => 'text',
+		'label' => __( 'Role/Roles', 'fl-theme-builder' ),
+		'help'  => __( 'Comma separated list of WordPress roles, lowercase. This connection returns true or false, best used as a conditional shortcode.', 'fl-theme-builder' ),
+	),
 ) );
 
 /**

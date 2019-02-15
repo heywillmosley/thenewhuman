@@ -190,25 +190,25 @@ abstract class Order_Document_Methods extends Order_Document {
 			$custom_field = WCX_Order::get_meta( $this->order, $field_name, true );
 		}
 		// if not found, try prefixed with underscore (not when ACF is active!)
-		if ( !$custom_field && substr( $field_name, 0, 1 ) !== '_' && !$this->is_order_prop( "_{$field_name}" ) && !class_exists('ACF') ) {
+		if ( empty( $custom_field ) && substr( $field_name, 0, 1 ) !== '_' && !$this->is_order_prop( "_{$field_name}" ) && !class_exists('ACF') ) {
 			$custom_field = WCX_Order::get_meta( $this->order, "_{$field_name}", true );
 		}
 
 		// WC3.0 fallback to properties
 		$property = str_replace('-', '_', sanitize_title( ltrim($field_name, '_') ) );
-		if ( !$custom_field && is_callable( array( $this->order, "get_{$property}" ) ) ) {
+		if ( empty( $custom_field ) && is_callable( array( $this->order, "get_{$property}" ) ) ) {
 			$custom_field = $this->order->{"get_{$property}"}( 'view' );
 		}
 
 		// fallback to parent for refunds
-		if ( !$custom_field && $this->is_refund( $this->order ) ) {
+		if ( empty( $custom_field ) && $this->is_refund( $this->order ) ) {
 			$parent_order = $this->get_refund_parent( $this->order );
 			if ( !$this->is_order_prop( $field_name ) ) {
 				$custom_field = WCX_Order::get_meta( $parent_order, $field_name, true );
 			}
 
 			// WC3.0 fallback to properties
-			if ( !$custom_field && is_callable( array( $parent_order, "get_{$property}" ) ) ) {
+			if ( empty( $custom_field ) && is_callable( array( $parent_order, "get_{$property}" ) ) ) {
 				$custom_field = $parent_order->{"get_{$property}"}( 'view' );
 			}
 		}
@@ -377,7 +377,7 @@ abstract class Order_Document_Methods extends Order_Document {
 	 * Return/Show the current date
 	 */
 	public function get_current_date() {
-		return apply_filters( 'wpo_wcpdf_date', date_i18n( get_option( 'date_format' ) ) );
+		return apply_filters( 'wpo_wcpdf_date', date_i18n( wc_date_format() ) );
 	}
 	public function current_date() {
 		echo $this->get_current_date();
@@ -448,7 +448,7 @@ abstract class Order_Document_Methods extends Order_Document {
 			$order_date = WCX_Order::get_prop( $this->order, 'date_created' );
 		}
 
-		$date = $order_date->date_i18n( get_option( 'date_format' ) );
+		$date = $order_date->date_i18n( wc_date_format() );
 		$mysql_date = $order_date->date( "Y-m-d H:i:s" );
 		return apply_filters( 'wpo_wcpdf_order_date', $date, $mysql_date, $this );
 	}
@@ -475,8 +475,14 @@ abstract class Order_Document_Methods extends Order_Document {
 				$data['product_id'] = $item['product_id'];
 				$data['variation_id'] = $item['variation_id'];
 
+				// Compatibility: WooCommerce Composit Products uses a workaround for
+				// setting the order before the item name filter, so we run this first
+				if ( class_exists('WC_Composite_Products') ) {
+					$order_item_class = apply_filters( 'woocommerce_order_item_class', '', $item, $this->order );
+				}
+				
 				// Set item name
-				$data['name'] = $item['name'];
+				$data['name'] = apply_filters( 'woocommerce_order_item_name', $item['name'], $item, false );
 				
 				// Set item quantity
 				$data['quantity'] = $item['qty'];
@@ -692,7 +698,12 @@ abstract class Order_Document_Methods extends Order_Document {
 	 */
 	public function get_thumbnail ( $product ) {
 		// Get default WooCommerce img tag (url/http)
-		$size = apply_filters( 'wpo_wcpdf_thumbnail_size', 'shop_thumbnail' );
+		if ( version_compare( WOOCOMMERCE_VERSION, '3.3', '>=' ) ) {
+			$thumbnail_size = 'woocommerce_thumbnail';
+		} else {
+			$thumbnail_size = 'shop_thumbnail';
+		}
+		$size = apply_filters( 'wpo_wcpdf_thumbnail_size', $thumbnail_size );
 		$thumbnail_img_tag_url = $product->get_image( $size, array( 'title' => '' ) );
 		
 		// Extract the url from img

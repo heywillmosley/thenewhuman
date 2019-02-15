@@ -8,36 +8,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WCCBPSettings {
+class WCCBPSettings extends WC_Settings_Page {
 
-    private $id;
-
-    private $text_domain;
-
+    protected $id;
 
     public function __construct()
     {
         $this->id = 'wccbp';
 
-        $this->text_domain = WCCBP_TEXT_DOMAIN;
+        $this->label = __( 'WCCBP', 'my-textdomain' );
 
-        add_filter('woocommerce_settings_tabs_array', array($this, 'addSettingsTab'), 40);
+		add_filter( 'woocommerce_settings_tabs_array', array( $this, 'add_settings_page' ), 20 );
+
+		add_action( 'woocommerce_settings_' . $this->id, array( $this, 'output' ) );
+
+		add_action( 'woocommerce_sections_' . $this->id, array( $this, 'output_sections' ) );
 
         add_action('woocommerce_settings_tabs_' . $this->id, array($this, 'addSectionToTab'));
 
         add_action('woocommerce_update_options_' . $this->id, array($this, 'updateOptions'));
-    }
+	}
+	
+	/**
+	 * Output the settings
+	 */
+	public function output() {
 
+		global $current_section;
 
-    /**
-     * Create settings tab for WooCommercer settings
-     */
-    public function addSettingsTab($tabs)
-    {
-        $tabs[$this->id] = __('WCCBP', $this->text_domain);
-
-        return $tabs;
-    }
+		$settings = $this->get_settings( $current_section );
+		WC_Admin_Settings::output_fields( $settings );
+	}
 
 
     /**
@@ -73,8 +74,8 @@ class WCCBPSettings {
         $section = array();
 
         $section[] = array(
-                'title' => __('Country Based Payments', $this->text_domain),
-                'desc'  => __('Select in which countries payment gateways will be available', $this->text_domain),
+                'title' => __( 'Country Based Payments', 'wccbp' ),
+                'desc'  => __( 'Select in which countries payment gateways will be available', 'wccbp' ),
                 'type'  => 'title',
                 'id'    => $this->id,
             );

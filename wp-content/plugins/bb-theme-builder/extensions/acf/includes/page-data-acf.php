@@ -348,3 +348,74 @@ FLPageData::add_post_property_settings_fields( 'acf_color', $form );
 FLPageData::add_post_property_settings_fields( 'acf_author_color', $form );
 FLPageData::add_site_property_settings_fields( 'acf_user_color', $form );
 FLPageData::add_site_property_settings_fields( 'acf_option_color', $form );
+
+/**
+ * Advanced Custom Field Relational
+ */
+ FLPageData::add_post_property( 'acf_relational', array(
+	 'label'   => __( 'ACF Relational', 'fl-theme-builder' ),
+	 'group'   => 'acf',
+	 'type'    => array( 'string', 'custom_field' ),
+	 'getter'  => 'FLPageDataACF::relational_field',
+ ) );
+
+ $form = array(
+	 'type' => array(
+		'type'    => 'select',
+		'label'   => __( 'Field Type', 'fl-theme-builder' ),
+		'default' => 'user',
+		'options' => array(
+			'user'			=> __( 'User', 'fl-theme-builder' ),
+			'post_object'	=> __( 'Post Object', 'fl-theme-builder' ),
+		),
+		'toggle' => array(
+			'user'  => array(
+				'fields' => array( 'display_type', 'link', 'link_type' ),
+			),
+		),
+	 ),
+	'name' => array(
+		'type'  => 'text',
+		'label' => __( 'Field Name', 'fl-theme-builder' ),
+	),
+	'display_type' => array(
+		'type'          => 'select',
+		'label'         => __( 'Display Type', 'fl-theme-builder' ),
+		'default'       => 'display',
+		'options'		=> array(
+			'display'		=> __( 'Display Name', 'fl-theme-builder' ),
+			'first'			=> __( 'First Name', 'fl-theme-builder' ),
+			'last'			=> __( 'Last Name', 'fl-theme-builder' ),
+			'firstlast'		=> __( 'First &amp; Last Name', 'fl-theme-builder' ),
+			'lastfirst'		=> __( 'Last, First Name', 'fl-theme-builder' ),
+			'nickname'		=> __( 'Nickname', 'fl-theme-builder' ),
+			'username'		=> __( 'Username', 'fl-theme-builder' ),
+		),
+	),
+	'link' => array(
+		'type'          => 'select',
+		'label'         => __( 'Link', 'fl-theme-builder' ),
+		'default'       => 'no',
+		'options'       => array(
+			'yes'        	=> __( 'Yes', 'fl-theme-builder' ),
+			'no'        	=> __( 'No', 'fl-theme-builder' ),
+		),
+		'toggle'		=> array(
+			'yes'			=> array(
+				'fields'		=> array( 'link_type' ),
+			),
+		),
+		'help'          => __( 'Link to the archive or website for this author.', 'fl-theme-builder' ),
+	),
+	'link_type' => array(
+		'type'          => 'select',
+		'label'         => __( 'Link Type', 'fl-theme-builder' ),
+		'default'       => 'archive',
+		'options'       => array(
+			'archive'        => __( 'Post Archive', 'fl-theme-builder' ),
+			'website'        => __( 'Website', 'fl-theme-builder' ),
+		),
+	),
+ );
+
+ FLPageData::add_post_property_settings_fields( 'acf_relational', $form );

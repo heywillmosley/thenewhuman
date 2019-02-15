@@ -236,9 +236,7 @@ class ESIG_SAD {
             $document_type = $api->document->getDocumenttype($doc_id);
 
             if ($document_type != 'stand_alone') {
-                $pageID = $api->setting->get_generic('default_display_page');
-                // preparing redirect link 
-                $siteURL = get_permalink($pageID);
+                $siteURL = WP_E_Sig()->setting->default_link();
                 wp_redirect($siteURL);
                 exit;
             }
@@ -417,7 +415,7 @@ class ESIG_SAD {
             $recipient_obj = $api->user->getUserByID($recipient['id']);
 
 
-            $invitation = $api->invite->getInviteBy('invite_hash', $invite_hash);
+            $invitation = $api->invite->getInvite_by_invite_hash($invite_hash);
 
             // sad print option settings 
 
@@ -461,7 +459,7 @@ class ESIG_SAD {
 
 
             if ($allSigned) {
-
+              
                 $api->document->updateStatus($doc_id, "signed");
                 $event_text = __("The document has been signed by all parties and is now closed.", 'esig');
                 $api->document->recordEvent($doc_id, 'all_signed', $event_text, null);

@@ -74,6 +74,7 @@ if (!class_exists('ESIG_LOGO_BRANDING_Admin')) :
 
             // logo alignment filters 
             add_filter('esig-logo-alignment', array($this, 'logo_alignment'), 10, 2);
+            add_filter('esig-document_title-alignment', array($this, 'document_title_alignment'), 10, 2);
 
             // sender type filter has been added . 
 
@@ -102,6 +103,18 @@ if (!class_exists('ESIG_LOGO_BRANDING_Admin')) :
         public function logo_alignment($alignment,$wpUserId) {
 
             $align = $this->headImgageAlignment($wpUserId);
+
+            $alignment = 'align="' . $align . '"';
+
+            return $alignment;
+        }
+        
+        public function document_title_alignment($alignment,$wpUserId) {
+
+            $align = $this->docTitleAlignment($wpUserId);
+            if(empty($align)){
+                $align="left";
+            }
 
             $alignment = 'align="' . $align . '"';
 
@@ -501,6 +514,7 @@ if (!class_exists('ESIG_LOGO_BRANDING_Admin')) :
                 $this->save_esig_cover_page($wpUserId, ESIG_POST('esig_cover_page'));
                 $this->save_esig_branding_back_color($wpUserId, ESIG_POST('esig_button_background'));
                 $this->save_esig_document_head_img_alignment($wpUserId, ESIG_POST('esig_document_head_img_alignment'));
+                $this->save_esig_document_title_alignment($wpUserId, ESIG_POST('esig_document_title_alignment'));
                 $this->save_esig_email_invitation_sender_checked($wpUserId, ESIG_POST('esig_email_invitation_sender_checked'));
                 
 
@@ -535,6 +549,7 @@ if (!class_exists('ESIG_LOGO_BRANDING_Admin')) :
                 "esig_document_head_img" => $esig_document_head_img,
                 "esig_branding_back_color" => $this->backColor($wpUserId),
                 'esig_head_img_alignment' => $this->headImgageAlignment($wpUserId),
+                'esig_document_title_alignment' => $this->docTitleAlignment($wpUserId),
                 'esig_email_invitation_sender_checked' => $this->invitationSender($wpUserId),
                 'esig_branding_more_content' => $esig_branding_more_content,
             );

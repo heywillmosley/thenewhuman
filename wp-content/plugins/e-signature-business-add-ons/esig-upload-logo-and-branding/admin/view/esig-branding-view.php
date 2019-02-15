@@ -52,6 +52,33 @@
                     ?>> Align Right
                 </td>
             </tr>
+            
+            <tr>
+                <th> <label for="document_title" > <?php _e("Document Title Alignment", "esig"); ?> </label></th>
+                <td>
+                    <?php
+                           $sender_type = $data['esig_document_title_alignment'];                          ?>
+                    <input type="radio" name="esig_document_title_alignment" value="left" <?php
+                           if ($sender_type == 'left') {
+                               echo 'checked';
+                           } if (empty($sender_type)) {
+                               echo 'checked';
+                           }
+                           ?>> Left
+                    <input type="radio" name="esig_document_title_alignment" value="center" <?php
+                           if ($sender_type == 'center') {
+                               echo 'checked';
+                           }
+                           ?>>Center
+                    
+                    <input type="radio" name="esig_document_title_alignment" value="right" <?php
+                           if ($sender_type == 'right') {
+                               echo 'checked';
+                           }
+                           ?>>Right
+
+                </td>
+            </tr>
 
             <?php
             if (!isset($data['esig_branding_logo_tagline']) && $data['esig_branding_logo_tagline'] == false) {

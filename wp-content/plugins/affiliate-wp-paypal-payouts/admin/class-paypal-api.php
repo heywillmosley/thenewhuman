@@ -53,7 +53,7 @@ class AffiliateWP_PayPal_API {
 					array(
 						'recipient_type' => 'EMAIL',
 						'amount'         => array(
-							'value'      => $args['amount'],
+							'value'      => affwp_sanitize_amount( $args['amount'] ),
 							'currency'   => affwp_get_currency()
 						),
 						'receiver'       => $args['email'],
@@ -124,7 +124,7 @@ class AffiliateWP_PayPal_API {
 			$items[] = array(
 				'recipient_type' => 'EMAIL',
 				'amount'         => array(
-					'value'      => affwp_format_amount( $payout['amount'] ),
+					'value'      => affwp_sanitize_amount( $payout['amount'] ),
 					'currency'   => affwp_get_currency()
 				),
 				'receiver'       => $payout['email'],

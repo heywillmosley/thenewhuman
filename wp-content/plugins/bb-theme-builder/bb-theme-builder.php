@@ -3,7 +3,7 @@
  * Plugin Name: Beaver Themer
  * Plugin URI: https://www.wpbeaverbuilder.com/?utm_medium=bb-theme-builder&utm_source=plugins-admin-page&utm_campaign=plugins-admin-uri
  * Description: Easily build Themer layouts for your archives, posts, 404 pages and more!
- * Version: 1.2.0.3
+ * Version: 1.2.1.1
  * Author: The Beaver Builder Team
  * Author URI: https://www.wpbeaverbuilder.com/?utm_medium=bb-theme-builder&utm_source=plugins-admin-page&utm_campaign=plugins-admin-author
  * Copyright: (c) 2016 Beaver Builder

@@ -86,6 +86,11 @@ final class FLThemeBuilderACFRepeater {
 			return '';
 		}
 
+		// Yoast will throw a fatal error if shortcodes are found in regular wp content.
+		if ( ! class_exists( 'FLPageDataACF' ) ) {
+			return '';
+		}
+
 		$name = trim( $attrs['name'] );
 		$type = isset( $attrs['type'] ) ? $attrs['type'] : 'post';
 		$id = FLPageDataACF::get_object_id_by_type( $type );
